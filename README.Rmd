@@ -1,6 +1,8 @@
 # Data Recipes
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 This is a document to explore an approach to pre-processing data for modeling. The idea is to define a plan/recipe/blueprint that can be used to eventually create a design matrix,  outcome array, or other collections of data.
 
@@ -54,41 +56,39 @@ The tags could also include features that have not been created yet and may have
 ## An Example
 
 Some data in the `caret` package will be used but thinned down to two predictors (`A` and `B`) and an outcome that is a binary category with classes `One` and `Two`. 
+```{r create_data, echo = FALSE, message = FALSE}
+library(caret)
+data(segmentationData)
 
-There are two data sets: `raw_train` with 1009 data points and `raw_test` with 1010 samples.
+segmentationData$Cell <- NULL
+segmentationData$Class <- factor(ifelse(segmentationData$Class == "PS", "One", "Two"))
+segmentationData <- segmentationData[, c("EqSphereAreaCh1", "PerimCh1", "Class", "Case")]
+names(segmentationData)[1:2] <- LETTERS[1:2]
+raw_train <- subset(segmentationData, Case == "Train")
+raw_test  <- subset(segmentationData, Case == "Test")
 
+raw_train$Case <- NULL
+raw_test$Case  <- NULL
+```
+There are two data sets: `raw_train` with `r nrow(raw_train)` data points and `raw_test` with `r nrow(raw_test)` samples.
 
-```r
+```{r head}
 summary(raw_train)
-```
-
-```
-##        A                B          Class    
-##  Min.   : 603.8   Min.   : 47.74   One:636  
-##  1st Qu.: 779.9   1st Qu.: 64.37   Two:373  
-##  Median :1027.2   Median : 79.02            
-##  Mean   :1302.5   Mean   : 91.61            
-##  3rd Qu.:1505.2   3rd Qu.:103.24            
-##  Max.   :8746.1   Max.   :459.77
 ```
 
 A look at the training data:
 
-
-```r
+```{r scatterplot}
 theme_set(theme_bw())
 ggplot(raw_train, aes(x = A, y = B, color = Class)) + 
   geom_point(alpha = .3, cex = 2.5)  + 
   theme(legend.position = "top")
 ```
 
-![plot of chunk scatterplot](figure/scatterplot-1.png)
-
 
 Let's create an initial recipe:
 
-
-```r
+```{r basic, eval = FALSE}
 preds_vars <- c("A", "B")
 
 # Start from scratch
@@ -105,8 +105,7 @@ basic <- as.recipe(frame)
 ```
 
 These predictors are both pretty right-skewed so maybe start with
-
-```r
+```{r log, eval = FALSE}
 basic <- basic %>% log_trans(features = pred_vars) 
 # or 
 basic <- basic %>% log_trans(A, B)
@@ -115,36 +114,30 @@ basic <- basic %>% log_trans(~ A + B)
 ```
 
 We can also plan some simple normalization
-
-```r
+```{r stand, eval = FALSE}
 normalized <- basic %>% standardize(features = pred_vars, type = c("center", "scale"))
 ```
 
 Also, since they are pretty correlated, we can schedule the first PCA component to be used based on _any_ numeric features created thus far
-
-```r
+```{r pca, eval = FALSE}
 with_comp <- normalized %>% pca_extract(features = "::num::", comps = 1)
 ```
 Alternatively, we add an interaction term. If this were an interaction between two factors, we might want to tag the resulting columns so that we can refer to the group later: 
-
-```r
+```{r int, eval = FALSE}
 two_way_int <- normalized %>% interact(formula = ~ A:B, tag = "AB int")
 ```
 
 Now check the recipe with some actual data
-
-```r
+```{r check, eval = FALSE}
 with_comp <- check(with_comp, data = raw_train)
 ```
 
 Unless there are any critical issues, we can then compute the means, standard deviations, and PCA component to be used later:
-
-```r
+```{r train, eval = FALSE}
 data_stats <- compute(with_comp, data = raw_train)
 ```
 and then apply these computations to the data sets. I'm not sure what verb is best here so I'll just used `predict`: 
-
-```r
+```{r predict, eval = FALSE}
 train_features <- predict(data_stats, raw_train)
 test_features  <- predict(data_stats, raw_test)
 ```
