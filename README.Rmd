@@ -37,8 +37,8 @@ Below are example classes of actions and their characteristics. Each action migh
 * *standardization* (replacement, univariate): centering, scaling, and other re-encoding of individual features. 
 * *interactions* or *nesting* (derived, multivariate)
 * *imputation* (replacement, univariate): models or rules are used to replace missing features. 
-* Encoding *dummy variables* from categorical data (derived, univariate)
-* *transformations* of data (replacement, uni- or multivariate): this includes logging, Box-Cox, arc-sin, spatial sign or other transformations of data. 
+* encoding *dummy variables* from categorical data (derived, univariate)
+* *transformations* of data (replacement, uni- or multivariate): this includes logging, Box-Cox, arc-sin, spatial sign or other transformations of data. This also encompasses cases where a date variable is transformed into one or more features (e.g. day of the week, month number).
 * *binning* (derived, univariate): the unfortunate process of creating categories from numeric data
 * feature *extraction* (derived, multivariate): PCA, ICA, autoencoders, basis functions, and other procedures that estimate new features from the original data
 * *filters* (removal, uni- or multivariate): filters on zero-variance features or for reducing correlations between predictors. 
