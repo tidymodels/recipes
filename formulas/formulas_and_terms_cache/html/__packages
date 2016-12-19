@@ -1,0 +1,7 @@
+base
+knitr
+lattice
+ggplot2
+caret
+rpart
+randomForest
