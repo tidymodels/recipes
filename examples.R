@@ -7,19 +7,32 @@ data("schedulingData")
 str(schedulingData)
 
 num_vars <- unlist(lapply(schedulingData[, -8], is.numeric))
-num_vars <- names(num_vars)[num_vars]
+num_vars <- as.formula(paste0("~", paste0(names(num_vars)[num_vars], collapse = "+")))
 
 cat_vars <- unlist(lapply(schedulingData[, -8], is.factor))
-cat_vars <- names(cat_vars)[cat_vars]
+cat_vars <- as.formula(paste0("~", paste0(names(cat_vars)[cat_vars], collapse = "+")))
 
 
 pp <- recipe()
 pp <- pp %>% 
-  add_response("Class") %>%
-  add_predictor(names(schedulingData)[-8])
+  add_role("Class", role = "response") %>% # or add_response(~Class)
+  add_role(names(schedulingData)[-8])
 
-normalized <- pp %>% standardize(features = num_vars)
+pp <- as.recipe(Class ~ ., data = schedulingData)
 
-with_comp <- normalized %>% pca_extract(features = num_vars)
+normalized <- pp %>% standardize(form = num_vars)
 
-with_ints <- with_comp %>% interact(~ (Protocol+Compound+Iterations)^3)
+with_comp <- normalized %>% pca_extract(form = ~. -Class, data = schedulingData)
+with_comp
+
+
+with_ints <- with_comp %>% interact(~(Protocol+Compounds+Iterations)^3)
+with_ints
+
+
+library(QSARdata)
+
+
+
+
+
