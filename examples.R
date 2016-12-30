@@ -27,6 +27,8 @@ pp <- pp %>%
 pp <- as.recipe(Class ~ ., data = hpc_train)
 
 normalized <- pp %>% standardize(form = num_vars)
+
+## not the final API (I hope)
 normalized <- compute_predictors(normalized, training = hpc_train, verbose = TRUE, keep_data = TRUE)
 scaled_train <- apply_predictors(normalized, data = hpc_train, verbose = TRUE)
 scaled_test  <- apply_predictors(normalized, data = hpc_test,  verbose = TRUE)
@@ -34,6 +36,10 @@ all.equal(normalized$data, scaled_train)
 
 with_comp <- normalized %>% pca_extract(form =num_vars, data = schedulingData)
 with_comp
+with_comp <- compute_predictors(with_comp, training = hpc_train, verbose = TRUE)
+comps_train <- apply_predictors(with_comp, data = hpc_train, verbose = TRUE)
+comps_test  <- apply_predictors(with_comp, data = hpc_test,  verbose = TRUE)
+
 
 
 with_ints <- with_comp %>% interact(~(Protocol+Compounds+Iterations)^3)

@@ -70,7 +70,7 @@ check_vars <- function(vars, role, types, rec){
   
   ## Second, see if they are the right role
   role_data <- rec$var_info %>% 
-    filter(variable %in% vars)
+    dplyr::filter(variable %in% vars)
   wrong_role <- role_data$role != role
   if(any(wrong_role))
     stop(paste("These variables do not have the correct role",
@@ -82,7 +82,7 @@ check_vars <- function(vars, role, types, rec){
   ## makes sense for interactions and other situations where
   ## any type will do
   if(!all(is.na(types))) {
-    role_data <- role_data %>% filter(type != "")
+    role_data <- role_data %>% dplyr::filter(type != "")
     wrong_type <- !(role_data$type %in% types)
     if(any(wrong_type))
       stop(paste("These variables do not have the correct role",
@@ -111,7 +111,7 @@ apply_center <- function(form, data, values) {
     form <- as.formula(form)
   dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
   dat <- sweep(dat, 2, values$means, "-")
-  dat
+  as_tibble(dat)
 }
 
 compute_scale <- function(form, data, args) {
@@ -127,7 +127,7 @@ apply_scale <- function(form, data, values) {
     form <- as.formula(form)
   dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
   dat <- sweep(dat, 2, values$sds, "/")
-  dat
+  as_tibble(dat)
 }
 
 standardize <- function(rec, form, type = c("center", "scale"), data = NULL) {
@@ -164,7 +164,8 @@ interact <- function(rec, form, data = NULL) {
   rec
 }
 
-pca_extract <- function(rec, form, data = NULL, num = NA, standardize = FALSE) {
+pca_extract <- function(rec, form, data = NULL, num = NULL, 
+                        prcomp_args = list(retx = FALSE)) {
   if(!is_formula(form))
     stop("`form` should be a formula with predictors listed on the right-hand side")
   if(!is.null(data)) 
@@ -174,8 +175,40 @@ pca_extract <- function(rec, form, data = NULL, num = NA, standardize = FALSE) {
   
   rec$verbs[[length(rec$verbs)+1]] <- 
     list(verb = "pca signal extraction", inputs = form, 
-         args = list(num = num, standardize = standardize))
+         compute = compute_pca_extract, apply = apply_pca_extract, 
+         args = list(num = num, standardize = standardize, prcomp = prcomp_args))
   rec
+}
+
+
+compute_pca_extract <- function(form, data, args) {
+  ## add zv filter? 
+  
+  ## use this call as the basis to make one for `prcomp`
+  cl <- match.call(expand.dots = TRUE)
+  cl$args <- NULL
+  cl[[1]] <- quote(stats:::prcomp.formula)
+  names(cl)[2] <- "formula"
+  ## surely a smoother way exists
+  for(i in seq(along = args$prcomp)) 
+    cl[[ names(args$prcomp)[i] ]] <- args$prcomp[[i]]
+  comp_info <- eval(cl, envir = parent.frame())
+  # Better api here
+  if(is.null(args$num))
+    args$num <- max(which(cumsum(comp_info$sdev^2/sum(comp_info$sdev^2)) <= .95))
+  
+  ## keep everything past the requested rotation? 
+  ## comp_info$rotation <- comp_info$rotation[,1:args$num, drop = FALSE]
+  list(components = comp_info, num = args$num, columns = paste0("PC", seq_lab(1:args$num)))
+}
+
+apply_pca_extract <- function(form, data, values) {
+  if(!is_formula(form)) 
+    form <- as.formula(form)
+  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
+  dat <- predict(values$components, dat)[, 1:values$num]
+  colnames(dat) <- values$columns
+  as_tibble(dat)
 }
 
 ###################################################################
@@ -271,24 +304,37 @@ get_columns <- function(form, data) {
   attr(terms(form, data = schedulingData), "term.labels")
 }
 
+seq_lab <- function(x) 
+  gsub(" ", "0", format(seq_along(x)))
+
+
 ###################################################################
 ## Functions for training and application of the pre-processing.
 ## Better names/API are needed
 
 ## should we always return a tibble?
+## TODO At each iteration check to see if values are there and then skip
+## in case of adding to a recipe that has already been computed. This happens
+## since the recipe contains the values. Should we make a different 
+## object? 
+## TODO Option to remove variables that PCs are replacing? What does this do to 
+## subsequent formulas? 
+
 compute_predictors <- function(rec, training, verbose = TRUE, keep_data = FALSE) {
   preds <- rec$var_info$variable[rec$var_info$role == "predictor"]
-  training <- training[, preds, drop = FALSE]
+  training <- as_tibble(training[, preds, drop = FALSE])
   vrb <- rec$verbs
   for(i in seq(along = vrb)) {
     if(verbose) cat(vrb[[i]]$verb, "\n")
     
     # Compute anything needed for the pre-processing steps including
-    # the names of the columns that will be replaced (or new columns)
-    vrb[[i]]$values <- vrb[[i]]$compute(vrb[[i]]$inputs, training, vrb[[i]]$values$args)
+    # the names of the columns that will be replaced (or new columns). 
+    # We might need to split the `columns` return object into 
+    # separate sets to replace, add, or remove columns. 
+    vrb[[i]]$values <- vrb[[i]]$compute(as.formula(vrb[[i]]$inputs), training, vrb[[i]]$values$args)
     cols <- vrb[[i]]$values$columns
     # Apply the results to the original data
-    training[, cols] <- vrb[[i]]$apply(vrb[[i]]$inputs, training, vrb[[i]]$values)
+    training[, cols] <- vrb[[i]]$apply(as.formula(vrb[[i]]$inputs), training, vrb[[i]]$values)
   }
   rec$verbs <- vrb
   if(keep_data) 
