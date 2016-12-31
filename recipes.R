@@ -330,7 +330,7 @@ compute_predictors <- function(rec, training, verbose = TRUE, keep_data = FALSE)
     # Compute anything needed for the pre-processing steps including
     # the names of the columns that will be replaced (or new columns). 
     # We might need to split the `columns` return object into 
-    # separate sets to replace, add, or remove columns. 
+    # seperate sets to replace, add, or remove columns. 
     vrb[[i]]$values <- vrb[[i]]$compute(as.formula(vrb[[i]]$inputs), training, vrb[[i]]$values$args)
     cols <- vrb[[i]]$values$columns
     # Apply the results to the original data
