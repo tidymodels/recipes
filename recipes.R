@@ -1,9 +1,85 @@
-###################################################################
-## Some simple prototyping files for data recipes. 
 
-## Add missing data arguments
-## What is the procedure for getting different components
-## (i.e. predictors, outcomes)? 
+## `recipes.default` takes arguments:
+##
+##  - data: a template data set
+##  - vars: a character strings of column names that 
+##          will be used in the model is some capacity
+##  - roles: an optional character string that shows 
+##           the role of each element of `vars`
+
+## `recipes.formula` takes arguments:
+##
+##  - data: a template data set
+##  - formula: a formula (1- or 2-sided) that is used 
+##             to declare the predictors (and possibly)
+##             the outcomes
+##  - should be added: subset?
+
+
+recipe <- function(x, ...) UseMethod("recipe")
+
+recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
+  require(tibble)
+  require(dplyr)
+  
+  if(!is_tibble(data)) data <- as_tibble(data)
+  if(is.null(vars)) vars <- colnames(data)
+  if(any(table(vars) > 1))
+    stop("`vars` should have unique members")
+  if(any(!(vars %in% colnames(data))))
+    stop("1+ elements of `vars` are not in `data`")
+  
+  data <- data[, vars]
+  
+  var_info <- tibble(variable = vars)
+  
+  ## Check and add roles when available
+  if(!is.null(roles)) {
+    if(length(roles) != length(vars))
+      stop("The number of roles should be the same as the number of variables")
+    var_info$role <- roles
+  } else var_info$role <- ""
+  
+  ## Add types
+  var_info <- get_types(data) %>% full_join(var_info)
+  
+  ## Return final object of class `recipe`
+  out <- list(var_info = var_info, 
+              steps = NULL,
+              template = data)
+  class(out) <- "recipe"
+  out
+}
+
+recipe.formula <- function(formula, data, ...) {
+  if(!is_formula(formula)) 
+    formula <- as.formula(formula)
+  
+  require(lazyeval)
+  require(tibble)
+  
+  if(!is_tibble(data)) data <- as_tibble(data)
+  
+  ## use lazyeval to get both sides of the formula
+  outcomes <- get_lhs_vars(formula, data)
+  predictors <- get_rhs_vars(formula, data)
+  
+  ## get `vars` from lhs and rhs of formula
+  
+  vars <- c(predictors, outcomes)
+  
+  ## subset data columns
+  data <- data[, vars]
+  
+  ## derive roles
+  roles <- rep("predictor", length(predictors))
+  if(length(outcomes) > 0) 
+    roles <- c(roles, rep("outcome", length(outcomes)))
+  
+  ## pass to recipe.default with vars and roles
+  
+  recipe.default(data = data, vars = vars, roles = roles, ...) 
+}
 
 ###################################################################
 ## Role functions
@@ -37,319 +113,239 @@ add_role <- function(rec, vars, role = "predictor", data = NULL) {
   out
 }
 
-## huh, I assumed this was in R. Crappy version:
-is_formula <- function(x) {
+###################################################################
+## helpers
+
+## Buckets variables into discrete, mutally exclusive types
+get_types <- function(x) {
+  type_list <- list(
+    nominal = c("character", "factor", "ordered"),
+    numeric = c("integer", "numeric"),
+    date = c("POSIXct", "Date")
+  )
+  res <- lapply(type_list, type_by_var, dat = x)
+  ## I think that Hadley has a better function somewhere to do this
+  res <- res[sapply(res, length) > 0]
+  for(i in seq_along(res)) 
+    res[[i]] <- tibble(variable = res[[i]], type = names(res)[i])
+  do.call("rbind", res)
+}
+
+type_by_var <- function(classes, dat) {
+  res <- sapply(dat, is_one_of, what = classes)
+  names(res)[res]
+}
+
+is_one_of <- function(x, what) {
+  res <- sapply(
+    as.list(what), 
+    function(class, obj) inherits(obj, what = class),
+    obj = x
+  )
+  any(res)
+}
+
+## general error trapping functions
+
+check_outcomes_same_type <- function(x) x
+
+## get variables from formulas
+is_formula <- function(x) 
   isTRUE(inherits(x, "formula"))
+
+get_lhs_vars <- function(formula, data) {
+  if(!is_formula(formula)) 
+    formula <- as.formula(formula)
+  ## Want to make sure that multiple outcomes can be expressed as
+  ## additions with no cbind business and that `.` works too (maybe)
+  formula <- as.formula(paste("~", deparse(f_lhs(formula))))
+  get_rhs_vars(formula, data)
 }
 
-## Expand a rhs dot if used and data is passed in 
-expand_dots <- function(form, data) {
-  form <- terms(form, data = data)
-  attributes(form) <- NULL
-  form
+get_rhs_vars <- function(formula, data) {
+  if(!is_formula(formula)) 
+    formula <- as.formula(formula)
+  ## This will need a lot of work to account for cases with `.`
+  ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`. 
+  ## or should it? what about Y ~ log(x)? 
+  data_info <- attr(model.frame(formula, data), "terms")
+  response_info <- attr(data_info, "response")
+  predictor_names <- names(attr(data_info, "dataClasses"))
+  if(length(response_info)>0 && all(response_info > 0))
+    predictor_names <- predictor_names[-response_info]
+  predictor_names
 }
 
-missing_msg <- function(x) {
-  msg <- if(length(x) > 1)
-    "These variables are" else
-      "This variable is"
-  paste(msg, "not currently included in the recipe:", 
-        paste0(x, collapse = ", "))
+get_lhs_terms <- function(x) x
+get_rhs_terms <- function(x) x
+
+## ancillary step functions
+
+add_step <- function(rec, object) {
+  rec$steps[[length(rec$steps)+1]] <- object
+  rec
 }
 
-check_vars <- function(vars, role, types, rec){
-  ## First check to see if they are listed in the list of
-  ## raw variables. If not this may not matter in case
-  ## they are derived variables. For now, issue a 
-  ## warning if they are not found.
-  ## NOTE: all.vars does not remove "-vars" terms.
-  vars <- all.vars(vars)
-  missing_vars <- vars[!(vars %in% rec$var_info$variable)]
-  if(length(missing_vars) > 0)
-    warning(missing_msg(missing_vars))
+
+var_by_role <- function(rec, role = "predictor", returnform = TRUE) {
+  res <- rec$var_info$variable[rec$var_info$role == role]
+  if(returnform) 
+    res <- as.formula(
+      paste("~", 
+            paste(res, collapse = "+")
+      )
+    )
+  res
+}
+
+###################################################################
+##
+
+# other words to replace "apply": process, engineer, 
+
+##   recipes(mtcars) %>% 
+##     step_center()
+
+## Overall wrapper to make new step_X objects
+step <- function(subclass, ...) {
+  structure(
+    list(
+      ...
+    ),
+    class = c(paste0(subclass, "_step"), "step")
+  )
+}
+
+## User called function that adds a classed object to the 
+## original recipe.Add code to default formula to null and
+## pick off all numeric variables
+step_center <- function(recipe, formula) {
+  # this should prob use get_rhs_{terms}
+  col_names <- get_rhs_vars(formula, recipe$template) 
+  add_step(recipe, step_center_new(col_names))
+}
+
+## Initializes a new object
+step_center_new <- function(col_names = NULL, means = NULL) {
+  step(
+    subclass = "center", 
+    col_names = col_names,
+    means = means
+  )
+}
+
+step_scale <- function(recipe, formula) {
+  # this should prob use get_rhs_{terms}
+  col_names <- get_rhs_vars(formula, recipe$template) 
+  add_step(recipe, step_scale_new(col_names))
+}
+
+## Initializes a new object
+step_scale_new <- function(col_names = NULL, sds = NULL) {
+  step(
+    subclass = "scale", 
+    col_names = col_names,
+    sds = sds
+  )
+}
+
+###################################################################
+## Processing and application functions
+
+learn   <- function(x, ...) UseMethod("learn")
+process <- function(x, ...) UseMethod("process")
+
+
+learn.center_step <- function(x, data, ...) {
+  means <- unlist(lapply(data[, x$col_names], mean, na.rm = TRUE))
+  step_center_new(x$col_names, means)
+}
+
+
+## ?inact, process, other verb to avoid conflicts with base:::apply
+process.center_step <- function(x, data, ...) {
+  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$means, "-")
+  as_tibble(data)
+}
+
+learn.scale_step <- function(x, data, ...) {
+  sds <- unlist(lapply(data[, x$col_names], sd, na.rm = TRUE))
+  step_scale_new(x$col_names, sds)
+}
+
+
+process.scale_step <- function(x, data, ...) {
+  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$sds, "/")
+  as_tibble(data)
+}
+
+learn.recipe <- function(x, training = x$template, verbose = TRUE) {
+  if(length(x$steps) == 0)
+    stop("Add some steps")
   
-  ## Second, see if they are the right role
-  role_data <- rec$var_info %>% 
-    dplyr::filter(variable %in% vars)
-  wrong_role <- role_data$role != role
-  if(any(wrong_role))
-    stop(paste("These variables do not have the correct role",
-               "for this operation:", 
-               paste(role_data$variable[wrong_role], collapse = ", ")))
+  preds <- x$var_info$variable[x$var_info$role == "predictor"]
+  training <- as_tibble(training[, preds, drop = FALSE])
   
-  ## Third, if the data types are available, then 
-  ## check. Avoid this check with types are missing. This
-  ## makes sense for interactions and other situations where
-  ## any type will do
-  if(!all(is.na(types))) {
-    role_data <- role_data %>% dplyr::filter(type != "")
-    wrong_type <- !(role_data$type %in% types)
-    if(any(wrong_type))
-      stop(paste("These variables do not have the correct role",
-                 "for this operation:", 
-                 paste(role_data$variable[wrong_type], collapse = ", ")))
+  for(i in seq(along = x$steps)) {
+    if(verbose) cat("step", i, "\n")
+    
+    # Compute anything needed for the pre-processing steps 
+    # then apply it to the current training set
+    
+    x$steps[[i]] <- learn(x$steps[[i]], data = training)
+    training <- process(x$steps[[i]], data = training)
   }
-  invisible(NULL)
+  x
 }
 
-## TODO test cases terms(~ . - Species, data = iris)
+process.recipe <- function(x, newdata = x$template) {
+  preds <- x$var_info$variable[x$var_info$role == "predictor"]
+  training <- as_tibble(newdata[, preds, drop = FALSE])
+  
+  for(i in seq(along = x$steps)) {
+    training <- process(x$steps[[i]], data = training)
+  }
+  training
+}
+
 
 ###################################################################
-## Verb specification functions. 
+## Printing
 
-compute_center <- function(form, data, args) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  ## This can prob be done using some tibble thingy
-  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
-  means <- apply(dat, 2, mean, na.rm = TRUE) 
-  list(means = means, columns = colnames(dat))
-}
-
-apply_center <- function(form, data, values) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
-  dat <- sweep(dat, 2, values$means, "-")
-  as_tibble(dat)
-}
-
-compute_scale <- function(form, data, args) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
-  sds <- apply(dat, 2, sd, na.rm = TRUE) 
-  list(sds = sds, columns = colnames(dat))
-}
-
-apply_scale <- function(form, data, values) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
-  dat <- sweep(dat, 2, values$sds, "/")
-  as_tibble(dat)
-}
-
-standardize <- function(rec, form, type = c("center", "scale"), data = NULL) {
-  if(!is_formula(form))
-    stop("`form` should be a formula with predictors listed on the right-hand side")
-  if(!is.null(data)) 
-    form <- expand_dots(form, data = data)
-  
-  check_vars(form, role = "predictor", rec = rec, types = "numeric")
-  
-  if("center" %in% type) 
-    rec$verbs[[length(rec$verbs)+1]] <- 
-    list(verb = "center", inputs = form, 
-         compute = compute_center, apply = apply_center, 
-         args = NULL)
-  if("scale" %in% type) 
-    rec$verbs[[length(rec$verbs)+1]]  <- 
-    list(verb = "scale", inputs = form, 
-         compute = compute_scale, apply = apply_scale, 
-         args = NULL)
-  rec
-}
-
-interact <- function(rec, form, data = NULL) {
-  if(!is_formula(form))
-    stop("`form` should be a formula with predictors listed on the right-hand side")
-  if(!is.null(data)) 
-    form <- expand_dots(form, data = data)
-  check_vars(form, role = "predictor", rec = rec, types = NA)
-  
-  rec$verbs[[length(rec$verbs)+1]] <- 
-    list(verb = "interaction", inputs = form, 
-         args = NULL)
-  rec
-}
-
-pca_extract <- function(rec, form, data = NULL, num = NULL, 
-                        prcomp_args = list(retx = FALSE)) {
-  if(!is_formula(form))
-    stop("`form` should be a formula with predictors listed on the right-hand side")
-  if(!is.null(data)) 
-    form <- expand_dots(form, data = data)
-  
-  check_vars(form, role = "predictor", rec = rec, types = "numeric")
-  
-  rec$verbs[[length(rec$verbs)+1]] <- 
-    list(verb = "pca signal extraction", inputs = form, 
-         compute = compute_pca_extract, apply = apply_pca_extract, 
-         args = list(num = num, standardize = standardize, prcomp = prcomp_args))
-  rec
-}
-
-
-compute_pca_extract <- function(form, data, args) {
-  ## add zv filter? 
-  
-  ## use this call as the basis to make one for `prcomp`
-  cl <- match.call(expand.dots = TRUE)
-  cl$args <- NULL
-  cl[[1]] <- quote(stats:::prcomp.formula)
-  names(cl)[2] <- "formula"
-  ## surely a smoother way exists
-  for(i in seq(along = args$prcomp)) 
-    cl[[ names(args$prcomp)[i] ]] <- args$prcomp[[i]]
-  comp_info <- eval(cl, envir = parent.frame())
-  # Better api here
-  if(is.null(args$num))
-    args$num <- max(which(cumsum(comp_info$sdev^2/sum(comp_info$sdev^2)) <= .95))
-  
-  ## keep everything past the requested rotation? 
-  ## comp_info$rotation <- comp_info$rotation[,1:args$num, drop = FALSE]
-  list(components = comp_info, num = args$num, columns = paste0("PC", seq_lab(1:args$num)))
-}
-
-apply_pca_extract <- function(form, data, values) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  dat <- model.matrix(form, data = data)[, -1, drop  = FALSE]
-  dat <- predict(values$components, dat)[, 1:values$num]
-  colnames(dat) <- values$columns
-  as_tibble(dat)
-}
-
-###################################################################
-## Other functions
-
-## initialize a new recipe. eventually add code to pull variable
-## names and types if `data` is supplied, 
-recipe <- function(data = NULL, vars = NULL, roles = NULL) {
-  var_info <- NULL
-  if(!is.null(data) && is.null(vars) && is.null(roles)) {
-    if(is.matrix(data)) data <- as_tibble(data)
-    var_info <- tibble(variable = colnames(data), role = "", type = "")
-  } ## need to add the else here
-  out <- list(var_info = var_info, verbs = NULL)
-  class(out) <- "recipe"
+term_num <- function(x, num = 3, ...) {
+  p <- length(x$col_names)
+  if(p > 1) {
+    out <- if(p >= num) 
+      cat(paste0(x$col_names, collapse = ", ")) else 
+        cat(p, "terms")
+  } else out <- cat(" 1 term")
   out
 }
 
-print.recipe <- function(x, limit = 3, ...){
-  if(!is.null(x$var_info) && nrow(x$var_info) > 0) {
-    tab <- as.data.frame(table(x$var_info$role))
-    colnames(tab) <- c("role", "#variables")
-    cat("Data Recipe\n\n")
-    cat("Inputs:\n\n")
-    print(tab, row.names = FALSE)
-  } else cat("Data Recipe (empty)\n")
-  
-  if(length(x$verbs) > 0) {
-    cat("\nVerbs and Inputs (in order):\n\n")
-    vrb_sum <- lapply(x$verbs, 
-                      function(x, lim) 
-                        paste0(" ", x$verb, ": ", print_verbs(x$input, max_vars = lim), "\n"), 
-                      lim = limit)
-    cat(paste0(vrb_sum, collapse = ""))
-  } else  cat("\nNo verbs\n")
+print.scale_step <- function(x, num = 3, ...) {
+  cat("Scaling with ")
+  cat(term_num(x, num))
+  if(!is.null(x$sds)) cat(" (processed)\n") else cat("\n")
+  invisible(x)
+}
+print.center_step <- function(x, num = 3, ...) {
+  cat("Centering with ")
+  cat(term_num(x, num))
+  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
   invisible(x)
 }
 
-## Doesn't work properly with interactions =[
-## Someday write some general code to cut the text based
-## on the page width
-print_verbs <- function(x, max_vars = 5) {
-  x <- terms(as.formula(x))
-  vars <- attr(x, "term.labels")
-  p <- length(vars)
-  if(p == 0) return("(none)")
-  print_vars <- paste0(vars[1:min(p, max_vars)], collapse = ", ")
-  if(p > max_vars) 
-    print_vars <- paste0(print_vars, " (", p - max_vars, " others)")
-  print_vars
-}
-
-as.recipe <- function(formula, data = NULL) {
-  ## currently ignores interactions in the formula but
-  ## can be added later in the function via a verb 
-  if(!is.null(data)) {
-    data_info <- attr(model.frame(formula, data), "terms")
-    response_info <- attr(data_info, "response")
-    data_classes <- attr(data_info, "dataClasses")
-    var_info <- tibble(variable = names(data_classes),
-                       role = "",
-                       type = data_classes)
-    if(length(response_info) > 0) {
-      var_info[ response_info, "role"] <- "response"
-      var_info[-response_info, "role"] <- "predictor"
-    } else {
-      var_info$role <- "predictor"
-    }
-  } else {
-    ## need to catch multivariate outcomes and capture vars accordingly
-    data_info <- terms(formula)
-    response_info <- attr(data_info, "response")
-    var_info <- tibble(variable = rownames(attr(data_info, "factors")),
-                       role = "",
-                       type = "")
-    if(length(response_info) > 0) {
-      var_info[ response_info, "role"] <- "response"
-      var_info[-response_info, "role"] <- "predictor"
-    } else {
-      var_info$role <- "predictor"
-    }
-  }
+print.recipe <- function(x, num = 3) {
+  tab <- as.data.frame(table(x$var_info$role))
+  colnames(tab) <- c("role", "#variables")
+  cat("Data Recipe\n\n")
+  cat("Inputs:\n\n")
+  print(tab, row.names = FALSE)
   
-  out <- list(var_info = var_info, verbs = NULL)
-  class(out) <- "recipe"
-  out
-}
-
-## do we really need the `data` argument here? 
-get_columns <- function(form, data) {
-  if(!is_formula(form)) 
-    form <- as.formula(form)
-  attr(terms(form, data = schedulingData), "term.labels")
-}
-
-seq_lab <- function(x) 
-  gsub(" ", "0", format(seq_along(x)))
-
-
-###################################################################
-## Functions for training and application of the pre-processing.
-## Better names/API are needed
-
-## should we always return a tibble?
-## TODO At each iteration check to see if values are there and then skip
-## in case of adding to a recipe that has already been computed. This happens
-## since the recipe contains the values. Should we make a different 
-## object? 
-## TODO Option to remove variables that PCs are replacing? What does this do to 
-## subsequent formulas? 
-
-compute_predictors <- function(rec, training, verbose = TRUE, keep_data = FALSE) {
-  preds <- rec$var_info$variable[rec$var_info$role == "predictor"]
-  training <- as_tibble(training[, preds, drop = FALSE])
-  vrb <- rec$verbs
-  for(i in seq(along = vrb)) {
-    if(verbose) cat(vrb[[i]]$verb, "\n")
-    
-    # Compute anything needed for the pre-processing steps including
-    # the names of the columns that will be replaced (or new columns). 
-    # We might need to split the `columns` return object into 
-    # seperate sets to replace, add, or remove columns. 
-    vrb[[i]]$values <- vrb[[i]]$compute(as.formula(vrb[[i]]$inputs), training, vrb[[i]]$values$args)
-    cols <- vrb[[i]]$values$columns
-    # Apply the results to the original data
-    training[, cols] <- vrb[[i]]$apply(as.formula(vrb[[i]]$inputs), training, vrb[[i]]$values)
+  cat("\nSteps:\n\n")
+  if(!is.null(x$steps)) {
+    for(i in seq_along(x$steps)) 
+      print(x$steps[[i]], num = num)
   }
-  rec$verbs <- vrb
-  if(keep_data) 
-    rec$data <- training
-  rec
-}
-
-apply_predictors <- function(rec, data, verbose = TRUE) {
-  preds <- rec$var_info$variable[rec$var_info$role == "predictor"]
-  data <- data[, preds, drop = FALSE]
-  vrb <- rec$verbs
-  for(i in seq(along = vrb)) {
-    if(verbose) cat(vrb[[i]]$verb, "\n")
-    cols <- vrb[[i]]$values$columns
-    data[, cols] <- vrb[[i]]$apply(vrb[[i]]$inputs, data, vrb[[i]]$values)
-  }
-  data
+  invisible(x)
 }
