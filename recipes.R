@@ -302,6 +302,89 @@ print.scale_step <- function(x, num = 3, ...) {
 }
 
 ###################################################################
+## Dummy variables
+
+###################################################################
+## Dummy variable functions
+
+step_dummy <- function(recipe, formula) {
+  ## add an option to exclude cols with a single level? 
+  ## add option to drop levels into "other" when freq is low
+  ## add option to encode missing as a level
+  col_names <- get_rhs_vars(formula, recipe$template) 
+  col_data <- filter(recipe$var_info, variable %in% col_names)
+  wrong_type <- col_data$type != "nominal"
+  if(any(wrong_type)) {
+    col_names <- col_data$variable[!wrong_type]
+    if(length(col_names) == 0)
+      stop("At least one nominal column should be in the formula")
+    warning(paste("Some columns cannot be made into dummy variables:",
+                  paste0(col_names, collapse = ", ")))
+  }
+  add_step(recipe, step_dummy_new(col_names))
+}
+
+
+step_dummy_new <- function(col_names = NULL,  
+                           formula = NULL,
+                           contrast = options("contrasts"),
+                           naming = function(var, lvl) paste(var, lvl, sep = "_"),
+                           levels = NULL) {
+  step(
+    subclass = "dummy", 
+    col_names = col_names,
+    formula = formula,
+    contrast = contrast,
+    naming = naming,
+    levels = levels
+  )
+}
+
+learn.dummy_step <- function(x, data, ...) {
+  levels <- lapply(data[, x$col_names], levels)
+  step_dummy_new(
+    col_names = x$col_names, 
+    formula = x$formula,
+    contrast = x$contrast,
+    naming = x$naming,
+    levels = levels
+  )
+}
+
+process.dummy_step <- function(x, data, ...) {
+  ## Maybe do this in C? 
+  
+  for(i in seq_along(x$col_names)) {
+    form <- as.formula(paste0("~", x$col_names[i]))
+    terms <- model.frame(
+      form, 
+      data = data, 
+      xlev = x$levels[[i]]
+    )
+    terms <- attr(terms, "terms")
+    indicators <- model.matrix(
+      object = terms, 
+      data = data,
+      contrasts.arg = x$contrast 
+    )
+    indicators <- indicators[, -1, drop = FALSE]
+    ## use backticks for nonstandard factor levels here 
+    used_lvl <- gsub(paste0("^", x$col_names[i]), "", colnames(indicators))
+    colnames(indicators) <- x$naming(x$col_names[i], used_lvl)
+    data <- cbind(data, as.data.frame(indicators))
+    data[, x$col_names[i]] <- NULL
+  }
+  as_tibble(data)
+}
+
+print.dummy_step <- function(x, num = 3, ...) {
+  cat("Dummy variables from ")
+  cat(term_num(x, num))
+  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  invisible(x)
+}
+
+###################################################################
 ## Processing and application functions
 
 
