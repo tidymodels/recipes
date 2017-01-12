@@ -45,3 +45,13 @@ standardized <- learn(standardized)
 standarized_filtered <- process(standardized, newdata = hpc_test)
 
 
+with_comps <- standardized %>% 
+  step_pca(formula = ~ Compounds + InputFields + Iterations + Hour + 
+             Protocol_H + Protocol_I + Protocol_J + Protocol_L + Protocol_M + 
+             Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + Day_Fri)
+
+with_comps <- learn(with_comps)
+standarized_pca <- process(with_comps, newdata = hpc_test)
+
+
+

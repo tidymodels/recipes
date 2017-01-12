@@ -215,7 +215,7 @@ form_printer <- function(x, wdth = 50, ...) {
   if(!is_formula(x)) 
     x <- as.formula(x)
   char_x <- deparse(f_rhs(x))
-  if(nchar(char_x) >= wdth) {
+  if(sum(nchar(char_x)) >= wdth) {
     split_up <- unlist(strsplit(char_x, split = " \\+ "))
     widths <- which(cumsum(nchar(split_up)) <= wdth)
     split_up <- if(length(widths) == length(split_up))
@@ -411,9 +411,59 @@ process.nzv_step <- function(x, data, ...) {
 }
 
 print.nzv_step <- function(x, form_width = 50, ...) {
-  cat("Near-zero variance filter on")
+  cat("Near-zero variance filter on ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
+  invisible(x)
+}
+
+###################################################################
+## PCA extraction
+
+step_pca_new <- function(formula = NULL,
+                         num  = 5, 
+                         options = list(center = TRUE, scale. = TRUE),
+                         object = NULL) {
+  
+  step(
+    subclass = "pca",
+    formula = formula, 
+    num = num,
+    object = object
+  )
+}
+
+step_pca <- function(recipe, formula) {
+  add_step(recipe, step_pca_new(formula))
+}
+
+learn.pca_step <- function(x, data, ...) {
+  col_names <- get_rhs_vars(x$formula, data) 
+  dat <- data[, col_names]
+  prc <- do.call("prcomp", c(list(x = dat), x$options))
+  
+  step_pca_new(
+    formula = x$formula,
+    num = min(x$num, ncol(dat)),
+    options = x$options,
+    object = prc
+  )
+}
+
+process.pca_step <- function(x, data, ...) {
+  pca_vars <- rownames(x$object$rotation)
+  comps <- predict(x$object, data[, pca_vars, drop = FALSE])
+  comps <- comps[, 1:x$num, drop = FALSE]
+  data <- cbind(data, comps)
+  data <- data[, !(colnames(data) %in% pca_vars), drop = FALSE]
+  as_tibble(data)
+}
+
+
+print.pca_step <- function(x, form_width = 50, ...) {
+  cat("PCA extraction with ")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$object)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
 
