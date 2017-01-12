@@ -304,9 +304,6 @@ print.scale_step <- function(x, num = 3, ...) {
 ###################################################################
 ## Dummy variables
 
-###################################################################
-## Dummy variable functions
-
 step_dummy <- function(recipe, formula) {
   ## add an option to exclude cols with a single level? 
   ## add option to drop levels into "other" when freq is low
@@ -341,7 +338,20 @@ step_dummy_new <- function(col_names = NULL,
 }
 
 learn.dummy_step <- function(x, data, ...) {
-  levels <- lapply(data[, x$col_names], levels)
+  ## I hate doing this but currently we are going to have 
+  ## to save the terms object form the original (= training) 
+  ## data
+  levels <- vector(mode = "list", length = length(x$col_names))
+  for(i in seq_along(x$col_names)) {
+    form <- as.formula(paste0("~", x$col_names[i]))
+    terms <- model.frame(
+      form, 
+      data = data, 
+      xlev = x$levels[[i]]
+    )
+    levels[[i]] <- attr(terms, "terms")
+  }
+  
   step_dummy_new(
     col_names = x$col_names, 
     formula = x$formula,
@@ -356,16 +366,10 @@ process.dummy_step <- function(x, data, ...) {
   
   for(i in seq_along(x$col_names)) {
     form <- as.formula(paste0("~", x$col_names[i]))
-    terms <- model.frame(
-      form, 
-      data = data, 
-      xlev = x$levels[[i]]
-    )
-    terms <- attr(terms, "terms")
     indicators <- model.matrix(
-      object = terms, 
-      data = data,
-      contrasts.arg = x$contrast 
+      object = x$levels[[i]], 
+      data = data
+      # contrasts.arg = x$contrast 
     )
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here 
