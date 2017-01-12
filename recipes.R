@@ -389,8 +389,53 @@ print.dummy_step <- function(x, num = 3, ...) {
 }
 
 ###################################################################
-## Processing and application functions
+## Near-zero variance filter
 
+###################################################################
+## Near-zero variable (nzv) filter
+
+step_nzv <- function(recipe, formula) {
+  col_names <- get_rhs_vars(formula, recipe$template) 
+  add_step(recipe, step_nzv_new(col_names))
+}
+
+step_nzv_new <- function(col_names = NULL,  
+                         formula = NULL,
+                         options = list(freqCut = 95 / 5, uniqueCut = 10, names = TRUE),
+                         removals = NULL) {
+  step(
+    subclass = "nzv", 
+    col_names = col_names,
+    options = options,
+    removals = removals
+  )
+}
+
+learn.nzv_step <- function(x, data, ...) {
+  data <- data[, x$col_names]
+  filter <- do.call("nearZeroVar", c(list(x = data), x$ions))
+  step_nzv_new(
+    col_names = x$col_names, 
+    options = x$options,
+    removals = filter
+  )
+}
+
+process.nzv_step <- function(x, data, ...) {
+  if(length(x$removals) > 0)
+    data <- data[, !(colnames(data) %in% x$removals)]
+  as_tibble(data)
+}
+
+print.nzv_step <- function(x, num = 3, ...) {
+  cat("Near-zero variance filter on")
+  cat(term_num(x, num))
+  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  invisible(x)
+}
+
+###################################################################
+## Processing and application functions
 
 learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   if(length(x$steps) == 0)
