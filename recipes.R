@@ -211,13 +211,17 @@ step <- function(subclass, ...) {
 learn   <- function(x, ...) UseMethod("learn")
 process <- function(x, ...) UseMethod("process")
 
-term_num <- function(x, num = 3, ...) {
-  p <- length(x$col_names)
-  if(p > 1) {
-    out <- if(p >= num) 
-      cat(paste0(x$col_names, collapse = ", ")) else 
-        cat(p, "terms")
-  } else out <- cat(" 1 term")
+form_printer <- function(x, wdth = 50, ...) {
+  if(!is_formula(x)) 
+    x <- as.formula(x)
+  char_x <- deparse(f_rhs(x))
+  if(nchar(char_x) >= wdth) {
+    split_up <- unlist(strsplit(char_x, split = " \\+ "))
+    widths <- which(cumsum(nchar(split_up)) <= wdth)
+    split_up <- if(length(widths) == length(split_up))
+      split_up else c(split_up[widths], "{more}")  
+    out <- paste0(split_up, collapse = " + ")
+  } else out <- char_x
   out
 }
 
@@ -234,36 +238,34 @@ term_num <- function(x, num = 3, ...) {
 ## original recipe.Add code to default formula to null and
 ## pick off all numeric variables
 step_center <- function(recipe, formula) {
-  # this should prob use get_rhs_{terms}
-  col_names <- get_rhs_vars(formula, recipe$template) 
-  add_step(recipe, step_center_new(col_names))
+  add_step(recipe, step_center_new(formula))
 }
 
 ## Initializes a new object
-step_center_new <- function(col_names = NULL, means = NULL) {
+step_center_new <- function(formula = NULL, means = NULL) {
   step(
     subclass = "center", 
-    col_names = col_names,
+    formula = formula,
     means = means
   )
 }
 
 learn.center_step <- function(x, data, ...) {
-  means <- unlist(lapply(data[, x$col_names], mean, na.rm = TRUE))
-  step_center_new(x$col_names, means)
+  col_names <- get_rhs_vars(x$formula, data) 
+  means <- unlist(lapply(data[, col_names], mean, na.rm = TRUE))
+  step_center_new(x$formula, means)
 }
-
 
 ## ?inact, process, other verb to avoid conflicts with base:::apply
 process.center_step <- function(x, data, ...) {
-  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$means, "-")
+  data[, names(x$means)] <- sweep(as.matrix(data[, names(x$means)]), 2, x$means, "-")
   as_tibble(data)
 }
 
-print.center_step <- function(x, num = 3, ...) {
+print.center_step <- function(x, form_width = 50, ...) {
   cat("Centering with ")
-  cat(term_num(x, num))
-  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
 
@@ -271,33 +273,32 @@ print.center_step <- function(x, num = 3, ...) {
 ## Scaling functions
 
 step_scale <- function(recipe, formula) {
-  # this should prob use get_rhs_{terms}
-  col_names <- get_rhs_vars(formula, recipe$template) 
-  add_step(recipe, step_scale_new(col_names))
+  add_step(recipe, step_scale_new(formula))
 }
 
-step_scale_new <- function(col_names = NULL, sds = NULL) {
+step_scale_new <- function(formula = NULL, sds = NULL) {
   step(
     subclass = "scale", 
-    col_names = col_names,
+    formula = formula,
     sds = sds
   )
 }
 
 learn.scale_step <- function(x, data, ...) {
-  sds <- unlist(lapply(data[, x$col_names], sd, na.rm = TRUE))
-  step_scale_new(x$col_names, sds)
+  col_names <- get_rhs_vars(x$formula, data) 
+  sds <- unlist(lapply(data[, col_names], sd, na.rm = TRUE))
+  step_scale_new(formula = x$formula, sds)
 }
 
 process.scale_step <- function(x, data, ...) {
-  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$sds, "-")
+  data[, names(x$sds)] <- sweep(as.matrix(data[, names(x$sds)]), 2, x$sds, "-")
   as_tibble(data)
 }
 
-print.scale_step <- function(x, num = 3, ...) {
+print.scale_step <- function(x, form_width = 50, ...) {
   cat("Scaling with ")
-  cat(term_num(x, num))
-  if(!is.null(x$sds)) cat(" (processed)\n") else cat("\n")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$sds)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
 
@@ -305,31 +306,16 @@ print.scale_step <- function(x, num = 3, ...) {
 ## Dummy variables
 
 step_dummy <- function(recipe, formula) {
-  ## add an option to exclude cols with a single level? 
-  ## add option to drop levels into "other" when freq is low
-  ## add option to encode missing as a level
-  col_names <- get_rhs_vars(formula, recipe$template) 
-  col_data <- filter(recipe$var_info, variable %in% col_names)
-  wrong_type <- col_data$type != "nominal"
-  if(any(wrong_type)) {
-    col_names <- col_data$variable[!wrong_type]
-    if(length(col_names) == 0)
-      stop("At least one nominal column should be in the formula")
-    warning(paste("Some columns cannot be made into dummy variables:",
-                  paste0(col_names, collapse = ", ")))
-  }
-  add_step(recipe, step_dummy_new(col_names))
+  add_step(recipe, step_dummy_new(formula))
 }
 
 
-step_dummy_new <- function(col_names = NULL,  
-                           formula = NULL,
+step_dummy_new <- function(formula = NULL,  
                            contrast = options("contrasts"),
                            naming = function(var, lvl) paste(var, lvl, sep = "_"),
                            levels = NULL) {
   step(
     subclass = "dummy", 
-    col_names = col_names,
     formula = formula,
     contrast = contrast,
     naming = naming,
@@ -338,12 +324,14 @@ step_dummy_new <- function(col_names = NULL,
 }
 
 learn.dummy_step <- function(x, data, ...) {
+  col_names <- get_rhs_vars(x$formula, data) 
   ## I hate doing this but currently we are going to have 
   ## to save the terms object form the original (= training) 
   ## data
-  levels <- vector(mode = "list", length = length(x$col_names))
-  for(i in seq_along(x$col_names)) {
-    form <- as.formula(paste0("~", x$col_names[i]))
+  levels <- vector(mode = "list", length = length(col_names))
+  names(levels) <- col_names
+  for(i in seq_along(col_names)) {
+    form <- as.formula(paste0("~", col_names[i]))
     terms <- model.frame(
       form, 
       data = data, 
@@ -353,7 +341,6 @@ learn.dummy_step <- function(x, data, ...) {
   }
   
   step_dummy_new(
-    col_names = x$col_names, 
     formula = x$formula,
     contrast = x$contrast,
     naming = x$naming,
@@ -363,9 +350,9 @@ learn.dummy_step <- function(x, data, ...) {
 
 process.dummy_step <- function(x, data, ...) {
   ## Maybe do this in C? 
-  
-  for(i in seq_along(x$col_names)) {
-    form <- as.formula(paste0("~", x$col_names[i]))
+  col_names <- names(x$levels)
+  for(i in seq_along(x$levels)) {
+    form <- as.formula(paste0("~", x$levels[i]))
     indicators <- model.matrix(
       object = x$levels[[i]], 
       data = data
@@ -373,49 +360,45 @@ process.dummy_step <- function(x, data, ...) {
     )
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here 
-    used_lvl <- gsub(paste0("^", x$col_names[i]), "", colnames(indicators))
-    colnames(indicators) <- x$naming(x$col_names[i], used_lvl)
+    used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
+    colnames(indicators) <- x$naming(col_names[i], used_lvl)
     data <- cbind(data, as.data.frame(indicators))
-    data[, x$col_names[i]] <- NULL
+    data[, col_names[i]] <- NULL
   }
   as_tibble(data)
 }
 
-print.dummy_step <- function(x, num = 3, ...) {
+print.dummy_step <- function(x, form_width = 50, ...) {
   cat("Dummy variables from ")
-  cat(term_num(x, num))
-  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$levels)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
-
-###################################################################
-## Near-zero variance filter
 
 ###################################################################
 ## Near-zero variable (nzv) filter
 
 step_nzv <- function(recipe, formula) {
-  col_names <- get_rhs_vars(formula, recipe$template) 
-  add_step(recipe, step_nzv_new(col_names))
+  add_step(recipe, step_nzv_new(formula))
 }
 
-step_nzv_new <- function(col_names = NULL,  
-                         formula = NULL,
+step_nzv_new <- function(formula = NULL,
                          options = list(freqCut = 95 / 5, uniqueCut = 10, names = TRUE),
                          removals = NULL) {
   step(
     subclass = "nzv", 
-    col_names = col_names,
+    formula = formula,
     options = options,
     removals = removals
   )
 }
 
 learn.nzv_step <- function(x, data, ...) {
-  data <- data[, x$col_names]
-  filter <- do.call("nearZeroVar", c(list(x = data), x$ions))
+  col_names <- get_rhs_vars(x$formula, data) 
+  data <- data[, col_names]
+  filter <- do.call("nearZeroVar", c(list(x = data), x$options))
   step_nzv_new(
-    col_names = x$col_names, 
+    formula = x$formula, 
     options = x$options,
     removals = filter
   )
@@ -427,10 +410,10 @@ process.nzv_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-print.nzv_step <- function(x, num = 3, ...) {
+print.nzv_step <- function(x, form_width = 50, ...) {
   cat("Near-zero variance filter on")
-  cat(term_num(x, num))
-  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
 
@@ -466,7 +449,7 @@ process.recipe <- function(x, newdata = x$template) {
   training
 }
 
-print.recipe <- function(x, num = 3) {
+print.recipe <- function(x, form_width = 50) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")
   cat("Data Recipe\n\n")
@@ -476,7 +459,7 @@ print.recipe <- function(x, num = 3) {
   cat("\nSteps:\n\n")
   if(!is.null(x$steps)) {
     for(i in seq_along(x$steps)) 
-      print(x$steps[[i]], num = num)
+      print(x$steps[[i]], form_width = form_width)
   }
   invisible(x)
 }

@@ -33,30 +33,15 @@ standardized <- raw %>%
 standardized <- learn(standardized)
 standarized_test <- process(standardized, newdata = hpc_test)
 
-## This doesn't currently work since, right now, the formula
-## is evaluated on the data _prior_ to the `learn` function. 
-
+## Until we have tags and formula functions like `numeric(.)`
 standardized <- standardized %>% 
-  step_nzv(formula = ~ Protocol + Compounds + InputFields + Iterations + NumPending + Hour + Day)
+  step_nzv(formula = ~ Compounds + InputFields + Iterations + NumPending + Hour + 
+             Protocol_C + Protocol_D + Protocol_E + Protocol_F + Protocol_G + 
+             Protocol_H + Protocol_I + Protocol_J + Protocol_K + Protocol_L + 
+             Protocol_M + Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + 
+             Day_Fri + Day_Sat + Day_Sun)
 
-## The effect is that variables that exist before `learn` may not
-## be there. 
-
-## If we wait until `learn` to evaluate the formula:
-## 
-## - Do we even need the data and `var_info` prior to that? 
-##   I don't think so. 
-## - We would have to check that the columns exist each time
-##   the calculations are executed
-## - We wouldn't;'t be able to pre-train the recipe. This may 
-##   be good to avoid leakage but also slows things down and 
-##   you might get errors during model training
-
-## If we keep things as-is in terms of the formulas: 
-## 
-## - We would need to keep and revaluate the formulas during
-##   learning anyway
-## - We could just ignore columns that are not there
-
+standardized <- learn(standardized)
+standarized_filtered <- process(standardized, newdata = hpc_test)
 
 
