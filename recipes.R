@@ -198,14 +198,6 @@ var_by_role <- function(rec, role = "predictor", returnform = TRUE) {
   res
 }
 
-###################################################################
-##
-
-# other words to replace "apply": process, engineer, 
-
-##   recipes(mtcars) %>% 
-##     step_center()
-
 ## Overall wrapper to make new step_X objects
 step <- function(subclass, ...) {
   structure(
@@ -215,6 +207,28 @@ step <- function(subclass, ...) {
     class = c(paste0(subclass, "_step"), "step")
   )
 }
+
+learn   <- function(x, ...) UseMethod("learn")
+process <- function(x, ...) UseMethod("process")
+
+term_num <- function(x, num = 3, ...) {
+  p <- length(x$col_names)
+  if(p > 1) {
+    out <- if(p >= num) 
+      cat(paste0(x$col_names, collapse = ", ")) else 
+        cat(p, "terms")
+  } else out <- cat(" 1 term")
+  out
+}
+
+###################################################################
+## Centering functions
+
+# other words to replace "apply": process, engineer, 
+
+##   recipes(mtcars) %>% 
+##     step_center()
+
 
 ## User called function that adds a classed object to the 
 ## original recipe.Add code to default formula to null and
@@ -234,28 +248,6 @@ step_center_new <- function(col_names = NULL, means = NULL) {
   )
 }
 
-step_scale <- function(recipe, formula) {
-  # this should prob use get_rhs_{terms}
-  col_names <- get_rhs_vars(formula, recipe$template) 
-  add_step(recipe, step_scale_new(col_names))
-}
-
-## Initializes a new object
-step_scale_new <- function(col_names = NULL, sds = NULL) {
-  step(
-    subclass = "scale", 
-    col_names = col_names,
-    sds = sds
-  )
-}
-
-###################################################################
-## Processing and application functions
-
-learn   <- function(x, ...) UseMethod("learn")
-process <- function(x, ...) UseMethod("process")
-
-
 learn.center_step <- function(x, data, ...) {
   means <- unlist(lapply(data[, x$col_names], mean, na.rm = TRUE))
   step_center_new(x$col_names, means)
@@ -268,16 +260,50 @@ process.center_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
+print.center_step <- function(x, num = 3, ...) {
+  cat("Centering with ")
+  cat(term_num(x, num))
+  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
+  invisible(x)
+}
+
+###################################################################
+## Scaling functions
+
+step_scale <- function(recipe, formula) {
+  # this should prob use get_rhs_{terms}
+  col_names <- get_rhs_vars(formula, recipe$template) 
+  add_step(recipe, step_scale_new(col_names))
+}
+
+step_scale_new <- function(col_names = NULL, sds = NULL) {
+  step(
+    subclass = "scale", 
+    col_names = col_names,
+    sds = sds
+  )
+}
+
 learn.scale_step <- function(x, data, ...) {
   sds <- unlist(lapply(data[, x$col_names], sd, na.rm = TRUE))
   step_scale_new(x$col_names, sds)
 }
 
-
 process.scale_step <- function(x, data, ...) {
-  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$sds, "/")
+  data[, x$col_names] <- sweep(as.matrix(data[, x$col_names]), 2, x$sds, "-")
   as_tibble(data)
 }
+
+print.scale_step <- function(x, num = 3, ...) {
+  cat("Scaling with ")
+  cat(term_num(x, num))
+  if(!is.null(x$sds)) cat(" (processed)\n") else cat("\n")
+  invisible(x)
+}
+
+###################################################################
+## Processing and application functions
+
 
 learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   if(length(x$steps) == 0)
@@ -308,33 +334,6 @@ process.recipe <- function(x, newdata = x$template) {
   training
 }
 
-
-###################################################################
-## Printing
-
-term_num <- function(x, num = 3, ...) {
-  p <- length(x$col_names)
-  if(p > 1) {
-    out <- if(p >= num) 
-      cat(paste0(x$col_names, collapse = ", ")) else 
-        cat(p, "terms")
-  } else out <- cat(" 1 term")
-  out
-}
-
-print.scale_step <- function(x, num = 3, ...) {
-  cat("Scaling with ")
-  cat(term_num(x, num))
-  if(!is.null(x$sds)) cat(" (processed)\n") else cat("\n")
-  invisible(x)
-}
-print.center_step <- function(x, num = 3, ...) {
-  cat("Centering with ")
-  cat(term_num(x, num))
-  if(!is.null(x$means)) cat(" (processed)\n") else cat("\n")
-  invisible(x)
-}
-
 print.recipe <- function(x, num = 3) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")
@@ -349,3 +348,4 @@ print.recipe <- function(x, num = 3) {
   }
   invisible(x)
 }
+
