@@ -54,4 +54,8 @@ with_comps <- learn(with_comps)
 standarized_pca <- process(with_comps, newdata = hpc_test)
 
 
+standardized <- raw %>% 
+  step_center(formula = num_vars) %>% 
+  step_scale(formula = num_vars) %>%
+  step_dummy(formula = ~ Protocol + Day)
 
