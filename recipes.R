@@ -16,6 +16,7 @@
 ##  - should be added: subset?
 
 
+
 recipe <- function(x, ...) UseMethod("recipe")
 
 recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
@@ -235,7 +236,7 @@ form_printer <- function(x, wdth = 50, ...) {
 
 
 ## User called function that adds a classed object to the 
-## original recipe.Add code to default formula to null and
+## original recipe. Add code to default formula to null and
 ## pick off all numeric variables
 step_center <- function(recipe, formula) {
   add_step(recipe, step_center_new(formula))
@@ -250,8 +251,16 @@ step_center_new <- function(formula = NULL, means = NULL) {
   )
 }
 
+## The learn functions have the and centering info but 
+## does not have access to the recipe so no var_info. 
+## We might want to check against the roles and types. 
+## That might not help us anyway since there are going
+## to be derived or removed predictors beyond the 
+## original set of columns. 
+
 learn.center_step <- function(x, data, ...) {
   col_names <- get_rhs_vars(x$formula, data) 
+  
   means <- unlist(lapply(data[, col_names], mean, na.rm = TRUE))
   step_center_new(x$formula, means)
 }
@@ -262,7 +271,7 @@ process.center_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-print.center_step <- function(x, form_width = 50, ...) {
+print.center_step <- function(x, form_width = 30, ...) {
   cat("Centering with ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
@@ -295,7 +304,7 @@ process.scale_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-print.scale_step <- function(x, form_width = 50, ...) {
+print.scale_step <- function(x, form_width = 30, ...) {
   cat("Scaling with ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$sds)) cat(" [learned]\n") else cat("\n")
@@ -312,7 +321,8 @@ step_dummy <- function(recipe, formula) {
 
 step_dummy_new <- function(formula = NULL,  
                            contrast = options("contrasts"),
-                           naming = function(var, lvl) paste(var, lvl, sep = "_"),
+                           naming = function(var, lvl) 
+                             paste(var, make.names(lvl), sep = "_"),
                            levels = NULL) {
   step(
     subclass = "dummy", 
@@ -368,7 +378,7 @@ process.dummy_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-print.dummy_step <- function(x, form_width = 50, ...) {
+print.dummy_step <- function(x, form_width = 30, ...) {
   cat("Dummy variables from ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$levels)) cat(" [learned]\n") else cat("\n")
@@ -410,7 +420,7 @@ process.nzv_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-print.nzv_step <- function(x, form_width = 50, ...) {
+print.nzv_step <- function(x, form_width = 30, ...) {
   cat("Near-zero variance filter on ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
@@ -460,7 +470,7 @@ process.pca_step <- function(x, data, ...) {
 }
 
 
-print.pca_step <- function(x, form_width = 50, ...) {
+print.pca_step <- function(x, form_width = 30, ...) {
   cat("PCA extraction with ")
   cat(form_printer(x, wdth = form_width))
   if(!is.null(x$object)) cat(" [learned]\n") else cat("\n")
@@ -474,8 +484,9 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   if(length(x$steps) == 0)
     stop("Add some steps")
   
-  preds <- x$var_info$variable[x$var_info$role == "predictor"]
-  training <- as_tibble(training[, preds, drop = FALSE])
+  training <- if(!is_tibble(training)) 
+    as_tibble(training[, x$var_info$variable, drop = FALSE]) else 
+      training[, x$var_info$variable]
   
   for(i in seq(along = x$steps)) {
     if(verbose) cat("step", i, "\n")
@@ -490,16 +501,17 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
 }
 
 process.recipe <- function(x, newdata = x$template) {
-  preds <- x$var_info$variable[x$var_info$role == "predictor"]
-  training <- as_tibble(newdata[, preds, drop = FALSE])
+  newdata <- if(!is_tibble(newdata)) 
+   as_tibble(newdata[, x$var_info$variable, drop = FALSE]) else 
+     newdata[, x$var_info$variable]
   
   for(i in seq(along = x$steps)) {
-    training <- process(x$steps[[i]], data = training)
+    newdata <- process(x$steps[[i]], data = newdata)
   }
-  training
+  newdata
 }
 
-print.recipe <- function(x, form_width = 50) {
+print.recipe <- function(x, form_width = 30) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")
   cat("Data Recipe\n\n")
