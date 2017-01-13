@@ -428,6 +428,43 @@ print.nzv_step <- function(x, form_width = 30, ...) {
 }
 
 ###################################################################
+## Downsampling - NOTE this probably should be excluded from the 
+## recipes since there are a lot of cases where you do not want
+## to apply this step to the test set.
+
+step_downsample <- function(recipe, formula) {
+  add_step(recipe, step_downsample_new(formula))
+}
+
+step_downsample_new <- function(formula = NULL, frequencies = NULL) {
+  step(
+    subclass = "downsample", 
+    formula = formula,
+    frequencies = frequencies
+  )
+}
+
+learn.downsample_step <- function(x, data, ...) {
+  class_name <- get_rhs_vars(x$formula, data)
+  frequencies <- table(data[, class_name])
+  step_downsample_new(formula = x$formula, frequencies = frequencies)
+}
+
+process.downsample_step <- function(x, data, ...) {
+  class_name <- get_rhs_vars(x$formula, data)
+  group_by_(data, .dots = class_name) %>% sample_n(size = min(x$frequencies))
+}
+
+print.downsample_step <- function(x, form_width = 30, ...) {
+  cat("Downsampling with ")
+  cat(form_printer(x, wdth = form_width))
+  if(!is.null(x$sds)) cat(" [learned]\n") else cat("\n")
+  invisible(x)
+}
+
+
+
+###################################################################
 ## PCA extraction
 
 step_pca_new <- function(formula = NULL,
