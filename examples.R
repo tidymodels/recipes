@@ -26,16 +26,16 @@ hpc_test  <- schedulingData[-in_train,]
 raw <- recipe(Class ~ ., data = hpc_train)
 
 standardized <- raw %>% 
-  step_center(formula = num_vars) %>% 
-  step_scale(formula = num_vars) %>%
-  step_dummy(formula = ~ Protocol + Day)
+  step_center(num_vars) %>% 
+  step_scale(num_vars) %>%
+  step_dummy(~ Protocol + Day)
 
 standardized <- learn(standardized)
 standarized_test <- process(standardized, newdata = hpc_test)
 
 ## Until we have tags and formula functions like `numeric(.)`
 standardized <- standardized %>% 
-  step_nzv(formula = ~ Compounds + InputFields + Iterations + NumPending + Hour + 
+  step_nzv(~ Compounds + InputFields + Iterations + NumPending + Hour + 
              Protocol_C + Protocol_D + Protocol_E + Protocol_F + Protocol_G + 
              Protocol_H + Protocol_I + Protocol_J + Protocol_K + Protocol_L + 
              Protocol_M + Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + 
@@ -46,7 +46,7 @@ standarized_filtered <- process(standardized, newdata = hpc_test)
 
 
 with_comps <- standardized %>% 
-  step_pca(formula = ~ Compounds + InputFields + Iterations + Hour + 
+  step_pca(~ Compounds + InputFields + Iterations + Hour + 
              Protocol_H + Protocol_I + Protocol_J + Protocol_L + Protocol_M + 
              Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + Day_Fri)
 
@@ -55,7 +55,7 @@ standarized_pca <- process(with_comps, newdata = hpc_test)
 
 
 standardized <- raw %>% 
-  step_center(formula = num_vars) %>% 
-  step_scale(formula = num_vars) %>%
-  step_dummy(formula = ~ Protocol + Day)
+  step_center(num_vars) %>% 
+  step_scale(num_vars) %>%
+  step_dummy(~ Protocol + Day)
 

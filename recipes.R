@@ -43,9 +43,11 @@ recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
   
   ## Add types
   var_info <- get_types(data) %>% full_join(var_info)
+  var_info$source <- "original"
   
   ## Return final object of class `recipe`
   out <- list(var_info = var_info, 
+              term_info = var_info,
               steps = NULL,
               template = data)
   class(out) <- "recipe"
@@ -226,6 +228,12 @@ form_printer <- function(x, wdth = 50, ...) {
   out
 }
 
+terms.recipe <- function(x, ...) x$term_info
+
+filter_terms <- function(x, ...) UseMethod("filter_terms")
+filter_terms.formula <- function(formula, data, ...)
+  get_rhs_vars(formula, data) 
+
 ###################################################################
 ## Centering functions
 
@@ -236,17 +244,16 @@ form_printer <- function(x, wdth = 50, ...) {
 
 
 ## User called function that adds a classed object to the 
-## original recipe. Add code to default formula to null and
-## pick off all numeric variables
-step_center <- function(recipe, formula) {
-  add_step(recipe, step_center_new(formula))
+## original recipe. 
+step_center <- function(recipe, terms) {
+  add_step(recipe, step_center_new(terms))
 }
 
 ## Initializes a new object
-step_center_new <- function(formula = NULL, means = NULL) {
+step_center_new <- function(terms = NULL, means = NULL) {
   step(
     subclass = "center", 
-    formula = formula,
+    terms = terms,
     means = means
   )
 }
@@ -259,10 +266,10 @@ step_center_new <- function(formula = NULL, means = NULL) {
 ## original set of columns. 
 
 learn.center_step <- function(x, data, ...) {
-  col_names <- get_rhs_vars(x$formula, data) 
+  col_names <- filter_terms(x$terms, data) 
   
   means <- unlist(lapply(data[, col_names], mean, na.rm = TRUE))
-  step_center_new(x$formula, means)
+  step_center_new(x$terms, means)
 }
 
 ## ?inact, process, other verb to avoid conflicts with base:::apply
@@ -281,22 +288,22 @@ print.center_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Scaling functions
 
-step_scale <- function(recipe, formula) {
-  add_step(recipe, step_scale_new(formula))
+step_scale <- function(recipe, terms) {
+  add_step(recipe, step_scale_new(terms))
 }
 
-step_scale_new <- function(formula = NULL, sds = NULL) {
+step_scale_new <- function(terms = NULL, sds = NULL) {
   step(
     subclass = "scale", 
-    formula = formula,
+    terms = terms,
     sds = sds
   )
 }
 
 learn.scale_step <- function(x, data, ...) {
-  col_names <- get_rhs_vars(x$formula, data) 
+  col_names <- filter_terms(x$terms, data) 
   sds <- unlist(lapply(data[, col_names], sd, na.rm = TRUE))
-  step_scale_new(formula = x$formula, sds)
+  step_scale_new(terms = x$terms, sds)
 }
 
 process.scale_step <- function(x, data, ...) {
@@ -314,19 +321,19 @@ print.scale_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Dummy variables
 
-step_dummy <- function(recipe, formula) {
-  add_step(recipe, step_dummy_new(formula))
+step_dummy <- function(recipe, terms) {
+  add_step(recipe, step_dummy_new(terms))
 }
 
 
-step_dummy_new <- function(formula = NULL,  
+step_dummy_new <- function(terms = NULL,  
                            contrast = options("contrasts"),
                            naming = function(var, lvl) 
                              paste(var, make.names(lvl), sep = "_"),
                            levels = NULL) {
   step(
     subclass = "dummy", 
-    formula = formula,
+    terms = terms,
     contrast = contrast,
     naming = naming,
     levels = levels
@@ -334,7 +341,8 @@ step_dummy_new <- function(formula = NULL,
 }
 
 learn.dummy_step <- function(x, data, ...) {
-  col_names <- get_rhs_vars(x$formula, data) 
+  col_names <- filter_terms(x$terms, data) 
+  
   ## I hate doing this but currently we are going to have 
   ## to save the terms object form the original (= training) 
   ## data
@@ -351,7 +359,7 @@ learn.dummy_step <- function(x, data, ...) {
   }
   
   step_dummy_new(
-    formula = x$formula,
+    terms = x$terms,
     contrast = x$contrast,
     naming = x$naming,
     levels = levels
@@ -388,27 +396,28 @@ print.dummy_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Near-zero variable (nzv) filter
 
-step_nzv <- function(recipe, formula) {
-  add_step(recipe, step_nzv_new(formula))
+step_nzv <- function(recipe, terms) {
+  add_step(recipe, step_nzv_new(terms))
 }
 
-step_nzv_new <- function(formula = NULL,
+step_nzv_new <- function(terms = NULL,
                          options = list(freqCut = 95 / 5, uniqueCut = 10, names = TRUE),
                          removals = NULL) {
   step(
     subclass = "nzv", 
-    formula = formula,
+    terms = terms,
     options = options,
     removals = removals
   )
 }
 
 learn.nzv_step <- function(x, data, ...) {
-  col_names <- get_rhs_vars(x$formula, data) 
+  col_names <- filter_terms(x$terms, data) 
+  
   data <- data[, col_names]
   filter <- do.call("nearZeroVar", c(list(x = data), x$options))
   step_nzv_new(
-    formula = x$formula, 
+    terms = x$terms, 
     options = x$options,
     removals = filter
   )
@@ -432,22 +441,22 @@ print.nzv_step <- function(x, form_width = 30, ...) {
 ## recipes since there are a lot of cases where you do not want
 ## to apply this step to the test set.
 
-step_downsample <- function(recipe, formula) {
-  add_step(recipe, step_downsample_new(formula))
+step_downsample <- function(recipe, terms) {
+  add_step(recipe, step_downsample_new(terms))
 }
 
-step_downsample_new <- function(formula = NULL, frequencies = NULL) {
+step_downsample_new <- function(terms = NULL, frequencies = NULL) {
   step(
     subclass = "downsample", 
-    formula = formula,
+    terms = terms,
     frequencies = frequencies
   )
 }
 
 learn.downsample_step <- function(x, data, ...) {
-  class_name <- get_rhs_vars(x$formula, data)
+  col_names <- filter_terms(x$terms, data) 
   frequencies <- table(data[, class_name])
-  step_downsample_new(formula = x$formula, frequencies = frequencies)
+  step_downsample_new(terms = x$terms, frequencies = frequencies)
 }
 
 process.downsample_step <- function(x, data, ...) {
@@ -462,35 +471,34 @@ print.downsample_step <- function(x, form_width = 30, ...) {
   invisible(x)
 }
 
-
-
 ###################################################################
 ## PCA extraction
 
-step_pca_new <- function(formula = NULL,
+step_pca_new <- function(terms = NULL,
                          num  = 5, 
                          options = list(center = TRUE, scale. = TRUE),
                          object = NULL) {
   
   step(
     subclass = "pca",
-    formula = formula, 
+    terms = terms, 
     num = num,
     object = object
   )
 }
 
-step_pca <- function(recipe, formula) {
-  add_step(recipe, step_pca_new(formula))
+step_pca <- function(recipe, terms) {
+  add_step(recipe, step_pca_new(terms))
 }
 
 learn.pca_step <- function(x, data, ...) {
-  col_names <- get_rhs_vars(x$formula, data) 
+  col_names <- filter_terms(x$terms, data) 
+  
   dat <- data[, col_names]
   prc <- do.call("prcomp", c(list(x = dat), x$options))
   
   step_pca_new(
-    formula = x$formula,
+    terms = x$terms,
     num = min(x$num, ncol(dat)),
     options = x$options,
     object = prc
@@ -524,7 +532,7 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   training <- if(!is_tibble(training)) 
     as_tibble(training[, x$var_info$variable, drop = FALSE]) else 
       training[, x$var_info$variable]
-  
+
   for(i in seq(along = x$steps)) {
     if(verbose) cat("step", i, "\n")
     
@@ -533,6 +541,9 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
     
     x$steps[[i]] <- learn(x$steps[[i]], data = training)
     training <- process(x$steps[[i]], data = training)
+    x$term_info <- left_join(get_types(training), x$term_info)
+    x$term_info$source[is.na(x$term_info$source)] <- "derived"
+    print(as.data.frame(x$term_info))
   }
   x
 }
