@@ -245,15 +245,16 @@ filter_terms.formula <- function(formula, data, ...)
 
 ## User called function that adds a classed object to the 
 ## original recipe. 
-step_center <- function(recipe, terms) {
-  add_step(recipe, step_center_new(terms))
+step_center <- function(recipe, terms, role = NA) {
+  add_step(recipe, step_center_new(terms = terms, role = role))
 }
 
 ## Initializes a new object
-step_center_new <- function(terms = NULL, means = NULL) {
+step_center_new <- function(terms = NULL, role = NA, means = NULL) {
   step(
     subclass = "center", 
     terms = terms,
+    role = role,
     means = means
   )
 }
@@ -269,7 +270,7 @@ learn.center_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
   means <- unlist(lapply(data[, col_names], mean, na.rm = TRUE))
-  step_center_new(x$terms, means)
+  step_center_new(terms = x$terms, role = x$role, means = means)
 }
 
 ## ?inact, process, other verb to avoid conflicts with base:::apply
@@ -288,14 +289,15 @@ print.center_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Scaling functions
 
-step_scale <- function(recipe, terms) {
-  add_step(recipe, step_scale_new(terms))
+step_scale <- function(recipe, terms, role = NA) {
+  add_step(recipe, step_scale_new(terms = terms, role = role))
 }
 
-step_scale_new <- function(terms = NULL, sds = NULL) {
+step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
   step(
     subclass = "scale", 
     terms = terms,
+    role = role,
     sds = sds
   )
 }
@@ -303,7 +305,7 @@ step_scale_new <- function(terms = NULL, sds = NULL) {
 learn.scale_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   sds <- unlist(lapply(data[, col_names], sd, na.rm = TRUE))
-  step_scale_new(terms = x$terms, sds)
+  step_scale_new(terms = x$terms, role = x$role, sds)
 }
 
 process.scale_step <- function(x, data, ...) {
@@ -321,12 +323,13 @@ print.scale_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Dummy variables
 
-step_dummy <- function(recipe, terms) {
-  add_step(recipe, step_dummy_new(terms))
+step_dummy <- function(recipe, terms, role = "predictor") {
+  add_step(recipe, step_dummy_new(terms = terms, role = role))
 }
 
 
-step_dummy_new <- function(terms = NULL,  
+step_dummy_new <- function(terms = NULL, 
+                           role = "predictor", 
                            contrast = options("contrasts"),
                            naming = function(var, lvl) 
                              paste(var, make.names(lvl), sep = "_"),
@@ -334,6 +337,7 @@ step_dummy_new <- function(terms = NULL,
   step(
     subclass = "dummy", 
     terms = terms,
+    role = role,
     contrast = contrast,
     naming = naming,
     levels = levels
@@ -360,6 +364,7 @@ learn.dummy_step <- function(x, data, ...) {
   
   step_dummy_new(
     terms = x$terms,
+    role = x$role,
     contrast = x$contrast,
     naming = x$naming,
     levels = levels
@@ -396,16 +401,18 @@ print.dummy_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## Near-zero variable (nzv) filter
 
-step_nzv <- function(recipe, terms) {
-  add_step(recipe, step_nzv_new(terms))
+step_nzv <- function(recipe, terms, role = NA) {
+  add_step(recipe, step_nzv_new(terms = terms, role = role))
 }
 
-step_nzv_new <- function(terms = NULL,
+step_nzv_new <- function(terms = NULL, 
+                         role = NA,
                          options = list(freqCut = 95 / 5, uniqueCut = 10, names = TRUE),
                          removals = NULL) {
   step(
     subclass = "nzv", 
     terms = terms,
+    role = role,
     options = options,
     removals = removals
   )
@@ -418,6 +425,7 @@ learn.nzv_step <- function(x, data, ...) {
   filter <- do.call("nearZeroVar", c(list(x = data), x$options))
   step_nzv_new(
     terms = x$terms, 
+    role = x$role,
     options = x$options,
     removals = filter
   )
@@ -441,14 +449,15 @@ print.nzv_step <- function(x, form_width = 30, ...) {
 ## recipes since there are a lot of cases where you do not want
 ## to apply this step to the test set.
 
-step_downsample <- function(recipe, terms) {
-  add_step(recipe, step_downsample_new(terms))
+step_downsample <- function(recipe, terms, role = NA) {
+  add_step(recipe, step_downsample_new(terms = terms, role = role))
 }
 
-step_downsample_new <- function(terms = NULL, frequencies = NULL) {
+step_downsample_new <- function(terms = NULL, role = NA, frequencies = NULL) {
   step(
     subclass = "downsample", 
     terms = terms,
+    role = role,
     frequencies = frequencies
   )
 }
@@ -456,7 +465,7 @@ step_downsample_new <- function(terms = NULL, frequencies = NULL) {
 learn.downsample_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   frequencies <- table(data[, class_name])
-  step_downsample_new(terms = x$terms, frequencies = frequencies)
+  step_downsample_new(terms = x$terms, role = x$role, frequencies = frequencies)
 }
 
 process.downsample_step <- function(x, data, ...) {
@@ -474,21 +483,23 @@ print.downsample_step <- function(x, form_width = 30, ...) {
 ###################################################################
 ## PCA extraction
 
-step_pca_new <- function(terms = NULL,
+step_pca_new <- function(terms = NULL, 
+                         role = "predictor",
                          num  = 5, 
                          options = list(center = TRUE, scale. = TRUE),
                          object = NULL) {
   
   step(
     subclass = "pca",
-    terms = terms, 
+    terms = terms,
+    role = role, 
     num = num,
     object = object
   )
 }
 
-step_pca <- function(recipe, terms) {
-  add_step(recipe, step_pca_new(terms))
+step_pca <- function(recipe, terms, role = "predictor") {
+  add_step(recipe, step_pca_new(terms = terms, role = role))
 }
 
 learn.pca_step <- function(x, data, ...) {
@@ -499,6 +510,7 @@ learn.pca_step <- function(x, data, ...) {
   
   step_pca_new(
     terms = x$terms,
+    role = x$role,
     num = min(x$num, ncol(dat)),
     options = x$options,
     object = prc
@@ -542,8 +554,12 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
     x$steps[[i]] <- learn(x$steps[[i]], data = training)
     training <- process(x$steps[[i]], data = training)
     x$term_info <- left_join(get_types(training), x$term_info)
+    
+    ## Update the roles and the term source
+    ## These next two steps needs to be smarter to find diffs
+    if(!is.na(x$steps[[i]]$role))
+      x$term_info$role[is.na(x$term_info$role)] <- x$steps[[i]]$role
     x$term_info$source[is.na(x$term_info$source)] <- "derived"
-    print(as.data.frame(x$term_info))
   }
   x
 }
