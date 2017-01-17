@@ -5,6 +5,7 @@ filter_terms <- function(x, ...) UseMethod("filter_terms")
 
 
 ## Buckets variables into discrete, mutally exclusive types
+#' @importFrom tibble tibble
 get_types <- function(x) {
   type_list <- list(
     nominal = c("character", "factor", "ordered"),
@@ -41,6 +42,7 @@ check_outcomes_same_type <- function(x) x
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
 
+#' @importFrom lazyeval f_lhs
 get_lhs_vars <- function(formula, data) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
@@ -96,6 +98,7 @@ step <- function(subclass, ...) {
   )
 }
 
+#' @importFrom lazyeval f_rhs
 form_printer <- function(x, wdth = 50, ...) {
   if(!is_formula(x))
     x <- as.formula(x)

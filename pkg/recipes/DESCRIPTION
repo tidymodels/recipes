@@ -11,6 +11,7 @@ Depends:
 Imports:
     tibble,
     dplyr,
+    lazyeval,
     stats
 License: GPL-2
 Encoding: UTF-8

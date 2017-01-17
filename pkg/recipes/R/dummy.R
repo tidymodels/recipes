@@ -40,7 +40,7 @@ step_dummy_new <- function(terms = NULL,
 #' For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}). 
 #' 
 #' @param x a \code{step_dummy} object that specifies which columns will be converted to dummy variables.
-#' @param data a tibble or data frame that contains the training set. These data will be used to define the centering for all future data that this step will be applied.
+#' @param data a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{step_dummy}. 
 #' @author Max Kuhn
