@@ -7,7 +7,7 @@
 \method{process}{dummy_step}(x, data, ...)
 }
 \arguments{
-\item{x}{A trained \code{step_dummy} object.}
+\item{x}{A trained \code{dummy_step} object.}
 
 \item{data}{A tibble or data frame that has nominal variables that will be converted to dumy variables.}
 
@@ -17,13 +17,13 @@
 A tibble of processed data.
 }
 \description{
-For a trained \code{step_dummy} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s).
+For a trained \code{dummy_step} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s).
 }
 \author{
 Max Kuhn
 }
 \concept{
-preprocessing dummy_variables model_specification
+preprocessing dummy_variables model_specification dummy_variables variable_encodings
 }
 \keyword{datagen}
 

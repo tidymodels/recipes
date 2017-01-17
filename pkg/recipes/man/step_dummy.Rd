@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\title{Declare which variables should be converted to dummy variables.}
+\title{Declare Which Variables Should Be Converted to Dummy Variables.}
 \usage{
 step_dummy(recipe, terms, role = "predictor")
 }
@@ -14,7 +14,7 @@ step_dummy(recipe, terms, role = "predictor")
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.}
 }
 \value{
-An object of class \code{step_dummy}.
+An object of class \code{dummy_step}.
 }
 \description{
 This function is a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
@@ -23,7 +23,7 @@ This function is a \emph{specification} of a recipe step that will convert nomin
 Max Kuhn
 }
 \concept{
-preprocessing dummy_variables model_specification
+preprocessing dummy_variables model_specification dummy_variables variable_encodings
 }
 \keyword{datagen}
 

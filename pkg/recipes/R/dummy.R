@@ -5,7 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model. 
-#' @return An object of class \code{step_dummy}. 
+#' @return An object of class \code{dummy_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
@@ -39,10 +39,10 @@ step_dummy_new <- function(terms = NULL,
 #' 
 #' For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}). 
 #' 
-#' @param x a \code{step_dummy} object that specifies which columns will be converted to dummy variables.
+#' @param x a \code{dummy_step} object that specifies which columns will be converted to dummy variables.
 #' @param data a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{step_dummy}. 
+#' @return An object of class \code{dummy_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
@@ -78,9 +78,9 @@ learn.dummy_step <- function(x, data, ...) {
 
 #' Generate dummy variables in a data set.
 #' 
-#' For a trained \code{step_dummy} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
+#' For a trained \code{dummy_step} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
 #' 
-#' @param x A trained \code{step_dummy} object.
+#' @param x A trained \code{dummy_step} object.
 #' @param data A tibble or data frame that has nominal variables that will be converted to dumy variables.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 

@@ -2,19 +2,19 @@
 % Please edit documentation in R/dummy.R
 \name{learn.dummy_step}
 \alias{learn.dummy_step}
-\title{Estimate dummy variable encoding from a training set.}
+\title{Estimate Dummy Variable Encoding from a Training Set.}
 \usage{
 \method{learn}{dummy_step}(x, data, ...)
 }
 \arguments{
-\item{x}{a \code{step_dummy} object that specifies which columns will be converted to dummy variables.}
+\item{x}{a \code{dummy_step} object that specifies which columns will be converted to dummy variables.}
 
-\item{data}{a tibble or data frame that contains the training set. These data will be used to define the centering for all future data that this step will be applied.}
+\item{data}{a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{step_dummy}.
+An object of class \code{dummy_step}.
 }
 \description{
 For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}).
@@ -23,7 +23,7 @@ For a training set of data, this function enumerates the possible values of the 
 Max Kuhn
 }
 \concept{
-preprocessing dummy_variables model_specification
+preprocessing dummy_variables model_specification dummy_variables variable_encodings
 }
 \keyword{datagen}
 
