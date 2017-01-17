@@ -1,4 +1,4 @@
-#' Declare which variables should be converted to dummy variables.
+#' Declare Which Variables Should Be Converted to Dummy Variables.
 #' 
 #' This function is a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 #' 
@@ -8,7 +8,7 @@
 #' @return An object of class \code{step_dummy}. 
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification
+#' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 
 step_dummy <- function(recipe, terms, role = "predictor") {
@@ -35,7 +35,7 @@ step_dummy_new <- function(terms = NULL,
 }
 
 
-#' Estimate dummy variable encoding from a training set.
+#' Estimate Dummy Variable Encoding from a Training Set.
 #' 
 #' For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}). 
 #' 
@@ -45,7 +45,7 @@ step_dummy_new <- function(terms = NULL,
 #' @return An object of class \code{step_dummy}. 
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification
+#' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 #' @importFrom stats as.formula model.frame
 
@@ -86,7 +86,7 @@ learn.dummy_step <- function(x, data, ...) {
 #' @return A tibble of processed data. 
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification
+#' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 #' @importFrom stats as.formula model.matrix
 #' @importFrom tibble as_tibble
