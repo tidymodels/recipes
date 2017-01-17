@@ -4,7 +4,8 @@
 \alias{step_nzv}
 \title{Declare Which Variables Are Used Near-Zero Variance Filter.}
 \usage{
-step_nzv(recipe, terms, role = NA)
+step_nzv(recipe, terms, role = NA, options = list(freqCut = 95/5, uniqueCut
+  = 10), removals = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -12,6 +13,10 @@ step_nzv(recipe, terms, role = NA)
 \item{terms}{A representation of the variables or terms that will evaluated by the filtering process.}
 
 \item{role}{Not used by this step since no new variables are created.}
+
+\item{options}{A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list.}
+
+\item{removals}{A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.nzv_step}}.}
 }
 \value{
 An object of class \code{nzv_step}.

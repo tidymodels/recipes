@@ -5,25 +5,37 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model. 
+#' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}
+#' @param naming A function that defines the naming convention for new binary columns. See Details below. 
+#' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.dummy_step}}.
 #' @return An object of class \code{dummy_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 
-step_dummy <- function(recipe, terms, role = "predictor") {
-  add_step(recipe, step_dummy_new(terms = terms, role = role))
+step_dummy <- function(recipe, 
+                       terms, 
+                       role = "predictor", 
+                       contrast = options("contrasts"),
+                       naming = function(var, lvl) 
+                         paste(var, make.names(lvl), sep = "_"),
+                       levels = NULL) {
+  add_step(
+    recipe, 
+    step_dummy_new(
+      terms = terms, 
+      role = role,
+      contrast = contrast, 
+      naming = naming, 
+      levels = levels))
 }
 
-## This is the function that instantiates a new dummy variable object. 
-## The `naming`` function defines how the novel terms will be named. In this function `var` is the name of the original variable that created the dummy variables and `lvl` is a vector of levels for the factor. 
-## The `levels` argument should be a list. Each element in the list contains the data required to produce the dummy variables (such as the possible values). 
 step_dummy_new <- function(terms = NULL, 
-                           role = "predictor", 
-                           contrast = options("contrasts"),
-                           naming = function(var, lvl) 
-                             paste(var, make.names(lvl), sep = "_"),
-                           levels = NULL) {
+                           role = "predictor",
+                           contrast = contrast, 
+                           naming = naming, 
+                           levels = levels) {
   step(
     subclass = "dummy", 
     terms = terms,

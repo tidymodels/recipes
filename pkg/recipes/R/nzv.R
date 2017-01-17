@@ -5,6 +5,8 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will evaluated by the filtering process.
 #' @param role Not used by this step since no new variables are created.
+#' @param options A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list. 
+#' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.nzv_step}}. 
 #' @return An object of class \code{nzv_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
@@ -12,13 +14,25 @@
 #' @export
 #' 
 
-step_nzv <- function(recipe, terms, role = NA) {
-  add_step(recipe, step_nzv_new(terms = terms, role = role))
+step_nzv <- function(recipe, 
+                     terms, 
+                     role = NA,
+                     options = list(freqCut = 95 / 5, uniqueCut = 10),
+                     removals = NULL) {
+  add_step(
+    recipe, 
+    step_nzv_new(
+      terms = terms, 
+      role = role,
+      options = options,
+      removals = removals
+    )
+  )
 }
 
 step_nzv_new <- function(terms = NULL, 
                          role = NA,
-                         options = list(freqCut = 95 / 5, uniqueCut = 10, names = TRUE),
+                         options = NULL,
                          removals = NULL) {
   step(
     subclass = "nzv", 
@@ -47,7 +61,7 @@ learn.nzv_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
   data <- data[, col_names]
-  filter <- do.call("nearZeroVar", c(list(x = data), x$options))
+  filter <- do.call("nearZeroVar", c(list(x = data, names = TRUE), x$options))
   step_nzv_new(
     terms = x$terms, 
     role = x$role,

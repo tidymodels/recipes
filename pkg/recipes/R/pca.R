@@ -5,20 +5,37 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to compute the components.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model. 
+#' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
+#' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).
+#' @param object The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.
 #' @return An object of class \code{pca_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
 #' @export
 
-step_pca <- function(recipe, terms, role = "predictor") {
-  add_step(recipe, step_pca_new(terms = terms, role = role))
+step_pca <- function(recipe, 
+                     terms, 
+                     role = "predictor",
+                     num  = 5, 
+                     options = list(center = TRUE, scale. = TRUE),
+                     object = NULL) {
+  add_step(
+    recipe, 
+    step_pca_new(
+      terms = terms, 
+      role = role, 
+      num = num,
+      options = options,
+      object = object
+    )
+  )
 }
 
 step_pca_new <- function(terms = NULL, 
                          role = "predictor",
-                         num  = 5, 
-                         options = list(center = TRUE, scale. = TRUE),
+                         num  = NULL, 
+                         options = NULL,
                          object = NULL) {
   
   step(
@@ -26,6 +43,7 @@ step_pca_new <- function(terms = NULL,
     terms = terms,
     role = role, 
     num = num,
+    options = options,
     object = object
   )
 }

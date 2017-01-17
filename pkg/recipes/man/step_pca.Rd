@@ -4,7 +4,8 @@
 \alias{step_pca}
 \title{Declare Which Variables Are Used for PCA Signal Extraction.}
 \usage{
-step_pca(recipe, terms, role = "predictor")
+step_pca(recipe, terms, role = "predictor", num = 5, options = list(center
+  = TRUE, scale. = TRUE), object = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -12,6 +13,12 @@ step_pca(recipe, terms, role = "predictor")
 \item{terms}{A representation of the variables or terms that will be used to compute the components.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.}
+
+\item{num}{The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
+
+\item{options}{A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).}
+
+\item{object}{The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.}
 }
 \value{
 An object of class \code{pca_step}.

@@ -1,7 +1,7 @@
 ## User called function that adds a classed object to the 
 ## original recipe. 
-step_center <- function(recipe, terms, role = NA) {
-  add_step(recipe, step_center_new(terms = terms, role = role))
+step_center <- function(recipe, terms, role = NA, means = NULL) {
+  add_step(recipe, step_center_new(terms = terms, role = role, means = means))
 }
 
 ## Initializes a new object
@@ -28,7 +28,6 @@ learn.center_step <- function(x, data, ...) {
   step_center_new(terms = x$terms, role = x$role, means = means)
 }
 
-## ?inact, process, other verb to avoid conflicts with base:::apply
 process.center_step <- function(x, data, ...) {
   data[, names(x$means)] <- sweep(as.matrix(data[, names(x$means)]), 2, x$means, "-")
   as_tibble(data)

@@ -1,5 +1,5 @@
-step_scale <- function(recipe, terms, role = NA) {
-  add_step(recipe, step_scale_new(terms = terms, role = role))
+step_scale <- function(recipe, terms, role = NA, sds = NULL) {
+  add_step(recipe, step_scale_new(terms = terms, role = role, sds = sds))
 }
 
 step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
@@ -11,6 +11,7 @@ step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
   )
 }
 
+#' @importFrom stats sd
 learn.scale_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   sds <- unlist(lapply(data[, col_names], sd, na.rm = TRUE))
