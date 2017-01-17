@@ -59,7 +59,6 @@ step_pca_new <- function(terms = NULL,
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
-#' @export
 #' @importFrom stats as.formula model.frame prcomp
 learn.pca_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
@@ -88,7 +87,6 @@ learn.pca_step <- function(x, data, ...) {
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
-#' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
 process.pca_step <- function(x, data, ...) {

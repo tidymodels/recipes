@@ -93,7 +93,7 @@ recipe.formula <- function(formula, data, ...) {
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
-#' @export
+#' @exportPattern ^learn
 learn   <- function(x, ...) UseMethod("learn")
 
 #' Train a Data Recipe
@@ -105,7 +105,6 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
-
 learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   if(length(x$steps) == 0)
     stop("Add some steps")
@@ -138,7 +137,7 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
-#' @export
+#' @exportPattern ^process
 process <- function(x, ...) UseMethod("process")
 
 #' Apply a Trained Data Recipe
@@ -162,6 +161,16 @@ process.recipe <- function(x, newdata = x$template) {
   newdata
 }
 
+#' Print a Recipe
+#' 
+#' @aliases print.recipe
+#' @param x A \code{recipe} object
+#' @param form_width The number of characters used to print the variables or terms in a formula
+#' @param ... further arguments passed to or from other methods (not currently used).
+#' @return The original object (invisibly)
+#'
+#' @author Max Kuhn
+#' @export print.recipe
 print.recipe <- function(x, form_width = 30) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")

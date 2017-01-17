@@ -1,5 +1,17 @@
-## User called function that adds a classed object to the 
-## original recipe. 
+#' Declare Variables for Centering.
+#' 
+#' This function is a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero. 
+#' 
+#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @param terms A representation of the variables or terms that will be centered.
+#' @param role Not used by this step since no new variables are created. 
+#' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.center_step}}. 
+#' @return An object of class \code{center_step}. 
+#' @author Max Kuhn
+#' @keywords datagen
+#' @concept preprocessing normalization_methods
+#' @export
+
 step_center <- function(recipe, terms, role = NA, means = NULL) {
   add_step(recipe, step_center_new(terms = terms, role = role, means = means))
 }
@@ -14,12 +26,18 @@ step_center_new <- function(terms = NULL, role = NA, means = NULL) {
   )
 }
 
-## The learn functions have the and centering info but 
-## does not have access to the recipe so no var_info. 
-## We might want to check against the roles and types. 
-## That might not help us anyway since there are going
-## to be derived or removed predictors beyond the 
-## original set of columns. 
+#' Estimate Means from a Training Set for Centering.
+#' 
+#' For a training set of data, this function computes the sample mean across numeric columns that require centering. Note that no data are centered by this function; see  \code{\link{process.center_step}}.
+#' 
+#' @param x a \code{center_step} object that specifies which columns will be centered.
+#' @param data a tibble or data frame that contains the training set. 
+#' @param ... further arguments passed to or from other methods (not currently used).
+#' @return An object of class \code{center_step}. 
+#' @author Max Kuhn
+#' @keywords datagen
+#' @concept preprocessing normalization_methods
+#' @export
 
 learn.center_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
@@ -27,6 +45,20 @@ learn.center_step <- function(x, data, ...) {
   means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = TRUE)
   step_center_new(terms = x$terms, role = x$role, means = means)
 }
+
+#' Center Variables in a Data Set.
+#' 
+#' For a trained \code{center_step} object, this function will subtract the sample mean obtained from the training set from column in the current data. 
+#' 
+#' @param x A trained \code{center_step} object.
+#' @param data A tibble or data frame that has numeric variables that will be centered.
+#' @param ... further arguments passed to or from other methods (not currently used).
+#' @return A tibble of processed data. 
+#' @author Max Kuhn
+#' @keywords datagen
+#' @concept preprocessing normalization_methods
+#' @export
+#' @importFrom tibble as_tibble
 
 process.center_step <- function(x, data, ...) {
   data[, names(x$means)] <- sweep(as.matrix(data[, names(x$means)]), 2, x$means, "-")

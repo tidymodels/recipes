@@ -92,7 +92,7 @@ process.nzv_step <- function(x, data, ...) {
 print.nzv_step <- function(x, form_width = 30, ...) {
   cat("Near-zero variance filter on ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
+  if(!is.null(x$removals)) cat(" [learned]\n") else cat("\n")
   invisible(x)
 }
 
