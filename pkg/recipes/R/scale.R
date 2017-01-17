@@ -14,7 +14,7 @@ step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
 #' @importFrom stats sd
 learn.scale_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
-  sds <- unlist(lapply(data[, col_names], sd, na.rm = TRUE))
+  sds <- vapply(data[, col_names], sd, c(sd = 0), na.rm = TRUE)
   step_scale_new(terms = x$terms, role = x$role, sds)
 }
 
