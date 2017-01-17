@@ -133,6 +133,7 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   x
 }
 
+#' @rdname process
 #' @aliases process process.recipe
 #' @author Max Kuhn
 #' @keywords datagen
