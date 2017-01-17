@@ -41,7 +41,7 @@ recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
   } else var_info$role <- ""
 
   ## Add types
-  var_info <- get_types(data) %>% full_join(var_info)
+  var_info <- full_join(get_types(data), var_info)
   var_info$source <- "original"
 
   ## Return final object of class `recipe`

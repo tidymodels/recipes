@@ -24,7 +24,7 @@ step_center_new <- function(terms = NULL, role = NA, means = NULL) {
 learn.center_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
-  means <- unlist(lapply(data[, col_names], mean, na.rm = TRUE))
+  means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = TRUE)
   step_center_new(terms = x$terms, role = x$role, means = means)
 }
 
