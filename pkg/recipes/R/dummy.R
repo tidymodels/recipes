@@ -89,6 +89,7 @@ learn.dummy_step <- function(x, data, ...) {
 #' @concept preprocessing dummy_variables model_specification
 #' @export
 #' @importFrom stats as.formula model.matrix
+#' @importFrom tibble as_tibble
 
 process.dummy_step <- function(x, data, ...) {
   ## Maybe do this in C? 

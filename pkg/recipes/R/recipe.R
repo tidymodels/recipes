@@ -18,6 +18,8 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @return An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}
 #'
 #' @export
+#' @importFrom tibble as_tibble is_tibble tibble
+#' @importFrom dplyr full_join
 recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
 
   if(!is_tibble(data)) data <- as_tibble(data)
@@ -55,6 +57,8 @@ recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
 #' @param formula a model formula.
 #' @export
 #' @importFrom stats as.formula
+#' @importFrom tibble as_tibble is_tibble 
+
 recipe.formula <- function(formula, data, ...) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
@@ -85,6 +89,7 @@ recipe.formula <- function(formula, data, ...) {
 
 #' @aliases learn learn.recipe
 #' @param x an object
+#' @param ... further arguments passed to or from other methods (not currently used).
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
@@ -98,6 +103,9 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @param verbose A logical that controls wether progress is reported as steps are executed.
 #' @return A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
 #' @rdname learn
+#' @importFrom tibble as_tibble is_tibble tibble
+#' @importFrom dplyr left_join
+
 learn.recipe <- function(x, training = x$template, verbose = TRUE) {
   if(length(x$steps) == 0)
     stop("Add some steps")
@@ -126,7 +134,6 @@ learn.recipe <- function(x, training = x$template, verbose = TRUE) {
 }
 
 #' @aliases process process.recipe
-#' @param trained object such as a \code{\link{recipe}} with at least one preprocessing step.
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
@@ -137,9 +144,11 @@ process <- function(x, ...) UseMethod("process")
 #'
 #' For a recipe with at least one preprocessing step that has been trained by \code{\link{learn.recipe}}, apply the computations to new data.
 #' @param x A trained object such as a \code{\link{recipe}} with at least one preprocessing step.
+#' @param ... further arguments passed to or from other methods (not currently used).
 #' @param newdata A data frame or tibble for whom the preprocessing will be applied.
 #' @return A tibble that may have different columns than the original columns in \code{newdata}.
 #' @rdname process
+#' @importFrom tibble as_tibble is_tibble
 
 process.recipe <- function(x, newdata = x$template) {
   newdata <- if(!is_tibble(newdata))
