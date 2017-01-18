@@ -178,8 +178,9 @@ print.recipe <- function(x, form_width = 30) {
   cat("Inputs:\n\n")
   print(tab, row.names = FALSE)
 
-  cat("\nSteps:\n\n")
+
   if(!is.null(x$steps)) {
+    cat("\nSteps:\n\n")
     for(i in seq_along(x$steps))
       print(x$steps[[i]], form_width = form_width)
   }
