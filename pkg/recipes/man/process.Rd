@@ -7,7 +7,7 @@
 \usage{
 process(x, ...)
 
-\method{process}{recipe}(x, newdata = x$template)
+\method{process}{recipe}(x, newdata = x$template, ...)
 }
 \arguments{
 \item{x}{A trained object such as a \code{\link{recipe}} with at least one preprocessing step.}

@@ -7,7 +7,7 @@
 \usage{
 learn(x, ...)
 
-\method{learn}{recipe}(x, training = x$template, verbose = TRUE)
+\method{learn}{recipe}(x, training = x$template, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}

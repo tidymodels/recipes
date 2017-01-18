@@ -105,7 +105,7 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
-learn.recipe <- function(x, training = x$template, verbose = TRUE) {
+learn.recipe <- function(x, training = x$template, verbose = TRUE, ...) {
   if(length(x$steps) == 0)
     stop("Add some steps")
 
@@ -150,7 +150,7 @@ process <- function(x, ...) UseMethod("process")
 #' @rdname process
 #' @importFrom tibble as_tibble is_tibble
 
-process.recipe <- function(x, newdata = x$template) {
+process.recipe <- function(x, newdata = x$template, ...) {
   newdata <- if(!is_tibble(newdata))
     as_tibble(newdata[, x$var_info$variable, drop = FALSE]) else
       newdata[, x$var_info$variable]
@@ -171,7 +171,7 @@ process.recipe <- function(x, newdata = x$template) {
 #'
 #' @author Max Kuhn
 #' @export print.recipe
-print.recipe <- function(x, form_width = 30) {
+print.recipe <- function(x, form_width = 30, ...) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")
   cat("Data Recipe\n\n")
