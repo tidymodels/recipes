@@ -38,103 +38,243 @@ Below are example classes of verbs and their characteristics. Each verb might re
 * *filters* (removal): filters on zero-variance terms or for reducing correlations between predictors. 
 * *subsampling* (changes to rows): procedures to remove or create new *rows* of the data set. Examples are down-sampling or SMOTE sampling procedures for class imbalances. 
 
-
-### Tags
-
-Some sugar to be added later: a _tagging_ system where groups of variables can be referenced in lieu of a character vector.  For example, if you are modeling data for the purpose of predicting credit scores, you could have groups of variables that are related to demographic data on a potential lendee, some that are related to the requested loan, or bank account data. 
-
-These groups of variables can be grouped by tags, although they need not be mutually exclusive. Also, tags for data type (e.g. `::num::` for numeric, `::cat::` for categorical, etc.) can be declared and instantiated once data is available. 
-
-The tags could also include terms that have not been created yet and may have an undefined set of members (e.g. `::pc::` for the principal components). Finally, we can use them to select specific types of terms like `::predictor::`, `::interactions::` or `::ns::` 
-
 ## An Example
 
-Some data in the `caret` package will be used but thinned down to two predictors (`A` and `B`) and an outcome that is a binary category with classes `One` and `Two`. 
-
-There are two data sets: `raw_train` with 1009 data points and `raw_test` with 1010 samples.
+The data used to demonstrate recipes will be the high performance computing example from _Applied Predictive Modeling_:
 
 
 ```r
-summary(raw_train)
+library(AppliedPredictiveModeling)
+data("schedulingData")
+
+str(schedulingData)
 ```
 
 ```
-##        A                B          Class    
-##  Min.   : 603.8   Min.   : 47.74   One:636  
-##  1st Qu.: 779.9   1st Qu.: 64.37   Two:373  
-##  Median :1027.2   Median : 79.02            
-##  Mean   :1302.5   Mean   : 91.61            
-##  3rd Qu.:1505.2   3rd Qu.:103.24            
-##  Max.   :8746.1   Max.   :459.77
+## 'data.frame':	4331 obs. of  8 variables:
+##  $ Protocol   : Factor w/ 14 levels "A","C","D","E",..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ Compounds  : num  997 97 101 93 100 100 105 98 101 95 ...
+##  $ InputFields: num  137 103 75 76 82 82 88 95 91 92 ...
+##  $ Iterations : num  20 20 10 20 20 20 20 20 20 20 ...
+##  $ NumPending : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Hour       : num  14 13.8 13.8 10.1 10.4 ...
+##  $ Day        : Factor w/ 7 levels "Mon","Tue","Wed",..: 2 2 4 5 5 3 5 5 5 3 ...
+##  $ Class      : Factor w/ 4 levels "VF","F","M","L": 2 1 1 1 1 1 1 1 1 1 ...
 ```
 
-A look at the training data:
+We want to predict the `Class` column as a function of the others. For some models, we would need to center and scale the predictors, estimate some univariate transformations, and also convert the data to dummy variables. 
+
+First, split the data into training and testing:
 
 
 ```r
-theme_set(theme_bw())
-ggplot(raw_train, aes(x = A, y = B, color = Class)) + 
-  geom_point(alpha = .3, cex = 2.5)  + 
-  theme(legend.position = "top")
+library(caret)
+set.seed(34188)
+in_train <- createDataPartition(schedulingData$Class, p = .75, list = FALSE)
+
+hpc_train <- schedulingData[ in_train,]
+hpc_test  <- schedulingData[-in_train,]
 ```
 
-![plot of chunk scatterplot](figure/scatterplot-1.png)
-
-
-Let's create an initial recipe:
+I'll define some formulas up-front to use the specify variables and terms (a different and better interface is needed here; see below).
 
 
 ```r
-# Start from scratch
-basic <- recipe()
-basic <- basic %>% 
-  add_role(~Class, role = "outcome") %>%
-  add_role(~A + B, role = "predictor")
-
-# We can setup something like that can automatically
-# setup the variables and roles:
-basic <- as.recipe(Class ~ A + B)
-## or, when we use the data
-basic <- as.recipe(Class ~ ., data = raw_train)
+# Based on variable types
+num_vars <- ~ Compounds + InputFields + Iterations + NumPending + Hour
+cat_vars <- ~ Protocol + Day
 ```
 
-These predictors are both pretty right-skewed so maybe start with
+To start, a data set and role specification is required. The easiest way to do that is to use the model formula approach: 
+
 
 ```r
-basic <- basic %>% log_trans(~A + B) 
+library(recipes)
+raw <- recipe(Class ~ ., data = hpc_train)
+raw$var_info
 ```
 
-We can also plan some simple normalization
+```
+## # A tibble: 8 × 4
+##      variable    type      role   source
+##         <chr>   <chr>     <chr>    <chr>
+## 1    Protocol nominal predictor original
+## 2         Day nominal predictor original
+## 3       Class nominal   outcome original
+## 4   Compounds numeric predictor original
+## 5 InputFields numeric predictor original
+## 6  Iterations numeric predictor original
+## 7  NumPending numeric predictor original
+## 8        Hour numeric predictor original
+```
+
+A lower-level API is available that will allow for different roles that are manually created. For example: 
+
 
 ```r
-normalized <- basic %>% standardize(~A + B, type = c("center", "scale"))
+data_set <- recipe(data = hpc_train)
+data_set <- data_set %>%
+  add_role("Class", role = "response") %>%
+  add_role(num_vars, role = "predictor") %>%
+  add_role(~ obs_counts, role = "case_weight") %>%
+  add_role(~ variable, role = "something else") # etc
 ```
 
-Also, since they are pretty correlated, we can schedule the first PCA component to be used based on _any_ numeric terms created thus far
+Back to the HPC data, a simple preprocessing specification could be:
+
 
 ```r
-with_comp <- normalized %>% pca_extract(form = "::num::", comps = 1)
+library(magrittr)
+standardized <- raw %>% 
+  step_center(num_vars) %>% 
+  step_scale(num_vars) %>%
+  step_dummy(cat_vars)
+standardized
 ```
-Alternatively, we add an interaction term. If this were an interaction between two factors, we might want to tag the resulting columns so that we can refer to the group later: 
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor          7
+## 
+## Steps:
+## 
+## Centering with Compounds + InputFields + Iterations + {more}
+## Scaling with Compounds + InputFields + Iterations + {more}
+## Dummy variables from Protocol + Day
+```
+
+We haven't done anything here beyond stating the _plan_ for data processing.
+
+Order matters here; if we were interested in making sure that the resulting dummy variables are on the same scale as the others, we would switch the order. The downside is that the simple formula will need to know the names of the dummy variables columns that have not been created yet. In some cases, such as PCA, we won't even know the names or numbers of the predictors at the time that the formula needs to be specified. 
+
+As an example of that issue, we can create an alternate workflow that filters the predictors that are unbalanced and sparse (aka "near zero variance" columns):
+
 
 ```r
-two_way_int <- normalized %>% interact(~ A:B, tag = "AB int")
+filtered <- standardized %>% 
+  step_nzv(~ Compounds + InputFields + Iterations + NumPending + Hour + 
+             Protocol_C + Protocol_D + Protocol_E + Protocol_F + Protocol_G + 
+             Protocol_H + Protocol_I + Protocol_J + Protocol_K + Protocol_L + 
+             Protocol_M + Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + 
+             Day_Fri + Day_Sat + Day_Sun)
+filtered
 ```
 
-Now check the recipe with some actual data
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor          7
+## 
+## Steps:
+## 
+## Centering with Compounds + InputFields + Iterations + {more}
+## Scaling with Compounds + InputFields + Iterations + {more}
+## Dummy variables from Protocol + Day
+## Near-zero variance filter on Compounds + InputFields + Iterations + {more}
+```
+
+We can start the actual computations using the `learn` function:
+
 
 ```r
-with_comp <- check(with_comp, data = raw_train)
+filtered <- learn(filtered, training = hpc_train, verbose = FALSE)
+filtered
 ```
 
-Unless there are any critical issues, we can then compute the means, standard deviations, and PCA component to be used later:
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor          7
+## 
+## Steps:
+## 
+## Centering with Compounds + InputFields + Iterations + {more} [learned]
+## Scaling with Compounds + InputFields + Iterations + {more} [learned]
+## Dummy variables from Protocol + Day [learned]
+## Near-zero variance filter on Compounds + InputFields + Iterations + {more} [learned]
+```
+**aside**: As the recipe is trained, we keep track of the changes at each step:  
 
 ```r
-data_stats <- compute(with_comp, data = raw_train)
+filtered$term_info
 ```
-and then apply these computations to the data sets. I'm not sure what verb is best here so I'll just used `predict`: 
+
+```
+## # A tibble: 16 × 4
+##       variable    type      role   source
+##          <chr>   <chr>     <chr>    <chr>
+## 1        Class nominal   outcome original
+## 2    Compounds numeric predictor original
+## 3  InputFields numeric predictor original
+## 4   Iterations numeric predictor original
+## 5         Hour numeric predictor original
+## 6   Protocol_H numeric predictor  derived
+## 7   Protocol_I numeric predictor  derived
+## 8   Protocol_J numeric predictor  derived
+## 9   Protocol_L numeric predictor  derived
+## 10  Protocol_M numeric predictor  derived
+## 11  Protocol_N numeric predictor  derived
+## 12  Protocol_O numeric predictor  derived
+## 13     Day_Tue numeric predictor  derived
+## 14     Day_Wed numeric predictor  derived
+## 15     Day_Thu numeric predictor  derived
+## 16     Day_Fri numeric predictor  derived
+```
+**/aside**
+
+To apply the trained recipe to any data set:
 
 ```r
-train_features <- predict(data_stats, raw_train)
-test_features  <- predict(data_stats, raw_test)
+filtered_test <- process(filtered, newdata = hpc_test)
 ```
+
+### Interface Ideas
+
+One outstanding item to figure out is how to allow variables, which may not exist at the time, to be specified for steps. 
+
+Right now, I'm using simple formulas but it would be good to allow the user to specify them by
+
+* name (via some regex)
+* type ("all numeric")
+* role ("all predictors")
+
+or some combination of these. The object to "hit" is the `terms_info` tibble that is changed as each step is processed. For example:
+
+
+```r
+library(dplyr)
+filtered$term_info %>% 
+  filter(source == "derived" & role == "predictor") %>%
+  select(variable)
+```
+
+```
+## # A tibble: 11 × 1
+##      variable
+##         <chr>
+## 1  Protocol_H
+## 2  Protocol_I
+## 3  Protocol_J
+## 4  Protocol_L
+## 5  Protocol_M
+## 6  Protocol_N
+## 7  Protocol_O
+## 8     Day_Tue
+## 9     Day_Wed
+## 10    Day_Thu
+## 11    Day_Fri
+```
+Of course, this won't work as an argument so some magical-functional-programming-with-a-formula is probably the right direction.

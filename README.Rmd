@@ -1,7 +1,7 @@
 # Data Recipes
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ```
 
 This is a document to explore an approach to pre-processing data for modeling. The idea is to define a plan/recipe/blueprint that can be used to eventually create a design matrix,  outcome array, or other collections of data.
@@ -40,94 +40,117 @@ Below are example classes of verbs and their characteristics. Each verb might re
 * *filters* (removal): filters on zero-variance terms or for reducing correlations between predictors. 
 * *subsampling* (changes to rows): procedures to remove or create new *rows* of the data set. Examples are down-sampling or SMOTE sampling procedures for class imbalances. 
 
-
-### Tags
-
-Some sugar to be added later: a _tagging_ system where groups of variables can be referenced in lieu of a character vector.  For example, if you are modeling data for the purpose of predicting credit scores, you could have groups of variables that are related to demographic data on a potential lendee, some that are related to the requested loan, or bank account data. 
-
-These groups of variables can be grouped by tags, although they need not be mutually exclusive. Also, tags for data type (e.g. `::num::` for numeric, `::cat::` for categorical, etc.) can be declared and instantiated once data is available. 
-
-The tags could also include terms that have not been created yet and may have an undefined set of members (e.g. `::pc::` for the principal components). Finally, we can use them to select specific types of terms like `::predictor::`, `::interactions::` or `::ns::` 
-
 ## An Example
 
-Some data in the `caret` package will be used but thinned down to two predictors (`A` and `B`) and an outcome that is a binary category with classes `One` and `Two`. 
-```{r create_data, echo = FALSE, message = FALSE}
+The data used to demonstrate recipes will be the high performance computing example from _Applied Predictive Modeling_:
+
+```{r data}
+library(AppliedPredictiveModeling)
+data("schedulingData")
+
+str(schedulingData)
+```
+
+We want to predict the `Class` column as a function of the others. For some models, we would need to center and scale the predictors, estimate some univariate transformations, and also convert the data to dummy variables. 
+
+First, split the data into training and testing:
+
+```{r hpc_split}
 library(caret)
-data(segmentationData)
+set.seed(34188)
+in_train <- createDataPartition(schedulingData$Class, p = .75, list = FALSE)
 
-segmentationData$Cell <- NULL
-segmentationData$Class <- factor(ifelse(segmentationData$Class == "PS", "One", "Two"))
-segmentationData <- segmentationData[, c("EqSphereAreaCh1", "PerimCh1", "Class", "Case")]
-names(segmentationData)[1:2] <- LETTERS[1:2]
-raw_train <- subset(segmentationData, Case == "Train")
-raw_test  <- subset(segmentationData, Case == "Test")
-
-raw_train$Case <- NULL
-raw_test$Case  <- NULL
-```
-There are two data sets: `raw_train` with `r nrow(raw_train)` data points and `raw_test` with `r nrow(raw_test)` samples.
-
-```{r head}
-summary(raw_train)
+hpc_train <- schedulingData[ in_train,]
+hpc_test  <- schedulingData[-in_train,]
 ```
 
-A look at the training data:
+I'll define some formulas up-front to use the specify variables and terms (a different and better interface is needed here; see below).
 
-```{r scatterplot}
-theme_set(theme_bw())
-ggplot(raw_train, aes(x = A, y = B, color = Class)) + 
-  geom_point(alpha = .3, cex = 2.5)  + 
-  theme(legend.position = "top")
+```{r forms}
+# Based on variable types
+num_vars <- ~ Compounds + InputFields + Iterations + NumPending + Hour
+cat_vars <- ~ Protocol + Day
 ```
 
+To start, a data set and role specification is required. The easiest way to do that is to use the model formula approach: 
 
-Let's create an initial recipe:
-
-```{r basic, eval = FALSE}
-# Start from scratch
-basic <- recipe()
-basic <- basic %>% 
-  add_role(~Class, role = "outcome") %>%
-  add_role(~A + B, role = "predictor")
-
-# We can setup something like that can automatically
-# setup the variables and roles:
-basic <- as.recipe(Class ~ A + B)
-## or, when we use the data
-basic <- as.recipe(Class ~ ., data = raw_train)
+```{r rec_form}
+library(recipes)
+raw <- recipe(Class ~ ., data = hpc_train)
+raw$var_info
 ```
 
-These predictors are both pretty right-skewed so maybe start with
-```{r log, eval = FALSE}
-basic <- basic %>% log_trans(~A + B) 
+A lower-level API is available that will allow for different roles that are manually created. For example: 
+
+```{r low_rec, eval = FALSE}
+data_set <- recipe(data = hpc_train)
+data_set <- data_set %>%
+  add_role("Class", role = "response") %>%
+  add_role(num_vars, role = "predictor") %>%
+  add_role(~ obs_counts, role = "case_weight") %>%
+  add_role(~ variable, role = "something else") # etc
 ```
 
-We can also plan some simple normalization
-```{r stand, eval = FALSE}
-normalized <- basic %>% standardize(~A + B, type = c("center", "scale"))
+Back to the HPC data, a simple preprocessing specification could be:
+
+```{r standardize}
+library(magrittr)
+standardized <- raw %>% 
+  step_center(num_vars) %>% 
+  step_scale(num_vars) %>%
+  step_dummy(cat_vars)
+standardized
 ```
 
-Also, since they are pretty correlated, we can schedule the first PCA component to be used based on _any_ numeric terms created thus far
-```{r pca, eval = FALSE}
-with_comp <- normalized %>% pca_extract(form = "::num::", comps = 1)
-```
-Alternatively, we add an interaction term. If this were an interaction between two factors, we might want to tag the resulting columns so that we can refer to the group later: 
-```{r int, eval = FALSE}
-two_way_int <- normalized %>% interact(~ A:B, tag = "AB int")
+We haven't done anything here beyond stating the _plan_ for data processing.
+
+Order matters here; if we were interested in making sure that the resulting dummy variables are on the same scale as the others, we would switch the order. The downside is that the simple formula will need to know the names of the dummy variables columns that have not been created yet. In some cases, such as PCA, we won't even know the names or numbers of the predictors at the time that the formula needs to be specified. 
+
+As an example of that issue, we can create an alternate workflow that filters the predictors that are unbalanced and sparse (aka "near zero variance" columns):
+
+```{r filters}
+filtered <- standardized %>% 
+  step_nzv(~ Compounds + InputFields + Iterations + NumPending + Hour + 
+             Protocol_C + Protocol_D + Protocol_E + Protocol_F + Protocol_G + 
+             Protocol_H + Protocol_I + Protocol_J + Protocol_K + Protocol_L + 
+             Protocol_M + Protocol_N + Protocol_O + Day_Tue + Day_Wed + Day_Thu + 
+             Day_Fri + Day_Sat + Day_Sun)
+filtered
 ```
 
-Now check the recipe with some actual data
-```{r check, eval = FALSE}
-with_comp <- check(with_comp, data = raw_train)
+We can start the actual computations using the `learn` function:
+
+```{r learn}
+filtered <- learn(filtered, training = hpc_train, verbose = FALSE)
+filtered
+```
+**aside**: As the recipe is trained, we keep track of the changes at each step:  
+```{r terms}
+filtered$term_info
+```
+**/aside**
+
+To apply the trained recipe to any data set:
+```{r predict}
+filtered_test <- process(filtered, newdata = hpc_test)
 ```
 
-Unless there are any critical issues, we can then compute the means, standard deviations, and PCA component to be used later:
-```{r train, eval = FALSE}
-data_stats <- compute(with_comp, data = raw_train)
+### Interface Ideas
+
+One outstanding item to figure out is how to allow variables, which may not exist at the time, to be specified for steps. 
+
+Right now, I'm using simple formulas but it would be good to allow the user to specify them by
+
+* name (via some regex)
+* type ("all numeric")
+* role ("all predictors")
+
+or some combination of these. The object to "hit" is the `terms_info` tibble that is changed as each step is processed. For example:
+
+```{r term_search}
+library(dplyr)
+filtered$term_info %>% 
+  filter(source == "derived" & role == "predictor") %>%
+  select(variable)
 ```
-and then apply these computations to the data sets. I'm not sure what verb is best here so I'll just used `predict`: 
-```{r predict, eval = FALSE}
-train_features <- predict(data_stats, raw_train)
-test_features  <- predict(data_stats, raw_test)
-```
+Of course, this won't work as an argument so some magical-functional-programming-with-a-formula is probably the right direction.
