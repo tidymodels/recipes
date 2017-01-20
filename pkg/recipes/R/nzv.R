@@ -47,7 +47,7 @@ step_nzv_new <- function(terms = NULL,
 #' Determine Which Variables to Remove Using a Training Set.
 #' 
 #' For a training set of data, this function uses \code{\link[caret]{nearZeroVar}} to determine which, if any, columns in the training set have sparse and unbalanced distributions.
-#' #' 
+#'
 #' @param x a \code{nzv_step} object that contains the list of predictors that should be removed.
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).

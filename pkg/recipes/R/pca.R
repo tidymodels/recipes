@@ -51,7 +51,7 @@ step_pca_new <- function(terms = NULL,
 #' Estimate the Principal Component Loadings from a Training Set.
 #' 
 #' For a training set of data, this function uses \code{\link[stats]{prcomp}} to estimate the loadings for the principal components. This transformation only compute the required statistics for PCA while \code{\link{process}} is used to compute the components on specific data sets. 
-#' #' 
+#'
 #' @param x a \code{pca_step} object that contains the PCA objects.
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).

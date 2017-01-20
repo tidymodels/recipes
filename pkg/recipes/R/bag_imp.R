@@ -80,7 +80,7 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 #' Estimate the Bagged Tree Imputation Models from a Training Set.
 #' 
 #' For a training set of data, this function uses \code{\link[ipred]{ipredbagg}} to create models that will be used to impute missing data. This transformation only fits the models while \code{\link{process}} is used to do the imputation for specific data sets. 
-#' #' 
+#'
 #' @param x a \code{bagimpute_step} object that contains the model objects.
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
