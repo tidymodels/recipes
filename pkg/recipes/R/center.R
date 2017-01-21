@@ -73,6 +73,7 @@ process.center_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
+#' @export
 print.center_step <- function(x, form_width = 30, ...) {
   cat("Centering with ")
   cat(form_printer(x, wdth = form_width))
