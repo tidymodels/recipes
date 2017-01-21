@@ -129,6 +129,7 @@ process.dummy_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
+#' @export
 print.dummy_step <- function(x, form_width = 30, ...) {
   cat("Dummy variables from ")
   cat(form_printer(x, wdth = form_width))
