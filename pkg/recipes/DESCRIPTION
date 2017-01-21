@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", c("aut", "cre")),
     person("RStudio", role = "cph")
@@ -15,6 +15,9 @@ Imports:
     stats,
     caret,
     ipred
+Suggests:
+    testthat,
+    magrittr
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
