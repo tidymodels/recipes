@@ -1,8 +1,7 @@
-library(testthat)
-library(magrittr)
-library(recipes)
-data(biomass)
+context("Testing retraining")
 
+library(magrittr)
+data(biomass)
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
