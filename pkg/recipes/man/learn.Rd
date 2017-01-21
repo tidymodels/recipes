@@ -7,7 +7,8 @@
 \usage{
 learn(x, ...)
 
-\method{learn}{recipe}(x, training = x$template, verbose = TRUE, ...)
+\method{learn}{recipe}(x, training = x$template, fresh = FALSE,
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -15,6 +16,8 @@ learn(x, ...)
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{training}{A data frame or tibble that will be used to estimate parameters for preprocessing.}
+
+\item{fresh}{A logical indicating whether already trained steps should be re-trained}
 
 \item{verbose}{A logical that controls wether progress is reported as steps are executed.}
 }

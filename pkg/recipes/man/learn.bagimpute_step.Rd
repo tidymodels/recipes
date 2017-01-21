@@ -17,8 +17,7 @@
 An object of class \code{bagimpute_step}.
 }
 \description{
-For a training set of data, this function uses \code{\link[ipred]{ipredbagg}} to create models that will be used to impute missing data. This transformation only fits the models while \code{\link{process}} is used to do the imputation for specific data sets. 
-#'
+For a training set of data, this function uses \code{\link[ipred]{ipredbagg}} to create models that will be used to impute missing data. This transformation only fits the models while \code{\link{process}} is used to do the imputation for specific data sets.
 }
 \author{
 Max Kuhn

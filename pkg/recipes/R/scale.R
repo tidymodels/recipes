@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be scaled.
 #' @param role Not used by this step since no new variables are created. 
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.scale_step}}. 
 #' @return An object of class \code{scale_step}. 
 #' @author Max Kuhn
@@ -12,15 +13,24 @@
 #' @concept preprocessing normalization_methods
 #' @export
 #' 
-step_scale <- function(recipe, terms, role = NA, sds = NULL) {
-  add_step(recipe, step_scale_new(terms = terms, role = role, sds = sds))
+step_scale <- function(recipe, terms, role = NA, trained = FALSE, sds = NULL) {
+  add_step(
+    recipe, 
+    step_scale_new(
+      terms = terms, 
+      role = role,
+      trained = trained, 
+      sds = sds
+    )
+  )
 }
 
-step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
+step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL) {
   step(
     subclass = "scale", 
     terms = terms,
     role = role,
+    trained = trained,
     sds = sds
   )
 }
@@ -42,7 +52,7 @@ step_scale_new <- function(terms = NULL, role = NA, sds = NULL) {
 learn.scale_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   sds <- vapply(data[, col_names], sd, c(sd = 0), na.rm = TRUE)
-  step_scale_new(terms = x$terms, role = x$role, sds)
+  step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
 }
 
 #' Scale Variables in a Data Set.
@@ -67,6 +77,6 @@ process.scale_step <- function(x, data, ...) {
 print.scale_step <- function(x, form_width = 30, ...) {
   cat("Scaling with ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$sds)) cat(" [learned]\n") else cat("\n")
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

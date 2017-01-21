@@ -4,7 +4,7 @@
 \alias{step_center}
 \title{Declare Variables for Centering.}
 \usage{
-step_center(recipe, terms, role = NA, means = NULL)
+step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -12,6 +12,8 @@ step_center(recipe, terms, role = NA, means = NULL)
 \item{terms}{A representation of the variables or terms that will be centered.}
 
 \item{role}{Not used by this step since no new variables are created.}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.center_step}}.}
 }

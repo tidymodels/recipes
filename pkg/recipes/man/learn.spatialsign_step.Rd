@@ -7,7 +7,7 @@
 \method{learn}{spatialsign_step}(x, data, ...)
 }
 \arguments{
-\item{x}{a \code{spatialsign_step} object that contains the PCA objects.}
+\item{x}{a \code{spatialsign_step} object that contains the spatial sign objects.}
 
 \item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
@@ -17,8 +17,7 @@
 An object of class \code{spatialsign_step}.
 }
 \description{
-The spatial sign is a transformation of the original variables that does not require any parameters to be estimated. As such, this function only returns the original object. 
-#'
+The spatial sign is a transformation of the original variables that does not require any parameters to be estimated. As such, this function only returns the original object.
 }
 \author{
 Max Kuhn

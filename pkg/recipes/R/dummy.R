@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model. 
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below. 
 #' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.dummy_step}}.
@@ -16,7 +17,8 @@
 
 step_dummy <- function(recipe, 
                        terms, 
-                       role = "predictor", 
+                       role = "predictor",
+                       trained = FALSE, 
                        contrast = options("contrasts"),
                        naming = function(var, lvl) 
                          paste(var, make.names(lvl), sep = "_"),
@@ -26,6 +28,7 @@ step_dummy <- function(recipe,
     step_dummy_new(
       terms = terms, 
       role = role,
+      trained = trained,
       contrast = contrast, 
       naming = naming, 
       levels = levels))
@@ -33,6 +36,7 @@ step_dummy <- function(recipe,
 
 step_dummy_new <- function(terms = NULL, 
                            role = "predictor",
+                           trained = FALSE,
                            contrast = contrast, 
                            naming = naming, 
                            levels = levels) {
@@ -40,6 +44,7 @@ step_dummy_new <- function(terms = NULL,
     subclass = "dummy", 
     terms = terms,
     role = role,
+    trained = trained,
     contrast = contrast,
     naming = naming,
     levels = levels
@@ -82,6 +87,7 @@ learn.dummy_step <- function(x, data, ...) {
   step_dummy_new(
     terms = x$terms,
     role = x$role,
+    trained = TRUE,
     contrast = x$contrast,
     naming = x$naming,
     levels = levels
@@ -126,6 +132,6 @@ process.dummy_step <- function(x, data, ...) {
 print.dummy_step <- function(x, form_width = 30, ...) {
   cat("Dummy variables from ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$levels)) cat(" [learned]\n") else cat("\n")
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

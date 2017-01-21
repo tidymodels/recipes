@@ -4,7 +4,7 @@
 \alias{step_dummy}
 \title{Declare Which Variables Should Be Converted to Dummy Variables.}
 \usage{
-step_dummy(recipe, terms, role = "predictor",
+step_dummy(recipe, terms, role = "predictor", trained = FALSE,
   contrast = options("contrasts"), naming = function(var, lvl) paste(var,
   make.names(lvl), sep = "_"), levels = NULL)
 }
@@ -14,6 +14,8 @@ step_dummy(recipe, terms, role = "predictor",
 \item{terms}{A representation of the variables or terms that will be used to create the dummy variables.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{contrast}{A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}}
 

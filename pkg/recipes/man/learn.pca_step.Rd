@@ -17,8 +17,7 @@
 An object of class \code{pca_step}.
 }
 \description{
-For a training set of data, this function uses \code{\link[stats]{prcomp}} to estimate the loadings for the principal components. This transformation only compute the required statistics for PCA while \code{\link{process}} is used to compute the components on specific data sets. 
-#'
+For a training set of data, this function uses \code{\link[stats]{prcomp}} to estimate the loadings for the principal components. This transformation only compute the required statistics for PCA while \code{\link{process}} is used to compute the components on specific data sets.
 }
 \author{
 Max Kuhn

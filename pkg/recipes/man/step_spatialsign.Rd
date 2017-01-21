@@ -4,7 +4,7 @@
 \alias{step_spatialsign}
 \title{Declare Which Variables for the Spatial Sign.}
 \usage{
-step_spatialsign(recipe, terms, role = "predictor")
+step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -12,6 +12,8 @@ step_spatialsign(recipe, terms, role = "predictor")
 \item{terms}{A representation of the variables or terms that will be used for the normalization.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 }
 \value{
 An object of class \code{spatialsign_step}.

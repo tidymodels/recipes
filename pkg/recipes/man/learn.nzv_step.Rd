@@ -18,7 +18,6 @@ An object of class \code{nzv_step}.
 }
 \description{
 For a training set of data, this function uses \code{\link[caret]{nearZeroVar}} to determine which, if any, columns in the training set have sparse and unbalanced distributions.
-#'
 }
 \author{
 Max Kuhn

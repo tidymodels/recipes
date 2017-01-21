@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be imputed.
 #' @param role Not used by this step since no new variables are created.  
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.  
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.
@@ -14,7 +15,8 @@
 #' @concept preprocessing imputation
 #' @export
 
-step_bagimpute <- function(recipe, terms, role = NA, 
+step_bagimpute <- function(recipe, terms, role = NA,
+                           trained = FALSE, 
                            models = NULL, 
                            options = list(nbagg = 25, keepX = FALSE),
                            impute_with = NULL) {
@@ -23,6 +25,7 @@ step_bagimpute <- function(recipe, terms, role = NA,
     step_bagimpute_new(
       terms = terms, 
       role = role,
+      trained = trained,
       models = models,
       options = options,
       impute_with = impute_with
@@ -30,13 +33,15 @@ step_bagimpute <- function(recipe, terms, role = NA,
   )
 }
 
-step_bagimpute_new <- function(terms = NULL, role = NA, 
+step_bagimpute_new <- function(terms = NULL, role = NA,
+                               trained = FALSE, 
                                models = NULL, options = NULL,
                                impute_with = NULL) {
   step(
     subclass = "bagimpute", 
     terms = terms,
     role = role,
+    trained = trained,
     models = models,
     options = options,
     impute_with = impute_with
@@ -97,6 +102,7 @@ learn.bagimpute_step <- function(x, data, ...) {
     opt = x$options
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
+  x$trained <- TRUE
   x
 }
 
@@ -143,6 +149,6 @@ process.bagimpute_step <- function(x, data, ...) {
 print.bagimpute_step <- function(x, form_width = 30, ...) {
   cat("Bagged tree imputation for ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$models)) cat(" [learned]\n") else cat("\n")
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

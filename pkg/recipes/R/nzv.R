@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will evaluated by the filtering process.
 #' @param role Not used by this step since no new variables are created.
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param options A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list. 
 #' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.nzv_step}}. 
 #' @return An object of class \code{nzv_step}. 
@@ -17,6 +18,7 @@
 step_nzv <- function(recipe, 
                      terms, 
                      role = NA,
+                     trained = FALSE,
                      options = list(freqCut = 95 / 5, uniqueCut = 10),
                      removals = NULL) {
   add_step(
@@ -24,6 +26,7 @@ step_nzv <- function(recipe,
     step_nzv_new(
       terms = terms, 
       role = role,
+      trained = trained,
       options = options,
       removals = removals
     )
@@ -32,12 +35,14 @@ step_nzv <- function(recipe,
 
 step_nzv_new <- function(terms = NULL, 
                          role = NA,
+                         trained = FALSE,
                          options = NULL,
                          removals = NULL) {
   step(
     subclass = "nzv", 
     terms = terms,
     role = role,
+    trained = trained,
     options = options,
     removals = removals
   )
@@ -65,6 +70,7 @@ learn.nzv_step <- function(x, data, ...) {
   step_nzv_new(
     terms = x$terms, 
     role = x$role,
+    trained = TRUE,
     options = x$options,
     removals = filter
   )
@@ -92,7 +98,7 @@ process.nzv_step <- function(x, data, ...) {
 print.nzv_step <- function(x, form_width = 30, ...) {
   cat("Near-zero variance filter on ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$removals)) cat(" [learned]\n") else cat("\n")
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
 

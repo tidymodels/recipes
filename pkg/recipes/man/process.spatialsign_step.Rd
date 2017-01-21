@@ -17,7 +17,7 @@
 A tibble of processed data.
 }
 \description{
-For a trained \code{spatialsign_step} object, this function projects the current data into a unit sphere. This creates overwrites the original columnms
+For a \code{spatialsign_step} object, this function projects the current data into a unit sphere. This creates overwrites the original columns
 }
 \author{
 Max Kuhn

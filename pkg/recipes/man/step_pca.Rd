@@ -4,8 +4,8 @@
 \alias{step_pca}
 \title{Declare Which Variables Are Used for PCA Signal Extraction.}
 \usage{
-step_pca(recipe, terms, role = "predictor", num = 5, options = list(center
-  = TRUE, scale. = TRUE), object = NULL)
+step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
+  options = list(center = TRUE, scale. = TRUE), object = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -13,6 +13,8 @@ step_pca(recipe, terms, role = "predictor", num = 5, options = list(center
 \item{terms}{A representation of the variables or terms that will be used to compute the components.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{num}{The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
 

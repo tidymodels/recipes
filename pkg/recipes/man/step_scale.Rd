@@ -4,7 +4,7 @@
 \alias{step_scale}
 \title{Declare Variables for Scaling}
 \usage{
-step_scale(recipe, terms, role = NA, sds = NULL)
+step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -12,6 +12,8 @@ step_scale(recipe, terms, role = NA, sds = NULL)
 \item{terms}{A representation of the variables or terms that will be scaled.}
 
 \item{role}{Not used by this step since no new variables are created.}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.scale_step}}.}
 }

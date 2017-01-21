@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be centered.
 #' @param role Not used by this step since no new variables are created. 
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated. 
 #' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.center_step}}. 
 #' @return An object of class \code{center_step}. 
 #' @author Max Kuhn
@@ -12,16 +13,23 @@
 #' @concept preprocessing normalization_methods
 #' @export
 
-step_center <- function(recipe, terms, role = NA, means = NULL) {
-  add_step(recipe, step_center_new(terms = terms, role = role, means = means))
+step_center <- function(recipe, terms, role = NA, trained = FALSE, means = NULL) {
+  add_step(
+    recipe, 
+    step_center_new(
+      terms = terms, 
+      trained = trained,
+      role = role, 
+      means = means))
 }
 
 ## Initializes a new object
-step_center_new <- function(terms = NULL, role = NA, means = NULL) {
+step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NULL) {
   step(
     subclass = "center", 
     terms = terms,
     role = role,
+    trained = trained,
     means = means
   )
 }
@@ -43,7 +51,7 @@ learn.center_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
   means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = TRUE)
-  step_center_new(terms = x$terms, role = x$role, means = means)
+  step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 
 #' Center Variables in a Data Set.
@@ -68,7 +76,7 @@ process.center_step <- function(x, data, ...) {
 print.center_step <- function(x, form_width = 30, ...) {
   cat("Centering with ")
   cat(form_printer(x, wdth = form_width))
-  if(!is.null(x$means)) cat(" [learned]\n") else cat("\n")
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
 

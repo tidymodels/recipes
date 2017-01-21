@@ -4,7 +4,7 @@
 \alias{step_bagimpute}
 \title{Declare Which Variables Will be Imputed via Bagged Trees.}
 \usage{
-step_bagimpute(recipe, terms, role = NA, models = NULL,
+step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE), impute_with = NULL)
 }
 \arguments{
@@ -13,6 +13,8 @@ step_bagimpute(recipe, terms, role = NA, models = NULL,
 \item{terms}{A representation of the variables or terms that will be imputed.}
 
 \item{role}{Not used by this step since no new variables are created.}
+
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.}
 

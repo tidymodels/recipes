@@ -5,6 +5,7 @@
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used for the normalization.
 #' @param role For model terms created by this step, what analysis role should they be assigned? 
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @return An object of class \code{spatialsign_step}. 
 #' @author Max Kuhn
 #' @keywords datagen
@@ -13,23 +14,27 @@
 
 step_spatialsign <- function(recipe, 
                              terms, 
-                             role = "predictor") {
+                             role = "predictor",
+                             trained = FALSE) {
   add_step(
     recipe, 
     step_spatialsign_new(
       terms = terms, 
-      role = role
+      role = role,
+      trained = trained
     )
   )
 }
 
 step_spatialsign_new <- function(terms = NULL, 
-                                 role = "predictor") {
+                                 role = "predictor",
+                                 trained = FALSE) {
   
   step(
     subclass = "spatialsign",
     terms = terms,
-    role = role
+    role = role,
+    trained = trained
   )
 }
 
@@ -46,7 +51,8 @@ step_spatialsign_new <- function(terms = NULL,
 learn.spatialsign_step <- function(x, data, ...) {
   step_spatialsign_new(
     terms = x$terms,
-    role = x$role
+    role = x$role,
+    trained = TRUE
   )
 }
 
@@ -72,5 +78,6 @@ process.spatialsign_step <- function(x, data, ...) {
 print.spatialsign_step <- function(x, form_width = 30, ...) {
   cat("Spatial sign on ")
   cat(form_printer(x, wdth = form_width))
+  if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
