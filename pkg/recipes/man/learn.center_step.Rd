@@ -4,12 +4,14 @@
 \alias{learn.center_step}
 \title{Estimate Means from a Training Set for Centering.}
 \usage{
-\method{learn}{center_step}(x, data, ...)
+\method{learn}{center_step}(x, data, na.rm = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{center_step} object that specifies which columns will be centered.}
 
-\item{data}{a tibble or data frame that contains the training set.}
+\item{data}{A tibble or data frame that contains the training set.}
+
+\item{na.rm}{A boolean indicates whether to remove NAs, default TRUE.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 }

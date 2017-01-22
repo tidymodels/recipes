@@ -39,7 +39,8 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
 #' For a training set of data, this function computes the sample mean across numeric columns that require centering. Note that no data are centered by this function; see  \code{\link{process.center_step}}.
 #' 
 #' @param x a \code{center_step} object that specifies which columns will be centered.
-#' @param data a tibble or data frame that contains the training set. 
+#' @param data A tibble or data frame that contains the training set.
+#' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{center_step}. 
 #' @author Max Kuhn
@@ -47,10 +48,10 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
 #' @concept preprocessing normalization_methods
 #' @export
 
-learn.center_step <- function(x, data, ...) {
+learn.center_step <- function(x, data, na.rm = TRUE, ...) {
   col_names <- filter_terms(x$terms, data) 
   
-  means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = TRUE)
+  means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = na.rm)
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 
