@@ -68,10 +68,10 @@ learn.spatialsign_step <- function(x, data, ...) {
 #' @concept preprocessing projection_methods
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
-#' @importFrom caret spatialSign
 process.spatialsign_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
-  data[, col_names] <- spatialSign(data[, col_names])
+  ss <- function(x) x/sqrt(sum(x^2))
+  data[, col_names] <- t(apply(as.matrix(data[, col_names]), 1, ss))
   as_tibble(data)
 }
 
