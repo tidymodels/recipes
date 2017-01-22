@@ -70,7 +70,7 @@ learn.scale_step <- function(x, data, ...) {
 #' @importFrom tibble as_tibble
 
 process.scale_step <- function(x, data, ...) {
-  data[, names(x$sds)] <- sweep(as.matrix(data[, names(x$sds)]), 2, x$sds, "-")
+  data[, names(x$sds)] <- sweep(as.matrix(data[, names(x$sds)]), 2, x$sds, "/")
   as_tibble(data)
 }
 
