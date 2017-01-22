@@ -74,6 +74,7 @@ process.scale_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
+#' @export
 print.scale_step <- function(x, form_width = 30, ...) {
   cat("Scaling with ")
   cat(form_printer(x, wdth = form_width))

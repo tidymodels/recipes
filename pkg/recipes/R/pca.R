@@ -104,7 +104,7 @@ process.pca_step <- function(x, data, ...) {
   as_tibble(data)
 }
 
-
+#' @export
 print.pca_step <- function(x, form_width = 30, ...) {
   cat("PCA extraction with ")
   cat(form_printer(x, wdth = form_width))
