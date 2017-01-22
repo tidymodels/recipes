@@ -8,7 +8,7 @@ Authors@R: c(
 Description: A set of tools to create a sequence of data processing steps that
     can trained and executed on other data sets.
 Depends:
-    R (>= 3.3.2)
+    R (>= 3.2.3)
 Imports:
     tibble,
     dplyr,

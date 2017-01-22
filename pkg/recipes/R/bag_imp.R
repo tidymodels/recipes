@@ -145,7 +145,7 @@ process.bagimpute_step <- function(x, data, ...) {
 }
 
 
-
+#' @export
 print.bagimpute_step <- function(x, form_width = 30, ...) {
   cat("Bagged tree imputation for ")
   cat(form_printer(x, wdth = form_width))

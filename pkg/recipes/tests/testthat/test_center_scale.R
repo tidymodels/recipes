@@ -1,7 +1,7 @@
-library(testthat)
+context("Testing center and scale")
+
 library(magrittr)
 library(recipes)
-data(biomass)
 
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))
 sds <- vapply(biomass[, 3:7], sd, c(sd = 0))
