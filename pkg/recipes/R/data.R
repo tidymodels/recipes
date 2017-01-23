@@ -35,3 +35,20 @@ NULL
 #' @keywords datasets
 NULL
 
+
+#' Credit Data
+#'
+#' These data are from the website of Dr. Lluís A. Belanche Muñoz by way of a 
+#' github repository of Dr. Gaston Sanchez. 
+#'
+#' @name credit_data
+#' @aliases credit_data
+#' @docType data
+#' @return \item{credit_data}{a data frame} 
+#'
+#' @source \url{https://github.com/gastonstat/CreditScoring}, 
+#' \url{http://bit.ly/2kkBFrk}
+#'
+#' @keywords datasets
+NULL
+
