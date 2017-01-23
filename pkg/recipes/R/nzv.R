@@ -65,8 +65,12 @@ step_nzv_new <- function(terms = NULL,
 learn.nzv_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
-  data <- data[, col_names]
-  filter <- do.call("nearZeroVar", c(list(x = data, names = TRUE), x$options))
+  nzv_call <- quote(nearZeroVar(x, freqCut, uniqueCut, saveMetrics, names = TRUE, foreach, allowParallel))
+  args <- sub_args(nearZeroVar, x$options)
+  args$x <- data[, col_names]
+  args$names <- TRUE
+  filter <- eval(nzv_call, envir = args)
+  
   step_nzv_new(
     terms = x$terms, 
     role = x$role,

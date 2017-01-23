@@ -5,7 +5,7 @@
 \title{Declare Which Variables Are Used for PCA Signal Extraction.}
 \usage{
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(center = TRUE, scale. = TRUE), object = NULL)
+  options = list(center = TRUE, scale. = TRUE, retx = FALSE), object = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
