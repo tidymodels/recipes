@@ -44,6 +44,12 @@ test_that('imputation models', {
 })
 
 
+test_that('no predictor lists', {
+  expect_error(imputed <- rec %>%  step_bagimpute(~carbon + fac))
+  
+})
+
+
 
 
 

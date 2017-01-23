@@ -22,7 +22,7 @@ step_bagimpute <- function(recipe, terms, role = NA,
                            options = list(nbagg = 25, keepX = FALSE),
                            impute_with = NULL,
                            seed_val = sample.int(10^4, 1)) {
-  if(is.null(step_bagimpute))
+  if(is.null(impute_with))
     stop("Please list some variables in `impute_with`")
   add_step(
     recipe, 
