@@ -10,7 +10,8 @@ test_that('correct PCA values', {
   pca_extract <- rec %>% 
     step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>% 
     step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-    step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur)
+    step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur, 
+             options = list(retx = TRUE))
   
   pca_extract_trained <- learn(pca_extract, training = biomass, verbose = FALSE)
   

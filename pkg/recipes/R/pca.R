@@ -20,7 +20,7 @@ step_pca <- function(recipe,
                      role = "predictor",
                      trained = FALSE,
                      num  = 5, 
-                     options = list(center = TRUE, scale. = TRUE),
+                     options = list(center = TRUE, scale. = TRUE, retx = FALSE),
                      object = NULL) {
   add_step(
     recipe, 
@@ -68,19 +68,22 @@ step_pca_new <- function(terms = NULL,
 learn.pca_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
-  dat <- data[, col_names]
-  prc <- do.call("prcomp", c(list(x = dat), x$options))
+  # should maybe use the formula method in case of missing data
+  pca_call <- quote(prcomp(x, retx, center, scale., tol))
+  args <- sub_args(stats:::prcomp.default, x$options, c("x", "..."))
+  args$x <- data[, col_names]
+  
+  prc <- eval(pca_call, envir = args)
   
   step_pca_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = min(x$num, ncol(dat)),
+    num = min(x$num, ncol(data)),
     options = x$options,
     object = prc
   )
 }
-
 
 #' Compute the Principal Components for a Data Set.
 #' 

@@ -117,3 +117,17 @@ terms.recipe <- function(x, ...) x$term_info
 
 filter_terms.formula <- function(formula, data, ...)
   get_rhs_vars(formula, data)
+
+
+## This function takes the default arguments of `func` and
+## replaces them with the matching ones in `options` and
+## remove any in `removals`
+sub_args <- function(func, options, removals = NULL) {
+  args <- formals(func)
+  for(i in seq_along(options)) 
+    args[[names(options)[i]]] <- options[[i]]
+  if(!is.null(removals))
+    args[removals] <- NULL
+  args
+}
+
