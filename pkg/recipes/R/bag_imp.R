@@ -8,6 +8,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.  
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
+#' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.
 #' @return An object of class \code{bagimpute_step}. 
 #' @author Max Kuhn
@@ -19,7 +20,10 @@ step_bagimpute <- function(recipe, terms, role = NA,
                            trained = FALSE, 
                            models = NULL, 
                            options = list(nbagg = 25, keepX = FALSE),
-                           impute_with = NULL) {
+                           impute_with = NULL,
+                           seed_val = sample.int(10^4, 1)) {
+  if(is.null(step_bagimpute))
+    stop("Please list some variables in `impute_with`")
   add_step(
     recipe, 
     step_bagimpute_new(
@@ -28,7 +32,8 @@ step_bagimpute <- function(recipe, terms, role = NA,
       trained = trained,
       models = models,
       options = options,
-      impute_with = impute_with
+      impute_with = impute_with,
+      seed_val = seed_val
     )
   )
 }
@@ -36,7 +41,8 @@ step_bagimpute <- function(recipe, terms, role = NA,
 step_bagimpute_new <- function(terms = NULL, role = NA,
                                trained = FALSE, 
                                models = NULL, options = NULL,
-                               impute_with = NULL) {
+                               impute_with = NULL, 
+                               seed_val = NA) {
   step(
     subclass = "bagimpute", 
     terms = terms,
@@ -44,15 +50,20 @@ step_bagimpute_new <- function(terms = NULL, role = NA,
     trained = trained,
     models = models,
     options = options,
-    impute_with = impute_with
+    impute_with = impute_with,
+    seed_val = seed_val
   )
 }
 
 
 #' @importFrom ipred ipredbagg
-bag_wrap <- function(vars, dat, opt) {
+bag_wrap <- function(vars, dat, opt, seed_val) {
+  seed_val <- seed_val[1]
   mod_form <- as.formula(paste0(vars$y,"~."))
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
+  if(!is.null(seed_val) && !is.na(seed_val))
+    set.seed(seed_val) 
+  
   out <- do.call(
     "ipredbagg", 
     c(
@@ -99,7 +110,8 @@ learn.bagimpute_step <- function(x, data, ...) {
     var_lists, 
     bag_wrap,
     dat = data,
-    opt = x$options
+    opt = x$options, 
+    seed_val = x$seed_val
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
   x$trained <- TRUE
