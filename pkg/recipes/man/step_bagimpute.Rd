@@ -5,7 +5,8 @@
 \title{Declare Which Variables Will be Imputed via Bagged Trees.}
 \usage{
 step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
-  options = list(nbagg = 25, keepX = FALSE), impute_with = NULL)
+  options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,
+  seed_val = sample.int(10^4, 1))
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -21,6 +22,8 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 \item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.}
 
 \item{impute_with}{A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.}
+
+\item{seed_val}{A integer used to create reproducible models. The same seed is used across all imputation models.}
 }
 \value{
 An object of class \code{bagimpute_step}.
