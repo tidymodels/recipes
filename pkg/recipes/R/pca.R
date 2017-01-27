@@ -64,22 +64,22 @@ step_pca_new <- function(terms = NULL,
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
-#' @importFrom stats as.formula model.frame prcomp
+#' @importFrom dimRed PCA dimRedData
 learn.pca_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
-  # should maybe use the formula method in case of missing data
-  pca_call <- quote(prcomp(x, retx, center, scale., tol))
-  args <- sub_args(stats:::prcomp.default, x$options, c("x", "..."))
-  args$x <- data[, col_names]
+  x$num <- min(x$num, ncol(data))
   
-  prc <- eval(pca_call, envir = args)
+  prc <- PCA(stdpars = x$options)
+  
+  prc <- prc@fun(dimRedData(as.data.frame(data[, col_names, drop = FALSE])), 
+                 list(ndim = x$num))
   
   step_pca_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = min(x$num, ncol(data)),
+    num = x$num,
     options = x$options,
     object = prc
   )
@@ -97,10 +97,11 @@ learn.pca_step <- function(x, data, ...) {
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
 #' @importFrom tibble as_tibble
-#' @importFrom stats predict
+#' @importFrom dimRed dimRedData
 process.pca_step <- function(x, data, ...) {
-  pca_vars <- rownames(x$object$rotation)
-  comps <- predict(x$object, data[, pca_vars, drop = FALSE])
+  pca_vars <- filter_terms(x$terms, data) 
+  # comps <- predict(x$object, dimRedData(data[, pca_vars, drop = FALSE]))@data
+  comps <- x$object@apply(dimRedData(as.data.frame(data[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:x$num, drop = FALSE]
   data <- cbind(data, comps)
   data <- data[, !(colnames(data) %in% pca_vars), drop = FALSE]
