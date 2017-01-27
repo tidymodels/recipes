@@ -30,7 +30,6 @@ test_that('correct kernel PCA values', {
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
   
-  # https://github.com/gdkrmr/dimRed/issues/3
-  # expect_equal(pca_pred, pca_pred_exp)
+  expect_equal(pca_pred, pca_pred_exp)
 })
 
