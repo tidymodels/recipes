@@ -3,8 +3,11 @@ library(magrittr)
 library(recipes)
 data(biomass)
 
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass)
+              data = biomass_tr)
 
 test_that('correct PCA values', {
   pca_extract <- rec %>% 
@@ -13,15 +16,18 @@ test_that('correct PCA values', {
     step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur, 
              options = list(retx = TRUE))
   
-  pca_extract_trained <- learn(pca_extract, training = biomass, verbose = FALSE)
+  pca_extract_trained <- learn(pca_extract, training = biomass_tr, verbose = FALSE)
   
-  pca_pred <- process(pca_extract_trained, newdata = biomass)
-  pca_pred <- as.matrix(pca_pred)[, -1]
+  pca_pred <- process(pca_extract_trained, newdata = biomass_te, roles = "predictor")
+  pca_pred <- as.matrix(pca_pred)
   
-  pca_obj <- prcomp(biomass[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
+  pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, 3:7])[, 1:pca_extract$steps[[3]]$num]
   
-  expect_equal(pca_extract_trained$steps[[3]]$object$rotation, pca_obj$rotation)
-  expect_equal(pca_pred, pca_obj$x)
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  
+  expect_equal(pca_pred, pca_pred_exp)
 })
 
 
@@ -31,14 +37,17 @@ test_that('Reduced rotation size', {
     step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
     step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur, num = 3)
   
-  pca_extract_trained <- learn(pca_extract, training = biomass, verbose = FALSE)
+  pca_extract_trained <- learn(pca_extract, training = biomass_tr, verbose = FALSE)
   
-  pca_pred <- process(pca_extract_trained, newdata = biomass)
-  pca_pred <- as.matrix(pca_pred[, paste0("PC", 1:3)])
+  pca_pred <- process(pca_extract_trained, newdata = biomass_te, roles = "predictor")
+  pca_pred <- as.matrix(pca_pred)
   
-  pca_obj <- prcomp(biomass[, 3:7], center = TRUE, scale. = TRUE)
-  pca_obj$rotation <- pca_obj$rotation[, 1:3]
-  pca_obj_pred <- predict(pca_obj, biomass[, 3:7])
+  pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, 3:7])[, 1:3]
+  rownames(pca_pred_exp) <- NULL
   
-  expect_equal(pca_pred, pca_obj_pred)
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  
+  expect_equal(pca_pred, pca_pred_exp)
 })
