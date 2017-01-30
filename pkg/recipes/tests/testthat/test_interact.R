@@ -11,7 +11,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('non-factor variables with dot', {
   int_rec <- rec %>% step_interact(~(.-HHV)^3, sep=":")
-  int_rec_trained <- learn(int_rec, tr_biomass)
+  int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
   
   te_new <- process(int_rec_trained, newdata = te_biomass, role = "predictor")
   te_new <- te_new[, sort(names(te_new))]
@@ -24,13 +24,13 @@ test_that('non-factor variables with dot', {
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
   
-  all.equal(te_og, te_new)
+  expect_equal(te_og, te_new)
 })
 
 
 test_that('non-factor variables with specific variables', {
   int_rec <- rec %>% step_interact(~carbon:hydrogen + oxygen:nitrogen:sulfur, sep = ":")
-  int_rec_trained <- learn(int_rec, tr_biomass)
+  int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
   
   te_new <- process(int_rec_trained, newdata = te_biomass, role = "predictor")
   te_new <- te_new[, sort(names(te_new))]
@@ -44,7 +44,7 @@ test_that('non-factor variables with specific variables', {
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
   
-  all.equal(te_og, te_new)
+  expect_equal(te_og, te_new)
 })
 
 

@@ -9,7 +9,7 @@
 step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
   = 95/5, uniqueCut = 10), removals = NULL)
 
-\method{learn}{nzv_step}(x, data, ...)
+\method{learn}{nzv_step}(x, training, ...)
 
 \method{process}{nzv_step}(x, data, ...)
 }
@@ -28,7 +28,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{x}{a \code{nzv_step} object that contains the list of predictors that should be removed.}
 
-\item{data}{a tibble or data frame that contains the training set.}
+\item{training}{a tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

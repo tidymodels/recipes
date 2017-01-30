@@ -10,7 +10,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,
   seed_val = sample.int(10^4, 1))
 
-\method{learn}{bagimpute_step}(x, data, ...)
+\method{learn}{bagimpute_step}(x, training, ...)
 
 \method{process}{bagimpute_step}(x, data, ...)
 }
@@ -33,7 +33,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{x}{A \code{bagimpute_step} object that contains the imputation specifications.}
 
-\item{data}{tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.}
+\item{training}{tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

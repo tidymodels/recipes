@@ -123,7 +123,7 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
       # Compute anything needed for the pre-processing steps
       # then apply it to the current training set
       
-      x$steps[[i]] <- learn(x$steps[[i]], data = training)
+      x$steps[[i]] <- learn(x$steps[[i]], training = training)
       training <- process(x$steps[[i]], data = training)
       x$term_info <- left_join(get_types(training), x$term_info, by = c("variable", "type"))
       

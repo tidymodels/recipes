@@ -9,7 +9,7 @@
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   options = list(center = TRUE, scale. = TRUE, retx = FALSE), object = NULL)
 
-\method{learn}{pca_step}(x, data, ...)
+\method{learn}{pca_step}(x, training, ...)
 
 \method{process}{pca_step}(x, data, ...)
 }
@@ -30,7 +30,7 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{x}{A \code{pca_step} object that contains the PCA specifications.}
 
-\item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

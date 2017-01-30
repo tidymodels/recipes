@@ -40,7 +40,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 #' For a training set of data, \code{learn.interact_step} computes the required information to produce interaction terms. Note that no interactions are created by this function.
 #' 
 #' @param x a \code{interact_step} object 
-#' @param data a tibble or data frame that contains the training set. 
+#' @param training a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom stats sd
@@ -48,15 +48,15 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 
 ## The idea is to save a bunch of x-factor interaction terms instead of 
 ## one large set of collected terms. 
-learn.interact_step <- function(x, data, na.rm = TRUE, ...) {
+learn.interact_step <- function(x, training, ...) {
   ## First, find the interaction terms based on the given formula
-  int_terms <- get_term_names(x$terms, vnames = colnames(data))
+  int_terms <- get_term_names(x$terms, vnames = colnames(training))
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
   ## Generate a standard R `terms` object from these short formulas and 
   ## save to make future interactions
-  int_terms <- make_small_terms(int_forms, data)
+  int_terms <- make_small_terms(int_forms, training)
   step_interact_new(
     terms = x$terms, 
     role = x$role, 

@@ -37,15 +37,15 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
 #' For a training set of data, \code{learn.scale_step} estimates the standard deviations from numeric columns. 
 #' 
 #' @param x a \code{scale_step} object that specifies which columns will be scaled
-#' @param data a tibble or data frame that contains the training set. 
+#' @param training a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom stats sd
 #' @rdname step_scale
 
-learn.scale_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
-  sds <- vapply(data[, col_names], sd, c(sd = 0), na.rm = TRUE)
+learn.scale_step <- function(x, training, ...) {
+  col_names <- filter_terms(x$terms, training) 
+  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = TRUE)
   step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
 }
 

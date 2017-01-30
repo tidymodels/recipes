@@ -56,15 +56,15 @@ step_kpca_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.kpca_step} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA. 
 #'
 #' @param x A \code{kpca_step} object that contains the kernel PCA specifications. 
-#' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
+#' @param training a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @importFrom dimRed kPCA dimRedData
 #' @rdname step_kpca
-learn.kpca_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
+learn.kpca_step <- function(x, training, ...) {
+  col_names <- filter_terms(x$terms, training) 
   
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
-  kprc <- kprc@fun(dimRedData(as.data.frame(data[, col_names, drop = FALSE])),
+  kprc <- kprc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
                    kprc@stdpars)
   
   step_kpca_new(

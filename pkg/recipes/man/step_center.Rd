@@ -8,7 +8,7 @@
 \usage{
 step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
-\method{learn}{center_step}(x, data, na.rm = TRUE, ...)
+\method{learn}{center_step}(x, training, na.rm = TRUE, ...)
 
 \method{process}{center_step}(x, data, ...)
 }
@@ -25,7 +25,7 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
 \item{x}{a \code{center_step} object that specifies which columns will be centered.}
 
-\item{data}{A tibble or data frame that contains the training set.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{na.rm}{A boolean indicates whether to remove NAs, default TRUE.}
 

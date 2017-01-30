@@ -10,7 +10,7 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   object = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
   0.2)))
 
-\method{learn}{kpca_step}(x, data, ...)
+\method{learn}{kpca_step}(x, training, ...)
 
 \method{process}{kpca_step}(x, data, ...)
 }
@@ -31,7 +31,7 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{x}{A \code{kpca_step} object that contains the kernel PCA specifications.}
 
-\item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

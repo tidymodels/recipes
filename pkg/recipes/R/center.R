@@ -36,16 +36,16 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
 #' For a training set of data, \code{learn.center_step} estimates the means for numeric columns.
 #' 
 #' @param x a \code{center_step} object that specifies which columns will be centered.
-#' @param data A tibble or data frame that contains the training set.
+#' @param training A tibble or data frame that contains the training set.
 #' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @rdname step_center
 
-learn.center_step <- function(x, data, na.rm = TRUE, ...) {
-  col_names <- filter_terms(x$terms, data) 
+learn.center_step <- function(x, training, na.rm = TRUE, ...) {
+  col_names <- filter_terms(x$terms, training) 
   
-  means <- vapply(data[, col_names], mean, c(mean = 0), na.rm = na.rm)
+  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = na.rm)
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 

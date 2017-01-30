@@ -39,11 +39,11 @@ step_spatialsign_new <- function(terms = NULL,
 
 #' \code{learn.spatialsign_step} processes a training data set for the transformation. 
 #' @param x a \code{spatialsign_step} object that contains the spatial sign objects.
-#' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
+#' @param training a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @rdname step_spatialsign
 
-learn.spatialsign_step <- function(x, data, ...) {
+learn.spatialsign_step <- function(x, training, ...) {
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,

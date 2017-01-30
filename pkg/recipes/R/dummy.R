@@ -54,14 +54,14 @@ step_dummy_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.dummy_step} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
 #' 
 #' @param x a \code{dummy_step} object that specifies which columns will be converted to dummy variables.
-#' @param data a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
+#' @param training a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom stats as.formula model.frame
 #' @rdname step_dummy
 
-learn.dummy_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
+learn.dummy_step <- function(x, training, ...) {
+  col_names <- filter_terms(x$terms, training) 
   
   ## I hate doing this but currently we are going to have 
   ## to save the terms object form the original (= training) 
@@ -72,7 +72,7 @@ learn.dummy_step <- function(x, data, ...) {
     form <- as.formula(paste0("~", col_names[i]))
     terms <- model.frame(
       form, 
-      data = data, 
+      data = training, 
       xlev = x$levels[[i]]
     )
     levels[[i]] <- attr(terms, "terms")

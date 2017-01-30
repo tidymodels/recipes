@@ -8,7 +8,7 @@
 \usage{
 step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
-\method{learn}{scale_step}(x, data, ...)
+\method{learn}{scale_step}(x, training, ...)
 
 \method{process}{scale_step}(x, data, ...)
 }
@@ -25,7 +25,7 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
 \item{x}{a \code{scale_step} object that specifies which columns will be scaled}
 
-\item{data}{a tibble or data frame that contains the training set.}
+\item{training}{a tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

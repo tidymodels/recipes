@@ -9,7 +9,7 @@
 step_interact(recipe, terms, role = "predictor", trained = FALSE,
   objects = NULL, sep = "_x_")
 
-\method{learn}{interact_step}(x, data, na.rm = TRUE, ...)
+\method{learn}{interact_step}(x, training, ...)
 
 \method{process}{interact_step}(x, data, ...)
 }
@@ -28,7 +28,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{x}{a \code{interact_step} object}
 
-\item{data}{a tibble or data frame that contains the training set.}
+\item{training}{a tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

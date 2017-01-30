@@ -51,18 +51,18 @@ step_nzv_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.nzv_step} determines which, if any, columns in the training set have sparse and unbalanced distributions.
 #'
 #' @param x a \code{nzv_step} object that contains the list of predictors that should be removed.
-#' @param data a tibble or data frame that contains the training set. 
+#' @param training a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom caret nearZeroVar
 #' @rdname step_nzv
 
-learn.nzv_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
+learn.nzv_step <- function(x, training, ...) {
+  col_names <- filter_terms(x$terms, training) 
   
   nzv_call <- quote(nearZeroVar(x, freqCut, uniqueCut, saveMetrics, names = TRUE, foreach, allowParallel))
   args <- sub_args(nearZeroVar, x$options)
-  args$x <- data[, col_names]
+  args$x <- training[, col_names]
   args$names <- TRUE
   filter <- eval(nzv_call, envir = args)
   

@@ -55,18 +55,18 @@ step_pca_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.pca_step} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. 
 #'
 #' @param x A \code{pca_step} object that contains the PCA specifications. 
-#' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
+#' @param training a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @importFrom dimRed PCA dimRedData
 #' @rdname step_pca
-learn.pca_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
+learn.pca_step <- function(x, training, ...) {
+  col_names <- filter_terms(x$terms, training) 
   
-  x$num <- min(x$num, ncol(data))
+  x$num <- min(x$num, ncol(training))
   
   prc <- PCA(stdpars = x$options)
   
-  prc <- prc@fun(dimRedData(as.data.frame(data[, col_names, drop = FALSE])), 
+  prc <- prc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])), 
                  list(ndim = x$num))
   
   step_pca_new(

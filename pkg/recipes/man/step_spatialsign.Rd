@@ -8,7 +8,7 @@
 \usage{
 step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
-\method{learn}{spatialsign_step}(x, data, ...)
+\method{learn}{spatialsign_step}(x, training, ...)
 
 \method{process}{spatialsign_step}(x, data, ...)
 }
@@ -23,7 +23,7 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \item{x}{a \code{spatialsign_step} object that contains the spatial sign objects.}
 
-\item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

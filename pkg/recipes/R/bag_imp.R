@@ -95,16 +95,16 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 #' For a training set of data, \code{learn.bagimpute_step} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). 
 #'
 #' @param x A \code{bagimpute_step} object that contains the imputation specifications. 
-#' @param data tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
+#' @param training tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @rdname step_bagimpute
 
-learn.bagimpute_step <- function(x, data, ...) {
-  var_lists <- impute_var_lists(x$terms,x $impute_with, data) 
+learn.bagimpute_step <- function(x, training, ...) {
+  var_lists <- impute_var_lists(x$terms,x $impute_with, training) 
   x$models <- lapply(
     var_lists, 
     bag_wrap,
-    dat = data,
+    dat = training,
     opt = x$options, 
     seed_val = x$seed_val
   )
