@@ -4,7 +4,7 @@
 \alias{learn.kpca_step}
 \alias{process.kpca_step}
 \alias{step_kpca}
-\title{Declare Which Variables Are Used for Kernel PCA Signal Extraction.}
+\title{Kernel PCA Signal Extraction.}
 \usage{
 step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   object = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
@@ -29,37 +29,27 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{options}{A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).}
 
-\item{x}{a \code{kpca_step} object that contains the kernel PCA objects.}
+\item{x}{A \code{kpca_step} object that contains the kernel PCA specifications.}
 
 \item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{kpca_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables that will be converted to principal components.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{kpca}.
+\code{step_kpca} and \code{learn.kpca_step} return objects of class \code{kpca_step}.
 
-An object of class \code{kpca_step}.
-
-A tibble of processed data.
+\code{process.kpca_step} returns a tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.
+\code{step_kpca} a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.
 
-For a training set of data, this function uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA while \code{\link{process}} is used to compute the components on specific data sets.
+For a training set of data, \code{learn.kpca_step} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA.
 
-For a trained \code{kpca_step} object, this function projects the current data into the kernel principal components defined by the training set. This creates new columns in the data set and removes the original columns.
+\code{process.kpca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns.
 }
 \concept{
-preprocessing pca projection_methods kernel_methods
-
-preprocessing pca projection_methods kernel_methods
-
 preprocessing pca projection_methods kernel_methods
 }
 \keyword{datagen}

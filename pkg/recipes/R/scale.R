@@ -1,13 +1,13 @@
-#' Declare Variables for Scaling
+#' Scaling Numeric Data
 #' 
-#' This function is a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one 
+#' \code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be scaled.
 #' @param role Not used by this step since no new variables are created. 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.scale_step}}. 
-#' @return An object of class \code{scale_step}. 
+#' @return \code{step_scale} and \code{learn.scale_step} return objects of class \code{scale_step}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
@@ -34,16 +34,11 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
   )
 }
 
-#' Estimate Standard Deviations from a Training Set for Scaling
-#' 
-#' For a training set of data, this function computes the sample standard deviation across numeric columns that require scaling Note that no data are scaled by this function; see  \code{\link{process.scale_step}}.
+#' For a training set of data, \code{learn.scale_step} estimates the standard deviations from numeric columns. 
 #' 
 #' @param x a \code{scale_step} object that specifies which columns will be scaled
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{scale_step}. 
-#' @keywords datagen
-#' @concept preprocessing normalization_methods
 #' @export
 #' @importFrom stats sd
 #' @rdname step_scale
@@ -54,16 +49,10 @@ learn.scale_step <- function(x, data, ...) {
   step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
 }
 
-#' Scale Variables in a Data Set.
+#' \code{process.scale_step} is used to perform the scaling on specific data sets. This replaces values in the original columns. 
 #' 
-#' For a trained \code{scale_step} object, this function will divide the sample standard deviation obtained from the training set into the columns in the current data. 
-#' 
-#' @param x A trained \code{scale_step} object.
 #' @param data A tibble or data frame that has numeric variables that will be scaled
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @return \code{process.scale_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_scale

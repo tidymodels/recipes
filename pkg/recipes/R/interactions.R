@@ -1,6 +1,6 @@
-#' Declare Interaction Variables
+#' Create Interaction Variables
 #' 
-#' This function is a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables
+#' \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A traditional R formula that contains interaction terms.
@@ -8,7 +8,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.
-#' @return An object of class \code{interact_step}. 
+#' @return \code{step_interact} and \code{learn.interact_step} return objects of class \code{interact_step}.
 #' @keywords datagen
 #' @concept preprocessing 
 #' @export
@@ -37,16 +37,11 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
   )
 }
 
-#' Estimate Interaction Information from a Training Set
-#' 
-#' For a training set of data, this function computes the required information to produce interaction terms.Note that no interactions are created by this function; see  \code{\link{process.interact_step}}.
+#' For a training set of data, \code{learn.interact_step} computes the required information to produce interaction terms. Note that no interactions are created by this function.
 #' 
 #' @param x a \code{interact_step} object 
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{interact_step}. 
-#' @keywords datagen
-#' @concept preprocessing
 #' @export
 #' @importFrom stats sd
 #' @rdname step_interact
@@ -71,16 +66,10 @@ learn.interact_step <- function(x, data, na.rm = TRUE, ...) {
   )
 }
 
-#' Create Interactions in a Data Set.
+#' \code{process.interact_step} augment the current data with columns containing the interactions. 
 #' 
-#' For a trained \code{interact_step} object, this function will augment the current data with columns containing the interactions. 
-#' 
-#' @param x A trained \code{interact_step} object.
 #' @param data A tibble or data frame that has numeric variables for the interactions.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing 
+#' @return \code{process.interact_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats model.matrix

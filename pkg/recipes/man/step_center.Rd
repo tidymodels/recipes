@@ -4,7 +4,7 @@
 \alias{learn.center_step}
 \alias{process.center_step}
 \alias{step_center}
-\title{Declare Variables for Centering.}
+\title{Centering Numeric Data}
 \usage{
 step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
@@ -31,31 +31,21 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{center_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables that will be centered.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{center_step}.
-
-An object of class \code{center_step}.
+\code{step_center} and \code{learn.center_step} return objects of class \code{center_step}.
 
 A tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
+\code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
 
-For a training set of data, this function computes the sample mean across numeric columns that require centering. Note that no data are centered by this function; see  \code{\link{process.center_step}}.
+For a training set of data, \code{learn.center_step} estimates the means for numeric columns.
 
-For a trained \code{center_step} object, this function will subtract the sample mean obtained from the training set from column in the current data.
+\code{process.center_step} is used to center the columns in specific data sets. This replaces values in the original columns.
 }
 \concept{
-preprocessing normalization_methods
-
-preprocessing normalization_methods
-
 preprocessing normalization_methods
 }
 \keyword{datagen}

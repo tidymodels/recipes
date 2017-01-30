@@ -4,7 +4,7 @@
 \alias{learn.dummy_step}
 \alias{process.dummy_step}
 \alias{step_dummy}
-\title{Declare Which Variables Should Be Converted to Dummy Variables.}
+\title{Dummy Variables Creation.}
 \usage{
 step_dummy(recipe, terms, role = "predictor", trained = FALSE,
   contrast = options("contrasts"), naming = function(var, lvl) paste(var,
@@ -35,31 +35,21 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{dummy_step} object.}
-
 \item{data}{A tibble or data frame that has nominal variables that will be converted to dumy variables.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{dummy_step}.
-
-An object of class \code{dummy_step}.
+\code{step_dummy} and \code{learn.dummy_step} return objects of class \code{dummy_step}.
 
 A tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
+\code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 
-For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}).
+For a training set of data, \code{learn.dummy_step} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}.
 
-For a trained \code{dummy_step} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s).
+\code{process.dummy_step} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s).
 }
 \concept{
-preprocessing dummy_variables model_specification dummy_variables variable_encodings
-
-preprocessing dummy_variables model_specification dummy_variables variable_encodings
-
 preprocessing dummy_variables model_specification dummy_variables variable_encodings
 }
 \keyword{datagen}

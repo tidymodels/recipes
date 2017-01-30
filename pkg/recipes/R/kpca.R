@@ -1,6 +1,6 @@
-#' Declare Which Variables Are Used for Kernel PCA Signal Extraction.
+#' Kernel PCA Signal Extraction.
 #' 
-#' This function is a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion. 
+#' \code{step_kpca} a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to compute the components.
@@ -9,7 +9,7 @@
 #' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).
 #' @param object An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.
-#' @return An object of class \code{kpca}. 
+#' @return \code{step_kpca} and \code{learn.kpca_step} return objects of class \code{kpca_step}. 
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
@@ -53,16 +53,11 @@ step_kpca_new <- function(terms = NULL,
   )
 }
 
-#' Estimate the Kernel Principal Component Loadings from a Training Set.
-#' 
-#' For a training set of data, this function uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA while \code{\link{process}} is used to compute the components on specific data sets. 
+#' For a training set of data, \code{learn.kpca_step} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA. 
 #'
-#' @param x a \code{kpca_step} object that contains the kernel PCA objects.
+#' @param x A \code{kpca_step} object that contains the kernel PCA specifications. 
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{kpca_step}. 
-#' @keywords datagen
-#' @concept preprocessing pca projection_methods kernel_methods
 #' @importFrom dimRed kPCA dimRedData
 #' @rdname step_kpca
 learn.kpca_step <- function(x, data, ...) {
@@ -82,16 +77,10 @@ learn.kpca_step <- function(x, data, ...) {
   )
 }
 
-#' Compute the Kernel Principal Components for a Data Set.
+#'  \code{process.kpca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' For a trained \code{kpca_step} object, this function projects the current data into the kernel principal components defined by the training set. This creates new columns in the data set and removes the original columns. 
-#' 
-#' @param x A trained \code{kpca_step} object.
 #' @param data A tibble or data frame that has numeric variables that will be converted to principal components.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing pca projection_methods kernel_methods
+#' @return \code{process.kpca_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom dimRed dimRedData
 #' @rdname step_kpca

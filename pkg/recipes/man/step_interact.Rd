@@ -4,7 +4,7 @@
 \alias{learn.interact_step}
 \alias{process.interact_step}
 \alias{step_interact}
-\title{Declare Interaction Variables}
+\title{Create Interaction Variables}
 \usage{
 step_interact(recipe, terms, role = "predictor", trained = FALSE,
   objects = NULL, sep = "_x_")
@@ -32,31 +32,21 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{interact_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables for the interactions.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{interact_step}.
-
-An object of class \code{interact_step}.
+\code{step_interact} and \code{learn.interact_step} return objects of class \code{interact_step}.
 
 A tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables
+\code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
 
-For a training set of data, this function computes the required information to produce interaction terms.Note that no interactions are created by this function; see  \code{\link{process.interact_step}}.
+For a training set of data, \code{learn.interact_step} computes the required information to produce interaction terms. Note that no interactions are created by this function.
 
-For a trained \code{interact_step} object, this function will augment the current data with columns containing the interactions.
+\code{process.interact_step} augment the current data with columns containing the interactions.
 }
 \concept{
-preprocessing
-
-preprocessing
-
 preprocessing
 }
 \keyword{datagen}

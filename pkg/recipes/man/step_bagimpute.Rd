@@ -4,7 +4,7 @@
 \alias{learn.bagimpute_step}
 \alias{process.bagimpute_step}
 \alias{step_bagimpute}
-\title{Declare Which Variables Will be Imputed via Bagged Trees.}
+\title{Imputed via Bagged Trees.}
 \usage{
 step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,
@@ -31,37 +31,27 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{seed_val}{A integer used to create reproducible models. The same seed is used across all imputation models.}
 
-\item{x}{a \code{bagimpute_step} object that contains the model objects.}
+\item{x}{A \code{bagimpute_step} object that contains the imputation specifications.}
 
-\item{data}{a tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.}
+\item{data}{tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
-
-\item{x}{A trained \code{bagimpute_step} object.}
 
 \item{data}{A tibble or data frame that will be imputed.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{bagimpute_step}.
+\code{step_bagimpute} and \code{learn.bagimpute_step} return objects of class \code{bagimpute_step}.
 
-An object of class \code{bagimpute_step}.
-
-A tibble of processed data.
+\code{process.bagimpute_step} returns a tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
+\code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
 
-For a training set of data, this function uses \code{\link[ipred]{ipredbagg}} to create models that will be used to impute missing data. This transformation only fits the models while \code{\link{process}} is used to do the imputation for specific data sets.
+For a training set of data, \code{learn.bagimpute_step} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}).
 
-For a trained \code{bagimpute_step} object, this function imputes data based on models created on the training set.
+\code{process.bagimpute_step} is used to perform the imputation on specific data sets. This replaces values in the original columns.
 }
 \concept{
-preprocessing imputation
-
-preprocessing imputation
-
 preprocessing imputation
 }
 \keyword{datagen}

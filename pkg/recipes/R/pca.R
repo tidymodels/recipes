@@ -1,6 +1,6 @@
-#' Declare Which Variables Are Used for PCA Signal Extraction.
+#' PCA Signal Extraction.
 #' 
-#' This function is a \emph{specification} of a recipe step that will convert numeric data into one or more principal components. 
+#' \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to compute the components.
@@ -9,7 +9,7 @@
 #' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).
 #' @param object The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.
-#' @return An object of class \code{pca_step}. 
+#' @return \code{step_pca} and \code{learn.pca_step} return objects of class \code{pca_step}. 
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
 #' @export
@@ -52,16 +52,11 @@ step_pca_new <- function(terms = NULL,
   )
 }
 
-#' Estimate the Principal Component Loadings from a Training Set.
-#' 
-#' For a training set of data, this function uses \code{\link[stats]{prcomp}} to estimate the loadings for the principal components. This transformation only compute the required statistics for PCA while \code{\link{process}} is used to compute the components on specific data sets. 
+#' For a training set of data, \code{learn.pca_step} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. 
 #'
-#' @param x a \code{pca_step} object that contains the PCA objects.
+#' @param x A \code{pca_step} object that contains the PCA specifications. 
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{pca_step}. 
-#' @keywords datagen
-#' @concept preprocessing pca projection_methods
 #' @importFrom dimRed PCA dimRedData
 #' @rdname step_pca
 learn.pca_step <- function(x, data, ...) {
@@ -84,16 +79,10 @@ learn.pca_step <- function(x, data, ...) {
   )
 }
 
-#' Compute the Principal Components for a Data Set.
+#'  \code{process.pca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' For a trained \code{pca_step} object, this function projects the current data into the principal components defined by the training set. This creates new columns in the data set and removes the original columns. 
-#' 
-#' @param x A trained \code{pca_step} object.
 #' @param data A tibble or data frame that has numeric variables that will be converted to principal components.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing pca projection_methods
+#' @return \code{process.pca_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom dimRed dimRedData
 #' @rdname step_pca

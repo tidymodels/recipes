@@ -1,6 +1,6 @@
-#' Declare Which Variables Should Be Converted to Dummy Variables.
+#' Dummy Variables Creation.
 #' 
-#' This function is a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
+#' \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
@@ -9,7 +9,7 @@
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below. 
 #' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.dummy_step}}.
-#' @return An object of class \code{dummy_step}. 
+#' @return \code{step_dummy} and \code{learn.dummy_step} return objects of class \code{dummy_step}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
@@ -51,16 +51,11 @@ step_dummy_new <- function(terms = NULL,
 }
 
 
-#' Estimate Dummy Variable Encoding from a Training Set.
-#' 
-#' For a training set of data, this function enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed} (see \code{\link{process.dummy_step}}). 
+#' For a training set of data, \code{learn.dummy_step} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
 #' 
 #' @param x a \code{dummy_step} object that specifies which columns will be converted to dummy variables.
 #' @param data a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{dummy_step}. 
-#' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 #' @importFrom stats as.formula model.frame
 #' @rdname step_dummy
@@ -93,16 +88,10 @@ learn.dummy_step <- function(x, data, ...) {
   )
 }
 
-#' Generate dummy variables in a data set.
+#' \code{process.dummy_step} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
 #' 
-#' For a trained \code{dummy_step} object, this function can be used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
-#' 
-#' @param x A trained \code{dummy_step} object.
 #' @param data A tibble or data frame that has nominal variables that will be converted to dumy variables.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
+#' @return \code{process.dummy_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom stats as.formula model.matrix
 #' @importFrom tibble as_tibble

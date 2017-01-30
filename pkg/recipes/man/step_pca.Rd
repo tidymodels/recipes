@@ -4,7 +4,7 @@
 \alias{learn.pca_step}
 \alias{process.pca_step}
 \alias{step_pca}
-\title{Declare Which Variables Are Used for PCA Signal Extraction.}
+\title{PCA Signal Extraction.}
 \usage{
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   options = list(center = TRUE, scale. = TRUE, retx = FALSE), object = NULL)
@@ -28,37 +28,27 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{object}{The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.}
 
-\item{x}{a \code{pca_step} object that contains the PCA objects.}
+\item{x}{A \code{pca_step} object that contains the PCA specifications.}
 
 \item{data}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{pca_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables that will be converted to principal components.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{pca_step}.
+\code{step_pca} and \code{learn.pca_step} return objects of class \code{pca_step}.
 
-An object of class \code{pca_step}.
-
-A tibble of processed data.
+\code{process.pca_step} returns a tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will convert numeric data into one or more principal components.
+\code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components.
 
-For a training set of data, this function uses \code{\link[stats]{prcomp}} to estimate the loadings for the principal components. This transformation only compute the required statistics for PCA while \code{\link{process}} is used to compute the components on specific data sets.
+For a training set of data, \code{learn.pca_step} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA.
 
-For a trained \code{pca_step} object, this function projects the current data into the principal components defined by the training set. This creates new columns in the data set and removes the original columns.
+\code{process.pca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns.
 }
 \concept{
-preprocessing pca projection_methods
-
-preprocessing pca projection_methods
-
 preprocessing pca projection_methods
 }
 \keyword{datagen}

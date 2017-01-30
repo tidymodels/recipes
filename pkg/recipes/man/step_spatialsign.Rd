@@ -4,7 +4,7 @@
 \alias{learn.spatialsign_step}
 \alias{process.spatialsign_step}
 \alias{step_spatialsign}
-\title{Declare Which Variables for the Spatial Sign.}
+\title{Spatial Sign Preprocessing.}
 \usage{
 step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
@@ -27,31 +27,21 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{spatialsign_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables that will be transformed.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{spatialsign_step}.
+\code{step_spatialsign} and \code{learn.spatialsign_step} return objects of class \code{spatialsign_step}.
 
-An object of class \code{spatialsign_step}.
-
-A tibble of processed data.
+\code{process.spatialsign_step} returns a tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
+\code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
 
-The spatial sign is a transformation of the original variables that does not require any parameters to be estimated. As such, this function only returns the original object.
+\code{learn.spatialsign_step} processes a training data set for the transformation.
 
-For a \code{spatialsign_step} object, this function projects the current data into a unit sphere. This creates overwrites the original columns
+To project the data onto a unit sphere, \code{process.spatialsign_step} is used and this overwrites the original columns.
 }
 \concept{
-preprocessing projection_methods
-
-preprocessing projection_methods
-
 preprocessing projection_methods
 }
 \keyword{datagen}

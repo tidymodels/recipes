@@ -1,6 +1,6 @@
-#' Declare Which Variables Will be Imputed via Bagged Trees.
+#' Imputed via Bagged Trees.
 #' 
-#' This function is a \emph{specification} of a recipe step that will create bagged tree models to impute missing data. 
+#' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
 #' @param terms A representation of the variables or terms that will be imputed.
@@ -10,7 +10,7 @@
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.
-#' @return An object of class \code{bagimpute_step}. 
+#' @return \code{step_bagimpute} and \code{learn.bagimpute_step} return objects of class \code{bagimpute_step}. 
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -92,16 +92,11 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 }
 
 
-#' Estimate the Bagged Tree Imputation Models from a Training Set.
-#' 
-#' For a training set of data, this function uses \code{\link[ipred]{ipredbagg}} to create models that will be used to impute missing data. This transformation only fits the models while \code{\link{process}} is used to do the imputation for specific data sets. 
+#' For a training set of data, \code{learn.bagimpute_step} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). 
 #'
-#' @param x a \code{bagimpute_step} object that contains the model objects.
-#' @param data a tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
+#' @param x A \code{bagimpute_step} object that contains the imputation specifications. 
+#' @param data tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
-#' @return An object of class \code{bagimpute_step}. 
-#' @keywords datagen
-#' @concept preprocessing imputation
 #' @rdname step_bagimpute
 
 learn.bagimpute_step <- function(x, data, ...) {
@@ -118,16 +113,10 @@ learn.bagimpute_step <- function(x, data, ...) {
   x
 }
 
-#' Impute Missing Data a Data Set using Bagged Trees.
+#' \code{process.bagimpute_step} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
 #' 
-#' For a trained \code{bagimpute_step} object, this function imputes data based on models created on the training set. 
-#' 
-#' @param x A trained \code{bagimpute_step} object.
 #' @param data A tibble or data frame that will be imputed.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @return A tibble of processed data. 
-#' @keywords datagen
-#' @concept preprocessing imputation
+#' @return \code{process.bagimpute_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @rdname step_bagimpute

@@ -4,7 +4,7 @@
 \alias{learn.nzv_step}
 \alias{process.nzv_step}
 \alias{step_nzv}
-\title{Declare Which Variables Are Used Near-Zero Variance Filter.}
+\title{Near-Zero Variance Filter.}
 \usage{
 step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
   = 95/5, uniqueCut = 10), removals = NULL)
@@ -32,31 +32,21 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{nzv_step} object.}
-
 \item{data}{A tibble or data frame.}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{nzv_step}.
-
-An object of class \code{nzv_step}.
+\code{step_nzv} and \code{learn.nzv_step} return objects of class \code{nzv_step}.
 
 A tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
+\code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
 
-For a training set of data, this function uses \code{\link[caret]{nearZeroVar}} to determine which, if any, columns in the training set have sparse and unbalanced distributions.
+For a training set of data, \code{learn.nzv_step} determines which, if any, columns in the training set have sparse and unbalanced distributions.
 
-For a trained \code{nzv_step} object, this function potentially removes columns from the data.
+\code{process.nzv_step} is used to potentially remove columns from the data.
 }
 \concept{
-preprocessing variable_filters
-
-preprocessing variable_filters
-
 preprocessing variable_filters
 }
 \keyword{datagen}

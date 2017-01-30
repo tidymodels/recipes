@@ -4,7 +4,7 @@
 \alias{learn.scale_step}
 \alias{process.scale_step}
 \alias{step_scale}
-\title{Declare Variables for Scaling}
+\title{Scaling Numeric Data}
 \usage{
 step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
@@ -29,31 +29,21 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{x}{A trained \code{scale_step} object.}
-
 \item{data}{A tibble or data frame that has numeric variables that will be scaled}
-
-\item{...}{further arguments passed to or from other methods (not currently used).}
 }
 \value{
-An object of class \code{scale_step}.
-
-An object of class \code{scale_step}.
+\code{step_scale} and \code{learn.scale_step} return objects of class \code{scale_step}.
 
 A tibble of processed data.
 }
 \description{
-This function is a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one
+\code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
 
-For a training set of data, this function computes the sample standard deviation across numeric columns that require scaling Note that no data are scaled by this function; see  \code{\link{process.scale_step}}.
+For a training set of data, \code{learn.scale_step} estimates the standard deviations from numeric columns.
 
-For a trained \code{scale_step} object, this function will divide the sample standard deviation obtained from the training set into the columns in the current data.
+\code{process.scale_step} is used to perform the scaling on specific data sets. This replaces values in the original columns.
 }
 \concept{
-preprocessing normalization_methods
-
-preprocessing normalization_methods
-
 preprocessing normalization_methods
 }
 \keyword{datagen}
