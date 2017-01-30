@@ -37,7 +37,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 \value{
 \code{step_interact} and \code{learn.interact_step} return objects of class \code{interact_step}.
 
-A tibble of processed data.
+\code{process.interact_step} returns a tibble of processed data.
 }
 \description{
 \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.

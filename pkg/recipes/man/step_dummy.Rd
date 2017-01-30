@@ -40,7 +40,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 \value{
 \code{step_dummy} and \code{learn.dummy_step} return objects of class \code{dummy_step}.
 
-A tibble of processed data.
+\code{process.dummy_step} returns a tibble of processed data.
 }
 \description{
 \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).

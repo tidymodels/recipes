@@ -15,7 +15,7 @@
 #' 
 #' 
 step_interact <- function(recipe, terms, role = "predictor", trained = FALSE, objects = NULL, sep = "_x_") {
-  recipes:::add_step(
+  add_step(
     recipe, 
     step_interact_new(
       terms = terms, 
@@ -27,7 +27,7 @@ step_interact <- function(recipe, terms, role = "predictor", trained = FALSE, ob
 
 ## Initializes a new object
 step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects = NULL, sep = NULL) {
-  recipes:::step(
+  step(
     subclass = "interact", 
     terms = terms,
     role = role,
@@ -89,7 +89,7 @@ process.interact_step <- function(x, data, ...) {
   }
   colnames(out) <- gsub(":", x$sep, unlist(lapply(res, colnames)))
   data <- cbind(data, out)
-  tibble:::as_tibble(data)
+  as_tibble(data)
 }
 
 ## This uses the highest level of interactions

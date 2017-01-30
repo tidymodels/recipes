@@ -37,7 +37,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 \value{
 \code{step_nzv} and \code{learn.nzv_step} return objects of class \code{nzv_step}.
 
-A tibble of processed data.
+\code{process.nzv_step} returns a tibble of processed data.
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.

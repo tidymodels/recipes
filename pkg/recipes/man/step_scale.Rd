@@ -34,7 +34,7 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 \value{
 \code{step_scale} and \code{learn.scale_step} return objects of class \code{scale_step}.
 
-A tibble of processed data.
+\code{process.scale_step} returns a tibble of processed data.
 }
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.

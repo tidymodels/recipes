@@ -36,7 +36,7 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 \value{
 \code{step_center} and \code{learn.center_step} return objects of class \code{center_step}.
 
-A tibble of processed data.
+\code{process.center_step} returns a tibble of processed data.
 }
 \description{
 \code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
