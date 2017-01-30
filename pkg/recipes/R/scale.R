@@ -8,7 +8,6 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.scale_step}}. 
 #' @return An object of class \code{scale_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
@@ -43,11 +42,11 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{scale_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
 #' @importFrom stats sd
+#' @rdname step_scale
 
 learn.scale_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
@@ -63,11 +62,11 @@ learn.scale_step <- function(x, data, ...) {
 #' @param data A tibble or data frame that has numeric variables that will be scaled
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
 #' @importFrom tibble as_tibble
+#' @rdname step_scale
 
 process.scale_step <- function(x, data, ...) {
   data[, names(x$sds)] <- sweep(as.matrix(data[, names(x$sds)]), 2, x$sds, "/")

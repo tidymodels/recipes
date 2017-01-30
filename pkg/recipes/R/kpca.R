@@ -10,7 +10,6 @@
 #' @param options A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).
 #' @param object An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.
 #' @return An object of class \code{kpca}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
@@ -62,10 +61,10 @@ step_kpca_new <- function(terms = NULL,
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{kpca_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @importFrom dimRed kPCA dimRedData
+#' @rdname step_kpca
 learn.kpca_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
@@ -91,11 +90,11 @@ learn.kpca_step <- function(x, data, ...) {
 #' @param data A tibble or data frame that has numeric variables that will be converted to principal components.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @importFrom tibble as_tibble
 #' @importFrom dimRed dimRedData
+#' @rdname step_kpca
 process.kpca_step <- function(x, data, ...) {
   pca_vars <- filter_terms(x$terms, data) 
   comps <- x$object@apply(dimRedData(as.data.frame(data[, pca_vars, drop = FALSE])))@data

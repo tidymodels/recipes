@@ -6,7 +6,7 @@ This is a document to explore an approach to pre-processing data for modeling. T
 
 ## Definitions
 
-* __variables__ are the original data columns in a data frame or tibble. For example, in the formula `Y ~ A + B + A:B`, the variables are `A`, `B`, and `Y`. 
+* __variables__ are the original (raw) data columns in a data frame or tibble. For example, in the formula `Y ~ A + B + A:B`, the variables are `A`, `B`, and `Y`. 
 * __roles__ define how variables will be used in the model. Examples are: `predictor` (independent variables), `response`, and `case weight`. This is meant to be open-ended and extensible. Some rules will exist such as "outcomes must be main effects" (e.g. not interactions) or "certain operations can only be used on predictors", etc. 
 * __terms__ are columns in a design matrix such as `A`, `B`, and `A:B`. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have `predictor` roles would automatically be main effect terms  
 

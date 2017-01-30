@@ -9,7 +9,6 @@
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.
 #' @return An object of class \code{interact_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing 
 #' @export
@@ -46,11 +45,11 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{interact_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
 #' @importFrom stats sd
+#' @rdname step_interact
 
 ## The idea is to save a bunch of x-factor interaction terms instead of 
 ## one large set of collected terms. 
@@ -80,12 +79,12 @@ learn.interact_step <- function(x, data, na.rm = TRUE, ...) {
 #' @param data A tibble or data frame that has numeric variables for the interactions.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing 
 #' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats model.matrix
+#' @rdname step_interact
 
 process.interact_step <- function(x, data, ...) {
   ## Create low level model matrices then remove the non-interaction terms.

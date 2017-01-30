@@ -8,7 +8,6 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated. 
 #' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.center_step}}. 
 #' @return An object of class \code{center_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
@@ -43,10 +42,10 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
 #' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{center_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
+#' @rdname step_center
 
 learn.center_step <- function(x, data, na.rm = TRUE, ...) {
   col_names <- filter_terms(x$terms, data) 
@@ -63,11 +62,11 @@ learn.center_step <- function(x, data, na.rm = TRUE, ...) {
 #' @param data A tibble or data frame that has numeric variables that will be centered.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
 #' @importFrom tibble as_tibble
+#' @rdname step_center
 
 process.center_step <- function(x, data, ...) {
   data[, names(x$means)] <- sweep(as.matrix(data[, names(x$means)]), 2, x$means, "-")

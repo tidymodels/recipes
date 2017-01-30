@@ -11,7 +11,6 @@
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.
 #' @return An object of class \code{bagimpute_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -101,9 +100,10 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{bagimpute_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing imputation
+#' @rdname step_bagimpute
+
 learn.bagimpute_step <- function(x, data, ...) {
   var_lists <- impute_var_lists(x$terms,x $impute_with, data) 
   x$models <- lapply(
@@ -126,11 +126,12 @@ learn.bagimpute_step <- function(x, data, ...) {
 #' @param data A tibble or data frame that will be imputed.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
+#' @rdname step_bagimpute
+
 process.bagimpute_step <- function(x, data, ...) {
   missing_rows <- !complete.cases(data)
   if(!any(missing_rows))

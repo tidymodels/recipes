@@ -7,7 +7,6 @@
 #' @param role For model terms created by this step, what analysis role should they be assigned? 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @return An object of class \code{spatialsign_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing projection_methods
 #' @export
@@ -45,9 +44,10 @@ step_spatialsign_new <- function(terms = NULL,
 #' @param data a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{spatialsign_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing projection_methods
+#' @rdname step_spatialsign
+
 learn.spatialsign_step <- function(x, data, ...) {
   step_spatialsign_new(
     terms = x$terms,
@@ -63,11 +63,12 @@ learn.spatialsign_step <- function(x, data, ...) {
 #' @param data A tibble or data frame that has numeric variables that will be transformed.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing projection_methods
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
+#' @rdname step_spatialsign
+
 process.spatialsign_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   ss <- function(x) x/sqrt(sum(x^2))

@@ -9,7 +9,6 @@
 #' @param options A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list. 
 #' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.nzv_step}}. 
 #' @return An object of class \code{nzv_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
@@ -57,11 +56,12 @@ step_nzv_new <- function(terms = NULL,
 #' @param data a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{nzv_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
 #' @importFrom caret nearZeroVar
+#' @rdname step_nzv
+
 learn.nzv_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
   
@@ -88,11 +88,12 @@ learn.nzv_step <- function(x, data, ...) {
 #' @param data A tibble or data frame.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
 #' @importFrom tibble as_tibble
+#' @rdname step_nzv
+
 process.nzv_step <- function(x, data, ...) {
   if(length(x$removals) > 0)
     data <- data[, !(colnames(data) %in% x$removals)]

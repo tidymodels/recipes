@@ -10,7 +10,6 @@
 #' @param naming A function that defines the naming convention for new binary columns. See Details below. 
 #' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.dummy_step}}.
 #' @return An object of class \code{dummy_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
@@ -60,11 +59,11 @@ step_dummy_new <- function(terms = NULL,
 #' @param data a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{dummy_step}. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 #' @importFrom stats as.formula model.frame
+#' @rdname step_dummy
 
 learn.dummy_step <- function(x, data, ...) {
   col_names <- filter_terms(x$terms, data) 
@@ -102,12 +101,12 @@ learn.dummy_step <- function(x, data, ...) {
 #' @param data A tibble or data frame that has nominal variables that will be converted to dumy variables.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return A tibble of processed data. 
-#' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
 #' @importFrom stats as.formula model.matrix
 #' @importFrom tibble as_tibble
+#' @rdname step_dummy
 
 process.dummy_step <- function(x, data, ...) {
   ## Maybe do this in C? 
