@@ -8,7 +8,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.
-#' @return \code{step_interact} and \code{learn.interact_step} return objects of class \code{interact_step}.
+#' @return \code{step_interact} and \code{learn.step_interact} return objects of class \code{step_interact}.
 #' @keywords datagen
 #' @concept preprocessing 
 #' @export
@@ -37,9 +37,9 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
   )
 }
 
-#' For a training set of data, \code{learn.interact_step} computes the required information to produce interaction terms. Note that no interactions are created by this function.
+#' For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function.
 #' 
-#' @param x a \code{interact_step} object 
+#' @param x a \code{step_interact} object 
 #' @param training a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
@@ -48,7 +48,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 
 ## The idea is to save a bunch of x-factor interaction terms instead of 
 ## one large set of collected terms. 
-learn.interact_step <- function(x, training, ...) {
+learn.step_interact <- function(x, training, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
   ## For each interaction, create a new formula that has main effects
@@ -66,17 +66,17 @@ learn.interact_step <- function(x, training, ...) {
   )
 }
 
-#' \code{process.interact_step} augment the current data with columns containing the interactions. 
+#' \code{process.step_interact} augment the current data with columns containing the interactions. 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame that has numeric variables for the interactions.
-#' @return \code{process.interact_step} returns a tibble of processed data. 
+#' @return \code{process.step_interact} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats model.matrix
 #' @rdname step_interact
 
-process.interact_step <- function(object, newdata, ...) {
+process.step_interact <- function(object, newdata, ...) {
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
   res <- lapply(res, function(x) x[, grepl(":", colnames(x)), drop = FALSE])

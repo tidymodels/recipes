@@ -106,6 +106,7 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
+#' @export
 learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE, ...) {
   if(length(x$steps) == 0)
     stop("Add some steps")
@@ -159,6 +160,7 @@ process <- function(object, ...) UseMethod("process")
 #' @rdname process
 #' @importFrom tibble as_tibble 
 #' @importFrom dplyr filter
+#' @export
 
 process.recipe <- function(object, newdata = object$template, roles = "all", ...) {
   newdata <- if(!is_tibble(newdata))

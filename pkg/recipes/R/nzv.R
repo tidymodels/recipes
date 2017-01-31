@@ -7,8 +7,8 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param options A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list. 
-#' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.nzv_step}}. 
-#' @return \code{step_nzv} and \code{learn.nzv_step} return objects of class \code{nzv_step}.
+#' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.step_nzv}}. 
+#' @return \code{step_nzv} and \code{learn.step_nzv} return objects of class \code{step_nzv}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
@@ -48,16 +48,16 @@ step_nzv_new <- function(terms = NULL,
 }
 
 
-#' For a training set of data, \code{learn.nzv_step} determines which, if any, columns in the training set have sparse and unbalanced distributions.
+#' For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions.
 #'
-#' @param x a \code{nzv_step} object that contains the list of predictors that should be removed.
+#' @param x a \code{step_nzv} object that contains the list of predictors that should be removed.
 #' @param training a tibble or data frame that contains the training set. 
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom caret nearZeroVar
 #' @rdname step_nzv
 
-learn.nzv_step <- function(x, training, ...) {
+learn.step_nzv <- function(x, training, ...) {
   col_names <- filter_terms(x$terms, training) 
   
   nzv_call <- quote(nearZeroVar(x, freqCut, uniqueCut, saveMetrics, names = TRUE, foreach, allowParallel))
@@ -75,23 +75,23 @@ learn.nzv_step <- function(x, training, ...) {
   )
 }
 
-#' \code{process.nzv_step} is used to potentially remove columns from the data. 
+#' \code{process.step_nzv} is used to potentially remove columns from the data. 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame to be filtered.
-#' @return \code{process.nzv_step} returns a tibble of processed data. 
+#' @return \code{process.step_nzv} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_nzv
 
-process.nzv_step <- function(object, newdata, ...) {
+process.step_nzv <- function(object, newdata, ...) {
   if(length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)
 }
 
 #' @export
-print.nzv_step <- function(x, form_width = 30, ...) {
+print.step_nzv <- function(x, form_width = 30, ...) {
   cat("Near-zero variance filter on ")
   cat(form_printer(x, wdth = form_width))
   if(x$trained) cat(" [trained]\n") else cat("\n")

@@ -6,8 +6,8 @@
 #' @param terms A representation of the variables or terms that will be centered.
 #' @param role Not used by this step since no new variables are created. 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated. 
-#' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.center_step}}. 
-#' @return \code{step_center} and \code{learn.center_step} return objects of class \code{center_step}.
+#' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.step_center}}. 
+#' @return \code{step_center} and \code{learn.step_center} return objects of class \code{step_center}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
@@ -33,38 +33,38 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
   )
 }
 
-#' For a training set of data, \code{learn.center_step} estimates the means for numeric columns.
+#' For a training set of data, \code{learn.step_center} estimates the means for numeric columns.
 #' 
-#' @param x a \code{center_step} object that specifies which columns will be centered.
+#' @param x a \code{step_center} object that specifies which columns will be centered.
 #' @param training A tibble or data frame that contains the training set.
 #' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @rdname step_center
 
-learn.center_step <- function(x, training, na.rm = TRUE, ...) {
+learn.step_center <- function(x, training, na.rm = TRUE, ...) {
   col_names <- filter_terms(x$terms, training) 
   
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = na.rm)
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 
-#' \code{process.center_step} is used to center the columns in specific data sets. This replaces values in the original columns. 
+#' \code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns. 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame that has numeric variables that will be centered.
-#' @return \code{process.center_step} returns a tibble of processed data. 
+#' @return \code{process.step_center} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_center
 
-process.center_step <- function(object, newdata, ...) {
+process.step_center <- function(object, newdata, ...) {
   newdata[, names(object$means)] <- sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
   as_tibble(newdata)
 }
 
 #' @export
-print.center_step <- function(x, form_width = 30, ...) {
+print.step_center <- function(x, form_width = 30, ...) {
   cat("Centering with ")
   cat(form_printer(x, wdth = form_width))
   if(x$trained) cat(" [trained]\n") else cat("\n")

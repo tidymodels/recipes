@@ -8,8 +8,8 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below. 
-#' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.dummy_step}}.
-#' @return \code{step_dummy} and \code{learn.dummy_step} return objects of class \code{dummy_step}.
+#' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.step_dummy}}.
+#' @return \code{step_dummy} and \code{learn.step_dummy} return objects of class \code{step_dummy}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables variable_encodings
 #' @export
@@ -51,16 +51,16 @@ step_dummy_new <- function(terms = NULL,
 }
 
 
-#' For a training set of data, \code{learn.dummy_step} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
+#' For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
 #' 
-#' @param x a \code{dummy_step} object that specifies which columns will be converted to dummy variables.
+#' @param x a \code{step_dummy} object that specifies which columns will be converted to dummy variables.
 #' @param training a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @importFrom stats as.formula model.frame
 #' @rdname step_dummy
 
-learn.dummy_step <- function(x, training, ...) {
+learn.step_dummy <- function(x, training, ...) {
   col_names <- filter_terms(x$terms, training) 
   
   ## I hate doing this but currently we are going to have 
@@ -88,17 +88,17 @@ learn.dummy_step <- function(x, training, ...) {
   )
 }
 
-#' \code{process.dummy_step} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
+#' \code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame that has nominal variables that will be converted to dumy variables.
-#' @return \code{process.dummy_step} returns a tibble of processed data. 
+#' @return \code{process.step_dummy} returns a tibble of processed data. 
 #' @export
 #' @importFrom stats as.formula model.matrix
 #' @importFrom tibble as_tibble
 #' @rdname step_dummy
 
-process.dummy_step <- function(object, newdata, ...) {
+process.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C? 
   col_names <- names(object$levels)
   for(i in seq_along(object$levels)) {
@@ -119,7 +119,7 @@ process.dummy_step <- function(object, newdata, ...) {
 }
 
 #' @export
-print.dummy_step <- function(x, form_width = 30, ...) {
+print.step_dummy <- function(x, form_width = 30, ...) {
   cat("Dummy variables from ")
   cat(form_printer(x, wdth = form_width))
   if(x$trained) cat(" [trained]\n") else cat("\n")

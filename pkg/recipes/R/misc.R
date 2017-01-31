@@ -94,7 +94,7 @@ step <- function(subclass, ...) {
     list(
       ...
     ),
-    class = c(paste0(subclass, "_step"), "step")
+    class = c(paste0("step_", subclass), "step")
   )
 }
 

@@ -9,8 +9,8 @@
 #' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.  
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
-#' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.bagimpute_step}}.
-#' @return \code{step_bagimpute} and \code{learn.bagimpute_step} return objects of class \code{bagimpute_step}. 
+#' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.step_bagimpute}}.
+#' @return \code{step_bagimpute} and \code{learn.step_bagimpute} return objects of class \code{step_bagimpute}. 
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -92,14 +92,15 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 }
 
 
-#' For a training set of data, \code{learn.bagimpute_step} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). 
+#' For a training set of data, \code{learn.step_bagimpute} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). 
 #'
-#' @param x A \code{bagimpute_step} object that contains the imputation specifications. 
+#' @param x A \code{step_bagimpute} object that contains the imputation specifications. 
 #' @param training tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @param ... further arguments passed to or from other methods (not currently used).
+#' @export
 #' @rdname step_bagimpute
 
-learn.bagimpute_step <- function(x, training, ...) {
+learn.step_bagimpute <- function(x, training, ...) {
   var_lists <- impute_var_lists(x$terms,x $impute_with, training) 
   x$models <- lapply(
     var_lists, 
@@ -113,16 +114,17 @@ learn.bagimpute_step <- function(x, training, ...) {
   x
 }
 
-#' \code{process.bagimpute_step} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
+#' \code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame that will be imputed.
-#' @return \code{process.bagimpute_step} returns a tibble of processed data. 
+#' @return \code{process.step_bagimpute} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
+#' @export
 #' @rdname step_bagimpute
 
-process.bagimpute_step <- function(object, newdata, ...) {
+process.step_bagimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if(!any(missing_rows))
     return(newdata)
@@ -149,7 +151,7 @@ process.bagimpute_step <- function(object, newdata, ...) {
 
 
 #' @export
-print.bagimpute_step <- function(x, form_width = 30, ...) {
+print.step_bagimpute <- function(x, form_width = 30, ...) {
   cat("Bagged tree imputation for ")
   cat(form_printer(x, wdth = form_width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
