@@ -103,7 +103,7 @@ bc_trans <- function(x, lambda, eps = .001) {
 }
 
 ## helper for the log-likelihood calc
-ll_lam <- function(lambda, y, gm, eps = .001) {
+ll_bc <- function(lambda, y, gm, eps = .001) {
   n <- length(y)
   gm0 <- gm^(lambda - 1)
   z <- if(abs(lambda) <= eps)
@@ -117,7 +117,7 @@ ll_lam <- function(lambda, y, gm, eps = .001) {
 bc_obj <- function(lam, dat){
   dat <- dat[complete.cases(dat)]
   geo_mean <- exp(mean(log(dat)))
-  ll_lam(lambda = lam, y = dat, gm = geo_mean)
+  ll_bc(lambda = lam, y = dat, gm = geo_mean)
 }
 
 ## estimates the values
