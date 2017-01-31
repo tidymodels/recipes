@@ -7,11 +7,11 @@
 \title{PCA Signal Extraction.}
 \usage{
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(center = TRUE, scale. = TRUE, retx = FALSE), object = NULL)
+  options = list(center = TRUE, scale. = TRUE, retx = FALSE), res = NULL)
 
 \method{learn}{pca_step}(x, training, ...)
 
-\method{process}{pca_step}(x, data, ...)
+\method{process}{pca_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -26,7 +26,7 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{options}{A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).}
 
-\item{object}{The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.}
+\item{res}{The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.}
 
 \item{x}{A \code{pca_step} object that contains the PCA specifications.}
 
@@ -34,7 +34,9 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables that will be converted to principal components.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables that will be converted to principal components.}
 }
 \value{
 \code{step_pca} and \code{learn.pca_step} return objects of class \code{pca_step}.

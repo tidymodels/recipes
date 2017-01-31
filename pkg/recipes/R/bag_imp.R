@@ -115,35 +115,36 @@ learn.bagimpute_step <- function(x, training, ...) {
 
 #' \code{process.bagimpute_step} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
 #' 
-#' @param data A tibble or data frame that will be imputed.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that will be imputed.
 #' @return \code{process.bagimpute_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @rdname step_bagimpute
 
-process.bagimpute_step <- function(x, data, ...) {
-  missing_rows <- !complete.cases(data)
+process.bagimpute_step <- function(object, newdata, ...) {
+  missing_rows <- !complete.cases(newdata)
   if(!any(missing_rows))
-    return(data)
+    return(newdata)
   
-  old_data <- data
-  for(i in seq(along = x$models)) {
-    imp_var <- names(x$models)[i]
-    missing_rows <- !complete.cases(data[, imp_var])
+  old_data <- newdata
+  for(i in seq(along = object$models)) {
+    imp_var <- names(object$models)[i]
+    missing_rows <- !complete.cases(newdata[, imp_var])
     if(any(missing_rows)) {
-      preds <- x$models[[i]]$..imp_vars
+      preds <- object$models[[i]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if(all(is.na(pred_data))) {
         warning("All predictors are missing; cannot impute")
       } else {
-        pred_vals <- predict(x$models[[i]], pred_data)
-        data[missing_rows, imp_var] <- pred_vals
+        pred_vals <- predict(object$models[[i]], pred_data)
+        newdata[missing_rows, imp_var] <- pred_vals
       }
     }
   }
   ## changes character to factor!
-  as_tibble(data)
+  as_tibble(newdata)
 }
 
 

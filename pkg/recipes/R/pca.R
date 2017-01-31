@@ -8,7 +8,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).
-#' @param object The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.
+#' @param res The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.pca_step}}.
 #' @return \code{step_pca} and \code{learn.pca_step} return objects of class \code{pca_step}. 
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
@@ -20,7 +20,7 @@ step_pca <- function(recipe,
                      trained = FALSE,
                      num  = 5, 
                      options = list(center = TRUE, scale. = TRUE, retx = FALSE),
-                     object = NULL) {
+                     res = NULL) {
   add_step(
     recipe, 
     step_pca_new(
@@ -29,7 +29,7 @@ step_pca <- function(recipe,
       trained = trained, 
       num = num,
       options = options,
-      object = object
+      res = res
     )
   )
 }
@@ -39,7 +39,7 @@ step_pca_new <- function(terms = NULL,
                          trained = FALSE,
                          num  = NULL, 
                          options = NULL,
-                         object = NULL) {
+                         res = NULL) {
   
   step(
     subclass = "pca",
@@ -48,7 +48,7 @@ step_pca_new <- function(terms = NULL,
     trained = trained, 
     num = num,
     options = options,
-    object = object
+    res = res
   )
 }
 
@@ -75,25 +75,26 @@ learn.pca_step <- function(x, training, ...) {
     trained = TRUE,
     num = x$num,
     options = x$options,
-    object = prc
+    res = prc
   )
 }
 
 #'  \code{process.pca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' @param data A tibble or data frame that has numeric variables that will be converted to principal components.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables that will be converted to principal components.
 #' @return \code{process.pca_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom dimRed dimRedData
 #' @rdname step_pca
-process.pca_step <- function(x, data, ...) {
-  pca_vars <- filter_terms(x$terms, data) 
-  # comps <- predict(x$object, dimRedData(data[, pca_vars, drop = FALSE]))@data
-  comps <- x$object@apply(dimRedData(as.data.frame(data[, pca_vars, drop = FALSE])))@data
-  comps <- comps[, 1:x$num, drop = FALSE]
-  data <- cbind(data, comps)
-  data <- data[, !(colnames(data) %in% pca_vars), drop = FALSE]
-  as_tibble(data)
+process.pca_step <- function(object, newdata, ...) {
+  pca_vars <- filter_terms(object$terms, newdata) 
+  # comps <- predict(object$object, dimRedData(data[, pca_vars, drop = FALSE]))@data
+  comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
+  comps <- comps[, 1:object$num, drop = FALSE]
+  newdata <- cbind(newdata, comps)
+  newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
+  as_tibble(newdata)
 }
 
 #' @export

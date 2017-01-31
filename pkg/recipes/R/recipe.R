@@ -124,7 +124,7 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
       # then apply it to the current training set
       
       x$steps[[i]] <- learn(x$steps[[i]], training = training)
-      training <- process(x$steps[[i]], data = training)
+      training <- process(x$steps[[i]], newdata = training)
       x$term_info <- left_join(get_types(training), x$term_info, by = c("variable", "type"))
       
       ## Update the roles and the term source
@@ -146,12 +146,12 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
 #' @keywords datagen
 #' @concept preprocessing model_specification
 #' @exportPattern ^process
-process <- function(x, ...) UseMethod("process")
+process <- function(object, ...) UseMethod("process")
 
 #' Apply a Trained Data Recipe
 #'
 #' For a recipe with at least one preprocessing step that has been trained by \code{\link{learn.recipe}}, apply the computations to new data.
-#' @param x A trained object such as a \code{\link{recipe}} with at least one preprocessing step.
+#' @param object A trained object such as a \code{\link{recipe}} with at least one preprocessing step.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @param newdata A data frame or tibble for whom the preprocessing will be applied.
 #' @param roles A character vector to choose which types of columns to return (e.g. "predictor"). By default all columns are returned.
@@ -160,20 +160,20 @@ process <- function(x, ...) UseMethod("process")
 #' @importFrom tibble as_tibble 
 #' @importFrom dplyr filter
 
-process.recipe <- function(x, newdata = x$template, roles = "all", ...) {
+process.recipe <- function(object, newdata = object$template, roles = "all", ...) {
   newdata <- if(!is_tibble(newdata))
-    as_tibble(newdata[, x$var_info$variable, drop = FALSE]) else
-      newdata[, x$var_info$variable]
+    as_tibble(newdata[, object$var_info$variable, drop = FALSE]) else
+      newdata[, object$var_info$variable]
   
-  for(i in seq(along = x$steps)) {
-    newdata <- process(x$steps[[i]], data = newdata)
+  for(i in seq(along = object$steps)) {
+    newdata <- process(object$steps[[i]], newdata = newdata)
   }
   if(all(roles != "all")) {
-    dat_info <- filter(x$term_info, role %in% roles)
+    dat_info <- filter(object$term_info, role %in% roles)
     if(nrow(dat_info) == 0) {
       msg <- paste("No matching `roles` were found; returning everything instead", 
                    "Existing roles are:", 
-                   paste0(sort(unique(x$term_info$role)), collapse = ", "))
+                   paste0(sort(unique(object$term_info$role)), collapse = ", "))
       warning(msg)
     }
     keepers <- dat_info$variable

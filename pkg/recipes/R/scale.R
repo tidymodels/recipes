@@ -51,15 +51,16 @@ learn.scale_step <- function(x, training, ...) {
 
 #' \code{process.scale_step} is used to perform the scaling on specific data sets. This replaces values in the original columns. 
 #' 
-#' @param data A tibble or data frame that has numeric variables that will be scaled
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables that will be scaled
 #' @return \code{process.scale_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_scale
 
-process.scale_step <- function(x, data, ...) {
-  data[, names(x$sds)] <- sweep(as.matrix(data[, names(x$sds)]), 2, x$sds, "/")
-  as_tibble(data)
+process.scale_step <- function(object, newdata, ...) {
+  newdata[, names(object$sds)] <- sweep(as.matrix(newdata[, names(object$sds)]), 2, object$sds, "/")
+  as_tibble(newdata)
 }
 
 #' @export

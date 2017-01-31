@@ -10,7 +10,7 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
 \method{learn}{center_step}(x, training, na.rm = TRUE, ...)
 
-\method{process}{center_step}(x, data, ...)
+\method{process}{center_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -31,7 +31,9 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables that will be centered.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables that will be centered.}
 }
 \value{
 \code{step_center} and \code{learn.center_step} return objects of class \code{center_step}.

@@ -24,7 +24,7 @@ test_that('correct kernel PCA values', {
                   kernel = kpca_rec$steps[[1]]$options$kernel,
                   kpar = kpca_rec$steps[[1]]$options$kpar)
 
-  pca_pred_exp <- predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num]
+  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num]
   colnames(pca_pred_exp) <- paste0("kPCA", 1:kpca_trained$steps[[1]]$num)
   
   rownames(pca_pred) <- NULL

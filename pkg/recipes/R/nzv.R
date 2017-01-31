@@ -77,16 +77,17 @@ learn.nzv_step <- function(x, training, ...) {
 
 #' \code{process.nzv_step} is used to potentially remove columns from the data. 
 #' 
-#' @param data A tibble or data frame.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame to be filtered.
 #' @return \code{process.nzv_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_nzv
 
-process.nzv_step <- function(x, data, ...) {
-  if(length(x$removals) > 0)
-    data <- data[, !(colnames(data) %in% x$removals)]
-  as_tibble(data)
+process.nzv_step <- function(object, newdata, ...) {
+  if(length(object$removals) > 0)
+    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
+  as_tibble(newdata)
 }
 
 #' @export

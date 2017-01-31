@@ -10,7 +10,7 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
 \method{learn}{scale_step}(x, training, ...)
 
-\method{process}{scale_step}(x, data, ...)
+\method{process}{scale_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -29,7 +29,9 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables that will be scaled}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables that will be scaled}
 }
 \value{
 \code{step_scale} and \code{learn.scale_step} return objects of class \code{scale_step}.

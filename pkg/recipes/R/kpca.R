@@ -8,20 +8,20 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).
-#' @param object An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.
+#' @param res An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.
 #' @return \code{step_kpca} and \code{learn.kpca_step} return objects of class \code{kpca_step}. 
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
 
 step_kpca <- function(recipe, 
-                     terms, 
-                     role = "predictor",
-                     trained = FALSE,
-                     num  = 5,
-                     object = NULL,
-                     options = list(kernel = "rbfdot", 
-                                    kpar = list(sigma = 0.2))) {
+                      terms, 
+                      role = "predictor",
+                      trained = FALSE,
+                      num  = 5,
+                      res = NULL,
+                      options = list(kernel = "rbfdot", 
+                                     kpar = list(sigma = 0.2))) {
   add_step(
     recipe, 
     step_kpca_new(
@@ -29,18 +29,18 @@ step_kpca <- function(recipe,
       role = role,
       trained = trained, 
       num = num,
-      object = object,
+      res = res,
       options = options
     )
   )
 }
 
 step_kpca_new <- function(terms = NULL, 
-                         role = "predictor",
-                         trained = FALSE,
-                         num  = NULL,
-                         object = NULL,
-                         options = NULL) {
+                          role = "predictor",
+                          trained = FALSE,
+                          num  = NULL,
+                          res = NULL,
+                          options = NULL) {
   
   step(
     subclass = "kpca",
@@ -48,7 +48,7 @@ step_kpca_new <- function(terms = NULL,
     role = role,
     trained = trained, 
     num = num,
-    object = object,
+    res = res,
     options = options
   )
 }
@@ -73,24 +73,25 @@ learn.kpca_step <- function(x, training, ...) {
     trained = TRUE,
     num = x$num,
     options = x$options,
-    object = kprc
+    res = kprc
   )
 }
 
 #'  \code{process.kpca_step} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' @param data A tibble or data frame that has numeric variables that will be converted to principal components.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables that will be processed.
 #' @return \code{process.kpca_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom dimRed dimRedData
 #' @rdname step_kpca
-process.kpca_step <- function(x, data, ...) {
-  pca_vars <- filter_terms(x$terms, data) 
-  comps <- x$object@apply(dimRedData(as.data.frame(data[, pca_vars, drop = FALSE])))@data
-  comps <- comps[, 1:x$num, drop = FALSE]
-  data <- cbind(data, comps)
-  data <- data[, !(colnames(data) %in% pca_vars), drop = FALSE]
-  as_tibble(data)
+process.kpca_step <- function(object, newdata, ...) {
+  pca_vars <- filter_terms(object$terms, newdata) 
+  comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
+  comps <- comps[, 1:object$num, drop = FALSE]
+  newdata <- cbind(newdata, comps)
+  newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
+  as_tibble(newdata)
 }
 
 #' @export

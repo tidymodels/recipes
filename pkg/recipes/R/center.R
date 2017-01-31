@@ -51,15 +51,16 @@ learn.center_step <- function(x, training, na.rm = TRUE, ...) {
 
 #' \code{process.center_step} is used to center the columns in specific data sets. This replaces values in the original columns. 
 #' 
-#' @param data A tibble or data frame that has numeric variables that will be centered.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables that will be centered.
 #' @return \code{process.center_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @rdname step_center
 
-process.center_step <- function(x, data, ...) {
-  data[, names(x$means)] <- sweep(as.matrix(data[, names(x$means)]), 2, x$means, "-")
-  as_tibble(data)
+process.center_step <- function(object, newdata, ...) {
+  newdata[, names(object$means)] <- sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
+  as_tibble(newdata)
 }
 
 #' @export

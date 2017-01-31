@@ -52,17 +52,18 @@ learn.spatialsign_step <- function(x, training, ...) {
 }
 
 #' To project the data onto a unit sphere, \code{process.spatialsign_step} is used and this overwrites the original columns.
-#' @param data A tibble or data frame that has numeric variables that will be transformed.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables that will be processed.
 #' @return  \code{process.spatialsign_step} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
 #' @rdname step_spatialsign
 
-process.spatialsign_step <- function(x, data, ...) {
-  col_names <- filter_terms(x$terms, data) 
+process.spatialsign_step <- function(object, newdata, ...) {
+  col_names <- filter_terms(object$terms, newdata) 
   ss <- function(x) x/sqrt(sum(x^2))
-  data[, col_names] <- t(apply(as.matrix(data[, col_names]), 1, ss))
-  as_tibble(data)
+  newdata[, col_names] <- t(apply(as.matrix(newdata[, col_names]), 1, ss))
+  as_tibble(newdata)
 }
 
 print.spatialsign_step <- function(x, form_width = 30, ...) {

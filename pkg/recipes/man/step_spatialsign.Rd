@@ -10,7 +10,7 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \method{learn}{spatialsign_step}(x, training, ...)
 
-\method{process}{spatialsign_step}(x, data, ...)
+\method{process}{spatialsign_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -27,7 +27,9 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables that will be transformed.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables that will be processed.}
 }
 \value{
 \code{step_spatialsign} and \code{learn.spatialsign_step} return objects of class \code{spatialsign_step}.

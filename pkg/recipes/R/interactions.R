@@ -68,28 +68,29 @@ learn.interact_step <- function(x, training, ...) {
 
 #' \code{process.interact_step} augment the current data with columns containing the interactions. 
 #' 
-#' @param data A tibble or data frame that has numeric variables for the interactions.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has numeric variables for the interactions.
 #' @return \code{process.interact_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom tibble as_tibble
 #' @importFrom stats model.matrix
 #' @rdname step_interact
 
-process.interact_step <- function(x, data, ...) {
+process.interact_step <- function(object, newdata, ...) {
   ## Create low level model matrices then remove the non-interaction terms.
-  res <- lapply(x$object, model.matrix, data = data)
+  res <- lapply(object$object, model.matrix, data = newdata)
   res <- lapply(res, function(x) x[, grepl(":", colnames(x)), drop = FALSE])
   ncols <- vapply(res, ncol, c(int = 1L))
-  out <- matrix(NA, nrow = nrow(data), ncol = sum(ncols))
+  out <- matrix(NA, nrow = nrow(newdata), ncol = sum(ncols))
   strt <- 1
   for(i in seq_along(ncols)) {
     cols <- (strt):(strt+ncols[i]-1)
     out[, cols] <- res[[i]]
     strt <- max(cols)+1
   }
-  colnames(out) <- gsub(":", x$sep, unlist(lapply(res, colnames)))
-  data <- cbind(data, out)
-  as_tibble(data)
+  colnames(out) <- gsub(":", object$sep, unlist(lapply(res, colnames)))
+  newdata <- cbind(newdata, out)
+  as_tibble(newdata)
 }
 
 ## This uses the highest level of interactions

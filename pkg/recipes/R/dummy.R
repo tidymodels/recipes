@@ -90,31 +90,32 @@ learn.dummy_step <- function(x, training, ...) {
 
 #' \code{process.dummy_step} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
 #' 
-#' @param data A tibble or data frame that has nominal variables that will be converted to dumy variables.
+#' @param object A trained step object.
+#' @param newdata A tibble or data frame that has nominal variables that will be converted to dumy variables.
 #' @return \code{process.dummy_step} returns a tibble of processed data. 
 #' @export
 #' @importFrom stats as.formula model.matrix
 #' @importFrom tibble as_tibble
 #' @rdname step_dummy
 
-process.dummy_step <- function(x, data, ...) {
+process.dummy_step <- function(object, newdata, ...) {
   ## Maybe do this in C? 
-  col_names <- names(x$levels)
-  for(i in seq_along(x$levels)) {
-    form <- as.formula(paste0("~", x$levels[i]))
+  col_names <- names(object$levels)
+  for(i in seq_along(object$levels)) {
+    form <- as.formula(paste0("~", object$levels[i]))
     indicators <- model.matrix(
-      object = x$levels[[i]], 
-      data = data
+      object = object$levels[[i]], 
+      data = newdata
       # contrasts.arg = x$contrast 
     )
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here 
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
-    colnames(indicators) <- x$naming(col_names[i], used_lvl)
-    data <- cbind(data, as.data.frame(indicators))
-    data[, col_names[i]] <- NULL
+    colnames(indicators) <- object$naming(col_names[i], used_lvl)
+    newdata <- cbind(newdata, as.data.frame(indicators))
+    newdata[, col_names[i]] <- NULL
   }
-  as_tibble(data)
+  as_tibble(newdata)
 }
 
 #' @export

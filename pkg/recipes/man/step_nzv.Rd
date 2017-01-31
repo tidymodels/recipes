@@ -11,7 +11,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \method{learn}{nzv_step}(x, training, ...)
 
-\method{process}{nzv_step}(x, data, ...)
+\method{process}{nzv_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -32,7 +32,9 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame to be filtered.}
 }
 \value{
 \code{step_nzv} and \code{learn.nzv_step} return objects of class \code{nzv_step}.

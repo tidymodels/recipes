@@ -7,12 +7,11 @@
 \title{Kernel PCA Signal Extraction.}
 \usage{
 step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  object = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
-  0.2)))
+  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)))
 
 \method{learn}{kpca_step}(x, training, ...)
 
-\method{process}{kpca_step}(x, data, ...)
+\method{process}{kpca_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -25,7 +24,7 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{num}{The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
 
-\item{object}{An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.}
+\item{res}{An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.kpca_step}}.}
 
 \item{options}{A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).}
 
@@ -35,7 +34,9 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables that will be converted to principal components.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables that will be processed.}
 }
 \value{
 \code{step_kpca} and \code{learn.kpca_step} return objects of class \code{kpca_step}.

@@ -12,7 +12,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \method{learn}{dummy_step}(x, training, ...)
 
-\method{process}{dummy_step}(x, data, ...)
+\method{process}{dummy_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -35,7 +35,9 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has nominal variables that will be converted to dumy variables.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has nominal variables that will be converted to dumy variables.}
 }
 \value{
 \code{step_dummy} and \code{learn.dummy_step} return objects of class \code{dummy_step}.

@@ -12,7 +12,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \method{learn}{bagimpute_step}(x, training, ...)
 
-\method{process}{bagimpute_step}(x, data, ...)
+\method{process}{bagimpute_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -37,7 +37,9 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that will be imputed.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that will be imputed.}
 }
 \value{
 \code{step_bagimpute} and \code{learn.bagimpute_step} return objects of class \code{bagimpute_step}.

@@ -5,12 +5,13 @@
 \alias{process.recipe}
 \title{Apply a Trained Data Recipe}
 \usage{
-process(x, ...)
+process(object, ...)
 
-\method{process}{recipe}(x, newdata = x$template, roles = "all", ...)
+\method{process}{recipe}(object, newdata = object$template, roles = "all",
+  ...)
 }
 \arguments{
-\item{x}{A trained object such as a \code{\link{recipe}} with at least one preprocessing step.}
+\item{object}{A trained object such as a \code{\link{recipe}} with at least one preprocessing step.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

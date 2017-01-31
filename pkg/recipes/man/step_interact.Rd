@@ -11,7 +11,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \method{learn}{interact_step}(x, training, ...)
 
-\method{process}{interact_step}(x, data, ...)
+\method{process}{interact_step}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -32,7 +32,9 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
-\item{data}{A tibble or data frame that has numeric variables for the interactions.}
+\item{object}{A trained step object.}
+
+\item{newdata}{A tibble or data frame that has numeric variables for the interactions.}
 }
 \value{
 \code{step_interact} and \code{learn.interact_step} return objects of class \code{interact_step}.
