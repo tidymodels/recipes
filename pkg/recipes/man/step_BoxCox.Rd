@@ -16,7 +16,7 @@ step_BoxCox(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be scaled.}
+\item{terms}{A representation of the variables or terms that will be transformed.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -36,7 +36,7 @@ step_BoxCox(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 
 \item{object}{A trained step object.}
 
-\item{newdata}{A tibble or data frame that has numeric variables that will be scaled}
+\item{newdata}{A tibble or data frame that has numeric variables that will be transformed}
 }
 \value{
 \code{step_BoxCox} and \code{learn.step_BoxCox} return objects of class \code{step_BoxCox}.

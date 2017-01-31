@@ -3,7 +3,7 @@
 #' \code{step_BoxCox} creates a \emph{specification} of a recipe step that will transform data using a simple Box-Cox transformation. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
-#' @param terms A representation of the variables or terms that will be scaled.
+#' @param terms A representation of the variables or terms that will be transformed.
 #' @param role Not used by this step since no new variables are created. 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param lambdas A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.step_BoxCox}}. 
