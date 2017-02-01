@@ -131,3 +131,22 @@ sub_args <- function(func, options, removals = NULL) {
   args
 }
 
+#' Sequences of Names with Padded Zeros
+#' 
+#' This function creates a series of \code{num} names with a common prefix. The names are numbered with leading zeros (e.g. \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
+#' 
+#' @param num A single integer for how many elements are created.
+#' @param prefix A character string that will start each name. .
+#' @return A character string of length \code{num}.
+#' @keywords datagen
+#' @concept string_functions naming_functions
+#' @export
+
+
+names0 <- function(num, prefix = "x") {
+  if(num < 1)
+    stop("`num` should be > 0")
+  ind <- format(1:num)
+  ind <- gsub(" ", "0", ind)
+  paste0(prefix, ind)
+}
