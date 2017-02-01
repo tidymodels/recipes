@@ -94,6 +94,7 @@ process.step_pca <- function(object, newdata, ...) {
   # comps <- predict(object$object, dimRedData(data[, pca_vars, drop = FALSE]))@data
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), "PC")
   newdata <- cbind(newdata, comps)
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
   as_tibble(newdata)
