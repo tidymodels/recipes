@@ -116,7 +116,7 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
       training[, x$var_info$variable]
   
   for(i in seq(along = x$steps)) {
-    note <- paste("step", i, gsub("_step$", "", class(x$steps[[i]])[1]))
+    note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
     if(!x$steps[[i]]$trained | fresh) {
       if(verbose) 
         cat(note, "training", "\n")
