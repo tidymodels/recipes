@@ -91,6 +91,7 @@ process.step_kpca <- function(object, newdata, ...) {
   pca_vars <- filter_terms(object$terms, newdata) 
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), "kPC")
   newdata <- cbind(newdata, comps)
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
   as_tibble(newdata)
