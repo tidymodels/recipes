@@ -16,7 +16,7 @@ step_hyperbolic(recipe, terms, role = NA, trained = FALSE, func = "sin",
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be transformed.}
+\item{terms}{A representation of the variables or terms that will be centered.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -28,7 +28,7 @@ step_hyperbolic(recipe, terms, role = NA, trained = FALSE, func = "sin",
 
 \item{x}{a \code{step_hyperbolic} object that specifies which columns will be transformed}
 
-\item{training}{a tibble or data frame that contains the training set.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

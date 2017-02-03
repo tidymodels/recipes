@@ -2,10 +2,8 @@
 #' 
 #' \code{step_log} creates a \emph{specification} of a recipe step that will log transform data. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
-#' @param terms A representation of the variables or terms that will be transformed.
+#' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created. 
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param base A numeric value for the base. 
 #' @return \code{step_log} and \code{learn.step_log} return objects of class \code{step_log}.
 #' @keywords datagen
@@ -38,8 +36,7 @@ step_log_new <- function(terms = NULL, role = NA, trained = FALSE,
 #' For a training set of data, \code{learn.step_log} configures the log transformation (by basically doing nothing). 
 #' 
 #' @param x a \code{step_log} object that specifies which columns will be transformed
-#' @param training a tibble or data frame that contains the training set. 
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @inheritParams learn.step_center
 #' @export
 #' @importFrom stats optimize
 #' @rdname step_log
@@ -56,7 +53,7 @@ learn.step_log <- function(x, training, ...) {
 
 #' \code{process.step_log} is used to transform columns on specific data sets. This replaces values in the original columns. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be transformed
 #' @return \code{process.step_log} returns a tibble of processed data. 
 #' @export

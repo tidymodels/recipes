@@ -23,7 +23,7 @@ step_sqrt(recipe, terms, role = NA, trained = FALSE)
 
 \item{x}{a \code{step_sqrt} object that specifies which columns will be transformed}
 
-\item{training}{a tibble or data frame that contains the training set.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

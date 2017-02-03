@@ -28,7 +28,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{x}{a \code{step_nzv} object that contains the list of predictors that should be removed.}
 
-\item{training}{a tibble or data frame that contains the training set.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

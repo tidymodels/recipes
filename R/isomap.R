@@ -2,10 +2,9 @@
 #' 
 #' \code{step_isomap} creates a \emph{specification} of a recipe step that will convert numeric data into one or more new dimensions. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to compute the dimensions.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as predictors in a model. 
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param num The number of isomap dimensions to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used. 
 #' @param options A list of options to \code{\link[dimRed]{Isomap}}. 
 #' @param res The \code{\link[dimRed]{Isomap}} object is stored here once this preprocessing step has be trained by \code{\link{learn.step_isomap}}.
@@ -55,8 +54,7 @@ step_isomap_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.step_isomap} estimates the mappings for the new dimensions. This transformation only computes the required statistics for the Isomap approximation. 
 #'
 #' @param x A \code{step_isomap} object that contains the Isomap specifications. 
-#' @param training a tibble or data frame that contains the training set. These data will be used to compute the mappings that are used when this step is applied.
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @param training A tibble or data frame that contains the training set. These data will be used to compute the mappings that are used when this step is applied.
 #' @importFrom dimRed Isomap dimRedData embed dimRedMethodList
 #' @export
 #' @rdname step_isomap
@@ -81,7 +79,7 @@ learn.step_isomap <- function(x, training, ...) {
 
 #'  \code{process.step_isomap} is used to compute the new dimensions on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to new dimensions.
 #' @return \code{process.step_isomap} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble

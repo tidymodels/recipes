@@ -23,7 +23,7 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \item{x}{a \code{step_spatialsign} object that contains the spatial sign objects.}
 
-\item{training}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

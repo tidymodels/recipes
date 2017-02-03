@@ -2,10 +2,9 @@
 #' 
 #' \code{step_ica} creates a \emph{specification} of a recipe step that will convert numeric data into one or more independent components. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to compute the components.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as predictors in a model. 
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param num The number of ICA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[fastICA]{fastICA}}. No defaults are set here. \bold{Note} that the arguments \code{X} and \code{n.comp} should not be passed here.
 #' @param res The \code{\link[fastICA]{fastICA}} object is stored here once this preprocessing step has be trained by \code{\link{learn.step_ica}}.
@@ -55,8 +54,8 @@ step_ica_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.step_ica} estimates the loadings for the independent components. This transformation only compute the required statistics for ICA. 
 #'
 #' @param x A \code{step_ica} object that contains the ICA specifications. 
-#' @param training a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @inheritParams learn.step_center
+#' @param training A tibble or data frame that contains the training set.  These data will be used to compute the loadings that are used when this step is applied.
 #' @importFrom dimRed FastICA dimRedData
 #' @export
 #' @rdname step_ica
@@ -82,7 +81,7 @@ learn.step_ica <- function(x, training, ...) {
 
 #'  \code{process.step_ica} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to independent components.
 #' @return \code{process.step_ica} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble

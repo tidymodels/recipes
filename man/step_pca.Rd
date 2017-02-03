@@ -30,7 +30,7 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{x}{A \code{step_pca} object that contains the PCA specifications.}
 
-\item{training}{a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

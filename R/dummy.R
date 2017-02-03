@@ -2,10 +2,9 @@
 #' 
 #' \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model. 
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently hooked up}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below. 
 #' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.step_dummy}}.
@@ -54,8 +53,7 @@ step_dummy_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
 #' 
 #' @param x a \code{step_dummy} object that specifies which columns will be converted to dummy variables.
-#' @param training a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @param training A tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
 #' @export
 #' @importFrom stats as.formula model.frame
 #' @rdname step_dummy
@@ -90,7 +88,7 @@ learn.step_dummy <- function(x, training, ...) {
 
 #' \code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has nominal variables that will be converted to dumy variables.
 #' @return \code{process.step_dummy} returns a tibble of processed data. 
 #' @export

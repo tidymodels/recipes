@@ -2,10 +2,9 @@
 #' 
 #' \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to compute the components.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model. 
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used. 
 #' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the arguments \code{x} and \code{y} should not be passed here (or at all).
 #' @param res The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.step_pca}}.
@@ -55,8 +54,7 @@ step_pca_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.step_pca} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. 
 #'
 #' @param x A \code{step_pca} object that contains the PCA specifications. 
-#' @param training a tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @param training A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @importFrom dimRed PCA dimRedData
 #' @export
 #' @rdname step_pca
@@ -82,7 +80,7 @@ learn.step_pca <- function(x, training, ...) {
 
 #'  \code{process.step_pca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to principal components.
 #' @return \code{process.step_pca} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble

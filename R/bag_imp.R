@@ -2,10 +2,9 @@
 #' 
 #' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be imputed.
 #' @param role Not used by this step since no new variables are created.  
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.  
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
@@ -96,7 +95,6 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 #'
 #' @param x A \code{step_bagimpute} object that contains the imputation specifications. 
 #' @param training tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
-#' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @rdname step_bagimpute
 
@@ -116,7 +114,7 @@ learn.step_bagimpute <- function(x, training, ...) {
 
 #' \code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that will be imputed.
 #' @return \code{process.step_bagimpute} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble

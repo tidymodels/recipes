@@ -2,10 +2,9 @@
 #' 
 #' \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced. 
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will evaluated by the filtering process.
 #' @param role Not used by this step since no new variables are created.
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param options A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list. 
 #' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.step_nzv}}. 
 #' @return \code{step_nzv} and \code{learn.step_nzv} return objects of class \code{step_nzv}.
@@ -51,8 +50,7 @@ step_nzv_new <- function(terms = NULL,
 #' For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions.
 #'
 #' @param x a \code{step_nzv} object that contains the list of predictors that should be removed.
-#' @param training a tibble or data frame that contains the training set. 
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @inheritParams learn.step_center
 #' @export
 #' @importFrom caret nearZeroVar
 #' @rdname step_nzv
@@ -77,7 +75,7 @@ learn.step_nzv <- function(x, training, ...) {
 
 #' \code{process.step_nzv} is used to potentially remove columns from the data. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame to be filtered.
 #' @return \code{process.step_nzv} returns a tibble of processed data. 
 #' @export

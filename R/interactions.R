@@ -2,10 +2,9 @@
 #' 
 #' \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
 #' 
-#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @inheritParams step_center
 #' @param terms A traditional R formula that contains interaction terms.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.  
-#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.
 #' @return \code{step_interact} and \code{learn.step_interact} return objects of class \code{step_interact}.
@@ -40,8 +39,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 #' For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function.
 #' 
 #' @param x a \code{step_interact} object 
-#' @param training a tibble or data frame that contains the training set. 
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @inheritParams learn.step_center
 #' @export
 #' @importFrom stats sd
 #' @rdname step_interact
@@ -68,7 +66,7 @@ learn.step_interact <- function(x, training, ...) {
 
 #' \code{process.step_interact} augment the current data with columns containing the interactions. 
 #' 
-#' @param object A trained step object.
+#' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables for the interactions.
 #' @return \code{process.step_interact} returns a tibble of processed data. 
 #' @export

@@ -28,7 +28,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{x}{a \code{step_interact} object}
 
-\item{training}{a tibble or data frame that contains the training set.}
+\item{training}{A tibble or data frame that contains the training set.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 

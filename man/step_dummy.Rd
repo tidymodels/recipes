@@ -31,7 +31,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{x}{a \code{step_dummy} object that specifies which columns will be converted to dummy variables.}
 
-\item{training}{a tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.}
+\item{training}{A tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
