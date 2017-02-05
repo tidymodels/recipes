@@ -51,17 +51,17 @@ step_pca_new <- function(terms = NULL,
   )
 }
 
-#' For a training set of data, \code{learn.step_pca} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. 
+#' For a training set of data, \code{learn.step_pca} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x A \code{step_pca} object that contains the PCA specifications. 
 #' @param training A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
 #' @importFrom dimRed PCA dimRedData
 #' @export
 #' @rdname step_pca
-learn.step_pca <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_pca <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
-  x$num <- min(x$num, ncol(training))
+  x$num <- min(x$num, length(col_names))
   
   prc <- PCA(stdpars = x$options)
   
@@ -78,7 +78,7 @@ learn.step_pca <- function(x, training, ...) {
   )
 }
 
-#'  \code{process.step_pca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
+#'  \code{process.step_pca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to principal components.
@@ -88,8 +88,7 @@ learn.step_pca <- function(x, training, ...) {
 #' @export
 #' @rdname step_pca
 process.step_pca <- function(object, newdata, ...) {
-  pca_vars <- filter_terms(object$terms, newdata) 
-  # comps <- predict(object$object, dimRedData(data[, pca_vars, drop = FALSE]))@data
+  pca_vars <- rownames(environment(object$res@apply)$rot)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), "PC")

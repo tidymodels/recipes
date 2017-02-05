@@ -6,24 +6,28 @@
 \alias{step_logit}
 \title{Logit Transformation}
 \usage{
-step_logit(recipe, terms, role = NA, trained = FALSE)
+step_logit(recipe, terms, role = NA, trained = FALSE, vars = NULL)
 
-\method{learn}{step_logit}(x, training, ...)
+\method{learn}{step_logit}(x, training, info = NULL, ...)
 
 \method{process}{step_logit}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be centered.}
+\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
+\item{vars}{A character string of variable names that will be (eventually) populated by the \code{terms} argument.}
+
 \item{x}{a \code{step_logit} object that specifies which columns will be transformed}
 
 \item{training}{A tibble or data frame that contains the training set.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
@@ -39,9 +43,9 @@ step_logit(recipe, terms, role = NA, trained = FALSE)
 \description{
 \code{step_logit} creates a \emph{specification} of a recipe step that will logit transform the data.
 
-For a training set of data, \code{learn.step_logit} configures the logit transformation (by basically doing nothing).
+For a training set of data, \code{learn.step_logit} configures the logit transformation (by basically doing nothing). This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_logit} is used to transform columns on specific data sets. This replaces values in the original columns.
+\code{process.step_logit} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing transformation_methods

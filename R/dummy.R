@@ -50,7 +50,7 @@ step_dummy_new <- function(terms = NULL,
 }
 
 
-#' For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. 
+#' For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param x a \code{step_dummy} object that specifies which columns will be converted to dummy variables.
 #' @param training A tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.
@@ -58,8 +58,8 @@ step_dummy_new <- function(terms = NULL,
 #' @importFrom stats as.formula model.frame
 #' @rdname step_dummy
 
-learn.step_dummy <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_dummy <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
   ## I hate doing this but currently we are going to have 
   ## to save the terms object form the original (= training) 
@@ -86,7 +86,7 @@ learn.step_dummy <- function(x, training, ...) {
   )
 }
 
-#' \code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). 
+#' \code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has nominal variables that will be converted to dumy variables.

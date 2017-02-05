@@ -33,7 +33,7 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
   )
 }
 
-#' For a training set of data, \code{learn.step_scale} estimates the standard deviations from numeric columns. 
+#' For a training set of data, \code{learn.step_scale} estimates the standard deviations from numeric columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param x a \code{step_scale} object that specifies which columns will be scaled
 #' @inheritParams learn.step_center
@@ -41,13 +41,13 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
 #' @importFrom stats sd
 #' @rdname step_scale
 
-learn.step_scale <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_scale <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = TRUE)
   step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
 }
 
-#' \code{process.step_scale} is used to perform the scaling on specific data sets. This replaces values in the original columns. 
+#' \code{process.step_scale} is used to perform the scaling on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be scaled

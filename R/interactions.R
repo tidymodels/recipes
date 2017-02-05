@@ -36,7 +36,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
   )
 }
 
-#' For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function.
+#' For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param x a \code{step_interact} object 
 #' @inheritParams learn.step_center
@@ -46,7 +46,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 
 ## The idea is to save a bunch of x-factor interaction terms instead of 
 ## one large set of collected terms. 
-learn.step_interact <- function(x, training, ...) {
+learn.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
   ## For each interaction, create a new formula that has main effects
@@ -64,7 +64,7 @@ learn.step_interact <- function(x, training, ...) {
   )
 }
 
-#' \code{process.step_interact} augment the current data with columns containing the interactions. 
+#' \code{process.step_interact} augment the current data with columns containing the interactions. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables for the interactions.

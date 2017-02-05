@@ -47,7 +47,7 @@ step_nzv_new <- function(terms = NULL,
 }
 
 
-#' For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions.
+#' For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions. This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x a \code{step_nzv} object that contains the list of predictors that should be removed.
 #' @inheritParams learn.step_center
@@ -55,8 +55,8 @@ step_nzv_new <- function(terms = NULL,
 #' @importFrom caret nearZeroVar
 #' @rdname step_nzv
 
-learn.step_nzv <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_nzv <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
   nzv_call <- quote(nearZeroVar(x, freqCut, uniqueCut, saveMetrics, names = TRUE, foreach, allowParallel))
   args <- sub_args(nearZeroVar, x$options)
@@ -73,7 +73,7 @@ learn.step_nzv <- function(x, training, ...) {
   )
 }
 
-#' \code{process.step_nzv} is used to potentially remove columns from the data. 
+#' \code{process.step_nzv} is used to potentially remove columns from the data.  This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame to be filtered.

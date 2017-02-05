@@ -8,14 +8,14 @@
 \usage{
 step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 
-\method{learn}{step_center}(x, training, na.rm = TRUE, ...)
+\method{learn}{step_center}(x, training, info = NULL, na.rm = TRUE, ...)
 
 \method{process}{step_center}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be centered.}
+\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -26,6 +26,8 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 \item{x}{a \code{step_center} object that specifies which columns will be centered.}
 
 \item{training}{A tibble or data frame that contains the training set.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{na.rm}{A boolean indicates whether to remove NAs, default TRUE.}
 
@@ -43,9 +45,9 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 \description{
 \code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
 
-For a training set of data, \code{learn.step_center} estimates the means for numeric columns.
+For a training set of data, \code{learn.step_center} estimates the means for numeric columns. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns.
+\code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing normalization_methods

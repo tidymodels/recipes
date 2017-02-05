@@ -77,9 +77,9 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 }
 
 ## This figures out which data should be used to predict each variable scheduled for imputation
-impute_var_lists <- function(to_impute, impute_using, dat) {
-  to_impute <- filter_terms.formula(to_impute, dat) 
-  impute_using <- filter_terms.formula(impute_using, dat) 
+impute_var_lists <- function(to_impute, impute_using, info) {
+  to_impute <- parse_terms_formula(to_impute, info) 
+  impute_using <- parse_terms_formula(impute_using, info) 
   var_lists <- vector(mode = "list", length = length(to_impute))
   for(i in seq_along(var_lists)) {
     var_lists[[i]] <- list(
@@ -91,15 +91,15 @@ impute_var_lists <- function(to_impute, impute_using, dat) {
 }
 
 
-#' For a training set of data, \code{learn.step_bagimpute} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). 
+#' For a training set of data, \code{learn.step_bagimpute} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x A \code{step_bagimpute} object that contains the imputation specifications. 
 #' @param training tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.
 #' @export
 #' @rdname step_bagimpute
 
-learn.step_bagimpute <- function(x, training, ...) {
-  var_lists <- impute_var_lists(x$terms,x $impute_with, training) 
+learn.step_bagimpute <- function(x, training, info = NULL, ...) {
+  var_lists <- impute_var_lists(x$terms, x$impute_with, info) 
   x$models <- lapply(
     var_lists, 
     bag_wrap,
@@ -112,7 +112,7 @@ learn.step_bagimpute <- function(x, training, ...) {
   x
 }
 
-#' \code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns. 
+#' \code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that will be imputed.

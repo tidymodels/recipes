@@ -52,15 +52,15 @@ step_kpca_new <- function(terms = NULL,
   )
 }
 
-#' For a training set of data, \code{learn.step_kpca} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA. 
+#' For a training set of data, \code{learn.step_kpca} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA. This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x A \code{step_kpca} object that contains the kernel PCA specifications. 
-#' @param training A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
+#' @param training  These data will be used to compute the loadings that are used when this step is applied.
 #' @importFrom dimRed kPCA dimRedData
 #' @export
 #' @rdname step_kpca
-learn.step_kpca <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_kpca <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
   kprc <- kprc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
@@ -76,7 +76,7 @@ learn.step_kpca <- function(x, training, ...) {
   )
 }
 
-#'  \code{process.step_kpca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
+#'  \code{process.step_kpca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be processed.
@@ -86,7 +86,7 @@ learn.step_kpca <- function(x, training, ...) {
 #' @export
 #' @rdname step_kpca
 process.step_kpca <- function(object, newdata, ...) {
-  pca_vars <- filter_terms(object$terms, newdata) 
+  pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), "kPC")

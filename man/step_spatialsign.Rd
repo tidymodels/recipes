@@ -6,9 +6,10 @@
 \alias{step_spatialsign}
 \title{Spatial Sign Preprocessing.}
 \usage{
-step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
+step_spatialsign(recipe, terms, role = "predictor", trained = FALSE,
+  vars = NULL)
 
-\method{learn}{step_spatialsign}(x, training, ...)
+\method{learn}{step_spatialsign}(x, training, info = NULL, ...)
 
 \method{process}{step_spatialsign}(object, newdata, ...)
 }
@@ -21,9 +22,13 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
+\item{vars}{A character string of variable names that will be (eventually) populated by the \code{terms} argument.}
+
 \item{x}{a \code{step_spatialsign} object that contains the spatial sign objects.}
 
 \item{training}{A tibble or data frame that contains the training set.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
@@ -39,9 +44,9 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE)
 \description{
 \code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
 
-\code{learn.step_spatialsign} processes a training data set for the transformation.
+\code{learn.step_spatialsign} processes a training data set for the transformation. This function is \emph{not} intended to be directly called by the user.
 
-To project the data onto a unit sphere, \code{process.step_spatialsign} is used and this overwrites the original columns.
+To project the data onto a unit sphere, \code{process.step_spatialsign} is used and this overwrites the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing projection_methods

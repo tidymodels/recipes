@@ -51,7 +51,7 @@ step_ica_new <- function(terms = NULL,
   )
 }
 
-#' For a training set of data, \code{learn.step_ica} estimates the loadings for the independent components. This transformation only compute the required statistics for ICA. 
+#' For a training set of data, \code{learn.step_ica} estimates the loadings for the independent components. This transformation only compute the required statistics for ICA. This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x A \code{step_ica} object that contains the ICA specifications. 
 #' @inheritParams learn.step_center
@@ -59,10 +59,10 @@ step_ica_new <- function(terms = NULL,
 #' @importFrom dimRed FastICA dimRedData
 #' @export
 #' @rdname step_ica
-learn.step_ica <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_ica <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
-  x$num <- min(x$num, ncol(training))
+  x$num <- min(x$num, length(col_names))
   
   indc <- FastICA(stdpars = x$options)
   
@@ -79,7 +79,7 @@ learn.step_ica <- function(x, training, ...) {
   )
 }
 
-#'  \code{process.step_ica} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. 
+#'  \code{process.step_ica} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to independent components.
@@ -89,8 +89,7 @@ learn.step_ica <- function(x, training, ...) {
 #' @export
 #' @rdname step_ica
 process.step_ica <- function(object, newdata, ...) {
-  ica_vars <- filter_terms(object$terms, newdata) 
-  # comps <- predict(object$object, dimRedData(data[, ica_vars, drop = FALSE]))@data
+  ica_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, ica_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), "IC")

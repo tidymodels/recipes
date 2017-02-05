@@ -9,14 +9,14 @@
 step_YeoJohnson(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
   limits = c(-5, 5), nunique = 5)
 
-\method{learn}{step_YeoJohnson}(x, training, ...)
+\method{learn}{step_YeoJohnson}(x, training, info = NULL, ...)
 
 \method{process}{step_YeoJohnson}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be centered.}
+\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -32,6 +32,8 @@ step_YeoJohnson(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 
 \item{training}{A tibble or data frame that contains the training set.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -46,9 +48,9 @@ step_YeoJohnson(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 \description{
 \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that will transform data using a simple Yeo-Johnson transformation.
 
-For a training set of data, \code{learn.step_YeoJohnson} estimates the simple Yeo-Johnson transformation.
+For a training set of data, \code{learn.step_YeoJohnson} estimates the simple Yeo-Johnson transformation. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_YeoJohnson} is used to transform columns on specific data sets. This replaces values in the original columns.
+\code{process.step_YeoJohnson} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing transformation_methods

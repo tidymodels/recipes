@@ -10,7 +10,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
   contrast = options("contrasts"), naming = function(var, lvl) paste(var,
   make.names(lvl), sep = "_"), levels = NULL)
 
-\method{learn}{step_dummy}(x, training, ...)
+\method{learn}{step_dummy}(x, training, info = NULL, ...)
 
 \method{process}{step_dummy}(object, newdata, ...)
 }
@@ -33,6 +33,8 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{training}{A tibble or data frame that contains the training set. These data will be used to define the dummy variables for all future data when this step is applied.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -47,9 +49,9 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 \description{
 \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 
-For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}.
+For a training set of data, \code{learn.step_dummy} enumerates the possible values of the variables so that dummy variables can be created when a specific data set is \emph{processed}. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s).
+\code{process.step_dummy} is used to apply the process of creating dummy variables to any data set. This creates new columns in the data set and removes the original column(s). This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing dummy_variables model_specification dummy_variables variable_encodings

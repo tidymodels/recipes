@@ -6,16 +6,17 @@
 \alias{step_log}
 \title{Logarithmic Transformation}
 \usage{
-step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1))
+step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1),
+  vars = NULL)
 
-\method{learn}{step_log}(x, training, ...)
+\method{learn}{step_log}(x, training, info = NULL, ...)
 
 \method{process}{step_log}(object, newdata, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be centered.}
+\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -23,9 +24,13 @@ step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1))
 
 \item{base}{A numeric value for the base.}
 
+\item{vars}{A character string of variable names that will be (eventually) populated by the \code{terms} argument.}
+
 \item{x}{a \code{step_log} object that specifies which columns will be transformed}
 
 \item{training}{A tibble or data frame that contains the training set.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
@@ -41,9 +46,9 @@ step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1))
 \description{
 \code{step_log} creates a \emph{specification} of a recipe step that will log transform data.
 
-For a training set of data, \code{learn.step_log} configures the log transformation (by basically doing nothing).
+For a training set of data, \code{learn.step_log} configures the log transformation (by basically doing nothing). This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_log} is used to transform columns on specific data sets. This replaces values in the original columns.
+\code{process.step_log} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing transformation_methods

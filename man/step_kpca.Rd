@@ -9,7 +9,7 @@
 step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)))
 
-\method{learn}{step_kpca}(x, training, ...)
+\method{learn}{step_kpca}(x, training, info = NULL, ...)
 
 \method{process}{step_kpca}(object, newdata, ...)
 }
@@ -30,7 +30,9 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{x}{A \code{step_kpca} object that contains the kernel PCA specifications.}
 
-\item{training}{A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
+\item{training}{These data will be used to compute the loadings that are used when this step is applied.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
@@ -46,9 +48,9 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \description{
 \code{step_kpca} a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.
 
-For a training set of data, \code{learn.step_kpca} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA.
+For a training set of data, \code{learn.step_kpca} uses \code{\link[kernlab]{kpca}} to estimate the loadings for the principal components in the kernel space. This transformation only compute the required statistics for kernel PCA. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_kpca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns.
+\code{process.step_kpca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing pca projection_methods kernel_methods

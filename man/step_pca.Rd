@@ -9,7 +9,7 @@
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   options = list(center = TRUE, scale. = TRUE, retx = FALSE), res = NULL)
 
-\method{learn}{step_pca}(x, training, ...)
+\method{learn}{step_pca}(x, training, info = NULL, ...)
 
 \method{process}{step_pca}(object, newdata, ...)
 }
@@ -32,6 +32,8 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{training}{A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -46,9 +48,9 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \description{
 \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components.
 
-For a training set of data, \code{learn.step_pca} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA.
+For a training set of data, \code{learn.step_pca} estimates the loadings for the principal components. This transformation only compute the required statistics for PCA. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_pca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns.
+\code{process.step_pca} is used to compute the components on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing pca projection_methods

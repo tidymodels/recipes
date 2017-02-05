@@ -39,7 +39,7 @@ step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
   )
 }
 
-#' For a training set of data, \code{learn.step_YeoJohnson} estimates the simple Yeo-Johnson transformation. 
+#' For a training set of data, \code{learn.step_YeoJohnson} estimates the simple Yeo-Johnson transformation. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param x a \code{step_YeoJohnson} object that specifies which columns will be transformed
 #' @inheritParams learn.step_center
@@ -47,8 +47,8 @@ step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
 #' @importFrom stats optimize
 #' @rdname step_YeoJohnson
 
-learn.step_YeoJohnson <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   values <- vapply(
     training[, col_names], 
     estimate_yj, 
@@ -66,7 +66,7 @@ learn.step_YeoJohnson <- function(x, training, ...) {
   )
 }
 
-#' \code{process.step_YeoJohnson} is used to transform columns on specific data sets. This replaces values in the original columns. 
+#' \code{process.step_YeoJohnson} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be transformed
@@ -124,6 +124,8 @@ yj_trans <- function(x, lambda, eps = .001) {
 ## Helper for the log-likelihood calc for eq 3.1 of Yeo, I. K., 
 ## & Johnson, R. A. (2000). A new family of power transformations 
 ## to improve normality or symmetry. Biometrika. page 957
+
+#' @importFrom stats var
 ll_yj <- function(lambda, y, eps = .001) {
   n <- length(y)
   nonneg <- all(y > 0)

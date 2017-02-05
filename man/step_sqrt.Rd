@@ -6,9 +6,9 @@
 \alias{step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, terms, role = NA, trained = FALSE)
+step_sqrt(recipe, terms, role = NA, trained = FALSE, vars = NULL)
 
-\method{learn}{step_sqrt}(x, training, ...)
+\method{learn}{step_sqrt}(x, training, info = NULL, ...)
 
 \method{process}{step_sqrt}(object, newdata, ...)
 }
@@ -21,9 +21,13 @@ step_sqrt(recipe, terms, role = NA, trained = FALSE)
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
+\item{vars}{A character string of variable names that will be (eventually) populated by the \code{terms} argument.}
+
 \item{x}{a \code{step_sqrt} object that specifies which columns will be transformed}
 
 \item{training}{A tibble or data frame that contains the training set.}
+
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
@@ -39,9 +43,9 @@ step_sqrt(recipe, terms, role = NA, trained = FALSE)
 \description{
 \code{step_sqrt} creates a \emph{specification} of a recipe step that will square root transform the data.
 
-For a training set of data, \code{learn.step_sqrt} configures the square root transformation (by basically doing nothing).
+For a training set of data, \code{learn.step_sqrt} configures the square root transformation (by basically doing nothing). This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_sqrt} is used to transform columns on specific data sets. This replaces values in the original columns.
+\code{process.step_sqrt} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing transformation_methods

@@ -9,7 +9,7 @@
 step_interact(recipe, terms, role = "predictor", trained = FALSE,
   objects = NULL, sep = "_x_")
 
-\method{learn}{step_interact}(x, training, ...)
+\method{learn}{step_interact}(x, training, info = NULL, ...)
 
 \method{process}{step_interact}(object, newdata, ...)
 }
@@ -30,6 +30,8 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{training}{A tibble or data frame that contains the training set.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -44,9 +46,9 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 \description{
 \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
 
-For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function.
+For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_interact} augment the current data with columns containing the interactions.
+\code{process.step_interact} augment the current data with columns containing the interactions. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing

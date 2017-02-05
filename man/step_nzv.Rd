@@ -9,7 +9,7 @@
 step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
   = 95/5, uniqueCut = 10), removals = NULL)
 
-\method{learn}{step_nzv}(x, training, ...)
+\method{learn}{step_nzv}(x, training, info = NULL, ...)
 
 \method{process}{step_nzv}(object, newdata, ...)
 }
@@ -30,6 +30,8 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{training}{A tibble or data frame that contains the training set.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -44,9 +46,9 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
 
-For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions.
+For a training set of data, \code{learn.step_nzv} determines which, if any, columns in the training set have sparse and unbalanced distributions. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_nzv} is used to potentially remove columns from the data.
+\code{process.step_nzv} is used to potentially remove columns from the data.  This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing variable_filters

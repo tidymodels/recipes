@@ -8,7 +8,7 @@
 \usage{
 step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
-\method{learn}{step_scale}(x, training, ...)
+\method{learn}{step_scale}(x, training, info = NULL, ...)
 
 \method{process}{step_scale}(object, newdata, ...)
 }
@@ -27,6 +27,8 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 
 \item{training}{A tibble or data frame that contains the training set.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -41,9 +43,9 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
 
-For a training set of data, \code{learn.step_scale} estimates the standard deviations from numeric columns.
+For a training set of data, \code{learn.step_scale} estimates the standard deviations from numeric columns. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_scale} is used to perform the scaling on specific data sets. This replaces values in the original columns.
+\code{process.step_scale} is used to perform the scaling on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing normalization_methods

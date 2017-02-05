@@ -51,15 +51,15 @@ step_isomap_new <- function(terms = NULL,
   )
 }
 
-#' For a training set of data, \code{learn.step_isomap} estimates the mappings for the new dimensions. This transformation only computes the required statistics for the Isomap approximation. 
+#' For a training set of data, \code{learn.step_isomap} estimates the mappings for the new dimensions. This transformation only computes the required statistics for the Isomap approximation. This function is \emph{not} intended to be directly called by the user. 
 #'
 #' @param x A \code{step_isomap} object that contains the Isomap specifications. 
 #' @param training A tibble or data frame that contains the training set. These data will be used to compute the mappings that are used when this step is applied.
 #' @importFrom dimRed Isomap dimRedData embed dimRedMethodList
 #' @export
 #' @rdname step_isomap
-learn.step_isomap <- function(x, training, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_isomap <- function(x, training, info = NULL, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))
@@ -77,7 +77,7 @@ learn.step_isomap <- function(x, training, ...) {
   )
 }
 
-#'  \code{process.step_isomap} is used to compute the new dimensions on specific data sets. This creates new columns in the data set and removes the original columns. 
+#'  \code{process.step_isomap} is used to compute the new dimensions on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @inheritParams process.step_center
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to new dimensions.
@@ -87,8 +87,7 @@ learn.step_isomap <- function(x, training, ...) {
 #' @export
 #' @rdname step_isomap
 process.step_isomap <- function(object, newdata, ...) {
-  isomap_vars <- filter_terms(object$terms, newdata) 
-  # comps <- predict(object$object, dimRedData(data[, isomap_vars, drop = FALSE]))@data
+  isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), "Isomap")

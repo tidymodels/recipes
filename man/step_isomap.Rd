@@ -9,7 +9,7 @@
 step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   options = list(knn = 50, .mute = c("message", "output")), res = NULL)
 
-\method{learn}{step_isomap}(x, training, ...)
+\method{learn}{step_isomap}(x, training, info = NULL, ...)
 
 \method{process}{step_isomap}(object, newdata, ...)
 }
@@ -32,6 +32,8 @@ step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{training}{A tibble or data frame that contains the training set. These data will be used to compute the mappings that are used when this step is applied.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -46,9 +48,9 @@ step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \description{
 \code{step_isomap} creates a \emph{specification} of a recipe step that will convert numeric data into one or more new dimensions.
 
-For a training set of data, \code{learn.step_isomap} estimates the mappings for the new dimensions. This transformation only computes the required statistics for the Isomap approximation.
+For a training set of data, \code{learn.step_isomap} estimates the mappings for the new dimensions. This transformation only computes the required statistics for the Isomap approximation. This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_isomap} is used to compute the new dimensions on specific data sets. This creates new columns in the data set and removes the original columns.
+\code{process.step_isomap} is used to compute the new dimensions on specific data sets. This creates new columns in the data set and removes the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing isomap projection_methods

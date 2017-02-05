@@ -3,7 +3,7 @@
 #' \code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero. 
 #' 
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
-#' @param terms A representation of the variables or terms that will be centered.
+#' @param terms A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details. 
 #' @param role Not used by this step since no new variables are created. 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated. 
 #' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.step_center}}. 
@@ -33,23 +33,24 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
   )
 }
 
-#' For a training set of data, \code{learn.step_center} estimates the means for numeric columns.
+#' For a training set of data, \code{learn.step_center} estimates the means for numeric columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param x a \code{step_center} object that specifies which columns will be centered.
 #' @param training A tibble or data frame that contains the training set.
+#' @param info A tibble with information on the current set of columns in the design matrix. 
 #' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @export
 #' @rdname step_center
 
-learn.step_center <- function(x, training, na.rm = TRUE, ...) {
-  col_names <- filter_terms(x$terms, training) 
+learn.step_center <- function(x, training, info = NULL, na.rm = TRUE, ...) {
+  col_names <- parse_terms_formula(x$terms, info = info) 
   
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = na.rm)
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 
-#' \code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns. 
+#' \code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
 #' 
 #' @param object A trained step object.
 #' @param newdata A tibble or data frame that has numeric variables that will be centered.

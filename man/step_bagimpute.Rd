@@ -10,7 +10,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,
   seed_val = sample.int(10^4, 1))
 
-\method{learn}{step_bagimpute}(x, training, ...)
+\method{learn}{step_bagimpute}(x, training, info = NULL, ...)
 
 \method{process}{step_bagimpute}(object, newdata, ...)
 }
@@ -35,6 +35,8 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{training}{tibble or data frame that contains the training set. These data will be used to compute the tree ensembles that are used when this step is applied.}
 
+\item{info}{A tibble with information on the current set of columns in the design matrix.}
+
 \item{...}{further arguments passed to or from other methods (not currently used).}
 
 \item{object}{A trained step object.}
@@ -49,9 +51,9 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 \description{
 \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
 
-For a training set of data, \code{learn.step_bagimpute} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}).
+For a training set of data, \code{learn.step_bagimpute} creates models that will be used to impute missing data (using \code{\link[ipred]{ipredbagg}}). This function is \emph{not} intended to be directly called by the user.
 
-\code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns.
+\code{process.step_bagimpute} is used to perform the imputation on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user.
 }
 \concept{
 preprocessing imputation
