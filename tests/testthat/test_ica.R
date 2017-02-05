@@ -75,9 +75,6 @@ test_that('correct ICA values', {
   ica_pred <- process(ica_extract_trained, newdata = biomass_te, roles = "predictor")
   ica_pred <- as.matrix(ica_pred)
   
-  ica_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
-  ica_pred_exp <- predict(ica_exp, biomass_te[, 3:7])[, 1:ica_extract$steps[[3]]$num]
-  
   rownames(ica_pred) <- NULL
   
   expect_equal(ica_pred, exp_comp)
