@@ -10,6 +10,8 @@
 #' Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid. 
 #' 
 #' However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
+#' 
+#' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
 NULL
 
 name_selectors <- c("starts_with", "ends_with", "contains", 
@@ -18,10 +20,10 @@ name_selectors <- c("starts_with", "ends_with", "contains",
 parse_terms_formula <- function(f, info) {
   vars <- info$variable
   ## split the terms up using +/- as seperators
-  elmts <- f_elements(f)
-  
-  ## TODO determine the sign of the operation
-  
+  f_info <- f_elements(f)
+  elmts <- f_info$terms
+  elmts_sign <- f_info$signs
+
   ## Look for inappropriate functions in elements
   check_elements(f)
   
@@ -38,10 +40,17 @@ parse_terms_formula <- function(f, info) {
     } else {
       indices[[i-1]] <- which(as.character(elmts[[i]]) == vars)
     }
+    if(elmts_sign[i-1] == "-")
+      indices[[i-1]] <- -indices[[i-1]] 
   }
   indices <- unlist(unique(indices))
   
-  ## TODO add/subtract based on sign of elements
+  ## add/subtract based on sign of elements
+  if(!all(sign(indices) == 1)) {
+    pos <- indices[indices > 0]
+    neg <- indices[indices < 0]
+    indices <- pos[!(pos %in% abs(neg))]
+  }
   
   if(length(indices) == 0)
     stop("No columns were selected by the `terms` formula for this step.")
@@ -50,13 +59,32 @@ parse_terms_formula <- function(f, info) {
 }
 
 f_elements <- function(x) {
-  if(recipes:::is_formula(x)) 
-  trms <- terms(x)
-  attr(trms, "variables")
-}
-
-f_signs <- function(x) {
-  x 
+  trms_obj <- terms(x)
+  ## Their order will change here (minus at the end)
+  clls <- attr(trms_obj, "variables")
+  ## Any formula element with a minus prefix will not
+  ## have an colname in the `factor` attribute of the
+  ## terms object. We will check these against the 
+  ## list of calls
+  tmp <- colnames(attr(trms_obj, "factors"))
+  kept <- vector(mode = "list", length = length(tmp))
+  for(j in seq_along(tmp)) 
+    kept[[j]] <- as.name(tmp[j])
+  
+  term_signs <- rep("", length(clls) - 1)
+  for(i in seq_along(term_signs)) {
+    retained <- any(
+      unlist(
+        lapply(
+          kept, 
+          function(x, y) any(y == x), 
+          y = clls[[i+1]]
+        )
+      )
+    )
+    term_signs[i] <- if(retained) "+" else "-"
+  } 
+  list(terms  = clls, signs = term_signs)  
 }
 
 #' @importFrom pryr fun_calls

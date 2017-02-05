@@ -10,6 +10,8 @@ The formula is not processed until the \code{learn} function for the step is exe
 
 Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid. 
 
-However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}.
+However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
+
+While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1".
 }
 
