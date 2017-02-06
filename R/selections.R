@@ -12,13 +12,24 @@
 #' However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
 #' 
 #' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
+#' 
+#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{role_is}, \code{role_is_not}, \code{type_is}, and \code{type_is_not}. For convenience, there are also functions that are more specific: \code{is_numeric}, \code{is_nominal}, \code{is_predictor}, and \code{is_outcome}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
 NULL
 
 name_selectors <- c("starts_with", "ends_with", "contains", 
                     "matches", "num_range", "everything")
 
+role_selectors <- c("role_is", "role_is_not", "is_predictor", "is_outcome")
+
+type_selectors <- c("type_is", "type_is_not", "is_numeric", "is_nominal")
+
+selectors <- c(name_selectors, role_selectors, type_selectors)
+
 parse_terms_formula <- function(f, info) {
-  vars <- info$variable
+  var_vals <- info$variable
+  role_vals <- info$role
+  type_vals <- info$type
+  
   ## split the terms up using +/- as seperators
   f_info <- f_elements(f)
   elmts <- f_info$terms
@@ -35,10 +46,10 @@ parse_terms_formula <- function(f, info) {
   for(i in seq_along(elmts)[-1]) {
     if(has_func[i-1]) {
       cll <- as.call(elmts[[i]])
-      cll$vars <- quote(vars)
+      cll <- add_arg(cll)
       indices[[i-1]] <- eval(cll)
     } else {
-      indices[[i-1]] <- which(as.character(elmts[[i]]) == vars)
+      indices[[i-1]] <- which(as.character(elmts[[i]]) == var_vals)
     }
     if(elmts_sign[i-1] == "-")
       indices[[i-1]] <- -indices[[i-1]] 
@@ -55,7 +66,7 @@ parse_terms_formula <- function(f, info) {
   if(length(indices) == 0)
     stop("No columns were selected by the `terms` formula for this step.")
   
-  vars[indices]
+  var_vals[indices]
 }
 
 f_elements <- function(x) {
@@ -87,21 +98,93 @@ f_elements <- function(x) {
   list(terms  = clls, signs = term_signs)  
 }
 
+add_arg <- function(cl) {
+  func <- fun_calls(cl)
+  if(func %in% name_selectors) {
+    cl$vars <- quote(var_vals)
+  } else {
+    if(func %in% role_selectors) {
+      cl$roles <- quote(role_vals)
+    } else cl$types <- quote(type_vals)
+  }
+  cl
+}
+
 #' @importFrom pryr fun_calls
-check_elements <- function(x, allowed = name_selectors) {
+check_elements <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
   not_good <- funs[!(funs %in% allowed)]
   if(length(not_good) > 0)
-    stop("Only functions allowed are...")
+    stop("Not all functions are allowed in `terms` formulas. See ?selections ")
   invisible(NULL)
 }
 
 #' @importFrom pryr fun_calls
-has_selector <- function(x, allowed = name_selectors) {
+has_selector <- function(x, allowed = selectors) {
   res <- rep(NA, length(x) - 1)
   for(i in 2:length(x)) 
     res[[i-1]] <- isTRUE(fun_calls(x[[i]]) %in% allowed)
   res
 }
+
+
+#' Role Selection
+#' 
+#' \code{role_is}, \code{role_is_not}, \code{is_predictor}, and \code{is_outcome} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{type_is_not}, \code{is_numeric}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
+#' 
+#' @param x A single character string for the query.
+#' @param role A character string of roles for the current set of terms. 
+#' @param type A character string of roles for the current set of data types
+#' @return An integer vector.
+#' @keywords datagen
+#' @export
+
+role_is <- function(x = "predictor", roles = NULL) 
+  which(roles %in% x[1])
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+role_is_not <- function(x = "predictor", roles = NULL) 
+  which(!(roles %in% x[1]))
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+is_predictor <- function(roles = NULL)
+  role_is("predictor", roles = roles)
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+is_outcome <- function(roles = NULL)
+  role_is("outcome", roles = roles)
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+type_is <- function(x = "numeric", types = NULL) 
+  which(types %in% x[1])
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+type_is_not <- function(x = "numeric", types = NULL) 
+  which(!(types %in% x[1]))
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+is_numeric <- function(types = NULL)
+  type_is("numeric", types = types)
+
+#' @export
+#' @rdname role_is
+#' @inheritParams role_is
+is_nominal <- function(types = NULL)
+  type_is("nominal", types = types)
+
+
+
 

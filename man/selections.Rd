@@ -12,6 +12,8 @@ Standard formulas can be used where only the right-hand side is used (e.g. \code
 
 However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
 
-While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1".
+While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
+
+Finally, there are sets of functions that can be used to select variables based on their role or type: \code{role_is}, \code{role_is_not}, \code{type_is}, and \code{type_is_not}. For convenience, there are also functions that are more specific: \code{is_numeric}, \code{is_nominal}, \code{is_predictor}, and \code{is_outcome}. These can be used in conjunction with the previous functions described for selecting variables using their names.
 }
 
