@@ -30,9 +30,9 @@ is_nominal(types = NULL)
 \arguments{
 \item{x}{A single character string for the query.}
 
-\item{role}{A character string of roles for the current set of terms.}
+\item{roles}{A character string of roles for the current set of terms.}
 
-\item{type}{A character string of roles for the current set of data types}
+\item{types}{A character string of roles for the current set of data types}
 }
 \value{
 An integer vector.

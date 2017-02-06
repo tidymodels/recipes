@@ -134,8 +134,8 @@ has_selector <- function(x, allowed = selectors) {
 #' \code{role_is}, \code{role_is_not}, \code{is_predictor}, and \code{is_outcome} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{type_is_not}, \code{is_numeric}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
 #' 
 #' @param x A single character string for the query.
-#' @param role A character string of roles for the current set of terms. 
-#' @param type A character string of roles for the current set of data types
+#' @param roles A character string of roles for the current set of terms. 
+#' @param types A character string of roles for the current set of data types
 #' @return An integer vector.
 #' @keywords datagen
 #' @export
