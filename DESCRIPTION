@@ -14,9 +14,9 @@ Imports:
     dplyr,
     lazyeval,
     stats,
-    caret,
     ipred,
-    dimRed
+    dimRed,
+    pryr
 Suggests:
     testthat,
     magrittr,

@@ -52,17 +52,13 @@ step_nzv_new <- function(terms = NULL,
 #' @param x a \code{step_nzv} object that contains the list of predictors that should be removed.
 #' @inheritParams learn.step_center
 #' @export
-#' @importFrom caret nearZeroVar
 #' @rdname step_nzv
 
 learn.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
-  
-  nzv_call <- quote(nearZeroVar(x, freqCut, uniqueCut, saveMetrics, names = TRUE, foreach, allowParallel))
-  args <- sub_args(nearZeroVar, x$options)
-  args$x <- training[, col_names]
-  args$names <- TRUE
-  filter <- eval(nzv_call, envir = args)
+  filter <- nzv(x = training[, col_names], 
+                freqCut = x$options$freqCut, 
+                uniqueCut = x$options$uniqueCut)
   
   step_nzv_new(
     terms = x$terms, 
@@ -94,5 +90,32 @@ print.step_nzv <- function(x, form_width = 30, ...) {
   cat(form_printer(x, wdth = form_width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
+}
+
+
+
+nzv <- function (x, freqCut = 95/5, uniqueCut = 10){
+  if (is.null(dim(x))) x <- matrix(x, ncol = 1)
+  
+  fr_foo <- function(data){
+    t <- table(data[!is.na(data)])
+    if (length(t) <= 1) {
+      return(0);
+    }
+    w <- which.max(t);
+    return(max(t, na.rm=TRUE)/max(t[-w], na.rm=TRUE))
+  }
+  
+  freqRatio <- vapply(x, fr_foo, c(ratio = 0))
+  uni_foo <- function(data) length(unique(data[!is.na(data)]))
+  lunique <- vapply(x, uni_foo, c(num = 0))
+  percentUnique <- 100 * lunique / vapply(x, length, c(num = 0))
+  
+  zero_func <- function(data) all(is.na(data))
+  zeroVar <- (lunique == 1) | vapply(x, zero_func, c(zv = TRUE))
+  
+  out <- which((freqRatio > freqCut & percentUnique <= uniqueCut) | zeroVar)
+  names(out) <- NULL
+  colnames(x)[out]
 }
 
