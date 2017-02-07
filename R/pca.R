@@ -55,7 +55,7 @@ step_pca_new <- function(terms = NULL,
 #'
 #' @param x A \code{step_pca} object that contains the PCA specifications. 
 #' @param training A tibble or data frame that contains the training set. These data will be used to compute the loadings that are used when this step is applied.
-#' @importFrom dimRed PCA dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_pca
 learn.step_pca <- function(x, training, info = NULL, ...) {
@@ -84,7 +84,7 @@ learn.step_pca <- function(x, training, info = NULL, ...) {
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to principal components.
 #' @return \code{process.step_pca} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
-#' @importFrom dimRed dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_pca
 process.step_pca <- function(object, newdata, ...) {

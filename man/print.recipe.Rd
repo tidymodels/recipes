@@ -4,7 +4,7 @@
 \alias{print.recipe}
 \title{Print a Recipe}
 \usage{
-\method{print}{recipe}(x, form_width = 30, ...)
+print.recipe(x, form_width = 30, ...)
 }
 \arguments{
 \item{x}{A \code{recipe} object}

@@ -56,7 +56,7 @@ step_kpca_new <- function(terms = NULL,
 #'
 #' @param x A \code{step_kpca} object that contains the kernel PCA specifications. 
 #' @param training  These data will be used to compute the loadings that are used when this step is applied.
-#' @importFrom dimRed kPCA dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_kpca
 learn.step_kpca <- function(x, training, info = NULL, ...) {
@@ -82,7 +82,7 @@ learn.step_kpca <- function(x, training, info = NULL, ...) {
 #' @param newdata A tibble or data frame that has numeric variables that will be processed.
 #' @return \code{process.step_kpca} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
-#' @importFrom dimRed dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_kpca
 process.step_kpca <- function(object, newdata, ...) {

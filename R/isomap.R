@@ -18,7 +18,7 @@ step_isomap <- function(recipe,
                         role = "predictor",
                         trained = FALSE,
                         num  = 5, 
-                        options = list(knn = 50, .mute = c("message", "output")),
+                        options = list(knn = 50),
                         res = NULL) {
   add_step(
     recipe, 
@@ -55,7 +55,7 @@ step_isomap_new <- function(terms = NULL,
 #'
 #' @param x A \code{step_isomap} object that contains the Isomap specifications. 
 #' @param training A tibble or data frame that contains the training set. These data will be used to compute the mappings that are used when this step is applied.
-#' @importFrom dimRed Isomap dimRedData embed dimRedMethodList
+#' @import dimRed
 #' @export
 #' @rdname step_isomap
 learn.step_isomap <- function(x, training, info = NULL, ...) {
@@ -64,9 +64,9 @@ learn.step_isomap <- function(x, training, info = NULL, ...) {
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))
   
-  imap <- embed(dimRedData(as.data.frame(training[, col_names, drop = FALSE])), 
-                "Isomap", knn = x$options$knn, ndim = x$num, .mute = x$options$.mute)
-  
+  imap <- Isomap(stdpars = x$options)
+  imap <- imap@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])), 
+                 list(ndim = x$num, knn = x$options$knn))
   step_isomap_new(
     terms = x$terms,
     role = x$role,
@@ -83,7 +83,7 @@ learn.step_isomap <- function(x, training, info = NULL, ...) {
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to new dimensions.
 #' @return \code{process.step_isomap} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
-#' @importFrom dimRed dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_isomap
 process.step_isomap <- function(object, newdata, ...) {

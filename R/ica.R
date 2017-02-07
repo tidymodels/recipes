@@ -56,7 +56,7 @@ step_ica_new <- function(terms = NULL,
 #' @param x A \code{step_ica} object that contains the ICA specifications. 
 #' @inheritParams learn.step_center
 #' @param training A tibble or data frame that contains the training set.  These data will be used to compute the loadings that are used when this step is applied.
-#' @importFrom dimRed FastICA dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_ica
 learn.step_ica <- function(x, training, info = NULL, ...) {
@@ -85,7 +85,7 @@ learn.step_ica <- function(x, training, info = NULL, ...) {
 #' @param newdata A tibble or data frame that has numeric variables that will be converted to independent components.
 #' @return \code{process.step_ica} returns a tibble of processed data. 
 #' @importFrom tibble as_tibble
-#' @importFrom dimRed dimRedData
+#' @import dimRed
 #' @export
 #' @rdname step_ica
 process.step_ica <- function(object, newdata, ...) {

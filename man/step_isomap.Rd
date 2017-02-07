@@ -7,7 +7,7 @@
 \title{Isomap Embedding.}
 \usage{
 step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(knn = 50, .mute = c("message", "output")), res = NULL)
+  options = list(knn = 50), res = NULL)
 
 \method{learn}{step_isomap}(x, training, info = NULL, ...)
 
