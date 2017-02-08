@@ -98,9 +98,9 @@ learn.step_isomap <- function(x, training, info = NULL, ...) {
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))
   
-  imap <- Isomap(stdpars = x$options)
-  imap <- imap@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])), 
-                 list(ndim = x$num, knn = x$options$knn))
+  imap <- embed(dimRedData(as.data.frame(training[, col_names, drop = FALSE])), 
+                "Isomap", knn = x$options$knn, ndim = x$num, .mute = x$options$.mute)
+  
   step_isomap_new(
     terms = x$terms,
     role = x$role,
