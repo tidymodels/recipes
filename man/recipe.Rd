@@ -8,22 +8,22 @@
 \usage{
 recipe(x, ...)
 
-\method{recipe}{default}(data, vars = names(data), roles = NULL, ...)
+\method{recipe}{default}(x, vars = colnames(x), roles = NULL, ...)
 
 \method{recipe}{formula}(formula, data, ...)
 }
 \arguments{
-\item{x}{an object}
+\item{x}{an object. For the default method, \code{x} is a data frame or tibble of the \emph{template} data set (see below).}
 
 \item{...}{further arguments passed to or from other methods (not currently used).}
-
-\item{data}{a data frame or tibble of the \emph{template} data set (see below).}
 
 \item{vars}{a character string of column names corresponding to variables that will be used in any context (see below)}
 
 \item{roles}{a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
 
 \item{formula}{a model formula.}
+
+\item{data}{a data frame or tibble of the \emph{template} data set (see below).}
 }
 \value{
 An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}

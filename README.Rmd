@@ -13,5 +13,5 @@ The idea of the `recipes` package is to define a recipe or blueprint that can be
 The package is still in devleopent and is not on CRAN. To install it, use:
 ```{r install, eval = FALSE}
 library(devtools)
-install_github("toppepo/recipes")
+install_github("topepo/recipes")
 ```

@@ -7,7 +7,7 @@
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.  
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.
-#' @return \code{step_interact} and \code{learn.step_interact} return objects of class \code{step_interact}.
+#' @return \code{step_interact} returns an object of class \code{step_interact}.
 #' @keywords datagen
 #' @concept preprocessing 
 #' @export
@@ -36,13 +36,6 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
   )
 }
 
-#' For a training set of data, \code{learn.step_interact} computes the required information to produce interaction terms. Note that no interactions are created by this function. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @param x a \code{step_interact} object 
-#' @inheritParams learn.step_center
-#' @export
-#' @importFrom stats sd
-#' @rdname step_interact
 
 ## The idea is to save a bunch of x-factor interaction terms instead of 
 ## one large set of collected terms. 
@@ -64,15 +57,6 @@ learn.step_interact <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' \code{process.step_interact} augment the current data with columns containing the interactions. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @inheritParams process.step_center
-#' @param newdata A tibble or data frame that has numeric variables for the interactions.
-#' @return \code{process.step_interact} returns a tibble of processed data. 
-#' @export
-#' @importFrom tibble as_tibble
-#' @importFrom stats model.matrix
-#' @rdname step_interact
 
 process.step_interact <- function(object, newdata, ...) {
   ## Create low level model matrices then remove the non-interaction terms.

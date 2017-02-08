@@ -4,10 +4,10 @@
 #' 
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created. 
-#' @param lambdas A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.step_YeoJohnson}}. 
+#' @param lambdas A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.recipe}}. 
 #' @param limits A length 2 numeric vector defining the range to compute the transformation parameter lambda. 
 #' @param nunique An integer where data that have less possible values will not be evaluate for a transformation
-#' @return \code{step_YeoJohnson} and \code{learn.step_YeoJohnson} return objects of class \code{step_YeoJohnson}.
+#' @return \code{step_YeoJohnson} return an object of class \code{step_YeoJohnson}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
@@ -39,14 +39,6 @@ step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
   )
 }
 
-#' For a training set of data, \code{learn.step_YeoJohnson} estimates the simple Yeo-Johnson transformation. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @param x a \code{step_YeoJohnson} object that specifies which columns will be transformed
-#' @inheritParams learn.step_center
-#' @export
-#' @importFrom stats optimize
-#' @rdname step_YeoJohnson
-
 learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   values <- vapply(
@@ -66,15 +58,6 @@ learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' \code{process.step_YeoJohnson} is used to transform columns on specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @inheritParams process.step_center
-#' @param newdata A tibble or data frame that has numeric variables that will be transformed
-#' @return \code{process.step_YeoJohnson} returns a tibble of processed data. 
-#' @export
-#' @importFrom tibble as_tibble
-#' @rdname step_YeoJohnson
-
 process.step_YeoJohnson <- function(object, newdata, ...) {
   if(length(object$lambdas) == 0) 
     return(as_tibble(newdata))
@@ -84,7 +67,6 @@ process.step_YeoJohnson <- function(object, newdata, ...) {
   as_tibble(newdata)
 }
 
-#' @export
 print.step_YeoJohnson <- function(x, form_width = 30, ...) {
   cat("Yeo-Johnson transformation on ")
   cat(form_printer(x, wdth = form_width))
@@ -137,12 +119,14 @@ ll_yj <- function(lambda, y, eps = .001) {
   res
 }
 
+#' @importFrom  stats complete.cases
 ## eliminates missing data and returns -llh
 yj_obj <- function(lam, dat){
   dat <- dat[complete.cases(dat)]
   ll_yj(lambda = lam, y = dat)
 }
 
+#' @importFrom stats optimize
 ## estimates the values
 estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5) {
   eps <- .001

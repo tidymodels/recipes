@@ -52,6 +52,7 @@ get_lhs_vars <- function(formula, data) {
   get_rhs_vars(formula, data)
 }
 
+#' @importFrom stats model.frame
 get_rhs_vars <- function(formula, data) {
   if(!is_formula(formula))
     formula <- as.formula(formula)

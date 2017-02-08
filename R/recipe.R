@@ -3,7 +3,7 @@
 #' A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
-#' @param x an object
+#' @param x an object. For the default method, \code{x} is a data frame or tibble of the \emph{template} data set (see below).
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
@@ -20,16 +20,16 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @export
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr full_join
-recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
+recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   
-  if(!is_tibble(data)) data <- as_tibble(data)
-  if(is.null(vars)) vars <- colnames(data)
+  if(!is_tibble(x)) x <- as_tibble(x)
+  if(is.null(vars)) vars <- colnames(x)
   if(any(table(vars) > 1))
     stop("`vars` should have unique members")
-  if(any(!(vars %in% colnames(data))))
-    stop("1+ elements of `vars` are not in `data`")
+  if(any(!(vars %in% colnames(x))))
+    stop("1+ elements of `vars` are not in `x`")
   
-  data <- data[, vars]
+  x <- x[, vars]
   
   var_info <- tibble(variable = vars)
   
@@ -41,14 +41,14 @@ recipe.default <- function(data, vars = names(data), roles = NULL, ...) {
   } else var_info$role <- ""
   
   ## Add types
-  var_info <- full_join(get_types(data), var_info, by = "variable")
+  var_info <- full_join(get_types(x), var_info, by = "variable")
   var_info$source <- "original"
   
   ## Return final object of class `recipe`
   out <- list(var_info = var_info,
               term_info = var_info,
               steps = NULL,
-              template = data)
+              template = x)
   class(out) <- "recipe"
   out
 }
@@ -83,7 +83,7 @@ recipe.formula <- function(formula, data, ...) {
   
   ## pass to recipe.default with vars and roles
   
-  recipe.default(data = data, vars = vars, roles = roles, ...)
+  recipe.default(x = data, vars = vars, roles = roles, ...)
 }
 
 
@@ -93,7 +93,7 @@ recipe.formula <- function(formula, data, ...) {
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
-#' @exportPattern ^learn
+#' @export
 learn   <- function(x, ...) UseMethod("learn")
 
 #' Train a Data Recipe
@@ -146,7 +146,7 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
-#' @exportPattern ^process
+#' @export
 process <- function(object, ...) UseMethod("process")
 
 #' Apply a Trained Data Recipe
@@ -193,7 +193,6 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
 #' @return The original object (invisibly)
 #'
 #' @author Max Kuhn
-#' @export print.recipe
 print.recipe <- function(x, form_width = 30, ...) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")

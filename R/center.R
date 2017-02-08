@@ -6,8 +6,8 @@
 #' @param terms A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details. 
 #' @param role Not used by this step since no new variables are created. 
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated. 
-#' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.step_center}}. 
-#' @return \code{step_center} and \code{learn.step_center} return objects of class \code{step_center}.
+#' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}. 
+#' @return \code{step_center} returns an object of class \code{step_center}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
@@ -33,16 +33,6 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
   )
 }
 
-#' For a training set of data, \code{learn.step_center} estimates the means for numeric columns. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @param x a \code{step_center} object that specifies which columns will be centered.
-#' @param training A tibble or data frame that contains the training set.
-#' @param info A tibble with information on the current set of columns in the design matrix. 
-#' @param na.rm A boolean indicates whether to remove NAs, default TRUE.
-#' @param ... further arguments passed to or from other methods (not currently used).
-#' @export
-#' @rdname step_center
-
 learn.step_center <- function(x, training, info = NULL, na.rm = TRUE, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   
@@ -50,21 +40,11 @@ learn.step_center <- function(x, training, info = NULL, na.rm = TRUE, ...) {
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
 }
 
-#' \code{process.step_center} is used to center the columns in specific data sets. This replaces values in the original columns. This function is \emph{not} intended to be directly called by the user. 
-#' 
-#' @param object A trained step object.
-#' @param newdata A tibble or data frame that has numeric variables that will be centered.
-#' @return \code{process.step_center} returns a tibble of processed data. 
-#' @export
-#' @importFrom tibble as_tibble
-#' @rdname step_center
-
 process.step_center <- function(object, newdata, ...) {
   newdata[, names(object$means)] <- sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
   as_tibble(newdata)
 }
 
-#' @export
 print.step_center <- function(x, form_width = 30, ...) {
   cat("Centering with ")
   cat(form_printer(x, wdth = form_width))
