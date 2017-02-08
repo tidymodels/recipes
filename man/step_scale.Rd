@@ -23,6 +23,29 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
 }
+\details{
+Scaling data means that the standard deviation of a variable is divided out of the data. \code{step_scale} estimates the variable standard deviations from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the scaling to new data sets using these standard deviations.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+scaled_trans <- rec \%>\%
+  step_scale(terms = ~ carbon + hydrogen)
+
+scaled_obj <- learn(scaled_trans, training = biomass_tr)
+
+transformed_te <- process(scaled_obj, biomass_te)
+
+biomass_te[1:10, names(transformed_te)]
+transformed_te
+}
 \concept{
 preprocessing normalization_methods
 }

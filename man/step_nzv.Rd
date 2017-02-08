@@ -16,7 +16,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{options}{A list of options for \code{\link[caret]{nearZeroVar}}. \bold{Note} that the arguments \code{data} and \code{names} should not be included in this list.}
+\item{options}{A list of options for the filter (see Details below).}
 
 \item{removals}{A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.}
 }
@@ -25,6 +25,39 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
+}
+\details{
+This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics: 
+\enumerate{
+  \item they have very few unique values relative to the number of samples and 
+  \item the ratio of the frequency of the most common value to the frequency of the second most common value is large. 
+}
+
+For example, an example of near zero variance predictor is one that, for 1000 samples, has two distinct values and 999 of them are a single value.
+
+To be flagged, first the frequency of the most prevalent value over the second most frequent value (called the "frequency ratio") must be above \code{freqCut}. Secondly, the "percent of unique values," the number of unique values divided by the total number of samples (times 100), must also be below \code{uniqueCut}.
+
+In the above example, the frequency ratio is 999 and the unique value percentage is 0.0001.
+}
+\examples{
+data(biomass)
+
+biomass$sparse <- c(1, rep(0, nrow(biomass) - 1))
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + sparse,
+              data = biomass_tr)
+
+library(magrittr)
+nzv_filter <- rec \%>\%
+  step_nzv(terms = ~ is_predictor()) 
+
+filter_obj <- learn(nzv_filter, training = biomass_tr)
+
+filtered_te <- process(filter_obj, biomass_te)
+any(names(filtered_te) == "sparse")
 }
 \concept{
 preprocessing variable_filters

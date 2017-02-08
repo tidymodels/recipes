@@ -24,6 +24,37 @@ step_spatialsign(recipe, terms, role = "predictor", trained = FALSE,
 \description{
 \code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
 }
+\details{
+The spatial sign transformation projects the variables onto a unit sphere and is related to global contrast normalization. The spatial sign of a vector \code{w} is \code{w/norm(w)}.
+
+The variables should be centered and scaled prior to the computations.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+ss_trans <- rec \%>\%
+  step_center(terms = ~ carbon + hydrogen) \%>\%
+  step_scale(terms = ~ carbon + hydrogen) \%>\%
+  step_spatialsign(terms = ~ carbon + hydrogen) 
+
+ss_obj <- learn(ss_trans, training = biomass_tr)
+
+transformed_te <- process(ss_obj, biomass_te)
+
+plot(biomass_te$carbon, biomass_te$hydrogen)
+
+plot(transformed_te$carbon, transformed_te$hydrogen)
+}
+\references{
+Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign preprocessing: a simple way to impart moderate robustness to multivariate estimators. \emph{Journal of Chemical Information and Modeling}, 46(3), 1402-1409.
+}
 \concept{
 preprocessing projection_methods
 }

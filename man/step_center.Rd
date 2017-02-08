@@ -23,6 +23,29 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 \description{
 \code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
 }
+\details{
+Centering data means that the average of a variable is subtracted from the data. \code{step_center} estimates the variable means from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the centering to new data sets using these means.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+center_trans <- rec \%>\%
+  step_center(terms = ~ carbon + hydrogen)
+
+center_obj <- learn(center_trans, training = biomass_tr)
+
+transformed_te <- process(center_obj, biomass_te)
+
+biomass_te[1:10, names(transformed_te)]
+transformed_te
+}
 \concept{
 preprocessing normalization_methods
 }
