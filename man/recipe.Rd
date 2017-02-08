@@ -21,7 +21,7 @@ recipe(x, ...)
 
 \item{roles}{a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
 
-\item{formula}{a model formula.}
+\item{formula}{A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed.}
 
 \item{data}{a data frame or tibble of the \emph{template} data set (see below).}
 }

@@ -54,7 +54,7 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
 }
 
 #' @rdname recipe
-#' @param formula a model formula.
+#' @param formula A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed. 
 #' @export
 #' @importFrom stats as.formula
 #' @importFrom tibble as_tibble is_tibble 
@@ -62,6 +62,8 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
 recipe.formula <- function(formula, data, ...) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
+  ## check for in-line formulas
+  check_elements(formula, allowed = NULL)
   
   if(!is_tibble(data)) data <- as_tibble(data)
   

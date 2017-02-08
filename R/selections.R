@@ -114,9 +114,14 @@ add_arg <- function(cl) {
 check_elements <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
-  not_good <- funs[!(funs %in% allowed)]
-  if(length(not_good) > 0)
-    stop("Not all functions are allowed in `terms` formulas. See ?selections ")
+  if(!is.null(allowed)) { # when called from a step
+    not_good <- funs[!(funs %in% allowed)]
+    if(length(not_good) > 0)
+      stop("Not all functions are allowed in `terms` formulas. See ?selections ")
+  } else { # when called from formula.recipe
+    if(length(funs) > 0) 
+      stop("No in-line functions should be used here; use steps to define processing actions")
+  }
   invisible(NULL)
 }
 
