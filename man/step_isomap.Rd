@@ -30,6 +30,44 @@ step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \description{
 \code{step_isomap} creates a \emph{specification} of a recipe step that will convert numeric data into one or more new dimensions.
 }
+\details{
+Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a reduced set of dimensions such that the geometric distances between the original data points are preserved. This version of MDS uses nearest neighbors in the data as a method for increasing the fidelity of the new dimensions to the original data values.
+
+It is advisable to center and scale the variables prior to running Isomap (\code{step_center} and \code{step_scale} can be used for this purpose).
+
+The argument \code{num} controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with \code{prefix} and a sequence of numbers. The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{Isomap1} - \code{Isomap9}. If \code{num = 101}, the names would be \code{Isomap001} - \code{Isomap101}.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+im_trans <- rec \%>\%
+  step_YeoJohnson(terms = ~ is_predictor()) \%>\%
+  step_center(terms = ~ is_predictor()) \%>\%
+  step_scale(terms = ~ is_predictor()) \%>\%
+  step_isomap(terms = ~ is_predictor(), 
+              options = list(knn = 100), 
+              num = 2)
+
+im_estimates <- learn(im_trans, training = biomass_tr)
+
+im_te <- process(im_estimates, biomass_te)
+
+rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+plot(im_te$Isomap1, im_te$Isomap2,
+     xlim = rng, ylim = rng)
+}
+\references{
+De Silva, V., and Tenenbaum, J. B. (2003). Global versus local methods in nonlinear dimensionality reduction. \emph{Advances in Neural Information Processing Systems}. 721-728.
+
+\pkg{dimRed}, a framework for dimensionality reduction, \url{https://github.com/gdkrmr}
+}
 \concept{
 preprocessing isomap projection_methods
 }

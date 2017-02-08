@@ -31,6 +31,26 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \description{
 \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components.
 }
+\details{
+Principal component analysis (PCA) is a transformation of a group of variables that produces a new set of artificial features or components. These components are designed to capture the maximum amount of information (i.e. variance) in the original variables. Also, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. 
+
+It is advisable to standardized the variables prior to running PCA. Here, each variable will be centered and scaled prior to the PCA calculation. This can be changed using the \code{options} argument. The means and standard deviation are estimated from the training set and are applied to any data sets that are converted to principal components. 
+
+The argument \code{num} controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with \code{prefix} and a sequence of numbers. The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{PC1} - \code{PC9}. If \code{num = 101}, the names would be \code{PC001} - \code{PC101}.
+}
+\examples{
+rec <- recipe( ~ ., data = USArrests)
+pca_trans <- step_pca(rec, terms = ~ is_numeric(), num = 3)
+pca_estimates <- learn(pca_trans, training = USArrests)
+pca_data <- process(pca_estimates, USArrests)
+
+rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
+plot(pca_data$PC1, pca_data$PC2,
+     xlim = rng, ylim = rng)
+}
+\references{
+Jolliffe, I. T. (2010). \emph{Principal Component Analysis}. Springer.
+}
 \concept{
 preprocessing pca projection_methods
 }

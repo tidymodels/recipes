@@ -14,6 +14,41 @@
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
 #' @import dimRed
+#' @details Kernel principal component analysis (kPCA) is an extension a PCA analysis that conducts the calculations in a broader dimensionality defined by a kernel function. For example, if a quadratic kernel function were used, each variable would be represented by its original values as well as its square. This nonlinear mapping is used  during the PCA analysis and can potentially help find better representations of the original data.
+#' 
+#' As with ordinary PCA, it is important to standardized the variables prior to running PCA (\code{step_center} and \code{step_scale} can be used for this purpose). 
+#' 
+#' When performing kPCA, the kernel function (and any important kernel parameters) must be chosen. The \pkg{kernlab} package is used and the reference below discusses the types of kernels available and their parameter(s). These specifications can be made in the \code{kernel} and \code{kpar} slots of the \code{options} argument to \code{step_kpca}. 
+#' 
+#' The argument \code{num} controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with \code{prefix} and a sequence of numbers. The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{kPC1} - \code{kPC9}. If \code{num = 101}, the names would be \code{kPC001} - \code{kPC101}.
+#' 
+#' @references Scholkopf, B., Smola, A., and Muller, K. (1997). Kernel principal component analysis. \emph{Lecture Notes in Computer Science}, 1327, 583-588.
+#' 
+#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab - An S4 package for kernel methods in R. \emph{Journal of Statistical Software}, 11(1), 1-20.
+#' 
+#' @examples  
+#' data(biomass)
+#' 
+#' biomass_tr <- biomass[biomass$dataset == "Training",]
+#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' 
+#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'               data = biomass_tr)
+#' 
+#' library(magrittr)
+#' kpca_trans <- rec %>% 
+#'   step_YeoJohnson(terms = ~ is_predictor()) %>% 
+#'   step_center(terms = ~ is_predictor()) %>% 
+#'   step_scale(terms = ~ is_predictor()) %>% 
+#'   step_kpca(terms = ~ is_predictor())
+#' 
+#' kpca_estimates <- learn(kpca_trans, training = biomass_tr)
+#' 
+#' kpca_te <- process(kpca_estimates, biomass_te)
+#' 
+#' rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
+#' plot(kpca_te$kPC1, kpca_te$kPC2,
+#'      xlim = rng, ylim = rng)
 
 step_kpca <- function(recipe, 
                       terms, 

@@ -14,7 +14,35 @@
 #' @concept preprocessing ica projection_methods
 #' @export
 #' @import dimRed
-
+#' @details Independent component analysis (ICA) is a transformation of a group of variables that produces a new set of artificial features or components. ICA assumes that the variables are mixtures of a set of distinct, non-Gaussian signals and attempts to transform the data to isolate these signals. Like PCA, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. Also like PCA, it is advisable to center and scale the variables prior to running ICA.
+#' 
+#' This package produces components using the "FastICA" methodology (see reference below).
+#' 
+#' The argument \code{num} controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with \code{prefix} and a sequence of numbers. The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{IC1} - \code{IC9}. If \code{num = 101}, the names would be \code{IC001} - \code{IC101}. 
+#' 
+#' @references Hyvarinen, A., and Oja, E. (2000). Independent component analysis: algorithms and applications. \emph{Neural Networks}, 13(4-5), 411-430.
+#' 
+#' @examples 
+#' # from fastICA::fastICA
+#' set.seed(131)
+#' S <- matrix(runif(400), 200, 2)
+#' A <- matrix(c(1, 1, -1, 3), 2, 2, byrow = TRUE)
+#' X <- as.data.frame(S %*% A)
+#' 
+#' tr <- X[1:100, ]
+#' te <- X[101:200, ]
+#' 
+#' rec <- recipe( ~ ., data = tr)
+#' 
+#' ica_trans <- step_center(rec, terms = ~ V1 + V2)
+#' ica_trans <- step_scale(rec, terms =  ~ V1 + V2)
+#' ica_trans <- step_ica(rec, terms =  ~ V1 + V2, num = 2)
+#' ica_estimates <- learn(ica_trans, training = tr)
+#' ica_data <- process(ica_estimates, te)
+#' 
+#' plot(te$V1, te$V2)
+#' plot(ica_data$IC1, ica_data$IC2)
+#' 
 step_ica <- function(recipe, 
                      terms, 
                      role = "predictor",
