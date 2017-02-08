@@ -28,6 +28,29 @@ step_BoxCox(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 \description{
 \code{step_BoxCox} creates a \emph{specification} of a recipe step that will transform data using a simple Box-Cox transformation.
 }
+\details{
+The Box-Cox transformation, which requires a strictly positive variable, can be used to rescale a variable to be more similar to a normal distribution. In this package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user). 
+
+This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric. 
+
+If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of \code{NA} is used and no transformation is applied.
+}
+\examples{
+
+rec <- recipe(~ ., data = as.data.frame(state.x77))
+
+bc_trans <- step_BoxCox(rec, terms = ~ is_numeric())
+
+bc_estimates <- learn(bc_trans, training = as.data.frame(state.x77))
+
+bc_data <- process(bc_estimates, as.data.frame(state.x77))
+
+plot(density(state.x77[, "Illiteracy"]), main = "before")
+plot(density(bc_data$Illiteracy), main = "after")
+}
+\references{
+Sakia, R. M. (1992). The Box-Cox transformation technique: A review. \emph{The Statistician}, 169-178..
+}
 \concept{
 preprocessing transformation_methods
 }
