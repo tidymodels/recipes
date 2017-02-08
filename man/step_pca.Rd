@@ -5,7 +5,8 @@
 \title{PCA Signal Extraction.}
 \usage{
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(center = TRUE, scale. = TRUE, retx = FALSE), res = NULL)
+  options = list(center = TRUE, scale. = TRUE, retx = FALSE), res = NULL,
+  prefix = "PC")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -21,6 +22,8 @@ step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \item{options}{A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the argument \code{x} should not be passed here (or at all).}
 
 \item{res}{The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
+
+\item{prefix}{A character string that will be the prefix to the resulting new variables. See notes below}
 }
 \value{
 \code{step_pca}  returns an object of class \code{step_pca}.

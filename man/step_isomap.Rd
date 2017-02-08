@@ -5,7 +5,7 @@
 \title{Isomap Embedding.}
 \usage{
 step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(knn = 50), res = NULL)
+  options = list(knn = 50), res = NULL, prefix = "Isomap")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -21,6 +21,8 @@ step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \item{options}{A list of options to \code{\link[dimRed]{Isomap}}.}
 
 \item{res}{The \code{\link[dimRed]{Isomap}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
+
+\item{prefix}{A character string that will be the prefix to the resulting new variables. See notes below}
 }
 \value{
 \code{step_isomap} returns an object of class \code{step_isomap}.

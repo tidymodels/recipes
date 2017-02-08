@@ -5,7 +5,8 @@
 \title{Kernel PCA Signal Extraction.}
 \usage{
 step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)))
+  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
+  prefix = "kPC")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -21,6 +22,8 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \item{res}{An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
 
 \item{options}{A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).}
+
+\item{prefix}{A character string that will be the prefix to the resulting new variables. See notes below}
 }
 \value{
 \code{step_kpca} returns an object of class \code{step_kpca}.

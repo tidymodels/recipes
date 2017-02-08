@@ -5,7 +5,7 @@
 \title{ICA Signal Extraction.}
 \usage{
 step_ica(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(), res = NULL)
+  options = list(), res = NULL, prefix = "IC")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -21,6 +21,8 @@ step_ica(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 \item{options}{A list of options to \code{\link[fastICA]{fastICA}}. No defaults are set here. \bold{Note} that the arguments \code{X} and \code{n.comp} should not be passed here.}
 
 \item{res}{The \code{\link[fastICA]{fastICA}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
+
+\item{prefix}{A character string that will be the prefix to the resulting new variables. See notes below}
 }
 \value{
 \code{step_ica} returns an object of class \code{step_ica}.
