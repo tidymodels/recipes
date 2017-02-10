@@ -13,7 +13,6 @@
 #' @keywords datagen
 #' @concept preprocessing ica projection_methods
 #' @export
-#' @import dimRed
 #' @details Independent component analysis (ICA) is a transformation of a group of variables that produces a new set of artificial features or components. ICA assumes that the variables are mixtures of a set of distinct, non-Gaussian signals and attempts to transform the data to isolate these signals. Like PCA, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. Also like PCA, it is advisable to center and scale the variables prior to running ICA.
 #' 
 #' This package produces components using the "FastICA" methodology (see reference below).
@@ -85,6 +84,7 @@ step_ica_new <- function(terms = NULL,
   )
 }
 
+#' @importFrom dimRed FastICA dimRedData
 learn.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   

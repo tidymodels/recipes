@@ -13,7 +13,6 @@
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
 #' @export
-#' @import dimRed
 #' @details 
 #' Principal component analysis (PCA) is a transformation of a group of variables that produces a new set of artificial features or components. These components are designed to capture the maximum amount of information (i.e. variance) in the original variables. Also, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. 
 #' 
@@ -75,6 +74,7 @@ step_pca_new <- function(terms = NULL,
   )
 }
 
+#' @importFrom dimRed PCA dimRedData
 learn.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   

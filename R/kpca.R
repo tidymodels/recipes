@@ -13,7 +13,6 @@
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
-#' @import dimRed
 #' @details Kernel principal component analysis (kPCA) is an extension a PCA analysis that conducts the calculations in a broader dimensionality defined by a kernel function. For example, if a quadratic kernel function were used, each variable would be represented by its original values as well as its square. This nonlinear mapping is used  during the PCA analysis and can potentially help find better representations of the original data.
 #' 
 #' As with ordinary PCA, it is important to standardized the variables prior to running PCA (\code{step_center} and \code{step_scale} can be used for this purpose). 
@@ -93,6 +92,7 @@ step_kpca_new <- function(terms = NULL,
   )
 }
 
+#' @importFrom dimRed kPCA dimRedData
 learn.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   

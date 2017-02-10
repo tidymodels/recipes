@@ -18,7 +18,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{objects}{A list of \code{terms} objects for each individual interation.}
 
-\item{sep}{A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}.}
+\item{sep}{A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).}
 }
 \value{
 \code{step_interact} returns an object of class \code{step_interact}.
