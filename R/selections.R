@@ -16,6 +16,8 @@
 #' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{role_is}, \code{role_is_not}, \code{type_is}, and \code{type_is_not}. For convenience, there are also functions that are more specific: \code{is_numeric}, \code{is_nominal}, \code{is_predictor}, and \code{is_outcome}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
 NULL
 
+## These are the allowable functions for formulas in the the `terms` arguments to the steps or
+## to `recipes.formula`. 
 name_selectors <- c("starts_with", "ends_with", "contains", 
                     "matches", "num_range", "everything")
 
@@ -25,6 +27,7 @@ type_selectors <- c("type_is", "type_is_not", "is_numeric", "is_nominal")
 
 selectors <- c(name_selectors, role_selectors, type_selectors)
 
+## Main function to parse the `terms` arguments
 parse_terms_formula <- function(f, info) {
   var_vals <- info$variable
   role_vals <- info$role
@@ -69,6 +72,8 @@ parse_terms_formula <- function(f, info) {
   var_vals[indices]
 }
 
+## Get the components of the formula split by +/-. The
+## function also returns the sign
 f_elements <- function(x) {
   trms_obj <- terms(x)
   ## Their order will change here (minus at the end)
@@ -84,6 +89,8 @@ f_elements <- function(x) {
   
   term_signs <- rep("", length(clls) - 1)
   for(i in seq_along(term_signs)) {
+    ## Check to see if the elements are in the `factors`
+    ## part of `terms` and these will have a + sign
     retained <- any(
       unlist(
         lapply(
@@ -98,6 +105,8 @@ f_elements <- function(x) {
   list(terms  = clls, signs = term_signs)  
 }
 
+## This adds the appropriate argument based on whether the call is for
+## a variable name, role, or data type. 
 add_arg <- function(cl) {
   func <- fun_calls(cl)
   if(func %in% name_selectors) {
@@ -110,6 +119,8 @@ add_arg <- function(cl) {
   cl
 }
 
+## This flags formulas that are not allowed. When called from `recipe.formula`
+## `allowed` is NULL. 
 #' @importFrom pryr fun_calls
 check_elements <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
