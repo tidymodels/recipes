@@ -26,6 +26,38 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 \description{
 \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
 }
+\details{
+\code{step_interact} can create interactions between variables. It is primarily intended for \bold{numeric data}; categorical variables should probably be converted to dummy variables using \code{\link{step_dummy}} prior to being used for interactions. 
+
+Unlike other step functions, the \code{terms} argument should be a traditional R model formula but should contain no inline functions (e.g. \code{log}). For example, for predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are retained for the design matrix. 
+
+The separator between the variables defaults to "\code{_x_}" so that the three way interaction shown previously would generate a column named \code{A_x_B_x_C}. This can be changed using the \code{sep} argument.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+int_mod_1 <- rec \%>\%
+  step_interact(terms = ~ carbon:hydrogen)
+
+int_mod_2 <- int_mod_1 \%>\%
+  step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)  
+
+int_mod_1 <- learn(int_mod_1, training = biomass_tr)
+int_mod_2 <- learn(int_mod_2, training = biomass_tr)
+
+dat_1 <- process(int_mod_1, biomass_te)
+dat_2 <- process(int_mod_2, biomass_te)
+
+names(dat_1)
+names(dat_2)
+}
 \concept{
 preprocessing
 }

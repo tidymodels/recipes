@@ -20,6 +20,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @export
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr full_join
+#' @importFrom stats predict
 recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   
   if(!is_tibble(x)) x <- as_tibble(x)
@@ -195,7 +196,7 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
 #' @return The original object (invisibly)
 #'
 #' @author Max Kuhn
-
+#' @export 
 print.recipe <- function(x, form_width = 30, ...) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")
