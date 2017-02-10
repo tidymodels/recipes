@@ -9,7 +9,7 @@ filter_terms <- function(x, ...) UseMethod("filter_terms")
 get_types <- function(x) {
   type_list <- list(
     nominal = c("character", "factor", "ordered"),
-    numeric = c("integer", "numeric"),
+    numeric = c("integer", "numeric", "double"),
     date = c("POSIXct", "Date")
   )
   res <- lapply(type_list, type_by_var, dat = x)
