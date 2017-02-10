@@ -23,6 +23,29 @@ step_invlogit(recipe, terms, role = NA, trained = FALSE, vars = NULL)
 \description{
 \code{step_invlogit} creates a \emph{specification} of a recipe step that will transform the data from real values to be between zero and one.
 }
+\details{
+The inverse logit transformation takes values on the real line and translates them to be between zero and one using the function \code{f(x) = 1/(1+exp(-x))}.
+}
+\examples{
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+ilogit_trans <- rec  \%>\%
+  step_center(terms = ~ carbon + hydrogen) \%>\%
+  step_scale(terms = ~ carbon + hydrogen) \%>\%
+  step_invlogit(terms = ~ carbon + hydrogen)
+
+ilogit_obj <- learn(ilogit_trans, training = biomass_tr)
+
+transformed_te <- process(ilogit_obj, biomass_te)
+plot(biomass_te$carbon, transformed_te$carbon)
+}
 \concept{
 preprocessing transformation_methods
 }

@@ -23,6 +23,25 @@ step_logit(recipe, terms, role = NA, trained = FALSE, vars = NULL)
 \description{
 \code{step_logit} creates a \emph{specification} of a recipe step that will logit transform the data.
 }
+\details{
+The inverse logit transformation takes values between zero and one and translates them to be on the real line using the function \code{f(p) = log(p/(1-p))}.
+}
+\examples{
+set.seed(313)
+examples <- matrix(runif(40), ncol = 2)
+examples <- data.frame(examples)
+
+rec <- recipe(~ X1 + X2, data = examples)
+
+library(magrittr)
+logit_trans <- rec  \%>\%
+  step_logit(terms = ~ is_predictor())
+
+logit_obj <- learn(logit_trans, training = examples)
+
+transformed_te <- process(logit_obj, examples)
+plot(examples$X1, transformed_te$X1)
+}
 \concept{
 preprocessing transformation_methods
 }
