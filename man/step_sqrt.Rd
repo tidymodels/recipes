@@ -23,6 +23,22 @@ step_sqrt(recipe, terms, role = NA, trained = FALSE, vars = NULL)
 \description{
 \code{step_sqrt} creates a \emph{specification} of a recipe step that will square root transform the data.
 }
+\examples{
+set.seed(313)
+examples <- matrix(rnorm(40)^2, ncol = 2)
+examples <- as.data.frame(examples)
+
+rec <- recipe(~ V1 + V2, data = examples)
+
+library(magrittr)
+sqrt_trans <- rec  \%>\%
+  step_sqrt(terms = ~ is_predictor())
+
+sqrt_obj <- learn(sqrt_trans, training = examples)
+
+transformed_te <- process(sqrt_obj, examples)
+plot(examples$V1, transformed_te$V1)
+}
 \concept{
 preprocessing transformation_methods
 }

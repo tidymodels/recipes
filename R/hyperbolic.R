@@ -11,7 +11,23 @@
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
+#' @examples 
+#' set.seed(313)
+#' examples <- matrix(rnorm(40), ncol = 2)
+#' examples <- as.data.frame(examples)
 #' 
+#' rec <- recipe(~ V1 + V2, data = examples)
+#' 
+#' library(magrittr)
+#' cos_trans <- rec  %>%
+#'   step_hyperbolic(terms = ~ is_predictor(), 
+#'                   fun = "cos", inverse = FALSE)
+#' 
+#' cos_obj <- learn(cos_trans, training = examples)
+#' 
+#' transformed_te <- process(cos_obj, examples)
+#' plot(examples$V1, transformed_te$V1)
+
 step_hyperbolic <- function(recipe, terms, role = NA, trained = FALSE, 
                             func = "sin", inverse = TRUE, vars = NULL) {
   funcs <- c("sin", "cos", "tan")

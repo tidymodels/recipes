@@ -195,6 +195,7 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
 #' @return The original object (invisibly)
 #'
 #' @author Max Kuhn
+
 print.recipe <- function(x, form_width = 30, ...) {
   tab <- as.data.frame(table(x$var_info$role))
   colnames(tab) <- c("role", "#variables")

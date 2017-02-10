@@ -26,6 +26,22 @@ step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1),
 \description{
 \code{step_log} creates a \emph{specification} of a recipe step that will log transform data.
 }
+\examples{
+set.seed(313)
+examples <- matrix(exp(rnorm(40)), ncol = 2)
+examples <- as.data.frame(examples)
+
+rec <- recipe(~ V1 + V2, data = examples)
+
+library(magrittr)
+log_trans <- rec  \%>\%
+  step_log(terms = ~ is_predictor())
+
+log_obj <- learn(log_trans, training = examples)
+
+transformed_te <- process(log_obj, examples)
+plot(examples$V1, transformed_te$V1)
+}
 \concept{
 preprocessing transformation_methods
 }

@@ -10,7 +10,22 @@
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
+#' @examples 
+#' set.seed(313)
+#' examples <- matrix(exp(rnorm(40)), ncol = 2)
+#' examples <- as.data.frame(examples)
 #' 
+#' rec <- recipe(~ V1 + V2, data = examples)
+#' 
+#' library(magrittr)
+#' log_trans <- rec  %>%
+#'   step_log(terms = ~ is_predictor())
+#' 
+#' log_obj <- learn(log_trans, training = examples)
+#' 
+#' transformed_te <- process(log_obj, examples)
+#' plot(examples$V1, transformed_te$V1)
+
 step_log <- function(recipe, terms, role = NA, trained = FALSE, base = exp(1), vars = NULL) {
   add_step(
     recipe, 
