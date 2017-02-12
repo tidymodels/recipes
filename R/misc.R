@@ -151,3 +151,22 @@ names0 <- function(num, prefix = "x") {
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
 }
+
+
+
+## As suggested by HW, brought in from the `pryr` package
+## https://github.com/hadley/pryr
+fun_calls <- function(f) {
+  if (is.function(f)) {
+    fun_calls(body(f))
+  } else if (is.call(f)) {
+    fname <- as.character(f[[1]])
+    
+    # Calls inside .Internal are special and shouldn't be included
+    if (identical(fname, ".Internal")) return(fname)
+    
+    unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
+  }
+}
+
+

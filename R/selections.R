@@ -121,7 +121,6 @@ add_arg <- function(cl) {
 
 ## This flags formulas that are not allowed. When called from `recipe.formula`
 ## `allowed` is NULL. 
-#' @importFrom pryr fun_calls
 check_elements <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
@@ -136,7 +135,6 @@ check_elements <- function(x, allowed = selectors) {
   invisible(NULL)
 }
 
-#' @importFrom pryr fun_calls
 has_selector <- function(x, allowed = selectors) {
   res <- rep(NA, length(x) - 1)
   for(i in 2:length(x)) 
