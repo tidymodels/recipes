@@ -13,7 +13,6 @@
 #' @keywords datagen
 #' @concept preprocessing isomap projection_methods
 #' @export
-#' @import dimRed
 #' @details Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a reduced set of dimensions such that the geometric distances between the original data points are preserved. This version of MDS uses nearest neighbors in the data as a method for increasing the fidelity of the new dimensions to the original data values.
 #' 
 #' It is advisable to center and scale the variables prior to running Isomap (\code{step_center} and \code{step_scale} can be used for this purpose).
@@ -55,7 +54,7 @@ step_isomap <- function(recipe,
                         role = "predictor",
                         trained = FALSE,
                         num  = 5, 
-                        options = list(knn = 50),
+                        options = list(knn = 50, .mute = c("message", "output")),
                         res = NULL,
                         prefix = "Isomap") {
   add_step(
@@ -92,6 +91,7 @@ step_isomap_new <- function(terms = NULL,
   )
 }
 
+#' @importFrom dimRed embed dimRedData
 learn.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info) 
   
