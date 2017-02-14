@@ -103,20 +103,26 @@ learn   <- function(x, ...) UseMethod("learn")
 #'
 #' For a recipe with at least one preprocessing step, estimate the required parameters from a training set that can be later applied to other data sets.
 #' @param training A data frame or tibble that will be used to estimate parameters for preprocessing.
-#' @param fresh A logical indicating whether already trained steps should be re-trained
+#' @param fresh A logical indicating whether already trained steps should be re-trained. If \code{TRUE}, you should pass in a data set to the argument \code{training}. 
 #' @param verbose A logical that controls wether progress is reported as steps are executed.
+#' @param retain A logical: should the processed training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps. 
 #' @return A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
 #' @export
-learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE, ...) {
+learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, retain = FALSE, ...) {
   if(length(x$steps) == 0)
     stop("Add some steps")
-  
-  training <- if(!is_tibble(training))
-    as_tibble(training[, x$var_info$variable, drop = FALSE]) else
-      training[, x$var_info$variable]
+  if(is.null(training)) {
+    if(fresh)
+      stop("A training set must be supplied to the `training` argument when `fresh = TRUE`")
+    training <- x$template
+  } else {
+    training <- if(!is_tibble(training))
+      as_tibble(training[, x$var_info$variable, drop = FALSE]) else
+        training[, x$var_info$variable]
+  }
   
   for(i in seq(along = x$steps)) {
     note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
@@ -141,6 +147,8 @@ learn.recipe <- function(x, training = x$template, fresh = FALSE, verbose = TRUE
         cat(note, "[pre-trained]\n")
     }
   }
+  if(retain) x$template <- training
+  
   x
 }
 

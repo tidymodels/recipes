@@ -7,8 +7,8 @@
 \usage{
 learn(x, ...)
 
-\method{learn}{recipe}(x, training = x$template, fresh = FALSE,
-  verbose = TRUE, ...)
+\method{learn}{recipe}(x, training = NULL, fresh = FALSE, verbose = TRUE,
+  retain = FALSE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -17,9 +17,11 @@ learn(x, ...)
 
 \item{training}{A data frame or tibble that will be used to estimate parameters for preprocessing.}
 
-\item{fresh}{A logical indicating whether already trained steps should be re-trained}
+\item{fresh}{A logical indicating whether already trained steps should be re-trained. If \code{TRUE}, you should pass in a data set to the argument \code{training}.}
 
 \item{verbose}{A logical that controls wether progress is reported as steps are executed.}
+
+\item{retain}{A logical: should the processed training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.}
 }
 \value{
 A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
