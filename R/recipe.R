@@ -21,6 +21,45 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr full_join
 #' @importFrom stats predict
+#' @examples 
+#' 
+#' # simple example:
+#' data(biomass)
+#' 
+#' # split data
+#' biomass_tr <- biomass[biomass$dataset == "Training",]
+#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' 
+#' # When only predictors and outcomes, a simplified formula can be used.
+#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'               data = biomass_tr)
+#' 
+#' library(magrittr)
+#' sp_signed <- rec %>%
+#'   step_center(~ is_predictor()) %>%
+#'   step_scale(~ is_predictor()) %>%
+#'   step_spatialsign(~ is_predictor())
+#' sp_signed
+#' 
+#' # now estimate required parameters
+#' sp_signed_trained <- learn(sp_signed, training = biomass_tr)
+#' sp_signed_trained
+#' 
+#' # apply the preprocessing to a data set
+#' test_set_values <- process(sp_signed_trained, newdata = biomass_te)
+#' 
+#' # multivariate example
+#' 
+#' # no need for `cbind(carbon, hydrogen)` for right-hand side
+#' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
+#' multi_y <- multi_y %>% 
+#'   step_center(~ is_outcome()) %>%
+#'   step_scale(~ is_predictor())
+#' 
+#' multi_y_trained <- learn(multi_y, training = biomass_tr)
+#' 
+#' results <- process(multi_y_trained, biomass_te)
+
 recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   
   if(!is_tibble(x)) x <- as_tibble(x)
@@ -49,13 +88,14 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   out <- list(var_info = var_info,
               term_info = var_info,
               steps = NULL,
-              template = x)
+              template = x,
+              levels = NULL)
   class(out) <- "recipe"
   out
 }
 
 #' @rdname recipe
-#' @param formula A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed. 
+#' @param formula A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).
 #' @export
 #' @importFrom stats as.formula
 #' @importFrom tibble as_tibble is_tibble 
@@ -105,13 +145,15 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @param training A data frame or tibble that will be used to estimate parameters for preprocessing.
 #' @param fresh A logical indicating whether already trained steps should be re-trained. If \code{TRUE}, you should pass in a data set to the argument \code{training}. 
 #' @param verbose A logical that controls wether progress is reported as steps are executed.
-#' @param retain A logical: should the processed training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps. 
+#' @param retain A logical: should the \emph{processed} training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps. 
+#' @param stringsAsFactors A logical: should character columns be converted to factors? This affects the processed training set (when \code{retain = TRUE}) as well as the results of \code{process.recipe}. 
 #' @return A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
 #' @export
-learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, retain = FALSE, ...) {
+learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, 
+                         retain = FALSE, stringsAsFactors = TRUE, ...) {
   if(length(x$steps) == 0)
     stop("Add some steps")
   if(is.null(training)) {
@@ -123,6 +165,10 @@ learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, reta
       as_tibble(training[, x$var_info$variable, drop = FALSE]) else
         training[, x$var_info$variable]
   }
+  if(stringsAsFactors) {
+    lvls <- lapply(training, get_levels)
+    training <- strings2factors(training, lvls)
+  } else lvls <- NULL
   
   for(i in seq(along = x$steps)) {
     note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
@@ -147,8 +193,15 @@ learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, reta
         cat(note, "[pre-trained]\n")
     }
   }
-  if(retain) x$template <- training
   
+  ## The steps may have changed the data so reassess the levels
+  if(stringsAsFactors) 
+    lvls <- lapply(training, get_levels)
+  
+  if(retain) 
+    x$template <- training
+  
+  x$levels <- lvls
   x
 }
 
@@ -180,6 +233,7 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
   
   for(i in seq(along = object$steps)) {
     newdata <- process(object$steps[[i]], newdata = newdata)
+    if(!is_tibble(newdata)) as_tibble(newdata)
   }
   if(all(roles != "all")) {
     dat_info <- filter(object$term_info, role %in% roles)
@@ -192,6 +246,10 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
     keepers <- dat_info$variable
     newdata <- newdata[, names(newdata) %in% keepers]
   }
+  
+  if(!is.null(object$levels)) 
+    newdata <- strings2factors(newdata, object$levels)
+    
   newdata
 }
 
