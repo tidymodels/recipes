@@ -5,7 +5,8 @@
 \title{Isomap Embedding.}
 \usage{
 step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
-  options = list(knn = 50), res = NULL, prefix = "Isomap")
+  options = list(knn = 50, .mute = c("message", "output")), res = NULL,
+  prefix = "Isomap")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
