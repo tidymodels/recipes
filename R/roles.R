@@ -1,7 +1,7 @@
 ## Adds a variable to the recipe$var_info table with a specific 
 ## role 
 role_addition_char <- function(rec, vars, role) {
-  if(length(role) > 1) stop("A single role is required")
+  if(length(role) > 1) stop("A single role is required", call. = FALSE)
   vars <- unique(vars)
   ## check if there are newly defined variables in the list 
   existing_var <- vars %in% rec$var_info$variable
@@ -25,7 +25,8 @@ role_addition_char <- function(rec, vars, role) {
 role_addition_form <- function(rec, vars, role) {
   check_elements(vars, allowed = NULL)
   if(any(all.vars(vars) == "."))
-    stop("Dots cannot be used here; use explicit variable names in the formula") 
+    stop("Dots cannot be used here; use explicit variable names in the formula", 
+         call. = FALSE) 
   role_addition_char(rec = rec, all.vars(vars), role = role)
 }
 
@@ -73,7 +74,7 @@ add_role <- function(rec, vars, role = "predictor", data = NULL) {
     out <- role_addition_char(rec = rec, vars = vars, role = role)
   } else if(is_formula(vars)) {
     out <- role_addition_form(rec = rec, vars = vars, role = role)
-  } else stop("`vars` should be a character vector or formula")
+  } else stop("`vars` should be a character vector or formula", call. = FALSE)
   out$term_info <- out$role_info
   out
 }

@@ -67,7 +67,8 @@ parse_terms_formula <- function(f, info) {
   }
   
   if(length(indices) == 0)
-    stop("No columns were selected by the `terms` formula for this step.")
+    stop("No columns were selected by the `terms` formula for this step.", 
+         call. = FALSE)
   
   var_vals[indices]
 }
@@ -127,10 +128,12 @@ check_elements <- function(x, allowed = selectors) {
   if(!is.null(allowed)) { # when called from a step
     not_good <- funs[!(funs %in% allowed)]
     if(length(not_good) > 0)
-      stop("Not all functions are allowed in `terms` formulas. See ?selections ")
+      stop("Not all functions are allowed in `terms` formulas. See ?selections.", 
+           call. = FALSE)
   } else { # when called from formula.recipe
     if(length(funs) > 0) 
-      stop("No in-line functions should be used here; use steps to define processing actions")
+      stop("No in-line functions should be used here; use steps to define processing actions", 
+           call. = FALSE)
   }
   invisible(NULL)
 }

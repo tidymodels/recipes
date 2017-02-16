@@ -32,7 +32,7 @@ step_hyperbolic <- function(recipe, terms, role = NA, trained = FALSE,
                             func = "sin", inverse = TRUE, vars = NULL) {
   funcs <- c("sin", "cos", "tan")
   if(!(func %in% funcs))
-    stop("`func` should be either `sin``, `cos`, or `tan`")
+    stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
   
   add_step(
     recipe, 

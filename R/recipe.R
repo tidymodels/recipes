@@ -65,9 +65,9 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   if(!is_tibble(x)) x <- as_tibble(x)
   if(is.null(vars)) vars <- colnames(x)
   if(any(table(vars) > 1))
-    stop("`vars` should have unique members")
+    stop("`vars` should have unique members", call. = FALSE)
   if(any(!(vars %in% colnames(x))))
-    stop("1+ elements of `vars` are not in `x`")
+    stop("1+ elements of `vars` are not in `x`", call. = FALSE)
   
   x <- x[, vars]
   
@@ -76,7 +76,8 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
   ## Check and add roles when available
   if(!is.null(roles)) {
     if(length(roles) != length(vars))
-      stop("The number of roles should be the same as the number of variables")
+      stop("The number of roles should be the same as the number of variables", 
+           call. = FALSE)
     var_info$role <- roles
   } else var_info$role <- ""
   
@@ -155,10 +156,11 @@ learn   <- function(x, ...) UseMethod("learn")
 learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE, 
                          retain = FALSE, stringsAsFactors = TRUE, ...) {
   if(length(x$steps) == 0)
-    stop("Add some steps")
+    stop("Add some steps", call. = FALSE)
   if(is.null(training)) {
     if(fresh)
-      stop("A training set must be supplied to the `training` argument when `fresh = TRUE`")
+      stop("A training set must be supplied to the `training` argument when `fresh = TRUE`", 
+           call. = FALSE)
     training <- x$template
   } else {
     training <- if(!is_tibble(training))
