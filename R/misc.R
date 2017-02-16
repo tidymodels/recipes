@@ -169,4 +169,28 @@ fun_calls <- function(f) {
   }
 }
 
+get_levels <- function(x) {
+  if(!is.factor(x) & !is.character(x))
+    return(NA)
+  out <- if(is.factor(x)) 
+    levels(x) else
+      sort(unique(x))
+  out
+}
+
+strings2factors <- function(x, lvl) {
+  if(is.null(lvl))
+    return(x)
+  lvl <- lvl[!is.na(lvl)]
+  if(any(!is.na(lvl))) {
+   for(i in seq_along(lvl)) {
+     lcol <- names(lvl)[i]
+     if(!is.factor(x[, lcol]))
+       x[, lcol] <- factor(getElement(x, lcol), levels = lvl[[i]])
+   } 
+  }
+  x
+}
+
+
 

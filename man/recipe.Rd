@@ -21,7 +21,7 @@ recipe(x, ...)
 
 \item{roles}{a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
 
-\item{formula}{A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed.}
+\item{formula}{A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).}
 
 \item{data}{a data frame or tibble of the \emph{template} data set (see below).}
 }
@@ -30,6 +30,45 @@ An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble cont
 }
 \description{
 A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
+}
+\examples{
+
+# simple example:
+data(biomass)
+
+# split data
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+# When only predictors and outcomes, a simplified formula can be used.
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+library(magrittr)
+sp_signed <- rec \%>\%
+  step_center(~ is_predictor()) \%>\%
+  step_scale(~ is_predictor()) \%>\%
+  step_spatialsign(~ is_predictor())
+sp_signed
+
+# now estimate required parameters
+sp_signed_trained <- learn(sp_signed, training = biomass_tr)
+sp_signed_trained
+
+# apply the preprocessing to a data set
+test_set_values <- process(sp_signed_trained, newdata = biomass_te)
+
+# multivariate example
+
+# no need for `cbind(carbon, hydrogen)` for right-hand side
+multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
+multi_y <- multi_y \%>\% 
+  step_center(~ is_outcome()) \%>\%
+  step_scale(~ is_predictor())
+
+multi_y_trained <- learn(multi_y, training = biomass_tr)
+
+results <- process(multi_y_trained, biomass_te)
 }
 \author{
 Max Kuhn

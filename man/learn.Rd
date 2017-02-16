@@ -8,7 +8,7 @@
 learn(x, ...)
 
 \method{learn}{recipe}(x, training = NULL, fresh = FALSE, verbose = TRUE,
-  retain = FALSE, ...)
+  retain = FALSE, stringsAsFactors = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -21,7 +21,9 @@ learn(x, ...)
 
 \item{verbose}{A logical that controls wether progress is reported as steps are executed.}
 
-\item{retain}{A logical: should the processed training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.}
+\item{retain}{A logical: should the \emph{processed} training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.}
+
+\item{stringsAsFactors}{A logical: should character columns be converted to factors? This affects the processed training set (when \code{retain = TRUE}) as well as the results of \code{process.recipe}.}
 }
 \value{
 A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.

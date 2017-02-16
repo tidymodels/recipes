@@ -236,6 +236,7 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
     if(!is_tibble(newdata)) as_tibble(newdata)
   }
   if(all(roles != "all")) {
+    role <- NULL
     dat_info <- filter(object$term_info, role %in% roles)
     if(nrow(dat_info) == 0) {
       msg <- paste("No matching `roles` were found; returning everything instead", 
