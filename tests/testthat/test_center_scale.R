@@ -1,3 +1,4 @@
+library(testthat)
 context("Testing center and scale")
 
 library(magrittr)
@@ -40,3 +41,21 @@ test_that('training in stages', {
   expect_equal(at_once_trained, in_stages_retrained)
   
 })
+
+
+test_that('single predictor', {
+  standardized <- rec %>% 
+    step_center(~ carbon) %>% 
+    step_scale(~ hydrogen) 
+  
+  standardized_trained <- learn(standardized, training = biomass, verbose = FALSE)
+  results <- process(standardized_trained, biomass)
+  
+  exp_res <- biomass[, 3:8]
+  exp_res$carbon <- exp_res$carbon - mean(exp_res$carbon)
+  exp_res$hydrogen <- exp_res$hydrogen / sd(exp_res$hydrogen)
+  
+  expect_equal(as.data.frame(results), exp_res[, colnames(results)])
+})
+
+

@@ -61,7 +61,9 @@ learn.step_scale <- function(x, training, info = NULL, ...) {
 }
 
 process.step_scale <- function(object, newdata, ...) {
-  newdata[, names(object$sds)] <- sweep(as.matrix(newdata[, names(object$sds)]), 2, object$sds, "/")
+  res <- sweep(as.matrix(newdata[, names(object$sds)]), 2, object$sds, "/")
+  if(is.matrix(res) && ncol(res) == 1) res <- res[,1]
+  newdata[, names(object$sds)] <- res
   as_tibble(newdata)
 }
 

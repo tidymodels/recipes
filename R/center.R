@@ -62,7 +62,9 @@ learn.step_center <- function(x, training, info = NULL, na.rm = TRUE, ...) {
 }
 
 process.step_center <- function(object, newdata, ...) {
-  newdata[, names(object$means)] <- sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
+  res <- sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
+  if(is.matrix(res) && ncol(res) == 1) res <- res[,1]
+  newdata[, names(object$means)] <- res
   as_tibble(newdata)
 }
 
