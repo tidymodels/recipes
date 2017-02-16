@@ -13,7 +13,7 @@ add_role(rec, vars, role = "predictor", data = NULL)
 
 \item{role}{A character string for a single role.}
 
-\item{data}{A data template that may be needed to resolve the formula (in case there is a \code{.}).}
+\item{data}{Am optional data template that may be needed to resolve the formula (in case there is a \code{.}).}
 }
 \value{
 An updated recipe object.

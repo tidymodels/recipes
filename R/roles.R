@@ -36,7 +36,7 @@ role_addition_form <- function(rec, vars, role) {
 #' @param rec An existing \code{\link{recipe}}. 
 #' @param vars A character string of variable names or simple formula that defines one or more variable that will be assigned to the role.
 #' @param role A character string for a single role.
-#' @param data A data template that may be needed to resolve the formula (in case there is a \code{.}).
+#' @param data Am optional data template that may be needed to resolve the formula (in case there is a \code{.}).
 #' @return An updated recipe object.
 #' @details If \code{vars} is a formula, it should not include any functions, negative signs, or \code{.} (since there is no data element to evaluate it). 
 #' @keywords datagen
@@ -66,8 +66,8 @@ role_addition_form <- function(rec, vars, role) {
 #' rec2$var_info
 #' 
 add_role <- function(rec, vars, role = "predictor", data = NULL) {
-  if(!is.null(data) & is_formula(vars)) 
-    vars <- expand_dots(vars, data = data)
+  if(is_formula(vars) && !is.null(data)) 
+    vars <- get_rhs_vars(vars, data)
   
   if(is.character(vars)) {
     out <- role_addition_char(rec = rec, vars = vars, role = role)
