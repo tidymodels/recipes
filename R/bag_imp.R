@@ -153,7 +153,7 @@ process.step_bagimpute <- function(object, newdata, ...) {
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if(all(is.na(pred_data))) {
-        warning("All predictors are missing; cannot impute")
+        warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         pred_vals <- predict(object$models[[i]], pred_data)
         newdata[missing_rows, imp_var] <- pred_vals

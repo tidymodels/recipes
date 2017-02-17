@@ -244,7 +244,7 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
       msg <- paste("No matching `roles` were found; returning everything instead", 
                    "Existing roles are:", 
                    paste0(sort(unique(object$term_info$role)), collapse = ", "))
-      warning(msg)
+      warning(msg, call. = FALSE)
     }
     keepers <- dat_info$variable
     newdata <- newdata[, names(newdata) %in% keepers]

@@ -14,8 +14,9 @@ role_addition_char <- function(rec, vars, role) {
     vars2 <- vars[existing_var]
     has_role <- rec$var_info$role[rec$var_info$variable %in% vars2] != ""
     if(any(has_role)) {
-      warning(paste("Overwriting role(s) for",
-                    paste(vars2[has_role], collapse = ", ", sep = "")))
+      warning("Overwriting role(s) for",
+              paste(vars2[has_role], collapse = ", ", sep = ""),
+              call. = FALSE)
     }
     rec$var_info$role[rec$var_info$variable %in% vars2] <- role
   }
