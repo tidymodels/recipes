@@ -4,10 +4,10 @@
 \alias{add_role}
 \title{Manually Add Roles}
 \usage{
-add_role(rec, vars, role = "predictor", data = NULL)
+add_role(recipe, vars, role = "predictor", data = NULL)
 }
 \arguments{
-\item{rec}{An existing \code{\link{recipe}}.}
+\item{recipe}{An existing \code{\link{recipe}}.}
 
 \item{vars}{A character string of variable names or simple formula that defines one or more variable that will be assigned to the role.}
 
