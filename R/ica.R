@@ -1,4 +1,4 @@
-#' ICA Signal Extraction.
+#' ICA Signal Extraction
 #' 
 #' \code{step_ica} creates a \emph{specification} of a recipe step that will convert numeric data into one or more independent components. 
 #' 

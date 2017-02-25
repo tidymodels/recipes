@@ -1,4 +1,4 @@
-#' Spatial Sign Preprocessing.
+#' Spatial Sign Preprocessing
 #' 
 #' \code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere. 
 #' 

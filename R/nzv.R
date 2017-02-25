@@ -1,4 +1,4 @@
-#' Near-Zero Variance Filter.
+#' Near-Zero Variance Filter
 #' 
 #' \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced. 
 #' 

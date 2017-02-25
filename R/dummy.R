@@ -1,4 +1,4 @@
-#' Dummy Variables Creation.
+#' Dummy Variables Creation
 #' 
 #' \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data. 
 #' 

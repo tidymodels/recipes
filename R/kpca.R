@@ -1,4 +1,4 @@
-#' Kernel PCA Signal Extraction.
+#' Kernel PCA Signal Extraction
 #' 
 #' \code{step_kpca} a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion. 
 #' 

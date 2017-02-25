@@ -1,4 +1,4 @@
-#' Imputed via Bagged Trees.
+#' Imputation via Bagged Trees
 #' 
 #' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data. 
 #' 

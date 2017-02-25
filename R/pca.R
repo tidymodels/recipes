@@ -1,4 +1,4 @@
-#' PCA Signal Extraction.
+#' PCA Signal Extraction
 #' 
 #' \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components. 
 #' 
