@@ -1,10 +1,10 @@
 ---
-title: "Custom Steps"
+title: "Creating Custom Step Functions"
 author: "Max Kuhn"
-date: '`r Sys.Date()`'
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Custom Steps}
+  %\VignetteEncoding{UTF-8}  
 output:
   knitr:::html_vignette:
     toc: yes
@@ -53,7 +53,6 @@ Our new step will do this computation for any numeric variables of interest. We 
 # Create the initial function. 
 
 The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. 
-
 
 ```{r initial_def}
 step_percentile <- function(recipe, terms, role = NA, 
@@ -167,7 +166,7 @@ function(object, newdata, ...)
 
 where `object` is the updated step function that has been through the corresponding `learn` code and `newdata` is a tibble of data to be processed. 
 
-Here is the code to convert the new data to percentiles. Two initial help functions handle the two cases (approximation or not). We always return a tibble as the output. 
+Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output. 
 
 ```{r process}
 ## Two helper functions
@@ -200,6 +199,8 @@ process.step_percentile <- function(object, newdata, ...) {
 }
 ```
 
+# Running the example
+
 Let's use the example data to make sure that it works: 
 
 ```{r example}
@@ -213,6 +214,7 @@ rec_obj <- learn(rec_obj, training = biomass_tr)
 percentiles <- process(rec_obj, biomass_te)
 percentiles
 ```
+
 The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:
 
 ```{r cdf_plot, echo = FALSE}

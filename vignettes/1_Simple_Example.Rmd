@@ -1,7 +1,6 @@
 ---
 title: "Basic Recipes"
 author: "Max Kuhn"
-date: '`r Sys.Date()`'
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Basic Recipes}

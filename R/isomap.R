@@ -1,4 +1,4 @@
-#' Isomap Embedding.
+#' Isomap Embedding
 #' 
 #' \code{step_isomap} creates a \emph{specification} of a recipe step that will convert numeric data into one or more new dimensions. 
 #' 

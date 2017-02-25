@@ -1,0 +1,27 @@
+templates:
+  params:
+    bootswatch: united
+
+reference:
+  - title: Basic Functions
+    contents:
+    - matches("(learn)|(recipe)|(selection)|(^is)")
+    - init_site
+  - title: Example Datasets
+    contents:
+    - matches("(okc)|(biomass)|(credit)")
+    - init_site    
+  - title: Step Functions
+    contents:
+    - matches("step_")
+    - init_site
+
+
+navbar:
+  left:
+  - text: Simple Example 
+    href: articles/1_Simple_Example.html     
+  - text: Custom Steps
+    href: articles/2_Custom_Steps.html
+  - text: Reference
+    href: reference/index.html
