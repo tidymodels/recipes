@@ -1,6 +1,5 @@
 ---
 title: "Creating Custom Step Functions"
-author: "Max Kuhn"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Custom Steps}

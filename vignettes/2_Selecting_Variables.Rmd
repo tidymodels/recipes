@@ -1,6 +1,5 @@
 ---
 title: "Selecting Variables"
-author: "Max Kuhn"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Selecting Variables}

@@ -1,6 +1,5 @@
 ---
 title: "Basic Recipes"
-author: "Max Kuhn"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Basic Recipes}
