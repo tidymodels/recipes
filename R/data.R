@@ -16,6 +16,9 @@
 #' Intelligence Formalisms. \emph{BioEnergy Research}, 1-12.
 #'
 #' @keywords datasets
+#' @examples 
+#' data(biomass)
+#' str(biomass)
 NULL
 
 #' OkCupid Data
@@ -33,13 +36,17 @@ NULL
 #' International Journal on the Teaching and Learning of Statistics}.
 #'
 #' @keywords datasets
+#' @examples 
+#' data(okc)
+#' str(okc)
 NULL
 
 
 #' Credit Data
 #'
 #' These data are from the website of Dr. Lluís A. Belanche Muñoz by way of a 
-#' github repository of Dr. Gaston Sanchez. 
+#' github repository of Dr. Gaston Sanchez. One data point is a missing outcome
+#' was removed from the original data. 
 #'
 #' @name credit_data
 #' @aliases credit_data
@@ -50,5 +57,8 @@ NULL
 #' \url{http://bit.ly/2kkBFrk}
 #'
 #' @keywords datasets
+#' @examples 
+#' data(credit_data)
+#' str(credit_data)
 NULL
 
