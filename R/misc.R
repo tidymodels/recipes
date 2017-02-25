@@ -99,13 +99,19 @@ step <- function(subclass, ...) {
   )
 }
 
+
+
+## needs to handle minus and plus signs
+## extend to work with variable names
+## rewrite print methods
+
 #' @importFrom lazyeval f_rhs
 form_printer <- function(x, wdth = 50, ...) {
   if(!is_formula(x))
     x <- as.formula(x)
   char_x <- deparse(f_rhs(x))
   if(sum(nchar(char_x)) >= wdth) {
-    split_up <- unlist(strsplit(char_x, split = " \\+ "))
+    split_up <- unlist(strsplit(char_x, split = "(\\+)|(-)"))
     widths <- which(cumsum(nchar(split_up)) <= wdth)
     split_up <- if(length(widths) == length(split_up))
       split_up else c(split_up[widths], "{more}")
