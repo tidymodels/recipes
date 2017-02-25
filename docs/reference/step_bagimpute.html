@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Imputed via Bagged Trees. — step_bagimpute • recipes</title>
+<title>Imputation via Bagged Trees — step_bagimpute • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -52,7 +52,10 @@
   <a href="../articles/1_Simple_Example.html">Simple Example</a>
 </li>
 <li>
-  <a href="../articles/2_Custom_Steps.html">Custom Steps</a>
+  <a href="../articles/2_Selecting_Variables.html">Selecting Variables</a>
+</li>
+<li>
+  <a href="../articles/3_Custom_Steps.html">Custom Steps</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -77,7 +80,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Imputed via Bagged Trees.</h1>
+    <h1>Imputation via Bagged Trees</h1>
     </div>
 
     
@@ -128,9 +131,9 @@
 
 <span class='co'>## missing data per column</span>
 <span class='fu'>vapply</span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>mean</span>(<span class='fu'>is.na</span>(<span class='no'>x</span>)), <span class='fu'>c</span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
-#&gt; 0.0002244669 0.0000000000 0.0013468013 0.0000000000 0.0000000000 0.0002244669 
+#&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
-#&gt; 0.0000000000 0.0004489338 0.0000000000 0.0855218855 0.0105499439 0.0040404040 
+#&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
 #&gt;       Amount        Price 
 #&gt; 0.0000000000 0.0000000000 </div><div class='input'>
 <span class='fu'>set.seed</span>(<span class='fl'>342</span>)
@@ -150,21 +153,21 @@
 <span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='input'>
 <span class='no'>inputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>)
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority  Home Time Age Marital Records       Job Expenses Income
-#&gt; 30      bad         0  &lt;NA&gt;   48  37  single      no      &lt;NA&gt;       35     NA
-#&gt; 735     bad        30 owner   18  57 married     yes freelance       75    290
-#&gt; 1060   good         6  &lt;NA&gt;   12  25  single      no     fixed       35     69
+<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
+#&gt; 30      bad         0 &lt;NA&gt;   48  37  single      no  &lt;NA&gt;       35     NA
+#&gt; 736     bad         1 priv   48  36  single     yes fixed       35    173
+#&gt; 1057    bad        24 priv   60  46 married      no fixed       60    165
 #&gt;      Assets Debt Amount Price
 #&gt; 30       NA   NA   1500  1850
-#&gt; 735      NA    0    350   450
-#&gt; 1060     NA   NA    500  1275</div><div class='input'><span class='no'>inputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 × 14
-#&gt;   Status Seniority    Home  Time   Age Marital Records       Job Expenses
-#&gt;   &lt;fctr&gt;     &lt;int&gt;  &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt;    &lt;fctr&gt;    &lt;int&gt;
-#&gt; 1    bad         0   other    48    37  single      no     fixed       35
-#&gt; 2    bad        30   owner    18    57 married     yes freelance       75
-#&gt; 3   good         6 parents    12    25  single      no     fixed       35
-#&gt; # ... with 5 more variables: Income &lt;dbl&gt;, Assets &lt;dbl&gt;, Debt &lt;dbl&gt;,
-#&gt; #   Amount &lt;int&gt;, Price &lt;int&gt;</div></pre>
+#&gt; 736    7700    0   1000  2008
+#&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>inputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 × 14
+#&gt;   Status Seniority   Home  Time   Age Marital Records    Job Expenses   Income
+#&gt;   &lt;fctr&gt;     &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;dbl&gt;
+#&gt; 1    bad         0  other    48    37  single      no  fixed       35 115.4538
+#&gt; 2    bad         1   priv    48    36  single     yes  fixed       35 173.0000
+#&gt; 3    bad        24   priv    60    46 married      no  fixed       60 165.0000
+#&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
+#&gt; #   Price &lt;int&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

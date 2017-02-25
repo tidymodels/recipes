@@ -2,7 +2,7 @@
 % Please edit documentation in R/bag_imp.R
 \name{step_bagimpute}
 \alias{step_bagimpute}
-\title{Imputed via Bagged Trees.}
+\title{Imputation via Bagged Trees}
 \usage{
 step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,

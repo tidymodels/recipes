@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 README.Rmd
 README.md
+^docs$
+^_pkgdown\.yml$

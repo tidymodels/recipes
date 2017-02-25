@@ -2,7 +2,7 @@
 % Please edit documentation in R/pca.R
 \name{step_pca}
 \alias{step_pca}
-\title{PCA Signal Extraction.}
+\title{PCA Signal Extraction}
 \usage{
 step_pca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
   options = list(center = TRUE, scale. = TRUE, retx = FALSE), res = NULL,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Isomap Embedding. — step_isomap • recipes</title>
+<title>Isomap Embedding — step_isomap • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -52,7 +52,10 @@
   <a href="../articles/1_Simple_Example.html">Simple Example</a>
 </li>
 <li>
-  <a href="../articles/2_Custom_Steps.html">Custom Steps</a>
+  <a href="../articles/2_Selecting_Variables.html">Selecting Variables</a>
+</li>
+<li>
+  <a href="../articles/3_Custom_Steps.html">Custom Steps</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -77,7 +80,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Isomap Embedding.</h1>
+    <h1>Isomap Embedding</h1>
     </div>
 
     
@@ -145,8 +148,8 @@
 <span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
 #&gt; step 2 center training 
 #&gt; step 3 scale training 
-#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:14: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:15: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:15: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:15: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:15: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:15: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:16: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 09:43:16: DONE</span></div><div class='input'>
+#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:50: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: DONE</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-02-25 17:17:51: DONE</span></div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
 <span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_isomap-20.png' alt='' width='540' height='400' /></pre>

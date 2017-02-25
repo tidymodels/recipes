@@ -2,7 +2,7 @@
 % Please edit documentation in R/spatialsign.R
 \name{step_spatialsign}
 \alias{step_spatialsign}
-\title{Spatial Sign Preprocessing.}
+\title{Spatial Sign Preprocessing}
 \usage{
 step_spatialsign(recipe, terms, role = "predictor", trained = FALSE,
   vars = NULL)

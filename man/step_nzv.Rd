@@ -2,7 +2,7 @@
 % Please edit documentation in R/nzv.R
 \name{step_nzv}
 \alias{step_nzv}
-\title{Near-Zero Variance Filter.}
+\title{Near-Zero Variance Filter}
 \usage{
 step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
   = 95/5, uniqueCut = 10), removals = NULL)

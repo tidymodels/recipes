@@ -20,8 +20,10 @@ reference:
 navbar:
   left:
   - text: Simple Example 
-    href: articles/1_Simple_Example.html     
+    href: articles/1_Simple_Example.html   
+  - text: Selecting Variables
+    href: articles/2_Selecting_Variables.html     
   - text: Custom Steps
-    href: articles/2_Custom_Steps.html
+    href: articles/3_Custom_Steps.html
   - text: Reference
     href: reference/index.html

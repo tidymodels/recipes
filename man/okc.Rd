@@ -16,5 +16,9 @@ International Journal on the Teaching and Learning of Statistics}.
 These are a sample of columns of users of OkCupid dating website. The data
 are from Kim and Escobedo-Land (2015).
 }
+\examples{
+data(okc)
+str(okc)
+}
 \keyword{datasets}
 

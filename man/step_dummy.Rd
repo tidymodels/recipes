@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\title{Dummy Variables Creation.}
+\title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, terms, role = "predictor", trained = FALSE,
   contrast = options("contrasts"), naming = function(var, lvl) paste(var,
