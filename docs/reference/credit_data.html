@@ -52,7 +52,10 @@
   <a href="../articles/1_Simple_Example.html">Simple Example</a>
 </li>
 <li>
-  <a href="../articles/2_Custom_Steps.html">Custom Steps</a>
+  <a href="../articles/2_Selecting_Variables.html">Selecting Variables</a>
+</li>
+<li>
+  <a href="../articles/3_Custom_Steps.html">Custom Steps</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -82,7 +85,8 @@
 
     
     <p>These data are from the website of Dr. Lluís A. Belanche Muñoz by way of a 
-github repository of Dr. Gaston Sanchez.</p>
+github repository of Dr. Gaston Sanchez. One data point is a missing outcome
+was removed from the original data.</p>
     
 
         
@@ -96,6 +100,23 @@ github repository of Dr. Gaston Sanchez.</p>
     <p></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>credit_data</span>)
+<span class='fu'>str</span>(<span class='no'>credit_data</span>)</div><div class='output co'>#&gt; &#39;data.frame&#39;:	4454 obs. of  14 variables:
+#&gt;  $ Status   : Factor w/ 2 levels &quot;bad&quot;,&quot;good&quot;: 2 2 1 2 2 2 2 2 2 1 ...
+#&gt;  $ Seniority: int  9 17 10 0 0 1 29 9 0 0 ...
+#&gt;  $ Home     : Factor w/ 6 levels &quot;ignore&quot;,&quot;other&quot;,..: 6 6 3 6 6 3 3 4 3 4 ...
+#&gt;  $ Time     : int  60 60 36 60 36 60 60 12 60 48 ...
+#&gt;  $ Age      : int  30 58 46 24 26 36 44 27 32 41 ...
+#&gt;  $ Marital  : Factor w/ 5 levels &quot;divorced&quot;,&quot;married&quot;,..: 2 5 2 4 4 2 2 4 2 2 ...
+#&gt;  $ Records  : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 2 1 1 1 1 1 1 1 ...
+#&gt;  $ Job      : Factor w/ 4 levels &quot;fixed&quot;,&quot;freelance&quot;,..: 2 1 2 1 1 1 1 1 2 4 ...
+#&gt;  $ Expenses : int  73 48 90 63 46 75 75 35 90 90 ...
+#&gt;  $ Income   : int  129 131 200 182 107 214 125 80 107 80 ...
+#&gt;  $ Assets   : int  0 0 3000 2500 0 3500 10000 0 15000 0 ...
+#&gt;  $ Debt     : int  0 0 0 0 0 0 0 0 0 0 ...
+#&gt;  $ Amount   : int  800 1000 2000 900 310 650 1600 200 1200 1200 ...
+#&gt;  $ Price    : int  846 1658 2985 1325 910 1645 1800 1093 1957 1468 ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -104,7 +125,9 @@ github repository of Dr. Gaston Sanchez.</p>
       <li><a href="#source">Source</a></li>
 
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

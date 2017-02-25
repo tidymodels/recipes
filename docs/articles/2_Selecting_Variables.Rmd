@@ -47,7 +47,7 @@ library(magrittr)
 dummied <- rec %>% step_dummy(~ is_nominal())
 ```
 
-This will capture _any_ variables that are either character strings or factors: `Status` and `Records`. However, since `Status` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out wither by name or by role:
+This will capture _any_ variables that are either character strings or factors: `Status` and `Records`. However, since `Status` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out either by name or by role:
 
 ```{r dummy_2}
 dummied <- rec %>% step_dummy(~ Records) # or
