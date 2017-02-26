@@ -70,12 +70,24 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 learn.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
+  
+  ## Check to see if any variables are non-numeric and issue a warning
+  ## if that is the case
+  vars <- unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
+  var_check <- info[info$variable %in% vars, ]
+  if(any(var_check$type == "nominal")) 
+    warning("Categorical variables used in `step_interact` should probably be avoided; ",
+            "This can lead to differences in dummy variable values that are ",
+            "produced by `step_dummy`.")
+
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
+  
   ## Generate a standard R `terms` object from these short formulas and 
   ## save to make future interactions
   int_terms <- make_small_terms(int_forms, training)
+  
   step_interact_new(
     terms = x$terms, 
     role = x$role, 
