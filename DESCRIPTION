@@ -6,7 +6,7 @@ Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
     person("RStudio", role = "cph"))
 Description: A set of tools to create a sequence of data processing steps that
-    can trained and executed on other data sets.
+    can be trained then executed on other data sets.
 URL: https://github.com/topepo/recipes
 BugReports: https://github.com/topepo/recipes/issues
 Depends:

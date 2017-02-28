@@ -18,7 +18,7 @@ step_poly(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{objects}{A list of \code{\link[stats]{poly}} objects created once the step has been learned.}
 
-\item{options}{A list of options for  \code{\link[stats]{poly}} which should not include \code{x} or \code{simple}.}
+\item{options}{A list of options for  \code{\link[stats]{poly}} which should not include \code{x} or \code{simple}. Note that the option \code{raw = TRUE} will produce the regular polynomial values (not orthogonalized).}
 }
 \value{
 \code{step_poly} returns an object of class \code{step_poly}.
