@@ -17,7 +17,9 @@ Imports:
     lazyeval,
     stats,
     ipred,
-    dimRed
+    dimRed,
+    lubridate,
+    timeDate
 Suggests:
     testthat,
     magrittr,

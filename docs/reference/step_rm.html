@@ -117,7 +117,7 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rm</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'>contains</span>(<span class='st'>"gen"</span>))
 
