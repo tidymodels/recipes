@@ -281,3 +281,31 @@ print.recipe <- function(x, form_width = 30, ...) {
   }
   invisible(x)
 }
+
+
+
+#' Summarize a Recipe
+#' 
+#' This function prints the current set of variables/features and some of their characteristics.  
+#' @aliases summary.recipe
+#' @param object A \code{recipe} object
+#' @param original A logical: show the current set of variables or the original set when the recipe was defined. 
+#' @param ... further arguments passed to or from other methods (not currently used).
+#' @return A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source}.
+#' @details Note that, until the recipe has been learned, the currrent and original variables are the same.
+#' @examples 
+#' rec <- recipe( ~ ., data = USArrests)
+#' summary(rec)
+#' rec <- step_pca(rec, terms = ~ is_numeric(), num = 3)
+#' summary(rec) # still the same since not yet learned
+#' rec <- learn(rec, training = USArrests)
+#' summary(rec)
+#' @export 
+#' @seealso \code{\link{recipe}} \code{\link{parse_terms_formula}} \code{\link{learn.recipe}} 
+summary.recipe <- function(object, original = FALSE, ...) {
+if(original) 
+  object$var_info else
+    object$term_info
+}
+
+

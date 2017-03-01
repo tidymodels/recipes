@@ -28,6 +28,25 @@ type_selectors <- c("type_is", "type_is_not", "is_numeric", "is_nominal")
 selectors <- c(name_selectors, role_selectors, type_selectors)
 
 ## Main function to parse the `terms` arguments
+## Overall wrapper to make new step_X objects
+
+#' Parse a Step Function Formula. 
+#'
+#' \code{parse_terms_formula} takes the \code{terms} element of a step and translates it to a character vector of column names.  
+#'
+#' @param f A formula that can inlcude variable names and certain functions. See \code{\link{selections}} for a list of functions.  
+#' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe. 
+#' @keywords datagen
+#' @concept preprocessing 
+#' @return A character string of column names. 
+#' @export
+#' @examples 
+#' rec <- recipe( ~ ., data = USArrests)
+#' rec <- step_pca(rec, terms = ~ is_numeric(), num = 3)
+#' parse_terms_formula(~ is_predictor(), summary(rec))
+#' rec <- learn(rec, training = USArrests)
+#' parse_terms_formula(~ is_predictor(), summary(rec))
+#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}} 
 parse_terms_formula <- function(f, info) {
   var_vals <- info$variable
   role_vals <- info$role

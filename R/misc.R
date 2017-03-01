@@ -72,6 +72,16 @@ get_rhs_terms <- function(x) x
 
 ## ancillary step functions
 
+#' Add a New Step to Current Recipe
+#'
+#' \code{add_step} adds a step to the last location in the recipe. 
+#'
+#' @param rec A \code{\link{recipe}}.
+#' @param object A step object. 
+#' @keywords datagen
+#' @concept preprocessing 
+#' @return A updated \code{\link{recipe}} with the new step in the last slot for processing. 
+#' @export
 add_step <- function(rec, object) {
   rec$steps[[length(rec$steps)+1]] <- object
   rec
@@ -90,6 +100,17 @@ var_by_role <- function(rec, role = "predictor", returnform = TRUE) {
 }
 
 ## Overall wrapper to make new step_X objects
+#' A General Step Wrapper
+#'
+#' \code{step} sets the class of the step.  
+#'
+#' @param subclass A character string for the resulting class. For example, if \code{subclass = "blah"} the step object that is returned has class \code{step_blah}. 
+#' @param ... All arguments to the step that should be returned.  
+#' @keywords datagen
+#' @concept preprocessing 
+#' @return A updated step with the new class. 
+#' @export
+#' @export
 step <- function(subclass, ...) {
   structure(
     list(

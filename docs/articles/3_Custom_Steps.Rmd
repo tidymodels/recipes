@@ -58,7 +58,7 @@ step_percentile <- function(recipe, terms, role = NA,
                             trained = FALSE, ref_dist = NULL,
                             approx = FALSE, 
                             options = list(probs = (0:100)/100, names = TRUE)) {
-  recipes:::add_step(
+  add_step(
     recipe, 
     step_percentile_new(
       terms = terms, 
@@ -89,7 +89,7 @@ Next, you can utilize the internal function `step` that sets the class of new ob
 ```{r initialize}
 step_percentile_new <- function(terms = NULL, role = NA, trained = FALSE, 
                                 ref_dist = NULL, approx = NULL, options = NULL) {
-  recipes:::step(
+  step(
     subclass = "percentile", 
     terms = terms,
     role = role,
@@ -121,7 +121,7 @@ The first thing that you might want to do in the `learn` function is to translat
 
 ```{r learn_1, eval = FALSE}
 learn.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- recipes:::parse_terms_formula(x$terms, info = info) 
+  col_names <- parse_terms_formula(x$terms, info = info) 
 }
 ```
 
@@ -134,7 +134,7 @@ get_pctl <- function(x, args) {
 }
 
 learn.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- recipes:::parse_terms_formula(x$terms, info = info) 
+  col_names <- parse_terms_formula(x$terms, info = info) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   if(x$options$names == FALSE)
