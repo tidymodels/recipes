@@ -46,6 +46,9 @@ quadratic <- learn(quadratic, training = biomass_tr)
 expanded <- process(quadratic, biomass_te)
 expanded
 }
+\seealso{
+\code{\link{step_ns}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing basis_expansion
 }

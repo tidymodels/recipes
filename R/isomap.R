@@ -47,7 +47,7 @@
 #' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 #' plot(im_te$Isomap1, im_te$Isomap2,
 #'      xlim = rng, ylim = rng)
-
+#' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_ica}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_isomap <- function(recipe, 
                         terms, 

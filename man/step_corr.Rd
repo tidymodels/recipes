@@ -58,6 +58,9 @@ round(abs(cor(filtered_te)), 2)
 \author{
 Original R code for filtering algorithm by Dong Li, modified by Max Kuhn. Contributions by Reynald Lescarbeau (for original in \code{caret} package). Max Kuhn for the \code{step} function.
 }
+\seealso{
+\code{\link{step_nzv}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing variable_filters
 }

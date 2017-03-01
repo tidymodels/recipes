@@ -30,6 +30,7 @@
 #' 
 #' plot(density(state.x77[, "Illiteracy"]), main = "before")
 #' plot(density(bc_data$Illiteracy), main = "after")
+#' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 step_BoxCox <- function(recipe, terms, role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
   add_step(
     recipe, 

@@ -37,6 +37,7 @@
 #' filtered_te <- process(filter_obj, biomass_te, role = "predictor")
 #' round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 #' round(abs(cor(filtered_te)), 2)
+#' @seealso \code{\link{step_nzv}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_corr <- function(recipe, 
                       terms, 

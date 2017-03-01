@@ -69,6 +69,9 @@ De Silva, V., and Tenenbaum, J. B. (2003). Global versus local methods in nonlin
 
 \pkg{dimRed}, a framework for dimensionality reduction, \url{https://github.com/gdkrmr}
 }
+\seealso{
+\code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_ica}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing isomap projection_methods
 }

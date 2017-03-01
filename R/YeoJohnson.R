@@ -36,7 +36,7 @@
 #' 
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
-
+#' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 step_YeoJohnson <- function(recipe, terms, role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
   add_step(
     recipe, 

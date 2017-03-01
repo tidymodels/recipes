@@ -25,6 +25,7 @@
 #' 
 #' transformed_te <- process(sqrt_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
+#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_sqrt <- function(recipe, terms, role = NA, trained = FALSE, vars = NULL) {
   add_step(

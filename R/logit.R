@@ -25,7 +25,7 @@
 #' 
 #' transformed_te <- process(logit_obj, examples)
 #' plot(examples$X1, transformed_te$X1)
-
+#' @seealso \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_logit <- function(recipe, terms, role = NA, trained = FALSE, vars = NULL) {
   add_step(

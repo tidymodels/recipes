@@ -39,6 +39,9 @@ sqrt_obj <- learn(sqrt_trans, training = examples)
 transformed_te <- process(sqrt_obj, examples)
 plot(examples$V1, transformed_te$V1)
 }
+\seealso{
+\code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing transformation_methods
 }

@@ -31,7 +31,7 @@
 #' rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
 #' plot(pca_data$PC1, pca_data$PC2,
 #'      xlim = rng, ylim = rng)
-
+#' @seealso \code{\link{step_ica}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 step_pca <- function(recipe, 
                      terms, 
                      role = "predictor",

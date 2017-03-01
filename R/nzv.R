@@ -42,6 +42,7 @@
 #' 
 #' filtered_te <- process(filter_obj, biomass_te)
 #' any(names(filtered_te) == "sparse")
+#' @seealso \code{\link{step_corr}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_nzv <- function(recipe, 
                      terms, 

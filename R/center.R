@@ -32,7 +32,7 @@
 #' 
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
-
+#' @seealso \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 step_center <- function(recipe, terms, role = NA, trained = FALSE, means = NULL) {
   add_step(
     recipe, 

@@ -29,7 +29,7 @@
 #' 
 #' transformed_te <- process(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
-
+#' @seealso \code{\link{step_logit}} \code{\link{step_log}}  \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_invlogit <- function(recipe, terms, role = NA, trained = FALSE, vars = NULL) {
   add_step(

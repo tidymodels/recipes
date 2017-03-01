@@ -41,7 +41,7 @@
 #' 
 #' plot(te$V1, te$V2)
 #' plot(ica_data$IC1, ica_data$IC2)
-#' 
+#' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 step_ica <- function(recipe, 
                      terms, 
                      role = "predictor",

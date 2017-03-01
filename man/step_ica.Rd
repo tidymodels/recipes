@@ -57,10 +57,12 @@ ica_data <- process(ica_estimates, te)
 
 plot(te$V1, te$V2)
 plot(ica_data$IC1, ica_data$IC2)
-
 }
 \references{
 Hyvarinen, A., and Oja, E. (2000). Independent component analysis: algorithms and applications. \emph{Neural Networks}, 13(4-5), 411-430.
+}
+\seealso{
+\code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing ica projection_methods

@@ -27,6 +27,8 @@
 #' 
 #' expanded <- process(quadratic, biomass_te)
 #' expanded
+#' @seealso \code{\link{step_ns}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
+
 
 step_poly <- function(recipe, terms, role = "predictor", trained = FALSE, 
                       objects = NULL, options = list(degree = 2)) {

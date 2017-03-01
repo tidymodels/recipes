@@ -46,6 +46,9 @@ transformed_te <- process(center_obj, biomass_te)
 biomass_te[1:10, names(transformed_te)]
 transformed_te
 }
+\seealso{
+\code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing normalization_methods
 }

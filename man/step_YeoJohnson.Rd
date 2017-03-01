@@ -57,6 +57,9 @@ plot(density(yj_te$sulfur), main = "after")
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power transformations to improve normality or symmetry. \emph{Biometrika}.
 }
+\seealso{
+\code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing transformation_methods
 }

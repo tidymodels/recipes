@@ -51,6 +51,9 @@ plot(density(bc_data$Illiteracy), main = "after")
 \references{
 Sakia, R. M. (1992). The Box-Cox transformation technique: A review. \emph{The Statistician}, 169-178..
 }
+\seealso{
+\code{\link{step_YeoJohnson}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing transformation_methods
 }

@@ -51,6 +51,9 @@ plot(pca_data$PC1, pca_data$PC2,
 \references{
 Jolliffe, I. T. (2010). \emph{Principal Component Analysis}. Springer.
 }
+\seealso{
+\code{\link{step_ica}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing pca projection_methods
 }

@@ -70,6 +70,9 @@ Scholkopf, B., Smola, A., and Muller, K. (1997). Kernel principal component anal
 
 Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab - An S4 package for kernel methods in R. \emph{Journal of Statistical Software}, 11(1), 1-20.
 }
+\seealso{
+\code{\link{step_pca}} \code{\link{step_ica}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing pca projection_methods kernel_methods
 }

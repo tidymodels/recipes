@@ -46,6 +46,9 @@ ilogit_obj <- learn(ilogit_trans, training = biomass_tr)
 transformed_te <- process(ilogit_obj, biomass_te)
 plot(biomass_te$carbon, transformed_te$carbon)
 }
+\seealso{
+\code{\link{step_logit}} \code{\link{step_log}}  \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing transformation_methods
 }

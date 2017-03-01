@@ -25,6 +25,7 @@
 #' 
 #' transformed_te <- process(log_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
+#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_log <- function(recipe, terms, role = NA, trained = FALSE, base = exp(1), vars = NULL) {
   add_step(

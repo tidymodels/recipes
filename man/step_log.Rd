@@ -42,6 +42,9 @@ log_obj <- learn(log_trans, training = examples)
 transformed_te <- process(log_obj, examples)
 plot(examples$V1, transformed_te$V1)
 }
+\seealso{
+\code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
 \concept{
 preprocessing transformation_methods
 }

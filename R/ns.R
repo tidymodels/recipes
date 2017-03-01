@@ -27,7 +27,7 @@
 #' 
 #' expanded <- process(with_splines, biomass_te)
 #' expanded
-
+#' @seealso \code{\link{step_poly}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
 
 step_ns <- function(recipe, terms, role = "predictor", trained = FALSE, 
                     objects = NULL, options = list(df = 2)) {

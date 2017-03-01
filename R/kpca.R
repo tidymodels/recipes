@@ -48,7 +48,8 @@
 #' rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
 #' plot(kpca_te$kPC1, kpca_te$kPC2,
 #'      xlim = rng, ylim = rng)
-
+#' @seealso \code{\link{step_pca}} \code{\link{step_ica}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
+#' 
 step_kpca <- function(recipe, 
                       terms, 
                       role = "predictor",
