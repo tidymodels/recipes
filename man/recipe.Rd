@@ -62,7 +62,7 @@ test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 
 # no need for `cbind(carbon, hydrogen)` for right-hand side
 multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
-multi_y <- multi_y \%>\% 
+multi_y <- multi_y \%>\%
   step_center(~ is_outcome()) \%>\%
   step_scale(~ is_predictor())
 
