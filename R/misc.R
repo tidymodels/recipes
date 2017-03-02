@@ -74,13 +74,13 @@ get_rhs_terms <- function(x) x
 
 #' Add a New Step to Current Recipe
 #'
-#' \code{add_step} adds a step to the last location in the recipe. 
+#' \code{add_step} adds a step to the last location in the recipe.
 #'
 #' @param rec A \code{\link{recipe}}.
-#' @param object A step object. 
+#' @param object A step object.
 #' @keywords datagen
-#' @concept preprocessing 
-#' @return A updated \code{\link{recipe}} with the new step in the last slot for processing. 
+#' @concept preprocessing
+#' @return A updated \code{\link{recipe}} with the new step in the last slot for processing.
 #' @export
 add_step <- function(rec, object) {
   rec$steps[[length(rec$steps)+1]] <- object
@@ -102,13 +102,13 @@ var_by_role <- function(rec, role = "predictor", returnform = TRUE) {
 ## Overall wrapper to make new step_X objects
 #' A General Step Wrapper
 #'
-#' \code{step} sets the class of the step.  
+#' \code{step} sets the class of the step.
 #'
-#' @param subclass A character string for the resulting class. For example, if \code{subclass = "blah"} the step object that is returned has class \code{step_blah}. 
-#' @param ... All arguments to the step that should be returned.  
+#' @param subclass A character string for the resulting class. For example, if \code{subclass = "blah"} the step object that is returned has class \code{step_blah}.
+#' @param ... All arguments to the step that should be returned.
 #' @keywords datagen
-#' @concept preprocessing 
-#' @return A updated step with the new class. 
+#' @concept preprocessing
+#' @return A updated step with the new class.
 #' @export
 #' @export
 step <- function(subclass, ...) {
@@ -141,6 +141,23 @@ form_printer <- function(x, wdth = 50, ...) {
   out
 }
 
+
+## then 9 is to keep space for "[trained]
+format_ch_vec <- function(x, sep = ", ", width = options()$width - 9) {
+  widths <- nchar(x)
+  sep_wd <- nchar(sep)
+  adj_wd <- widths*sep_wd
+  if(sum(adj_wd) >= width) {
+    keepers <- max(which(cumsum(adj_wd) < width)) - 1
+    if(length(keepers) == 0 || keepers < 1) {
+      x <- paste(length(x), "items")
+    } else {
+      x <- c(x[1:keepers], "...")
+    }
+  }
+  paste0(x, collapse = sep)
+}
+
 terms.recipe <- function(x, ...) x$term_info
 
 filter_terms.formula <- function(formula, data, ...)
@@ -152,7 +169,7 @@ filter_terms.formula <- function(formula, data, ...)
 ## remove any in `removals`
 sub_args <- function(func, options, removals = NULL) {
   args <- formals(func)
-  for(i in seq_along(options)) 
+  for(i in seq_along(options))
     args[[names(options)[i]]] <- options[[i]]
   if(!is.null(removals))
     args[removals] <- NULL
@@ -160,9 +177,9 @@ sub_args <- function(func, options, removals = NULL) {
 }
 
 #' Sequences of Names with Padded Zeros
-#' 
+#'
 #' This function creates a series of \code{num} names with a common prefix. The names are numbered with leading zeros (e.g. \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
-#' 
+#'
 #' @param num A single integer for how many elements are created.
 #' @param prefix A character string that will start each name. .
 #' @return A character string of length \code{num}.
@@ -188,10 +205,10 @@ fun_calls <- function(f) {
     fun_calls(body(f))
   } else if (is.call(f)) {
     fname <- as.character(f[[1]])
-    
+
     # Calls inside .Internal are special and shouldn't be included
     if (identical(fname, ".Internal")) return(fname)
-    
+
     unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
   }
 }
@@ -199,7 +216,7 @@ fun_calls <- function(f) {
 get_levels <- function(x) {
   if(!is.factor(x) & !is.character(x))
     return(NA)
-  out <- if(is.factor(x)) 
+  out <- if(is.factor(x))
     levels(x) else
       sort(unique(x))
   out
@@ -214,7 +231,7 @@ strings2factors <- function(x, lvl) {
      lcol <- names(lvl)[i]
      if(!is.factor(x[, lcol]))
        x[, lcol] <- factor(getElement(x, lcol), levels = lvl[[i]])
-   } 
+   }
   }
   x
 }
