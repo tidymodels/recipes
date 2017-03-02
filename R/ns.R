@@ -1,51 +1,51 @@
 #' Nature Spline Basis Functions
-#' 
+#'
 #' \code{step_ns} creates a \emph{specification} of a recipe step that will create new columns that are basis expansions of variables using natural spines.
-#' 
+#'
 #' @inheritParams step_center
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.  
-#' @param objects A list of \code{\link[splines]{ns}} objects created once the step has been learned. 
-#' @param options A list of options for \code{\link[splines]{ns}} which should not include \code{x}. 
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.
+#' @param objects A list of \code{\link[splines]{ns}} objects created once the step has been learned.
+#' @param options A list of options for \code{\link[splines]{ns}} which should not include \code{x}.
 #' @return \code{step_ns} returns an object of class \code{step_ns}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
-#' @details \code{step_ns} can new features from a single variable that enable fitting routines to model this variable in a nonlinear manner. The extent of the possible nonlinearity is determined by the \code{df} or \code{knot} arguments of \code{\link[splines]{ns}}. The original variables are removed from the data and new columns are added. The naming convention for the new variables is \code{varname_ns_1} and so on. 
-#' @examples 
+#' @details \code{step_ns} can new features from a single variable that enable fitting routines to model this variable in a nonlinear manner. The extent of the possible nonlinearity is determined by the \code{df} or \code{knot} arguments of \code{\link[splines]{ns}}. The original variables are removed from the data and new columns are added. The naming convention for the new variables is \code{varname_ns_1} and so on.
+#' @examples
 #' data(biomass)
-#' 
+#'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' 
+#'
 #' library(magrittr)
 #' with_splines <- rec %>%
 #'   step_ns(terms = ~ carbon + hydrogen)
 #' with_splines <- learn(with_splines, training = biomass_tr)
-#' 
+#'
 #' expanded <- process(with_splines, biomass_te)
 #' expanded
-#' @seealso \code{\link{step_poly}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
+#' @seealso \code{\link{step_poly}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_ns <- function(recipe, terms, role = "predictor", trained = FALSE, 
+step_ns <- function(recipe, terms, role = "predictor", trained = FALSE,
                     objects = NULL, options = list(df = 2)) {
   add_step(
-    recipe, 
+    recipe,
     step_ns_new(
-      terms = terms, 
+      terms = terms,
       trained = trained,
-      role = role, 
+      role = role,
       objects = objects,
       options = options)
   )
 }
 
-step_ns_new <- function(terms = NULL, role = NA, trained = FALSE, 
+step_ns_new <- function(terms = NULL, role = NA, trained = FALSE,
                         objects = NULL, options = NULL) {
   step(
-    subclass = "ns", 
+    subclass = "ns",
     terms = terms,
     role = role,
     trained = trained,
@@ -58,9 +58,9 @@ step_ns_new <- function(terms = NULL, role = NA, trained = FALSE,
 ns_wrapper <- function(x, args) {
   if(!("Boundary.knots" %in% names(args)))
     args$Boundary.knots <- range(x)
-  args$x <- x  
+  args$x <- x
   ns_obj <- do.call("ns", args)
-  
+
   ## don't need to save the original data so keep 1 row
   out <- matrix(NA, ncol = ncol(ns_obj), nrow = 1)
   class(out) <- c("ns", "basis", "matrix")
@@ -71,19 +71,19 @@ ns_wrapper <- function(x, args) {
 }
 
 learn.step_ns <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info) 
-  
+  col_names <- parse_terms_formula(x$terms, info = info)
+
   obj <- lapply(training[, col_names], ns_wrapper, x$options)
   for(i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
-  
-  step_ns_new(terms = x$terms, role = x$role, 
+
+  step_ns_new(terms = x$terms, role = x$role,
               trained = TRUE, objects = obj,
               options = x$options)
 }
 
 #' @importFrom tibble as_tibble is_tibble
-#' @importFrom stats predict 
+#' @importFrom stats predict
 process.step_ns <- function(object, newdata, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
@@ -105,9 +105,12 @@ process.step_ns <- function(object, newdata, ...) {
 }
 
 
-print.step_ns <- function(x, width = 30, ...) {
+print.step_ns <- function(x, width = max(20, options()$width - 28), ...) {
   cat("Natural Splines on ")
-  cat(format_formula(x$terms, wdth = width))
+  if(x$trained) {
+    cat(format_ch_vec(names(x$objects), width = width))
+  } else cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
+

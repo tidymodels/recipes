@@ -1,53 +1,53 @@
 #' Create Interaction Variables
-#' 
+#'
 #' \code{step_interact} creates a \emph{specification} of a recipe step that will create new columns that are interaction terms between two or more variables.
-#' 
+#'
 #' @inheritParams step_center
 #' @param terms A traditional R formula that contains interaction terms.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.  
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).
 #' @return \code{step_interact} returns an object of class \code{step_interact}.
 #' @keywords datagen
-#' @concept preprocessing 
+#' @concept preprocessing
 #' @export
-#' @details \code{step_interact} can create interactions between variables. It is primarily intended for \bold{numeric data}; categorical variables should probably be converted to dummy variables using \code{\link{step_dummy}} prior to being used for interactions. 
-#' 
-#' Unlike other step functions, the \code{terms} argument should be a traditional R model formula but should contain no inline functions (e.g. \code{log}). For example, for predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are retained for the design matrix. 
-#' 
-#' The separator between the variables defaults to "\code{_x_}" so that the three way interaction shown previously would generate a column named \code{A_x_B_x_C}. This can be changed using the \code{sep} argument. 
-#' @examples 
+#' @details \code{step_interact} can create interactions between variables. It is primarily intended for \bold{numeric data}; categorical variables should probably be converted to dummy variables using \code{\link{step_dummy}} prior to being used for interactions.
+#'
+#' Unlike other step functions, the \code{terms} argument should be a traditional R model formula but should contain no inline functions (e.g. \code{log}). For example, for predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are retained for the design matrix.
+#'
+#' The separator between the variables defaults to "\code{_x_}" so that the three way interaction shown previously would generate a column named \code{A_x_B_x_C}. This can be changed using the \code{sep} argument.
+#' @examples
 #' data(biomass)
-#' 
+#'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' 
+#'
 #' library(magrittr)
 #' int_mod_1 <- rec %>%
 #'   step_interact(terms = ~ carbon:hydrogen)
-#' 
+#'
 #' int_mod_2 <- int_mod_1 %>%
-#'   step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)  
-#' 
+#'   step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)
+#'
 #' int_mod_1 <- learn(int_mod_1, training = biomass_tr)
 #' int_mod_2 <- learn(int_mod_2, training = biomass_tr)
-#' 
+#'
 #' dat_1 <- process(int_mod_1, biomass_te)
 #' dat_2 <- process(int_mod_2, biomass_te)
-#' 
+#'
 #' names(dat_1)
 #' names(dat_2)
 
 step_interact <- function(recipe, terms, role = "predictor", trained = FALSE, objects = NULL, sep = "_x_") {
   add_step(
-    recipe, 
+    recipe,
     step_interact_new(
-      terms = terms, 
+      terms = terms,
       trained = trained,
-      role = role, 
+      role = role,
       objects = objects,
       sep = sep))
 }
@@ -55,7 +55,7 @@ step_interact <- function(recipe, terms, role = "predictor", trained = FALSE, ob
 ## Initializes a new object
 step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects = NULL, sep = NULL) {
   step(
-    subclass = "interact", 
+    subclass = "interact",
     terms = terms,
     role = role,
     trained = trained,
@@ -65,17 +65,17 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 }
 
 
-## The idea is to save a bunch of x-factor interaction terms instead of 
-## one large set of collected terms. 
+## The idea is to save a bunch of x-factor interaction terms instead of
+## one large set of collected terms.
 learn.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
-  
+
   ## Check to see if any variables are non-numeric and issue a warning
   ## if that is the case
   vars <- unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
   var_check <- info[info$variable %in% vars, ]
-  if(any(var_check$type == "nominal")) 
+  if(any(var_check$type == "nominal"))
     warning("Categorical variables used in `step_interact` should probably be avoided; ",
             "This can lead to differences in dummy variable values that are ",
             "produced by `step_dummy`.")
@@ -83,16 +83,16 @@ learn.step_interact <- function(x, training, info = NULL, ...) {
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
-  
-  ## Generate a standard R `terms` object from these short formulas and 
+
+  ## Generate a standard R `terms` object from these short formulas and
   ## save to make future interactions
   int_terms <- make_small_terms(int_forms, training)
-  
+
   step_interact_new(
-    terms = x$terms, 
-    role = x$role, 
-    trained = TRUE, 
-    objects = int_terms, 
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    objects = int_terms,
     sep = x$sep
   )
 }
@@ -116,7 +116,7 @@ process.step_interact <- function(object, newdata, ...) {
 }
 
 ## This uses the highest level of interactions
-x_fac_int <- function(x) 
+x_fac_int <- function(x)
   as.formula(paste0("~", paste0(x, collapse = "+"), "+", paste0(x, collapse = ":")))
 
 make_new_formula <- function(x){
@@ -127,12 +127,12 @@ make_new_formula <- function(x){
 
 #' @importFrom stats model.matrix
 
-## Given a standard model formula and some data, get the 
+## Given a standard model formula and some data, get the
 ## term expansion (without `.`s). This returns the factor
-## names and would not expand dummy variables. 
+## names and would not expand dummy variables.
 get_term_names <- function(form, vnames) {
-  ## We are going to cheat and make a small fake data set to 
-  ## effcicently get the full formula exapnsion from 
+  ## We are going to cheat and make a small fake data set to
+  ## effcicently get the full formula exapnsion from
   ## model.matrix (devoid of factor levels) and then
   ## pick off the interactions
   dat <- matrix(1, nrow = 5, ncol = length(vnames))
@@ -145,8 +145,16 @@ get_term_names <- function(form, vnames) {
 
 #' @importFrom stats terms
 
-## For a given data set and a list of formulas, generate the 
+## For a given data set and a list of formulas, generate the
 ## standard R `terms`` objects
 make_small_terms <- function(forms, dat) {
   lapply(forms, terms, data = dat)
+}
+
+
+print.step_interact <- function(x, width = max(20, options()$width - 27), ...) {
+  cat("Interactions with ", sep = "")
+  cat(as.character(x$terms)[-1])
+  if(x$trained) cat(" [trained]\n") else cat("\n")
+  invisible(x)
 }

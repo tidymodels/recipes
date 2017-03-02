@@ -1,49 +1,49 @@
 #' Yeo-Johnson Transformation
-#' 
-#' \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that will transform data using a simple Yeo-Johnson transformation. 
-#' 
+#'
+#' \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that will transform data using a simple Yeo-Johnson transformation.
+#'
 #' @inheritParams step_center
-#' @param role Not used by this step since no new variables are created. 
-#' @param lambdas A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.recipe}}. 
-#' @param limits A length 2 numeric vector defining the range to compute the transformation parameter lambda. 
+#' @param role Not used by this step since no new variables are created.
+#' @param lambdas A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.recipe}}.
+#' @param limits A length 2 numeric vector defining the range to compute the transformation parameter lambda.
 #' @param nunique An integer where data that have less possible values will not be evaluate for a transformation
 #' @return \code{step_YeoJohnson} return an object of class \code{step_YeoJohnson}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
-#' @details The Yeo-Johnson transformation is very similar to the Box-Cox but does not require the input variables to be strictly positive. In the package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user). 
-#' 
-#' This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric. 
+#' @details The Yeo-Johnson transformation is very similar to the Box-Cox but does not require the input variables to be strictly positive. In the package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user).
 #'
-#' If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of \code{NA} is used and no transformation is applied. 
-#' 
+#' This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric.
+#'
+#' If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of \code{NA} is used and no transformation is applied.
+#'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power transformations to improve normality or symmetry. \emph{Biometrika}.
-#' @examples 
-#' 
+#' @examples
+#'
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' 
+#'
 #' yj_trans <- step_YeoJohnson(rec, terms = ~ is_numeric())
-#' 
+#'
 #' yj_estimates <- learn(yj_trans, training = biomass_tr)
-#' 
+#'
 #' yj_te <- process(yj_estimates, biomass_te)
-#' 
+#'
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
-#' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} 
+#' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_YeoJohnson <- function(recipe, terms, role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
   add_step(
-    recipe, 
+    recipe,
     step_YeoJohnson_new(
-      terms = terms, 
+      terms = terms,
       role = role,
-      trained = trained, 
+      trained = trained,
       lambdas = lambdas,
       limits = sort(limits)[1:2],
       nunique = nunique
@@ -51,13 +51,13 @@ step_YeoJohnson <- function(recipe, terms, role = NA, trained = FALSE, lambdas =
   )
 }
 
-step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE, 
+step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
                             lambdas = NULL, limits = NULL, nunique = NULL) {
   step(
-    subclass = "YeoJohnson", 
+    subclass = "YeoJohnson",
     terms = terms,
     role = role,
-    trained = trained, 
+    trained = trained,
     lambdas = lambdas,
     limits = limits,
     nunique = nunique
@@ -65,18 +65,18 @@ step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
 }
 
 learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info) 
+  col_names <- parse_terms_formula(x$terms, info = info)
   values <- vapply(
-    training[, col_names], 
-    estimate_yj, 
-    c(lambda = 0), 
+    training[, col_names],
+    estimate_yj,
+    c(lambda = 0),
     limits = x$limits,
     nunique = x$nunique)
   values <- values[!is.na(values)]
   step_YeoJohnson_new(
-    terms = x$terms, 
+    terms = x$terms,
     role = x$role,
-    trained = TRUE, 
+    trained = TRUE,
     lambdas = values,
     limits = x$limits,
     nunique = x$nunique
@@ -84,7 +84,7 @@ learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 }
 
 process.step_YeoJohnson <- function(object, newdata, ...) {
-  if(length(object$lambdas) == 0) 
+  if(length(object$lambdas) == 0)
     return(as_tibble(newdata))
   param <- names(object$lambdas)
   for(i in seq_along(object$lambdas))
@@ -92,9 +92,11 @@ process.step_YeoJohnson <- function(object, newdata, ...) {
   as_tibble(newdata)
 }
 
-print.step_YeoJohnson <- function(x, width = 30, ...) {
-  cat("Yeo-Johnson transformation on ")
-  cat(format_formula(x$terms, wdth = width))
+print.step_YeoJohnson <- function(x, width = max(20, options()$width - 39), ...) {
+  cat("Yeo-Johnson transformation on ", sep = "")
+  if(x$trained) {
+    cat(format_ch_vec(names(x$lambdas), width = width))
+  } else cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
@@ -107,29 +109,29 @@ yj_trans <- function(x, lambda, eps = .001) {
   } else {
     if(!is.vector(x)) x <- as.vector(x)
   }
-  
+
   not_neg <- x >= 0
-  
+
   nn_trans <- function(x, lambda)
     if(abs(lambda) < eps)
-      log(x+1) else 
+      log(x+1) else
         ((x+1)^lambda -1)/lambda
-  
+
   ng_trans <- function(x, lambda)
     if(abs(lambda-2) < eps)
-      -log(-x+1) else 
+      -log(-x+1) else
         -((-x+1)^(2-lambda)-1)/(2-lambda)
-  
+
   if(any(not_neg))
     x[not_neg] <- nn_trans(x[not_neg], lambda)
   if(any(!not_neg))
-    x[!not_neg] <- ng_trans(x[!not_neg], lambda) 
+    x[!not_neg] <- ng_trans(x[!not_neg], lambda)
   x
 }
 
 
-## Helper for the log-likelihood calc for eq 3.1 of Yeo, I. K., 
-## & Johnson, R. A. (2000). A new family of power transformations 
+## Helper for the log-likelihood calc for eq 3.1 of Yeo, I. K.,
+## & Johnson, R. A. (2000). A new family of power transformations
 ## to improve normality or symmetry. Biometrika. page 957
 
 #' @importFrom stats var
@@ -155,10 +157,10 @@ yj_obj <- function(lam, dat){
 ## estimates the values
 estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5) {
   eps <- .001
-  if(length(unique(dat)) < nunique) 
+  if(length(unique(dat)) < nunique)
     return(NA)
   res <- optimize(yj_obj, interval = limits,
-                  maximum = TRUE, dat = dat, 
+                  maximum = TRUE, dat = dat,
                   tol = .0001)
   lam <- res$maximum
   if(abs(limits[1]-lam) <= eps | abs(limits[2]-lam) <= eps)

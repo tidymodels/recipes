@@ -1,64 +1,64 @@
 #' Imputation via Bagged Trees
-#' 
-#' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data. 
-#' 
+#'
+#' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
+#'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be imputed.
-#' @param role Not used by this step since no new variables are created.  
-#' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.  
+#' @param role Not used by this step since no new variables are created.
+#' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
-#' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models. 
+#' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.recipe}}.
-#' @return \code{step_bagimpute} returns an object of class \code{step_bagimpute}. 
+#' @return \code{step_bagimpute} returns an object of class \code{step_bagimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.  
-#' 
-#' Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored. 
-#' 
-#' It is possible that missing values will still occur after imputation if a large majority (or all) of the imputing variables are also missing. 
+#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
+#'
+#' Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
+#'
+#' It is possible that missing values will still occur after imputation if a large majority (or all) of the imputing variables are also missing.
 #' @references Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}. Springer Verlag.
-#' @examples 
+#' @examples
 #' data("credit_data")
-#' 
+#'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
-#' 
+#'
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
-#' 
+#'
 #' credit_tr <- credit_data[ in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
-#' 
+#'
 #' rec <- recipe(Price ~ ., data = credit_tr)
-#' 
+#'
 #' library(magrittr)
 #' impute_rec <- rec %>%
 #'   step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
 #'                  impute_with  = ~ is_predictor())
-#' 
+#'
 #' imp_models <- learn(impute_rec, training = credit_tr)
-#' 
+#'
 #' inputed_te <- process(imp_models, newdata = credit_te)
-#' 
+#'
 #' credit_te[missing_examples,]
 #' inputed_te[missing_examples, names(credit_te)]
 
 
 step_bagimpute <- function(recipe, terms, role = NA,
-                           trained = FALSE, 
-                           models = NULL, 
+                           trained = FALSE,
+                           models = NULL,
                            options = list(nbagg = 25, keepX = FALSE),
                            impute_with = NULL,
                            seed_val = sample.int(10^4, 1)) {
   if(is.null(impute_with))
     stop("Please list some variables in `impute_with`", call. = FALSE)
   add_step(
-    recipe, 
+    recipe,
     step_bagimpute_new(
-      terms = terms, 
+      terms = terms,
       role = role,
       trained = trained,
       models = models,
@@ -70,12 +70,12 @@ step_bagimpute <- function(recipe, terms, role = NA,
 }
 
 step_bagimpute_new <- function(terms = NULL, role = NA,
-                               trained = FALSE, 
+                               trained = FALSE,
                                models = NULL, options = NULL,
-                               impute_with = NULL, 
+                               impute_with = NULL,
                                seed_val = NA) {
   step(
-    subclass = "bagimpute", 
+    subclass = "bagimpute",
     terms = terms,
     role = role,
     trained = trained,
@@ -93,15 +93,15 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
   mod_form <- as.formula(paste0(vars$y,"~."))
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
   if(!is.null(seed_val) && !is.na(seed_val))
-    set.seed(seed_val) 
-  
+    set.seed(seed_val)
+
   out <- do.call(
-    "ipredbagg", 
+    "ipredbagg",
     c(
       list(
         y = dat[, vars$y],
         X = dat[, vars$x, drop = FALSE]
-      ), 
+      ),
       opt
     )
   )
@@ -111,12 +111,12 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 
 ## This figures out which data should be used to predict each variable scheduled for imputation
 impute_var_lists <- function(to_impute, impute_using, info) {
-  to_impute <- parse_terms_formula(to_impute, info) 
-  impute_using <- parse_terms_formula(impute_using, info) 
+  to_impute <- parse_terms_formula(to_impute, info)
+  impute_using <- parse_terms_formula(impute_using, info)
   var_lists <- vector(mode = "list", length = length(to_impute))
   for(i in seq_along(var_lists)) {
     var_lists[[i]] <- list(
-      y = to_impute[i], 
+      y = to_impute[i],
       x = impute_using[!(impute_using %in% to_impute[i])]
     )
   }
@@ -124,12 +124,12 @@ impute_var_lists <- function(to_impute, impute_using, info) {
 }
 
 learn.step_bagimpute <- function(x, training, info = NULL, ...) {
-  var_lists <- impute_var_lists(x$terms, x$impute_with, info) 
+  var_lists <- impute_var_lists(x$terms, x$impute_with, info)
   x$models <- lapply(
-    var_lists, 
+    var_lists,
     bag_wrap,
     dat = training,
-    opt = x$options, 
+    opt = x$options,
     seed_val = x$seed_val
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
@@ -143,7 +143,7 @@ process.step_bagimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if(!any(missing_rows))
     return(newdata)
-  
+
   old_data <- newdata
   for(i in seq(along = object$models)) {
     imp_var <- names(object$models)[i]
@@ -165,9 +165,11 @@ process.step_bagimpute <- function(object, newdata, ...) {
 }
 
 
-print.step_bagimpute <- function(x, width = 30, ...) {
-  cat("Bagged tree imputation for ")
-  cat(format_formula(x$terms, wdth = width))
+print.step_bagimpute <- function(x, width = max(20, options()$width - 31), ...) {
+  cat("Bagged tree imputation for ", sep = "")
+  if(x$trained) {
+    cat(format_ch_vec(names(x$models), width = width))
+  } else cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
