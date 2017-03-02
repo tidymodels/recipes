@@ -127,8 +127,9 @@ step <- function(subclass, ...) {
 ## rewrite print methods
 
 #' @importFrom lazyeval f_rhs
-form_printer <- function(x, wdth = options()$width - 9, ...) {
+format_formula <- function(x, wdth = options()$width - 9, ...) {
   x <- recipes:::f_elements(x)
+  if(x$signs[1] == "+") x$signs[1] <- ""
   x_items <- unlist(lapply(x$terms, deparse))[-1] # -1 for "list"
   x_items <- paste0(x$signs, x_items)
   recipes:::format_ch_vec(x_items, width = wdth, sep = " ")
@@ -138,7 +139,7 @@ form_printer <- function(x, wdth = options()$width - 9, ...) {
 format_ch_vec <- function(x, sep = ", ", width = options()$width - 9) {
   widths <- nchar(x)
   sep_wd <- nchar(sep)
-  adj_wd <- widths*sep_wd
+  adj_wd <- widths+sep_wd
   if(sum(adj_wd) >= width) {
     keepers <- max(which(cumsum(adj_wd) < width)) - 1
     if(length(keepers) == 0 || keepers < 1) {

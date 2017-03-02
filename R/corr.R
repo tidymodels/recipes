@@ -104,9 +104,9 @@ process.step_corr <- function(object, newdata, ...) {
   as_tibble(newdata)
 }
 
-print.step_corr <- function(x, form_width = 30, ...) {
+print.step_corr <- function(x, width = 30, ...) {
   cat("Correlation filter on ")
-  cat(form_printer(x, wdth = form_width))
+  cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

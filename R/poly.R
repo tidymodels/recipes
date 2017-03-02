@@ -105,9 +105,9 @@ process.step_poly <- function(object, newdata, ...) {
 }
 
 
-print.step_poly <- function(x, form_width = 30, ...) {
+print.step_poly <- function(x, width = 30, ...) {
   cat("Orthogonal polynomials on ")
-  cat(form_printer(x, wdth = form_width))
+  cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

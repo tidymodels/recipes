@@ -105,9 +105,9 @@ process.step_ns <- function(object, newdata, ...) {
 }
 
 
-print.step_ns <- function(x, form_width = 30, ...) {
+print.step_ns <- function(x, width = 30, ...) {
   cat("Natural Splines on ")
-  cat(form_printer(x, wdth = form_width))
+  cat(format_formula(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
