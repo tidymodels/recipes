@@ -127,20 +127,12 @@ step <- function(subclass, ...) {
 ## rewrite print methods
 
 #' @importFrom lazyeval f_rhs
-form_printer <- function(x, wdth = 50, ...) {
-  if(!is_formula(x))
-    x <- as.formula(x)
-  char_x <- deparse(f_rhs(x))
-  if(sum(nchar(char_x)) >= wdth) {
-    split_up <- unlist(strsplit(char_x, split = "(\\+)|(-)"))
-    widths <- which(cumsum(nchar(split_up)) <= wdth)
-    split_up <- if(length(widths) == length(split_up))
-      split_up else c(split_up[widths], "{more}")
-    out <- paste0(split_up, collapse = " + ")
-  } else out <- char_x
-  out
+form_printer <- function(x, wdth = options()$width - 9, ...) {
+  x <- recipes:::f_elements(x)
+  x_items <- unlist(lapply(x$terms, deparse))[-1] # -1 for "list"
+  x_items <- paste0(x$signs, x_items)
+  recipes:::format_ch_vec(x_items, width = wdth, sep = " ")
 }
-
 
 ## then 9 is to keep space for "[trained]
 format_ch_vec <- function(x, sep = ", ", width = options()$width - 9) {
