@@ -116,7 +116,11 @@
 
 <span class='co'># Create the recipe manually</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>biomass</span>)
-<span class='no'>rec</span></div><div class='output co'>#&gt; <span class='error'>Error in `colnames&lt;-`(`*tmp*`, value = c(&quot;role&quot;, &quot;#variables&quot;)): &#39;names&#39; attribute [2] must be the same length as the vector [1]</span></div><div class='input'><span class='no'>rec</span>$<span class='no'>var_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
+<span class='no'>rec</span></div><div class='output co'>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;   8 variables (no declared roles)</div><div class='input'><span class='no'>rec</span>$<span class='no'>var_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
 #&gt;   variable    type  role   source
 #&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;
 #&gt; 1   sample nominal    NA original

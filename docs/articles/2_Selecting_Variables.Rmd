@@ -36,7 +36,7 @@ rec
 Before any steps are used the information on the original variables is:
 
 ```{r var_info_orig}
-rec$term_info
+summary(rec, original = TRUE)
 ```
 
 We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:

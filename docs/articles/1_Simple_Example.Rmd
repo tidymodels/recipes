@@ -20,7 +20,7 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 
 ## An Example
 
-The cell segmentation data will be used. It has 58 columns with predictors and a factor variable (which is the outcome). Each of the predictors has a suffix for the optical channel ("`Ch1`"-"`Ch4`""). We will first separate the data into a training and test set then remove unimportant variables:
+The cell segmentation data will be used. It has 58 columns with predictors and a factor variable (which is the outcome). Each of the predictors has a suffix for the optical channel (`"Ch1"`-`"Ch4"`). We will first separate the data into a training and test set then remove unimportant variables:
 
 ```{r data}
 library(caret)
