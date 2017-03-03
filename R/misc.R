@@ -10,7 +10,8 @@ get_types <- function(x) {
   type_list <- list(
     nominal = c("character", "factor", "ordered"),
     numeric = c("integer", "numeric", "double"),
-    date = c("POSIXct", "Date")
+    date = c("POSIXct", "Date"),
+    censored = "Surv"
   )
   res <- lapply(type_list, type_by_var, dat = x)
   ## I think that Hadley has a better function somewhere to do this
