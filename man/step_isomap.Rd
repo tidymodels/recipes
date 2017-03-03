@@ -52,8 +52,8 @@ im_trans <- rec \%>\%
   step_YeoJohnson(terms = ~ is_predictor()) \%>\%
   step_center(terms = ~ is_predictor()) \%>\%
   step_scale(terms = ~ is_predictor()) \%>\%
-  step_isomap(terms = ~ is_predictor(), 
-              options = list(knn = 100), 
+  step_isomap(terms = ~ is_predictor(),
+              options = list(knn = 100),
               num = 2)
 
 im_estimates <- learn(im_trans, training = biomass_tr)

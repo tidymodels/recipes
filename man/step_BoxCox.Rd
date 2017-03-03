@@ -29,9 +29,9 @@ step_BoxCox(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
 \code{step_BoxCox} creates a \emph{specification} of a recipe step that will transform data using a simple Box-Cox transformation.
 }
 \details{
-The Box-Cox transformation, which requires a strictly positive variable, can be used to rescale a variable to be more similar to a normal distribution. In this package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user). 
+The Box-Cox transformation, which requires a strictly positive variable, can be used to rescale a variable to be more similar to a normal distribution. In this package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user).
 
-This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric. 
+This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric.
 
 If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of \code{NA} is used and no transformation is applied.
 }

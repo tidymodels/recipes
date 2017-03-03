@@ -42,7 +42,7 @@ library(magrittr)
 ss_trans <- rec \%>\%
   step_center(terms = ~ carbon + hydrogen) \%>\%
   step_scale(terms = ~ carbon + hydrogen) \%>\%
-  step_spatialsign(terms = ~ carbon + hydrogen) 
+  step_spatialsign(terms = ~ carbon + hydrogen)
 
 ss_obj <- learn(ss_trans, training = biomass_tr)
 

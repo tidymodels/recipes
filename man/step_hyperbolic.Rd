@@ -37,7 +37,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 
 library(magrittr)
 cos_trans <- rec  \%>\%
-  step_hyperbolic(terms = ~ is_predictor(), 
+  step_hyperbolic(terms = ~ is_predictor(),
                   fun = "cos", inverse = FALSE)
 
 cos_obj <- learn(cos_trans, training = examples)

@@ -17,7 +17,8 @@ knitr::opts_chunk$set(message = FALSE, digits = 3)
 
 ```{r step_list}
 library(recipes)
-apropos("^step_")
+steps <- apropos("^step_")
+steps[!grepl("new$", steps)]
 ```
 
 You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for [centering](https://github.com/topepo/recipes/blob/master/R/center.R) or [PCA](https://github.com/topepo/recipes/blob/master/R/pca.R) to start. 

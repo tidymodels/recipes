@@ -32,7 +32,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 \details{
 \code{step_dummy} will create a set of binary dummy variables from a factor variable. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).
 
-By default, the missing dummy variable will correspond to the first level of the factor being converted. 
+By default, the missing dummy variable will correspond to the first level of the factor being converted.
 
 The function allows for non-standard naming of the resulting variables. For a factor named \code{x}, with levels \code{"a"} and \code{"b"}, the default naming convention would be to create a new variable called \code{x_b}. Note that if the factor levels are not valid variable names (e.g. "some text with spaces"), it will be changed by \code{\link[base]{make.names}} to be valid (see the example below). The naming format can be changed using the \code{naming} argument.
 }

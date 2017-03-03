@@ -44,9 +44,9 @@ examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
    step_date(~ is_predictor())
 
-date_rec <- learn(date_rec, training = examples)   
+date_rec <- learn(date_rec, training = examples)
 date_values <- process(date_rec, newdata = examples)
-date_values                                               
+date_values
 }
 \seealso{
 \code{\link{step_holiday}} \code{\link{step_rm}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}

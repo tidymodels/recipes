@@ -142,8 +142,8 @@ standardized</code></pre></div>
 ## 
 ## Steps:
 ## 
-## Centering with is_predictor()
-## Scaling with is_predictor()</code></pre>
+## Centering for is_predictor()
+## Scaling for is_predictor()</code></pre>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>learn</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
@@ -208,9 +208,9 @@ trained_rec</code></pre></div>
 ## 
 ## Steps:
 ## 
-## Centering with is_predictor() [trained]
-## Scaling with is_predictor() [trained]
-## PCA extraction with ends_with("Ch1")  + {more}</code></pre>
+## Centering for AngleCh1, AreaCh1, ... [trained]
+## Scaling for AngleCh1, AreaCh1, ... [trained]
+## PCA extraction with ends_with("Ch1") +contains("area")</code></pre>
 <p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>learn</code> again:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
 <pre><code>## step 1 center [pre-trained]
@@ -241,9 +241,9 @@ steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"n
 ## [10] "step_ica"         "step_interact"    "step_invlogit"   
 ## [13] "step_isomap"      "step_kpca"        "step_log"        
 ## [16] "step_logit"       "step_ns"          "step_nzv"        
-## [19] "step_pca"         "step_poly"        "step_rm"         
-## [22] "step_scale"       "step_spatialsign" "step_sqrt"       
-## [25] "step_YeoJohnson"</code></pre>
+## [19] "step_other"       "step_pca"         "step_poly"       
+## [22] "step_range"       "step_rm"          "step_scale"      
+## [25] "step_spatialsign" "step_sqrt"        "step_YeoJohnson"</code></pre>
 </div>
 </div>
   </div>

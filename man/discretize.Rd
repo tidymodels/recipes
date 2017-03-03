@@ -62,11 +62,11 @@ step_discretize(recipe, terms, role = NA, trained = FALSE, objects = NULL,
 \code{discretize} converts a numeric vector into a factor with bins having approximately the same number of data points (based on a training set).
 }
 \details{
-\code{discretize} estimates the cut points from \code{x} using percentiles. For example, if \code{cuts = 3}, the function estimates the quartiles of \code{x} and uses these as the cut points. If \code{cuts = 2}, the bins are defined as being above or below the median of \code{x}. 
+\code{discretize} estimates the cut points from \code{x} using percentiles. For example, if \code{cuts = 3}, the function estimates the quartiles of \code{x} and uses these as the cut points. If \code{cuts = 2}, the bins are defined as being above or below the median of \code{x}.
 
-The \code{predict} method can then be used to turn numeric vectors into factor vectors. 
+The \code{predict} method can then be used to turn numeric vectors into factor vectors.
 
-If \code{keep_na = TRUE}, a suffix of "_missing" is used as a factor level (see the examples below). 
+If \code{keep_na = TRUE}, a suffix of "_missing" is used as a factor level (see the examples below).
 
 If \code{infs = FALSE} and a new value is greater than the largest value of \code{x}, a missing value will result.
 }

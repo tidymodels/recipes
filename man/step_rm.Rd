@@ -34,7 +34,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 library(dplyr)
 smaller_set <- rec \%>\%
-  step_rm(terms = ~ contains("gen")) 
+  step_rm(terms = ~ contains("gen"))
 
 smaller_set <- learn(smaller_set, training = biomass_tr)
 

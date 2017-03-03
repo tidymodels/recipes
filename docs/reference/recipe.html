@@ -144,9 +144,9 @@
 #&gt; 
 #&gt; Steps:
 #&gt; 
-#&gt; Centering with is_predictor()
-#&gt; Scaling with is_predictor()
-#&gt; Spatial sign on is_predictor()</div><div class='input'>
+#&gt; Centering for is_predictor()
+#&gt; Scaling for is_predictor()
+#&gt; Spatial sign on  is_predictor()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
 <span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training 
@@ -160,9 +160,9 @@
 #&gt; 
 #&gt; Steps:
 #&gt; 
-#&gt; Centering with is_predictor() [trained]
-#&gt; Scaling with is_predictor() [trained]
-#&gt; Spatial sign on is_predictor() [trained]</div><div class='input'>
+#&gt; Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+#&gt; Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+#&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
 <span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
 
