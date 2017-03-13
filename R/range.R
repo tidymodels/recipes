@@ -72,11 +72,14 @@ learn.step_range <- function(x, training, info = NULL, ...) {
 
 process.step_range <- function(object, newdata, ...) {
   tmp <- as.matrix(newdata[, colnames(object$ranges)])
-
   tmp <- sweep(tmp, 2, object$ranges[1,], "-")
+  tmp <- tmp * (object$max - object$min)
   tmp <- sweep(tmp, 2, object$ranges[2,] - object$ranges[1,], "/")
-  ## now transform to scale?
-
+  tmp <- tmp + object$min
+  
+  tmp[tmp < object$min] <- object$min
+  tmp[tmp > object$max] <- object$max
+  
   if(is.matrix(tmp) && ncol(tmp) == 1) tmp <- tmp[,1]
   newdata[, colnames(object$ranges)] <- tmp
   as_tibble(newdata)
