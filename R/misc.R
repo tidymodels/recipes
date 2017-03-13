@@ -129,11 +129,11 @@ step <- function(subclass, ...) {
 
 #' @importFrom lazyeval f_rhs
 format_formula <- function(x, wdth = options()$width - 9, ...) {
-  x <- recipes:::f_elements(x)
+  x <- f_elements(x)
   if(x$signs[1] == "+") x$signs[1] <- ""
   x_items <- unlist(lapply(x$terms, deparse))[-1] # -1 for "list"
   x_items <- paste0(x$signs, x_items)
-  recipes:::format_ch_vec(x_items, width = wdth, sep = " ")
+  format_ch_vec(x_items, width = wdth, sep = " ")
 }
 
 ## then 9 is to keep space for "[trained]
