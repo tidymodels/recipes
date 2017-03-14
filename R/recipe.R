@@ -283,10 +283,14 @@ print.recipe <- function(x, form_width = 30, ...) {
     cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
   }
   if("tr_info" %in% names(x)) {
+    nmiss <- x$tr_info$nrows - x$tr_info$ncomplete
     cat("\nTraining data contained ", x$tr_info$nrows, " data points and ", sep = "")
     if(x$tr_info$nrows == x$tr_info$ncomplete) 
       cat("no missing data.\n") else 
-        cat(x$tr_info$nrows - x$tr_info$ncomplete, "incomplete rows.\n")
+        cat(nmiss, 
+            "incomplete",
+            ifelse(nmiss > 1, "rows.", "row."), 
+            "\n")
   }
   if(!is.null(x$steps)) {
     cat("\nSteps:\n\n")
