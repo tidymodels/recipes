@@ -229,5 +229,11 @@ strings2factors <- function(x, lvl) {
   x
 }
 
+## short summary of training set
+train_info <- function(x) {
+  data.frame(nrows = nrow(x),
+             ncomplete = sum(complete.cases(x)))
+}
+
 
 

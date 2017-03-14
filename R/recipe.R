@@ -162,11 +162,13 @@ learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE,
       stop("A training set must be supplied to the `training` argument when `fresh = TRUE`",
            call. = FALSE)
     training <- x$template
+    tr_data <- train_info(training)
   } else {
     training <- if(!is_tibble(training))
       as_tibble(training[, x$var_info$variable, drop = FALSE]) else
         training[, x$var_info$variable]
   }
+  tr_data <- train_info(training)
   if(stringsAsFactors) {
     lvls <- lapply(training, get_levels)
     training <- strings2factors(training, lvls)
@@ -202,7 +204,7 @@ learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE,
 
   if(retain)
     x$template <- training
-
+  x$tr_info <- tr_data
   x$levels <- lvls
   x
 }
@@ -280,7 +282,12 @@ print.recipe <- function(x, form_width = 30, ...) {
   } else {
     cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
   }
-
+  if("tr_info" %in% names(x)) {
+    cat("\nTraining data contained ", x$tr_info$nrows, " data points and ", sep = "")
+    if(x$tr_info$nrows == x$tr_info$ncomplete) 
+      cat("no missing data.\n") else 
+        cat(x$tr_info$nrows - x$tr_info$ncomplete, "incomplete rows.\n")
+  }
   if(!is.null(x$steps)) {
     cat("\nSteps:\n\n")
     for(i in seq_along(x$steps))
