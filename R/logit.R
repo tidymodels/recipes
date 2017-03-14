@@ -49,6 +49,7 @@ step_logit_new <- function(terms = NULL, role = NA, trained = FALSE, vars = NULL
   )
 }
 
+#' @export
 learn.step_logit <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_logit_new(
@@ -61,6 +62,7 @@ learn.step_logit <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
+#' @export
 process.step_logit <- function(object, newdata, ...) {
   for(i in seq_along(object$vars))
     newdata[ , object$vars[i] ] <-

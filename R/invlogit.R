@@ -53,6 +53,7 @@ step_invlogit_new <- function(terms = NULL, role = NA, trained = FALSE, vars = N
   )
 }
 
+#' @export
 learn.step_invlogit <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_invlogit_new(
@@ -65,6 +66,7 @@ learn.step_invlogit <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
+#' @export
 process.step_invlogit <- function(object, newdata, ...) {
   for(i in seq_along(object$vars))
     newdata[ , object$vars[i] ] <-

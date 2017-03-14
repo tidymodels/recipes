@@ -93,6 +93,7 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 
 
 #' @importFrom stats as.formula model.frame
+#' @export
 learn.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- if(is_formula(x$class)) 
     all.vars(x$class)[1] else 
@@ -130,6 +131,7 @@ mah_pooled <- function(means, x, cov_mat)
 
 
 #' @importFrom tibble as_tibble 
+#' @export
 process.step_classdist <- function(object, newdata, ...) {
   if(object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])

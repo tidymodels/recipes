@@ -70,6 +70,7 @@ step_dummy_new <- function(terms = NULL,
 }
 
 #' @importFrom stats as.formula model.frame
+#' @export
 learn.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -98,6 +99,7 @@ learn.step_dummy <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)

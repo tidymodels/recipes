@@ -94,6 +94,7 @@ step_kpca_new <- function(terms = NULL,
 }
 
 #' @importFrom dimRed kPCA dimRedData
+#' @export
 learn.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -112,6 +113,7 @@ learn.step_kpca <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_kpca <- function(object, newdata, ...) {
   pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data

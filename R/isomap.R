@@ -92,6 +92,7 @@ step_isomap_new <- function(terms = NULL,
 }
 
 #' @importFrom dimRed embed dimRedData
+#' @export
 learn.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -112,6 +113,7 @@ learn.step_isomap <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_isomap <- function(object, newdata, ...) {
   isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE])))@data

@@ -70,6 +70,7 @@ ns_wrapper <- function(x, args) {
   out
 }
 
+#' @export
 learn.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -84,6 +85,7 @@ learn.step_ns <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
+#' @export
 process.step_ns <- function(object, newdata, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))

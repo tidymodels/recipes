@@ -57,6 +57,7 @@ step_rm_new <- function(terms = NULL,
   )
 }
 
+#' @export
 learn.step_rm <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -68,6 +69,7 @@ learn.step_rm <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_rm <- function(object, newdata, ...) {
   if(length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]

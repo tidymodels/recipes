@@ -75,6 +75,7 @@ step_pca_new <- function(terms = NULL,
 }
 
 #' @importFrom dimRed PCA dimRedData
+#' @export
 learn.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -96,6 +97,7 @@ learn.step_pca <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(environment(object$res@apply)$rot)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data

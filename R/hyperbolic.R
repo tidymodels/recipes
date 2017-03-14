@@ -61,6 +61,7 @@ step_hyperbolic_new <- function(terms = NULL, role = NA, trained = FALSE,
   )
 }
 
+#' @export
 learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_hyperbolic_new(
@@ -73,6 +74,7 @@ learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_hyperbolic <- function(object, newdata, ...) {
   func <- if(object$inverse)
     get(paste0("a", object$func)) else

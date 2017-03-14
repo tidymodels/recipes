@@ -80,6 +80,7 @@ step_corr_new <- function(terms = NULL,
   )
 }
 
+#' @export
 learn.step_corr <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   filter <- corr_filter(x = training[, col_names],
@@ -98,6 +99,7 @@ learn.step_corr <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_corr <- function(object, newdata, ...) {
   if(length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]

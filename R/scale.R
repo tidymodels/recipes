@@ -54,12 +54,14 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
 }
 
 #' @importFrom stats sd
+#' @export
 learn.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = TRUE)
   step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
 }
 
+#' @export
 process.step_scale <- function(object, newdata, ...) {
   res <- sweep(as.matrix(newdata[, names(object$sds)]), 2, object$sds, "/")
   if(is.matrix(res) && ncol(res) == 1) res <- res[,1]

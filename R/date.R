@@ -77,6 +77,7 @@ step_date_new <- function(terms = NULL,
 }
 
 #' @importFrom stats as.formula model.frame
+#' @export
 learn.step_date <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -136,6 +137,7 @@ get_date_features <- function(dt, feats, abbr = TRUE, label = TRUE, ord = FALSE)
 }
 
 #' @importFrom tibble as_tibble is_tibble
+#' @export
 process.step_date <- function(object, newdata, ...) {
   new_cols <- rep(length(object$features), each = length(object$variables))
   date_values <- matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))

@@ -77,6 +77,7 @@ step_nzv_new <- function(terms = NULL,
   )
 }
 
+#' @export
 learn.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   filter <- nzv(x = training[, col_names],
@@ -92,6 +93,7 @@ learn.step_nzv <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_nzv <- function(object, newdata, ...) {
   if(length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]

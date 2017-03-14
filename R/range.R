@@ -60,6 +60,7 @@ step_range_new <- function(terms = NULL, role = NA, trained = FALSE, min = 0, ma
 }
 
 #' @importFrom stats sd
+#' @export
 learn.step_range <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   mins <- vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
@@ -70,6 +71,7 @@ learn.step_range <- function(x, training, info = NULL, ...) {
                  ranges = rbind(mins, maxs))
 }
 
+#' @export
 process.step_range <- function(object, newdata, ...) {
   tmp <- as.matrix(newdata[, colnames(object$ranges)])
   tmp <- sweep(tmp, 2, object$ranges[1,], "-")

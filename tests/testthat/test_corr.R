@@ -10,13 +10,14 @@ dat$duplicate <- dat$V1
 dat$V6 <- -dat$V2 + runif(n)*.2
 
 test_that('high filter', {
+  set.seed(1)
   rec <- recipe(~ ., data = dat)
   filtering <- rec %>% 
     step_corr(~ is_predictor(), threshold = .5)
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
   
-  removed <- paste0("V", 1:2)
+  removed <- c("V6", "V1")
   
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })

@@ -67,6 +67,7 @@ step_interact_new <- function(terms = NULL, role = NA, trained = FALSE, objects 
 
 ## The idea is to save a bunch of x-factor interaction terms instead of
 ## one large set of collected terms.
+#' @export
 learn.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
@@ -98,6 +99,7 @@ learn.step_interact <- function(x, training, info = NULL, ...) {
 }
 
 
+#' @export
 process.step_interact <- function(object, newdata, ...) {
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)

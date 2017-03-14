@@ -118,7 +118,7 @@
 
     <p><code>step_depth</code> will create a</p>
     <p>Data depth metrics attempt to measure how close data a data point is to the center of its distribution.  There are a number of methods for calculating death but a simple example is the inverse of the distance of a data point to the centroid of the distribution. Generally, small values indicate that a data point not close to the centroid. <code>step_depth</code> can compute a class-specific depth for a new data point based on the proximity of the new value to the training set distribution.</p>
-    <p>Note that the entire training set is saved to compute future depth values. The saved data have been learned up to the point before the location that <code>step_depth</code> occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using <code>metric = &quot;Mahalanobis&quot;</code> requires that each class should have at least as many rows as variables listed in the <code>terms</code> argument.</p>
+    <p>Note that the entire training set is saved to compute future depth values. The saved data have been learned and processed up to the point before the location that <code>step_depth</code> occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using <code>metric = &quot;Mahalanobis&quot;</code> requires that each class should have at least as many rows as variables listed in the <code>terms</code> argument.</p>
     <p>The function will create a new column for every unique value of the <code>class</code> variable. The resulting variables will not replace the original values and have the prefix <code>depth_</code>.</p>
     
 
@@ -127,21 +127,21 @@
 
 <span class='co'># halfspace depth is the default</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_depth</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~<span class='no'>Species</span>)
+  <span class='fu'>step_depth</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~ <span class='no'>Species</span>)
 
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 depth training </div><div class='input'>
 <span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>dists_to_species</span></div><div class='output co'>#&gt; # A tibble: 150 × 7
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width depth_setosa
 #&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-#&gt; 1           5.1         3.5          1.4         0.2         0.18
+#&gt; 1           5.1         3.5          1.4         0.2         0.20
 #&gt; 2           4.9         3.0          1.4         0.2         0.04
 #&gt; 3           4.7         3.2          1.3         0.2         0.10
 #&gt; 4           4.6         3.1          1.5         0.2         0.08
 #&gt; 5           5.0         3.6          1.4         0.2         0.14
 #&gt; 6           5.4         3.9          1.7         0.4         0.04
 #&gt; 7           4.6         3.4          1.4         0.3         0.02
-#&gt; 8           5.0         3.4          1.5         0.2         0.26
+#&gt; 8           5.0         3.4          1.5         0.2         0.28
 #&gt; 9           4.4         2.9          1.4         0.2         0.02
 #&gt; 10          4.9         3.1          1.5         0.1         0.02
 #&gt; # ... with 140 more rows, and 2 more variables: depth_versicolor &lt;dbl&gt;,

@@ -52,6 +52,7 @@ step_log_new <- function(terms = NULL, role = NA, trained = FALSE,
   )
 }
 
+#' @export
 learn.step_log <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_log_new(
@@ -63,6 +64,7 @@ learn.step_log <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_log <- function(object, newdata, ...) {
   col_names <- object$vars
   for(i in seq_along(col_names))

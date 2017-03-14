@@ -58,6 +58,7 @@ step_BoxCox_new <- function(terms = NULL, role = NA, trained = FALSE,
   )
 }
 
+#' @export
 learn.step_BoxCox <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   values <- vapply(
@@ -77,6 +78,7 @@ learn.step_BoxCox <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_BoxCox <- function(object, newdata, ...) {
   if(length(object$lambdas) == 0)
     return(as_tibble(newdata))

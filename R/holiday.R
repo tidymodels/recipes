@@ -61,6 +61,7 @@ step_holiday_new <- function(terms = NULL,
 }
 
 #' @importFrom stats as.formula model.frame
+#' @export
 learn.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -97,6 +98,7 @@ get_holiday_features <- function(dt, hdays) {
 }
 
 #' @importFrom tibble as_tibble is_tibble
+#' @export
 process.step_holiday <- function(object, newdata, ...) {
   new_cols <- rep(length(object$holidays), each = length(object$variables))
   holiday_values <- matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))

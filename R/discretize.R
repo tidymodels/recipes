@@ -186,6 +186,7 @@ bin_wrapper <- function(x, args) {
   eval(bin_call, envir = args)
 }
 
+#' @export
 learn.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   if(length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
@@ -201,6 +202,7 @@ learn.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
+#' @export
 process.step_discretize <- function(object, newdata, ...) {
   for(i in names(object$objects))
     newdata[, i] <- predict(object$objects[[i]], getElement(newdata, i))

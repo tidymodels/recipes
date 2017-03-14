@@ -129,8 +129,12 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>magrittr</span>)
 
+<span class='co'># in case of missing data...</span>
+<span class='no'>mean2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>mean</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_classdist</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>, <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='fu'>step_classdist</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~ <span class='no'>Species</span>,
+                 <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>)
 
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>
 <span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)

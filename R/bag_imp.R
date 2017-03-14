@@ -123,6 +123,7 @@ impute_var_lists <- function(to_impute, impute_using, info) {
   var_lists
 }
 
+#' @export
 learn.step_bagimpute <- function(x, training, info = NULL, ...) {
   var_lists <- impute_var_lists(x$terms, x$impute_with, info)
   x$models <- lapply(
@@ -139,6 +140,7 @@ learn.step_bagimpute <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
+#' @export
 process.step_bagimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if(!any(missing_rows))

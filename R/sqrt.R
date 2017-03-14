@@ -50,6 +50,7 @@ step_sqrt_new <- function(terms = NULL, role = NA, trained = FALSE, vars = NULL)
 }
 
 
+#' @export
 learn.step_sqrt <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_sqrt_new(
@@ -60,6 +61,7 @@ learn.step_sqrt <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_sqrt <- function(object, newdata, ...) {
   col_names <- object$vars
   for(i in seq_along(col_names))

@@ -70,6 +70,7 @@ step_spatialsign_new <- function(terms = NULL,
   )
 }
 
+#' @export
 learn.step_spatialsign <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   step_spatialsign_new(
@@ -80,6 +81,7 @@ learn.step_spatialsign <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_spatialsign <- function(object, newdata, ...) {
   col_names <- object$vars
   ss <- function(x) x/sqrt(sum(x^2))

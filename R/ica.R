@@ -85,6 +85,7 @@ step_ica_new <- function(terms = NULL,
 }
 
 #' @importFrom dimRed FastICA dimRedData
+#' @export
 learn.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
@@ -106,6 +107,7 @@ learn.step_ica <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 process.step_ica <- function(object, newdata, ...) {
   ica_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, ica_vars, drop = FALSE])))@data

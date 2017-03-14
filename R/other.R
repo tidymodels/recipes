@@ -69,6 +69,7 @@ step_other_new <- function(terms = NULL, role = NA, trained = FALSE, threshold =
 }
 
 #' @importFrom stats sd
+#' @export
 learn.step_other <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
   objects <- lapply(training[, col_names], keep_levels,
@@ -80,6 +81,7 @@ learn.step_other <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom tibble as_tibble is_tibble
+#' @export
 process.step_other <- function(object, newdata, ...) {
   for(i in names(object$objects)) {
     if(object$objects[[i]]$collapse) {

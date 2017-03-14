@@ -74,6 +74,7 @@ step_depth_new <- function(terms = NULL,
 }
 
 #' @importFrom stats as.formula model.frame
+#' @export
 learn.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- if(is_formula(x$class)) 
     all.vars(x$class)[1] else 
@@ -104,6 +105,7 @@ get_depth <- function(tr_dat, new_dat, metric, opts){
 
 #' @importFrom tibble as_tibble 
 #' @importFrom ddalpha depth.halfspace depth.Mahalanobis depth.potential depth.projection depth.simplicial depth.simplicialVolume depth.spatial depth.zonoid
+#' @export
 process.step_depth <- function(object, newdata, ...) {
   x_names <- colnames(object$data[[1]])
   newdata <- as.matrix(newdata[, x_names])
