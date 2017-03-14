@@ -19,7 +19,8 @@ Imports:
     ipred,
     dimRed,
     lubridate,
-    timeDate
+    timeDate,
+    ddalpha
 Suggests:
     testthat,
     magrittr,

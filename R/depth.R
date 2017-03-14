@@ -1,0 +1,133 @@
+#' Data Depths
+#'
+#' \code{step_depth} creates a a \emph{specification} of a recipe step that will convert numeric data into measurement of \emph{data depth}. This is done for each value of a categorical class variable.
+#'
+#' @inheritParams step_center
+#' @param terms A representation of the variables or terms that will be used to create the new features.
+#' @param class A single character string or formula that that specifies a single categorical variable to be used as the class. 
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as predictors in a model.
+#' @param metric A character string specifying the depth metric. Possible values are "potential", "halfspace", "Mahalanobis", "simplicialVolume", "spatial", and "zonoid".
+#' @param options A list of options to pass to the underlying depth functions. See \code{\link[ddalpha]{depth.halfspace}}, \code{\link[ddalpha]{depth.Mahalanobis}}, \code{\link[ddalpha]{depth.potential}}, \code{\link[ddalpha]{depth.projection}}, \code{\link[ddalpha]{depth.simplicial}}, \code{\link[ddalpha]{depth.simplicialVolume}}, \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}. 
+#' @param data The training data are stored here once after  \code{\link{learn.recipe}} is executed.
+#' @return \code{step_depth} returns an object of class \code{step_depth}.
+#' @keywords datagen
+#' @concept preprocessing dimension_reduction
+#' @export
+#' @details \code{step_depth} will create a 
+#'
+#' Data depth metrics attempt to measure how close data a data point is to the center of its distribution.  There are a number of methods for calculating death but a simple example is the inverse of the distance of a data point to the centroid of the distribution. Generally, small values indicate that a data point not close to the centroid. \code{step_depth} can compute a class-specific depth for a new data point based on the proximity of the new value to the training set distribution. 
+#'
+#' Note that the entire training set is saved to compute future depth values. The saved data have been learned and processed up to the point before the location that \code{step_depth} occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using \code{metric = "Mahalanobis"} requires that each class should have at least as many rows as variables listed in the \code{terms} argument.
+#' 
+#' The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{depth_}. 
+#' 
+#' @examples
+#' library(magrittr)
+#' 
+#' # halfspace depth is the default
+#' rec <- recipe(Species ~ ., data = iris) %>%
+#'   step_depth(~ is_predictor(), class = ~ Species)
+#' 
+#' rec_dists <- learn(rec, training = iris)
+#' 
+#' dists_to_species <- process(rec_dists, newdata = iris)
+#' dists_to_species
+
+
+step_depth <- function(recipe,
+                       terms,
+                       class,
+                       role = "predictor",
+                       trained = FALSE,
+                       metric =  "halfspace",
+                       options = list(),
+                       data = NULL) {
+  add_step(
+    recipe,
+    step_depth_new(
+      terms = terms,
+      class = class,
+      role = role,
+      trained = trained,
+      metric = metric,
+      options = options,
+      data = data))
+}
+
+step_depth_new <- function(terms = NULL,
+                           class = NULL,
+                           role = "predictor",
+                           trained = FALSE,
+                           metric = NULL,
+                           options = NULL,
+                           data = NULL) {
+  step(
+    subclass = "depth",
+    terms = terms,
+    class = class,
+    role = role,
+    trained = trained,
+    metric = metric,
+    options = options,
+    data = data
+  )
+}
+
+#' @importFrom stats as.formula model.frame
+learn.step_depth <- function(x, training, info = NULL, ...) {
+  class_var <- if(is_formula(x$class)) 
+    all.vars(x$class)[1] else 
+      x$class[1]
+  x_names <- parse_terms_formula(x$terms, info = info)
+  x_dat <- split(training[, x_names], getElement(training, class_var))
+  x_dat <- lapply(x_dat, as.matrix)
+  step_depth_new(
+    terms = x$terms,
+    class = x$class,
+    role = x$role,
+    trained = TRUE,
+    metric = x$metric,
+    options = x$options,
+    data = x_dat
+  )
+}
+
+
+get_depth <- function(tr_dat, new_dat, metric, opts){
+  if(!is.matrix(new_dat)) new_dat <- as.matrix(new_dat)
+  opts$data <- tr_dat
+  opts$x <- new_dat
+  do.call(paste0("depth.", metric), opts)
+}
+
+
+
+#' @importFrom tibble as_tibble 
+#' @importFrom ddalpha depth.halfspace depth.Mahalanobis depth.potential depth.projection depth.simplicial depth.simplicialVolume depth.spatial depth.zonoid
+process.step_depth <- function(object, newdata, ...) {
+  x_names <- colnames(object$data[[1]])
+  newdata <- as.matrix(newdata[, x_names])
+  res <- lapply(
+    object$data, 
+    get_depth, 
+    new_dat = newdata, 
+    metric = object$metric, 
+    opts = object$options
+  )
+  res <- as_tibble(res)
+  colnames(res) <- paste0("depth_", colnames(res))
+  res <- cbind(newdata, res)
+  if(!is_tibble(res)) res <- as_tibble(res)
+  res
+}
+
+print.step_depth <- function(x, width = max(20, options()$width - 30), ...) {
+  cat("Distances to", x$class, "for ")
+  if(x$trained) {
+    x_names <- colnames(x$data[[1]])
+    cat(format_ch_vec(x_names, width = width))
+  } else cat(format_formula(x$terms, wdth = width))
+  if(x$trained) cat(" [trained]\n") else cat("\n")
+  invisible(x)
+}
+
