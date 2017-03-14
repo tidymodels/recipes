@@ -4,7 +4,8 @@
 \alias{step_center}
 \title{Centering Numeric Data}
 \usage{
-step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
+step_center(recipe, terms, role = NA, trained = FALSE, means = NULL,
+  na.rm = TRUE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -16,6 +17,8 @@ step_center(recipe, terms, role = NA, trained = FALSE, means = NULL)
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+
+\item{na.rm}{A logical value indicating whether \code{NA} values should be removed when averaging.}
 }
 \value{
 \code{step_center} returns an object of class \code{step_center}.

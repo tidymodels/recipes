@@ -4,7 +4,8 @@
 \alias{step_scale}
 \title{Scaling Numeric Data}
 \usage{
-step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
+step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL,
+  na.rm = TRUE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
@@ -16,6 +17,8 @@ step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL)
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+
+\item{na.rm}{A logical value indicating whether \code{NA} values should be removed when computing the standard deviation.}
 }
 \value{
 \code{step_scale}  returns an object of class \code{step_scale}.

@@ -6,6 +6,7 @@
 #' @param terms A representation of the variables or terms that will be scaled.
 #' @param role Not used by this step since no new variables are created.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.recipe}}.
+#' @param na.rm A logical value indicating whether \code{NA} values should be removed when computing the standard deviation.
 #' @return \code{step_scale}  returns an object of class \code{step_scale}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
@@ -31,25 +32,27 @@
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
 
-step_scale <- function(recipe, terms, role = NA, trained = FALSE, sds = NULL) {
+step_scale <- function(recipe, terms, role = NA, trained = FALSE, sds = NULL, na.rm = TRUE) {
   add_step(
     recipe,
     step_scale_new(
       terms = terms,
       role = role,
       trained = trained,
-      sds = sds
+      sds = sds,
+      na.rm = na.rm
     )
   )
 }
 
-step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL) {
+step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL, na.rm = NULL) {
   step(
     subclass = "scale",
     terms = terms,
     role = role,
     trained = trained,
-    sds = sds
+    sds = sds,
+    na.rm = na.rm
   )
 }
 
@@ -57,8 +60,8 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL)
 #' @export
 learn.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = TRUE)
-  step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds)
+  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na.rm)
+  step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds, na.rm = x$na.rm)
 }
 
 #' @export

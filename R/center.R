@@ -7,6 +7,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}.
+#' @param na.rm A logical value indicating whether \code{NA} values should be removed when averaging.
 #' @return \code{step_center} returns an object of class \code{step_center}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
@@ -33,32 +34,34 @@
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
 #' @seealso \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
-step_center <- function(recipe, terms, role = NA, trained = FALSE, means = NULL) {
+step_center <- function(recipe, terms, role = NA, trained = FALSE, means = NULL, na.rm = TRUE) {
   add_step(
     recipe,
     step_center_new(
       terms = terms,
       trained = trained,
       role = role,
-      means = means))
+      means = means,
+      na.rm = na.rm))
 }
 
 ## Initializes a new object
-step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NULL) {
+step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NULL, na.rm = NULL) {
   step(
     subclass = "center",
     terms = terms,
     role = role,
     trained = trained,
-    means = means
+    means = means,
+    na.rm = na.rm
   )
 }
 
-learn.step_center <- function(x, training, info = NULL, na.rm = TRUE, ...) {
+learn.step_center <- function(x, training, info = NULL, ...) {
   col_names <- parse_terms_formula(x$terms, info = info)
 
-  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = na.rm)
-  step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means)
+  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)
+  step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means, na.rm = x$na.rm)
 }
 
 process.step_center <- function(object, newdata, ...) {
