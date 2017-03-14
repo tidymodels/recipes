@@ -143,10 +143,10 @@
 
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>kpca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_kpca</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>())
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_kpca</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>())
 
 <span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
 #&gt; step 2 center training 

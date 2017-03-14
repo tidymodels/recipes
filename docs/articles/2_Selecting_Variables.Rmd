@@ -20,7 +20,7 @@ The three main characteristics of variables that can be queried:
  * the data type (e.g. numeric or nominal)
  * the role that was declared by the recipe
  
-The manual pages for `?selections` and  `?role_is` have details about the available selection methods. 
+The manual pages for `?selections` and  `?has_role` have details about the available selection methods. 
  
 To illustrate this, the credit data will be used: 
 

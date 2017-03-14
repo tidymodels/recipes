@@ -61,7 +61,7 @@ test_that('more complex var minus', {
 })
 
 test_that('simple role function', {
-  f7 <- ~ role_is("predictor") 
+  f7 <- ~ has_role("predictor") 
   f7_exp <- items$variable[items$role == "predictor"]
   f7_res <- recipes:::parse_terms_formula(f7, items)
   expect_equal(sort(f7_exp), sort(f7_res))

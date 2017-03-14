@@ -133,7 +133,7 @@
 <span class='no'>mean2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>mean</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_classdist</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~ <span class='no'>Species</span>,
+  <span class='fu'>step_classdist</span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~ <span class='no'>Species</span>,
                  <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>)
 
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>

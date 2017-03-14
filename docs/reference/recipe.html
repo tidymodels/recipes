@@ -131,9 +131,9 @@
 
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>())
 <span class='no'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -158,6 +158,8 @@
 #&gt;    outcome          1
 #&gt;  predictor          5
 #&gt; 
+#&gt; Training data contained 456 data points and no missing data.
+#&gt; 
 #&gt; Steps:
 #&gt; 
 #&gt; Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
@@ -171,8 +173,8 @@
 <span class='co'># no need for `cbind(carbon, hydrogen)` for right-hand side</span>
 <span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>carbon</span> + <span class='no'>hydrogen</span> ~ <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>)
 <span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='no'>multi_y</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='role_is.html'>is_outcome</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>is_outcome</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>())
 
 <span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training </div><div class='input'>

@@ -87,7 +87,8 @@
     <p><code>step_center</code> creates a <em>specification</em> of a recipe step that will normalize numeric data to have a mean of zero.</p>
     
 
-    <pre><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -101,6 +102,8 @@
       <dd>A logical to indicate if the quantities for preprocessing have been estimated.</dd>
       <dt>means</dt>
       <dd>A named numeric vector of means. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</dd>
+      <dt>na.rm</dt>
+      <dd>A logical value indicating whether <code>NA</code> values should be removed when averaging.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>

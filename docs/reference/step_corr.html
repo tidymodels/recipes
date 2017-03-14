@@ -137,7 +137,7 @@
 
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>corr_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_corr</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
+  <span class='fu'>step_corr</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
 
 <span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 corr training </div><div class='input'>
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)

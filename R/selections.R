@@ -13,7 +13,7 @@
 #' 
 #' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
 #' 
-#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{role_is}, \code{role_is_not}, \code{type_is}, and \code{type_is_not}. For convenience, there are also functions that are more specific: \code{is_numeric}, \code{is_nominal}, \code{is_predictor}, and \code{is_outcome}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
+#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{has_role} and \code{type_is}. For convenience, there are also functions that are more specific: \code{is_numeric}, \code{is_nominal}, \code{is_predictor}, and \code{is_outcome}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
 NULL
 
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
@@ -21,9 +21,9 @@ NULL
 name_selectors <- c("starts_with", "ends_with", "contains", 
                     "matches", "num_range", "everything")
 
-role_selectors <- c("role_is", "role_is_not", "is_predictor", "is_outcome")
+role_selectors <- c("has_role", "is_predictor", "is_outcome")
 
-type_selectors <- c("type_is", "type_is_not", "is_numeric", "is_nominal")
+type_selectors <- c("type_is", "is_numeric", "is_nominal")
 
 selectors <- c(name_selectors, role_selectors, type_selectors)
 
@@ -167,7 +167,7 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Role Selection
 #' 
-#' \code{role_is}, \code{role_is_not}, \code{is_predictor}, and \code{is_outcome} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{type_is_not}, \code{is_numeric}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
+#' \code{has_role}, \code{is_predictor}, and \code{is_outcome} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{is_numeric}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
 #' 
 #' @param x A single character string for the query.
 #' @param roles A character string of roles for the current set of terms. 
@@ -176,48 +176,36 @@ has_selector <- function(x, allowed = selectors) {
 #' @keywords datagen
 #' @export
 
-role_is <- function(x = "predictor", roles = NULL) 
+has_role <- function(x = "predictor", roles = NULL) 
   which(roles %in% x[1])
 
 #' @export
-#' @rdname role_is
-#' @inheritParams role_is
-role_is_not <- function(x = "predictor", roles = NULL) 
-  which(!(roles %in% x[1]))
-
-#' @export
-#' @rdname role_is
-#' @inheritParams role_is
+#' @rdname has_role
+#' @inheritParams has_role
 is_predictor <- function(roles = NULL)
-  role_is("predictor", roles = roles)
+  has_role("predictor", roles = roles)
 
 #' @export
-#' @rdname role_is
-#' @inheritParams role_is
+#' @rdname has_role
+#' @inheritParams has_role
 is_outcome <- function(roles = NULL)
-  role_is("outcome", roles = roles)
+  has_role("outcome", roles = roles)
 
 #' @export
-#' @rdname role_is
-#' @inheritParams role_is
+#' @rdname has_role
+#' @inheritParams has_role
 type_is <- function(x = "numeric", types = NULL) 
   which(types %in% x[1])
 
 #' @export
-#' @rdname role_is
-#' @inheritParams role_is
-type_is_not <- function(x = "numeric", types = NULL) 
-  which(!(types %in% x[1]))
-
-#' @export
-#' @rdname role_is
-#' @inheritParams role_is
+#' @rdname has_role
+#' @inheritParams has_role
 is_numeric <- function(types = NULL)
   type_is("numeric", types = types)
 
 #' @export
-#' @rdname role_is
-#' @inheritParams role_is
+#' @rdname has_role
+#' @inheritParams has_role
 is_nominal <- function(types = NULL)
   type_is("nominal", types = types)
 

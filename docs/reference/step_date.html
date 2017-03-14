@@ -132,7 +132,7 @@
 <span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'>ymd</span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'>days</span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
                        <span class='kw'>Stefan</span> <span class='kw'>=</span> <span class='fu'>ymd</span>(<span class='st'>"2006-01-13"</span>) + <span class='fu'>days</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'>step_date</span>(~ <span class='fu'><a href='role_is.html'>is_predictor</a></span>())
+   <span class='fu'>step_date</span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>())
 
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>date_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 date training </div><div class='input'><span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>date_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
 <span class='no'>date_values</span></div><div class='output co'>#&gt; # A tibble: 10 × 8

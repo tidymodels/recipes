@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parse a Step Function Formula. — parse_terms_formula • recipes</title>
+<title>Role Selection — has_role • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,36 +80,40 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parse a Step Function Formula.</h1>
+    <h1>Role Selection</h1>
     </div>
 
     
-    <p><code>parse_terms_formula</code> takes the <code>terms</code> element of a step and translates it to a character vector of column names.</p>
+    <p><code>has_role</code>, <code>is_predictor</code>, and <code>is_outcome</code> can be used to select variables in a formula that have certain roles. Similarly,  <code>type_is</code>, <code>is_numeric</code>, and <code>is_nominal</code> are used to select columns based on their data type. See <code><a href='selections.html'>selections</a></code> for more details.</p>
     
 
-    <pre><span class='fu'>parse_terms_formula</span>(<span class='no'>f</span>, <span class='no'>info</span>)</pre>
+    <pre><span class='fu'>has_role</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>is_predictor</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>is_outcome</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>type_is</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>, <span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>is_numeric</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>is_nominal</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>A formula that can inlcude variable names and certain functions. See <code><a href='selections.html'>selections</a></code> for a list of functions.</dd>
-      <dt>info</dt>
-      <dd>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>, and <code>source</code> that represent the current state of the data. The function <code><a href='summary.recipe.html'>summary.recipe</a></code> can be used to get this information from a recipe.</dd>
+      <dt>x</dt>
+      <dd>A single character string for the query.</dd>
+      <dt>roles</dt>
+      <dd>A character string of roles for the current set of terms.</dd>
+      <dt>types</dt>
+      <dd>A character string of roles for the current set of data types</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string of column names.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='summary.recipe.html'>summary.recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code></p>
+    <p>An integer vector.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>parse_terms_formula</span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>(), <span class='fu'>summary</span>(<span class='no'>rec</span>))</div><div class='output co'>#&gt; [1] &quot;Murder&quot;   &quot;Assault&quot;  &quot;UrbanPop&quot; &quot;Rape&quot;    </div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='fu'>parse_terms_formula</span>(~ <span class='fu'><a href='has_role.html'>is_predictor</a></span>(), <span class='fu'>summary</span>(<span class='no'>rec</span>))</div><div class='output co'>#&gt; [1] &quot;PC1&quot; &quot;PC2&quot; &quot;PC3&quot;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -117,11 +121,7 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

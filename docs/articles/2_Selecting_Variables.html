@@ -74,7 +74,7 @@
 <li>the data type (e.g. numeric or nominal)</li>
 <li>the role that was declared by the recipe</li>
 </ul>
-<p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and <code><a href="../reference/role_is.html">?role_is</a></code> have details about the available selection methods.</p>
+<p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and <code><a href="../reference/has_role.html">?has_role</a></code> have details about the available selection methods.</p>
 <p>To illustrate this, the credit data will be used:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
 <span class="kw">data</span>(<span class="st">"credit_data"</span>)
@@ -115,11 +115,11 @@ rec</code></pre></div>
 ## 5       Age numeric predictor original</code></pre>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/role_is.html">is_nominal</a></span>())</code></pre></div>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">is_nominal</a></span>())</code></pre></div>
 <p>This will capture <em>any</em> variables that are either character strings or factors: <code>Status</code> and <code>Records</code>. However, since <code>Status</code> is our outcome, we might want to keep it as a factor so we can <em>subtract</em> that variable out either by name or by role:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span>Records) <span class="co"># or</span>
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/role_is.html">is_nominal</a></span>() <span class="op">-</span><span class="st"> </span>Status) <span class="co"># or</span>
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/role_is.html">is_nominal</a></span>() <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/role_is.html">is_outcome</a></span>()) </code></pre></div>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">is_nominal</a></span>() <span class="op">-</span><span class="st"> </span>Status) <span class="co"># or</span>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">is_nominal</a></span>() <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">is_outcome</a></span>()) </code></pre></div>
 <p>Using the last definition:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(dummied, <span class="dt">training =</span> credit_data)</code></pre></div>
 <pre><code>## step 1 dummy training</code></pre>
