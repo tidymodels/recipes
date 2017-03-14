@@ -49,7 +49,7 @@ library(magrittr)
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(~ is_predictor(), class = ~ Species, 
+  step_classdist(~ predictors(), class = ~ Species, 
                  pool = FALSE, mean_func = mean2)
 
 rec_dists <- learn(rec, training = iris)

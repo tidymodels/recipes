@@ -18,7 +18,7 @@
 #' library(magrittr)
 #' examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 #' holiday_rec <- recipe(~ someday, examples) %>%
-#'    step_holiday(~ is_predictor())
+#'    step_holiday(~ predictors())
 #'
 #' holiday_rec <- learn(holiday_rec, training = examples)
 #' holiday_values <- process(holiday_rec, newdata = examples)

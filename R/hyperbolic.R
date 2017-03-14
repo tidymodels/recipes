@@ -20,7 +20,7 @@
 #'
 #' library(magrittr)
 #' cos_trans <- rec  %>%
-#'   step_hyperbolic(terms = ~ is_predictor(),
+#'   step_hyperbolic(terms = ~ predictors(),
 #'                   fun = "cos", inverse = FALSE)
 #'
 #' cos_obj <- learn(cos_trans, training = examples)

@@ -13,7 +13,7 @@ test_that('high filter', {
   set.seed(1)
   rec <- recipe(~ ., data = dat)
   filtering <- rec %>% 
-    step_corr(~ is_predictor(), threshold = .5)
+    step_corr(~ predictors(), threshold = .5)
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
   
@@ -25,7 +25,7 @@ test_that('high filter', {
 test_that('low filter', {
   rec <- recipe(~ ., data = dat)
   filtering <- rec %>% 
-    step_corr(~ is_predictor(), threshold = 1)
+    step_corr(~ predictors(), threshold = 1)
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
 

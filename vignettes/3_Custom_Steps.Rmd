@@ -207,7 +207,7 @@ Let's use the example data to make sure that it works:
 library(magrittr)
 rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
-  step_percentile(~ is_predictor(), approx = TRUE) 
+  step_percentile(~ predictors(), approx = TRUE) 
 
 rec_obj <- learn(rec_obj, training = biomass_tr)
 

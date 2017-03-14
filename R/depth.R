@@ -26,7 +26,7 @@
 #' 
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(~ is_predictor(), class = ~ Species)
+#'   step_depth(~ predictors(), class = ~ Species)
 #' 
 #' rec_dists <- learn(rec, training = iris)
 #' 

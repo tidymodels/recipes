@@ -42,7 +42,7 @@ library(magrittr)
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
-   step_date(~ is_predictor())
+   step_date(~ predictors())
 
 date_rec <- learn(date_rec, training = examples)
 date_values <- process(date_rec, newdata = examples)

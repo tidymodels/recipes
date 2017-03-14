@@ -36,9 +36,9 @@ recipe <- function(x, ...) UseMethod("recipe")
 #'
 #' library(magrittr)
 #' sp_signed <- rec %>%
-#'   step_center(~ is_predictor()) %>%
-#'   step_scale(~ is_predictor()) %>%
-#'   step_spatialsign(~ is_predictor())
+#'   step_center(~ predictors()) %>%
+#'   step_scale(~ predictors()) %>%
+#'   step_spatialsign(~ predictors())
 #' sp_signed
 #'
 #' # now estimate required parameters
@@ -54,7 +54,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
 #' multi_y <- multi_y %>%
 #'   step_center(~ is_outcome()) %>%
-#'   step_scale(~ is_predictor())
+#'   step_scale(~ predictors())
 #'
 #' multi_y_trained <- learn(multi_y, training = biomass_tr)
 #'

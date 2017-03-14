@@ -19,7 +19,7 @@
 #'
 #' library(magrittr)
 #' logit_trans <- rec  %>%
-#'   step_logit(terms = ~ is_predictor())
+#'   step_logit(terms = ~ predictors())
 #'
 #' logit_obj <- learn(logit_trans, training = examples)
 #'

@@ -36,7 +36,7 @@
 #'
 #' library(magrittr)
 #' nzv_filter <- rec %>%
-#'   step_nzv(terms = ~ is_predictor())
+#'   step_nzv(terms = ~ predictors())
 #'
 #' filter_obj <- learn(nzv_filter, training = biomass_tr)
 #'

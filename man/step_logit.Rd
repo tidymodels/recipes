@@ -35,7 +35,7 @@ rec <- recipe(~ X1 + X2, data = examples)
 
 library(magrittr)
 logit_trans <- rec  \%>\%
-  step_logit(terms = ~ is_predictor())
+  step_logit(terms = ~ predictors())
 
 logit_obj <- learn(logit_trans, training = examples)
 

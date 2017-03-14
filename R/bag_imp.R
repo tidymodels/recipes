@@ -37,7 +37,7 @@
 #' library(magrittr)
 #' impute_rec <- rec %>%
 #'   step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
-#'                  impute_with  = ~ is_predictor())
+#'                  impute_with  = ~ predictors())
 #'
 #' imp_models <- learn(impute_rec, training = credit_tr)
 #'

@@ -35,7 +35,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 
 library(magrittr)
 log_trans <- rec  \%>\%
-  step_log(terms = ~ is_predictor())
+  step_log(terms = ~ predictors())
 
 log_obj <- learn(log_trans, training = examples)
 

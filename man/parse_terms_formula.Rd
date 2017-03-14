@@ -20,9 +20,9 @@ A character string of column names.
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 rec <- step_pca(rec, terms = ~ is_numeric(), num = 3)
-parse_terms_formula(~ is_predictor(), summary(rec))
+parse_terms_formula(~ predictors(), summary(rec))
 rec <- learn(rec, training = USArrests)
-parse_terms_formula(~ is_predictor(), summary(rec))
+parse_terms_formula(~ predictors(), summary(rec))
 }
 \seealso{
 \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}

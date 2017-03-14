@@ -32,7 +32,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 
 library(magrittr)
 sqrt_trans <- rec  \%>\%
-  step_sqrt(terms = ~ is_predictor())
+  step_sqrt(terms = ~ predictors())
 
 sqrt_obj <- learn(sqrt_trans, training = examples)
 

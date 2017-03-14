@@ -33,10 +33,10 @@
 #'
 #' library(magrittr)
 #' im_trans <- rec %>%
-#'   step_YeoJohnson(terms = ~ is_predictor()) %>%
-#'   step_center(terms = ~ is_predictor()) %>%
-#'   step_scale(terms = ~ is_predictor()) %>%
-#'   step_isomap(terms = ~ is_predictor(),
+#'   step_YeoJohnson(terms = ~ predictors()) %>%
+#'   step_center(terms = ~ predictors()) %>%
+#'   step_scale(terms = ~ predictors()) %>%
+#'   step_isomap(terms = ~ predictors(),
 #'               options = list(knn = 100),
 #'               num = 2)
 #'
