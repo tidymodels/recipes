@@ -111,7 +111,6 @@ var_by_role <- function(rec, role = "predictor", returnform = TRUE) {
 #' @concept preprocessing
 #' @return A updated step with the new class.
 #' @export
-#' @export
 step <- function(subclass, ...) {
   structure(
     list(
