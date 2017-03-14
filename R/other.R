@@ -12,9 +12,9 @@
 #' @keywords datagen
 #' @concept preprocessing normalization_methods factors
 #' @export
-#' @details The overall proportion of the categories are computed and sorted. The "other" category is used for categorical levels whose cumulative proportion is less than \code{threshold}. 
+#' @details The overall proportion of the categories are computed. The "other" category is used in place of any categorical levels whose individual proportion in the training set is less than \code{threshold}.  
 #' 
-#' If no pooling is done the variable is unmodified. Otherwise, a factor is always returned with different factor levels. 
+#' If no pooling is done the data are unmodified (although character data may be changed to factors based on the value of \code{stringsAsFactors} in \code{\link{learn.recipe}}). Otherwise, a factor is always returned with different factor levels. 
 #' 
 #' If \code{threshold} is less than the largest category proportion, all levels except for the most frequent are collapsed to the \code{other} level. 
 #' 
@@ -31,13 +31,13 @@
 #' rec <- recipe(~ diet + location, data = okc_tr)
 #' 
 #' library(magrittr)
-#' rec <- rec %>% step_other(~ diet + location, threshold = .8, other = "other values")
+#' rec <- rec %>% step_other(~ diet + location, threshold = .1, other = "other values")
 #' rec <- learn(rec, training = okc_tr)
 #' 
 #' collapsed <- process(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
 
-step_other <- function(recipe, terms, role = NA, trained = FALSE, threshold = .95, other = "other", objects = NULL) {
+step_other <- function(recipe, terms, role = NA, trained = FALSE, threshold = .05, other = "other", objects = NULL) {
   if(threshold <= 0)
     stop("`threshold` should be greater than zero")
   if(threshold >= 1)
@@ -111,18 +111,22 @@ print.step_other <- function(x, width = max(20, options()$width - 30), ...) {
 }
 
 
-keep_levels <- function(x, prop = .9, other = "other") {
+keep_levels <- function(x, prop = .1, other = "other") {
   if(!is.factor(x)) x <- factor(x)
   xtab <- sort(table(x, useNA = "no"), decreasing = TRUE)/sum(!is.na(x))
-  keepers <- if(prop < max(xtab)) 
-    names(xtab)[1] else 
-      names(which(cumsum(xtab) <= prop))
+  dropped <- which(xtab < prop)
   orig <- levels(x)
-  if(other %in% keepers)
-    stop("The level", other, "is already a factor level that will be retained. ",
-         "Please choose a different value.")
+  collapse <- length(dropped) > 0
+  if(collapse) {
+    keepers <- names(xtab[-dropped])
+    if(length(keepers) == 0)
+      keepers <- names(xtab)[which.max(xtab)]
+    if(other %in% keepers)
+      stop("The level ", other, " is already a factor level that will be retained. ",
+           "Please choose a different value.")
+  } else keepers <- orig
   list(keep = orig[orig %in% keepers],
-       collapse = length(orig) != length(keepers),
+       collapse = collapse,
        other = other)
 }
 

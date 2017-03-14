@@ -4,7 +4,7 @@
 \alias{step_other}
 \title{Collapse Some Categorical Levels}
 \usage{
-step_other(recipe, terms, role = NA, trained = FALSE, threshold = 0.95,
+step_other(recipe, terms, role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
 }
 \arguments{
@@ -29,9 +29,9 @@ step_other(recipe, terms, role = NA, trained = FALSE, threshold = 0.95,
 \code{step_other} creates a \emph{specification} of a recipe step that will potentially pool infrequently occurring values into an "other" category.
 }
 \details{
-The overall proportion of the categories are computed and sorted. The "other" category is used for categorical levels whose cumulative proportion is less than \code{threshold}. 
+The overall proportion of the categories are computed. The "other" category is used in place of any categorical levels whose individual proportion in the training set is less than \code{threshold}.  
 
-If no pooling is done the variable is unmodified. Otherwise, a factor is always returned with different factor levels. 
+If no pooling is done the data are unmodified (although character data may be changed to factors based on the value of \code{stringsAsFactors} in \code{\link{learn.recipe}}). Otherwise, a factor is always returned with different factor levels. 
 
 If \code{threshold} is less than the largest category proportion, all levels except for the most frequent are collapsed to the \code{other} level. 
 
@@ -49,7 +49,7 @@ okc_te <- okc[-in_train,]
 rec <- recipe(~ diet + location, data = okc_tr)
 
 library(magrittr)
-rec <- rec \%>\% step_other(~ diet + location, threshold = .8, other = "other values")
+rec <- rec \%>\% step_other(~ diet + location, threshold = .1, other = "other values")
 rec <- learn(rec, training = okc_tr)
 
 collapsed <- process(rec, okc_te)
