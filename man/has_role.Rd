@@ -3,7 +3,7 @@
 \name{has_role}
 \alias{has_role}
 \alias{is_nominal}
-\alias{is_numeric}
+\alias{numerics}
 \alias{outcomes}
 \alias{predictors}
 \alias{type_is}
@@ -17,7 +17,7 @@ outcomes(roles = NULL)
 
 type_is(x = "numeric", types = NULL)
 
-is_numeric(types = NULL)
+numerics(types = NULL)
 
 is_nominal(types = NULL)
 }
@@ -32,7 +32,7 @@ is_nominal(types = NULL)
 An integer vector.
 }
 \description{
-\code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{is_numeric}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details.
+\code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{numerics}, and \code{is_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details.
 }
 \keyword{datagen}
 

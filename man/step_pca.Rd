@@ -40,7 +40,7 @@ The argument \code{num} controls the number of components that will be retained 
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)
-pca_trans <- step_pca(rec, terms = ~ is_numeric(), num = 3)
+pca_trans <- step_pca(rec, terms = ~ numerics(), num = 3)
 pca_estimates <- learn(pca_trans, training = USArrests)
 pca_data <- process(pca_estimates, USArrests)
 

@@ -82,7 +82,7 @@ test_that('simple type function', {
 })
 
 test_that('simple type function pt 2', {
-  f10 <- ~ is_numeric() 
+  f10 <- ~ numerics() 
   f10_exp <- items$variable[items$type == "numeric"]
   f10_res <- recipes:::parse_terms_formula(f10, items)
   expect_equal(sort(f10_exp), sort(f10_res))

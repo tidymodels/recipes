@@ -312,7 +312,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' summary(rec)
-#' rec <- step_pca(rec, terms = ~ is_numeric(), num = 3)
+#' rec <- step_pca(rec, terms = ~ numerics(), num = 3)
 #' summary(rec) # still the same since not yet learned
 #' rec <- learn(rec, training = USArrests)
 #' summary(rec)

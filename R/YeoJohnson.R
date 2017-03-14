@@ -28,7 +28,7 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' yj_trans <- step_YeoJohnson(rec, terms = ~ is_numeric())
+#' yj_trans <- step_YeoJohnson(rec, terms = ~ numerics())
 #'
 #' yj_estimates <- learn(yj_trans, training = biomass_tr)
 #'
