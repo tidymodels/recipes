@@ -68,7 +68,7 @@ test_that('simple role function', {
 })
 
 test_that('simple role function pt 2', {
-  f8 <- ~ is_outcome() 
+  f8 <- ~ outcomes() 
   f8_exp <- items$variable[items$role == "outcome"]
   f8_res <- recipes:::parse_terms_formula(f8, items)
   expect_equal(sort(f8_exp), sort(f8_res))

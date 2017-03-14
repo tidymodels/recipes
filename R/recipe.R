@@ -53,7 +53,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # no need for `cbind(carbon, hydrogen)` for right-hand side
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
 #' multi_y <- multi_y %>%
-#'   step_center(~ is_outcome()) %>%
+#'   step_center(~ outcomes()) %>%
 #'   step_scale(~ predictors())
 #'
 #' multi_y_trained <- learn(multi_y, training = biomass_tr)
