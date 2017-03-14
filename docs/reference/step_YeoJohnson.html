@@ -137,7 +137,7 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='no'>yj_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>is_numeric</a></span>())
+<span class='no'>yj_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>numerics</a></span>())
 
 <span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training </div><div class='input'>
 <span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)

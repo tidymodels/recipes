@@ -14,6 +14,6 @@ However, these are the only functions that can be used in the formula. Using oth
 
 While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
 
-Finally, there are sets of functions that can be used to select variables based on their role or type: \code{has_role} and \code{type_is}. For convenience, there are also functions that are more specific: \code{numerics}, \code{is_nominal}, \code{predictors}, and \code{outcomes}. These can be used in conjunction with the previous functions described for selecting variables using their names.
+Finally, there are sets of functions that can be used to select variables based on their role or type: \code{has_role} and \code{type_is}. For convenience, there are also functions that are more specific: \code{numerics}, \code{nominals}, \code{predictors}, and \code{outcomes}. These can be used in conjunction with the previous functions described for selecting variables using their names.
 }
 
