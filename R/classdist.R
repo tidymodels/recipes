@@ -23,8 +23,12 @@
 #' @examples
 #' library(magrittr)
 #' 
+#' # in case of missing data...
+#' mean2 <- function(x) mean(x, na.rm = TRUE)
+#' 
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(~ is_predictor(), class = "Species", pool = FALSE)
+#'   step_classdist(~ is_predictor(), class = ~ Species, 
+#'                  pool = FALSE, mean_func = mean2)
 #' 
 #' rec_dists <- learn(rec, training = iris)
 #' 
@@ -38,7 +42,6 @@ step_classdist <- function(recipe,
                            role = "predictor",
                            trained = FALSE,
                            mean_func = mean,
-                           ## make list(f = mean, opt = list(na.rm = TRUE)) ?
                            cov_func = cov,
                            pool = FALSE,
                            log = TRUE,

@@ -35,7 +35,7 @@ step_depth(recipe, terms, class, role = "predictor", trained = FALSE,
 
 Data depth metrics attempt to measure how close data a data point is to the center of its distribution.  There are a number of methods for calculating death but a simple example is the inverse of the distance of a data point to the centroid of the distribution. Generally, small values indicate that a data point not close to the centroid. \code{step_depth} can compute a class-specific depth for a new data point based on the proximity of the new value to the training set distribution. 
 
-Note that the entire training set is saved to compute future depth values. The saved data have been learned up to the point before the location that \code{step_depth} occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using \code{metric = "Mahalanobis"} requires that each class should have at least as many rows as variables listed in the \code{terms} argument.
+Note that the entire training set is saved to compute future depth values. The saved data have been learned and processed up to the point before the location that \code{step_depth} occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using \code{metric = "Mahalanobis"} requires that each class should have at least as many rows as variables listed in the \code{terms} argument.
 
 The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{depth_}.
 }
@@ -44,7 +44,7 @@ library(magrittr)
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(~ is_predictor(), class = ~Species)
+  step_depth(~ is_predictor(), class = ~ Species)
 
 rec_dists <- learn(rec, training = iris)
 

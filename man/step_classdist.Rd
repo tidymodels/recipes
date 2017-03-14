@@ -45,8 +45,12 @@ Note that, by default,  the default covariance function requires that each class
 \examples{
 library(magrittr)
 
+# in case of missing data...
+mean2 <- function(x) mean(x, na.rm = TRUE)
+
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(~ is_predictor(), class = "Species", pool = FALSE)
+  step_classdist(~ is_predictor(), class = ~ Species, 
+                 pool = FALSE, mean_func = mean2)
 
 rec_dists <- learn(rec, training = iris)
 
