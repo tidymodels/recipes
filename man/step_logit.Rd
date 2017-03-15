@@ -49,4 +49,3 @@ plot(examples$X1, transformed_te$X1)
 preprocessing transformation_methods
 }
 \keyword{datagen}
-

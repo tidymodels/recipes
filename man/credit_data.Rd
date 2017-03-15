@@ -21,4 +21,3 @@ data(credit_data)
 str(credit_data)
 }
 \keyword{datasets}
-

@@ -59,4 +59,3 @@ Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign preprocessing:
 preprocessing projection_methods
 }
 \keyword{datagen}
-

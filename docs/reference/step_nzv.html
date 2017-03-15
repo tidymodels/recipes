@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -93,17 +95,17 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>recipe</dt>
-      <dd>A recipe object. The step will be added to the sequence of operations for this recipe.</dd>
+      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
       <dt>terms</dt>
-      <dd>A representation of the variables or terms that will evaluated by the filtering process.</dd>
+      <dd><p>A representation of the variables or terms that will evaluated by the filtering process.</p></dd>
       <dt>role</dt>
-      <dd>Not used by this step since no new variables are created.</dd>
+      <dd><p>Not used by this step since no new variables are created.</p></dd>
       <dt>trained</dt>
-      <dd>A logical to indicate if the quantities for preprocessing have been estimated.</dd>
+      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
       <dt>options</dt>
-      <dd>A list of options for the filter (see Details below).</dd>
+      <dd><p>A list of options for the filter (see Details below).</p></dd>
       <dt>removals</dt>
-      <dd>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</dd>
+      <dd><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -112,16 +114,13 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:
-<ol>
-<li> they have very few unique values relative to the number of samples and
-  </li>
-<li> the ratio of the frequency of the most common value to the frequency of the second most common value is large.
-</li>
-</ol></p>
+    <p>This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:</p><ol>
+<li><p>they have very few unique values relative to the number of samples and</p></li>
+<li><p>the ratio of the frequency of the most common value to the frequency of the second most common value is large.</p></li>
+</ol>
     <p>For example, an example of near zero variance predictor is one that, for 1000 samples, has two distinct values and 999 of them are a single value.</p>
-    <p>To be flagged, first the frequency of the most prevalent value over the second most frequent value (called the &quot;frequency ratio&quot;) must be above <code>freqCut</code>. Secondly, the &quot;percent of unique values,&quot; the number of unique values divided by the total number of samples (times 100), must also be below <code>uniqueCut</code>.</p>
-    <p>In the above example, the frequency ratio is 999 and the unique value percentage is 0.0001.</p>
+<p>To be flagged, first the frequency of the most prevalent value over the second most frequent value (called the "frequency ratio") must be above <code>freqCut</code>. Secondly, the "percent of unique values," the number of unique values divided by the total number of samples (times 100), must also be below <code>uniqueCut</code>.</p>
+<p>In the above example, the frequency ratio is 999 and the unique value percentage is 0.0001.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

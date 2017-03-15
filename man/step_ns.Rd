@@ -53,4 +53,3 @@ expanded
 preprocessing basis_expansion
 }
 \keyword{datagen}
-

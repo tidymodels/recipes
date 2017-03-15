@@ -64,4 +64,3 @@ Yeo, I. K., and Johnson, R. A. (2000). A new family of power transformations to 
 preprocessing transformation_methods
 }
 \keyword{datagen}
-

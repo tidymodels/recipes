@@ -22,4 +22,3 @@ Print a Recipe
 \author{
 Max Kuhn
 }
-

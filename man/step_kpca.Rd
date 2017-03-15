@@ -76,4 +76,3 @@ Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab - An S4 
 preprocessing pca projection_methods kernel_methods
 }
 \keyword{datagen}
-

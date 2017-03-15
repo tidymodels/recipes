@@ -33,4 +33,3 @@ summary(rec)
 \seealso{
 \code{\link{recipe}} \code{\link{parse_terms_formula}} \code{\link{learn.recipe}}
 }
-

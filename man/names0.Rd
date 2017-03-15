@@ -21,4 +21,3 @@ This function creates a series of \code{num} names with a common prefix. The nam
 string_functions naming_functions
 }
 \keyword{datagen}
-

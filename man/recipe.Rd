@@ -4,6 +4,8 @@
 \alias{recipe}
 \alias{recipe.default}
 \alias{recipe.formula}
+\alias{recipe.default}
+\alias{recipe.formula}
 \title{Create a Recipe for Preprocessing Data}
 \usage{
 recipe(x, ...)
@@ -108,4 +110,3 @@ Max Kuhn
 preprocessing model_specification
 }
 \keyword{datagen}
-

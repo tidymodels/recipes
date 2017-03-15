@@ -52,4 +52,3 @@ plot(examples$V1, transformed_te$V1)
 preprocessing transformation_methods
 }
 \keyword{datagen}
-

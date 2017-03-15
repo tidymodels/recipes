@@ -76,4 +76,3 @@ De Silva, V., and Tenenbaum, J. B. (2003). Global versus local methods in nonlin
 preprocessing isomap projection_methods
 }
 \keyword{datagen}
-

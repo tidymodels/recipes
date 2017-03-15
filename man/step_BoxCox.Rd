@@ -58,4 +58,3 @@ Sakia, R. M. (1992). The Box-Cox transformation technique: A review. \emph{The S
 preprocessing transformation_methods
 }
 \keyword{datagen}
-

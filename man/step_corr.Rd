@@ -55,14 +55,13 @@ filtered_te <- process(filter_obj, biomass_te, role = "predictor")
 round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 round(abs(cor(filtered_te)), 2)
 }
-\author{
-Original R code for filtering algorithm by Dong Li, modified by Max Kuhn. Contributions by Reynald Lescarbeau (for original in \code{caret} package). Max Kuhn for the \code{step} function.
-}
 \seealso{
 \code{\link{step_nzv}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+}
+\author{
+Original R code for filtering algorithm by Dong Li, modified by Max Kuhn. Contributions by Reynald Lescarbeau (for original in \code{caret} package). Max Kuhn for the \code{step} function.
 }
 \concept{
 preprocessing variable_filters
 }
 \keyword{datagen}
-

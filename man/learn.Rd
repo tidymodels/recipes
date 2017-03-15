@@ -3,6 +3,7 @@
 \name{learn}
 \alias{learn}
 \alias{learn.recipe}
+\alias{learn.recipe}
 \title{Train a Data Recipe}
 \usage{
 learn(x, ...)
@@ -49,4 +50,3 @@ Max Kuhn
 preprocessing model_specification
 }
 \keyword{datagen}
-

@@ -21,4 +21,3 @@ data(okc)
 str(okc)
 }
 \keyword{datasets}
-

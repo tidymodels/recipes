@@ -3,6 +3,7 @@
 \name{process}
 \alias{process}
 \alias{process.recipe}
+\alias{process.recipe}
 \title{Apply a Trained Data Recipe}
 \usage{
 process(object, ...)
@@ -39,4 +40,3 @@ Max Kuhn
 preprocessing model_specification
 }
 \keyword{datagen}
-

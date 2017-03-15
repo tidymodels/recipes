@@ -58,4 +58,3 @@ Jolliffe, I. T. (2010). \emph{Principal Component Analysis}. Springer.
 preprocessing pca projection_methods
 }
 \keyword{datagen}
-

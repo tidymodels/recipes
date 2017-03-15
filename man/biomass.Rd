@@ -23,4 +23,3 @@ data(biomass)
 str(biomass)
 }
 \keyword{datasets}
-
