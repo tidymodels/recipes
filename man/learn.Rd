@@ -31,6 +31,17 @@ A recipe whose step objects have been updated with the required quantities (e.g.
 \description{
 For a recipe with at least one preprocessing step, estimate the required parameters from a training set that can be later applied to other data sets.
 }
+\details{
+Given a data set, this function estimates the required quantities and statistics required by any steps. 
+
+\code{\link{learn}} returns an updated recipe with the estimates. 
+
+Note that missing data handling is handled in the steps; there is no global \code{na.rm} option at the recipe-level or in  \code{\link{learn}}.
+
+Also, if a recipe has been trained using \code{\link{learn}} and then steps are added, \code{\link{learn}} will only update the new steps. If \code{fresh = TRUE}, all of the steps will be (re)estimated. 
+
+As the steps are executed, the \code{training} set is updated. For example, if the first step is to center the data and the second is to scale the data, the step for scaling is given the centered data.
+}
 \author{
 Max Kuhn
 }

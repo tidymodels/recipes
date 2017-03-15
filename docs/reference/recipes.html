@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a Trained Data Recipe — process • recipes</title>
+<title>recipes: A package for computing and preprocessing design matrices. — recipes • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,56 +80,43 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a Trained Data Recipe</h1>
+    <h1>recipes: A package for computing and preprocessing design matrices.</h1>
     </div>
 
     
-    <p>For a recipe with at least one preprocessing step that has been trained by <code><a href='learn.html'>learn.recipe</a></code>, apply the computations to new data.</p>
+    <p>The <code>recipes</code> package can be used to create design matrices for modeling and to conduct preprocessing of variables. It is meant to be a more extensive framework that R&#39;s formula method. Some differences between simple formula methods and recipes are that
+<ol>
+<li> Variables can have arbitrary roles in the analysis beyond predictors and outcomes. 
+</li>
+<li> A recipe consists of one or more steps that define actions on the variables.
+</li>
+<li> Recipes can be defined sequentially using pipes as well as being modifiable and extensible. 
+</li>
+</ol></p>
     
 
-    <pre><span class='fu'>process</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+        
+    <h2 class="hasAnchor" id="basic-functions"><a class="anchor" href="#basic-functions"></a>Basic Functions</h2>
 
-<span class='co'># S3 method for recipe</span>
-<span class='fu'>process</span>(<span class='no'>object</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>template</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
-  <span class='no'>...</span>)</pre>
+    <p></p>
+    <p>The three main functions are <code><a href='recipe.html'>recipe</a></code>, <code><a href='learn.html'>learn</a></code>, and <code><a href='process.html'>process</a></code>.</p>
+    <p><code><a href='recipe.html'>recipe</a></code> defines the operations on the data and the associated roles. Once the preprocessing steps are defined, any parameters are estimated using <code><a href='learn.html'>learn</a></code>. Once the data are ready for transformation, the <code><a href='process.html'>process</a></code> function applies the operations.</p>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>object</dt>
-      <dd>A trained object such as a <code><a href='recipe.html'>recipe</a></code> with at least one preprocessing step.</dd>
-      <dt>...</dt>
-      <dd>further arguments passed to or from other methods (not currently used).</dd>
-      <dt>newdata</dt>
-      <dd>A data frame or tibble for whom the preprocessing will be applied.</dd>
-      <dt>roles</dt>
-      <dd>A character vector to choose which types of columns to return (e.g. &quot;predictor&quot;). By default all columns are returned.</dd>
-    </dl>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="step-functions"><a class="anchor" href="#step-functions"></a>Step Functions</h2>
 
-    <p>A tibble that may have different columns than the original columns in <code>newdata</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><code>process</code> takes a trained recipe and applies the operations to a data set to create a design matrix.</p>
-    <p>If the original data used to train the data are to be processed, time can be saved by using the <code>retain = TRUE</code> option of <code><a href='learn.html'>learn</a></code> to avoid duplicating the same operations.</p>
-    <p>A tibble is always returned but can be easily converted to a data frame or matrix as needed.</p>
+    <p></p>
+    <p>These functions are used to add new actions to the recipe and have the naming convention <code>&quot;step_action&quot;</code>. For example, <code><a href='step_center.html'>step_center</a></code> centers the data to have a zero mean and <code><a href='step_dummy.html'>step_dummy</a></code> is used to create dummy variables.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#basic-functions">Basic Functions</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#step-functions">Step Functions</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Max Kuhn
 
   </div>
 </div>

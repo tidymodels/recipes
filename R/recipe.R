@@ -16,6 +16,22 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @param roles a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}
 #' @param ... further arguments passed to or from other methods (not currently used).
 #' @return An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}
+#' 
+#' @details Recipes are alternative methods for creating design matrices and for preprocessing data. 
+#' 
+#' Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc. 
+#' 
+#' \code{recipe} objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below. 
+#' 
+#' Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example). 
+#' 
+#' Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified. 
+#' 
+#' Once a recipe has been defined, the \code{\link{learn}} function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). \code{\link{learn}} returns another recipe. 
+#' 
+#' To apply the recipe to a data set, the \code{\link{process}} function is used in the same manner as \code{predict} would be for models. This applies the steps to any data set. 
+#' 
+#' Note that the data passed to \code{recipe} need not be the complete data that will be used to train the steps (by \code{\link{learn}}). The recipe only needs to know the names and types of data that will be used. For large data sets, \code{head} could be used to pass the recipe a smaller data set to save time and memory.
 #'
 #' @export
 #' @importFrom tibble as_tibble is_tibble tibble
@@ -23,6 +39,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' @importFrom stats predict
 #' @examples
 #'
+#' ###############################################
 #' # simple example:
 #' data(biomass)
 #'
@@ -34,6 +51,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
+#' # Now add preprocessing steps to the recipe. 
 #' library(magrittr)
 #' sp_signed <- rec %>%
 #'   step_center(~ predictors()) %>%
@@ -48,9 +66,10 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # apply the preprocessing to a data set
 #' test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 #'
+#' ###############################################
 #' # multivariate example
 #'
-#' # no need for `cbind(carbon, hydrogen)` for right-hand side
+#' # no need for `cbind(carbon, hydrogen)` for left-hand side
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
 #' multi_y <- multi_y %>%
 #'   step_center(~ outcomes()) %>%
@@ -59,6 +78,17 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' multi_y_trained <- learn(multi_y, training = biomass_tr)
 #'
 #' results <- process(multi_y_trained, biomass_te)
+#' 
+#' ###############################################
+#' # Creating a recipe manually with different roles
+#'
+#' rec <- recipe(biomass_tr) %>%
+#'   add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur, 
+#'            role = "predictor") %>%
+#'   add_role("HHV", role = "outcome") %>%
+#'   add_role("sample", role = "id variable") %>% 
+#'   add_role("dataset", role = "splitting indicator")
+#' rec  
 
 recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
 
@@ -149,6 +179,16 @@ learn   <- function(x, ...) UseMethod("learn")
 #' @param retain A logical: should the \emph{processed} training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.
 #' @param stringsAsFactors A logical: should character columns be converted to factors? This affects the processed training set (when \code{retain = TRUE}) as well as the results of \code{process.recipe}.
 #' @return A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
+#' @details Given a data set, this function estimates the required quantities and statistics required by any steps. 
+#' 
+#' \code{\link{learn}} returns an updated recipe with the estimates. 
+#' 
+#' Note that missing data handling is handled in the steps; there is no global \code{na.rm} option at the recipe-level or in  \code{\link{learn}}.
+#' 
+#' Also, if a recipe has been trained using \code{\link{learn}} and then steps are added, \code{\link{learn}} will only update the new steps. If \code{fresh = TRUE}, all of the steps will be (re)estimated. 
+#' 
+#' As the steps are executed, the \code{training} set is updated. For example, if the first step is to center the data and the second is to scale the data, the step for scaling is given the centered data. 
+#' 
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @importFrom dplyr left_join
@@ -225,6 +265,11 @@ process <- function(object, ...) UseMethod("process")
 #' @param newdata A data frame or tibble for whom the preprocessing will be applied.
 #' @param roles A character vector to choose which types of columns to return (e.g. "predictor"). By default all columns are returned.
 #' @return A tibble that may have different columns than the original columns in \code{newdata}.
+#' @details \code{\link{process}} takes a trained recipe and applies the operations to a data set to create a design matrix. 
+#' 
+#' If the original data used to train the data are to be processed, time can be saved by using the \code{retain = TRUE} option of \code{\link{learn}} to avoid duplicating the same operations. 
+#' 
+#' A tibble is always returned but can be easily converted to a data frame or matrix as needed. 
 #' @rdname process
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter

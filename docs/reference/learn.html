@@ -115,6 +115,14 @@
 
     <p>A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the <code>term_info</code> object is likely to be modified as the steps are executed.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Given a data set, this function estimates the required quantities and statistics required by any steps.</p>
+    <p><code>learn</code> returns an updated recipe with the estimates.</p>
+    <p>Note that missing data handling is handled in the steps; there is no global <code>na.rm</code> option at the recipe-level or in  <code>learn</code>.</p>
+    <p>Also, if a recipe has been trained using <code>learn</code> and then steps are added, <code>learn</code> will only update the new steps. If <code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
+    <p>As the steps are executed, the <code>training</code> set is updated. For example, if the first step is to center the data and the second is to scale the data, the step for scaling is given the centered data.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -123,6 +131,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
     <h2>Author</h2>
