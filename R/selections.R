@@ -13,7 +13,7 @@
 #' 
 #' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
 #' 
-#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{has_role} and \code{type_is}. For convenience, there are also functions that are more specific: \code{numerics}, \code{nominals}, \code{predictors}, and \code{outcomes}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
+#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{has_role} and \code{has_type}. For convenience, there are also functions that are more specific: \code{numerics}, \code{nominals}, \code{predictors}, and \code{outcomes}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
 NULL
 
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
@@ -23,7 +23,7 @@ name_selectors <- c("starts_with", "ends_with", "contains",
 
 role_selectors <- c("has_role", "predictors", "outcomes")
 
-type_selectors <- c("type_is", "numerics", "nominals")
+type_selectors <- c("has_type", "numerics", "nominals")
 
 selectors <- c(name_selectors, role_selectors, type_selectors)
 
@@ -167,7 +167,7 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Role Selection
 #' 
-#' \code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
+#' \code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
 #' 
 #' @param x A single character string for the query.
 #' @param roles A character string of roles for the current set of terms. 
@@ -194,20 +194,20 @@ outcomes <- function(roles = NULL)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-type_is <- function(x = "numeric", types = NULL) 
+has_type <- function(x = "numeric", types = NULL) 
   which(types %in% x[1])
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
 numerics <- function(types = NULL)
-  type_is("numeric", types = types)
+  has_type("numeric", types = types)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
 nominals <- function(types = NULL)
-  type_is("nominal", types = types)
+  has_type("nominal", types = types)
 
 
 

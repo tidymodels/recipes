@@ -75,7 +75,7 @@ test_that('simple role function pt 2', {
 })
 
 test_that('simple type function', {
-  f9 <- ~ type_is("nominal") 
+  f9 <- ~ has_type("nominal") 
   f9_exp <- items$variable[items$type == "nominal"]
   f9_res <- recipes:::parse_terms_formula(f9, items)
   expect_equal(sort(f9_exp), sort(f9_res))

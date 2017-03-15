@@ -2,11 +2,11 @@
 % Please edit documentation in R/selections.R
 \name{has_role}
 \alias{has_role}
+\alias{has_type}
 \alias{nominals}
 \alias{numerics}
 \alias{outcomes}
 \alias{predictors}
-\alias{type_is}
 \title{Role Selection}
 \usage{
 has_role(x = "predictor", roles = NULL)
@@ -15,7 +15,7 @@ predictors(roles = NULL)
 
 outcomes(roles = NULL)
 
-type_is(x = "numeric", types = NULL)
+has_type(x = "numeric", types = NULL)
 
 numerics(types = NULL)
 
@@ -32,7 +32,7 @@ nominals(types = NULL)
 An integer vector.
 }
 \description{
-\code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{type_is}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details.
+\code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details.
 }
 \keyword{datagen}
 
