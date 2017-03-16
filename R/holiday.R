@@ -4,7 +4,7 @@
 #'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.
 #' @param holidays A character string that includes at least one holdiay supported by the \code{timeDate} package. See \code{\link[timeDate]{listHolidays}} for a complete list.
 
 #' @param variables A character string of variables that will be used as inputs. This field is a placeholder and will be populated once \code{\link{learn.recipe}} is used.
@@ -18,7 +18,7 @@
 #' library(magrittr)
 #' examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 #' holiday_rec <- recipe(~ someday, examples) %>%
-#'    step_holiday(~ predictors())
+#'    step_holiday(~ all_predictors())
 #'
 #' holiday_rec <- learn(holiday_rec, training = examples)
 #' holiday_values <- process(holiday_rec, newdata = examples)
@@ -126,8 +126,9 @@ process.step_holiday <- function(object, newdata, ...) {
     strt <- max(cols)+1
     # newdata[, object$variables[i] ] <- NULL
   }
-  newdata <- cbind(newdata, holiday_values)
-  if(!is_tibble(newdata)) as_tibble(newdata)
+  newdata <- cbind(newdata, as_tibble(holiday_values))
+  if(!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  newdata
 }
 
 print.step_holiday <- function(x, width = max(20, options()$width - 29), ...) {

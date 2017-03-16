@@ -4,8 +4,8 @@
 #'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to compute the components.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.
-#' @param num The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.
+#' @param num The number of PCA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.
 #' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the argument \code{x} should not be passed here (or at all).
 #' @param res The \code{\link[stats]{prcomp}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting new variables. See notes below
@@ -24,7 +24,7 @@
 #'
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
-#' pca_trans <- step_pca(rec, terms = ~ numerics(), num = 3)
+#' pca_trans <- step_pca(rec, terms = ~ all_numeric(), num = 3)
 #' pca_estimates <- learn(pca_trans, training = USArrests)
 #' pca_data <- process(pca_estimates, USArrests)
 #'
@@ -97,13 +97,14 @@ learn.step_pca <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @importFrom tibble as_tibble
 #' @export
 process.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(environment(object$res@apply)$rot)
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- cbind(newdata, comps)
+  newdata <- cbind(newdata, as_tibble(comps))
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
   as_tibble(newdata)
 }

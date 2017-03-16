@@ -4,8 +4,8 @@
 #'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to compute the dimensions.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as predictors in a model.
-#' @param num The number of isomap dimensions to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.
+#' @param num The number of isomap dimensions to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.
 #' @param options A list of options to \code{\link[dimRed]{Isomap}}.
 #' @param res The \code{\link[dimRed]{Isomap}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting new variables. See notes below
@@ -33,10 +33,10 @@
 #'
 #' library(magrittr)
 #' im_trans <- rec %>%
-#'   step_YeoJohnson(terms = ~ predictors()) %>%
-#'   step_center(terms = ~ predictors()) %>%
-#'   step_scale(terms = ~ predictors()) %>%
-#'   step_isomap(terms = ~ predictors(),
+#'   step_YeoJohnson(terms = ~ all_predictors()) %>%
+#'   step_center(terms = ~ all_predictors()) %>%
+#'   step_scale(terms = ~ all_predictors()) %>%
+#'   step_isomap(terms = ~ all_predictors(),
 #'               options = list(knn = 100),
 #'               num = 2)
 #'
@@ -119,9 +119,10 @@ process.step_isomap <- function(object, newdata, ...) {
   comps <- object$res@apply(dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE])))@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- cbind(newdata, comps)
+  newdata <- cbind(newdata, as_tibble(comps))
   newdata <- newdata[, !(colnames(newdata) %in% isomap_vars), drop = FALSE]
-  as_tibble(newdata)
+  if(!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  newdata
 }
 
 

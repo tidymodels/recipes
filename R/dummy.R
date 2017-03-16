@@ -4,7 +4,7 @@
 #'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to create the dummy variables.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently working}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below.
 #' @param levels A list that contains the information needed to create dummy variables for each variable contained in \code{terms}. This is \code{NULL} until the step is trained by \code{\link{learn.recipe}}.
@@ -114,10 +114,11 @@ process.step_dummy <- function(object, newdata, ...) {
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl)
-    newdata <- cbind(newdata, as.data.frame(indicators))
+    newdata <- cbind(newdata, as_tibble(indicators))
     newdata[, col_names[i]] <- NULL
   }
-  as_tibble(newdata)
+  if(!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  newdata
 }
 
 print.step_dummy <- function(x, width = max(20, options()$width - 30), ...) {
