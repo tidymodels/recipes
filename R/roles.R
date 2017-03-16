@@ -63,6 +63,7 @@ add_role.character <- function(recipe, vars, role = "predictor", data = NULL) {
     }
     recipe$var_info$role[recipe$var_info$variable %in% vars2] <- role
   }
+  recipe$term_info <- recipe$var_info
   recipe
 }
 
