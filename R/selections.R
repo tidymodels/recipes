@@ -147,7 +147,9 @@ check_elements <- function(x, allowed = selectors) {
   if(!is.null(allowed)) { # when called from a step
     not_good <- funs[!(funs %in% allowed)]
     if(length(not_good) > 0)
-      stop("Not all functions are allowed in `terms` formulas. See ?selections.",
+      stop("Not all functions are allowed in step function selectors (e.g. ",
+           paste0("`", not_good, "`", collapse = ", "),
+           "). See ?selections.",
            call. = FALSE)
   } else { # when called from formula.recipe
     if(length(funs) > 0)
@@ -214,13 +216,13 @@ has_type <- function(match = "numeric", types = current_info()$roles)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_numeric <- function(types = current_info()$roles)
+all_numeric <- function(types = current_info()$types)
   has_type("numeric", types = types)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_nominal <- function(types = current_info()$roles)
+all_nominal <- function(types = current_info()$types)
   has_type("nominal", types = types)
 
 ## functions to get current variable info for selectors modeled after dplyr versions
@@ -229,7 +231,7 @@ all_nominal <- function(types = current_info()$roles)
 cur_info_env <- child_env()
 
 set_current_info <- function(x) {
-  stopifnot(is_tibble(x))
+  # stopifnot(!is.environment(x))
   old <- cur_info_env
   cur_info_env$vars <- x$variable
   cur_info_env$roles <- x$role
