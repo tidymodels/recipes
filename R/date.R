@@ -4,7 +4,7 @@
 #'
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.
 #' @param features A character string that includes at least one of the following values: \code{month}, \code{dow} (day of week), \code{doy} (day of year), \code{week}, \code{decimal} (decimal date, e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.
 #' @param label A logical. Only available for features \code{month} or \code{dow}. \code{TRUE} will display the day of the week as an ordered factor of character strings, such as "Sunday." \code{FALSE} will display the day of the week as a number.
 #' @param abbr A logical. Only available for features \code{month} or \code{dow}. \code{FALSE} will display the day of the week as an ordered factor of character strings, such as "Sunday". \code{TRUE} will display an abbreviated version of the label, such as "Sun". \code{abbr} is disregarded if \code{label = FALSE}.
@@ -21,7 +21,7 @@
 #' examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 #'                        Stefan = ymd("2006-01-13") + days(1:10))
 #' date_rec <- recipe(~ Dan + Stefan, examples) %>%
-#'    step_date(~ predictors())
+#'    step_date(~ all_predictors())
 #'
 #' date_rec <- learn(date_rec, training = examples)
 #' date_values <- process(date_rec, newdata = examples)
@@ -169,7 +169,8 @@ process.step_date <- function(object, newdata, ...) {
     # newdata[, object$variables[i] ] <- NULL
   }
   newdata <- cbind(newdata, date_values)
-  if(!is_tibble(newdata)) as_tibble(newdata)
+  if(!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  newdata
 }
 
 
