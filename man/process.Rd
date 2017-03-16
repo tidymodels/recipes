@@ -27,9 +27,9 @@ A tibble that may have different columns than the original columns in \code{newd
 For a recipe with at least one preprocessing step that has been trained by \code{\link{learn.recipe}}, apply the computations to new data.
 }
 \details{
-\code{\link{process}} takes a trained recipe and applies the operations to a data set to create a design matrix. 
+\code{\link{process}} takes a trained recipe and applies the operations to a data set to create a design matrix.
 
-If the original data used to train the data are to be processed, time can be saved by using the \code{retain = TRUE} option of \code{\link{learn}} to avoid duplicating the same operations. 
+If the original data used to train the data are to be processed, time can be saved by using the \code{retain = TRUE} option of \code{\link{learn}} to avoid duplicating the same operations.
 
 A tibble is always returned but can be easily converted to a data frame or matrix as needed.
 }

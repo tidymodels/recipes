@@ -34,19 +34,19 @@ An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble cont
 A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
 }
 \details{
-Recipes are alternative methods for creating design matrices and for preprocessing data. 
+Recipes are alternative methods for creating design matrices and for preprocessing data.
 
-Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc. 
+Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
 
-\code{recipe} objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below. 
+\code{recipe} objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
 
-Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example). 
+Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
 
-Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified. 
+Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified.
 
-Once a recipe has been defined, the \code{\link{learn}} function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). \code{\link{learn}} returns another recipe. 
+Once a recipe has been defined, the \code{\link{learn}} function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). \code{\link{learn}} returns another recipe.
 
-To apply the recipe to a data set, the \code{\link{process}} function is used in the same manner as \code{predict} would be for models. This applies the steps to any data set. 
+To apply the recipe to a data set, the \code{\link{process}} function is used in the same manner as \code{predict} would be for models. This applies the steps to any data set.
 
 Note that the data passed to \code{recipe} need not be the complete data that will be used to train the steps (by \code{\link{learn}}). The recipe only needs to know the names and types of data that will be used. For large data sets, \code{head} could be used to pass the recipe a smaller data set to save time and memory.
 }
@@ -64,7 +64,7 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-# Now add preprocessing steps to the recipe. 
+# Now add preprocessing steps to the recipe.
 library(magrittr)
 sp_signed <- rec \%>\%
   step_center(~ all_predictors()) \%>\%
@@ -96,12 +96,12 @@ results <- process(multi_y_trained, biomass_te)
 # Creating a recipe manually with different roles
 
 rec <- recipe(biomass_tr) \%>\%
-  add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur, 
+  add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur,
            role = "predictor") \%>\%
   add_role("HHV", role = "outcome") \%>\%
-  add_role("sample", role = "id variable") \%>\% 
+  add_role("sample", role = "id variable") \%>\%
   add_role("dataset", role = "splitting indicator")
-rec  
+rec
 }
 \author{
 Max Kuhn

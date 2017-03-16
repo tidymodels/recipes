@@ -15,7 +15,6 @@ Depends:
     rlang
 Imports:
     tibble,
-    lazyeval,
     stats,
     ipred,
     dimRed,

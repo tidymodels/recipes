@@ -43,7 +43,7 @@ check_all_outcomes_same_type <- function(x) x
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
 
-#' @importFrom lazyeval f_lhs
+#' @importFrom rlang f_lhs
 get_lhs_vars <- function(formula, data) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
@@ -126,7 +126,7 @@ step <- function(subclass, ...) {
 ## extend to work with variable names
 ## rewrite print methods
 
-#' @importFrom lazyeval f_rhs
+#' @importFrom rlang f_rhs
 format_formula <- function(x, wdth = options()$width - 9, ...) {
   x <- f_elements(x)
   if(x$signs[1] == "+") x$signs[1] <- ""
