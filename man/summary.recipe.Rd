@@ -25,7 +25,7 @@ Note that, until the recipe has been learned, the currrent and original variable
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 summary(rec)
-rec <- step_pca(rec, terms = ~ numerics(), num = 3)
+rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
 summary(rec) # still the same since not yet learned
 rec <- learn(rec, training = USArrests)
 summary(rec)

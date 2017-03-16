@@ -100,11 +100,11 @@
       <dt>terms</dt>
       <dd><p>A representation of the variables or terms that will be used to compute the components.</p></dd>
       <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.</p></dd>
+      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
       <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
       <dt>num</dt>
-      <dd><p>The number of PCA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></dd>
+      <dd><p>The number of PCA components to retain as new all_predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></dd>
       <dt>res</dt>
       <dd><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
       <dt>options</dt>
@@ -145,10 +145,10 @@
 
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>kpca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_kpca</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>predictors</a></span>())
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_kpca</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
 #&gt; step 2 center training 

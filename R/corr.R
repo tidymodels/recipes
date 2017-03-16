@@ -30,7 +30,7 @@
 #'
 #' library(magrittr)
 #' corr_filter <- rec %>%
-#'   step_corr(terms = ~ predictors(), threshold = .5)
+#'   step_corr(terms = ~ all_predictors(), threshold = .5)
 #'
 #' filter_obj <- learn(corr_filter, training = biomass_tr)
 #'

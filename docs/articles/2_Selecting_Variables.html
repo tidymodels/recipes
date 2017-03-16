@@ -115,11 +115,11 @@ rec</code></pre></div>
 ## 5       Age numeric predictor original</code></pre>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">nominals</a></span>())</code></pre></div>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>())</code></pre></div>
 <p>This will capture <em>any</em> variables that are either character strings or factors: <code>Status</code> and <code>Records</code>. However, since <code>Status</code> is our outcome, we might want to keep it as a factor so we can <em>subtract</em> that variable out either by name or by role:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span>Records) <span class="co"># or</span>
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">nominals</a></span>() <span class="op">-</span><span class="st"> </span>Status) <span class="co"># or</span>
-dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">nominals</a></span>() <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">outcomes</a></span>()) </code></pre></div>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>() <span class="op">-</span><span class="st"> </span>Status) <span class="co"># or</span>
+dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>() <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_outcomes</a></span>()) </code></pre></div>
 <p>Using the last definition:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(dummied, <span class="dt">training =</span> credit_data)</code></pre></div>
 <pre><code>## step 1 dummy training</code></pre>
@@ -127,7 +127,7 @@ dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span cl
 with_dummy</code></pre></div>
 <pre><code>## # A tibble: 4,454 × 5
 ##    Status Seniority  Time   Age Records_yes
-## *  &lt;fctr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+##    &lt;fctr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
 ## 1    good         9    60    30           0
 ## 2    good        17    60    58           0
 ## 3     bad        10    36    46           1
@@ -140,7 +140,7 @@ with_dummy</code></pre></div>
 ## 10    bad         0    48    41           0
 ## # ... with 4,444 more rows</code></pre>
 <p><code>Status</code> is unaffected.</p>
-<p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being processed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>
+<p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being processed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>
 </div>
   </div>
 

@@ -123,7 +123,7 @@
 #&gt; 1   Murder numeric predictor original
 #&gt; 2  Assault numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
-#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>numerics</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet learned</span></div><div class='output co'>#&gt; # A tibble: 4 × 4
 #&gt;   variable    type      role   source
 #&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;

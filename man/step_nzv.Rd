@@ -27,7 +27,7 @@ step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
 \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
 }
 \details{
-This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:
+This step diagnoses all_predictors that have one unique value (i.e. are zero variance all_predictors) or all_predictors that are have both of the following characteristics:
 \enumerate{
   \item they have very few unique values relative to the number of samples and
   \item the ratio of the frequency of the most common value to the frequency of the second most common value is large.
@@ -52,7 +52,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + sparse,
 
 library(magrittr)
 nzv_filter <- rec \%>\%
-  step_nzv(terms = ~ predictors())
+  step_nzv(terms = ~ all_predictors())
 
 filter_obj <- learn(nzv_filter, training = biomass_tr)
 

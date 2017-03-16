@@ -13,11 +13,11 @@ step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
 
 \item{terms}{A representation of the variables or terms that will be used to compute the components.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
+\item{num}{The number of PCA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
 
 \item{res}{An S4 \code{\link[kernlab]{kpca}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
 
@@ -51,10 +51,10 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 library(magrittr)
 kpca_trans <- rec \%>\%
-  step_YeoJohnson(terms = ~ predictors()) \%>\%
-  step_center(terms = ~ predictors()) \%>\%
-  step_scale(terms = ~ predictors()) \%>\%
-  step_kpca(terms = ~ predictors())
+  step_YeoJohnson(terms = ~ all_predictors()) \%>\%
+  step_center(terms = ~ all_predictors()) \%>\%
+  step_scale(terms = ~ all_predictors()) \%>\%
+  step_kpca(terms = ~ all_predictors())
 
 kpca_estimates <- learn(kpca_trans, training = biomass_tr)
 

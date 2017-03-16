@@ -15,7 +15,7 @@ step_classdist(recipe, terms, class, role = "predictor", trained = FALSE,
 
 \item{class}{A single character string or formula that that specifies a single categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
@@ -49,7 +49,7 @@ library(magrittr)
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(~ predictors(), class = ~ Species, 
+  step_classdist(~ all_predictors(), class = ~ Species, 
                  pool = FALSE, mean_func = mean2)
 
 rec_dists <- learn(rec, training = iris)

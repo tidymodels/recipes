@@ -68,7 +68,7 @@ test_that('simple role function', {
 })
 
 test_that('simple role function pt 2', {
-  f8 <- ~ outcomes() 
+  f8 <- ~ all_outcomes() 
   f8_exp <- items$variable[items$role == "outcome"]
   f8_res <- recipes:::parse_terms_formula(f8, items)
   expect_equal(sort(f8_exp), sort(f8_res))
@@ -82,7 +82,7 @@ test_that('simple type function', {
 })
 
 test_that('simple type function pt 2', {
-  f10 <- ~ numerics() 
+  f10 <- ~ all_numeric() 
   f10_exp <- items$variable[items$type == "numeric"]
   f10_res <- recipes:::parse_terms_formula(f10, items)
   expect_equal(sort(f10_exp), sort(f10_res))

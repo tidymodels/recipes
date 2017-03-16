@@ -133,7 +133,7 @@
     <pre class="examples"><div class='input'>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
 
-<span class='no'>bc_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_BoxCox</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>numerics</a></span>())
+<span class='no'>bc_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_BoxCox</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
 
 <span class='no'>bc_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))</div><div class='output co'>#&gt; step 1 BoxCox training </div><div class='input'>
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))

@@ -12,7 +12,7 @@ step_holiday(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{terms}{A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
@@ -34,7 +34,7 @@ library(lubridate)
 library(magrittr)
 examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 holiday_rec <- recipe(~ someday, examples) \%>\%
-   step_holiday(~ predictors())
+   step_holiday(~ all_predictors())
 
 holiday_rec <- learn(holiday_rec, training = examples)
 holiday_values <- process(holiday_rec, newdata = examples)

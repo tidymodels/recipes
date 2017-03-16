@@ -13,7 +13,7 @@
 #' 
 #' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
 #' 
-#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{numerics}}, \code{\link{nominals}}, \code{\link{predictors}}, and \code{\link{outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
+#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
 NULL
 
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
@@ -21,9 +21,9 @@ NULL
 name_selectors <- c("starts_with", "ends_with", "contains", 
                     "matches", "num_range", "everything")
 
-role_selectors <- c("has_role", "predictors", "outcomes")
+role_selectors <- c("has_role", "all_predictors", "all_outcomes")
 
-type_selectors <- c("has_type", "numerics", "nominals")
+type_selectors <- c("has_type", "all_numeric", "all_nominal")
 
 selectors <- c(name_selectors, role_selectors, type_selectors)
 
@@ -42,10 +42,10 @@ selectors <- c(name_selectors, role_selectors, type_selectors)
 #' @export
 #' @examples 
 #' rec <- recipe( ~ ., data = USArrests)
-#' rec <- step_pca(rec, terms = ~ numerics(), num = 3)
-#' parse_terms_formula(~ predictors(), summary(rec))
+#' rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
+#' parse_terms_formula(~ all_predictors(), summary(rec))
 #' rec <- learn(rec, training = USArrests)
-#' parse_terms_formula(~ predictors(), summary(rec))
+#' parse_terms_formula(~ all_predictors(), summary(rec))
 #' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}} 
 parse_terms_formula <- function(f, info) {
   var_vals <- info$variable
@@ -167,7 +167,7 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Role Selection
 #' 
-#' \code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
+#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
 #' 
 #' @param x A single character string for the query.
 #' @param roles A character string of roles for the current set of terms. 
@@ -182,13 +182,13 @@ has_role <- function(x = "predictor", roles = NULL)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-predictors <- function(roles = NULL)
+all_predictors <- function(roles = NULL)
   has_role("predictor", roles = roles)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-outcomes <- function(roles = NULL)
+all_outcomes <- function(roles = NULL)
   has_role("outcome", roles = roles)
 
 #' @export
@@ -200,13 +200,13 @@ has_type <- function(x = "numeric", types = NULL)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-numerics <- function(types = NULL)
+all_numeric <- function(types = NULL)
   has_type("numeric", types = types)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-nominals <- function(types = NULL)
+all_nominal <- function(types = NULL)
   has_type("nominal", types = types)
 
 

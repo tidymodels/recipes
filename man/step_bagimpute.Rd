@@ -21,7 +21,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.}
 
-\item{impute_with}{A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.}
+\item{impute_with}{A representation of the variables that will be used as all_predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.}
 
 \item{seed_val}{A integer used to create reproducible models. The same seed is used across all imputation models.}
 }
@@ -32,7 +32,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
 }
 \details{
-For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
+For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the all_predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept all_predictors that have missing values themselves. This imputation method can be used when the variable of interest (and all_predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
 
 Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
 
@@ -56,7 +56,7 @@ rec <- recipe(Price ~ ., data = credit_tr)
 library(magrittr)
 impute_rec <- rec \%>\%
   step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
-                 impute_with  = ~ predictors())
+                 impute_with  = ~ all_predictors())
 
 imp_models <- learn(impute_rec, training = credit_tr)
 

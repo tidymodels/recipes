@@ -99,11 +99,11 @@
       <dt>terms</dt>
       <dd><p>A representation of the variables or terms that will be used to compute the components.</p></dd>
       <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as predictors in a model.</p></dd>
+      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
       <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
       <dt>num</dt>
-      <dd><p>The number of ICA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></dd>
+      <dd><p>The number of ICA components to retain as new all_predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></dd>
       <dt>options</dt>
       <dd><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA</a></code>. No defaults are set here. <b>Note</b> that the arguments <code>X</code> and <code>n.comp</code> should not be passed here.</p></dd>
       <dt>res</dt>

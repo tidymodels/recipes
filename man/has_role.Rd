@@ -2,24 +2,24 @@
 % Please edit documentation in R/selections.R
 \name{has_role}
 \alias{has_role}
-\alias{predictors}
-\alias{outcomes}
+\alias{all_predictors}
+\alias{all_outcomes}
 \alias{has_type}
-\alias{numerics}
-\alias{nominals}
+\alias{all_numeric}
+\alias{all_nominal}
 \title{Role Selection}
 \usage{
 has_role(x = "predictor", roles = NULL)
 
-predictors(roles = NULL)
+all_predictors(roles = NULL)
 
-outcomes(roles = NULL)
+all_outcomes(roles = NULL)
 
 has_type(x = "numeric", types = NULL)
 
-numerics(types = NULL)
+all_numeric(types = NULL)
 
-nominals(types = NULL)
+all_nominal(types = NULL)
 }
 \arguments{
 \item{x}{A single character string for the query.}
@@ -32,6 +32,6 @@ nominals(types = NULL)
 An integer vector.
 }
 \description{
-\code{has_role}, \code{predictors}, and \code{outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{numerics}, and \code{nominals} are used to select columns based on their data type. See \code{\link{selections}} for more details.
+\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details.
 }
 \keyword{datagen}

@@ -13,7 +13,7 @@ step_date(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{terms}{A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
@@ -42,7 +42,7 @@ library(magrittr)
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
-   step_date(~ predictors())
+   step_date(~ all_predictors())
 
 date_rec <- learn(date_rec, training = examples)
 date_values <- process(date_rec, newdata = examples)

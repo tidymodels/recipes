@@ -19,7 +19,7 @@
 #'
 #' library(magrittr)
 #' sqrt_trans <- rec  %>%
-#'   step_sqrt(terms = ~ predictors())
+#'   step_sqrt(terms = ~ all_predictors())
 #'
 #' sqrt_obj <- learn(sqrt_trans, training = examples)
 #'

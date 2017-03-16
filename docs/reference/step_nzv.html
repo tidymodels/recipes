@@ -114,7 +114,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:</p><ol>
+    <p>This step diagnoses all_predictors that have one unique value (i.e. are zero variance all_predictors) or all_predictors that are have both of the following characteristics:</p><ol>
 <li><p>they have very few unique values relative to the number of samples and</p></li>
 <li><p>the ratio of the frequency of the most common value to the frequency of the second most common value is large.</p></li>
 </ol>
@@ -140,7 +140,7 @@
 
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>nzv_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_nzv</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>predictors</a></span>())
+  <span class='fu'>step_nzv</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>nzv_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 nzv training </div><div class='input'>
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)

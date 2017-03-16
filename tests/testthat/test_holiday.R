@@ -10,7 +10,7 @@ test_data <- data.frame(day  = ymd("2017-01-01") + days(0:364))
 
 test_that('Date class', {
   holiday_rec <- recipe(~ day, test_data) %>%
-    step_holiday(~ predictors(), holiday = exp_dates$holiday)
+    step_holiday(~ all_predictors(), holiday = exp_dates$holiday)
   
   holiday_rec <- learn(holiday_rec, training = test_data)
   holiday_ind <- process(holiday_rec, test_data)
@@ -32,7 +32,7 @@ test_that('POSIXct class', {
   exp_dates$date <- as.POSIXct(exp_dates$date)  
   
   holiday_rec <- recipe(~ day, test_data) %>%
-    step_holiday(~ predictors(), holiday = exp_dates$holiday)
+    step_holiday(~ all_predictors(), holiday = exp_dates$holiday)
   
   holiday_rec <- learn(holiday_rec, training = test_data)
   holiday_ind <- process(holiday_rec, test_data)

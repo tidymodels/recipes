@@ -207,7 +207,7 @@ Let's use the example data to make sure that it works:
 library(magrittr)
 rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
-  step_percentile(~ predictors(), approx = TRUE) 
+  step_percentile(~ all_predictors(), approx = TRUE) 
 
 rec_obj <- learn(rec_obj, training = biomass_tr)
 
@@ -215,7 +215,7 @@ percentiles <- process(rec_obj, biomass_te)
 percentiles
 ```
 
-The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:
+The plot below shows how the original data line up with the percentiles for each split of the data for one of the all_predictors:
 
 ```{r cdf_plot, echo = FALSE}
 grid_pct <- rec_obj$steps[[1]]$options$probs

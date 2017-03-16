@@ -13,7 +13,7 @@ step_dummy(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{terms}{A representation of the variables or terms that will be used to create the dummy variables.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 

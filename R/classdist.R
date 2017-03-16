@@ -5,7 +5,7 @@
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be used to create the new features.
 #' @param class A single character string or formula that that specifies a single categorical variable to be used as the class. 
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.
 #' @param mean_func A function to compute the center of the distribution.
 #' @param cov_func A function that computes the covariance matrix
 #' @param pool A logical: should the covariance matrix be computed by pooling the data for all of the classes? 
@@ -27,7 +27,7 @@
 #' mean2 <- function(x) mean(x, na.rm = TRUE)
 #' 
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(~ predictors(), class = ~ Species, 
+#'   step_classdist(~ all_predictors(), class = ~ Species, 
 #'                  pool = FALSE, mean_func = mean2)
 #' 
 #' rec_dists <- learn(rec, training = iris)

@@ -14,7 +14,7 @@ step_depth(recipe, terms, class, role = "predictor", trained = FALSE,
 
 \item{class}{A single character string or formula that that specifies a single categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as all_predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
@@ -31,9 +31,9 @@ step_depth(recipe, terms, class, role = "predictor", trained = FALSE,
 \code{step_depth} creates a a \emph{specification} of a recipe step that will convert numeric data into measurement of \emph{data depth}. This is done for each value of a categorical class variable.
 }
 \details{
-\code{step_depth} will create a 
+\code{step_depth} will create a
 
-Data depth metrics attempt to measure how close data a data point is to the center of its distribution.  There are a number of methods for calculating death but a simple example is the inverse of the distance of a data point to the centroid of the distribution. Generally, small values indicate that a data point not close to the centroid. \code{step_depth} can compute a class-specific depth for a new data point based on the proximity of the new value to the training set distribution. 
+Data depth metrics attempt to measure how close data a data point is to the center of its distribution.  There are a number of methods for calculating death but a simple example is the inverse of the distance of a data point to the centroid of the distribution. Generally, small values indicate that a data point not close to the centroid. \code{step_depth} can compute a class-specific depth for a new data point based on the proximity of the new value to the training set distribution.
 
 Note that the entire training set is saved to compute future depth values. The saved data have been learned and processed up to the point before the location that \code{step_depth} occupies in the recipe. Also, the data requirements for the different step methods may vary. For example, using \code{metric = "Mahalanobis"} requires that each class should have at least as many rows as variables listed in the \code{terms} argument.
 
@@ -44,7 +44,7 @@ library(magrittr)
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(~ predictors(), class = ~ Species)
+  step_depth(~ all_predictors(), class = ~ Species)
 
 rec_dists <- learn(rec, training = iris)
 

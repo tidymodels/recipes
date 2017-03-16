@@ -5,7 +5,7 @@
 #' @inheritParams step_center
 #' @param terms A representation of the variables or terms that will be imputed.
 #' @param role Not used by this step since no new variables are created.
-#' @param impute_with A representation of the variables that will be used as predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.
+#' @param impute_with A representation of the variables that will be used as all_predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.recipe}}.
@@ -13,7 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
+#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the all_predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept all_predictors that have missing values themselves. This imputation method can be used when the variable of interest (and all_predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
 #'
 #' Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
 #'
@@ -37,7 +37,7 @@
 #' library(magrittr)
 #' impute_rec <- rec %>%
 #'   step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
-#'                  impute_with  = ~ predictors())
+#'                  impute_with  = ~ all_predictors())
 #'
 #' imp_models <- learn(impute_rec, training = credit_tr)
 #'
@@ -155,7 +155,7 @@ process.step_bagimpute <- function(object, newdata, ...) {
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if(all(is.na(pred_data))) {
-        warning("All predictors are missing; cannot impute", call. = FALSE)
+        warning("All all_predictors are missing; cannot impute", call. = FALSE)
       } else {
         pred_vals <- predict(object$models[[i]], pred_data)
         newdata[missing_rows, imp_var] <- pred_vals

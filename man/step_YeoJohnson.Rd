@@ -45,7 +45,7 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-yj_trans <- step_YeoJohnson(rec, terms = ~ numerics())
+yj_trans <- step_YeoJohnson(rec, terms = ~ all_numeric())
 
 yj_estimates <- learn(yj_trans, training = biomass_tr)
 

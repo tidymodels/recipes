@@ -38,7 +38,7 @@ Recipes are alternative methods for creating design matrices and for preprocessi
 
 Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc. 
 
-\code{recipe} objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below. 
+\code{recipe} objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below. 
 
 Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example). 
 
@@ -60,16 +60,16 @@ data(biomass)
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-# When only predictors and outcomes, a simplified formula can be used.
+# When only all_predictors and all_outcomes, a simplified formula can be used.
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 # Now add preprocessing steps to the recipe. 
 library(magrittr)
 sp_signed <- rec \%>\%
-  step_center(~ predictors()) \%>\%
-  step_scale(~ predictors()) \%>\%
-  step_spatialsign(~ predictors())
+  step_center(~ all_predictors()) \%>\%
+  step_scale(~ all_predictors()) \%>\%
+  step_spatialsign(~ all_predictors())
 sp_signed
 
 # now estimate required parameters
@@ -85,8 +85,8 @@ test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 # no need for `cbind(carbon, hydrogen)` for left-hand side
 multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
 multi_y <- multi_y \%>\%
-  step_center(~ outcomes()) \%>\%
-  step_scale(~ predictors())
+  step_center(~ all_outcomes()) \%>\%
+  step_scale(~ all_predictors())
 
 multi_y_trained <- learn(multi_y, training = biomass_tr)
 

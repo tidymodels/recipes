@@ -123,7 +123,7 @@
 
     <p>Recipes are alternative methods for creating design matrices and for preprocessing data.</p>
 <p>Variables in recipes can have any type of <em>role</em> in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
-    <code>recipe</code> objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline functions such as <code>log(x3)</code>. An example is given below.</p>
+    <code>recipe</code> objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline functions such as <code>log(x3)</code>. An example is given below.</p>
 <p>Alternatively, a <code>recipe</code> object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).</p>
 <p>Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified.</p>
 <p>Once a recipe has been defined, the <code><a href='learn.html'>learn</a></code> function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). <code><a href='learn.html'>learn</a></code> returns another recipe.</p>
@@ -141,16 +141,16 @@
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='co'># When only predictors and outcomes, a simplified formula can be used.</span>
+<span class='co'># When only all_predictors and all_outcomes, a simplified formula can be used.</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='co'># Now add preprocessing steps to the recipe. </span>
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(~ <span class='fu'><a href='has_role.html'>predictors</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 <span class='no'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -161,9 +161,9 @@
 #&gt; 
 #&gt; Steps:
 #&gt; 
-#&gt; Centering for predictors()
-#&gt; Scaling for predictors()
-#&gt; Spatial sign on  predictors()</div><div class='input'>
+#&gt; Centering for all_predictors()
+#&gt; Scaling for all_predictors()
+#&gt; Spatial sign on  all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
 <span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training 
@@ -191,8 +191,8 @@
 <span class='co'># no need for `cbind(carbon, hydrogen)` for left-hand side</span>
 <span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>carbon</span> + <span class='no'>hydrogen</span> ~ <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>)
 <span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='no'>multi_y</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>outcomes</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>predictors</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training </div><div class='input'>

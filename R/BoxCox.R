@@ -22,7 +22,7 @@
 #'
 #' rec <- recipe(~ ., data = as.data.frame(state.x77))
 #'
-#' bc_trans <- step_BoxCox(rec, terms = ~ numerics())
+#' bc_trans <- step_BoxCox(rec, terms = ~ all_numeric())
 #'
 #' bc_estimates <- learn(bc_trans, training = as.data.frame(state.x77))
 #'
