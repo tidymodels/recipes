@@ -7,6 +7,7 @@
 \alias{has_type}
 \alias{all_numeric}
 \alias{all_nominal}
+\alias{current_info}
 \title{Role Selection}
 \usage{
 has_role(x = "predictor", roles = NULL)
@@ -20,6 +21,8 @@ has_type(x = "numeric", types = NULL)
 all_numeric(types = NULL)
 
 all_nominal(types = NULL)
+
+current_info()
 }
 \arguments{
 \item{x}{A single character string for the query.}
@@ -29,9 +32,9 @@ all_nominal(types = NULL)
 \item{types}{A character string of roles for the current set of data types}
 }
 \value{
-An integer vector.
+Selector functions return an integer vector while \code{current_info} returns an environment with vectors \code{vars}, \code{roles}, and \code{types}.
 }
 \description{
-\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details.
+\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users.
 }
 \keyword{datagen}

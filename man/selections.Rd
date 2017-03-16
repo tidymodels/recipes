@@ -4,15 +4,15 @@
 \alias{selections}
 \title{Methods for Select Variables in recipe Formulas}
 \description{
-There are a few different methods for selecting variables or model terms using the \code{terms} argument for the \code{step} functions. The two main requirements are that 1) the value of the \code{terms} argument is a formula and 2) that does not contain functions beyond those supported (see below). 
+There are a few different methods for selecting variables or model terms using the \code{terms} argument for the \code{step} functions. The two main requirements are that 1) the value of the \code{terms} argument is a formula and 2) that does not contain functions beyond those supported (see below).
 
-The formula is not processed until the \code{learn} function for the step is executed. Functions can be used inside of the formula that can select columns of the design matrix that may not currently exist. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{contains("^PC")} will select all of the columns whose names start with "PC". 
+The formula is not processed until the \code{learn} function for the step is executed. Functions can be used inside of the formula that can select columns of the design matrix that may not currently exist. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{contains("^PC")} will select all of the columns whose names start with "PC".
 
-Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid. 
+Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid.
 
-However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
+However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}.
 
-While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
+While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1".
 
 Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names.
 }

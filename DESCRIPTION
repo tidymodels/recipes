@@ -10,10 +10,11 @@ Description: A set of tools to create a sequence of data processing steps that
 URL: https://github.com/topepo/recipes
 BugReports: https://github.com/topepo/recipes/issues
 Depends:
-    R (>= 3.2.3)
+    R (>= 3.2.3),
+    dplyr,
+    rlang
 Imports:
     tibble,
-    dplyr,
     lazyeval,
     stats,
     ipred,

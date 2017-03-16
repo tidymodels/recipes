@@ -3,22 +3,22 @@
 #' @aliases selections
 #' @aliases selection
 #' @title Methods for Select Variables in recipe Formulas
-#' @description There are a few different methods for selecting variables or model terms using the \code{terms} argument for the \code{step} functions. The two main requirements are that 1) the value of the \code{terms} argument is a formula and 2) that does not contain functions beyond those supported (see below). 
-#' 
-#' The formula is not processed until the \code{learn} function for the step is executed. Functions can be used inside of the formula that can select columns of the design matrix that may not currently exist. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{contains("^PC")} will select all of the columns whose names start with "PC". 
-#' 
-#' Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid. 
-#' 
-#' However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}. 
-#' 
-#' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1". 
-#' 
-#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names. 
+#' @description There are a few different methods for selecting variables or model terms using the \code{terms} argument for the \code{step} functions. The two main requirements are that 1) the value of the \code{terms} argument is a formula and 2) that does not contain functions beyond those supported (see below).
+#'
+#' The formula is not processed until the \code{learn} function for the step is executed. Functions can be used inside of the formula that can select columns of the design matrix that may not currently exist. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{contains("^PC")} will select all of the columns whose names start with "PC".
+#'
+#' Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid.
+#'
+#' However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}.
+#'
+#' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1".
+#'
+#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names.
 NULL
 
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
-## to `recipes.formula`. 
-name_selectors <- c("starts_with", "ends_with", "contains", 
+## to `recipes.formula`.
+name_selectors <- c("starts_with", "ends_with", "contains",
                     "matches", "num_range", "everything")
 
 role_selectors <- c("has_role", "all_predictors", "all_outcomes")
@@ -30,28 +30,28 @@ selectors <- c(name_selectors, role_selectors, type_selectors)
 ## Main function to parse the `terms` arguments
 ## Overall wrapper to make new step_X objects
 
-#' Parse a Step Function Formula. 
+#' Parse a Step Function Formula.
 #'
-#' \code{parse_terms_formula} takes the \code{terms} element of a step and translates it to a character vector of column names.  
+#' \code{parse_terms_formula} takes the \code{terms} element of a step and translates it to a character vector of column names.
 #'
-#' @param f A formula that can inlcude variable names and certain functions. See \code{\link{selections}} for a list of functions.  
-#' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe. 
+#' @param f A formula that can inlcude variable names and certain functions. See \code{\link{selections}} for a list of functions.
+#' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
 #' @keywords datagen
-#' @concept preprocessing 
-#' @return A character string of column names. 
+#' @concept preprocessing
+#' @return A character string of column names.
 #' @export
-#' @examples 
+#' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
 #' parse_terms_formula(~ all_predictors(), summary(rec))
 #' rec <- learn(rec, training = USArrests)
 #' parse_terms_formula(~ all_predictors(), summary(rec))
-#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}} 
+#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
 parse_terms_formula <- function(f, info) {
   var_vals <- info$variable
   role_vals <- info$role
   type_vals <- info$type
-  
+
   ## split the terms up using +/- as seperators
   f_info <- f_elements(f)
   elmts <- f_info$terms
@@ -59,12 +59,12 @@ parse_terms_formula <- function(f, info) {
 
   ## Look for inappropriate functions in elements
   check_elements(f)
-  
+
   ## determine if there is a selector involved
   has_func <- has_selector(elmts)
-  
+
   indices <- vector(mode = "list", length = length(elmts)-1)
-  
+
   for(i in seq_along(elmts)[-1]) {
     if(has_func[i-1]) {
       cll <- as.call(elmts[[i]])
@@ -74,21 +74,21 @@ parse_terms_formula <- function(f, info) {
       indices[[i-1]] <- which(as.character(elmts[[i]]) == var_vals)
     }
     if(elmts_sign[i-1] == "-")
-      indices[[i-1]] <- -indices[[i-1]] 
+      indices[[i-1]] <- -indices[[i-1]]
   }
   indices <- unlist(unique(indices))
-  
+
   ## add/subtract based on sign of elements
   if(!all(sign(indices) == 1)) {
     pos <- indices[indices > 0]
     neg <- indices[indices < 0]
     indices <- pos[!(pos %in% abs(neg))]
   }
-  
+
   if(length(indices) == 0)
-    stop("No columns were selected by the `terms` formula for this step.", 
+    stop("No columns were selected by the `terms` formula for this step.",
          call. = FALSE)
-  
+
   var_vals[indices]
 }
 
@@ -100,13 +100,13 @@ f_elements <- function(x) {
   clls <- attr(trms_obj, "variables")
   ## Any formula element with a minus prefix will not
   ## have an colname in the `factor` attribute of the
-  ## terms object. We will check these against the 
+  ## terms object. We will check these against the
   ## list of calls
   tmp <- colnames(attr(trms_obj, "factors"))
   kept <- vector(mode = "list", length = length(tmp))
-  for(j in seq_along(tmp)) 
+  for(j in seq_along(tmp))
     kept[[j]] <- as.name(tmp[j])
-  
+
   term_signs <- rep("", length(clls) - 1)
   for(i in seq_along(term_signs)) {
     ## Check to see if the elements are in the `factors`
@@ -114,19 +114,19 @@ f_elements <- function(x) {
     retained <- any(
       unlist(
         lapply(
-          kept, 
-          function(x, y) any(y == x), 
+          kept,
+          function(x, y) any(y == x),
           y = clls[[i+1]]
         )
       )
     )
     term_signs[i] <- if(retained) "+" else "-"
-  } 
-  list(terms  = clls, signs = term_signs)  
+  }
+  list(terms  = clls, signs = term_signs)
 }
 
 ## This adds the appropriate argument based on whether the call is for
-## a variable name, role, or data type. 
+## a variable name, role, or data type.
 add_arg <- function(cl) {
   func <- fun_calls(cl)
   if(func %in% name_selectors) {
@@ -140,18 +140,18 @@ add_arg <- function(cl) {
 }
 
 ## This flags formulas that are not allowed. When called from `recipe.formula`
-## `allowed` is NULL. 
+## `allowed` is NULL.
 check_elements <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
   if(!is.null(allowed)) { # when called from a step
     not_good <- funs[!(funs %in% allowed)]
     if(length(not_good) > 0)
-      stop("Not all functions are allowed in `terms` formulas. See ?selections.", 
+      stop("Not all functions are allowed in `terms` formulas. See ?selections.",
            call. = FALSE)
   } else { # when called from formula.recipe
-    if(length(funs) > 0) 
-      stop("No in-line functions should be used here; use steps to define processing actions", 
+    if(length(funs) > 0)
+      stop("No in-line functions should be used here; use steps to define processing actions",
            call. = FALSE)
   }
   invisible(NULL)
@@ -159,24 +159,24 @@ check_elements <- function(x, allowed = selectors) {
 
 has_selector <- function(x, allowed = selectors) {
   res <- rep(NA, length(x) - 1)
-  for(i in 2:length(x)) 
+  for(i in 2:length(x))
     res[[i-1]] <- isTRUE(fun_calls(x[[i]]) %in% allowed)
   res
 }
 
 
 #' Role Selection
-#' 
-#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. 
-#' 
+#'
+#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users.
+#'
 #' @param x A single character string for the query.
-#' @param roles A character string of roles for the current set of terms. 
+#' @param roles A character string of roles for the current set of terms.
 #' @param types A character string of roles for the current set of data types
-#' @return An integer vector.
+#' @return Selector functions return an integer vector while \code{current_info} returns an environment with vectors \code{vars}, \code{roles}, and \code{types}.
 #' @keywords datagen
 #' @export
 
-has_role <- function(x = "predictor", roles = NULL) 
+has_role <- function(x = "predictor", roles = NULL)
   which(roles %in% x[1])
 
 #' @export
@@ -194,7 +194,7 @@ all_outcomes <- function(roles = NULL)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-has_type <- function(x = "numeric", types = NULL) 
+has_type <- function(x = "numeric", types = NULL)
   which(types %in% x[1])
 
 #' @export
@@ -208,6 +208,27 @@ all_numeric <- function(types = NULL)
 #' @inheritParams has_role
 all_nominal <- function(types = NULL)
   has_type("nominal", types = types)
+
+## functions to get current variable info for selectors modeled after dplyr versions
+
+#' @import rlang
+cur_info_env <- child_env()
+
+set_current_info <- function(x) {
+  stopifnot(is_tibble(x))
+  old <- cur_info_env
+  cur_info_env$vars <- x$variable
+  cur_info_env$roles <- x$role
+  cur_info_env$types <- x$type
+
+  invisible(old)
+}
+
+#' @export
+#' @rdname has_role
+current_info <- function() {
+  cur_info_env %||% stop("Variable context not set", call. = FALSE)
+}
 
 
 
