@@ -5,7 +5,7 @@ template:
 reference:
   - title: Basic Functions
     contents:
-    - matches("(learn)|(recipe)|(selection)|(^is)")
+    - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)")
     - init_site
   - title: Example Datasets
     contents:

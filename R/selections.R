@@ -167,46 +167,60 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Role Selection
 #'
-#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users.
+#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users while the others have limited utility outside of step function arguments.
 #'
-#' @param x A single character string for the query.
+#' @param match A single character string for the query. Exact matching is used (i.e. regular expressions won't work).
 #' @param roles A character string of roles for the current set of terms.
 #' @param types A character string of roles for the current set of data types
 #' @return Selector functions return an integer vector while \code{current_info} returns an environment with vectors \code{vars}, \code{roles}, and \code{types}.
 #' @keywords datagen
+#' @examples
+#' data(biomass)
+#'
+#' rec <- recipe(biomass) %>%
+#'   add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'            role = "predictor") %>%
+#'   add_role("HHV", role = "outcome") %>%
+#'   add_role("sample", role = "id variable") %>%
+#'   add_role("dataset", role = "splitting indicator")
+#' recipe_info <- summary(rec)
+#' recipe_info
+#'
+#' has_role("id variable", roles = recipe_info$role)
+#' all_outcomes(roles = recipe_info$role)
 #' @export
 
-has_role <- function(x = "predictor", roles = NULL)
-  which(roles %in% x[1])
+has_role <- function(match = "predictor", roles = current_info()$roles)
+  which(roles %in% match)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_predictors <- function(roles = NULL)
+all_predictors <- function(roles = current_info()$roles)
   has_role("predictor", roles = roles)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_outcomes <- function(roles = NULL)
+all_outcomes <- function(roles = current_info()$roles)
   has_role("outcome", roles = roles)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-has_type <- function(x = "numeric", types = NULL)
-  which(types %in% x[1])
+has_type <- function(match = "numeric", types = current_info()$roles)
+  which(types %in% match)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_numeric <- function(types = NULL)
+all_numeric <- function(types = current_info()$roles)
   has_type("numeric", types = types)
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_nominal <- function(types = NULL)
+all_nominal <- function(types = current_info()$roles)
   has_type("nominal", types = types)
 
 ## functions to get current variable info for selectors modeled after dplyr versions

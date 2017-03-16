@@ -10,22 +10,22 @@
 \alias{current_info}
 \title{Role Selection}
 \usage{
-has_role(x = "predictor", roles = NULL)
+has_role(match = "predictor", roles = current_info()$roles)
 
-all_predictors(roles = NULL)
+all_predictors(roles = current_info()$roles)
 
-all_outcomes(roles = NULL)
+all_outcomes(roles = current_info()$roles)
 
-has_type(x = "numeric", types = NULL)
+has_type(match = "numeric", types = current_info()$roles)
 
-all_numeric(types = NULL)
+all_numeric(types = current_info()$roles)
 
-all_nominal(types = NULL)
+all_nominal(types = current_info()$roles)
 
 current_info()
 }
 \arguments{
-\item{x}{A single character string for the query.}
+\item{match}{A single character string for the query. Exact matching is used (i.e. regular expressions won't work).}
 
 \item{roles}{A character string of roles for the current set of terms.}
 
@@ -35,6 +35,21 @@ current_info()
 Selector functions return an integer vector while \code{current_info} returns an environment with vectors \code{vars}, \code{roles}, and \code{types}.
 }
 \description{
-\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users.
+\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to select variables in a formula that have certain roles. Similarly,  \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to select columns based on their data type. See \code{\link{selections}} for more details. \code{current_info} is an internal function that is unlikely to help users while the others have limited utility outside of step function arguments.
+}
+\examples{
+data(biomass)
+
+rec <- recipe(biomass) \%>\%
+  add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+           role = "predictor") \%>\%
+  add_role("HHV", role = "outcome") \%>\%
+  add_role("sample", role = "id variable") \%>\%
+  add_role("dataset", role = "splitting indicator")
+recipe_info <- summary(rec)
+recipe_info
+
+has_role("id variable", roles = recipe_info$role)
+all_outcomes(roles = recipe_info$role)
 }
 \keyword{datagen}

@@ -86,25 +86,27 @@
     </div>
 
     
-    <p><code>has_role</code>, <code>all_predictors</code>, and <code>all_outcomes</code> can be used to select variables in a formula that have certain roles. Similarly,  <code>has_type</code>, <code>all_numeric</code>, and <code>all_nominal</code> are used to select columns based on their data type. See <code><a href='selections.html'>selections</a></code> for more details.</p>
+    <p><code>has_role</code>, <code>all_predictors</code>, and <code>all_outcomes</code> can be used to select variables in a formula that have certain roles. Similarly,  <code>has_type</code>, <code>all_numeric</code>, and <code>all_nominal</code> are used to select columns based on their data type. See <code><a href='selections.html'>selections</a></code> for more details. <code>current_info</code> is an internal function that is unlikely to help users while the others have limited utility outside of step function arguments.</p>
     
 
-    <pre><span class='fu'>has_role</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre><span class='fu'>has_role</span>(<span class='kw'>match</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
-<span class='fu'>all_predictors</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>all_predictors</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
-<span class='fu'>all_outcomes</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>all_outcomes</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
-<span class='fu'>has_type</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>, <span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>has_type</span>(<span class='kw'>match</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>, <span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
-<span class='fu'>all_numeric</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>all_numeric</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
-<span class='fu'>all_nominal</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>all_nominal</span>(<span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
+
+<span class='fu'>current_info</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd><p>A single character string for the query.</p></dd>
+      <dt>match</dt>
+      <dd><p>A single character string for the query. Exact matching is used (i.e. regular expressions won't work).</p></dd>
       <dt>roles</dt>
       <dd><p>A character string of roles for the current set of terms.</p></dd>
       <dt>types</dt>
@@ -113,9 +115,31 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An integer vector.</p>
+    <p>Selector functions return an integer vector while <code>current_info</code> returns an environment with vectors <code>vars</code>, <code>roles</code>, and <code>types</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
+           <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"HHV"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"sample"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"dataset"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
+<span class='no'>recipe_info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
+<span class='no'>recipe_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
+#&gt;   variable    type                role   source
+#&gt;      &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;    &lt;chr&gt;
+#&gt; 1   sample nominal         id variable original
+#&gt; 2  dataset nominal splitting indicator original
+#&gt; 3   carbon numeric           predictor original
+#&gt; 4 hydrogen numeric           predictor original
+#&gt; 5   oxygen numeric           predictor original
+#&gt; 6 nitrogen numeric           predictor original
+#&gt; 7   sulfur numeric           predictor original
+#&gt; 8      HHV numeric             outcome original</div><div class='input'>
+<span class='fu'>has_role</span>(<span class='st'>"id variable"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='no'>recipe_info</span>$<span class='no'>role</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>all_outcomes</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='no'>recipe_info</span>$<span class='no'>role</span>)</div><div class='output co'>#&gt; [1] 8</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -123,7 +147,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -145,7 +145,7 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='co'># Now add preprocessing steps to the recipe. </span>
+<span class='co'># Now add preprocessing steps to the recipe.</span>
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
