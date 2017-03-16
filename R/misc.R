@@ -235,5 +235,9 @@ train_info <- function(x) {
              ncomplete = sum(complete.cases(x)))
 }
 
+# Per LH and HW, brought in from the `dplyr` package
+is_negated <- function(x) {
+  is_lang(x, "-", n = 1)
+}
 
 
