@@ -239,5 +239,10 @@ train_info <- function(x) {
 is_negated <- function(x) {
   is_lang(x, "-", n = 1)
 }
+deparse_trunc <- function(x, width = getOption("width")) {
+  text <- deparse(x, width.cutoff = width)
+  if (length(text) == 1 && nchar(text) < width) return(text)
 
+  paste0(substr(text[1], 1, width - 3), "...")
+}
 

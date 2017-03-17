@@ -166,6 +166,81 @@ has_selector <- function(x, allowed = selectors) {
   res
 }
 
+#' Select Terms.
+#'
+#' This function processes the step function selectors and might be useful when creating custom steps.
+#'
+#' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
+#' @param ... One or more selection functions. See \code{\link{selections}} for more details.
+#' @keywords datagen
+#' @concept preprocessing
+#' @return A character string of column names or an error of there are no selectors or if no variables are selected.
+#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
+#' @importFrom purrr map_lgl map_if map_chr map
+#' @export
+select_terms <- function(info, ...) {
+  ## This is a modified version of dplyr:::select_vars
+
+  vars <- info$variable
+  roles <- info$role
+  types <- info$type
+
+  args <- tidy_quotes(...)
+
+  if (is_empty(args)) {
+    stop("At least one selector should be used")
+  }
+
+  ## check arguments against whitelist
+  lapply(args, check_elements)
+
+  # Set current_info so available to helpers
+  old <- set_current_info(info)
+  on.exit(set_current_info(old), add = TRUE)
+  # Set current_vars so available to select_helpers
+  old <- dplyr:::set_current_vars(vars)
+  on.exit(dplyr:::set_current_vars(old), add = TRUE)
+
+  # Map variable names to their positions: this keeps integer semantics
+  names_list <- set_names(as.list(seq_along(vars)), vars)
+
+  # if the first selector is exclusive (negative), start with all columns
+  initial_case <- if (is_negated(args[[1]])) list(seq_along(vars)) else integer(0)
+
+  # Evaluate symbols in an environment where columns are bound, but
+  # not calls (select helpers are scoped in the calling environment)
+  is_helper <- map_lgl(args, function(x) is_lang(x) && !is_lang(x, c("-", ":")))
+
+  ind_list <- map_if(args, is_helper, tidy_eval)
+  ind_list <- map_if(ind_list, !is_helper, tidy_eval, names_list)
+
+  ind_list <- c(initial_case, ind_list)
+  names(ind_list) <- c(names2(initial_case), names2(args))
+
+  is_numeric <- map_lgl(ind_list, is.numeric)
+  if (any(!is_numeric)) {
+    bad_inputs <- map(args[!is_numeric], f_rhs)
+    labels <- map_chr(bad_inputs, deparse_trunc)
+    stop("All inputs must resolve to integer column positions")
+  }
+
+  incl <- dplyr:::combine_vars(vars, ind_list)
+
+  sel <- set_names(vars[incl], names(incl))
+
+  # Ensure all output vars named
+  if (is_empty(sel)) {
+    stop("No variables or terms were selected")
+  } else {
+    unnamed <- names2(sel) == ""
+    names(sel)[unnamed] <- sel[unnamed]
+  }
+
+  unname(sel)
+}
+
+
+
 
 #' Role Selection
 #'
@@ -210,7 +285,7 @@ all_outcomes <- function(roles = current_info()$roles)
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-has_type <- function(match = "numeric", types = current_info()$roles)
+has_type <- function(match = "numeric", types = current_info()$types)
   which(types %in% match)
 
 #' @export

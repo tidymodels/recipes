@@ -16,11 +16,11 @@ all_predictors(roles = current_info()$roles)
 
 all_outcomes(roles = current_info()$roles)
 
-has_type(match = "numeric", types = current_info()$roles)
+has_type(match = "numeric", types = current_info()$types)
 
-all_numeric(types = current_info()$roles)
+all_numeric(types = current_info()$types)
 
-all_nominal(types = current_info()$roles)
+all_nominal(types = current_info()$types)
 
 current_info()
 }

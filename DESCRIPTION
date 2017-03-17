@@ -20,7 +20,8 @@ Imports:
     dimRed,
     lubridate,
     timeDate,
-    ddalpha
+    ddalpha,
+    purrr
 Suggests:
     testthat,
     magrittr,
