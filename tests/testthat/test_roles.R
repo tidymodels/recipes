@@ -14,9 +14,9 @@ test_that('default method', {
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
-test_that('changing roles with character string', {
+test_that('changing roles', {
   rec <- recipe(x = biomass)
-  rec <- add_role(rec, "sample", role = "some other role")
+  rec <- add_role(rec, sample, new_role = "some other role")
   exp_res <- tibble(variable = colnames(biomass),
                     type = rep(c("nominal", "numeric"), c(2, 6)),
                     role = rep(c("some other role", NA), c(1, 7)),
@@ -24,30 +24,14 @@ test_that('changing roles with character string', {
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
-test_that('change existing role with character string', {
+test_that('change existing role', {
   rec <- recipe(x = biomass)
-  rec <- add_role(rec, "sample", role = "some other role")
-  rec <- add_role(rec, "sample", role = "other other role")
+  rec <- add_role(rec, sample, new_role = "some other role")
+  rec <- add_role(rec, sample, new_role = "other other role")
   exp_res <- tibble(variable = colnames(biomass),
                     type = rep(c("nominal", "numeric"), c(2, 6)),
                     role = rep(c("other other role", NA), c(1, 7)),
                     source = "original")
   expect_equal(summary(rec, TRUE), exp_res)
-})
-
-
-test_that('changing roles with formula', {
-  rec <- recipe(x = biomass)
-  rec <- add_role(rec, ~ sample, role = "some other role")
-  exp_res <- tibble(variable = colnames(biomass),
-                    type = rep(c("nominal", "numeric"), c(2, 6)),
-                    role = rep(c("some other role", NA), c(1, 7)),
-                    source = "original")
-  expect_equal(summary(rec, TRUE), exp_res)
-})
-
-test_that('changing roles with bad formula', {
-  rec <- recipe(x = biomass)
-  expect_error(add_role(rec, ~ ., role = "some other role"))
 })
 

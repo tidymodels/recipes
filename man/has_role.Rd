@@ -41,11 +41,11 @@ Selector functions return an integer vector while \code{current_info} returns an
 data(biomass)
 
 rec <- recipe(biomass) \%>\%
-  add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           role = "predictor") \%>\%
-  add_role("HHV", role = "outcome") \%>\%
-  add_role("sample", role = "id variable") \%>\%
-  add_role("dataset", role = "splitting indicator")
+  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+           new_role = "predictor") \%>\%
+  add_role(HHV, new_role = "outcome") \%>\%
+  add_role(sample, new_role = "id variable") \%>\%
+  add_role(dataset, new_role = "splitting indicator")
 recipe_info <- summary(rec)
 recipe_info
 

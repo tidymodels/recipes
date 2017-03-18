@@ -4,16 +4,14 @@
 \alias{add_role}
 \title{Manually Add Roles}
 \usage{
-add_role(recipe, vars, role = "predictor", data = NULL)
+add_role(recipe, ..., new_role = "predictor")
 }
 \arguments{
 \item{recipe}{An existing \code{\link{recipe}}.}
 
-\item{vars}{A character string of variable names or simple formula that defines one or more variable that will be assigned to the role.}
+\item{...}{One or more selector functions to choose which variables are being assigned a role. See \code{\link{selections}} for more details.}
 
-\item{role}{A character string for a single role.}
-
-\item{data}{Am optional data template that may be needed to resolve the formula (in case there is a \code{.}).}
+\item{new_role}{A character string for a single role.}
 }
 \value{
 An updated recipe object.
@@ -22,7 +20,7 @@ An updated recipe object.
 \code{add_role} can add a role definition to an existing variable in the recipe.
 }
 \details{
-If \code{vars} is a formula, it should not include any functions, negative signs, or \code{.} (since there is no data element to evaluate it).
+If a variable is selected that currently has a role, the role is changed and a warning is issued.
 }
 \examples{
 
@@ -31,21 +29,15 @@ data(biomass)
 # Create the recipe manually
 rec <- recipe(x = biomass)
 rec
-rec$var_info
+summary(rec)
 
-rec <- add_role(rec, vars = colnames(biomass)[3:7], role = "predictor")
-rec <- add_role(rec, vars = "sample", role = "id variable")
-rec <- add_role(rec, vars = "dataset", role = "splitting variable")
-rec <- add_role(rec, vars = "HHV", role = "outcome")
+rec <- rec \%>\%
+  add_role(carbon, contains("gen"), sulfur, new_role = "predictor") \%>\%
+  add_role(sample, new_role = "id variable") \%>\%
+  add_role(dataset, new_role = "splitting variable") \%>\%
+  add_role(HHV, new_role = "outcome")
 rec
 
-# or, if you really want the formula method, you can change roles
-
-rec2 <- recipe(HHV ~ ., data = biomass)
-# Now change inappropriate predictor roles
-rec2 <- add_role(rec2, vars = "sample", role = "id variable")
-rec2 <- add_role(rec2, vars = "dataset", role = "splitting variable")
-rec2$var_info
 
 }
 \concept{

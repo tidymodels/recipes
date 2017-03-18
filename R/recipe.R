@@ -70,7 +70,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # multivariate example
 #'
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
-#' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
+#' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass_tr)
 #' multi_y <- multi_y %>%
 #'   step_center(~ all_outcomes()) %>%
 #'   step_scale(~ all_predictors())
@@ -83,11 +83,11 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # Creating a recipe manually with different roles
 #'
 #' rec <- recipe(biomass_tr) %>%
-#'   add_role(~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'            role = "predictor") %>%
-#'   add_role("HHV", role = "outcome") %>%
-#'   add_role("sample", role = "id variable") %>%
-#'   add_role("dataset", role = "splitting indicator")
+#'   add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+#'            new_role = "predictor") %>%
+#'   add_role(HHV, new_role = "outcome") %>%
+#'   add_role(sample, new_role = "id variable") %>%
+#'   add_role(dataset, new_role = "splitting indicator")
 #' rec
 
 recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
