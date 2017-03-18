@@ -3,7 +3,7 @@
 #' \code{step_dummy} creates a a \emph{specification} of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to create the dummy variables.
+#' @param ... One or more selector functions to choose which variables will be used to create the dummy variables. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.
 #' @param contrast A specification for which type of contrast should be used to make a set of full rank dummy variables. See \code{\link[stats]{contrasts}} for more details. \bold{not currently working}
 #' @param naming A function that defines the naming convention for new binary columns. See Details below.
@@ -23,8 +23,7 @@
 #'
 #' rec <- recipe(~ diet + age + height, data = okc)
 #'
-#' library(magrittr)
-#' dummies <- rec %>% step_dummy(~ diet)
+#' dummies <- rec %>% step_dummy(diet)
 #' dummies <- learn(dummies, training = okc)
 #'
 #' dummy_data <- process(dummies, newdata = okc)
@@ -34,13 +33,16 @@
 
 
 step_dummy <- function(recipe,
-                       terms,
+                       ...,
                        role = "predictor",
                        trained = FALSE,
                        contrast = options("contrasts"),
                        naming = function(var, lvl)
                          paste(var, make.names(lvl), sep = "_"),
                        levels = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_dummy_new(
@@ -72,7 +74,7 @@ step_dummy_new <- function(terms = NULL,
 #' @importFrom stats as.formula model.frame
 #' @export
 learn.step_dummy <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   ## I hate doing this but currently we are going to have
   ## to save the terms object form the original (= training)
@@ -125,7 +127,7 @@ print.step_dummy <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Dummy variables from ")
   if(x$trained) {
     cat(format_ch_vec(names(x$levels), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

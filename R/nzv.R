@@ -3,7 +3,7 @@
 #' \code{step_nzv} creates a \emph{specification} of a recipe step that will potentially remove variables that are highly sparse and unbalanced.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will evaluated by the filtering process.
+#' @param ... One or more selector functions to choose which variables that will evaluated by the filtering process. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param options A list of options for the filter (see Details below).
 #' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.
@@ -34,9 +34,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + sparse,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' nzv_filter <- rec %>%
-#'   step_nzv(terms = ~ all_predictors())
+#'   step_nzv(all_predictors())
 #'
 #' filter_obj <- learn(nzv_filter, training = biomass_tr)
 #'
@@ -45,11 +44,14 @@
 #' @seealso \code{\link{step_corr}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_nzv <- function(recipe,
-                     terms,
+                     ...,
                      role = NA,
                      trained = FALSE,
                      options = list(freqCut = 95 / 5, uniqueCut = 10),
                      removals = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_nzv_new(
@@ -79,7 +81,7 @@ step_nzv_new <- function(terms = NULL,
 
 #' @export
 learn.step_nzv <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   filter <- nzv(x = training[, col_names],
                 freqCut = x$options$freqCut,
                 uniqueCut = x$options$uniqueCut)

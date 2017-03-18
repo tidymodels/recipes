@@ -4,15 +4,15 @@
 \alias{step_depth}
 \title{Data Depths}
 \usage{
-step_depth(recipe, terms, class, role = "predictor", trained = FALSE,
+step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
   metric = "halfspace", options = list(), data = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to create the new features.}
+\item{...}{One or more selector functions to choose which variables that will be used to create the new features. See \code{\link{selections}} for more details.}
 
-\item{class}{A single character string or formula that that specifies a single categorical variable to be used as the class.}
+\item{class}{A single character string that specifies a single categorical variable to be used as the class.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as all_predictors in a model.}
 
@@ -40,11 +40,10 @@ Note that the entire training set is saved to compute future depth values. The s
 The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{depth_}.
 }
 \examples{
-library(magrittr)
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(~ all_predictors(), class = ~ Species)
+  step_depth(all_predictors(), class = "Species")
 
 rec_dists <- learn(rec, training = iris)
 

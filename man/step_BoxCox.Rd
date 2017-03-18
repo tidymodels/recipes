@@ -4,13 +4,13 @@
 \alias{step_BoxCox}
 \title{Box-Cox Transformation for Non-Negative Data}
 \usage{
-step_BoxCox(recipe, terms, role = NA, trained = FALSE, lambdas = NULL,
+step_BoxCox(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
   limits = c(-5, 5), nunique = 5)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -39,7 +39,7 @@ If the transformation parameters are estimated to be very closed to the bounds, 
 
 rec <- recipe(~ ., data = as.data.frame(state.x77))
 
-bc_trans <- step_BoxCox(rec, terms = ~ all_numeric())
+bc_trans <- step_BoxCox(rec, all_numeric())
 
 bc_estimates <- learn(bc_trans, training = as.data.frame(state.x77))
 

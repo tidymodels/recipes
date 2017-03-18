@@ -17,9 +17,8 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' library(magrittr)
 #' log_trans <- rec  %>%
-#'   step_log(terms = ~ all_predictors())
+#'   step_log(all_predictors())
 #'
 #' log_obj <- learn(log_trans, training = examples)
 #'
@@ -27,7 +26,10 @@
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_log <- function(recipe, terms, role = NA, trained = FALSE, base = exp(1), vars = NULL) {
+step_log <- function(recipe, ..., role = NA, trained = FALSE, base = exp(1), vars = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_log_new(
@@ -54,7 +56,7 @@ step_log_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 #' @export
 learn.step_log <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   step_log_new(
     terms = x$terms,
     role = x$role,
@@ -76,7 +78,7 @@ print.step_log <- function(x, width = max(20, options()$width - 31), ...) {
   cat("Log transformation on ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

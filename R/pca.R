@@ -3,7 +3,7 @@
 #' \code{step_pca} creates a \emph{specification} of a recipe step that will convert numeric data into one or more principal components.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to compute the components.
+#' @param ... One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.
 #' @param num The number of PCA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.
 #' @param options A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the argument \code{x} should not be passed here (or at all).
@@ -24,7 +24,7 @@
 #'
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
-#' pca_trans <- step_pca(rec, terms = ~ all_numeric(), num = 3)
+#' pca_trans <- step_pca(rec,  all_numeric(), num = 3)
 #' pca_estimates <- learn(pca_trans, training = USArrests)
 #' pca_data <- process(pca_estimates, USArrests)
 #'
@@ -33,13 +33,16 @@
 #'      xlim = rng, ylim = rng)
 #' @seealso \code{\link{step_ica}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_pca <- function(recipe,
-                     terms,
+                     ...,
                      role = "predictor",
                      trained = FALSE,
                      num  = 5,
                      options = list(center = TRUE, scale. = TRUE, retx = FALSE),
                      res = NULL,
                      prefix = "PC") {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_pca_new(
@@ -77,7 +80,7 @@ step_pca_new <- function(terms = NULL,
 #' @importFrom dimRed PCA dimRedData
 #' @export
 learn.step_pca <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   x$num <- min(x$num, length(col_names))
 
@@ -113,7 +116,7 @@ print.step_pca <- function(x, width = max(20, options()$width - 29), ...) {
   cat("PCA extraction with ")
   if(x$trained) {
     cat(format_ch_vec(colnames(x$res@org.data), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

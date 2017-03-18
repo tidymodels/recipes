@@ -89,15 +89,15 @@
     <p><code>step_ica</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more independent components.</p>
     
 
-    <pre><span class='fu'>step_ica</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <pre><span class='fu'>step_ica</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"IC"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be used to compute the components.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -143,12 +143,11 @@
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>tr</span>)
 
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='no'>V1</span> + <span class='no'>V2</span>)
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span>  ~ <span class='no'>V1</span> + <span class='no'>V2</span>)
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_ica</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span>  ~ <span class='no'>V1</span> + <span class='no'>V2</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>ica_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>tr</span>)</div><div class='output co'>#&gt; step 1 ica training </div><div class='input'><span class='no'>ica_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>ica_estimates</span>, <span class='no'>te</span>)
-
-<span class='fu'>plot</span>(<span class='no'>te</span>$<span class='no'>V1</span>, <span class='no'>te</span>$<span class='no'>V2</span>)</div><img src='step_ica-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='no'>ica_data</span>$<span class='no'>IC1</span>, <span class='no'>ica_data</span>$<span class='no'>IC2</span>)</div><img src='step_ica-6.png' alt='' width='540' height='400' /></pre>
+<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>rec</span>,  <span class='no'>V1</span>, <span class='no'>V2</span>)
+<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>rec</span>, <span class='no'>V1</span>, <span class='no'>V2</span>)
+<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_ica</span>(<span class='no'>rec</span>, <span class='no'>V1</span>, <span class='no'>V2</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>ica_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>tr</span>)</div><div class='output co'>#&gt; step 1 ica training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>ica_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>ica_estimates</span>, <span class='no'>te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(ica_estimates, te): object 'ica_estimates' not found</span></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>te</span>$<span class='no'>V1</span>, <span class='no'>te</span>$<span class='no'>V2</span>)</div><img src='step_ica-7.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='no'>ica_data</span>$<span class='no'>IC1</span>, <span class='no'>ica_data</span>$<span class='no'>IC2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(ica_data$IC1, ica_data$IC2): object 'ica_data' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

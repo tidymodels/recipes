@@ -3,7 +3,7 @@
 #' \code{step_sqrt} creates a \emph{specification} of a recipe step that will square root transform the data.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be transformed.
+#' @param ... One or more selector functions to choose which variables will be transformed. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param vars A character string of variable names that will be (eventually) populated by the \code{terms} argument.
 #' @return \code{step_sqrt}  returns an object of class \code{step_sqrt}.
@@ -17,9 +17,8 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' library(magrittr)
 #' sqrt_trans <- rec  %>%
-#'   step_sqrt(terms = ~ all_predictors())
+#'   step_sqrt(all_predictors())
 #'
 #' sqrt_obj <- learn(sqrt_trans, training = examples)
 #'
@@ -27,7 +26,10 @@
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_sqrt <- function(recipe, terms, role = NA, trained = FALSE, vars = NULL) {
+step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, vars = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_sqrt_new(
@@ -52,7 +54,7 @@ step_sqrt_new <- function(terms = NULL, role = NA, trained = FALSE, vars = NULL)
 
 #' @export
 learn.step_sqrt <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   step_sqrt_new(
     terms = x$terms,
     role = x$role,
@@ -73,7 +75,7 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
   cat("Square root transformation on ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

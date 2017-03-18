@@ -10,7 +10,7 @@ ex_dat <- data.frame(x1 = seq(0, 1, length = n),
 test_that('simple sqrt trans', {
   
       rec <- recipe(~., data = ex_dat) %>% 
-        step_sqrt(~x1 + x2)
+        step_sqrt(x1, x2)
       
       rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
       rec_trans <- process(rec_trained, newdata = ex_dat)

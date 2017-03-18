@@ -64,26 +64,26 @@ rec_obj <- rec_obj %>% step_name(arguments)
 ```
 `step_center` and the other functions will always return updated recipes. 
 
-One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but _formulas_ within the steps can utilize: 
+One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but [`dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)-like selector functions can be used: 
 
- * use basic variable names (e.g. `~ x1 + x2`),
+ * use basic variable names (e.g. `x1, x2`),
  *  [`dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) functions for selecting variables: `contains`, `ends_with`, `everything`, `matches`, `num_range`, and `starts_with`,
  * functions that subset on the role of the variables that have been specified so far: `all_outcomes`, `all_predictors`, `has_role`, or 
  * similar functions for the type of data: `all_nominal`, `all_numeric`, and `has_type`. 
 
-Note that the functions listed above are the only ones that can be used on formulas inside the steps. Also, minus signs can be used to deselect variables. 
+Note that the functions listed above are the only ones that can be used to selecto variables inside the steps. Also, minus signs can be used to deselect variables. 
 
 For our data, we can add the two operations for all of the all_predictors:
 ```{r center_scale}
 standardized <- rec_obj %>%
-  step_center(~ all_predictors()) %>%
-  step_scale(~ all_predictors()) 
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors()) 
 standardized
 ```
 
 It is important to realize that the _specific_ variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-If this is the only processing steps for the all_predictors, we can now estimate the means and standard deviations from the training set. The `learn` function is used with a recipe and a data set:
+If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `learn` function is used with a recipe and a data set:
 ```{r trained}
 trained_rec <- learn(standardized, training = seg_train)
 ```
@@ -104,7 +104,7 @@ test_data
 After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the all_predictors from channel 1 and any all_predictors that are areas: 
 ```{r pca}
 trained_rec <- trained_rec %>%
-  step_pca(~ ends_with("Ch1") + contains("area"), num = 5)
+  step_pca(ends_with("Ch1"), contains("area"), num = 5)
 trained_rec
 ```
 Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using `learn` again:

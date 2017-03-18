@@ -42,6 +42,8 @@ add_role.default <- function(recipe, vars, role = "predictor", data = NULL) {
   stop("`vars` should be either a character string or formula.", call. = FALSE)
 }
 
+##TODO use selectors here too?
+
 #' @export
 add_role.character <- function(recipe, vars, role = "predictor", data = NULL) {
   if(length(role) > 1) stop("A single role is required", call. = FALSE)

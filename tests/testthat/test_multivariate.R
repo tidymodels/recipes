@@ -7,8 +7,8 @@ data("biomass")
 test_that('multivariate outcome', {
   raw_recipe <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
   rec <- raw_recipe %>% 
-    step_center(~ all_outcomes()) %>%
-    step_scale(~ all_predictors())
+    step_center(all_outcomes()) %>%
+    step_scale(all_predictors())
   
   rec_trained <- learn(rec, training = biomass)
   

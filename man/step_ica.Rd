@@ -4,13 +4,13 @@
 \alias{step_ica}
 \title{ICA Signal Extraction}
 \usage{
-step_ica(recipe, terms, role = "predictor", trained = FALSE, num = 5,
+step_ica(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   options = list(), res = NULL, prefix = "IC")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to compute the components.}
+\item{...}{One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as all_predictors in a model.}
 
@@ -49,9 +49,9 @@ te <- X[101:200, ]
 
 rec <- recipe( ~ ., data = tr)
 
-ica_trans <- step_center(rec, terms = ~ V1 + V2)
-ica_trans <- step_scale(rec, terms =  ~ V1 + V2)
-ica_trans <- step_ica(rec, terms =  ~ V1 + V2, num = 2)
+ica_trans <- step_center(rec,  V1, V2)
+ica_trans <- step_scale(rec, V1, V2)
+ica_trans <- step_ica(rec, V1, V2, num = 2)
 ica_estimates <- learn(ica_trans, training = tr)
 ica_data <- process(ica_estimates, te)
 

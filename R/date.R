@@ -3,7 +3,7 @@
 #' \code{step_date} creates a a \emph{specification} of a recipe step that will convert date data into one or more factor or numeric variables.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.
+#' @param ... One or more selector functions to choose which variables that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.
 #' @param features A character string that includes at least one of the following values: \code{month}, \code{dow} (day of week), \code{doy} (day of year), \code{week}, \code{decimal} (decimal date, e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.
 #' @param label A logical. Only available for features \code{month} or \code{dow}. \code{TRUE} will display the day of the week as an ordered factor of character strings, such as "Sunday." \code{FALSE} will display the day of the week as a number.
@@ -17,18 +17,18 @@
 #' @details Unlike other steps, \code{step_date} does \emph{not} remove the original date variables. \code{\link{step_rm}} can be used for this purpose.
 #' @examples
 #' library(lubridate)
-#' library(magrittr)
+#'
 #' examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 #'                        Stefan = ymd("2006-01-13") + days(1:10))
 #' date_rec <- recipe(~ Dan + Stefan, examples) %>%
-#'    step_date(~ all_predictors())
+#'    step_date(all_predictors())
 #'
 #' date_rec <- learn(date_rec, training = examples)
 #' date_values <- process(date_rec, newdata = examples)
 #' date_values
 #' @seealso \code{\link{step_holiday}} \code{\link{step_rm}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_date <- function(recipe,
-                      terms,
+                      ...,
                       role = "predictor",
                       trained = FALSE,
                       features = c("dow", "month", "year"),
@@ -42,6 +42,9 @@ step_date <- function(recipe,
          paste0("'", feat, "'", collapse = ", "))
 
 
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_date_new(
@@ -79,7 +82,7 @@ step_date_new <- function(terms = NULL,
 #' @importFrom stats as.formula model.frame
 #' @export
 learn.step_date <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   date_data <- info[info$variable %in% col_names,]
   if(any(date_data$type != "date"))
@@ -178,7 +181,7 @@ print.step_date <- function(x, width = max(20, options()$width - 29), ...) {
   cat("Date features from ")
   if(x$trained) {
     cat(format_ch_vec(x$variables, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

@@ -4,12 +4,12 @@
 \alias{step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, terms, role = NA, trained = FALSE, vars = NULL)
+step_sqrt(recipe, ..., role = NA, trained = FALSE, vars = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be transformed.}
+\item{...}{One or more selector functions to choose which variables will be transformed. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -30,9 +30,8 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-library(magrittr)
 sqrt_trans <- rec  \%>\%
-  step_sqrt(terms = ~ all_predictors())
+  step_sqrt(all_predictors())
 
 sqrt_obj <- learn(sqrt_trans, training = examples)
 

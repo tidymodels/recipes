@@ -4,16 +4,16 @@
 \alias{step_classdist}
 \title{Distances to Class Centroids}
 \usage{
-step_classdist(recipe, terms, class, role = "predictor", trained = FALSE,
+step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   mean_func = mean, cov_func = cov, pool = FALSE, log = TRUE,
   objects = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to create the new features.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
-\item{class}{A single character string or formula that that specifies a single categorical variable to be used as the class.}
+\item{class}{A single character string that specifies a single categorical variable to be used as the class.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.}
 
@@ -36,20 +36,19 @@ step_classdist(recipe, terms, class, role = "predictor", trained = FALSE,
 \code{step_classdist} creates a a \emph{specification} of a recipe step that will convert numeric data into Mahalanobis distance measurements to the data centroid. This is done for each value of a categorical class variable.
 }
 \details{
-\code{step_classdist} will create a 
+\code{step_classdist} will create a
 
-The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{classdist_}. 
+The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{classdist_}.
 
 Note that, by default,  the default covariance function requires that each class should have at least as many rows as variables listed in the \code{terms} argument. If \code{pool = TRUE}, there must be at least as many data points are variables overall.
 }
 \examples{
-library(magrittr)
 
 # in case of missing data...
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(~ all_predictors(), class = ~ Species, 
+  step_classdist(all_predictors(), class = "Species",
                  pool = FALSE, mean_func = mean2)
 
 rec_dists <- learn(rec, training = iris)

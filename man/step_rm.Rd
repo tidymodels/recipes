@@ -4,12 +4,12 @@
 \alias{step_rm}
 \title{General Variable Filter}
 \usage{
-step_rm(recipe, terms, role = NA, trained = FALSE, removals = NULL)
+step_rm(recipe, ..., role = NA, trained = FALSE, removals = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will evaluated by the filtering process.}
+\item{...}{One or more selector functions to choose which variables that will evaluated by the filtering process. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -34,7 +34,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 library(dplyr)
 smaller_set <- rec \%>\%
-  step_rm(terms = ~ contains("gen"))
+  step_rm(contains("gen"))
 
 smaller_set <- learn(smaller_set, training = biomass_tr)
 

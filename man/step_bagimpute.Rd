@@ -2,16 +2,19 @@
 % Please edit documentation in R/bag_imp.R
 \name{step_bagimpute}
 \alias{step_bagimpute}
+\alias{imp_vars}
 \title{Imputation via Bagged Trees}
 \usage{
-step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
-  options = list(nbagg = 25, keepX = FALSE), impute_with = NULL,
-  seed_val = sample.int(10^4, 1))
+step_bagimpute(recipe, ..., role = NA, trained = FALSE, models = NULL,
+  options = list(nbagg = 25, keepX = FALSE),
+  impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4, 1))
+
+imp_vars(...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be imputed.}
+\item{...}{One or more selector functions to choose variables. For \code{step_bagimpute}, this indicates the variables to be imputed. When used with \code{imp_vars}, the dots indicates which variables are used to predict the missing data in each variable. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -21,7 +24,7 @@ step_bagimpute(recipe, terms, role = NA, trained = FALSE, models = NULL,
 
 \item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.}
 
-\item{impute_with}{A representation of the variables that will be used as all_predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.}
+\item{impute_with}{A call to \code{imp_vars} to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see \code{\link{selections}}).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.}
 
 \item{seed_val}{A integer used to create reproducible models. The same seed is used across all imputation models.}
 }
@@ -53,10 +56,8 @@ missing_examples <- c(14, 394, 565)
 
 rec <- recipe(Price ~ ., data = credit_tr)
 
-library(magrittr)
 impute_rec <- rec \%>\%
-  step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
-                 impute_with  = ~ all_predictors())
+  step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 
 imp_models <- learn(impute_rec, training = credit_tr)
 

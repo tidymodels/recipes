@@ -3,7 +3,7 @@
 #' \code{step_ica} creates a \emph{specification} of a recipe step that will convert numeric data into one or more independent components.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to compute the components.
+#' @param ... One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as all_predictors in a model.
 #' @param num The number of ICA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.
 #' @param options A list of options to \code{\link[fastICA]{fastICA}}. No defaults are set here. \bold{Note} that the arguments \code{X} and \code{n.comp} should not be passed here.
@@ -33,9 +33,9 @@
 #'
 #' rec <- recipe( ~ ., data = tr)
 #'
-#' ica_trans <- step_center(rec, terms = ~ V1 + V2)
-#' ica_trans <- step_scale(rec, terms =  ~ V1 + V2)
-#' ica_trans <- step_ica(rec, terms =  ~ V1 + V2, num = 2)
+#' ica_trans <- step_center(rec,  V1, V2)
+#' ica_trans <- step_scale(rec, V1, V2)
+#' ica_trans <- step_ica(rec, V1, V2, num = 2)
 #' ica_estimates <- learn(ica_trans, training = tr)
 #' ica_data <- process(ica_estimates, te)
 #'
@@ -43,13 +43,16 @@
 #' plot(ica_data$IC1, ica_data$IC2)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_ica <- function(recipe,
-                     terms,
+                     ...,
                      role = "predictor",
                      trained = FALSE,
                      num  = 5,
                      options = list(),
                      res = NULL,
                      prefix = "IC") {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_ica_new(
@@ -87,7 +90,7 @@ step_ica_new <- function(terms = NULL,
 #' @importFrom dimRed FastICA dimRedData
 #' @export
 learn.step_ica <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   x$num <- min(x$num, length(col_names))
 
@@ -123,7 +126,7 @@ print.step_ica <- function(x, width = max(20, options()$width - 29), ...) {
   cat("ICA extraction with ")
   if(x$trained) {
     cat(format_ch_vec(colnames(x$res@org.data), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

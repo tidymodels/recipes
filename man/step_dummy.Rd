@@ -4,14 +4,14 @@
 \alias{step_dummy}
 \title{Dummy Variables Creation}
 \usage{
-step_dummy(recipe, terms, role = "predictor", trained = FALSE,
+step_dummy(recipe, ..., role = "predictor", trained = FALSE,
   contrast = options("contrasts"), naming = function(var, lvl) paste(var,
   make.names(lvl), sep = "_"), levels = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to create the dummy variables.}
+\item{...}{One or more selector functions to choose which variables will be used to create the dummy variables. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.}
 
@@ -42,8 +42,7 @@ okc <- okc[complete.cases(okc),]
 
 rec <- recipe(~ diet + age + height, data = okc)
 
-library(magrittr)
-dummies <- rec \%>\% step_dummy(~ diet)
+dummies <- rec \%>\% step_dummy(diet)
 dummies <- learn(dummies, training = okc)
 
 dummy_data <- process(dummies, newdata = okc)

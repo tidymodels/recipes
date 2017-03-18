@@ -14,7 +14,7 @@ ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),
 
 test_that('simple log trans', {
   rec <- recipe(~., data = ex_dat) %>% 
-    step_log(~x1 + x2 + x3 + x4)
+    step_log(x1, x2, x3, x4)
   
   rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)
@@ -27,7 +27,7 @@ test_that('simple log trans', {
 
 test_that('alt base', {
   rec <- recipe(~., data = ex_dat) %>% 
-    step_log(~x1 + x2 + x3 + x4, base = pi)
+    step_log(x1, x2, x3, x4, base = pi)
   
   rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)

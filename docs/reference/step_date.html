@@ -89,7 +89,7 @@
     <p><code>step_date</code> creates a a <em>specification</em> of a recipe step that will convert date data into one or more factor or numeric variables.</p>
     
 
-    <pre><span class='fu'>step_date</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre><span class='fu'>step_date</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span>), <span class='kw'>abbr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -97,8 +97,8 @@
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be used to create the new variables. The selected variables should have class <code>Date</code> or <code>POSIXct</code>.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables that will be used to create the new variables. The selected variables should have class <code>Date</code> or <code>POSIXct</code>. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -130,27 +130,26 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
+
 <span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'>ymd</span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'>days</span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
                        <span class='kw'>Stefan</span> <span class='kw'>=</span> <span class='fu'>ymd</span>(<span class='st'>"2006-01-13"</span>) + <span class='fu'>days</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'>step_date</span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+   <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>date_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 date training </div><div class='input'><span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>date_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
-<span class='no'>date_values</span></div><div class='output co'>#&gt; # A tibble: 10 × 8
-#&gt;           Dan     Stefan Dan_dow Dan_month Dan_year Stefan_dow Stefan_month
-#&gt;        &lt;date&gt;     &lt;date&gt;  &lt;fctr&gt;    &lt;fctr&gt;    &lt;dbl&gt;     &lt;fctr&gt;       &lt;fctr&gt;
-#&gt; 1  2002-03-05 2006-01-14    Tues       Mar     2002        Sat          Jan
-#&gt; 2  2002-03-06 2006-01-15     Wed       Mar     2002        Sun          Jan
-#&gt; 3  2002-03-07 2006-01-16   Thurs       Mar     2002        Mon          Jan
-#&gt; 4  2002-03-08 2006-01-17     Fri       Mar     2002       Tues          Jan
-#&gt; 5  2002-03-09 2006-01-18     Sat       Mar     2002        Wed          Jan
-#&gt; 6  2002-03-10 2006-01-19     Sun       Mar     2002      Thurs          Jan
-#&gt; 7  2002-03-11 2006-01-20     Mon       Mar     2002        Fri          Jan
-#&gt; 8  2002-03-12 2006-01-21    Tues       Mar     2002        Sat          Jan
-#&gt; 9  2002-03-13 2006-01-22     Wed       Mar     2002        Sun          Jan
-#&gt; 10 2002-03-14 2006-01-23   Thurs       Mar     2002        Mon          Jan
-#&gt; # ... with 1 more variables: Stefan_year &lt;dbl&gt;</div></pre>
+<span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>date_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 date training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>date_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
+<span class='no'>date_values</span></div><div class='output co'>#&gt; # A tibble: 10 × 2
+#&gt;           Dan     Stefan
+#&gt;        &lt;date&gt;     &lt;date&gt;
+#&gt; 1  2002-03-05 2006-01-14
+#&gt; 2  2002-03-06 2006-01-15
+#&gt; 3  2002-03-07 2006-01-16
+#&gt; 4  2002-03-08 2006-01-17
+#&gt; 5  2002-03-09 2006-01-18
+#&gt; 6  2002-03-10 2006-01-19
+#&gt; 7  2002-03-11 2006-01-20
+#&gt; 8  2002-03-12 2006-01-21
+#&gt; 9  2002-03-13 2006-01-22
+#&gt; 10 2002-03-14 2006-01-23</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

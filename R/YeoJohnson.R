@@ -28,7 +28,7 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' yj_trans <- step_YeoJohnson(rec, terms = ~ all_numeric())
+#' yj_trans <- step_YeoJohnson(rec,  all_numeric())
 #'
 #' yj_estimates <- learn(yj_trans, training = biomass_tr)
 #'
@@ -37,7 +37,10 @@
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
 #' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
-step_YeoJohnson <- function(recipe, terms, role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
+step_YeoJohnson <- function(recipe, ..., role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_YeoJohnson_new(
@@ -66,7 +69,7 @@ step_YeoJohnson_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 #' @export
 learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   values <- vapply(
     training[, col_names],
     estimate_yj,
@@ -98,7 +101,7 @@ print.step_YeoJohnson <- function(x, width = max(20, options()$width - 39), ...)
   cat("Yeo-Johnson transformation on ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$lambdas), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

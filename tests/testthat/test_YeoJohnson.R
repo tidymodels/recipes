@@ -42,7 +42,7 @@ exp_dat <- structure(list(x1 = c(0.435993557749438, 0.754696454247318, 0.3713279
 
 test_that('simple YJ trans', {
   rec <- recipe(~., data = ex_dat) %>% 
-    step_YeoJohnson(~x1 + x2 + x3 + x4)
+    step_YeoJohnson(x1, x2, x3, x4)
   
   rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)

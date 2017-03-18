@@ -3,41 +3,39 @@
 #' \code{step_classdist} creates a a \emph{specification} of a recipe step that will convert numeric data into Mahalanobis distance measurements to the data centroid. This is done for each value of a categorical class variable.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to create the new features.
-#' @param class A single character string or formula that that specifies a single categorical variable to be used as the class. 
+#' @param class A single character string that specifies a single categorical variable to be used as the class.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.
 #' @param mean_func A function to compute the center of the distribution.
 #' @param cov_func A function that computes the covariance matrix
-#' @param pool A logical: should the covariance matrix be computed by pooling the data for all of the classes? 
+#' @param pool A logical: should the covariance matrix be computed by pooling the data for all of the classes?
 #' @param log A logical: should the distances be transformed by the natural log function?
 #' @param objects Statistics are stored here once this step has been trained by \code{\link{learn.recipe}}.
 #' @return \code{step_classdist} returns an object of class \code{step_classdist}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
-#' @details \code{step_classdist} will create a 
+#' @details \code{step_classdist} will create a
 #'
-#' The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{classdist_}. 
-#' 
-#' Note that, by default,  the default covariance function requires that each class should have at least as many rows as variables listed in the \code{terms} argument. If \code{pool = TRUE}, there must be at least as many data points are variables overall.  
+#' The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{classdist_}.
+#'
+#' Note that, by default,  the default covariance function requires that each class should have at least as many rows as variables listed in the \code{terms} argument. If \code{pool = TRUE}, there must be at least as many data points are variables overall.
 #' @examples
-#' library(magrittr)
-#' 
+#'
 #' # in case of missing data...
 #' mean2 <- function(x) mean(x, na.rm = TRUE)
-#' 
+#'
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(~ all_predictors(), class = ~ Species, 
+#'   step_classdist(all_predictors(), class = "Species",
 #'                  pool = FALSE, mean_func = mean2)
-#' 
+#'
 #' rec_dists <- learn(rec, training = iris)
-#' 
+#'
 #' dists_to_species <- process(rec_dists, newdata = iris)
 #' ## on log scale:
 #' dists_to_species[, c("Species", grep("classdist", names(dists_to_species), value = TRUE))]
 #' @importFrom stats cov
 step_classdist <- function(recipe,
-                           terms,
+                           ...,
                            class,
                            role = "predictor",
                            trained = FALSE,
@@ -46,6 +44,11 @@ step_classdist <- function(recipe,
                            pool = FALSE,
                            log = TRUE,
                            objects = NULL) {
+  if(!is.character(class) || length(class) != 1)
+    stop("`class` should be a single character value.")
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_classdist_new(
@@ -56,7 +59,7 @@ step_classdist <- function(recipe,
       mean_func = mean_func,
       cov_func = cov_func,
       pool = pool,
-      log = log, 
+      log = log,
       objects = objects))
 }
 
@@ -95,16 +98,13 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 #' @importFrom stats as.formula model.frame
 #' @export
 learn.step_classdist <- function(x, training, info = NULL, ...) {
-  class_var <- if(is_formula(x$class)) 
-    all.vars(x$class)[1] else 
-      x$class[1]
-    
-  x_names <- parse_terms_formula(x$terms, info = info)
+  class_var <- x$class[1]
+  x_names <- select_terms(x$terms, info = info)
   x_dat <- split(training[, x_names], getElement(training, class_var))
   if(x$pool) {
     res <- list(center = lapply(x_dat, get_center, mfun = x$mean_func),
                 scale = x$cov_func(training[, x_names]))
-    
+
   } else {
     res <- lapply(x_dat, get_both, mfun = x$mean_func, cfun = x$cov_func)
   }
@@ -116,29 +116,29 @@ learn.step_classdist <- function(x, training, info = NULL, ...) {
     mean_func = x$mean_func,
     cov_func = x$cov_func,
     pool = x$pool,
-    log = x$log, 
+    log = x$log,
     objects = res
   )
 }
 
 
 #' @importFrom stats mahalanobis
-mah_by_class <- function(param, x) 
+mah_by_class <- function(param, x)
   mahalanobis(x, param$center, param$scale)
 
-mah_pooled <- function(means, x, cov_mat) 
+mah_pooled <- function(means, x, cov_mat)
   mahalanobis(x, means, cov_mat)
 
 
-#' @importFrom tibble as_tibble 
+#' @importFrom tibble as_tibble
 #' @export
 process.step_classdist <- function(object, newdata, ...) {
   if(object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     res <- lapply(
-      object$objects$center, 
-      mah_pooled, 
-      x = newdata[, x_cols], 
+      object$objects$center,
+      mah_pooled,
+      x = newdata[, x_cols],
       cov_mat = object$objects$scale
     )
   } else {
@@ -157,12 +157,12 @@ process.step_classdist <- function(object, newdata, ...) {
 print.step_classdist <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Distances to", x$class, "for ")
   if(x$trained) {
-    x_names <- if(x$pool) 
+    x_names <- if(x$pool)
       names(x$objects[["center"]][[1]]) else
         names(x$objects[[1]]$center)
-    
+
     cat(format_ch_vec(x_names, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

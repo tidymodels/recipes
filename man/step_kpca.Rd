@@ -4,14 +4,14 @@
 \alias{step_kpca}
 \title{Kernel PCA Signal Extraction}
 \usage{
-step_kpca(recipe, terms, role = "predictor", trained = FALSE, num = 5,
+step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
   prefix = "kPC")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to compute the components.}
+\item{...}{One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.}
 
@@ -49,12 +49,11 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 kpca_trans <- rec \%>\%
-  step_YeoJohnson(terms = ~ all_predictors()) \%>\%
-  step_center(terms = ~ all_predictors()) \%>\%
-  step_scale(terms = ~ all_predictors()) \%>\%
-  step_kpca(terms = ~ all_predictors())
+  step_YeoJohnson(all_predictors()) \%>\%
+  step_center(all_predictors()) \%>\%
+  step_scale(all_predictors()) \%>\%
+  step_kpca(all_predictors())
 
 kpca_estimates <- learn(kpca_trans, training = biomass_tr)
 

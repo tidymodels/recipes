@@ -13,7 +13,7 @@ rec <- recipe(X1 ~ ., data = tr_dat)
 
 test_that('correct kernel PCA values', {
   kpca_rec <- rec %>%
-    step_kpca(~ X2 + X3 + X4 + X5 + X6)
+    step_kpca(X2, X3, X4, X5, X6)
   
   kpca_trained <- learn(kpca_rec, training = tr_dat, verbose = FALSE)
   

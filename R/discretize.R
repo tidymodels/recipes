@@ -17,8 +17,7 @@ discretize.default <- function(x, ...)
 #' @param keep_na A logical for whether a factor level should be created to identify missing values in \code{x}.
 #' @param infs A logical indicating whether the smallest and largest cut point should be infinite.
 #' @param min_unique An integer defining a sample size line of dignity for the binning. If (the number of unique values)\code{/(cuts+1)} is less than \code{min_unique}, no discretization takes place.
-#' @param ... Options to pass to \code{\link[stats]{quantile}} that should not include \code{x} or \code{probs}.
-#'
+#' @param ... For \code{discretize}: options to pass to \code{\link[stats]{quantile}} that should not include \code{x} or \code{probs}. For \code{step_discretize}, the dots specify one or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.
 #'
 #' @return \code{discretize} returns an object of class \code{discretize}. \code{predict.discretize} returns a factor vector.
 #' @keywords datagen
@@ -49,10 +48,9 @@ discretize.default <- function(x, ...)
 #' carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 #' predict(carbon_no_infs, c(50, 100))
 #'
-#' library(magrittr)
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' rec <- rec %>% step_discretize(~ carbon + hydrogen)
+#' rec <- rec %>% step_discretize(carbon, hydrogen)
 #' rec <- learn(rec, biomass_tr)
 #' binned_te <- process(rec, biomass_te)
 #' table(binned_te$carbon)
@@ -147,15 +145,17 @@ print.discretize <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 
 #' @rdname discretize
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be discretize.
 #' @param role Not used by this step since no new variables are created.
 #' @param objects The \code{\link{discretize}} objects are stored here once the recipe has be trained by \code{\link{learn.recipe}}.
 #' @param options A list of options to \code{\link{discretize}}. A defaults is set for the argument \code{x}. Note that the using the options \code{prefix} and \code{labels} when more than one variable is being transformed might be problematic as all variables inherit those values.
 #' @return \code{step_discretize} returns an object of class \code{step_discretize}.
 #' @export
 
-step_discretize <- function(recipe, terms, role = NA, trained = FALSE,
+step_discretize <- function(recipe, ..., role = NA, trained = FALSE,
                             objects = NULL, options = list()) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_discretize_new(
@@ -188,7 +188,7 @@ bin_wrapper <- function(x, args) {
 
 #' @export
 learn.step_discretize <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   if(length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     warning("Note that the options `prefix` and `labels`",
             "will be applied to all variables")
@@ -213,7 +213,7 @@ print.step_discretize <- function(x, width = max(20, options()$width - 30), ...)
   cat("Dummy variables from ")
   if(x$trained) {
     cat(format_ch_vec(names(x$objects), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

@@ -39,7 +39,7 @@ exp_dat <- structure(list(x1 = c(-0.48855792533959, 0.295526451871788, -0.663060
 
 test_that('simple Box Cox', {
   rec <- recipe(~., data = ex_dat) %>% 
-    step_BoxCox(~x1 + x2 + x3 + x4)
+    step_BoxCox(x1, x2, x3, x4)
   
   rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)

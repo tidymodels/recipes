@@ -20,9 +20,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' quadratic <- rec %>%
-#'   step_poly(terms = ~ carbon + hydrogen)
+#'   step_poly(carbon, hydrogen)
 #' quadratic <- learn(quadratic, training = biomass_tr)
 #'
 #' expanded <- process(quadratic, biomass_te)
@@ -30,8 +29,11 @@
 #' @seealso \code{\link{step_ns}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 
-step_poly <- function(recipe, terms, role = "predictor", trained = FALSE,
+step_poly <- function(recipe, ..., role = "predictor", trained = FALSE,
                       objects = NULL, options = list(degree = 2)) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_poly_new(
@@ -72,7 +74,7 @@ poly_wrapper <- function(x, args) {
 #' @importFrom stats poly
 #' @export
 learn.step_poly <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   obj <- lapply(training[, col_names], poly_wrapper, x$options)
   for(i in seq(along = col_names))
@@ -111,7 +113,7 @@ print.step_poly <- function(x, width = max(20, options()$width - 35), ...) {
   cat("Orthogonal polynomials on ")
   if(x$trained) {
     cat(format_ch_vec(names(x$objects), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

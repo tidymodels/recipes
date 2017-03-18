@@ -3,7 +3,7 @@
 #' \code{step_other} creates a \emph{specification} of a recipe step that will potentially pool infrequently occurring values into an "other" category.  
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will potentially be reduced.
+#' @param ... One or more selector functions to choose which variables that will potentially be reduced. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param threshold A single numeric value in (0, 1) for pooling. 
 #' @param other A single character value for the "other" category. 
@@ -30,19 +30,22 @@
 #' 
 #' rec <- recipe(~ diet + location, data = okc_tr)
 #' 
-#' library(magrittr)
-#' rec <- rec %>% step_other(~ diet + location, threshold = .1, other = "other values")
+#'
+#' rec <- rec %>% step_other(diet, location, threshold = .1, other = "other values")
 #' rec <- learn(rec, training = okc_tr)
 #' 
 #' collapsed <- process(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
 
-step_other <- function(recipe, terms, role = NA, trained = FALSE, threshold = .05, other = "other", objects = NULL) {
+step_other <- function(recipe, ..., role = NA, trained = FALSE, threshold = .05, other = "other", objects = NULL) {
   if(threshold <= 0)
     stop("`threshold` should be greater than zero")
   if(threshold >= 1)
     stop("`threshold` should be less than one")
   
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_other_new(
@@ -71,7 +74,7 @@ step_other_new <- function(terms = NULL, role = NA, trained = FALSE, threshold =
 #' @importFrom stats sd
 #' @export
 learn.step_other <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   objects <- lapply(training[, col_names], keep_levels,
                     prop = x$threshold, other = x$other)
   step_other_new(terms = x$terms, role = x$role, trained = TRUE,
@@ -107,7 +110,7 @@ print.step_other <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Collapsing factor levels for ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$objects), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

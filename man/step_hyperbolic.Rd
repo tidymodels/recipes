@@ -4,13 +4,13 @@
 \alias{step_hyperbolic}
 \title{Hyperbolic Transformations}
 \usage{
-step_hyperbolic(recipe, terms, role = NA, trained = FALSE, func = "sin",
+step_hyperbolic(recipe, ..., role = NA, trained = FALSE, func = "sin",
   inverse = TRUE, vars = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -35,10 +35,9 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-library(magrittr)
 cos_trans <- rec  \%>\%
-  step_hyperbolic(terms = ~ all_predictors(),
-                  fun = "cos", inverse = FALSE)
+  step_hyperbolic(all_predictors(),
+                  func = "cos", inverse = FALSE)
 
 cos_obj <- learn(cos_trans, training = examples)
 

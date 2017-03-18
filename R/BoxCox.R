@@ -22,7 +22,7 @@
 #'
 #' rec <- recipe(~ ., data = as.data.frame(state.x77))
 #'
-#' bc_trans <- step_BoxCox(rec, terms = ~ all_numeric())
+#' bc_trans <- step_BoxCox(rec, all_numeric())
 #'
 #' bc_estimates <- learn(bc_trans, training = as.data.frame(state.x77))
 #'
@@ -31,7 +31,10 @@
 #' plot(density(state.x77[, "Illiteracy"]), main = "before")
 #' plot(density(bc_data$Illiteracy), main = "after")
 #' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
-step_BoxCox <- function(recipe, terms, role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
+step_BoxCox <- function(recipe, ..., role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_BoxCox_new(
@@ -60,7 +63,7 @@ step_BoxCox_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 #' @export
 learn.step_BoxCox <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   values <- vapply(
     training[, col_names],
     estimate_bc,
@@ -92,7 +95,7 @@ print.step_BoxCox <- function(x, width = max(20, options()$width - 35), ...) {
   cat("Box-Cox transformation on ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$lambdas), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

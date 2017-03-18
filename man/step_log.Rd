@@ -4,13 +4,13 @@
 \alias{step_log}
 \title{Logarithmic Transformation}
 \usage{
-step_log(recipe, terms, role = NA, trained = FALSE, base = exp(1),
+step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
   vars = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -33,9 +33,8 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-library(magrittr)
 log_trans <- rec  \%>\%
-  step_log(terms = ~ all_predictors())
+  step_log(all_predictors())
 
 log_obj <- learn(log_trans, training = examples)
 

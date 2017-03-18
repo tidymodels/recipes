@@ -3,7 +3,6 @@
 #' \code{step_scale} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be scaled.
 #' @param role Not used by this step since no new variables are created.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL} until computed by \code{\link{learn.recipe}}.
 #' @param na.rm A logical value indicating whether \code{NA} values should be removed when computing the standard deviation.
@@ -21,9 +20,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' scaled_trans <- rec %>%
-#'   step_scale(terms = ~ carbon + hydrogen)
+#'   step_scale(carbon, hydrogen)
 #'
 #' scaled_obj <- learn(scaled_trans, training = biomass_tr)
 #'
@@ -32,7 +30,10 @@
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
 
-step_scale <- function(recipe, terms, role = NA, trained = FALSE, sds = NULL, na.rm = TRUE) {
+step_scale <- function(recipe, ..., role = NA, trained = FALSE, sds = NULL, na.rm = TRUE) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_scale_new(
@@ -59,7 +60,7 @@ step_scale_new <- function(terms = NULL, role = NA, trained = FALSE, sds = NULL,
 #' @importFrom stats sd
 #' @export
 learn.step_scale <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na.rm)
   step_scale_new(terms = x$terms, role = x$role, trained = TRUE, sds, na.rm = x$na.rm)
 }
@@ -76,7 +77,7 @@ print.step_scale <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Scaling for ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$sd), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

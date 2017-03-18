@@ -8,9 +8,9 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('spatial sign', {
   sp_sign <- rec %>% 
-    step_center(~ carbon + hydrogen) %>% 
-    step_scale(~ carbon + hydrogen) %>%
-    step_spatialsign(~ carbon + hydrogen)
+    step_center(carbon, hydrogen) %>% 
+    step_scale(carbon, hydrogen) %>%
+    step_spatialsign(carbon, hydrogen)
   
   sp_sign_trained <- learn(sp_sign, training = biomass, verbose = FALSE)
   

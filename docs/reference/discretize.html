@@ -101,7 +101,7 @@
 <span class='co'># S3 method for discretize</span>
 <span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)
 
-<span class='fu'>step_discretize</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>step_discretize</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -109,7 +109,7 @@
       <dt>x</dt>
       <dd><p>A numeric vector</p></dd>
       <dt>...</dt>
-      <dd><p>Options to pass to <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or <code>probs</code>.</p></dd>
+      <dd><p>For <code>discretize</code>: options to pass to <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or <code>probs</code>. For <code>step_discretize</code>, the dots specify one or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>cuts</dt>
       <dd><p>An integer defining how many cuts to make of the data.</p></dd>
       <dt>labels</dt>
@@ -128,8 +128,6 @@
       <dd><p>A new numeric object to be binned.</p></dd>
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be discretize.</p></dd>
       <dt>role</dt>
       <dd><p>Not used by this step since no new variables are created.</p></dd>
       <dt>trained</dt>
@@ -172,14 +170,23 @@
 <span class='no'>carbon_no_infs</span> <span class='kw'>&lt;-</span> <span class='fu'>discretize</span>(<span class='no'>biomass_tr</span>$<span class='no'>carbon</span>, <span class='kw'>infs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'>predict</span>(<span class='no'>carbon_no_infs</span>, <span class='fu'>c</span>(<span class='fl'>50</span>, <span class='fl'>100</span>))</div><div class='output co'>#&gt; [1] bin4 &lt;NA&gt;
 #&gt; Levels: bin_missing bin1 bin2 bin3 bin4</div><div class='input'>
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; 
-#&gt; bin_missing        bin1        bin2        bin3        bin4 
-#&gt;           0          22          17          25          16 </div></pre>
+#&gt;  27.8  29.2  33.4  36.5 36.63 38.94 41.11  41.5 41.68 41.78  42.1  42.7  43.2 
+#&gt;     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#&gt; 43.25 43.37 43.49  43.7 43.71 44.01 44.06  44.3  44.5 44.73 44.99 45.33  45.6 
+#&gt;     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#&gt;  45.7  45.8    46 46.04 46.17 46.35  46.4  46.6 46.63 46.68 46.83  47.2  47.4 
+#&gt;     2     1     1     1     1     1     2     1     1     1     1     1     1 
+#&gt;  47.5 47.63  47.7  47.8 47.89 48.13 48.18 48.26 48.54 48.57 48.64 48.67 48.76 
+#&gt;     1     1     1     2     1     1     2     1     1     1     1     1     1 
+#&gt;  48.9 48.94    49 49.69 49.71 50.18 50.19 50.24  50.3 50.35  51.2  52.8 52.99 
+#&gt;     1     2     3     1     1     1     1     1     1     1     1     1     1 
+#&gt; 53.07  54.6  54.9  71.5  75.5 77.54  78.8 79.34 
+#&gt;     1     1     1     1     1     1     1     1 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

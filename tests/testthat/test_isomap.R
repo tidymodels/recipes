@@ -24,7 +24,7 @@ rec <- recipe( ~ ., data = dat1)
 
 test_that('correct Isomap values', {
   im_rec <- rec %>%
-    step_isomap(~ x1 + x2 + x3, options = list(knn = 3), num = 3)
+    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
   
   im_trained <- learn(im_rec, training = dat1, verbose = FALSE)
   

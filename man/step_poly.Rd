@@ -4,13 +4,13 @@
 \alias{step_poly}
 \title{Orthogonal Polynomial Basis Functions}
 \usage{
-step_poly(recipe, terms, role = "predictor", trained = FALSE,
+step_poly(recipe, ..., role = "predictor", trained = FALSE,
   objects = NULL, options = list(degree = 2))
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.}
 
@@ -38,9 +38,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 quadratic <- rec \%>\%
-  step_poly(terms = ~ carbon + hydrogen)
+  step_poly(carbon, hydrogen)
 quadratic <- learn(quadratic, training = biomass_tr)
 
 expanded <- process(quadratic, biomass_te)

@@ -3,7 +3,7 @@
 #' \code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
-#' @param terms A formula that represents the variables or terms that will be processed. The raw variable names can be used or \pkg{dplyr} selection tools. See \code{\link{selections}} for more details.
+#' @param ... One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param means A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}.
@@ -23,9 +23,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' center_trans <- rec %>%
-#'   step_center(terms = ~ carbon + hydrogen)
+#'   step_center(carbon, contains("gen"), -hydrogen)
 #'
 #' center_obj <- learn(center_trans, training = biomass_tr)
 #'
@@ -34,7 +33,10 @@
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
 #' @seealso \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
-step_center <- function(recipe, terms, role = NA, trained = FALSE, means = NULL, na.rm = TRUE) {
+step_center <- function(recipe, ..., role = NA, trained = FALSE, means = NULL, na.rm = TRUE) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_center_new(
@@ -58,7 +60,7 @@ step_center_new <- function(terms = NULL, role = NA, trained = FALSE, means = NU
 }
 
 learn.step_center <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)
   step_center_new(terms = x$terms, role = x$role, trained = TRUE, means = means, na.rm = x$na.rm)
@@ -75,7 +77,7 @@ print.step_center <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Centering for ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$means), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

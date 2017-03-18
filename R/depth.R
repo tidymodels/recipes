@@ -3,8 +3,8 @@
 #' \code{step_depth} creates a a \emph{specification} of a recipe step that will convert numeric data into measurement of \emph{data depth}. This is done for each value of a categorical class variable.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to create the new features.
-#' @param class A single character string or formula that that specifies a single categorical variable to be used as the class.
+#' @param ... One or more selector functions to choose which variables that will be used to create the new features. See \code{\link{selections}} for more details.
+#' @param class A single character string that specifies a single categorical variable to be used as the class.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as all_predictors in a model.
 #' @param metric A character string specifying the depth metric. Possible values are "potential", "halfspace", "Mahalanobis", "simplicialVolume", "spatial", and "zonoid".
 #' @param options A list of options to pass to the underlying depth functions. See \code{\link[ddalpha]{depth.halfspace}}, \code{\link[ddalpha]{depth.Mahalanobis}}, \code{\link[ddalpha]{depth.potential}}, \code{\link[ddalpha]{depth.projection}}, \code{\link[ddalpha]{depth.simplicial}}, \code{\link[ddalpha]{depth.simplicialVolume}}, \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
@@ -22,11 +22,10 @@
 #' The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{depth_}.
 #'
 #' @examples
-#' library(magrittr)
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(~ all_predictors(), class = ~ Species)
+#'   step_depth(all_predictors(), class = "Species")
 #'
 #' rec_dists <- learn(rec, training = iris)
 #'
@@ -35,13 +34,18 @@
 
 
 step_depth <- function(recipe,
-                       terms,
+                       ...,
                        class,
                        role = "predictor",
                        trained = FALSE,
                        metric =  "halfspace",
                        options = list(),
                        data = NULL) {
+  if(!is.character(class) || length(class) != 1)
+    stop("`class` should be a single character value.")
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_depth_new(
@@ -76,10 +80,8 @@ step_depth_new <- function(terms = NULL,
 #' @importFrom stats as.formula model.frame
 #' @export
 learn.step_depth <- function(x, training, info = NULL, ...) {
-  class_var <- if(is_formula(x$class))
-    all.vars(x$class)[1] else
-      x$class[1]
-  x_names <- parse_terms_formula(x$terms, info = info)
+  class_var <- x$class[1]
+  x_names <- select_terms(x$terms, info = info)
   x_dat <- split(training[, x_names], getElement(training, class_var))
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
@@ -128,7 +130,7 @@ print.step_depth <- function(x, width = max(20, options()$width - 30), ...) {
   if(x$trained) {
     x_names <- colnames(x$data[[1]])
     cat(format_ch_vec(x_names, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

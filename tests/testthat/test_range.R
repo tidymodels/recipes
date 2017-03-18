@@ -11,7 +11,7 @@ rec <- recipe(HHV ~ carbon + hydrogen,
 
 test_that('correct values', {
   standardized <- rec %>% 
-    step_range(~ carbon + hydrogen, min = -12) 
+    step_range(carbon, hydrogen, min = -12) 
   
   standardized_trained <- learn(standardized, training = biomass_tr, verbose = FALSE)
   
@@ -43,7 +43,7 @@ test_that('correct values', {
 
 test_that('defaults', {
   standardized <- rec %>% 
-    step_range(~ carbon + hydrogen) 
+    step_range(carbon, hydrogen) 
   
   standardized_trained <- learn(standardized, training = biomass_tr, verbose = FALSE)
   
@@ -75,7 +75,7 @@ test_that('defaults', {
 
 test_that('one variable', {
   standardized <- rec %>% 
-    step_range(~ carbon) 
+    step_range(carbon) 
   
   standardized_trained <- learn(standardized, training = biomass_tr, verbose = FALSE)
   

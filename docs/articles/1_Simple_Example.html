@@ -118,19 +118,19 @@ rec_obj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec_obj &lt;-<span class="st"> </span><span class="kw">step_name</span>(rec_obj, arguments)    ## or
 rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">step_name</span>(arguments)</code></pre></div>
 <p><code>step_center</code> and the other functions will always return updated recipes.</p>
-<p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <em>formulas</em> within the steps can utilize:</p>
+<p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"><code>dplyr</code></a>-like selector functions can be used:</p>
 <ul>
-<li>use basic variable names (e.g. <code>~ x1 + x2</code>),</li>
+<li>use basic variable names (e.g. <code>x1, x2</code>),</li>
 <li>
 <a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"><code>dplyr</code></a> functions for selecting variables: <code>contains</code>, <code>ends_with</code>, <code>everything</code>, <code>matches</code>, <code>num_range</code>, and <code>starts_with</code>,</li>
 <li>functions that subset on the role of the variables that have been specified so far: <code>all_outcomes</code>, <code>all_predictors</code>, <code>has_role</code>, or</li>
 <li>similar functions for the type of data: <code>all_nominal</code>, <code>all_numeric</code>, and <code>has_type</code>.</li>
 </ul>
-<p>Note that the functions listed above are the only ones that can be used on formulas inside the steps. Also, minus signs can be used to deselect variables.</p>
+<p>Note that the functions listed above are the only ones that can be used to selecto variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add the two operations for all of the all_predictors:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardized &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/step_center.html">step_center</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/step_scale.html">step_scale</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) 
+<span class="st">  </span><span class="kw"><a href="../reference/step_center.html">step_center</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/step_scale.html">step_scale</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) 
 standardized</code></pre></div>
 <pre><code>## Data Recipe
 ## 
@@ -145,7 +145,7 @@ standardized</code></pre></div>
 ## Centering for all_predictors()
 ## Scaling for all_predictors()</code></pre>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
-<p>If this is the only processing steps for the all_predictors, we can now estimate the means and standard deviations from the training set. The <code>learn</code> function is used with a recipe and a data set:</p>
+<p>If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>learn</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
 <pre><code>## step 1 center training 
 ## step 2 scale training</code></pre>
@@ -196,7 +196,7 @@ test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <html><body><a href="#adding-steps" class="anchor"> </a></body></html>Adding Steps</h2>
 <p>After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the all_predictors from channel 1 and any all_predictors that are areas:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span>trained_rec <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/step_pca.html">step_pca</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw">ends_with</span>(<span class="st">"Ch1"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">contains</span>(<span class="st">"area"</span>), <span class="dt">num =</span> <span class="dv">5</span>)
+<span class="st">  </span><span class="kw"><a href="../reference/step_pca.html">step_pca</a></span>(<span class="kw">ends_with</span>(<span class="st">"Ch1"</span>), <span class="kw">contains</span>(<span class="st">"area"</span>), <span class="dt">num =</span> <span class="dv">5</span>)
 trained_rec</code></pre></div>
 <pre><code>## Data Recipe
 ## 
@@ -212,7 +212,7 @@ trained_rec</code></pre></div>
 ## 
 ## Centering for AngleCh1, AreaCh1, ... [trained]
 ## Scaling for AngleCh1, AreaCh1, ... [trained]
-## PCA extraction with ends_with("Ch1") +contains("area")</code></pre>
+## PCA extraction with ends_with("Ch1"), contains("area")</code></pre>
 <p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>learn</code> again:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
 <pre><code>## step 1 center [pre-trained]

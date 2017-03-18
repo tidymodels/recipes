@@ -67,7 +67,7 @@ rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
   ica_extract <- rec %>% 
-    step_ica(~ carbon + hydrogen + oxygen + nitrogen + sulfur, num = 2)
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
   
   set.seed(12)
   ica_extract_trained <- learn(ica_extract, training = biomass_tr, verbose = FALSE)

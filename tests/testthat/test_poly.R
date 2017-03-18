@@ -11,7 +11,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct basis functions', {
   with_poly <- rec %>% 
-    step_poly(~ carbon + hydrogen)
+    step_poly(carbon, hydrogen)
   
   with_poly <- learn(with_poly, training = biomass_tr, verbose = FALSE)
   

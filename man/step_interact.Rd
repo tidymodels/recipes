@@ -42,7 +42,6 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 int_mod_1 <- rec \%>\%
   step_interact(terms = ~ carbon:hydrogen)
 

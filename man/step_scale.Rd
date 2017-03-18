@@ -4,13 +4,13 @@
 \alias{step_scale}
 \title{Scaling Numeric Data}
 \usage{
-step_scale(recipe, terms, role = NA, trained = FALSE, sds = NULL,
+step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
   na.rm = TRUE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be scaled.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -38,9 +38,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 scaled_trans <- rec \%>\%
-  step_scale(terms = ~ carbon + hydrogen)
+  step_scale(carbon, hydrogen)
 
 scaled_obj <- learn(scaled_trans, training = biomass_tr)
 

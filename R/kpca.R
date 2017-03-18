@@ -3,7 +3,7 @@
 #' \code{step_kpca} a \emph{specification} of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to compute the components.
+#' @param ... One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.
 #' @param num The number of PCA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.
 #' @param options A list of options to \code{\link[kernlab]{kpca}}. Defaults are set for the arguments \code{kernel} and \code{kpar} but others can be passed in. \bold{Note} that the arguments \code{x} and \code{features} should not be passed here (or at all).
@@ -34,12 +34,11 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' kpca_trans <- rec %>%
-#'   step_YeoJohnson(terms = ~ all_predictors()) %>%
-#'   step_center(terms = ~ all_predictors()) %>%
-#'   step_scale(terms = ~ all_predictors()) %>%
-#'   step_kpca(terms = ~ all_predictors())
+#'   step_YeoJohnson(all_predictors()) %>%
+#'   step_center(all_predictors()) %>%
+#'   step_scale(all_predictors()) %>%
+#'   step_kpca(all_predictors())
 #'
 #' kpca_estimates <- learn(kpca_trans, training = biomass_tr)
 #'
@@ -51,7 +50,7 @@
 #' @seealso \code{\link{step_pca}} \code{\link{step_ica}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 #'
 step_kpca <- function(recipe,
-                      terms,
+                      ...,
                       role = "predictor",
                       trained = FALSE,
                       num  = 5,
@@ -59,6 +58,9 @@ step_kpca <- function(recipe,
                       options = list(kernel = "rbfdot",
                                      kpar = list(sigma = 0.2)),
                       prefix = "kPC") {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_kpca_new(
@@ -96,7 +98,7 @@ step_kpca_new <- function(terms = NULL,
 #' @importFrom dimRed kPCA dimRedData
 #' @export
 learn.step_kpca <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
   kprc <- kprc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),

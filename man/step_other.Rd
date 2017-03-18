@@ -4,13 +4,13 @@
 \alias{step_other}
 \title{Collapse Some Categorical Levels}
 \usage{
-step_other(recipe, terms, role = NA, trained = FALSE, threshold = 0.05,
+step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will potentially be reduced.}
+\item{...}{One or more selector functions to choose which variables that will potentially be reduced. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -48,8 +48,8 @@ okc_te <- okc[-in_train,]
 
 rec <- recipe(~ diet + location, data = okc_tr)
 
-library(magrittr)
-rec <- rec \%>\% step_other(~ diet + location, threshold = .1, other = "other values")
+
+rec <- rec \%>\% step_other(diet, location, threshold = .1, other = "other values")
 rec <- learn(rec, training = okc_tr)
 
 collapsed <- process(rec, okc_te)

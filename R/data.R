@@ -5,7 +5,6 @@
 #' nitrogen, and sulfur) and the corresponding higher heating value (HHV). 
 #' These data are from their Table S.2 of the Supplementary Materials
 #'
-#'
 #' @name biomass
 #' @aliases biomass
 #' @docType data

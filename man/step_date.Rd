@@ -4,14 +4,14 @@
 \alias{step_date}
 \title{Date Feature Generator}
 \usage{
-step_date(recipe, terms, role = "predictor", trained = FALSE,
+step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
   ordinal = FALSE, variables = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.}
+\item{...}{One or more selector functions to choose which variables that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.}
 
@@ -38,11 +38,11 @@ Unlike other steps, \code{step_date} does \emph{not} remove the original date va
 }
 \examples{
 library(lubridate)
-library(magrittr)
+
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
-   step_date(~ all_predictors())
+   step_date(all_predictors())
 
 date_rec <- learn(date_rec, training = examples)
 date_values <- process(date_rec, newdata = examples)

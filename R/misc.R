@@ -151,6 +151,13 @@ format_ch_vec <- function(x, sep = ", ", width = options()$width - 9) {
   paste0(x, collapse = sep)
 }
 
+format_selectors <- function(x, wdth = options()$width - 9, ...) {
+  ## convert to character without the leading ~
+  x_items <- lapply(x, function(x) as.character(x[-1]))
+  x_items <- unlist(x_items)
+  format_ch_vec(x_items, width = wdth, sep = ", ")
+}
+
 terms.recipe <- function(x, ...) x$term_info
 
 filter_terms.formula <- function(formula, data, ...)

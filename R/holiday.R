@@ -3,7 +3,7 @@
 #' \code{step_holiday} creates a a \emph{specification} of a recipe step that will convert date data into one or more binary indicator variables for common holidays.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.
+#' @param ... One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.
 #' @param holidays A character string that includes at least one holdiay supported by the \code{timeDate} package. See \code{\link[timeDate]{listHolidays}} for a complete list.
 
@@ -15,10 +15,10 @@
 #' @details Unlike other steps, \code{step_holiday} does \emph{not} remove the original date variables. \code{\link{step_rm}} can be used for this purpose.
 #' @examples
 #' library(lubridate)
-#' library(magrittr)
+#'
 #' examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 #' holiday_rec <- recipe(~ someday, examples) %>%
-#'    step_holiday(~ all_predictors())
+#'    step_holiday(all_predictors())
 #'
 #' holiday_rec <- learn(holiday_rec, training = examples)
 #' holiday_values <- process(holiday_rec, newdata = examples)
@@ -26,15 +26,18 @@
 #' @seealso \code{\link{step_date}} \code{\link{step_rm}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} \code{\link[timeDate]{listHolidays}}
 #' @import timeDate
 step_holiday <- function(recipe,
-                      terms,
-                      role = "predictor",
-                      trained = FALSE,
-                      holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-                      variables = NULL) {
+                         ...,
+                         role = "predictor",
+                         trained = FALSE,
+                         holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+                         variables = NULL) {
   all_days <- listHolidays()
   if(!all(holidays %in% all_days))
     stop("Invalid `holidays` value. See timeDate::listHolidays")
 
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_holiday_new(
@@ -63,7 +66,7 @@ step_holiday_new <- function(terms = NULL,
 #' @importFrom stats as.formula model.frame
 #' @export
 learn.step_holiday <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   holiday_data <- info[info$variable %in% col_names,]
   if(any(holiday_data$type != "date"))
@@ -135,7 +138,7 @@ print.step_holiday <- function(x, width = max(20, options()$width - 29), ...) {
   cat("Holiday features from ")
   if(x$trained) {
     cat(format_ch_vec(x$variables, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

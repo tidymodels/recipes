@@ -18,10 +18,9 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' library(magrittr)
 #' cos_trans <- rec  %>%
-#'   step_hyperbolic(terms = ~ all_predictors(),
-#'                   fun = "cos", inverse = FALSE)
+#'   step_hyperbolic(all_predictors(),
+#'                   func = "cos", inverse = FALSE)
 #'
 #' cos_obj <- learn(cos_trans, training = examples)
 #'
@@ -29,12 +28,15 @@
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_sqrt}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_hyperbolic <- function(recipe, terms, role = NA, trained = FALSE,
+step_hyperbolic <- function(recipe, ..., role = NA, trained = FALSE,
                             func = "sin", inverse = TRUE, vars = NULL) {
   funcs <- c("sin", "cos", "tan")
   if(!(func %in% funcs))
     stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
 
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_hyperbolic_new(
@@ -63,7 +65,7 @@ step_hyperbolic_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 #' @export
 learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   step_hyperbolic_new(
     terms = x$terms,
     role = x$role,
@@ -91,7 +93,7 @@ print.step_hyperbolic <- function(x, width = max(20, options()$width - 32), ...)
   cat(ttl, "transformation on ")
   if(x$trained) {
     cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

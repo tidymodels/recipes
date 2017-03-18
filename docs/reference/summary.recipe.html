@@ -130,12 +130,13 @@
 #&gt; 1   Murder numeric predictor original
 #&gt; 2  Assault numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
-#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 3 × 4
-#&gt;   variable    type      role  source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-#&gt; 1      PC1 numeric predictor derived
-#&gt; 2      PC2 numeric predictor derived
-#&gt; 3      PC3 numeric predictor derived</div></pre>
+#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 × 4
+#&gt;   variable    type      role   source
+#&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
+#&gt; 1   Murder numeric predictor original
+#&gt; 2  Assault numeric predictor original
+#&gt; 3 UrbanPop numeric predictor original
+#&gt; 4     Rape numeric predictor original</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

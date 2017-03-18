@@ -4,13 +4,13 @@
 \alias{step_spatialsign}
 \title{Spatial Sign Preprocessing}
 \usage{
-step_spatialsign(recipe, terms, role = "predictor", trained = FALSE,
+step_spatialsign(recipe, ..., role = "predictor", trained = FALSE,
   vars = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used for the normalization.}
+\item{...}{One or more selector functions to choose which variables will be used for the normalization. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?}
 
@@ -38,11 +38,10 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 ss_trans <- rec \%>\%
-  step_center(terms = ~ carbon + hydrogen) \%>\%
-  step_scale(terms = ~ carbon + hydrogen) \%>\%
-  step_spatialsign(terms = ~ carbon + hydrogen)
+  step_center(carbon, hydrogen) \%>\%
+  step_scale(carbon, hydrogen) \%>\%
+  step_spatialsign(carbon, hydrogen)
 
 ss_obj <- learn(ss_trans, training = biomass_tr)
 

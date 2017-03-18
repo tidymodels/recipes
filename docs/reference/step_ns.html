@@ -89,15 +89,15 @@
     <p><code>step_ns</code> creates a <em>specification</em> of a recipe step that will create new columns that are basis expansions of variables using natural spines.</p>
     
 
-    <pre><span class='fu'>step_ns</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>2</span>))</pre>
+    <pre><span class='fu'>step_ns</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>2</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A formula that represents the variables or terms that will be processed. The raw variable names can be used or <span class="pkg">dplyr</span> selection tools. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -130,25 +130,24 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_ns</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span>)
-<span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ns training </div><div class='input'>
+  <span class='fu'>step_ns</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
+<span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ns training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
-<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 8
-#&gt;    oxygen nitrogen sulfur    HHV carbon_ns_1 carbon_ns_2 hydrogen_ns_1
-#&gt; *   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-#&gt; 1   47.20     0.30   0.22 18.275   0.5235017  -0.2360067     0.5626398
-#&gt; 2   48.06     2.85   0.34 17.560   0.4929257  -0.2408145     0.5563744
-#&gt; 3   49.10     2.40   0.30 17.173   0.4868199  -0.2407445     0.5563744
-#&gt; 4   37.30     1.80   0.50 18.851   0.5239392  -0.2358537     0.5739704
-#&gt; 5   42.77     0.20   0.00 20.547   0.5424882  -0.2257850     0.5773303
-#&gt; 6   41.70     0.70   0.20 18.467   0.5040254  -0.2401936     0.5563744
-#&gt; 7   54.13     1.19   0.51 15.095   0.4400424  -0.2334398     0.5444179
-#&gt; 8   33.80     0.95   0.20 16.240   0.4799363  -0.2403662     0.5115938
-#&gt; 9   31.10     0.14   4.90 11.147   0.2850862  -0.1687288     0.4934496
-#&gt; 10  23.69     4.63   1.05 10.750   0.2596973  -0.1552040     0.4420907
-#&gt; # ... with 70 more rows, and 1 more variables: hydrogen_ns_2 &lt;dbl&gt;</div></pre>
+<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 6
+#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+#&gt; *   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1   46.35     5.67  47.20     0.30   0.22 18.275
+#&gt; 2   43.25     5.50  48.06     2.85   0.34 17.560
+#&gt; 3   42.70     5.50  49.10     2.40   0.30 17.173
+#&gt; 4   46.40     6.10  37.30     1.80   0.50 18.851
+#&gt; 5   48.76     6.32  42.77     0.20   0.00 20.547
+#&gt; 6   44.30     5.50  41.70     0.70   0.20 18.467
+#&gt; 7   38.94     5.23  54.13     1.19   0.51 15.095
+#&gt; 8   42.10     4.66  33.80     0.95   0.20 16.240
+#&gt; 9   29.20     4.40  31.10     0.14   4.90 11.147
+#&gt; 10  27.80     3.77  23.69     4.63   1.05 10.750
+#&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -4,13 +4,13 @@
 \alias{step_holiday}
 \title{Holiday Feature Generator}
 \usage{
-step_holiday(recipe, terms, role = "predictor", trained = FALSE,
+step_holiday(recipe, ..., role = "predictor", trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), variables = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}.}
+\item{...}{One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.}
 
@@ -31,10 +31,10 @@ Unlike other steps, \code{step_holiday} does \emph{not} remove the original date
 }
 \examples{
 library(lubridate)
-library(magrittr)
+
 examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 holiday_rec <- recipe(~ someday, examples) \%>\%
-   step_holiday(~ all_predictors())
+   step_holiday(all_predictors())
 
 holiday_rec <- learn(holiday_rec, training = examples)
 holiday_values <- process(holiday_rec, newdata = examples)

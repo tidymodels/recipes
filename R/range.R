@@ -3,7 +3,7 @@
 #' \code{step_range} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be scaled.
+#' @param ... One or more selector functions to choose which variables will be scaled. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param min A single numeric value for the smallest value in the range
 #' @param max A single numeric value for the largest value in the range
@@ -22,9 +22,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' ranged_trans <- rec %>%
-#'   step_range(terms = ~ carbon + hydrogen)
+#'   step_range(carbon, hydrogen)
 #'
 #' ranged_obj <- learn(ranged_trans, training = biomass_tr)
 #'
@@ -33,7 +32,10 @@
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
 
-step_range <- function(recipe, terms, role = NA, trained = FALSE, min = 0, max = 1, ranges = NULL) {
+step_range <- function(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1, ranges = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_range_new(
@@ -62,7 +64,7 @@ step_range_new <- function(terms = NULL, role = NA, trained = FALSE, min = 0, ma
 #' @importFrom stats sd
 #' @export
 learn.step_range <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   mins <- vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
   maxs <- vapply(training[, col_names], max, c(max = 0), na.rm = TRUE)
   step_range_new(terms = x$terms, role = x$role, trained = TRUE,
@@ -91,7 +93,7 @@ print.step_range <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Range scaling to [", x$min, ",", x$max, "] for ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(colnames(x$ranges), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

@@ -89,7 +89,7 @@
     <p><code>step_isomap</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more new dimensions.</p>
     
 
-    <pre><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <pre><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>.mute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"message"</span>, <span class='st'>"output"</span>)), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Isomap"</span>)</pre>
     
@@ -97,8 +97,8 @@
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be used to compute the dimensions.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables will be used to compute the dimensions. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -142,23 +142,18 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>im_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_isomap</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>(),
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_isomap</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(),
               <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>100</span>),
               <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
-#&gt; step 2 center training 
-#&gt; step 3 scale training 
-#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:54: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:54: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:54: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:55: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:55: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:55: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:55: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:55: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-03-16 17:17:56: DONE</span></div><div class='input'>
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
-<span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_isomap-20.png' alt='' width='540' height='400' /></pre>
+<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(im_estimates, biomass_te): object 'im_estimates' not found</span></div><div class='input'>
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))</div><div class='output co'>#&gt; <span class='error'>Error in extendrange(c(im_te$Isomap1, im_te$Isomap2)): object 'im_te' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(im_te$Isomap1, im_te$Isomap2, xlim = rng, ylim = rng): object 'im_te' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -3,7 +3,7 @@
 #' \code{step_rm} creates a \emph{specification} of a recipe step that will remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will evaluated by the filtering process.
+#' @param ... One or more selector functions to choose which variables that will evaluated by the filtering process. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.
 #' @return \code{step_rm}  returns an object of class \code{step_rm}.
@@ -21,7 +21,7 @@
 #'
 #' library(dplyr)
 #' smaller_set <- rec %>%
-#'   step_rm(terms = ~ contains("gen"))
+#'   step_rm(contains("gen"))
 #'
 #' smaller_set <- learn(smaller_set, training = biomass_tr)
 #'
@@ -29,10 +29,13 @@
 #' filtered_te
 
 step_rm <- function(recipe,
-                      terms,
-                      role = NA,
-                      trained = FALSE,
-                      removals = NULL) {
+                    ...,
+                    role = NA,
+                    trained = FALSE,
+                    removals = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_rm_new(
@@ -59,7 +62,7 @@ step_rm_new <- function(terms = NULL,
 
 #' @export
 learn.step_rm <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   step_rm_new(
     terms = x$terms,

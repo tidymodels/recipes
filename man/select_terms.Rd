@@ -2,20 +2,26 @@
 % Please edit documentation in R/selections.R
 \name{select_terms}
 \alias{select_terms}
-\title{Select Terms.}
+\title{Select Terms in a Step Function.}
 \usage{
-select_terms(info, ...)
+select_terms(info, args)
 }
 \arguments{
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.}
 
-\item{...}{One or more selection functions. See \code{\link{selections}} for more details.}
+\item{args}{A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{tidy_quote}} for examples.}
 }
 \value{
 A character string of column names or an error of there are no selectors or if no variables are selected.
 }
 \description{
 This function processes the step function selectors and might be useful when creating custom steps.
+}
+\examples{
+data(okc)
+rec <- recipe(~ ., data = okc)
+info <- summary(rec)
+select_terms(info = info, tidy_quotes(all_predictors()))
 }
 \seealso{
 \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}

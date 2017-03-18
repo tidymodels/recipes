@@ -4,14 +4,14 @@
 \alias{step_isomap}
 \title{Isomap Embedding}
 \usage{
-step_isomap(recipe, terms, role = "predictor", trained = FALSE, num = 5,
+step_isomap(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   options = list(knn = 50, .mute = c("message", "output")), res = NULL,
   prefix = "Isomap")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be used to compute the dimensions.}
+\item{...}{One or more selector functions to choose which variables will be used to compute the dimensions. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.}
 
@@ -47,12 +47,11 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 im_trans <- rec \%>\%
-  step_YeoJohnson(terms = ~ all_predictors()) \%>\%
-  step_center(terms = ~ all_predictors()) \%>\%
-  step_scale(terms = ~ all_predictors()) \%>\%
-  step_isomap(terms = ~ all_predictors(),
+  step_YeoJohnson(all_predictors()) \%>\%
+  step_center(all_predictors()) \%>\%
+  step_scale(all_predictors()) \%>\%
+  step_isomap(all_predictors(),
               options = list(knn = 100),
               num = 2)
 

@@ -25,7 +25,7 @@ test_that("Recipe fails on in-line functions", {
 test_that("return character or factor values", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
   centered <- raw_recipe %>% 
-    step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur)
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
   
   centered_char <- learn(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
   char_var <- process(centered_char, newdata = head(biomass))

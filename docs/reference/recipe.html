@@ -146,7 +146,7 @@
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='co'># Now add preprocessing steps to the recipe.</span>
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
+
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
@@ -161,30 +161,13 @@
 #&gt; 
 #&gt; Steps:
 #&gt; 
-#&gt; Centering for all_predictors()
-#&gt; Scaling for all_predictors()
-#&gt; Spatial sign on  all_predictors()</div><div class='input'>
+#&gt; Centering for ~all_predictors()
+#&gt; Scaling for ~all_predictors()
+#&gt; Spatial sign on  ~all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
-<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
-#&gt; step 2 scale training 
-#&gt; step 3 spatialsign training </div><div class='input'><span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
-#&gt; 
-#&gt; Inputs:
-#&gt; 
-#&gt;       role #variables
-#&gt;    outcome          1
-#&gt;  predictor          5
-#&gt; 
-#&gt; Training data contained 456 data points and no missing data.
-#&gt; 
-#&gt; Steps:
-#&gt; 
-#&gt; Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
-#&gt; Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
-#&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
+<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'sp_signed_trained' not found</span></div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
-<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
-
+<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(sp_signed_trained, newdata = biomass_te): object 'sp_signed_trained' not found</span></div><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># multivariate example</span>
 
@@ -194,10 +177,8 @@
   <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
-#&gt; step 2 scale training </div><div class='input'>
-<span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)
-
+<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(multi_y_trained, biomass_te): object 'multi_y_trained' not found</span></div><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># Creating a recipe manually with different roles</span>
 

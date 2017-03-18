@@ -89,7 +89,7 @@
     <p><code>step_classdist</code> creates a a <em>specification</em> of a recipe step that will convert numeric data into Mahalanobis distance measurements to the data centroid. This is done for each value of a categorical class variable.</p>
     
 
-    <pre><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>cov_func</span> <span class='kw'>=</span> <span class='no'>cov</span>, <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -97,10 +97,10 @@
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be used to create the new features.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>class</dt>
-      <dd><p>A single character string or formula that that specifies a single categorical variable to be used as the class.</p></dd>
+      <dd><p>A single character string that specifies a single categorical variable to be used as the class.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -129,32 +129,17 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>magrittr</span>)
-
+    <pre class="examples"><div class='input'>
 <span class='co'># in case of missing data...</span>
 <span class='no'>mean2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>mean</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_classdist</span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> ~ <span class='no'>Species</span>,
+  <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
                  <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>)
 
-<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>
-<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='co'>## on log scale:</span>
-<span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))]</div><div class='output co'>#&gt; # A tibble: 150 × 4
-#&gt;    Species classdist_setosa classdist_versicolor classdist_virginica
-#&gt;     &lt;fctr&gt;            &lt;dbl&gt;                &lt;dbl&gt;               &lt;dbl&gt;
-#&gt; 1   setosa       -0.8004790             4.743231            5.209136
-#&gt; 2   setosa        0.7328938             4.422633            5.036790
-#&gt; 3   setosa        0.2502412             4.553039            5.078257
-#&gt; 4   setosa        0.5342728             4.416172            4.946213
-#&gt; 5   setosa       -0.2722217             4.791492            5.215137
-#&gt; 6   setosa        1.3117452             4.791484            5.211114
-#&gt; 7   setosa        1.2308667             4.564384            5.037074
-#&gt; 8   setosa       -1.0687451             4.642609            5.120650
-#&gt; 9   setosa        1.0974371             4.303348            4.888585
-#&gt; 10  setosa        1.1631777             4.537918            5.054580
-#&gt; # ... with 140 more rows</div></pre>
+<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(rec_dists, newdata = iris): object 'rec_dists' not found</span></div><div class='input'><span class='co'>## on log scale:</span>
+<span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'dists_to_species' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

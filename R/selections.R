@@ -2,18 +2,59 @@
 #' @name selections
 #' @aliases selections
 #' @aliases selection
-#' @title Methods for Select Variables in recipe Formulas
-#' @description There are a few different methods for selecting variables or model terms using the \code{terms} argument for the \code{step} functions. The two main requirements are that 1) the value of the \code{terms} argument is a formula and 2) that does not contain functions beyond those supported (see below).
+#' @title Methods for Select Variables in Step Functions
+#' @description When selecting variables or model terms in \code{step} functions, \code{dplyr}-like tools are used. The \emph{selector} functions can choose variables based on their name, current role, data type, or any combination of these. The selectors are passed as any other argument to the step. If the variables are explicitly stated in the step function, this might be similar to:
 #'
-#' The formula is not processed until the \code{learn} function for the step is executed. Functions can be used inside of the formula that can select columns of the design matrix that may not currently exist. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{contains("^PC")} will select all of the columns whose names start with "PC".
+#' \preformatted{
+#'   recipe( ~ ., data = USArrests) \%>\%
+#'     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
+#' }
 #'
-#' Standard formulas can be used where only the right-hand side is used (e.g. \code{~ x1 + x2 + x3}). Alternatively, select helpers from the \code{dplyr} package, such as \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, \code{\link[dplyr]{everything}}. As an example, \code{~ contains("x") + y + z} is valid.
+#' The first four arguments indicate which variables should be used in the PCA while the last argument is a specific argument to  \code{\link{step_pca}}.
 #'
-#' However, these are the only functions that can be used in the formula. Using other functions will cause an error, such as  \code{~ contains("x") + y + log(z)}.
+#' Note that:
 #'
-#' While plus signs between formula terms will add columns to the list, minus signs can also be used to exclude columns. For example,  \code{~ contains("x") - x1} would keep all of the columns containing "x" but would exclude any called "x1".
+#'   \enumerate{
+#'     \item The selector arguments should not contain functions beyond those supported (see below).
+#'     \item These arguments are not processed until the \code{learn} function for the step is executed.
+#'     \item The \code{dplyr}-like syntax allows for negative sings to exclude variables (e.g. \code{-Murder}) and the set of selectors will processed in order.
+#'     \item A leading exclusion in these arguments (e.g. \code{-Murder}) has the effect of adding all variables to the list except the excluded variable(s).
+#'   }
 #'
-#' Finally, there are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names.
+#' Also, select helpers from the \code{dplyr} package can also be used: \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}. For example:
+#'
+#' \preformatted{
+#'   recipe(Species ~ ., data = iris) \%>\%
+#'     step_center(starts_with("Sepal"), -contains("Width"))
+#' }
+#'
+#' would only select \code{Sepal.Length}
+#'
+#' \bold{Inline} functions that specify computations, such as \code{log(x)}, should not be used in selectors and will produce an error. A list of allowed selector functions is below.
+#'
+#' Columns of the design matrix that may not exist when the step is coded can also be selected. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{matches("^PC")} will select all of the columns whose names start with "PC" \emph{once those columns are created}.
+#'
+#' There are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names:
+#'
+#' \preformatted{
+#'   data(biomass)
+#'   recipe(HHV ~ ., data = biomass) \%>\%
+#'     step_center(all_numeric(), -all_outcomes())
+#' }
+#'
+#' This results in all the numeric predictors: carbon, hydrogen, oxygen, nitrogen, and sulfur.
+#'
+#' If a role for a variable has not been defined, it will never be selected using role-specific selectors.
+#'
+#' All steps use these techniques to define variables for steps \emph{except one}: \code{\link{step_interact}} requires traditional model formula representations of the interactions and takes a single formula as the argument to select the variables.
+#'
+#' The complete list of allowable functions in steps:
+#'
+#'   \itemize{
+#'     \item \bold{By name}: \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}
+#'     \item \bold{By role}: \code{\link{has_role}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}
+#'     \item \bold{By type}: \code{\link{has_type}}, \code{\link{all_numeric}}, and \code{\link{all_nominal}}
+#'   }
 NULL
 
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
@@ -166,30 +207,33 @@ has_selector <- function(x, allowed = selectors) {
   res
 }
 
-#' Select Terms.
+#' Select Terms in a Step Function.
 #'
 #' This function processes the step function selectors and might be useful when creating custom steps.
 #'
 #' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
-#' @param ... One or more selection functions. See \code{\link{selections}} for more details.
+#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{tidy_quote}} for examples.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there are no selectors or if no variables are selected.
 #' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @export
-select_terms <- function(info, ...) {
+#' @examples
+#' data(okc)
+#' rec <- recipe(~ ., data = okc)
+#' info <- summary(rec)
+#' select_terms(info = info, tidy_quotes(all_predictors()))
+
+select_terms <- function(info, args) {
   ## This is a modified version of dplyr:::select_vars
 
   vars <- info$variable
   roles <- info$role
   types <- info$type
 
-  args <- tidy_quotes(...)
-
-  if (is_empty(args)) {
+  if (is_empty(args))
     stop("At least one selector should be used")
-  }
 
   ## check arguments against whitelist
   lapply(args, check_elements)
@@ -238,9 +282,6 @@ select_terms <- function(info, ...) {
 
   unname(sel)
 }
-
-
-
 
 #' Role Selection
 #'

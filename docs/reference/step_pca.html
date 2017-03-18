@@ -89,7 +89,7 @@
     <p><code>step_pca</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more principal components.</p>
     
 
-    <pre><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <pre><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>retx</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)</pre>
     
@@ -97,8 +97,8 @@
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will be used to compute the components.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.</p></dd>
       <dt>trained</dt>
@@ -134,12 +134,10 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='no'>pca_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_pca</span>(<span class='no'>rec</span>, <span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
-
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
-<span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_pca-4.png' alt='' width='540' height='400' /></pre>
+<span class='no'>pca_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_pca</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(pca_estimates, USArrests): object 'pca_estimates' not found</span></div><div class='input'>
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))</div><div class='output co'>#&gt; <span class='error'>Error in extendrange(c(pca_data$PC1, pca_data$PC2)): object 'pca_data' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(pca_data$PC1, pca_data$PC2, xlim = rng, ylim = rng): object 'pca_data' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -89,15 +89,15 @@
     <p><code>step_nzv</code> creates a <em>specification</em> of a recipe step that will potentially remove variables that are highly sparse and unbalanced.</p>
     
 
-    <pre><span class='fu'>step_nzv</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>freqCut</span>
-  <span class='kw'>=</span> <span class='fl'>95</span>/<span class='fl'>5</span>, <span class='kw'>uniqueCut</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre><span class='fu'>step_nzv</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>freqCut</span> <span class='kw'>=</span>
+  <span class='fl'>95</span>/<span class='fl'>5</span>, <span class='kw'>uniqueCut</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A representation of the variables or terms that will evaluated by the filtering process.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables that will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>Not used by this step since no new variables are created.</p></dd>
       <dt>trained</dt>
@@ -138,13 +138,11 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span> + <span class='no'>sparse</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>nzv_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_nzv</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+  <span class='fu'>step_nzv</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>nzv_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 nzv training </div><div class='input'>
-<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)
-<span class='fu'>any</span>(<span class='fu'>names</span>(<span class='no'>filtered_te</span>) <span class='kw'>==</span> <span class='st'>"sparse"</span>)</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>nzv_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 nzv training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(filter_obj, biomass_te): object 'filter_obj' not found</span></div><div class='input'><span class='fu'>any</span>(<span class='fu'>names</span>(<span class='no'>filtered_te</span>) <span class='kw'>==</span> <span class='st'>"sparse"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'filtered_te' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

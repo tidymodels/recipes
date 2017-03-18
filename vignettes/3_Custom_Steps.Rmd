@@ -52,13 +52,18 @@ Our new step will do this computation for any numeric variables of interest. We 
 
 # Create the initial function. 
 
-The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. 
+The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. The `...` signfies the variable selectors that can be used.
 
 ```{r initial_def}
-step_percentile <- function(recipe, terms, role = NA, 
+step_percentile <- function(recipe, ..., role = NA, 
                             trained = FALSE, ref_dist = NULL,
                             approx = FALSE, 
                             options = list(probs = (0:100)/100, names = TRUE)) {
+## process but do not evaluate the variable selectors with
+## the `tidy_quotes` function in `rlang`
+  terms <- tidy_quotes(...) 
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe, 
     step_percentile_new(
@@ -118,11 +123,11 @@ where
 
 You can define other options. 
 
-The first thing that you might want to do in the `learn` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `parse_terms_formula` that can be used to obtain this. 
+The first thing that you might want to do in the `learn` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `select_terms` that can be used to obtain this. 
 
 ```{r learn_1, eval = FALSE}
 learn.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info) 
+  col_names <- select_terms(info = info, args = x$terms) 
 }
 ```
 
@@ -135,7 +140,7 @@ get_pctl <- function(x, args) {
 }
 
 learn.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info) 
+  col_names <- select_terms(info = info, args = x$terms) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   if(x$options$names == FALSE)

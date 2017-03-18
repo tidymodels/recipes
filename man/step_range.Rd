@@ -4,13 +4,13 @@
 \alias{step_range}
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
-step_range(recipe, terms, role = NA, trained = FALSE, min = 0, max = 1,
+step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
   ranges = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will be scaled.}
+\item{...}{One or more selector functions to choose which variables will be scaled. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -40,9 +40,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-library(magrittr)
 ranged_trans <- rec \%>\%
-  step_range(terms = ~ carbon + hydrogen)
+  step_range(carbon, hydrogen)
 
 ranged_obj <- learn(ranged_trans, training = biomass_tr)
 

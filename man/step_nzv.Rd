@@ -4,13 +4,13 @@
 \alias{step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
-step_nzv(recipe, terms, role = NA, trained = FALSE, options = list(freqCut
-  = 95/5, uniqueCut = 10), removals = NULL)
+step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freqCut =
+  95/5, uniqueCut = 10), removals = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will evaluated by the filtering process.}
+\item{...}{One or more selector functions to choose which variables that will evaluated by the filtering process. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -50,9 +50,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + sparse,
               data = biomass_tr)
 
-library(magrittr)
 nzv_filter <- rec \%>\%
-  step_nzv(terms = ~ all_predictors())
+  step_nzv(all_predictors())
 
 filter_obj <- learn(nzv_filter, training = biomass_tr)
 

@@ -20,17 +20,19 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' with_splines <- rec %>%
-#'   step_ns(terms = ~ carbon + hydrogen)
+#'   step_ns(carbon, hydrogen)
 #' with_splines <- learn(with_splines, training = biomass_tr)
 #'
 #' expanded <- process(with_splines, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_poly}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_ns <- function(recipe, terms, role = "predictor", trained = FALSE,
+step_ns <- function(recipe, ..., role = "predictor", trained = FALSE,
                     objects = NULL, options = list(df = 2)) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_ns_new(
@@ -72,7 +74,7 @@ ns_wrapper <- function(x, args) {
 
 #' @export
 learn.step_ns <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   obj <- lapply(training[, col_names], ns_wrapper, x$options)
   for(i in seq(along = col_names))
@@ -111,7 +113,7 @@ print.step_ns <- function(x, width = max(20, options()$width - 28), ...) {
   cat("Natural Splines on ")
   if(x$trained) {
     cat(format_ch_vec(names(x$objects), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

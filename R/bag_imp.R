@@ -3,9 +3,9 @@
 #' \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be imputed.
+#' @param ... One or more selector functions to choose variables. For \code{step_bagimpute}, this indicates the variables to be imputed. When used with \code{imp_vars}, the dots indicates which variables are used to predict the missing data in each variable. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
-#' @param impute_with A representation of the variables that will be used as all_predictors in the imputation model. If a column is included in both \code{terms} and \code{impute_with}, it will be removed from the latter.
+#' @param impute_with A call to \code{imp_vars} to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see \code{\link{selections}}).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.
 #' @param options A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.
 #' @param seed_val A integer used to create reproducible models. The same seed is used across all imputation models.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.recipe}}.
@@ -34,10 +34,8 @@
 #'
 #' rec <- recipe(Price ~ ., data = credit_tr)
 #'
-#' library(magrittr)
 #' impute_rec <- rec %>%
-#'   step_bagimpute(~ Status + Home + Marital + Job + Income + Assets + Debt,
-#'                  impute_with  = ~ all_predictors())
+#'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 #'
 #' imp_models <- learn(impute_rec, training = credit_tr)
 #'
@@ -47,14 +45,17 @@
 #' inputed_te[missing_examples, names(credit_te)]
 
 
-step_bagimpute <- function(recipe, terms, role = NA,
+step_bagimpute <- function(recipe, ..., role = NA,
                            trained = FALSE,
                            models = NULL,
                            options = list(nbagg = 25, keepX = FALSE),
-                           impute_with = NULL,
+                           impute_with = imp_vars(all_predictors()),
                            seed_val = sample.int(10^4, 1)) {
   if(is.null(impute_with))
     stop("Please list some variables in `impute_with`", call. = FALSE)
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_bagimpute_new(
@@ -111,8 +112,8 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 
 ## This figures out which data should be used to predict each variable scheduled for imputation
 impute_var_lists <- function(to_impute, impute_using, info) {
-  to_impute <- parse_terms_formula(to_impute, info)
-  impute_using <- parse_terms_formula(impute_using, info)
+  to_impute <- select_terms(args = to_impute, info = info)
+  impute_using <- select_terms(args = impute_using, info = info)
   var_lists <- vector(mode = "list", length = length(to_impute))
   for(i in seq_along(var_lists)) {
     var_lists[[i]] <- list(
@@ -125,7 +126,7 @@ impute_var_lists <- function(to_impute, impute_using, info) {
 
 #' @export
 learn.step_bagimpute <- function(x, training, info = NULL, ...) {
-  var_lists <- impute_var_lists(x$terms, x$impute_with, info)
+  var_lists <- impute_var_lists(to_impute = x$terms, impute_using = x$impute_with, info = info)
   x$models <- lapply(
     var_lists,
     bag_wrap,
@@ -171,7 +172,13 @@ print.step_bagimpute <- function(x, width = max(20, options()$width - 31), ...) 
   cat("Bagged tree imputation for ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(names(x$models), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
+
+#' @export
+#' @rdname step_bagimpute
+imp_vars <- function (...)
+  tidy_quotes(...)
+

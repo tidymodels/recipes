@@ -10,13 +10,13 @@ examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 examples$Dan <- as.POSIXct(examples$Dan)
 
 date_rec <- recipe(~ Dan + Stefan, examples) %>%
-  step_date(~ all_predictors())
+  step_date(all_predictors())
 
 feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "month")
 
 test_that('default option', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(~ all_predictors(), features = feats)
+    step_date(all_predictors(), features = feats)
   
   date_rec <- learn(date_rec, training = examples)   
   date_res <- process(date_rec, newdata = examples)
@@ -52,7 +52,7 @@ test_that('default option', {
 
 test_that('nondefault options', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(~ all_predictors(), features = c("dow", "month"), label = FALSE)
+    step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
   
   date_rec <- learn(date_rec, training = examples)   
   date_res <- process(date_rec, newdata = examples)
@@ -72,7 +72,7 @@ test_that('nondefault options', {
 
 test_that('ordinal values', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(~ all_predictors(), features = c("dow", "month"), ordinal = TRUE)
+    step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
   
   date_rec <- learn(date_rec, training = examples)   
   date_res <- process(date_rec, newdata = examples)

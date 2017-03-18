@@ -10,7 +10,7 @@ ex_dat <- data.frame(x1 = rnorm(n),
 
 test_that('simple logit trans', {
   rec <- recipe(~., data = ex_dat) %>% 
-    step_invlogit(~x1)
+    step_invlogit(x1)
   
   rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)

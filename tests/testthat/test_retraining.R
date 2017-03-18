@@ -9,17 +9,17 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 test_that('training in stages', {
   skip_on_cran()
   at_once <- rec %>% 
-    step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>% 
-    step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) 
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>% 
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) 
   
   at_once_trained <- learn(at_once, training = biomass, verbose = FALSE)
   
   ## not train in stages
   center_first <- rec %>% 
-    step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur)
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
   center_first_trained <- learn(center_first, training = biomass, verbose = FALSE)
   in_stages <- center_first_trained %>%
-    step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) 
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) 
   in_stages_trained <- learn(in_stages, training = biomass, verbose = FALSE)
   in_stages_retrained <- learn(in_stages, training = biomass, verbose = FALSE, fresh = TRUE) 
   

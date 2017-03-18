@@ -19,11 +19,10 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' ilogit_trans <- rec  %>%
-#'   step_center(terms = ~ carbon + hydrogen) %>%
-#'   step_scale(terms = ~ carbon + hydrogen) %>%
-#'   step_invlogit(terms = ~ carbon + hydrogen)
+#'   step_center(carbon, hydrogen) %>%
+#'   step_scale(carbon, hydrogen) %>%
+#'   step_invlogit(carbon, hydrogen)
 #'
 #' ilogit_obj <- learn(ilogit_trans, training = biomass_tr)
 #'
@@ -31,7 +30,10 @@
 #' plot(biomass_te$carbon, transformed_te$carbon)
 #' @seealso \code{\link{step_logit}} \code{\link{step_log}}  \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_invlogit <- function(recipe, terms, role = NA, trained = FALSE, vars = NULL) {
+step_invlogit <- function(recipe, ..., role = NA, trained = FALSE, vars = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_invlogit_new(
@@ -55,7 +57,7 @@ step_invlogit_new <- function(terms = NULL, role = NA, trained = FALSE, vars = N
 
 #' @export
 learn.step_invlogit <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   step_invlogit_new(
     terms = x$terms,
     role = x$role,
@@ -79,7 +81,7 @@ print.step_invlogit <- function(x, width = max(20, options()$width - 26), ...) {
   cat("Inverse logit on ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

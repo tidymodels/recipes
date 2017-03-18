@@ -11,9 +11,9 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct PCA values', {
   pca_extract <- rec %>% 
-    step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>% 
-    step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-    step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur, 
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>% 
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, 
              options = list(retx = TRUE))
   
   pca_extract_trained <- learn(pca_extract, training = biomass_tr, verbose = FALSE)
@@ -33,9 +33,9 @@ test_that('correct PCA values', {
 
 test_that('Reduced rotation size', {
   pca_extract <- rec %>% 
-    step_center(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>% 
-    step_scale(~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-    step_pca(~ carbon + hydrogen + oxygen + nitrogen + sulfur, num = 3)
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>% 
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 3)
   
   pca_extract_trained <- learn(pca_extract, training = biomass_tr, verbose = FALSE)
   

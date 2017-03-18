@@ -65,7 +65,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 # Now add preprocessing steps to the recipe.
-library(magrittr)
+
 sp_signed <- rec \%>\%
   step_center(~ all_predictors()) \%>\%
   step_scale(~ all_predictors()) \%>\%

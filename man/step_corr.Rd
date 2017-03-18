@@ -4,13 +4,13 @@
 \alias{step_corr}
 \title{High Correlation Filter}
 \usage{
-step_corr(recipe, terms, role = NA, trained = FALSE, threshold = 0.9,
+step_corr(recipe, ..., role = NA, trained = FALSE, threshold = 0.9,
   use = "pairwise.complete.obs", method = "pearson", removals = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{terms}{A representation of the variables or terms that will evaluated by the filtering process.}
+\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -45,9 +45,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
               data = biomass_tr)
 
-library(magrittr)
 corr_filter <- rec \%>\%
-  step_corr(terms = ~ all_predictors(), threshold = .5)
+  step_corr(all_predictors(), threshold = .5)
 
 filter_obj <- learn(corr_filter, training = biomass_tr)
 

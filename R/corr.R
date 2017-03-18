@@ -3,7 +3,6 @@
 #' \code{step_corr} creates a \emph{specification} of a recipe step that will potentially remove variables that have large absolute correlations with other variables.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will evaluated by the filtering process.
 #' @param role Not used by this step since no new variables are created.
 #' @param threshold A value for the threshold of absolute correlation values. The step will try to remove the minimum number of columns so that all the resulting absolute correlations are less than this value.
 #' @param use A character string for the \code{use} argument to the \code{\link[stats]{cor}} function.
@@ -28,9 +27,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' corr_filter <- rec %>%
-#'   step_corr(terms = ~ all_predictors(), threshold = .5)
+#'   step_corr(all_predictors(), threshold = .5)
 #'
 #' filter_obj <- learn(corr_filter, training = biomass_tr)
 #'
@@ -40,13 +38,16 @@
 #' @seealso \code{\link{step_nzv}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_corr <- function(recipe,
-                      terms,
+                      ...,
                       role = NA,
                       trained = FALSE,
                       threshold = 0.9,
                       use = "pairwise.complete.obs",
                       method = "pearson",
                       removals = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_corr_new(
@@ -82,7 +83,7 @@ step_corr_new <- function(terms = NULL,
 
 #' @export
 learn.step_corr <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   filter <- corr_filter(x = training[, col_names],
                         cutoff = x$threshold,
                         use = x$use,

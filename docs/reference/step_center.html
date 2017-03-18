@@ -89,15 +89,15 @@
     <p><code>step_center</code> creates a <em>specification</em> of a recipe step that will normalize numeric data to have a mean of zero.</p>
     
 
-    <pre><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>recipe</dt>
       <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A formula that represents the variables or terms that will be processed. The raw variable names can be used or <span class="pkg">dplyr</span> selection tools. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
+      <dt>...</dt>
+      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
       <dt>role</dt>
       <dd><p>Not used by this step since no new variables are created.</p></dd>
       <dt>trained</dt>
@@ -130,37 +130,12 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'>library</span>(<span class='no'>magrittr</span>)
 <span class='no'>center_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_center</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span>)
+  <span class='fu'>step_center</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), -<span class='no'>hydrogen</span>)
 
-<span class='no'>center_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>center_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='input'>
-<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>center_obj</span>, <span class='no'>biomass_te</span>)
-
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
-#&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
-#&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
-#&gt; 31  46.40     6.10  37.30     1.80   0.50 18.851
-#&gt; 36  48.76     6.32  42.77     0.20   0.00 20.547
-#&gt; 41  44.30     5.50  41.70     0.70   0.20 18.467
-#&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
-#&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
-#&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 6
-#&gt;         carbon    hydrogen oxygen nitrogen sulfur    HHV
-#&gt; *        &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1   -2.0041447  0.21092105  47.20     0.30   0.22 18.275
-#&gt; 2   -5.1041447  0.04092105  48.06     2.85   0.34 17.560
-#&gt; 3   -5.6541447  0.04092105  49.10     2.40   0.30 17.173
-#&gt; 4   -1.9541447  0.64092105  37.30     1.80   0.50 18.851
-#&gt; 5    0.4058553  0.86092105  42.77     0.20   0.00 20.547
-#&gt; 6   -4.0541447  0.04092105  41.70     0.70   0.20 18.467
-#&gt; 7   -9.4141447 -0.22907895  54.13     1.19   0.51 15.095
-#&gt; 8   -6.2541447 -0.79907895  33.80     0.95   0.20 16.240
-#&gt; 9  -19.1541447 -1.05907895  31.10     0.14   4.90 11.147
-#&gt; 10 -20.5541447 -1.68907895  23.69     4.63   1.05 10.750
-#&gt; # ... with 70 more rows</div></pre>
+<span class='no'>center_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>center_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>center_obj</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(center_obj, biomass_te): object 'center_obj' not found</span></div><div class='input'>
+<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(biomass_te, 1:10, names(transformed_te)): object 'transformed_te' not found</span></div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'transformed_te' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

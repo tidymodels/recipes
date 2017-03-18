@@ -3,7 +3,7 @@
 #' \code{step_isomap} creates a \emph{specification} of a recipe step that will convert numeric data into one or more new dimensions.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used to compute the dimensions.
+#' @param ... One or more selector functions to choose which variables will be used to compute the dimensions. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.
 #' @param num The number of isomap dimensions to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.
 #' @param options A list of options to \code{\link[dimRed]{Isomap}}.
@@ -31,12 +31,11 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' im_trans <- rec %>%
-#'   step_YeoJohnson(terms = ~ all_predictors()) %>%
-#'   step_center(terms = ~ all_predictors()) %>%
-#'   step_scale(terms = ~ all_predictors()) %>%
-#'   step_isomap(terms = ~ all_predictors(),
+#'   step_YeoJohnson(all_predictors()) %>%
+#'   step_center(all_predictors()) %>%
+#'   step_scale(all_predictors()) %>%
+#'   step_isomap(all_predictors(),
 #'               options = list(knn = 100),
 #'               num = 2)
 #'
@@ -50,13 +49,16 @@
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_ica}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_isomap <- function(recipe,
-                        terms,
+                        ...,
                         role = "predictor",
                         trained = FALSE,
                         num  = 5,
                         options = list(knn = 50, .mute = c("message", "output")),
                         res = NULL,
                         prefix = "Isomap") {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_isomap_new(
@@ -94,7 +96,7 @@ step_isomap_new <- function(terms = NULL,
 #' @importFrom dimRed embed dimRedData
 #' @export
 learn.step_isomap <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
 
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))
@@ -130,7 +132,7 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
   cat("Isomap approximation with ")
   if(x$trained) {
     cat(format_ch_vec(colnames(x$res@org.data), width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

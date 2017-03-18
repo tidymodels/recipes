@@ -3,7 +3,7 @@
 #' \code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
 #'
 #' @inheritParams step_center
-#' @param terms A representation of the variables or terms that will be used for the normalization.
+#' @param ... One or more selector functions to choose which variables will be used for the normalization. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should they be assigned?
 #' @param vars A character string of variable names that will be (eventually) populated by the \code{terms} argument.
 #' @return \code{step_spatialsign} returns an object of class \code{step_spatialsign}.
@@ -23,11 +23,10 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' library(magrittr)
 #' ss_trans <- rec %>%
-#'   step_center(terms = ~ carbon + hydrogen) %>%
-#'   step_scale(terms = ~ carbon + hydrogen) %>%
-#'   step_spatialsign(terms = ~ carbon + hydrogen)
+#'   step_center(carbon, hydrogen) %>%
+#'   step_scale(carbon, hydrogen) %>%
+#'   step_spatialsign(carbon, hydrogen)
 #'
 #' ss_obj <- learn(ss_trans, training = biomass_tr)
 #'
@@ -41,10 +40,13 @@
 
 
 step_spatialsign <- function(recipe,
-                             terms,
+                             ...,
                              role = "predictor",
                              trained = FALSE,
                              vars = NULL) {
+  terms <- tidy_quotes(...)
+  if(is_empty(terms))
+    stop("Please supply at least one variable specification. See ?selections.")
   add_step(
     recipe,
     step_spatialsign_new(
@@ -72,7 +74,7 @@ step_spatialsign_new <- function(terms = NULL,
 
 #' @export
 learn.step_spatialsign <- function(x, training, info = NULL, ...) {
-  col_names <- parse_terms_formula(x$terms, info = info)
+  col_names <- select_terms(x$terms, info = info)
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,
@@ -93,7 +95,7 @@ print.step_spatialsign <- function(x, width = max(20, options()$width - 26), ...
   cat("Spatial sign on  ", sep = "")
   if(x$trained) {
     cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_formula(x$terms, wdth = width))
+  } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }

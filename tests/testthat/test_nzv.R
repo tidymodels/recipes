@@ -24,7 +24,7 @@ vars <- names(pct_uni)
 test_that('nzv filtering', {
   rec <- recipe(y ~ ., data = dat)
   filtering <- rec %>% 
-    step_nzv(~ x1 + x2 + x3 + x4)
+    step_nzv(x1, x2, x3, x4)
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
   
@@ -38,7 +38,7 @@ test_that('nzv filtering', {
 test_that('altered options', {
   rec <- recipe(y ~ ., data = dat)
   filtering <- rec %>% 
-    step_nzv(~ x1 + x2 + x3 + x4, 
+    step_nzv(x1, x2, x3, x4, 
              options = list(freqCut = 50, uniqueCut = 10))
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
