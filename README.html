@@ -127,9 +127,13 @@ $(document).ready(function () {
 </blockquote>
 <p>While R already has long-standing methods for creating these matrices (e.g. <a href="https://www.rstudio.com/rviews/2017/02/01/the-r-formula-method-the-good-parts">formulas</a> and <code>model.matrix</code>), there are some limitations to what the existing infrastructure can do.</p>
 <p>The idea of the <code>recipes</code> package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. “feature engineering”).</p>
-<p>The package is still in devleopent and is not on CRAN. To install it, use:</p>
-<pre class="r"><code>library(devtools)
-install_github(&quot;topepo/recipes&quot;)</code></pre>
+<p>The package is still in development and is not yet on CRAN. To install it, use:</p>
+<pre class="r"><code>if (packageVersion(&quot;devtools&quot;) &lt; 1.6) {
+  install.packages(&quot;devtools&quot;)
+}
+devtools::install_github(&quot;hadley/rlang&quot;)
+devtools::install_github(&quot;hadley/dplyr&quot;)
+devtools::install_github(&quot;topepo/recipes&quot;)</code></pre>
 </div>
 
 

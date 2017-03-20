@@ -10,8 +10,12 @@ While R already has long-standing methods for creating these matrices (e.g. [for
 
 The idea of the `recipes` package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. "feature engineering"). 
 
-The package is still in devleopent and is not on CRAN. To install it, use:
+The package is still in development and is not yet on CRAN. To install it, use:
 ```{r install, eval = FALSE}
-library(devtools)
-install_github("topepo/recipes")
+if (packageVersion("devtools") < 1.6) {
+  install.packages("devtools")
+}
+devtools::install_github("hadley/rlang")
+devtools::install_github("hadley/dplyr")
+devtools::install_github("topepo/recipes")
 ```

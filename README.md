@@ -2,7 +2,7 @@
 
 
 
-The `recipes` package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From [wikipedia]():
+The `recipes` package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From [wikipedia](https://en.wikipedia.org/wiki/Design_matrix):
 
  > In statistics, a **design matrix** (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object.
 
@@ -10,9 +10,13 @@ While R already has long-standing methods for creating these matrices (e.g. [for
 
 The idea of the `recipes` package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. "feature engineering"). 
 
-The package is still in devleopent and is not on CRAN. To install it, use:
+The package is still in development and is not yet on CRAN. To install it, use:
 
 ```r
-library(devtools)
-install_github("topepo/recipes")
+if (packageVersion("devtools") < 1.6) {
+  install.packages("devtools")
+}
+devtools::install_github("hadley/rlang")
+devtools::install_github("hadley/dplyr")
+devtools::install_github("topepo/recipes")
 ```
