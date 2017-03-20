@@ -1,7 +1,8 @@
 # Recipes
 
- [![Travis-CI Build Status](https://travis-ci.org/.svg?branch=master)](https://travis-ci.org/)
-  
+
+[![Build Status](https://travis-ci.org/topepo/recipes.png?branch=master)](https://travis-ci.org/topepo/recipes)
+[![Coverage Status](https://img.shields.io/codecov/c/github/topepo/recipes/master.svg)](https://codecov.io/github/topepo/recipes?branch=master)
 
 The `recipes` package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From [wikipedia](https://en.wikipedia.org/wiki/Design_matrix):
 
