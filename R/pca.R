@@ -40,7 +40,7 @@ step_pca <- function(recipe,
                      options = list(center = TRUE, scale. = TRUE, retx = FALSE),
                      res = NULL,
                      prefix = "PC") {
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

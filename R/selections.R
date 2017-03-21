@@ -60,34 +60,14 @@ NULL
 ## These are the allowable functions for formulas in the the `terms` arguments to the steps or
 ## to `recipes.formula`.
 name_selectors <- c("starts_with", "ends_with", "contains",
-                    "matches", "num_range", "everything")
+                    "matches", "num_range", "everything", "_F")
 
-role_selectors <- c("has_role", "all_predictors", "all_outcomes")
+role_selectors <- c("has_role", "all_predictors", "all_outcomes", "_F")
 
-type_selectors <- c("has_type", "all_numeric", "all_nominal")
+type_selectors <- c("has_type", "all_numeric", "all_nominal", "_F")
 
-selectors <- c(name_selectors, role_selectors, type_selectors)
+selectors <- unique(c(name_selectors, role_selectors, type_selectors))
 
-## Main function to parse the `terms` arguments
-## Overall wrapper to make new step_X objects
-
-#' Parse a Step Function Formula.
-#'
-#' \code{parse_terms_formula} takes the \code{terms} element of a step and translates it to a character vector of column names.
-#'
-#' @param f A formula that can inlcude variable names and certain functions. See \code{\link{selections}} for a list of functions.
-#' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A character string of column names.
-#' @export
-#' @examples
-#' rec <- recipe( ~ ., data = USArrests)
-#' rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
-#' parse_terms_formula(~ all_predictors(), summary(rec))
-#' rec <- learn(rec, training = USArrests)
-#' parse_terms_formula(~ all_predictors(), summary(rec))
-#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
 parse_terms_formula <- function(f, info) {
   var_vals <- info$variable
   role_vals <- info$role
@@ -212,7 +192,7 @@ has_selector <- function(x, allowed = selectors) {
 #' This function processes the step function selectors and might be useful when creating custom steps.
 #'
 #' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
-#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{tidy_quote}} for examples.
+#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{dots_quosures}} for examples.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there are no selectors or if no variables are selected.
@@ -223,7 +203,7 @@ has_selector <- function(x, allowed = selectors) {
 #' data(okc)
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
-#' select_terms(info = info, tidy_quotes(all_predictors()))
+#' select_terms(info = info, dots_quosures(all_predictors()))
 
 select_terms <- function(info, args) {
   ## This is a modified version of dplyr:::select_vars
@@ -255,8 +235,8 @@ select_terms <- function(info, args) {
   # not calls (select helpers are scoped in the calling environment)
   is_helper <- map_lgl(args, function(x) is_lang(x) && !is_lang(x, c("-", ":")))
 
-  ind_list <- map_if(args, is_helper, tidy_eval)
-  ind_list <- map_if(ind_list, !is_helper, tidy_eval, names_list)
+  ind_list <- map_if(args, is_helper, eval_tidy)
+  ind_list <- map_if(ind_list, !is_helper, eval_tidy, names_list)
 
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(args))

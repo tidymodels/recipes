@@ -25,11 +25,11 @@ Note that, until the recipe has been learned, the currrent and original variable
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 summary(rec)
-rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
+rec <- step_pca(rec, all_numeric(), num = 3)
 summary(rec) # still the same since not yet learned
 rec <- learn(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{parse_terms_formula}} \code{\link{learn.recipe}}
+\code{\link{recipe}} \code{\link{learn.recipe}}
 }

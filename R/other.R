@@ -43,7 +43,7 @@ step_other <- function(recipe, ..., role = NA, trained = FALSE, threshold = .05,
   if(threshold >= 1)
     stop("`threshold` should be less than one")
   
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

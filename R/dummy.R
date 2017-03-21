@@ -40,7 +40,7 @@ step_dummy <- function(recipe,
                        naming = function(var, lvl)
                          paste(var, make.names(lvl), sep = "_"),
                        levels = NULL) {
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

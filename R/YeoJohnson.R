@@ -38,7 +38,7 @@
 #' plot(density(yj_te$sulfur), main = "after")
 #' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_YeoJohnson <- function(recipe, ..., role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

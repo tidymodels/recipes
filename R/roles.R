@@ -29,7 +29,7 @@
 #'
 add_role <- function(recipe, ..., new_role = "predictor") {
   if(length(new_role) > 1) stop("A single role is required", call. = FALSE)
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     warning("No selectors were found")
   vars <- select_terms(args = terms, info = summary(recipe))

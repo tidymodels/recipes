@@ -54,9 +54,9 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # Now add preprocessing steps to the recipe.
 #'
 #' sp_signed <- rec %>%
-#'   step_center(~ all_predictors()) %>%
-#'   step_scale(~ all_predictors()) %>%
-#'   step_spatialsign(~ all_predictors())
+#'   step_center(all_predictors()) %>%
+#'   step_scale(all_predictors()) %>%
+#'   step_spatialsign(all_predictors())
 #' sp_signed
 #'
 #' # now estimate required parameters
@@ -72,8 +72,8 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass_tr)
 #' multi_y <- multi_y %>%
-#'   step_center(~ all_outcomes()) %>%
-#'   step_scale(~ all_predictors())
+#'   step_center(all_outcomes()) %>%
+#'   step_scale(all_predictors())
 #'
 #' multi_y_trained <- learn(multi_y, training = biomass_tr)
 #'
@@ -357,12 +357,12 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' summary(rec)
-#' rec <- step_pca(rec, terms = ~ all_numeric(), num = 3)
+#' rec <- step_pca(rec, all_numeric(), num = 3)
 #' summary(rec) # still the same since not yet learned
 #' rec <- learn(rec, training = USArrests)
 #' summary(rec)
 #' @export
-#' @seealso \code{\link{recipe}} \code{\link{parse_terms_formula}} \code{\link{learn.recipe}}
+#' @seealso \code{\link{recipe}} \code{\link{learn.recipe}}
 summary.recipe <- function(object, original = FALSE, ...) {
 if(original)
   object$var_info else

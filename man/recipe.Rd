@@ -67,9 +67,9 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 # Now add preprocessing steps to the recipe.
 
 sp_signed <- rec \%>\%
-  step_center(~ all_predictors()) \%>\%
-  step_scale(~ all_predictors()) \%>\%
-  step_spatialsign(~ all_predictors())
+  step_center(all_predictors()) \%>\%
+  step_scale(all_predictors()) \%>\%
+  step_spatialsign(all_predictors())
 sp_signed
 
 # now estimate required parameters
@@ -85,8 +85,8 @@ test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 # no need for `cbind(carbon, hydrogen)` for left-hand side
 multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass_tr)
 multi_y <- multi_y \%>\%
-  step_center(~ all_outcomes()) \%>\%
-  step_scale(~ all_predictors())
+  step_center(all_outcomes()) \%>\%
+  step_scale(all_predictors())
 
 multi_y_trained <- learn(multi_y, training = biomass_tr)
 

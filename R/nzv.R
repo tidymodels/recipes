@@ -49,7 +49,7 @@ step_nzv <- function(recipe,
                      trained = FALSE,
                      options = list(freqCut = 95 / 5, uniqueCut = 10),
                      removals = NULL) {
-  terms <- tidy_quotes(...)
+  terms <- dots_quosures(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
