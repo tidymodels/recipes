@@ -8,9 +8,7 @@ language: r
 sudo: false
 cache: packages
 r:
-  - oldrel
   - release
-  - devel
   
 env:
   global:
@@ -21,11 +19,6 @@ env:
     - NOT_CRAN="false"
 
 before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - sudo mkdir -p /usr/lib/R/library
-  - echo 'R_LIBS=/usr/lib/R/library:/usr/lib/R/site-library/' > ~/.Renviron
-  - sudo chmod 2777 /usr/lib/R/library
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh r_binary_install ddalpha
   - ./travis-tool.sh r_binary_install dimRed  
