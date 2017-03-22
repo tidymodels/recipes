@@ -13,11 +13,11 @@ step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
 
 \item{...}{One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
+\item{num}{The number of PCA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
 
 \item{options}{A list of options to \code{\link[stats]{prcomp}}. Defaults are set for the arguments \code{center} and \code{scale.} but others can be passed in (e.g. \code{tol}). \bold{Note} that the argument \code{x} should not be passed here (or at all).}
 

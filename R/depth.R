@@ -5,7 +5,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables that will be used to create the new features. See \code{\link{selections}} for more details.
 #' @param class A single character string that specifies a single categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as all_predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as predictors in a model.
 #' @param metric A character string specifying the depth metric. Possible values are "potential", "halfspace", "Mahalanobis", "simplicialVolume", "spatial", and "zonoid".
 #' @param options A list of options to pass to the underlying depth functions. See \code{\link[ddalpha]{depth.halfspace}}, \code{\link[ddalpha]{depth.Mahalanobis}}, \code{\link[ddalpha]{depth.potential}}, \code{\link[ddalpha]{depth.projection}}, \code{\link[ddalpha]{depth.simplicial}}, \code{\link[ddalpha]{depth.simplicialVolume}}, \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
 #' @param data The training data are stored here once after  \code{\link{learn.recipe}} is executed.

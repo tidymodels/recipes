@@ -14,7 +14,7 @@ step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
 
 \item{class}{A single character string that specifies a single categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as all_predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting depth estimates will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 

@@ -12,7 +12,7 @@
 #' @concept preprocessing variable_filters
 #' @export
 #'
-#' @details This step diagnoses all_predictors that have one unique value (i.e. are zero variance all_predictors) or all_predictors that are have both of the following characteristics:
+#' @details This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:
 #' \enumerate{
 #'   \item they have very few unique values relative to the number of samples and
 #'   \item the ratio of the frequency of the most common value to the frequency of the second most common value is large.

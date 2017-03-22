@@ -136,7 +136,7 @@
 
     <p>Recipes are alternative methods for creating design matrices and for preprocessing data.</p>
 <p>Variables in recipes can have any type of <em>role</em> in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
-    <code>recipe</code> objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline functions such as <code>log(x3)</code>. An example is given below.</p>
+    <code>recipe</code> objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline functions such as <code>log(x3)</code>. An example is given below.</p>
 <p>Alternatively, a <code>recipe</code> object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).</p>
 <p>Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified.</p>
 <p>Once a recipe has been defined, the <code><a href='learn.html'>learn</a></code> function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). <code><a href='learn.html'>learn</a></code> returns another recipe.</p>
@@ -154,7 +154,7 @@
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='co'># When only all_predictors and all_outcomes, a simplified formula can be used.</span>
+<span class='co'># When only predictors and outcomes, a simplified formula can be used.</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 

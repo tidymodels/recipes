@@ -4,7 +4,7 @@
 #'
 #' @inheritParams step_center
 #' @param class A single character string that specifies a single categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as all_predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as predictors in a model.
 #' @param mean_func A function to compute the center of the distribution.
 #' @param cov_func A function that computes the covariance matrix
 #' @param pool A logical: should the covariance matrix be computed by pooling the data for all of the classes?

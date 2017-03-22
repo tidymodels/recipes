@@ -3,7 +3,7 @@
 #' \code{step_ns} creates a \emph{specification} of a recipe step that will create new columns that are basis expansions of variables using natural spines.
 #'
 #' @inheritParams step_center
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.
 #' @param objects A list of \code{\link[splines]{ns}} objects created once the step has been learned.
 #' @param options A list of options for \code{\link[splines]{ns}} which should not include \code{x}.
 #' @return \code{step_ns} returns an object of class \code{step_ns}.

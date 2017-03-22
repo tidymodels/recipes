@@ -105,7 +105,7 @@
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -128,7 +128,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_interact</code> can create interactions between variables. It is primarily intended for <b>numeric data</b>; categorical variables should probably be converted to dummy variables using <code><a href='step_dummy.html'>step_dummy</a></code> prior to being used for interactions.</p>
-<p>Unlike other step functions, the <code>terms</code> argument should be a traditional R model formula but should contain no inline functions (e.g. <code>log</code>). For example, for all_predictors <code>A</code>, <code>B</code>, and <code>C</code>, a formula such as <code>~A:B:C</code> can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. <code>(A+B+C)^3</code>) only the interaction terms are retained for the design matrix.</p>
+<p>Unlike other step functions, the <code>terms</code> argument should be a traditional R model formula but should contain no inline functions (e.g. <code>log</code>). For example, for predictors <code>A</code>, <code>B</code>, and <code>C</code>, a formula such as <code>~A:B:C</code> can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. <code>(A+B+C)^3</code>) only the interaction terms are retained for the design matrix.</p>
 <p>The separator between the variables defaults to "<code>_x_</code>" so that the three way interaction shown previously would generate a column named <code>A_x_B_x_C</code>. This can be changed using the <code>sep</code> argument.</p>
     
 

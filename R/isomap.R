@@ -4,8 +4,8 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables will be used to compute the dimensions. See \code{\link{selections}} for more details.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.
-#' @param num The number of isomap dimensions to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as predictors in a model.
+#' @param num The number of isomap dimensions to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.
 #' @param options A list of options to \code{\link[dimRed]{Isomap}}.
 #' @param res The \code{\link[dimRed]{Isomap}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting new variables. See notes below
@@ -23,7 +23,6 @@
 #' \pkg{dimRed}, a framework for dimensionality reduction, \url{https://github.com/gdkrmr}
 #'
 #' @examples
-#' \dontrun{
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -47,7 +46,6 @@
 #' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 #' plot(im_te$Isomap1, im_te$Isomap2,
 #'      xlim = rng, ylim = rng)
-#' }
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_ica}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_isomap <- function(recipe,

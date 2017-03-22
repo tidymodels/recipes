@@ -3,7 +3,7 @@
 #' \code{step_poly} creates a \emph{specification} of a recipe step that will create new columns that are basis expansions of variables using orthogonal polynomials.
 #'
 #' @inheritParams step_center
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.
 #' @param objects A list of \code{\link[stats]{poly}} objects created once the step has been learned.
 #' @param options A list of options for  \code{\link[stats]{poly}} which should not include \code{x} or \code{simple}. Note that the option \code{raw = TRUE} will produce the regular polynomial values (not orthogonalized).
 #' @return \code{step_poly} returns an object of class \code{step_poly}.

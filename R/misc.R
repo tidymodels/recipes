@@ -47,7 +47,7 @@ is_formula <- function(x)
 get_lhs_vars <- function(formula, data) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
-  ## Want to make sure that multiple all_outcomes can be expressed as
+  ## Want to make sure that multiple outcomes can be expressed as
   ## additions with no cbind business and that `.` works too (maybe)
   formula <- as.formula(paste("~", deparse(f_lhs(formula))))
   get_rhs_vars(formula, data)

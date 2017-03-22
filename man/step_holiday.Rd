@@ -12,7 +12,7 @@ step_holiday(recipe, ..., role = "predictor", trained = FALSE,
 
 \item{...}{One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 

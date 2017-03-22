@@ -13,7 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the all_predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept all_predictors that have missing values themselves. This imputation method can be used when the variable of interest (and all_predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
+#' @details For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
 #'
 #' Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
 #'
@@ -156,7 +156,7 @@ process.step_bagimpute <- function(object, newdata, ...) {
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if(all(is.na(pred_data))) {
-        warning("All all_predictors are missing; cannot impute", call. = FALSE)
+        warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         pred_vals <- predict(object$models[[i]], pred_data)
         newdata[missing_rows, imp_var] <- pred_vals

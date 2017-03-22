@@ -38,7 +38,7 @@ Recipes are alternative methods for creating design matrices and for preprocessi
 
 Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
 
-\code{recipe} objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
+\code{recipe} objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
 
 Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
 
@@ -60,7 +60,7 @@ data(biomass)
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-# When only all_predictors and all_outcomes, a simplified formula can be used.
+# When only predictors and outcomes, a simplified formula can be used.
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 

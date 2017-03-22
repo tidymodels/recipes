@@ -13,11 +13,11 @@ step_isomap(recipe, ..., role = "predictor", trained = FALSE, num = 5,
 
 \item{...}{One or more selector functions to choose which variables will be used to compute the dimensions. See \code{\link{selections}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as all_predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{num}{The number of isomap dimensions to retain as new all_predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.}
+\item{num}{The number of isomap dimensions to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible dimensions, a smaller value will be used.}
 
 \item{options}{A list of options to \code{\link[dimRed]{Isomap}}.}
 

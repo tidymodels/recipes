@@ -4,7 +4,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.
+#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.
 #' @param holidays A character string that includes at least one holdiay supported by the \code{timeDate} package. See \code{\link[timeDate]{listHolidays}} for a complete list.
 
 #' @param variables A character string of variables that will be used as inputs. This field is a placeholder and will be populated once \code{\link{learn.recipe}} is used.

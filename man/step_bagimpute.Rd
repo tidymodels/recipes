@@ -35,7 +35,7 @@ imp_vars(...)
 \code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
 }
 \details{
-For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the all_predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept all_predictors that have missing values themselves. This imputation method can be used when the variable of interest (and all_predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
+For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
 
 Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
 

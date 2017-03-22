@@ -12,7 +12,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 
 \item{terms}{A traditional R formula that contains interaction terms.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
@@ -29,7 +29,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 \details{
 \code{step_interact} can create interactions between variables. It is primarily intended for \bold{numeric data}; categorical variables should probably be converted to dummy variables using \code{\link{step_dummy}} prior to being used for interactions.
 
-Unlike other step functions, the \code{terms} argument should be a traditional R model formula but should contain no inline functions (e.g. \code{log}). For example, for all_predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are retained for the design matrix.
+Unlike other step functions, the \code{terms} argument should be a traditional R model formula but should contain no inline functions (e.g. \code{log}). For example, for predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be used to make a three way interaction between the variables. If the formula contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are retained for the design matrix.
 
 The separator between the variables defaults to "\code{_x_}" so that the three way interaction shown previously would generate a column named \code{A_x_B_x_C}. This can be changed using the \code{sep} argument.
 }

@@ -21,7 +21,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #'
 #' Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
 #'
-#' \code{recipe} objects can be created in several ways. If the analysis only contains all_outcomes and all_predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
+#' \code{recipe} objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
 #'
 #' Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
 #'
@@ -47,7 +47,7 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
 #'
-#' # When only all_predictors and all_outcomes, a simplified formula can be used.
+#' # When only predictors and outcomes, a simplified formula can be used.
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
@@ -140,20 +140,20 @@ recipe.formula <- function(formula, data, ...) {
   if(!is_tibble(data)) data <- as_tibble(data)
 
   ## use rlang to get both sides of the formula
-  all_outcomes <- get_lhs_vars(formula, data)
-  all_predictors <- get_rhs_vars(formula, data)
+  outcomes <- get_lhs_vars(formula, data)
+  predictors <- get_rhs_vars(formula, data)
 
   ## get `vars` from lhs and rhs of formula
 
-  vars <- c(all_predictors, all_outcomes)
+  vars <- c(predictors, outcomes)
 
   ## subset data columns
   data <- data[, vars]
 
   ## derive roles
-  roles <- rep("predictor", length(all_predictors))
-  if(length(all_outcomes) > 0)
-    roles <- c(roles, rep("outcome", length(all_outcomes)))
+  roles <- rep("predictor", length(predictors))
+  if(length(outcomes) > 0)
+    roles <- c(roles, rep("outcome", length(outcomes)))
 
   ## pass to recipe.default with vars and roles
 
