@@ -17,7 +17,7 @@ Imports:
     tibble,
     stats,
     ipred,
-    dimRed,
+    dimRed (>= 0.0.3.9001),
     lubridate,
     timeDate,
     ddalpha,

@@ -94,22 +94,37 @@
   <span class='fu'>make.names</span>(<span class='no'>lvl</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>), <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables will be used to create the dummy variables. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>contrast</dt>
-      <dd><p>A specification for which type of contrast should be used to make a set of full rank dummy variables. See <code><a href='http://www.rdocumentation.org/packages/stats/topics/contrasts'>contrasts</a></code> for more details. <b>not currently working</b></p></dd>
-      <dt>naming</dt>
-      <dd><p>A function that defines the naming convention for new binary columns. See Details below.</p></dd>
-      <dt>levels</dt>
-      <dd><p>A list that contains the information needed to create dummy variables for each variable contained in <code>terms</code>. This is <code>NULL</code> until the step is trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables will be used to create the dummy variables. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as all_predictors in a model.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>contrast</th>
+      <td><p>A specification for which type of contrast should be used to make a set of full rank dummy variables. See <code><a href='http://www.rdocumentation.org/packages/stats/topics/contrasts'>contrasts</a></code> for more details. <b>not currently working</b></p></td>
+    </tr>
+    <tr>
+      <th>naming</th>
+      <td><p>A function that defines the naming convention for new binary columns. See Details below.</p></td>
+    </tr>
+    <tr>
+      <th>levels</th>
+      <td><p>A list that contains the information needed to create dummy variables for each variable contained in <code>terms</code>. This is <code>NULL</code> until the step is trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -129,7 +144,7 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>age</span> + <span class='no'>height</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 
 <span class='no'>dummies</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_dummy</span>(<span class='no'>diet</span>)
-<span class='no'>dummies</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>dummies</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; step 1 dummy training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>dummies</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>dummies</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; step 1 dummy training </div><div class='input'>
 <span class='no'>dummy_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>dummies</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 
 <span class='fu'>unique</span>(<span class='no'>okc</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt;  [1] "strictly anything"   "mostly other"        "anything"           
@@ -137,7 +152,15 @@
 #&gt;  [7] "strictly vegan"      "strictly vegetarian" "mostly vegan"       
 #&gt; [10] "strictly other"      "mostly halal"        "other"              
 #&gt; [13] "vegan"               "mostly kosher"       "strictly halal"     
-#&gt; [16] "halal"               "strictly kosher"     "kosher"             </div><div class='input'><span class='fu'>grep</span>(<span class='st'>"^diet"</span>, <span class='fu'>names</span>(<span class='no'>dummy_data</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "diet"</div></pre>
+#&gt; [16] "halal"               "strictly kosher"     "kosher"             </div><div class='input'><span class='fu'>grep</span>(<span class='st'>"^diet"</span>, <span class='fu'>names</span>(<span class='no'>dummy_data</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "diet_halal"               "diet_kosher"             
+#&gt;  [3] "diet_mostly.anything"     "diet_mostly.halal"       
+#&gt;  [5] "diet_mostly.kosher"       "diet_mostly.other"       
+#&gt;  [7] "diet_mostly.vegan"        "diet_mostly.vegetarian"  
+#&gt;  [9] "diet_other"               "diet_strictly.anything"  
+#&gt; [11] "diet_strictly.halal"      "diet_strictly.kosher"    
+#&gt; [13] "diet_strictly.other"      "diet_strictly.vegan"     
+#&gt; [15] "diet_strictly.vegetarian" "diet_vegan"              
+#&gt; [17] "diet_vegetarian"         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -78,7 +78,7 @@
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#an-example" class="anchor"> </a></body></html>An Example</h2>
+<a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The cell segmentation data will be used. It has 58 columns with all_predictors and a factor variable (which is the outcome). Each of the all_predictors has a suffix for the optical channel (<code>"Ch1"</code>-<code>"Ch4"</code>). We will first separate the data into a training and test set then remove unimportant variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
 <span class="kw">data</span>(segmentationData)
@@ -94,7 +94,7 @@ seg_test  &lt;-<span class="st"> </span>segmentationData <span class="op">%&gt;%
 </div>
 <div id="an-initial-recipe" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#an-initial-recipe" class="anchor"> </a></body></html>An Initial Recipe</h2>
+<a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
 <p>For a first recipe, let’s plan on centering and scaling the all_predictors. First, we will create a recipe from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only required <strong>all_outcomes</strong> and <strong>all_predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
@@ -113,7 +113,7 @@ rec_obj</code></pre></div>
 </div>
 <div id="preprocessing-steps" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#preprocessing-steps" class="anchor"> </a></body></html>Preprocessing Steps</h2>
+<a href="#preprocessing-steps" class="anchor"></a>Preprocessing Steps</h2>
 <p>From here, preprocessing steps can be added sequentially in one of two ways:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec_obj &lt;-<span class="st"> </span><span class="kw">step_name</span>(rec_obj, arguments)    ## or
 rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">step_name</span>(arguments)</code></pre></div>
@@ -193,7 +193,7 @@ test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 </div>
 <div id="adding-steps" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#adding-steps" class="anchor"> </a></body></html>Adding Steps</h2>
+<a href="#adding-steps" class="anchor"></a>Adding Steps</h2>
 <p>After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the all_predictors from channel 1 and any all_predictors that are areas:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span>trained_rec <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/step_pca.html">step_pca</a></span>(<span class="kw">ends_with</span>(<span class="st">"Ch1"</span>), <span class="kw">contains</span>(<span class="st">"area"</span>), <span class="dt">num =</span> <span class="dv">5</span>)

@@ -89,19 +89,24 @@
     <p><code>add_role</code> can add a role definition to an existing variable in the recipe.</p>
     
 
-    <pre><span class='fu'>add_role</span>(<span class='no'>recipe</span>, <span class='no'>vars</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre><span class='fu'>add_role</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>An existing <code><a href='recipe.html'>recipe</a></code>.</p></dd>
-      <dt>vars</dt>
-      <dd><p>A character string of variable names or simple formula that defines one or more variable that will be assigned to the role.</p></dd>
-      <dt>role</dt>
-      <dd><p>A character string for a single role.</p></dd>
-      <dt>data</dt>
-      <dd><p>Am optional data template that may be needed to resolve the formula (in case there is a <code>.</code>).</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>An existing <code><a href='recipe.html'>recipe</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables are being assigned a role. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>new_role</th>
+      <td><p>A character string for a single role.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -109,7 +114,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If <code>vars</code> is a formula, it should not include any functions, negative signs, or <code>.</code> (since there is no data element to evaluate it).</p>
+    <p>If a variable is selected that currently has a role, the role is changed and a warning is issued.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -122,7 +127,7 @@
 #&gt; 
 #&gt; Inputs:
 #&gt; 
-#&gt;   8 variables (no declared roles)</div><div class='input'><span class='no'>rec</span>$<span class='no'>var_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
+#&gt;   8 variables (no declared roles)</div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 8 × 4
 #&gt;   variable    type  role   source
 #&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;
 #&gt; 1   sample nominal    NA original
@@ -133,10 +138,11 @@
 #&gt; 6 nitrogen numeric    NA original
 #&gt; 7   sulfur numeric    NA original
 #&gt; 8      HHV numeric    NA original</div><div class='input'>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>biomass</span>)[<span class='fl'>3</span>:<span class='fl'>7</span>], <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='st'>"sample"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='st'>"dataset"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"splitting variable"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_role</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), <span class='no'>sulfur</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_role</span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_role</span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_role</span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
 <span class='no'>rec</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -146,21 +152,7 @@
 #&gt;             outcome          1
 #&gt;           predictor          5
 #&gt;  splitting variable          1</div><div class='input'>
-<span class='co'># or, if you really want the formula method, you can change roles</span>
 
-<span class='no'>rec2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>)
-<span class='co'># Now change inappropriate predictor roles</span>
-<span class='no'>rec2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec2</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='st'>"sample"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Overwriting role(s) forsample</span></div><div class='input'><span class='no'>rec2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_role</span>(<span class='no'>rec2</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='st'>"dataset"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"splitting variable"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Overwriting role(s) fordataset</span></div><div class='input'><span class='no'>rec2</span>$<span class='no'>var_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
-#&gt;   variable    type               role   source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;
-#&gt; 1   sample nominal        id variable original
-#&gt; 2  dataset nominal splitting variable original
-#&gt; 3   carbon numeric          predictor original
-#&gt; 4 hydrogen numeric          predictor original
-#&gt; 5   oxygen numeric          predictor original
-#&gt; 6 nitrogen numeric          predictor original
-#&gt; 7   sulfur numeric          predictor original
-#&gt; 8      HHV numeric            outcome original</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

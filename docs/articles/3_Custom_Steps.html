@@ -129,8 +129,8 @@ biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span
                             <span class="dt">approx =</span> <span class="ot">FALSE</span>, 
                             <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">probs =</span> (<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span>, <span class="dt">names =</span> <span class="ot">TRUE</span>)) {
 ## process but do not evaluate the variable selectors with
-## the `tidy_quotes` function in `rlang`
-  terms &lt;-<span class="st"> </span><span class="kw">tidy_quotes</span>(...) 
+## the `dots_quosures` function in `rlang`
+  terms &lt;-<span class="st"> </span><span class="kw">dots_quosures</span>(...) 
   <span class="cf">if</span>(<span class="kw">is_empty</span>(terms))
     <span class="kw">stop</span>(<span class="st">&quot;Please supply at least one variable specification. See ?selections.&quot;</span>)
   <span class="kw">add_step</span>(
@@ -251,7 +251,7 @@ process.step_percentile &lt;-<span class="st"> </span><span class="cf">function<
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
 rec_obj &lt;-<span class="st"> </span><span class="kw">recipe</span>(HHV <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> biomass_tr[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])
 rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">step_percentile</span>(<span class="op">~</span><span class="st"> </span><span class="kw">all_predictors</span>(), <span class="dt">approx =</span> <span class="ot">TRUE</span>) 
+<span class="st">  </span><span class="kw">step_percentile</span>(<span class="kw">all_predictors</span>(), <span class="dt">approx =</span> <span class="ot">TRUE</span>) 
 
 rec_obj &lt;-<span class="st"> </span><span class="kw">learn</span>(rec_obj, <span class="dt">training =</span> biomass_tr)</code></pre></div>
 <pre><code>## step 1 percentile training</code></pre>

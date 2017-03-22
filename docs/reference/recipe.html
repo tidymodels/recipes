@@ -98,20 +98,33 @@
 <span class='fu'>recipe</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd><p>an object. For the default method, <code>x</code> is a data frame or tibble of the <em>template</em> data set (see below).</p></dd>
-      <dt>...</dt>
-      <dd><p>further arguments passed to or from other methods (not currently used).</p></dd>
-      <dt>vars</dt>
-      <dd><p>a character string of column names corresponding to variables that will be used in any context (see below)</p></dd>
-      <dt>roles</dt>
-      <dd><p>a character string (the same length of <code>vars</code>) that describes a single role that the variable will take. This value could be anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>, <code>"case_weight"</code>, or <code>"ID"</code></p></dd>
-      <dt>formula</dt>
-      <dd><p>A model formula. No in-line functions should be used here (e.g. <code>log(x)</code>, <code>x:y</code>, etc.). These types of transformations should be enacted using <code>step</code> functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for <code>cbind</code>; see Examples).</p></dd>
-      <dt>data</dt>
-      <dd><p>a data frame or tibble of the <em>template</em> data set (see below).</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an object. For the default method, <code>x</code> is a data frame or tibble of the <em>template</em> data set (see below).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>further arguments passed to or from other methods (not currently used).</p></td>
+    </tr>
+    <tr>
+      <th>vars</th>
+      <td><p>a character string of column names corresponding to variables that will be used in any context (see below)</p></td>
+    </tr>
+    <tr>
+      <th>roles</th>
+      <td><p>a character string (the same length of <code>vars</code>) that describes a single role that the variable will take. This value could be anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>, <code>"case_weight"</code>, or <code>"ID"</code></p></td>
+    </tr>
+    <tr>
+      <th>formula</th>
+      <td><p>A model formula. No in-line functions should be used here (e.g. <code>log(x)</code>, <code>x:y</code>, etc.). These types of transformations should be enacted using <code>step</code> functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for <code>cbind</code>; see Examples).</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>a data frame or tibble of the <em>template</em> data set (see below).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -148,9 +161,9 @@
 <span class='co'># Now add preprocessing steps to the recipe.</span>
 
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 <span class='no'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -161,33 +174,52 @@
 #&gt; 
 #&gt; Steps:
 #&gt; 
-#&gt; Centering for ~all_predictors()
-#&gt; Scaling for ~all_predictors()
-#&gt; Spatial sign on  ~all_predictors()</div><div class='input'>
+#&gt; Centering for all_predictors()
+#&gt; Scaling for all_predictors()
+#&gt; Spatial sign on  all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
-<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'sp_signed_trained' not found</span></div><div class='input'>
+<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training 
+#&gt; step 3 spatialsign training </div><div class='input'><span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor          5
+#&gt; 
+#&gt; Training data contained 456 data points and no missing data.
+#&gt; 
+#&gt; Steps:
+#&gt; 
+#&gt; Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+#&gt; Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+#&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
-<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(sp_signed_trained, newdata = biomass_te): object 'sp_signed_trained' not found</span></div><div class='input'>
+<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
+
 <span class='co'>###############################################</span>
 <span class='co'># multivariate example</span>
 
 <span class='co'># no need for `cbind(carbon, hydrogen)` for left-hand side</span>
-<span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>carbon</span> + <span class='no'>hydrogen</span> ~ <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>)
+<span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>carbon</span> + <span class='no'>hydrogen</span> ~ <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 <span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='no'>multi_y</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(~ <span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(~ <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(multi_y_trained, biomass_te): object 'multi_y_trained' not found</span></div><div class='input'>
+<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training </div><div class='input'>
+<span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)
+
 <span class='co'>###############################################</span>
 <span class='co'># Creating a recipe manually with different roles</span>
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>biomass_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-           <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"HHV"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"sample"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"dataset"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>, <span class='no'>oxygen</span>, <span class='no'>nitrogen</span>, <span class='no'>sulfur</span>,
+           <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
 <span class='no'>rec</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:

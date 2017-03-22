@@ -92,12 +92,17 @@
     <pre><span class='fu'>select_terms</span>(<span class='no'>info</span>, <span class='no'>args</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>info</dt>
-      <dd><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>, and <code>source</code> that represent the current state of the data. The function <code><a href='summary.recipe.html'>summary.recipe</a></code> can be used to get this information from a recipe.</p></dd>
-      <dt>args</dt>
-      <dd><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/tidy_quote'>tidy_quote</a></code> for examples.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>info</th>
+      <td><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>, and <code>source</code> that represent the current state of the data. The function <code><a href='summary.recipe.html'>summary.recipe</a></code> can be used to get this information from a recipe.</p></td>
+    </tr>
+    <tr>
+      <th>args</th>
+      <td><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/dots_quosures'>dots_quosures</a></code> for examples.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -112,7 +117,7 @@
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
-<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>tidy_quotes</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div></pre>
+<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>dots_quosures</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "diet"     "location" "age"      "height"   "date"    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

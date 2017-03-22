@@ -104,14 +104,21 @@
 <span class='fu'>current_info</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>match</dt>
-      <dd><p>A single character string for the query. Exact matching is used (i.e. regular expressions won't work).</p></dd>
-      <dt>roles</dt>
-      <dd><p>A character string of roles for the current set of terms.</p></dd>
-      <dt>types</dt>
-      <dd><p>A character string of roles for the current set of data types</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>match</th>
+      <td><p>A single character string for the query. Exact matching is used (i.e. regular expressions won't work).</p></td>
+    </tr>
+    <tr>
+      <th>roles</th>
+      <td><p>A character string of roles for the current set of terms.</p></td>
+    </tr>
+    <tr>
+      <th>types</th>
+      <td><p>A character string of roles for the current set of data types</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -122,11 +129,11 @@
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-           <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"HHV"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"sample"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='st'>"dataset"</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>, <span class='no'>oxygen</span>, <span class='no'>nitrogen</span>, <span class='no'>sulfur</span>,
+           <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
 <span class='no'>recipe_info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
 <span class='no'>recipe_info</span></div><div class='output co'>#&gt; # A tibble: 8 × 4
 #&gt;   variable    type                role   source

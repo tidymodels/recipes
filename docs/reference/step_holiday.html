@@ -93,20 +93,33 @@
   <span class='kw'>holidays</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"LaborDay"</span>, <span class='st'>"NewYearsDay"</span>, <span class='st'>"ChristmasDay"</span>), <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class <code>Date</code> or <code>POSIXct</code>. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>holidays</dt>
-      <dd><p>A character string that includes at least one holdiay supported by the <code>timeDate</code> package. See <code><a href='http://www.rdocumentation.org/packages/timeDate/topics/holiday-Listing'>listHolidays</a></code> for a complete list.</p></dd>
-      <dt>variables</dt>
-      <dd><p>A character string of variables that will be used as inputs. This field is a placeholder and will be populated once <code><a href='learn.html'>learn.recipe</a></code> is used.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class <code>Date</code> or <code>POSIXct</code>. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as all_predictors in a model.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>holidays</th>
+      <td><p>A character string that includes at least one holdiay supported by the <code>timeDate</code> package. See <code><a href='http://www.rdocumentation.org/packages/timeDate/topics/holiday-Listing'>listHolidays</a></code> for a complete list.</p></td>
+    </tr>
+    <tr>
+      <th>variables</th>
+      <td><p>A character string of variables that will be used as inputs. This field is a placeholder and will be populated once <code><a href='learn.html'>learn.recipe</a></code> is used.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -128,20 +141,20 @@
 <span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>someday</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>step_holiday</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 holiday training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>holiday_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
-<span class='no'>holiday_values</span></div><div class='output co'>#&gt; # A tibble: 41 × 1
-#&gt;       someday
-#&gt;        &lt;date&gt;
-#&gt; 1  2000-12-20
-#&gt; 2  2000-12-21
-#&gt; 3  2000-12-22
-#&gt; 4  2000-12-23
-#&gt; 5  2000-12-24
-#&gt; 6  2000-12-25
-#&gt; 7  2000-12-26
-#&gt; 8  2000-12-27
-#&gt; 9  2000-12-28
-#&gt; 10 2000-12-29
+<span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 holiday training </div><div class='input'><span class='no'>holiday_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
+<span class='no'>holiday_values</span></div><div class='output co'>#&gt; # A tibble: 41 × 4
+#&gt;       someday someday_LaborDay someday_NewYearsDay someday_ChristmasDay
+#&gt;        &lt;date&gt;            &lt;dbl&gt;               &lt;dbl&gt;                &lt;dbl&gt;
+#&gt; 1  2000-12-20                0                   0                    0
+#&gt; 2  2000-12-21                0                   0                    0
+#&gt; 3  2000-12-22                0                   0                    0
+#&gt; 4  2000-12-23                0                   0                    0
+#&gt; 5  2000-12-24                0                   0                    0
+#&gt; 6  2000-12-25                0                   0                    1
+#&gt; 7  2000-12-26                0                   0                    0
+#&gt; 8  2000-12-27                0                   0                    0
+#&gt; 9  2000-12-28                0                   0                    0
+#&gt; 10 2000-12-29                0                   0                    0
 #&gt; # ... with 31 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

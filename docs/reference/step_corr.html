@@ -93,24 +93,41 @@
   <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>threshold</dt>
-      <dd><p>A value for the threshold of absolute correlation values. The step will try to remove the minimum number of columns so that all the resulting absolute correlations are less than this value.</p></dd>
-      <dt>use</dt>
-      <dd><p>A character string for the <code>use</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></dd>
-      <dt>method</dt>
-      <dd><p>A character string for the <code>method</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></dd>
-      <dt>removals</dt>
-      <dd><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>A value for the threshold of absolute correlation values. The step will try to remove the minimum number of columns so that all the resulting absolute correlations are less than this value.</p></td>
+    </tr>
+    <tr>
+      <th>use</th>
+      <td><p>A character string for the <code>use</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>A character string for the <code>method</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>removals</th>
+      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -140,14 +157,19 @@
 <span class='no'>corr_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_corr</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
 
-<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 corr training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(filter_obj, biomass_te, role = "predictor"): object 'filter_obj' not found</span></div><div class='input'><span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>biomass_tr</span>[, <span class='fu'>c</span>(<span class='fl'>3</span>:<span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
+<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 corr training </div><div class='input'>
+<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)
+<span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>biomass_tr</span>[, <span class='fu'>c</span>(<span class='fl'>3</span>:<span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
 #&gt; carbon      1.00     0.32   0.63     0.15   0.09      1.00
 #&gt; hydrogen    0.32     1.00   0.54     0.07   0.19      0.31
 #&gt; oxygen      0.63     0.54   1.00     0.18   0.31      0.63
 #&gt; nitrogen    0.15     0.07   0.18     1.00   0.27      0.15
 #&gt; sulfur      0.09     0.19   0.31     0.27   1.00      0.10
-#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'filtered_te' not found</span></div></pre>
+#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur duplicate
+#&gt; hydrogen      1.00     0.11   0.26      0.20
+#&gt; nitrogen      0.11     1.00   0.16      0.13
+#&gt; sulfur        0.26     0.16   1.00      0.13
+#&gt; duplicate     0.20     0.13   0.13      1.00</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

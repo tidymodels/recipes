@@ -93,20 +93,33 @@
   <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>terms</dt>
-      <dd><p>A traditional R formula that contains interaction terms.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>objects</dt>
-      <dd><p>A list of <code>terms</code> objects for each individual interation.</p></dd>
-      <dt>sep</dt>
-      <dd><p>A character value used to delinate variables in an interaction (e.g. <code>var1_x_var2</code> instead of the more traditional <code>var1:var2</code>).</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>terms</th>
+      <td><p>A traditional R formula that contains interaction terms.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>objects</th>
+      <td><p>A list of <code>terms</code> objects for each individual interation.</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>A character value used to delinate variables in an interaction (e.g. <code>var1_x_var2</code> instead of the more traditional <code>var1:var2</code>).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

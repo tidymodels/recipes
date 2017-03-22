@@ -93,18 +93,29 @@
   <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables will be used for the normalization. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>vars</dt>
-      <dd><p>A character string of variable names that will be (eventually) populated by the <code>terms</code> argument.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables will be used for the normalization. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>vars</th>
+      <td><p>A character string of variable names that will be (eventually) populated by the <code>terms</code> argument.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -134,10 +145,13 @@
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_spatialsign</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 
-<span class='no'>ss_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>ss_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>ss_obj</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(ss_obj, biomass_te): object 'ss_obj' not found</span></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>hydrogen</span>)</div><img src='step_spatialsign-7.png' alt='' width='540' height='400' /><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>hydrogen</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(transformed_te$carbon, transformed_te$hydrogen): object 'transformed_te' not found</span></div></pre>
+<span class='no'>ss_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>ss_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training 
+#&gt; step 3 spatialsign training </div><div class='input'>
+<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>ss_obj</span>, <span class='no'>biomass_te</span>)
+
+<span class='fu'>plot</span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>hydrogen</span>)</div><img src='step_spatialsign-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>hydrogen</span>)</div><img src='step_spatialsign-6.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

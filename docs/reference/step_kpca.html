@@ -94,24 +94,41 @@
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"kPC"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>num</dt>
-      <dd><p>The number of PCA components to retain as new all_predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></dd>
-      <dt>res</dt>
-      <dd><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-      <dt>options</dt>
-      <dd><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code>. Defaults are set for the arguments <code>kernel</code> and <code>kpar</code> but others can be passed in. <b>Note</b> that the arguments <code>x</code> and <code>features</code> should not be passed here (or at all).</p></dd>
-      <dt>prefix</dt>
-      <dd><p>A character string that will be the prefix to the resulting new variables. See notes below</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as all_predictors in a model.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>num</th>
+      <td><p>The number of PCA components to retain as new all_predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></td>
+    </tr>
+    <tr>
+      <th>res</th>
+      <td><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code>. Defaults are set for the arguments <code>kernel</code> and <code>kpar</code> but others can be passed in. <b>Note</b> that the arguments <code>x</code> and <code>features</code> should not be passed here (or at all).</p></td>
+    </tr>
+    <tr>
+      <th>prefix</th>
+      <td><p>A character string that will be the prefix to the resulting new variables. See notes below</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -149,10 +166,15 @@
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_kpca</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>kpca_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>kpca_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(kpca_estimates, biomass_te): object 'kpca_estimates' not found</span></div><div class='input'>
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>))</div><div class='output co'>#&gt; <span class='error'>Error in extendrange(c(kpca_te$kPC1, kpca_te$kPC2)): object 'kpca_te' not found</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(kpca_te$kPC1, kpca_te$kPC2, xlim = rng, ylim = rng): object 'kpca_te' not found</span></div></pre>
+<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
+#&gt; step 2 center training 
+#&gt; step 3 scale training 
+#&gt; step 4 kpca training </div><div class='input'>
+<span class='no'>kpca_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>kpca_estimates</span>, <span class='no'>biomass_te</span>)
+
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>))
+<span class='fu'>plot</span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>,
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_kpca-4.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -92,18 +92,29 @@
     <pre><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables that will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>removals</dt>
-      <dd><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables that will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>removals</th>
+      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -123,21 +134,21 @@
 <span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rm</span>(<span class='fu'>contains</span>(<span class='st'>"gen"</span>))
 
-<span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 rm training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 rm training </div><div class='input'>
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)
-<span class='no'>filtered_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 5
-#&gt;    carbon hydrogen oxygen nitrogen sulfur
-#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1   46.35     5.67  47.20     0.30   0.22
-#&gt; 2   43.25     5.50  48.06     2.85   0.34
-#&gt; 3   42.70     5.50  49.10     2.40   0.30
-#&gt; 4   46.40     6.10  37.30     1.80   0.50
-#&gt; 5   48.76     6.32  42.77     0.20   0.00
-#&gt; 6   44.30     5.50  41.70     0.70   0.20
-#&gt; 7   38.94     5.23  54.13     1.19   0.51
-#&gt; 8   42.10     4.66  33.80     0.95   0.20
-#&gt; 9   29.20     4.40  31.10     0.14   4.90
-#&gt; 10  27.80     3.77  23.69     4.63   1.05
+<span class='no'>filtered_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 2
+#&gt;    carbon sulfur
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1   46.35   0.22
+#&gt; 2   43.25   0.34
+#&gt; 3   42.70   0.30
+#&gt; 4   46.40   0.50
+#&gt; 5   48.76   0.00
+#&gt; 6   44.30   0.20
+#&gt; 7   38.94   0.51
+#&gt; 8   42.10   0.20
+#&gt; 9   29.20   4.90
+#&gt; 10  27.80   1.05
 #&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

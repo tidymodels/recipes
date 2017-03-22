@@ -93,22 +93,37 @@
   <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>lambdas</dt>
-      <dd><p>A numeric vector of transformation values. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-      <dt>limits</dt>
-      <dd><p>A length 2 numeric vector defining the range to compute the transformation parameter lambda.</p></dd>
-      <dt>nunique</dt>
-      <dd><p>An integer where data that have less possible values will not be evaluate for a transformation</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>lambdas</th>
+      <td><p>A numeric vector of transformation values. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>limits</th>
+      <td><p>A length 2 numeric vector defining the range to compute the transformation parameter lambda.</p></td>
+    </tr>
+    <tr>
+      <th>nunique</th>
+      <td><p>An integer where data that have less possible values will not be evaluate for a transformation</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -141,9 +156,10 @@
 
 <span class='no'>yj_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
 
-<span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(yj_estimates, biomass_te): object 'yj_estimates' not found</span></div><div class='input'>
-<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><img src='step_YeoJohnson-7.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in density(yj_te$sulfur): object 'yj_te' not found</span></div></pre>
+<span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training </div><div class='input'>
+<span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)
+
+<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><img src='step_YeoJohnson-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><img src='step_YeoJohnson-6.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

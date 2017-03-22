@@ -6,15 +6,12 @@ reference:
   - title: Basic Functions
     contents:
     - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)")
-    - init_site
   - title: Example Datasets
     contents:
     - matches("(okc)|(biomass)|(credit)")
-    - init_site    
   - title: Step Functions
     contents:
     - matches("step_")
-    - init_site
 
 
 navbar:

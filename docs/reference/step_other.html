@@ -93,22 +93,37 @@
   <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other"</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables that will potentially be reduced. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>threshold</dt>
-      <dd><p>A single numeric value in (0, 1) for pooling.</p></dd>
-      <dt>other</dt>
-      <dd><p>A single character value for the "other" category.</p></dd>
-      <dt>objects</dt>
-      <dd><p>A list of objects that contain the information to pool infrequent levels that is determined by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables that will potentially be reduced. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>A single numeric value in (0, 1) for pooling.</p></td>
+    </tr>
+    <tr>
+      <th>other</th>
+      <td><p>A single character value for the "other" category.</p></td>
+    </tr>
+    <tr>
+      <th>objects</th>
+      <td><p>A list of objects that contain the information to pool infrequent levels that is determined by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -135,113 +150,50 @@
 
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)</div><div class='output co'>#&gt; step 1 other training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)</div><div class='output co'>#&gt; step 1 other training </div><div class='input'>
 <span class='no'>collapsed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
 <span class='fu'>table</span>(<span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='no'>collapsed</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      
-#&gt;                       anything halal kosher mostly anything mostly halal
-#&gt;   anything                3013     0      0               0            0
-#&gt;   halal                      0     5      0               0            0
-#&gt;   kosher                     0     0      6               0            0
-#&gt;   mostly anything            0     0      0            8254            0
-#&gt;   mostly halal               0     0      0               0           27
-#&gt;   mostly kosher              0     0      0               0            0
-#&gt;   mostly other               0     0      0               0            0
-#&gt;   mostly vegan               0     0      0               0            0
-#&gt;   mostly vegetarian          0     0      0               0            0
-#&gt;   other                      0     0      0               0            0
-#&gt;   strictly anything          0     0      0               0            0
-#&gt;   strictly halal             0     0      0               0            0
-#&gt;   strictly kosher            0     0      0               0            0
-#&gt;   strictly other             0     0      0               0            0
-#&gt;   strictly vegan             0     0      0               0            0
-#&gt;   strictly vegetarian        0     0      0               0            0
-#&gt;   vegan                      0     0      0               0            0
-#&gt;   vegetarian                 0     0      0               0            0
-#&gt;   &lt;NA&gt;                       0     0      0               0            0
+#&gt;                       anything mostly anything strictly anything other values
+#&gt;   anything                3013               0                 0            0
+#&gt;   halal                      0               0                 0            5
+#&gt;   kosher                     0               0                 0            6
+#&gt;   mostly anything            0            8254                 0            0
+#&gt;   mostly halal               0               0                 0           27
+#&gt;   mostly kosher              0               0                 0           39
+#&gt;   mostly other               0               0                 0          517
+#&gt;   mostly vegan               0               0                 0          186
+#&gt;   mostly vegetarian          0               0                 0         1719
+#&gt;   other                      0               0                 0          162
+#&gt;   strictly anything          0               0              2497            0
+#&gt;   strictly halal             0               0                 0            7
+#&gt;   strictly kosher            0               0                 0           11
+#&gt;   strictly other             0               0                 0          223
+#&gt;   strictly vegan             0               0                 0          121
+#&gt;   strictly vegetarian        0               0                 0          437
+#&gt;   vegan                      0               0                 0           71
+#&gt;   vegetarian                 0               0                 0          336
+#&gt;   &lt;NA&gt;                       0               0                 0            0
 #&gt;                      
-#&gt;                       mostly kosher mostly other mostly vegan mostly vegetarian
-#&gt;   anything                        0            0            0                 0
-#&gt;   halal                           0            0            0                 0
-#&gt;   kosher                          0            0            0                 0
-#&gt;   mostly anything                 0            0            0                 0
-#&gt;   mostly halal                    0            0            0                 0
-#&gt;   mostly kosher                  39            0            0                 0
-#&gt;   mostly other                    0          517            0                 0
-#&gt;   mostly vegan                    0            0          186                 0
-#&gt;   mostly vegetarian               0            0            0              1719
-#&gt;   other                           0            0            0                 0
-#&gt;   strictly anything               0            0            0                 0
-#&gt;   strictly halal                  0            0            0                 0
-#&gt;   strictly kosher                 0            0            0                 0
-#&gt;   strictly other                  0            0            0                 0
-#&gt;   strictly vegan                  0            0            0                 0
-#&gt;   strictly vegetarian             0            0            0                 0
-#&gt;   vegan                           0            0            0                 0
-#&gt;   vegetarian                      0            0            0                 0
-#&gt;   &lt;NA&gt;                            0            0            0                 0
-#&gt;                      
-#&gt;                       other strictly anything strictly halal strictly kosher
-#&gt;   anything                0                 0              0               0
-#&gt;   halal                   0                 0              0               0
-#&gt;   kosher                  0                 0              0               0
-#&gt;   mostly anything         0                 0              0               0
-#&gt;   mostly halal            0                 0              0               0
-#&gt;   mostly kosher           0                 0              0               0
-#&gt;   mostly other            0                 0              0               0
-#&gt;   mostly vegan            0                 0              0               0
-#&gt;   mostly vegetarian       0                 0              0               0
-#&gt;   other                 162                 0              0               0
-#&gt;   strictly anything       0              2497              0               0
-#&gt;   strictly halal          0                 0              7               0
-#&gt;   strictly kosher         0                 0              0              11
-#&gt;   strictly other          0                 0              0               0
-#&gt;   strictly vegan          0                 0              0               0
-#&gt;   strictly vegetarian     0                 0              0               0
-#&gt;   vegan                   0                 0              0               0
-#&gt;   vegetarian              0                 0              0               0
-#&gt;   &lt;NA&gt;                    0                 0              0               0
-#&gt;                      
-#&gt;                       strictly other strictly vegan strictly vegetarian vegan
-#&gt;   anything                         0              0                   0     0
-#&gt;   halal                            0              0                   0     0
-#&gt;   kosher                           0              0                   0     0
-#&gt;   mostly anything                  0              0                   0     0
-#&gt;   mostly halal                     0              0                   0     0
-#&gt;   mostly kosher                    0              0                   0     0
-#&gt;   mostly other                     0              0                   0     0
-#&gt;   mostly vegan                     0              0                   0     0
-#&gt;   mostly vegetarian                0              0                   0     0
-#&gt;   other                            0              0                   0     0
-#&gt;   strictly anything                0              0                   0     0
-#&gt;   strictly halal                   0              0                   0     0
-#&gt;   strictly kosher                  0              0                   0     0
-#&gt;   strictly other                 223              0                   0     0
-#&gt;   strictly vegan                   0            121                   0     0
-#&gt;   strictly vegetarian              0              0                 437     0
-#&gt;   vegan                            0              0                   0    71
-#&gt;   vegetarian                       0              0                   0     0
-#&gt;   &lt;NA&gt;                             0              0                   0     0
-#&gt;                      
-#&gt;                       vegetarian  &lt;NA&gt;
-#&gt;   anything                     0     0
-#&gt;   halal                        0     0
-#&gt;   kosher                       0     0
-#&gt;   mostly anything              0     0
-#&gt;   mostly halal                 0     0
-#&gt;   mostly kosher                0     0
-#&gt;   mostly other                 0     0
-#&gt;   mostly vegan                 0     0
-#&gt;   mostly vegetarian            0     0
-#&gt;   other                        0     0
-#&gt;   strictly anything            0     0
-#&gt;   strictly halal               0     0
-#&gt;   strictly kosher              0     0
-#&gt;   strictly other               0     0
-#&gt;   strictly vegan               0     0
-#&gt;   strictly vegetarian          0     0
-#&gt;   vegan                        0     0
-#&gt;   vegetarian                 336     0
-#&gt;   &lt;NA&gt;                         0 12224</div></pre>
+#&gt;                        &lt;NA&gt;
+#&gt;   anything                0
+#&gt;   halal                   0
+#&gt;   kosher                  0
+#&gt;   mostly anything         0
+#&gt;   mostly halal            0
+#&gt;   mostly kosher           0
+#&gt;   mostly other            0
+#&gt;   mostly vegan            0
+#&gt;   mostly vegetarian       0
+#&gt;   other                   0
+#&gt;   strictly anything       0
+#&gt;   strictly halal          0
+#&gt;   strictly kosher         0
+#&gt;   strictly other          0
+#&gt;   strictly vegan          0
+#&gt;   strictly vegetarian     0
+#&gt;   vegan                   0
+#&gt;   vegetarian              0
+#&gt;   &lt;NA&gt;                12224</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

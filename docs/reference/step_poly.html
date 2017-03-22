@@ -93,20 +93,33 @@
   <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>degree</span> <span class='kw'>=</span> <span class='fl'>2</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>objects</dt>
-      <dd><p>A list of <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> objects created once the step has been learned.</p></dd>
-      <dt>options</dt>
-      <dd><p>A list of options for  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> which should not include <code>x</code> or <code>simple</code>. Note that the option <code>raw = TRUE</code> will produce the regular polynomial values (not orthogonalized).</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as all_predictors in a model.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>objects</th>
+      <td><p>A list of <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> objects created once the step has been learned.</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>A list of options for  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> which should not include <code>x</code> or <code>simple</code>. Note that the option <code>raw = TRUE</code> will produce the regular polynomial values (not orthogonalized).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -132,22 +145,22 @@
 
 <span class='no'>quadratic</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_poly</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
-<span class='no'>quadratic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>quadratic</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 poly training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='no'>quadratic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>quadratic</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 poly training </div><div class='input'>
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>quadratic</span>, <span class='no'>biomass_te</span>)
-<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 6
-#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; *   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1   46.35     5.67  47.20     0.30   0.22 18.275
-#&gt; 2   43.25     5.50  48.06     2.85   0.34 17.560
-#&gt; 3   42.70     5.50  49.10     2.40   0.30 17.173
-#&gt; 4   46.40     6.10  37.30     1.80   0.50 18.851
-#&gt; 5   48.76     6.32  42.77     0.20   0.00 20.547
-#&gt; 6   44.30     5.50  41.70     0.70   0.20 18.467
-#&gt; 7   38.94     5.23  54.13     1.19   0.51 15.095
-#&gt; 8   42.10     4.66  33.80     0.95   0.20 16.240
-#&gt; 9   29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 10  27.80     3.77  23.69     4.63   1.05 10.750
-#&gt; # ... with 70 more rows</div></pre>
+<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 8
+#&gt;    oxygen nitrogen sulfur    HHV carbon_poly_1 carbon_poly_2 hydrogen_poly_1
+#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;
+#&gt; 1   47.20     0.30   0.22 18.275  -0.009027012  -0.012392984     0.008261592
+#&gt; 2   48.06     2.85   0.34 17.560  -0.022989944   0.004033492     0.001602842
+#&gt; 3   49.10     2.40   0.30 17.173  -0.025467239   0.007338302     0.001602842
+#&gt; 4   37.30     1.80   0.50 18.851  -0.008801803  -0.012627295     0.025104314
+#&gt; 5   42.77     0.20   0.00 20.547   0.001828042  -0.022580618     0.033721520
+#&gt; 6   41.70     0.70   0.20 18.467  -0.018260564  -0.001948950     0.001602842
+#&gt; 7   54.13     1.19   0.51 15.095  -0.042402924   0.033082977    -0.008972821
+#&gt; 8   33.80     0.95   0.20 16.240  -0.028169742   0.011077745    -0.031299219
+#&gt; 9   31.10     0.14   4.90 11.147  -0.086273557   0.125345872    -0.041483191
+#&gt; 10  23.69     4.63   1.05 10.750  -0.092579397   0.141640714    -0.066159736
+#&gt; # ... with 70 more rows, and 1 more variables: hydrogen_poly_2 &lt;dbl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -105,38 +105,69 @@
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd><p>A numeric vector</p></dd>
-      <dt>...</dt>
-      <dd><p>For <code>discretize</code>: options to pass to <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or <code>probs</code>. For <code>step_discretize</code>, the dots specify one or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>cuts</dt>
-      <dd><p>An integer defining how many cuts to make of the data.</p></dd>
-      <dt>labels</dt>
-      <dd><p>A character vector defining the factor levels that will be in the new factor (from smallest to largest). This should have length <code>cuts+1</code> and should not include a level for missing (see <code>keep_na</code> below).</p></dd>
-      <dt>prefix</dt>
-      <dd><p>A single parameter value to be used as a prefix for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If the string is not a valid R name, it is coerced to one.</p></dd>
-      <dt>keep_na</dt>
-      <dd><p>A logical for whether a factor level should be created to identify missing values in <code>x</code>.</p></dd>
-      <dt>infs</dt>
-      <dd><p>A logical indicating whether the smallest and largest cut point should be infinite.</p></dd>
-      <dt>min_unique</dt>
-      <dd><p>An integer defining a sample size line of dignity for the binning. If (the number of unique values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no discretization takes place.</p></dd>
-      <dt>object</dt>
-      <dd><p>An object of class <code>discretize</code>.</p></dd>
-      <dt>newdata</dt>
-      <dd><p>A new numeric object to be binned.</p></dd>
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>objects</dt>
-      <dd><p>The <code>discretize</code> objects are stored here once the recipe has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-      <dt>options</dt>
-      <dd><p>A list of options to <code>discretize</code>. A defaults is set for the argument <code>x</code>. Note that the using the options <code>prefix</code> and <code>labels</code> when more than one variable is being transformed might be problematic as all variables inherit those values.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A numeric vector</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>For <code>discretize</code>: options to pass to <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or <code>probs</code>. For <code>step_discretize</code>, the dots specify one or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>cuts</th>
+      <td><p>An integer defining how many cuts to make of the data.</p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>A character vector defining the factor levels that will be in the new factor (from smallest to largest). This should have length <code>cuts+1</code> and should not include a level for missing (see <code>keep_na</code> below).</p></td>
+    </tr>
+    <tr>
+      <th>prefix</th>
+      <td><p>A single parameter value to be used as a prefix for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If the string is not a valid R name, it is coerced to one.</p></td>
+    </tr>
+    <tr>
+      <th>keep_na</th>
+      <td><p>A logical for whether a factor level should be created to identify missing values in <code>x</code>.</p></td>
+    </tr>
+    <tr>
+      <th>infs</th>
+      <td><p>A logical indicating whether the smallest and largest cut point should be infinite.</p></td>
+    </tr>
+    <tr>
+      <th>min_unique</th>
+      <td><p>An integer defining a sample size line of dignity for the binning. If (the number of unique values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no discretization takes place.</p></td>
+    </tr>
+    <tr>
+      <th>object</th>
+      <td><p>An object of class <code>discretize</code>.</p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>A new numeric object to be binned.</p></td>
+    </tr>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>objects</th>
+      <td><p>The <code>discretize</code> objects are stored here once the recipe has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>A list of options to <code>discretize</code>. A defaults is set for the argument <code>x</code>. Note that the using the options <code>prefix</code> and <code>labels</code> when more than one variable is being transformed might be problematic as all variables inherit those values.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -173,20 +204,10 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; 
-#&gt;  27.8  29.2  33.4  36.5 36.63 38.94 41.11  41.5 41.68 41.78  42.1  42.7  43.2 
-#&gt;     1     1     1     1     1     1     1     1     1     1     1     1     1 
-#&gt; 43.25 43.37 43.49  43.7 43.71 44.01 44.06  44.3  44.5 44.73 44.99 45.33  45.6 
-#&gt;     1     1     1     1     1     1     1     1     1     1     1     1     1 
-#&gt;  45.7  45.8    46 46.04 46.17 46.35  46.4  46.6 46.63 46.68 46.83  47.2  47.4 
-#&gt;     2     1     1     1     1     1     2     1     1     1     1     1     1 
-#&gt;  47.5 47.63  47.7  47.8 47.89 48.13 48.18 48.26 48.54 48.57 48.64 48.67 48.76 
-#&gt;     1     1     1     2     1     1     2     1     1     1     1     1     1 
-#&gt;  48.9 48.94    49 49.69 49.71 50.18 50.19 50.24  50.3 50.35  51.2  52.8 52.99 
-#&gt;     1     2     3     1     1     1     1     1     1     1     1     1     1 
-#&gt; 53.07  54.6  54.9  71.5  75.5 77.54  78.8 79.34 
-#&gt;     1     1     1     1     1     1     1     1 </div></pre>
+#&gt; bin_missing        bin1        bin2        bin3        bin4 
+#&gt;           0          22          17          25          16 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -96,22 +96,37 @@
   <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd><p>an object</p></dd>
-      <dt>...</dt>
-      <dd><p>further arguments passed to or from other methods (not currently used).</p></dd>
-      <dt>training</dt>
-      <dd><p>A data frame or tibble that will be used to estimate parameters for preprocessing.</p></dd>
-      <dt>fresh</dt>
-      <dd><p>A logical indicating whether already trained steps should be re-trained. If <code>TRUE</code>, you should pass in a data set to the argument <code>training</code>.</p></dd>
-      <dt>verbose</dt>
-      <dd><p>A logical that controls wether progress is reported as steps are executed.</p></dd>
-      <dt>retain</dt>
-      <dd><p>A logical: should the <em>processed</em> training set be saved into the <code>template</code> slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.</p></dd>
-      <dt>stringsAsFactors</dt>
-      <dd><p>A logical: should character columns be converted to factors? This affects the processed training set (when <code>retain = TRUE</code>) as well as the results of <code>process.recipe</code>.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>further arguments passed to or from other methods (not currently used).</p></td>
+    </tr>
+    <tr>
+      <th>training</th>
+      <td><p>A data frame or tibble that will be used to estimate parameters for preprocessing.</p></td>
+    </tr>
+    <tr>
+      <th>fresh</th>
+      <td><p>A logical indicating whether already trained steps should be re-trained. If <code>TRUE</code>, you should pass in a data set to the argument <code>training</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>A logical that controls wether progress is reported as steps are executed.</p></td>
+    </tr>
+    <tr>
+      <th>retain</th>
+      <td><p>A logical: should the <em>processed</em> training set be saved into the <code>template</code> slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.</p></td>
+    </tr>
+    <tr>
+      <th>stringsAsFactors</th>
+      <td><p>A logical: should character columns be converted to factors? This affects the processed training set (when <code>retain = TRUE</code>) as well as the results of <code>process.recipe</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

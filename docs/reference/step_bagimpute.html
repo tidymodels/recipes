@@ -96,24 +96,41 @@
 <span class='fu'>imp_vars</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>recipe</dt>
-      <dd><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></dd>
-      <dt>...</dt>
-      <dd><p>One or more selector functions to choose variables. For <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with <code>imp_vars</code>, the dots indicates which variables are used to predict the missing data in each variable. See <code><a href='selections.html'>selections</a></code> for more details.</p></dd>
-      <dt>role</dt>
-      <dd><p>Not used by this step since no new variables are created.</p></dd>
-      <dt>trained</dt>
-      <dd><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></dd>
-      <dt>models</dt>
-      <dd><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></dd>
-      <dt>options</dt>
-      <dd><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code>. Defaults are set for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <b>Note</b> that the arguments <code>X</code> and <code>y</code> should not be passed here.</p></dd>
-      <dt>impute_with</dt>
-      <dd><p>A call to <code>imp_vars</code> to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see <code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.</p></dd>
-      <dt>seed_val</dt>
-      <dd><p>A integer used to create reproducible models. The same seed is used across all imputation models.</p></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>recipe</th>
+      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more selector functions to choose variables. For <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with <code>imp_vars</code>, the dots indicates which variables are used to predict the missing data in each variable. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>role</th>
+      <td><p>Not used by this step since no new variables are created.</p></td>
+    </tr>
+    <tr>
+      <th>trained</th>
+      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>models</th>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code>. Defaults are set for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <b>Note</b> that the arguments <code>X</code> and <code>y</code> should not be passed here.</p></td>
+    </tr>
+    <tr>
+      <th>impute_with</th>
+      <td><p>A call to <code>imp_vars</code> to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see <code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.</p></td>
+    </tr>
+    <tr>
+      <th>seed_val</th>
+      <td><p>A integer used to create reproducible models. The same seed is used across all imputation models.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -152,8 +169,9 @@
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='output co'>#&gt; <span class='error'>Error in x$variable: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='no'>inputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>)</div><div class='output co'>#&gt; <span class='error'>Error in process(imp_models, newdata = credit_te): object 'imp_models' not found</span></div><div class='input'>
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='input'>
+<span class='no'>inputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>)
+
 <span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
 #&gt; 30      bad         0 &lt;NA&gt;   48  37  single      no  &lt;NA&gt;       35     NA
 #&gt; 736     bad         1 priv   48  36  single     yes fixed       35    173
@@ -161,7 +179,14 @@
 #&gt;      Assets Debt Amount Price
 #&gt; 30       NA   NA   1500  1850
 #&gt; 736    7700    0   1000  2008
-#&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>inputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'inputed_te' not found</span></div></pre>
+#&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>inputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 × 14
+#&gt;   Status Seniority   Home  Time   Age Marital Records    Job Expenses   Income
+#&gt;   &lt;fctr&gt;     &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;dbl&gt;
+#&gt; 1    bad         0  other    48    37  single      no  fixed       35 115.4538
+#&gt; 2    bad         1   priv    48    36  single     yes  fixed       35 173.0000
+#&gt; 3    bad        24   priv    60    46 married      no  fixed       60 165.0000
+#&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
+#&gt; #   Price &lt;int&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

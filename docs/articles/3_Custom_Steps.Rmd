@@ -60,8 +60,8 @@ step_percentile <- function(recipe, ..., role = NA,
                             approx = FALSE, 
                             options = list(probs = (0:100)/100, names = TRUE)) {
 ## process but do not evaluate the variable selectors with
-## the `tidy_quotes` function in `rlang`
-  terms <- tidy_quotes(...) 
+## the `dots_quosures` function in `rlang`
+  terms <- dots_quosures(...) 
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
@@ -212,7 +212,7 @@ Let's use the example data to make sure that it works:
 library(magrittr)
 rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
-  step_percentile(~ all_predictors(), approx = TRUE) 
+  step_percentile(all_predictors(), approx = TRUE) 
 
 rec_obj <- learn(rec_obj, training = biomass_tr)
 
