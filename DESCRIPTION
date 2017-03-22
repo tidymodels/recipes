@@ -28,7 +28,7 @@ Suggests:
     rpart,
     kernlab,
     fastICA
-Remotes: hadley/dplyr, hadley/rlang
+Remotes: hadley/dplyr, hadley/rlang, gdkrmr/dimRed
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
