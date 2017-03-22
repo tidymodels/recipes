@@ -40,7 +40,6 @@ before_install:
   - ./travis-tool.sh r_binary_install testthat
   - ./travis-tool.sh r_binary_install tibble
   - ./travis-tool.sh r_binary_install timeDate  
-  timeDate
 
 # install:
 #   - ./travis-tool.sh install_deps
