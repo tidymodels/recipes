@@ -242,11 +242,8 @@ select_terms <- function(info, args) {
   names(ind_list) <- c(names2(initial_case), names2(args))
 
   is_numeric <- map_lgl(ind_list, is.numeric)
-  if (any(!is_numeric)) {
-    bad_inputs <- map(args[!is_numeric], f_rhs)
-    labels <- map_chr(bad_inputs, deparse_trunc)
+  if (any(!is_numeric)) 
     stop("All inputs must resolve to integer column positions")
-  }
 
   incl <- dplyr:::combine_vars(vars, ind_list)
 
