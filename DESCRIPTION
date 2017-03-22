@@ -27,6 +27,7 @@ Suggests:
     magrittr,
     rpart,
     kernlab
+Remotes: hadley/dplyr, hadley/rlang
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

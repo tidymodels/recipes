@@ -8,6 +8,7 @@ cache: packages
 r:
   - release
 
-remotes: github::hadley/dplyr github::hadley/rlang
+r_packages: covr
 
-r_binary_packages: ddalpha
+after_success:
+- Rscript -e 'covr::codecov()'
