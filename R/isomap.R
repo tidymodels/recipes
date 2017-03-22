@@ -23,6 +23,7 @@
 #' \pkg{dimRed}, a framework for dimensionality reduction, \url{https://github.com/gdkrmr}
 #'
 #' @examples
+#' \dontrun{
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -30,7 +31,7 @@
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#'
+#' 
 #' im_trans <- rec %>%
 #'   step_YeoJohnson(all_predictors()) %>%
 #'   step_center(all_predictors()) %>%
@@ -46,6 +47,7 @@
 #' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 #' plot(im_te$Isomap1, im_te$Isomap2,
 #'      xlim = rng, ylim = rng)
+#' }
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_ica}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_isomap <- function(recipe,
