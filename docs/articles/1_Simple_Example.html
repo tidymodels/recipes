@@ -97,7 +97,7 @@ seg_test  &lt;-<span class="st"> </span>segmentationData <span class="op">%&gt;%
 <a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
 <p>For a first recipe, let’s plan on centering and scaling the all_predictors. First, we will create a recipe from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
-<p>If the analysis only required <strong>all_outcomes</strong> and <strong>all_predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
+<p>If the analysis only required <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
 rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> seg_train)
 rec_obj</code></pre></div>
