@@ -8,7 +8,7 @@ cache: packages
 r:
   - release
 
-r_packages: covr fastICA
+r_packages: covr,fastICA
 
 after_success:
 - Rscript -e 'covr::codecov()'
