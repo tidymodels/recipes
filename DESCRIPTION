@@ -27,8 +27,7 @@ Suggests:
     magrittr,
     rpart,
     kernlab,
-    fastICA,
-    RANN
+    fastICA
 Remotes: hadley/dplyr, hadley/rlang, gdkrmr/dimRed
 License: GPL-2
 Encoding: UTF-8
