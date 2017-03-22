@@ -9,7 +9,9 @@ warnings_are_errors: false
 r:
   - release
 
-r_packages: covr
+r_packages: 
+  - covr
+  - RANN
  
 
 after_success:
