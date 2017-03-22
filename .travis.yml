@@ -1,3 +1,9 @@
+# .travis.yml
+#
+# See README.md for instructions, or for more configuration options,
+# see the wiki:
+#   https://github.com/craigcitro/r-travis/wiki
+
 language: r
 sudo: false
 cache: packages
@@ -5,6 +11,43 @@ r:
   - oldrel
   - release
   - devel
+  
+env:
+  global:
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+  matrix:
+    - NOT_CRAN="true"
+    - NOT_CRAN="false"
+
+before_install:
+  - cd pkg/caret
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - sudo mkdir -p /usr/lib/R/library
+  - echo 'R_LIBS=/usr/lib/R/library:/usr/lib/R/site-library/' > ~/.Renviron
+  - sudo chmod 2777 /usr/lib/R/library
+  - ./travis-tool.sh bootstrap
+  - ./travis-tool.sh r_binary_install ddalpha
+  - ./travis-tool.sh install_github hadley/dplyr  
+  - ./travis-tool.sh r_binary_install ipred
+  - ./travis-tool.sh r_binary_install lubridate
+  - ./travis-tool.sh r_binary_install magrittr
+  - ./travis-tool.sh install_github hadley/rlang    
+  - ./travis-tool.sh r_binary_install rpart
+  - ./travis-tool.sh r_binary_install testthat
+  - ./travis-tool.sh r_binary_install tibble
+  timeDate
+
+install:
+  - ./travis-tool.sh install_deps
+
+script:
+  - ./travis-tool.sh run_tests
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'library(covr); coveralls()'
+
+after_failure:
+  - ./travis-tool.sh dump_logs
