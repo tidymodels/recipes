@@ -28,18 +28,22 @@ before_install:
   - sudo chmod 2777 /usr/lib/R/library
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh r_binary_install ddalpha
+  - ./travis-tool.sh r_binary_install dimRed  
   - ./travis-tool.sh install_github hadley/dplyr  
   - ./travis-tool.sh r_binary_install ipred
+  - ./travis-tool.sh r_binary_install kernlab
   - ./travis-tool.sh r_binary_install lubridate
   - ./travis-tool.sh r_binary_install magrittr
+  - ./travis-tool.sh r_binary_install purrr  
   - ./travis-tool.sh install_github hadley/rlang    
   - ./travis-tool.sh r_binary_install rpart
   - ./travis-tool.sh r_binary_install testthat
   - ./travis-tool.sh r_binary_install tibble
+  - ./travis-tool.sh r_binary_install timeDate  
   timeDate
 
-install:
-  - ./travis-tool.sh install_deps
+# install:
+#   - ./travis-tool.sh install_deps
 
 script:
   - ./travis-tool.sh run_tests
