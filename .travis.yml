@@ -10,4 +10,4 @@ r:
 
 remotes: github::hadley/dplyr github::hadley/rlang
 
-r_binary_packages: dalpha
+r_binary_packages: ddalpha
