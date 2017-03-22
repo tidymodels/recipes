@@ -26,7 +26,8 @@ Suggests:
     testthat,
     magrittr,
     rpart,
-    kernlab
+    kernlab,
+    fastICA
 Remotes: hadley/dplyr, hadley/rlang
 License: GPL-2
 Encoding: UTF-8

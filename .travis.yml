@@ -5,12 +5,11 @@
 language: r
 sudo: false
 cache: packages
+warnings_are_errors: false
 r:
   - release
 
-r_packages: 
-  - covr
-  - fastICA
+r_packages: covr
 
 after_success:
 - Rscript -e 'covr::codecov()'
