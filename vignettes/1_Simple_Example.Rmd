@@ -43,7 +43,7 @@ For a first recipe, let's plan on centering and scaling the all_predictors. Firs
 
 Recipes can be created manually by sequentially adding roles to variables in a data set. 
 
-If the analysis only required **all_outcomes** and **all_predictors**, the easiest way to create the initial recipe is to use the standard formula method:
+If the analysis only required **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
 
 ```{r first_rec}
 library(recipes)
