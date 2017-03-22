@@ -21,7 +21,6 @@ env:
     - NOT_CRAN="false"
 
 before_install:
-  - cd pkg/caret
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - sudo mkdir -p /usr/lib/R/library
