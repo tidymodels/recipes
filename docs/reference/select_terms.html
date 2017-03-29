@@ -51,13 +51,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/1_Simple_Example.html">Simple Example</a>
+  <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
 <li>
-  <a href="../articles/2_Selecting_Variables.html">Selecting Variables</a>
+  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
 </li>
 <li>
-  <a href="../articles/3_Custom_Steps.html">Custom Steps</a>
+  <a href="../articles/Custom_Steps.html">Custom Steps</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -100,7 +100,7 @@
     </tr>
     <tr>
       <th>args</th>
-      <td><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/dots_quosures'>dots_quosures</a></code> for examples.</p></td>
+      <td><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosures'>dots_quos</a></code> for examples.</p></td>
     </tr>
     </table>
     
@@ -114,10 +114,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)
+<span class='fu'>data</span>(<span class='no'>okc</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
-<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>dots_quosures</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "diet"     "location" "age"      "height"   "date"    </div></pre>
+<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>dots_quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "diet"     "location" "age"      "height"   "date"    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
