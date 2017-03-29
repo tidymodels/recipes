@@ -192,7 +192,7 @@ has_selector <- function(x, allowed = selectors) {
 #' This function processes the step function selectors and might be useful when creating custom steps.
 #'
 #' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
-#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{dots_quosures}} for examples.
+#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{dots_quos}} for examples.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there are no selectors or if no variables are selected.
@@ -200,10 +200,11 @@ has_selector <- function(x, allowed = selectors) {
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @export
 #' @examples
+#' library(rlang)
 #' data(okc)
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
-#' select_terms(info = info, dots_quosures(all_predictors()))
+#' select_terms(info = info, dots_quos(all_predictors()))
 
 select_terms <- function(info, args) {
   ## This is a modified version of dplyr:::select_vars

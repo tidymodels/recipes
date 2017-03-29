@@ -56,7 +56,7 @@ step_isomap <- function(recipe,
                         options = list(knn = 50, .mute = c("message", "output")),
                         res = NULL,
                         prefix = "Isomap") {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

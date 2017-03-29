@@ -43,7 +43,7 @@ step_depth <- function(recipe,
                        data = NULL) {
   if(!is.character(class) || length(class) != 1)
     stop("`class` should be a single character value.")
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

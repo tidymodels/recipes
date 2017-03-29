@@ -45,7 +45,7 @@ step_corr <- function(recipe,
                       use = "pairwise.complete.obs",
                       method = "pearson",
                       removals = NULL) {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

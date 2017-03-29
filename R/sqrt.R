@@ -27,7 +27,7 @@
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
 step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, vars = NULL) {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

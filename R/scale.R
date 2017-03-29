@@ -31,7 +31,7 @@
 #' transformed_te
 
 step_scale <- function(recipe, ..., role = NA, trained = FALSE, sds = NULL, na.rm = TRUE) {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

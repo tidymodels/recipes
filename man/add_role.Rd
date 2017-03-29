@@ -38,7 +38,6 @@ rec <- rec \%>\%
   add_role(HHV, new_role = "outcome")
 rec
 
-
 }
 \concept{
 preprocessing model_specification

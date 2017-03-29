@@ -53,7 +53,7 @@ step_bagimpute <- function(recipe, ..., role = NA,
                            seed_val = sample.int(10^4, 1)) {
   if(is.null(impute_with))
     stop("Please list some variables in `impute_with`", call. = FALSE)
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
@@ -180,5 +180,5 @@ print.step_bagimpute <- function(x, width = max(20, options()$width - 31), ...) 
 #' @export
 #' @rdname step_bagimpute
 imp_vars <- function (...)
-  dots_quosures(...)
+  dots_quos(...)
 

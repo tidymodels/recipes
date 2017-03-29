@@ -34,7 +34,7 @@ step_hyperbolic <- function(recipe, ..., role = NA, trained = FALSE,
   if(!(func %in% funcs))
     stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
 
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

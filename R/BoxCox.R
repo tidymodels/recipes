@@ -32,7 +32,7 @@
 #' plot(density(bc_data$Illiteracy), main = "after")
 #' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_BoxCox <- function(recipe, ..., role = NA, trained = FALSE, lambdas = NULL, limits = c(-5, 5), nunique = 5) {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

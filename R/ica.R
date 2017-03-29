@@ -50,7 +50,7 @@ step_ica <- function(recipe,
                      options = list(),
                      res = NULL,
                      prefix = "IC") {
-  terms <- dots_quosures(...)
+  terms <- dots_quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
