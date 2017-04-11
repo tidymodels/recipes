@@ -17,7 +17,7 @@ step_date(recipe, ..., role = "predictor", trained = FALSE,
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{features}{A character string that includes at least one of the following values: \code{month}, \code{dow} (day of week), \code{doy} (day of year), \code{week}, \code{decimal} (decimal date, e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.}
+\item{features}{A character string that includes at least one of the following values: \code{month}, \code{dow} (day of week), \code{doy} (day of year), \code{week}, \code{month}, \code{decimal} (decimal date, e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.}
 
 \item{abbr}{A logical. Only available for features \code{month} or \code{dow}. \code{FALSE} will display the day of the week as an ordered factor of character strings, such as "Sunday". \code{TRUE} will display an abbreviated version of the label, such as "Sun". \code{abbr} is disregarded if \code{label = FALSE}.}
 
