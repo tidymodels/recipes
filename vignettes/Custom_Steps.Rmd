@@ -209,6 +209,7 @@ process.step_percentile <- function(object, newdata, ...) {
 Let's use the example data to make sure that it works: 
 
 ```{r example}
+library(dplyr)
 library(magrittr)
 rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
