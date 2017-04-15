@@ -14,7 +14,7 @@ recipe(x, ...)
 
 \method{recipe}{default}(x, ...)
 
-\method{recipe}{data.frame}(x, formula = NULL, ..., vars = colnames(x),
+\method{recipe}{data.frame}(x, formula = NULL, ..., vars = NULL,
   roles = NULL)
 
 \method{recipe}{formula}(formula, data, ...)

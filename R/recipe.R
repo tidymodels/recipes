@@ -100,13 +100,21 @@ recipe.default <- function(x, ...)
 #'   add_role(sample, new_role = "id variable") %>%
 #'   add_role(dataset, new_role = "splitting indicator")
 #' rec
-recipe.data.frame <- function(x, formula = NULL, ..., vars = colnames(x), roles = NULL) {
-  
+recipe.data.frame <- function(x, formula = NULL, ..., vars = NULL, roles = NULL) {
+
   if (!is.null(formula)) {
-    ## check on `vars` and `roles` arguments; should `vars` default to NULL?
+    
+    if(!is.null(vars))
+      stop("This `vars` specification will be ignored when a formula is used", call. = FALSE)
+    if(!is.null(roles))
+      stop("This `roles` specification will be ignored when a formula is used", call. = FALSE)    
+    
     obj <- recipe.formula(formula, x, ...)
     return(obj)
   }
+  
+  if(is.null(vars))
+    vars = colnames(x)
   
   if(!is_tibble(x)) x <- as_tibble(x)
   if(is.null(vars)) vars <- colnames(x)
