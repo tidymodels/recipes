@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,40 +89,43 @@
     <p>A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.</p>
     
 
-    <pre><span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>x</span>), <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>x</span>),
+  <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for formula</span>
-<span class='fu'>recipe</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>recipe</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an object. For the default method, <code>x</code> is a data frame or tibble of the <em>template</em> data set (see below).</p></td>
+      <th>x, data</th>
+      <td><p>A data frame or tibble of the <em>template</em> data set (see below).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>further arguments passed to or from other methods (not currently used).</p></td>
-    </tr>
-    <tr>
-      <th>vars</th>
-      <td><p>a character string of column names corresponding to variables that will be used in any context (see below)</p></td>
-    </tr>
-    <tr>
-      <th>roles</th>
-      <td><p>a character string (the same length of <code>vars</code>) that describes a single role that the variable will take. This value could be anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>, <code>"case_weight"</code>, or <code>"ID"</code></p></td>
+      <td><p>Further arguments passed to or from other methods (not currently used).</p></td>
     </tr>
     <tr>
       <th>formula</th>
       <td><p>A model formula. No in-line functions should be used here (e.g. <code>log(x)</code>, <code>x:y</code>, etc.). These types of transformations should be enacted using <code>step</code> functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for <code>cbind</code>; see Examples).</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>a data frame or tibble of the <em>template</em> data set (see below).</p></td>
+      <th>vars</th>
+      <td><p>A character string of column names corresponding to variables that will be used in any context (see below)</p></td>
+    </tr>
+    <tr>
+      <th>roles</th>
+      <td><p>A character string (the same length of <code>vars</code>) that describes a single role that the variable will take. This value could be anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>, <code>"case_weight"</code>, or <code>"ID"</code></p></td>
     </tr>
     </table>
     
@@ -197,6 +200,12 @@
 #&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
 <span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
+
+<span class='co'># or use pipes for the entire workflow: </span>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>biomass_tr</span> <span class='kw'>%&gt;%</span> <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='co'>###############################################</span>
 <span class='co'># multivariate example</span>

@@ -5,27 +5,32 @@
 \alias{recipe.default}
 \alias{recipe.formula}
 \alias{recipe.default}
+\alias{recipe.data.frame}
 \alias{recipe.formula}
+\alias{recipe.matrix}
 \title{Create a Recipe for Preprocessing Data}
 \usage{
 recipe(x, ...)
 
-\method{recipe}{default}(x, vars = colnames(x), roles = NULL, ...)
+\method{recipe}{default}(x, ...)
+
+\method{recipe}{data.frame}(x, formula = NULL, ..., vars = colnames(x),
+  roles = NULL)
 
 \method{recipe}{formula}(formula, data, ...)
+
+\method{recipe}{matrix}(x, ...)
 }
 \arguments{
-\item{x}{an object. For the default method, \code{x} is a data frame or tibble of the \emph{template} data set (see below).}
+\item{x, data}{A data frame or tibble of the \emph{template} data set (see below).}
 
-\item{...}{further arguments passed to or from other methods (not currently used).}
-
-\item{vars}{a character string of column names corresponding to variables that will be used in any context (see below)}
-
-\item{roles}{a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
+\item{...}{Further arguments passed to or from other methods (not currently used).}
 
 \item{formula}{A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).}
 
-\item{data}{a data frame or tibble of the \emph{template} data set (see below).}
+\item{vars}{A character string of column names corresponding to variables that will be used in any context (see below)}
+
+\item{roles}{A character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
 }
 \value{
 An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}
@@ -78,6 +83,12 @@ sp_signed_trained
 
 # apply the preprocessing to a data set
 test_set_values <- process(sp_signed_trained, newdata = biomass_te)
+
+# or use pipes for the entire workflow: 
+rec <- biomass_tr \%>\% recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
+  step_center(all_predictors()) \%>\%
+  step_scale(all_predictors()) \%>\%
+  step_spatialsign(all_predictors())
 
 ###############################################
 # multivariate example

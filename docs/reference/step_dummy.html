@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +89,7 @@
     <p><code>step_dummy</code> creates a a <em>specification</em> of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data.</p>
     
 
-    <pre><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='fu'>options</span>(<span class='st'>"contrasts"</span>), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>var</span>, <span class='no'>lvl</span>) <span class='fu'>paste</span>(<span class='no'>var</span>,
   <span class='fu'>make.names</span>(<span class='no'>lvl</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>), <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     

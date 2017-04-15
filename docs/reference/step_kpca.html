@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +89,7 @@
     <p><code>step_kpca</code> a <em>specification</em> of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.</p>
     
 
-    <pre><span class='fu'>step_kpca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <pre class="usage"><span class='fu'>step_kpca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>kernel</span> <span class='kw'>=</span> <span class='st'>"rbfdot"</span>, <span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)),
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"kPC"</span>)</pre>
     

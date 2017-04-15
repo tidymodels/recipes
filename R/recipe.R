@@ -3,7 +3,6 @@
 #' A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
-#' @param x an object. For the default method, \code{x} is a data frame or tibble of the \emph{template} data set (see below).
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
@@ -11,10 +10,16 @@
 recipe <- function(x, ...) UseMethod("recipe")
 
 #' @rdname recipe
-#' @param data a data frame or tibble of the \emph{template} data set (see below).
-#' @param vars a character string of column names corresponding to variables that will be used in any context (see below)
-#' @param roles a character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}
-#' @param ... further arguments passed to or from other methods (not currently used).
+#' @export
+recipe.default <- function(x, ...) 
+  stop("`x` should be a data frame, matrix, or tibble", call. = FALSE) 
+
+#' @rdname recipe
+#' @param vars A character string of column names corresponding to variables that will be used in any context (see below)
+#' @param roles A character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}
+#' @param ... Further arguments passed to or from other methods (not currently used).
+#' @param formula A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).
+#' @param x,data A data frame or tibble of the \emph{template} data set (see below).
 #' @return An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}
 #'
 #' @details Recipes are alternative methods for creating design matrices and for preprocessing data.
@@ -66,6 +71,12 @@ recipe <- function(x, ...) UseMethod("recipe")
 #' # apply the preprocessing to a data set
 #' test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 #'
+#' # or use pipes for the entire workflow: 
+#' rec <- biomass_tr %>% recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
+#'   step_center(all_predictors()) %>%
+#'   step_scale(all_predictors()) %>%
+#'   step_spatialsign(all_predictors())
+#' 
 #' ###############################################
 #' # multivariate example
 #'
@@ -89,20 +100,25 @@ recipe <- function(x, ...) UseMethod("recipe")
 #'   add_role(sample, new_role = "id variable") %>%
 #'   add_role(dataset, new_role = "splitting indicator")
 #' rec
-
-recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
-
+recipe.data.frame <- function(x, formula = NULL, ..., vars = colnames(x), roles = NULL) {
+  
+  if (!is.null(formula)) {
+    ## check on `vars` and `roles` arguments; should `vars` default to NULL?
+    obj <- recipe.formula(formula, x, ...)
+    return(obj)
+  }
+  
   if(!is_tibble(x)) x <- as_tibble(x)
   if(is.null(vars)) vars <- colnames(x)
   if(any(table(vars) > 1))
     stop("`vars` should have unique members", call. = FALSE)
   if(any(!(vars %in% colnames(x))))
     stop("1+ elements of `vars` are not in `x`", call. = FALSE)
-
+  
   x <- x[, vars]
-
+  
   var_info <- tibble(variable = vars)
-
+  
   ## Check and add roles when available
   if(!is.null(roles)) {
     if(length(roles) != length(vars))
@@ -110,11 +126,11 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
            call. = FALSE)
     var_info$role <- roles
   } else var_info$role <- NA
-
+  
   ## Add types
   var_info <- full_join(get_types(x), var_info, by = "variable")
   var_info$source <- "original"
-
+  
   ## Return final object of class `recipe`
   out <- list(var_info = var_info,
               term_info = var_info,
@@ -126,12 +142,28 @@ recipe.default <- function(x, vars = colnames(x), roles = NULL, ...) {
 }
 
 #' @rdname recipe
-#' @param formula A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).
 #' @export
+recipe.formula <- function(formula, data, ...) {
+  args <- form2args(formula, data, ...)
+  obj <- recipe.data.frame(
+    x = args$x,
+    formula = NULL,
+    ...,
+    vars = args$vars,
+    roles = args$roles
+  )
+}
+
+#' @rdname recipe
+#' @export
+recipe.matrix <- function(x, ...) 
+  recipe.data.frame(x, ...)
+
+
 #' @importFrom stats as.formula
 #' @importFrom tibble as_tibble is_tibble
 
-recipe.formula <- function(formula, data, ...) {
+form2args <- function(formula, data, ...) {
   if(!is_formula(formula))
     formula <- as.formula(formula)
   ## check for in-line formulas
@@ -157,7 +189,7 @@ recipe.formula <- function(formula, data, ...) {
 
   ## pass to recipe.default with vars and roles
 
-  recipe.default(x = data, vars = vars, roles = roles, ...)
+  list(x = data, vars = vars, roles = roles)
 }
 
 

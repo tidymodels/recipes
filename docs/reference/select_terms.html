@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +89,7 @@
     <p>This function processes the step function selectors and might be useful when creating custom steps.</p>
     
 
-    <pre><span class='fu'>select_terms</span>(<span class='no'>info</span>, <span class='no'>args</span>)</pre>
+    <pre class="usage"><span class='fu'>select_terms</span>(<span class='no'>info</span>, <span class='no'>args</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -114,12 +114,8 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    is_formula</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:devtools’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    ns_env, pkg_env</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)
+<span class='fu'>data</span>(<span class='no'>okc</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
 <span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>dots_quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "diet"     "location" "age"      "height"   "date"    </div></pre>

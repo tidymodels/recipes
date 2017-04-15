@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -89,7 +89,7 @@
     <p><code>has_role</code>, <code>all_predictors</code>, and <code>all_outcomes</code> can be used to select variables in a formula that have certain roles. Similarly,  <code>has_type</code>, <code>all_numeric</code>, and <code>all_nominal</code> are used to select columns based on their data type. See <code><a href='selections.html'>selections</a></code> for more details. <code>current_info</code> is an internal function that is unlikely to help users while the others have limited utility outside of step function arguments.</p>
     
 
-    <pre><span class='fu'>has_role</span>(<span class='kw'>match</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
+    <pre class="usage"><span class='fu'>has_role</span>(<span class='kw'>match</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
 <span class='fu'>all_predictors</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='fu'>current_info</span>()$<span class='no'>roles</span>)
 
