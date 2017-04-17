@@ -8,17 +8,14 @@
 \usage{
 process(object, ...)
 
-\method{process}{recipe}(object, newdata = object$template, roles = "all",
-  ...)
+\method{process}{recipe}(object, newdata = object$template, ...)
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link{recipe}} with at least one preprocessing step.}
 
-\item{...}{further arguments passed to or from other methods (not currently used).}
+\item{...}{One or more selector functions to choose which variables will be returned by the function. See \code{\link{selections}} for more details. If no selectors are given, the default is to use \code{\link{all_predictors}}.}
 
 \item{newdata}{A data frame or tibble for whom the preprocessing will be applied.}
-
-\item{roles}{A character vector to choose which types of columns to return (e.g. "predictor"). By default all columns are returned.}
 }
 \value{
 A tibble that may have different columns than the original columns in \code{newdata}.

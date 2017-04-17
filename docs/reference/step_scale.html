@@ -62,6 +62,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -145,29 +148,29 @@
 <span class='no'>scaled_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 scale training </div><div class='input'>
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>scaled_obj</span>, <span class='no'>biomass_te</span>)
 
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
-#&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
-#&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
-#&gt; 31  46.40     6.10  37.30     1.80   0.50 18.851
-#&gt; 36  48.76     6.32  42.77     0.20   0.00 20.547
-#&gt; 41  44.30     5.50  41.70     0.70   0.20 18.467
-#&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
-#&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
-#&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 6
-#&gt;      carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; *     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1  4.453181 4.737318  47.20     0.30   0.22 18.275
-#&gt; 2  4.155342 4.595282  48.06     2.85   0.34 17.560
-#&gt; 3  4.102499 4.595282  49.10     2.40   0.30 17.173
-#&gt; 4  4.457985 5.096586  37.30     1.80   0.50 18.851
-#&gt; 5  4.684727 5.280397  42.77     0.20   0.00 20.547
-#&gt; 6  4.256223 4.595282  41.70     0.70   0.20 18.467
-#&gt; 7  3.741249 4.369696  54.13     1.19   0.51 15.095
-#&gt; 8  4.044853 3.893457  33.80     0.95   0.20 16.240
-#&gt; 9  2.805456 3.676226  31.10     0.14   4.90 11.147
-#&gt; 10 2.670948 3.149857  23.69     4.63   1.05 10.750
+<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur
+#&gt; 15  46.35     5.67  47.20     0.30   0.22
+#&gt; 20  43.25     5.50  48.06     2.85   0.34
+#&gt; 26  42.70     5.50  49.10     2.40   0.30
+#&gt; 31  46.40     6.10  37.30     1.80   0.50
+#&gt; 36  48.76     6.32  42.77     0.20   0.00
+#&gt; 41  44.30     5.50  41.70     0.70   0.20
+#&gt; 46  38.94     5.23  54.13     1.19   0.51
+#&gt; 51  42.10     4.66  33.80     0.95   0.20
+#&gt; 55  29.20     4.40  31.10     0.14   4.90
+#&gt; 65  27.80     3.77  23.69     4.63   1.05</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 5
+#&gt;      carbon hydrogen oxygen nitrogen sulfur
+#&gt;       &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1  4.453181 4.737318  47.20     0.30   0.22
+#&gt; 2  4.155342 4.595282  48.06     2.85   0.34
+#&gt; 3  4.102499 4.595282  49.10     2.40   0.30
+#&gt; 4  4.457985 5.096586  37.30     1.80   0.50
+#&gt; 5  4.684727 5.280397  42.77     0.20   0.00
+#&gt; 6  4.256223 4.595282  41.70     0.70   0.20
+#&gt; 7  3.741249 4.369696  54.13     1.19   0.51
+#&gt; 8  4.044853 3.893457  33.80     0.95   0.20
+#&gt; 9  2.805456 3.676226  31.10     0.14   4.90
+#&gt; 10 2.670948 3.149857  23.69     4.63   1.05
 #&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

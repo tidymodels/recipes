@@ -40,6 +40,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -156,20 +159,20 @@ test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(test_data)</code></pre></div>
 <pre><code>## [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data</code></pre></div>
-<pre><code>## # A tibble: 1,010 × 59
-##     Class    AngleCh1    AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3
-##    &lt;fctr&gt;       &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1      PS  1.06561586 -0.6470674  -0.6841090  -1.1769586  -0.9256508
-## 2      PS -1.80403073 -0.1852916  -0.6318946  -0.4791016  -0.8088369
-## 3      WS -1.02997656 -0.7070983   1.2073287   3.0354287   0.3481220
-## 4      WS  1.69348204 -0.6840095   0.8056903   2.6640591   0.2962628
-## 5      PS  1.81293423 -0.3422954  -0.6681004  -1.1719298  -0.8434861
-## 6      WS -1.47591871  0.7844377  -0.6820300  -0.6280328  -0.8810829
-## 7      WS  1.27016162  0.2718665  -0.6717198  -0.6251114  -0.8091589
-## 8      WS -1.58365831  0.4565769   0.2831505   1.3198321  -0.6133099
-## 9      PS -0.79573603 -0.4115617  -0.6689980  -1.1680446  -0.8450346
-## 10     PS  0.03629088 -0.6378319  -0.5345582   0.1818292  -0.5552296
-## # ... with 1,000 more rows, and 53 more variables: AvgIntenCh4 &lt;dbl&gt;,
+<pre><code>## # A tibble: 1,010 × 58
+##       AngleCh1    AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3 AvgIntenCh4
+##          &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1   1.06561586 -0.6470674  -0.6841090  -1.1769586  -0.9256508 -0.92379995
+## 2  -1.80403073 -0.1852916  -0.6318946  -0.4791016  -0.8088369 -0.66664196
+## 3  -1.02997656 -0.7070983   1.2073287   3.0354287   0.3481220  1.38644713
+## 4   1.69348204 -0.6840095   0.8056903   2.6640591   0.2962628  0.89335632
+## 5   1.81293423 -0.3422954  -0.6681004  -1.1719298  -0.8434861 -0.92822767
+## 6  -1.47591871  0.7844377  -0.6820300  -0.6280328  -0.8810829 -0.59391141
+## 7   1.27016162  0.2718665  -0.6717198  -0.6251114  -0.8091589 -0.51558489
+## 8  -1.58365831  0.4565769   0.2831505   1.3198321  -0.6133099 -0.08913901
+## 9  -0.79573603 -0.4115617  -0.6689980  -1.1680446  -0.8450346 -0.92583231
+## 10  0.03629088 -0.6378319  -0.5345582   0.1818292  -0.5552296 -0.02530285
+## # ... with 1,000 more rows, and 52 more variables:
 ## #   ConvexHullAreaRatioCh1 &lt;dbl&gt;, ConvexHullPerimRatioCh1 &lt;dbl&gt;,
 ## #   DiffIntenDensityCh1 &lt;dbl&gt;, DiffIntenDensityCh3 &lt;dbl&gt;,
 ## #   DiffIntenDensityCh4 &lt;dbl&gt;, EntropyIntenCh1 &lt;dbl&gt;,
@@ -221,18 +224,18 @@ trained_rec</code></pre></div>
 <p><code>process</code> can be reapplied to get the principal components in addition to the other variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)
 <span class="kw">names</span>(test_data)</code></pre></div>
-<pre><code>##  [1] "Class"                "AvgIntenCh2"          "AvgIntenCh3"         
-##  [4] "AvgIntenCh4"          "DiffIntenDensityCh3"  "DiffIntenDensityCh4" 
-##  [7] "EntropyIntenCh3"      "EntropyIntenCh4"      "FiberAlign2Ch3"      
-## [10] "FiberAlign2Ch4"       "IntenCoocASMCh3"      "IntenCoocASMCh4"     
-## [13] "IntenCoocContrastCh3" "IntenCoocContrastCh4" "IntenCoocEntropyCh3" 
-## [16] "IntenCoocEntropyCh4"  "IntenCoocMaxCh3"      "IntenCoocMaxCh4"     
-## [19] "KurtIntenCh3"         "KurtIntenCh4"         "SkewIntenCh3"        
-## [22] "SkewIntenCh4"         "SpotFiberCountCh3"    "SpotFiberCountCh4"   
-## [25] "TotalIntenCh2"        "TotalIntenCh3"        "TotalIntenCh4"       
-## [28] "VarIntenCh3"          "VarIntenCh4"          "XCentroid"           
-## [31] "YCentroid"            "PC1"                  "PC2"                 
-## [34] "PC3"                  "PC4"                  "PC5"</code></pre>
+<pre><code>##  [1] "AvgIntenCh2"          "AvgIntenCh3"          "AvgIntenCh4"         
+##  [4] "DiffIntenDensityCh3"  "DiffIntenDensityCh4"  "EntropyIntenCh3"     
+##  [7] "EntropyIntenCh4"      "FiberAlign2Ch3"       "FiberAlign2Ch4"      
+## [10] "IntenCoocASMCh3"      "IntenCoocASMCh4"      "IntenCoocContrastCh3"
+## [13] "IntenCoocContrastCh4" "IntenCoocEntropyCh3"  "IntenCoocEntropyCh4" 
+## [16] "IntenCoocMaxCh3"      "IntenCoocMaxCh4"      "KurtIntenCh3"        
+## [19] "KurtIntenCh4"         "SkewIntenCh3"         "SkewIntenCh4"        
+## [22] "SpotFiberCountCh3"    "SpotFiberCountCh4"    "TotalIntenCh2"       
+## [25] "TotalIntenCh3"        "TotalIntenCh4"        "VarIntenCh3"         
+## [28] "VarIntenCh4"          "XCentroid"            "YCentroid"           
+## [31] "PC1"                  "PC2"                  "PC3"                 
+## [34] "PC4"                  "PC5"</code></pre>
 <p>Note that the PCA components have replaced the original variables that were from channel 1 or measured an area aspect of the cells.</p>
 <p>There are a number of different steps included in the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">steps &lt;-<span class="st"> </span><span class="kw">apropos</span>(<span class="st">"^step_"</span>)

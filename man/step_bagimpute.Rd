@@ -61,7 +61,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- learn(impute_rec, training = credit_tr)
 
-inputed_te <- process(imp_models, newdata = credit_te)
+inputed_te <- process(imp_models, newdata = credit_te, everything())
 
 credit_te[missing_examples,]
 inputed_te[missing_examples, names(credit_te)]

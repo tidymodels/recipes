@@ -40,6 +40,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -255,19 +258,19 @@ rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lea
 <pre><code>## step 1 percentile training</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentiles &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(rec_obj, biomass_te)
 percentiles</code></pre></div>
-<pre><code>## # A tibble: 80 × 6
-##        carbon   hydrogen     oxygen  nitrogen    sulfur    HHV
-## *       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1  0.42093897 0.45000000 0.90262697 0.2150000 0.7350000 18.275
-## 2  0.18000000 0.38500000 0.92174978 0.9284932 0.8387097 17.560
-## 3  0.15613527 0.38500000 0.94471429 0.9000000 0.8050000 17.173
-## 4  0.42328638 0.77500000 0.28000000 0.8451613 0.9020000 18.851
-## 5  0.66620690 0.86666667 0.63142857 0.1550000 0.0900000 20.547
-## 6  0.21751880 0.38500000 0.53626866 0.4950000 0.7000000 18.467
-## 7  0.08030053 0.27130435 0.98591215 0.6950000 0.9033333 15.095
-## 8  0.13946463 0.12600000 0.16040445 0.6060000 0.7000000 16.240
-## 9  0.02258870 0.10345572 0.13124688 0.1258333 0.9959504 11.147
-## 10 0.01777328 0.08207885 0.09869775 0.9715133 0.9739877 10.750
+<pre><code>## # A tibble: 80 × 5
+##        carbon   hydrogen     oxygen  nitrogen    sulfur
+##         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1  0.42093897 0.45000000 0.90262697 0.2150000 0.7350000
+## 2  0.18000000 0.38500000 0.92174978 0.9284932 0.8387097
+## 3  0.15613527 0.38500000 0.94471429 0.9000000 0.8050000
+## 4  0.42328638 0.77500000 0.28000000 0.8451613 0.9020000
+## 5  0.66620690 0.86666667 0.63142857 0.1550000 0.0900000
+## 6  0.21751880 0.38500000 0.53626866 0.4950000 0.7000000
+## 7  0.08030053 0.27130435 0.98591215 0.6950000 0.9033333
+## 8  0.13946463 0.12600000 0.16040445 0.6060000 0.7000000
+## 9  0.02258870 0.10345572 0.13124688 0.1258333 0.9959504
+## 10 0.01777328 0.08207885 0.09869775 0.9715133 0.9739877
 ## # ... with 70 more rows</code></pre>
 <p>The plot below shows how the original data line up with the percentiles for each split of the data for one of the all_predictors:</p>
 <p><img src="Custom_Steps_files/figure-html/cdf_plot-1.png" width="672"></p>

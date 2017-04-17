@@ -13,7 +13,7 @@ test_that('non-factor variables with dot', {
   int_rec <- rec %>% step_interact(~(.-HHV)^3, sep=":")
   int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
   
-  te_new <- process(int_rec_trained, newdata = te_biomass, role = "predictor")
+  te_new <- process(int_rec_trained, newdata = te_biomass, all_predictors())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
   
@@ -32,7 +32,7 @@ test_that('non-factor variables with specific variables', {
   int_rec <- rec %>% step_interact(~carbon:hydrogen + oxygen:nitrogen:sulfur, sep = ":")
   int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
   
-  te_new <- process(int_rec_trained, newdata = te_biomass, role = "predictor")
+  te_new <- process(int_rec_trained, newdata = te_biomass, all_predictors())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
   

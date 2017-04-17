@@ -69,7 +69,7 @@ test_that('simple name selections', {
   ## This is weird but consistent with `dplyr::select_vars`
   expect_equal(
     select_terms(info = info1, dots_quos(-age, date)),
-    c("diet", "location", "height", "date")
+    c("diet", "height", "location", "date")
   )
   expect_equal(
     select_terms(info = info1, dots_quos(date, -age)),

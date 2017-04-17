@@ -17,7 +17,7 @@ test_that('correct kernel PCA values', {
   
   kpca_trained <- learn(kpca_rec, training = tr_dat, verbose = FALSE)
   
-  pca_pred <- process(kpca_trained, newdata = te_dat, roles = "predictor")
+  pca_pred <- process(kpca_trained, newdata = te_dat)
   pca_pred <- as.matrix(pca_pred)
   
   pca_exp <- kpca(as.matrix(tr_dat[, -1]), 

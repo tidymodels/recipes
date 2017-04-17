@@ -50,7 +50,7 @@ corr_filter <- rec \%>\%
 
 filter_obj <- learn(corr_filter, training = biomass_tr)
 
-filtered_te <- process(filter_obj, biomass_te, role = "predictor")
+filtered_te <- process(filter_obj, biomass_te)
 round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 round(abs(cor(filtered_te)), 2)
 }

@@ -24,3 +24,5 @@ navbar:
     href: articles/Custom_Steps.html
   - text: Reference
     href: reference/index.html
+  - text: News
+    href: news/index.html

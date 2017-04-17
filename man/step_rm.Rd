@@ -38,7 +38,7 @@ smaller_set <- rec \%>\%
 
 smaller_set <- learn(smaller_set, training = biomass_tr)
 
-filtered_te <- process(smaller_set, biomass_te, role = "predictor")
+filtered_te <- process(smaller_set, biomass_te)
 filtered_te
 }
 \concept{

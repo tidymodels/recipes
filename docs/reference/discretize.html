@@ -62,6 +62,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -205,9 +208,7 @@
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
-<span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; 
-#&gt; bin_missing        bin1        bin2        bin3        bin4 
-#&gt;           0          22          17          25          16 </div></pre>
+<span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'carbon'.</span></div><div class='output co'>#&gt; &lt; table of extent 0 &gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

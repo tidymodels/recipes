@@ -40,6 +40,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -108,11 +111,11 @@ rec</code></pre></div>
 <pre><code>## # A tibble: 5 × 4
 ##    variable    type      role   source
 ##       &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
-## 1   Records nominal predictor original
-## 2    Status nominal   outcome original
-## 3 Seniority numeric predictor original
-## 4      Time numeric predictor original
-## 5       Age numeric predictor original</code></pre>
+## 1 Seniority numeric predictor original
+## 2      Time numeric predictor original
+## 3       Age numeric predictor original
+## 4   Records nominal predictor original
+## 5    Status nominal   outcome original</code></pre>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
 dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>())</code></pre></div>
@@ -125,19 +128,19 @@ dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span cl
 <pre><code>## step 1 dummy training</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">with_dummy &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(dummied, <span class="dt">newdata =</span> credit_data)
 with_dummy</code></pre></div>
-<pre><code>## # A tibble: 4,454 × 5
-##    Status Seniority  Time   Age Records_yes
-##    &lt;fctr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
-## 1    good         9    60    30           0
-## 2    good        17    60    58           0
-## 3     bad        10    36    46           1
-## 4    good         0    60    24           0
-## 5    good         0    36    26           0
-## 6    good         1    60    36           0
-## 7    good        29    60    44           0
-## 8    good         9    12    27           0
-## 9    good         0    60    32           0
-## 10    bad         0    48    41           0
+<pre><code>## # A tibble: 4,454 × 4
+##    Seniority  Time   Age Records_yes
+##        &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+## 1          9    60    30           0
+## 2         17    60    58           0
+## 3         10    36    46           1
+## 4          0    60    24           0
+## 5          0    36    26           0
+## 6          1    60    36           0
+## 7         29    60    44           0
+## 8          9    12    27           0
+## 9          0    60    32           0
+## 10         0    48    41           0
 ## # ... with 4,444 more rows</code></pre>
 <p><code>Status</code> is unaffected.</p>
 <p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being processed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>

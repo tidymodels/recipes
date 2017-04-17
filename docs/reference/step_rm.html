@@ -62,6 +62,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -135,7 +138,7 @@
   <span class='fu'>step_rm</span>(<span class='fu'>contains</span>(<span class='st'>"gen"</span>))
 
 <span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 rm training </div><div class='input'>
-<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)
+<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>)
 <span class='no'>filtered_te</span></div><div class='output co'>#&gt; # A tibble: 80 × 2
 #&gt;    carbon sulfur
 #&gt;     &lt;dbl&gt;  &lt;dbl&gt;

@@ -62,6 +62,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -147,20 +150,20 @@
   <span class='fu'>step_ns</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 <span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ns training </div><div class='input'>
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
-<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 8
-#&gt;    oxygen nitrogen sulfur    HHV carbon_ns_1 carbon_ns_2 hydrogen_ns_1
-#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-#&gt; 1   47.20     0.30   0.22 18.275   0.5235017  -0.2360067     0.5626398
-#&gt; 2   48.06     2.85   0.34 17.560   0.4929257  -0.2408145     0.5563744
-#&gt; 3   49.10     2.40   0.30 17.173   0.4868199  -0.2407445     0.5563744
-#&gt; 4   37.30     1.80   0.50 18.851   0.5239392  -0.2358537     0.5739704
-#&gt; 5   42.77     0.20   0.00 20.547   0.5424882  -0.2257850     0.5773303
-#&gt; 6   41.70     0.70   0.20 18.467   0.5040254  -0.2401936     0.5563744
-#&gt; 7   54.13     1.19   0.51 15.095   0.4400424  -0.2334398     0.5444179
-#&gt; 8   33.80     0.95   0.20 16.240   0.4799363  -0.2403662     0.5115938
-#&gt; 9   31.10     0.14   4.90 11.147   0.2850862  -0.1687288     0.4934496
-#&gt; 10  23.69     4.63   1.05 10.750   0.2596973  -0.1552040     0.4420907
-#&gt; # ... with 70 more rows, and 1 more variables: hydrogen_ns_2 &lt;dbl&gt;</div></pre>
+<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 × 7
+#&gt;    oxygen nitrogen sulfur carbon_ns_1 carbon_ns_2 hydrogen_ns_1 hydrogen_ns_2
+#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt; 1   47.20     0.30   0.22   0.5235017  -0.2360067     0.5626398    -0.2180299
+#&gt; 2   48.06     2.85   0.34   0.4929257  -0.2408145     0.5563744    -0.2276068
+#&gt; 3   49.10     2.40   0.30   0.4868199  -0.2407445     0.5563744    -0.2276068
+#&gt; 4   37.30     1.80   0.50   0.5239392  -0.2358537     0.5739704    -0.1869846
+#&gt; 5   42.77     0.20   0.00   0.5424882  -0.2257850     0.5773303    -0.1674205
+#&gt; 6   41.70     0.70   0.20   0.5040254  -0.2401936     0.5563744    -0.2276068
+#&gt; 7   54.13     1.19   0.51   0.4400424  -0.2334398     0.5444179    -0.2397885
+#&gt; 8   33.80     0.95   0.20   0.4799363  -0.2403662     0.5115938    -0.2540546
+#&gt; 9   31.10     0.14   4.90   0.2850862  -0.1687288     0.4934496    -0.2557720
+#&gt; 10  23.69     4.63   1.05   0.2596973  -0.1552040     0.4420907    -0.2487678
+#&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

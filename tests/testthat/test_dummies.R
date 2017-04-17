@@ -14,7 +14,7 @@ test_that('dummy variables with string inputs', {
   rec <- recipe(age ~ ., data = okc)
   dummy <- rec %>% step_dummy(diet, location)
   dummy_trained <- learn(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
-  dummy_pred <- process(dummy_trained, newdata = okc, roles = "predictor")
+  dummy_pred <- process(dummy_trained, newdata = okc)
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL
