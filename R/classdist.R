@@ -30,7 +30,7 @@
 #'
 #' rec_dists <- learn(rec, training = iris)
 #'
-#' dists_to_species <- process(rec_dists, newdata = iris)
+#' dists_to_species <- process(rec_dists, newdata = iris, everything())
 #' ## on log scale:
 #' dists_to_species[, c("Species", grep("classdist", names(dists_to_species), value = TRUE))]
 #' @importFrom stats cov

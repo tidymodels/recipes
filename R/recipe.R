@@ -301,9 +301,8 @@ process <- function(object, ...) UseMethod("process")
 #'
 #' For a recipe with at least one preprocessing step that has been trained by \code{\link{learn.recipe}}, apply the computations to new data.
 #' @param object A trained object such as a \code{\link{recipe}} with at least one preprocessing step.
-#' @param ... further arguments passed to or from other methods (not currently used).
 #' @param newdata A data frame or tibble for whom the preprocessing will be applied.
-#' @param roles A character vector to choose which types of columns to return (e.g. "predictor"). By default all columns are returned.
+#' @param ... One or more selector functions to choose which variables will be returned by the function. See \code{\link{selections}} for more details. If no selectors are given, the default is to use \code{\link{all_predictors}}.
 #' @return A tibble that may have different columns than the original columns in \code{newdata}.
 #' @details \code{\link{process}} takes a trained recipe and applies the operations to a data set to create a design matrix.
 #'
@@ -315,7 +314,14 @@ process <- function(object, ...) UseMethod("process")
 #' @importFrom dplyr filter
 #' @export
 
-process.recipe <- function(object, newdata = object$template, roles = "all", ...) {
+process.recipe <- function(object, newdata = object$template, ...) {
+  terms <- dots_quos(...)
+  if(is_empty(terms))
+    terms <- dots_quos(all_predictors())
+  
+  ## determine return variables
+  keepers <- select_terms(args = terms, info = object$term_info)
+  
   newdata <- if(!is_tibble(newdata))
     as_tibble(newdata[, object$var_info$variable, drop = FALSE]) else
       newdata[, object$var_info$variable]
@@ -324,21 +330,18 @@ process.recipe <- function(object, newdata = object$template, roles = "all", ...
     newdata <- process(object$steps[[i]], newdata = newdata)
     if(!is_tibble(newdata)) as_tibble(newdata)
   }
-  if(all(roles != "all")) {
-    role <- NULL
-    dat_info <- filter(object$term_info, role %in% roles)
-    if(nrow(dat_info) == 0) {
-      msg <- paste("No matching `roles` were found; returning everything instead",
-                   "Existing roles are:",
-                   paste0(sort(unique(object$term_info$role)), collapse = ", "))
-      warning(msg, call. = FALSE)
-    }
-    keepers <- dat_info$variable
-    newdata <- newdata[, names(newdata) %in% keepers]
-  }
 
-  if(!is.null(object$levels))
-    newdata <- strings2factors(newdata, object$levels)
+  newdata <- newdata[, names(newdata) %in% keepers]
+
+  ## Since most models require factors, do the conversion from character
+  if(!is.null(object$levels)) {
+    var_levels <- object$levels
+    var_levels <- var_levels[keepers]
+    check_values <- vapply(var_levels, function(x) (!all(is.na(x))), c(all = TRUE))
+    var_levels <- var_levels[check_values]
+    if(length(var_levels) > 0)
+      newdata <- strings2factors(newdata, var_levels)
+  }
 
   newdata
 }

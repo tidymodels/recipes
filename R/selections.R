@@ -244,7 +244,7 @@ select_terms <- function(info, args) {
 
   is_numeric <- map_lgl(ind_list, is.numeric)
   if (any(!is_numeric)) 
-    stop("All inputs must resolve to integer column positions")
+    stop("No variables or terms were selected.", call. = FALSE)
 
   incl <- dplyr:::combine_vars(vars, ind_list)
 
@@ -252,7 +252,7 @@ select_terms <- function(info, args) {
 
   # Ensure all output vars named
   if (is_empty(sel)) {
-    stop("No variables or terms were selected")
+    stop("No variables or terms were selected.", call. = FALSE)
   } else {
     unnamed <- names2(sel) == ""
     names(sel)[unnamed] <- sel[unnamed]

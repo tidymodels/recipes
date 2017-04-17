@@ -7,18 +7,25 @@ filter_terms <- function(x, ...) UseMethod("filter_terms")
 ## Buckets variables into discrete, mutally exclusive types
 #' @importFrom tibble tibble
 get_types <- function(x) {
-  type_list <- list(
-    nominal = c("character", "factor", "ordered"),
-    numeric = c("integer", "numeric", "double"),
-    date = c("POSIXct", "Date"),
-    censored = "Surv"
-  )
-  res <- lapply(type_list, type_by_var, dat = x)
-  ## I think that Hadley has a better function somewhere to do this
-  res <- res[sapply(res, length) > 0]
-  for(i in seq_along(res))
-    res[[i]] <- tibble(variable = res[[i]], type = names(res)[i])
-  do.call("rbind", res)
+  var_types <- c(character = "nominal", factor = "nominal", ordered = "nominal",
+                 integer = "numeric", numeric = "numeric", double = "numeric",
+                 Surv = "censored", logical = "logical",
+                 Date = "date", POSIXct = "date")
+
+  classes <- lapply(x, class)
+  res <- lapply(classes, 
+                function(x, types) {
+                  in_types <- x %in% names(types)
+                  if(sum(in_types) > 0) {
+                    # not sure what to do with multiple matches; right now 
+                    ## pick the first match which favors "factor" over "ordered"
+                    out <- unname(types[min(which(names(types) %in% x))])
+                  } else out <- "other"
+                  out
+                },
+                types = var_types)
+  res <- unlist(res)
+  tibble(variable = names(res), type = unname(res))
 }
 
 type_by_var <- function(classes, dat) {

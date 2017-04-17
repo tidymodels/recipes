@@ -72,7 +72,7 @@ learn.step_invlogit <- function(x, training, info = NULL, ...) {
 process.step_invlogit <- function(object, newdata, ...) {
   for(i in seq_along(object$vars))
     newdata[ , object$vars[i] ] <-
-      binomial()$linkinv(unlist(newdata[, object$vars[i] ], use.names = FALSE))
+      binomial()$linkinv(unlist(getElement(newdata, object$vars[i]), use.names = FALSE))
   as_tibble(newdata)
 }
 

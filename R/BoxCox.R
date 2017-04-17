@@ -87,7 +87,7 @@ process.step_BoxCox <- function(object, newdata, ...) {
     return(as_tibble(newdata))
   param <- names(object$lambdas)
   for(i in seq_along(object$lambdas))
-    newdata[ , param[i] ] <- bc_trans(newdata[ , param[i] ], lambda = object$lambdas[i])
+    newdata[ , param[i] ] <- bc_trans(getElement(newdata, param[i]), lambda = object$lambdas[i])
   as_tibble(newdata)
 }
 

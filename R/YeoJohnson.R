@@ -93,7 +93,7 @@ process.step_YeoJohnson <- function(object, newdata, ...) {
     return(as_tibble(newdata))
   param <- names(object$lambdas)
   for(i in seq_along(object$lambdas))
-    newdata[ , param[i] ] <- yj_trans(newdata[ , param[i] ], lambda = object$lambdas[ param[i] ])
+    newdata[ , param[i] ] <- yj_trans(getElement(newdata, param[i]), lambda = object$lambdas[ param[i] ])
   as_tibble(newdata)
 }
 

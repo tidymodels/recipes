@@ -68,7 +68,7 @@ learn.step_logit <- function(x, training, info = NULL, ...) {
 process.step_logit <- function(object, newdata, ...) {
   for(i in seq_along(object$vars))
     newdata[ , object$vars[i] ] <-
-      binomial()$linkfun(unlist(newdata[, object$vars[i] ], use.names = FALSE))
+      binomial()$linkfun(getElement(newdata, object$vars[i]))
   as_tibble(newdata)
 }
 

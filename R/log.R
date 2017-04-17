@@ -70,7 +70,7 @@ learn.step_log <- function(x, training, info = NULL, ...) {
 process.step_log <- function(object, newdata, ...) {
   col_names <- object$vars
   for(i in seq_along(col_names))
-    newdata[ , col_names[i] ] <- log(newdata[ , col_names[i] ], base = object$base)
+    newdata[ , col_names[i] ] <- log(getElement(newdata, col_names[i]), base = object$base)
   as_tibble(newdata)
 }
 

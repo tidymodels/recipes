@@ -67,7 +67,7 @@ learn.step_sqrt <- function(x, training, info = NULL, ...) {
 process.step_sqrt <- function(object, newdata, ...) {
   col_names <- object$vars
   for(i in seq_along(col_names))
-    newdata[ , col_names[i] ] <- sqrt(newdata[ , col_names[i] ])
+    newdata[ , col_names[i] ] <- sqrt(getElement(newdata, col_names[i]))
   as_tibble(newdata)
 }
 

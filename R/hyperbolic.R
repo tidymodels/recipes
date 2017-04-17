@@ -83,7 +83,7 @@ process.step_hyperbolic <- function(object, newdata, ...) {
       get(object$func)
   col_names <- object$vars
   for(i in seq_along(col_names))
-    newdata[ , col_names[i] ] <- func(newdata[ , col_names[i] ])
+    newdata[ , col_names[i] ] <- func(getElement(newdata, col_names[i]))
   as_tibble(newdata)
 }
 
