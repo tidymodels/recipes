@@ -221,7 +221,7 @@ percentiles <- process(rec_obj, biomass_te)
 percentiles
 ```
 
-The plot below shows how the original data line up with the percentiles for each split of the data for one of the all_predictors:
+The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:
 
 ```{r cdf_plot, echo = FALSE}
 grid_pct <- rec_obj$steps[[1]]$options$probs

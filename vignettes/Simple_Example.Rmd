@@ -20,7 +20,7 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 
 ## An Example
 
-The cell segmentation data will be used. It has 58 columns with all_predictors and a factor variable (which is the outcome). Each of the all_predictors has a suffix for the optical channel (`"Ch1"`-`"Ch4"`). We will first separate the data into a training and test set then remove unimportant variables:
+The cell segmentation data will be used. It has 58 predictor columns, a factor variable `Class` (the outcome), and two extra labelling columns. Each of the predictors has a suffix for the optical channel (`"Ch1"`-`"Ch4"`). We will first separate the data into a training and test set then remove unimportant variables:
 
 ```{r data}
 library(caret)
@@ -39,7 +39,7 @@ The idea is that the preprocessing operations will all be created using the trai
 
 ## An Initial Recipe
 
-For a first recipe, let's plan on centering and scaling the all_predictors. First, we will create a recipe from the original data and then specify the processing steps. 
+For a first recipe, let's plan on centering and scaling the predictors. First, we will create a recipe from the original data and then specify the processing steps. 
 
 Recipes can be created manually by sequentially adding roles to variables in a data set. 
 
@@ -73,7 +73,7 @@ One other important facet of the code is the method for specifying which variabl
 
 Note that the functions listed above are the only ones that can be used to selecto variables inside the steps. Also, minus signs can be used to deselect variables. 
 
-For our data, we can add the two operations for all of the all_predictors:
+For our data, we can add the two operations for all of the predictors:
 ```{r center_scale}
 standardized <- rec_obj %>%
   step_center(all_predictors()) %>%
@@ -101,7 +101,7 @@ test_data
 
 ## Adding Steps
 
-After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the all_predictors from channel 1 and any all_predictors that are areas: 
+After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the predictors from channel 1 and any predictors that are areas: 
 ```{r pca}
 trained_rec <- trained_rec %>%
   step_pca(ends_with("Ch1"), contains("area"), num = 5)
