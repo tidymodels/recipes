@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Imputation via Bagged Trees — step_bagimpute • recipes</title>
+<title>Impute Numeric Data Using the Mean — step_meanimpute • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -85,18 +85,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Imputation via Bagged Trees</h1>
+    <h1>Impute Numeric Data Using the Mean</h1>
     </div>
 
     
-    <p><code>step_bagimpute</code> creates a <em>specification</em> of a recipe step that will create bagged tree models to impute missing data.</p>
+    <p><code>step_meanimpute</code> creates a <em>specification</em> of a recipe step that will substitute missing values of numeric variables by the training set mean of those variables.</p>
     
 
-    <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>nbagg</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'>sample.int</span>(<span class='fl'>10</span>^<span class='fl'>4</span>, <span class='fl'>1</span>))
-
-<span class='fu'>imp_vars</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>step_meanimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,7 +104,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose variables. For <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with <code>imp_vars</code>, the dots indicates which variables are used to predict the missing data in each variable. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -118,36 +115,22 @@
       <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
     </tr>
     <tr>
-      <th>models</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <th>means</th>
+      <td><p>A named numeric vector of means. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
-      <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code>. Defaults are set for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <b>Note</b> that the arguments <code>X</code> and <code>y</code> should not be passed here.</p></td>
-    </tr>
-    <tr>
-      <th>impute_with</th>
-      <td><p>A call to <code>imp_vars</code> to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see <code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.</p></td>
-    </tr>
-    <tr>
-      <th>seed_val</th>
-      <td><p>A integer used to create reproducible models. The same seed is used across all imputation models.</p></td>
+      <th>trim</th>
+      <td><p>The fraction (0 to 0.5) of observations to be trimmed from each end of the variables before the mean is computed. Values of trim outside that range are taken as the nearest endpoint.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_bagimpute</code> returns an object of class <code>step_bagimpute</code>.</p>
+    <p><code>step_meanimpute</code>  returns an object of class <code>step_meanimpute</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the <code>impute_with</code> formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.</p>
-<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>, this variable will be ignored.</p>
-<p>It is possible that missing values will still occur after imputation if a large majority (or all) of the imputing variables are also missing.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Kuhn, M. and Johnson, K. (2013). <em>Applied Predictive Modeling</em>. Springer Verlag.</p>
+    <p><code>step_meanimpute</code> estimates the variable means from the data used in the <code>training</code> argument of <code>learn.recipe</code>. <code>process.recipe</code> then applies the new values to new data sets using these averages.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,9 +153,9 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
 
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
+  <span class='fu'>step_meanimpute</span>(<span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='input'>
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 meanimpute training </div><div class='input'>
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
 <span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
@@ -185,7 +168,7 @@
 #&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 × 14
 #&gt;   Status Seniority   Home  Time   Age Marital Records    Job Expenses   Income
 #&gt;   &lt;fctr&gt;     &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;dbl&gt;
-#&gt; 1    bad         0  other    48    37  single      no  fixed       35 115.4538
+#&gt; 1    bad         0     NA    48    37  single      no     NA       35 138.9908
 #&gt; 2    bad         1   priv    48    36  single     yes  fixed       35 173.0000
 #&gt; 3    bad        24   priv    60    46 married      no  fixed       60 165.0000
 #&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
@@ -199,8 +182,6 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

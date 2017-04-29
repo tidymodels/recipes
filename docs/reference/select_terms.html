@@ -103,7 +103,7 @@
     </tr>
     <tr>
       <th>args</th>
-      <td><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosures'>dots_quos</a></code> for examples.</p></td>
+      <td><p>A list of formulas whose right-hand side contains quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosures'>quos</a></code> for examples.</p></td>
     </tr>
     </table>
     
@@ -117,11 +117,15 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)
-<span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    is_formula</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:devtools’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    ns_env, pkg_env</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
-<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>dots_quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"    </div></pre>
+<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
