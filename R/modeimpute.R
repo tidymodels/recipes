@@ -85,7 +85,6 @@ print.step_modeimpute <- function(x, width = max(20, options()$width - 30), ...)
   invisible(x)
 }
 
-#' @export
 mode_est <- function(x) {
   if(!is.character(x) & !is.factor(x))
     stop("The data should be character or factor to compute the mode.", call. = FALSE)
