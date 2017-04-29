@@ -61,10 +61,10 @@ impute_rec <- rec \%>\%
 
 imp_models <- learn(impute_rec, training = credit_tr)
 
-inputed_te <- process(imp_models, newdata = credit_te, everything())
+imputed_te <- process(imp_models, newdata = credit_te, everything())
 
 credit_te[missing_examples,]
-inputed_te[missing_examples, names(credit_te)]
+imputed_te[missing_examples, names(credit_te)]
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}. Springer Verlag.

@@ -34,7 +34,7 @@
 #' transformed_te
 #' @seealso \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 step_center <- function(recipe, ..., role = NA, trained = FALSE, means = NULL, na.rm = TRUE) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

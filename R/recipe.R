@@ -315,9 +315,9 @@ process <- function(object, ...) UseMethod("process")
 #' @export
 
 process.recipe <- function(object, newdata = object$template, ...) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
-    terms <- dots_quos(all_predictors())
+    terms <- quos(all_predictors())
   
   ## determine return variables
   keepers <- select_terms(args = terms, info = object$term_info)

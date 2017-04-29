@@ -192,20 +192,20 @@ has_selector <- function(x, allowed = selectors) {
 #' This function processes the step function selectors and might be useful when creating custom steps.
 #'
 #' @param info A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.
-#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{dots_quos}} for examples.
+#' @param args A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{quos}} for examples.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there are no selectors or if no variables are selected.
 #' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
 #' @importFrom purrr map_lgl map_if map_chr map
+#' @importFrom rlang names2
 #' @export
 #' @examples
 #' library(rlang)
 #' data(okc)
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
-#' select_terms(info = info, dots_quos(all_predictors()))
-
+#' select_terms(info = info, quos(all_predictors()))
 select_terms <- function(info, args) {
   ## This is a modified version of dplyr:::select_vars
 
@@ -230,15 +230,15 @@ select_terms <- function(info, args) {
   names_list <- set_names(as.list(seq_along(vars)), vars)
 
   # if the first selector is exclusive (negative), start with all columns
-  initial_case <- if (is_negated(args[[1]])) list(seq_along(vars)) else integer(0)
+  first <- f_rhs(args[[1]])
+  initial_case <- if (is_negated(first)) list(seq_along(vars)) else integer(0)
 
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment)
-  is_helper <- map_lgl(args, function(x) is_lang(x) && !is_lang(x, c("-", ":")))
-
+  is_helper <- map_lgl(args, dplyr:::quo_is_helper)
   ind_list <- map_if(args, is_helper, eval_tidy)
   ind_list <- map_if(ind_list, !is_helper, eval_tidy, names_list)
-
+  
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(args))
 
@@ -248,6 +248,7 @@ select_terms <- function(info, args) {
 
   incl <- dplyr:::combine_vars(vars, ind_list)
 
+  # Include/exclude specified variables
   sel <- set_names(vars[incl], names(incl))
 
   # Ensure all output vars named

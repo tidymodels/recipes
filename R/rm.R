@@ -33,7 +33,7 @@ step_rm <- function(recipe,
                     role = NA,
                     trained = FALSE,
                     removals = NULL) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

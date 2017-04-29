@@ -33,7 +33,7 @@
 #' transformed_te
 
 step_range <- function(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1, ranges = NULL) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

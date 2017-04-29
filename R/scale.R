@@ -31,7 +31,7 @@
 #' transformed_te
 
 step_scale <- function(recipe, ..., role = NA, trained = FALSE, sds = NULL, na.rm = TRUE) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
@@ -76,7 +76,7 @@ process.step_scale <- function(object, newdata, ...) {
 print.step_scale <- function(x, width = max(20, options()$width - 30), ...) {
   cat("Scaling for ", sep = "")
   if(x$trained) {
-    cat(format_ch_vec(names(x$sd), width = width))
+    cat(format_ch_vec(names(x$sds), width = width))
   } else cat(format_selectors(x$terms, wdth = width))
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)

@@ -30,7 +30,7 @@
 
 step_ns <- function(recipe, ..., role = "predictor", trained = FALSE,
                     objects = NULL, options = list(df = 2)) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(

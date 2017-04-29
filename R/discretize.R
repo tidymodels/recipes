@@ -153,7 +153,7 @@ print.discretize <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 
 step_discretize <- function(recipe, ..., role = NA, trained = FALSE,
                             objects = NULL, options = list()) {
-  terms <- dots_quos(...)
+  terms <- quos(...)
   if(is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
   add_step(
