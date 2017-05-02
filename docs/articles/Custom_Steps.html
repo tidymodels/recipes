@@ -144,7 +144,6 @@ biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span
 </ul>
 <p>I’ve added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the <code>ref_dist</code> object. However, this might be problematic if the data set is large. <code>approx</code> would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If <code>approx = TRUE</code>, the argument <code>ref_dist</code> will contain the grid for each variable.</p>
 <p>We will use the <code>stats::quantile</code> to compute the grid. However, we might also want to have control over the granularity of this grid, so the <code>options</code> argument will be used to define how that calculations is done. We could just use the ellipses (aka <code>...</code>) so that any options passed to <code>step_percentile</code> that are not one of its arguments will then be passed to <code>stats::quantile</code>. We recommend making a seperate list object with the options and use these inside the function.</p>
-<p>It might seen odd that any price of information that might be used later (e.g. <code>ref_dist</code>) is also an argument, but we recommend doing so.</p>
 </div>
 <div id="initialization-of-new-objects" class="section level1">
 <h1 class="hasAnchor">

@@ -86,7 +86,6 @@ However, this might be problematic if the data set is large. `approx` would be u
 
 We will use the `stats::quantile` to compute the grid. However, we might also want to have control over the granularity of this grid, so the `options` argument will be used to define how that calculations is done. We could just use the ellipses (aka `...`) so that any options passed to `step_percentile` that are not one of its arguments will then be passed to `stats::quantile`. We recommend making a seperate list object with the options and use these inside the function. 
 
-It might seen odd that any price of information that might be used later (e.g. `ref_dist`) is also an argument, but we recommend doing so.  
 
 # Initialization of new objects
 
