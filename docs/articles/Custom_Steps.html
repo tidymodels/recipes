@@ -79,12 +79,12 @@ steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"n
 ##  [7] "step_depth"       "step_discretize"  "step_dummy"      
 ## [10] "step_holiday"     "step_hyperbolic"  "step_ica"        
 ## [13] "step_interact"    "step_invlogit"    "step_isomap"     
-## [16] "step_kpca"        "step_log"         "step_logit"      
-## [19] "step_meanimpute"  "step_modeimpute"  "step_ns"         
-## [22] "step_nzv"         "step_other"       "step_pca"        
-## [25] "step_poly"        "step_range"       "step_rm"         
-## [28] "step_scale"       "step_spatialsign" "step_sqrt"       
-## [31] "step_YeoJohnson"</code></pre>
+## [16] "step_kpca"        "step_lincomb"     "step_log"        
+## [19] "step_logit"       "step_meanimpute"  "step_modeimpute" 
+## [22] "step_ns"          "step_nzv"         "step_other"      
+## [25] "step_pca"         "step_poly"        "step_range"      
+## [28] "step_rm"          "step_scale"       "step_spatialsign"
+## [31] "step_sqrt"        "step_YeoJohnson"</code></pre>
 <p>You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/topepo/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/topepo/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <div id="a-new-step-definition" class="section level1">
 <h1 class="hasAnchor">
@@ -261,15 +261,15 @@ percentiles</code></pre></div>
 <pre><code>## # A tibble: 80 × 5
 ##        carbon   hydrogen     oxygen  nitrogen    sulfur
 ##         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1  0.42093897 0.45000000 0.90262697 0.2150000 0.7350000
-## 2  0.18000000 0.38500000 0.92174978 0.9284932 0.8387097
-## 3  0.15613527 0.38500000 0.94471429 0.9000000 0.8050000
-## 4  0.42328638 0.77500000 0.28000000 0.8451613 0.9020000
-## 5  0.66620690 0.86666667 0.63142857 0.1550000 0.0900000
-## 6  0.21751880 0.38500000 0.53626866 0.4950000 0.7000000
-## 7  0.08030053 0.27130435 0.98591215 0.6950000 0.9033333
-## 8  0.13946463 0.12600000 0.16040445 0.6060000 0.7000000
-## 9  0.02258870 0.10345572 0.13124688 0.1258333 0.9959504
+##  1 0.42093897 0.45000000 0.90262697 0.2150000 0.7350000
+##  2 0.18000000 0.38500000 0.92174978 0.9284932 0.8387097
+##  3 0.15613527 0.38500000 0.94471429 0.9000000 0.8050000
+##  4 0.42328638 0.77500000 0.28000000 0.8451613 0.9020000
+##  5 0.66620690 0.86666667 0.63142857 0.1550000 0.0900000
+##  6 0.21751880 0.38500000 0.53626866 0.4950000 0.7000000
+##  7 0.08030053 0.27130435 0.98591215 0.6950000 0.9033333
+##  8 0.13946463 0.12600000 0.16040445 0.6060000 0.7000000
+##  9 0.02258870 0.10345572 0.13124688 0.1258333 0.9959504
 ## 10 0.01777328 0.08207885 0.09869775 0.9715133 0.9739877
 ## # ... with 70 more rows</code></pre>
 <p>The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:</p>
