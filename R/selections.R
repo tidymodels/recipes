@@ -199,6 +199,7 @@ has_selector <- function(x, allowed = selectors) {
 #' @seealso \code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @importFrom rlang names2
+#' @importFrom dplyr combine_indices set_current_vars quo_is_select_helper
 #' @export
 #' @examples
 #' library(rlang)
@@ -223,8 +224,8 @@ select_terms <- function(info, args) {
   old <- set_current_info(info)
   on.exit(set_current_info(old), add = TRUE)
   # Set current_vars so available to select_helpers
-  old <- dplyr:::set_current_vars(vars)
-  on.exit(dplyr:::set_current_vars(old), add = TRUE)
+  old <- set_current_vars(vars)
+  on.exit(set_current_vars(old), add = TRUE)
 
   # Map variable names to their positions: this keeps integer semantics
   names_list <- set_names(as.list(seq_along(vars)), vars)
@@ -235,7 +236,7 @@ select_terms <- function(info, args) {
 
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment)
-  is_helper <- map_lgl(args, dplyr:::quo_is_helper)
+  is_helper <- map_lgl(args, quo_is_select_helper)
   ind_list <- map_if(args, is_helper, eval_tidy)
   ind_list <- map_if(ind_list, !is_helper, eval_tidy, names_list)
   
@@ -246,7 +247,7 @@ select_terms <- function(info, args) {
   if (any(!is_numeric)) 
     stop("No variables or terms were selected.", call. = FALSE)
 
-  incl <- dplyr:::combine_vars(vars, ind_list)
+  incl <- combine_indices(vars, ind_list)
 
   # Include/exclude specified variables
   sel <- set_names(vars[incl], names(incl))
@@ -323,7 +324,7 @@ all_nominal <- function(types = current_info()$types)
 ## functions to get current variable info for selectors modeled after dplyr versions
 
 #' @import rlang
-cur_info_env <- child_env()
+cur_info_env <- child_env(env_parent(env))
 
 set_current_info <- function(x) {
   # stopifnot(!is.environment(x))
