@@ -6,3 +6,4 @@ README.md
 README.html
 ^docs$
 ^_pkgdown\.yml$
+contributors.md
