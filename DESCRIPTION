@@ -33,7 +33,7 @@ Suggests:
     knitr,
     caret,
     ggplot2
-Remotes: hadley/dplyr, hadley/rlang, gdkrmr/dimRed
+Remotes: hadley/dplyr, gdkrmr/dimRed
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
