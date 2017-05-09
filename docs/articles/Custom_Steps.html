@@ -83,8 +83,8 @@ steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"n
 ## [19] "step_logit"       "step_meanimpute"  "step_modeimpute" 
 ## [22] "step_ns"          "step_nzv"         "step_other"      
 ## [25] "step_pca"         "step_poly"        "step_range"      
-## [28] "step_rm"          "step_scale"       "step_spatialsign"
-## [31] "step_sqrt"        "step_YeoJohnson"</code></pre>
+## [28] "step_regex"       "step_rm"          "step_scale"      
+## [31] "step_spatialsign" "step_sqrt"        "step_YeoJohnson"</code></pre>
 <p>You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/topepo/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/topepo/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <div id="a-new-step-definition" class="section level1">
 <h1 class="hasAnchor">
@@ -122,8 +122,8 @@ biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span
                             <span class="dt">approx =</span> <span class="ot">FALSE</span>, 
                             <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">probs =</span> (<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span>, <span class="dt">names =</span> <span class="ot">TRUE</span>)) {
 ## process but do not evaluate the variable selectors with
-## the `dots_quos` function in `rlang`
-  terms &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">dots_quos</span>(...) 
+## the `quos` function in `rlang`
+  terms &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">quos</span>(...) 
   <span class="cf">if</span>(<span class="kw">length</span>(terms) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
     <span class="kw">stop</span>(<span class="st">"Please supply at least one variable specification. See ?selections."</span>)
   <span class="kw"><a href="../reference/add_step.html">add_step</a></span>(

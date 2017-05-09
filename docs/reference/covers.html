@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • recipes</title>
+<title>Raw Cover Type Data — covers • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,7 +36,7 @@
   </head>
 
   <body>
-    <div class="container template-vignette-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -82,22 +82,45 @@
       
       </header>
 
-      <div class="page-header">
-  <h1>Articles <small>version&nbsp;0.0.1.9001</small></h1>
-</div>
-
-<div class="row">
-  <div class="col-md-9">
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="Custom_Steps.html">Creating Custom Step Functions</a></li>
-        <li><a href="Selecting_Variables.html">Selecting Variables</a></li>
-        <li><a href="Simple_Example.html">Basic Recipes</a></li>
-      </ul>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>Raw Cover Type Data</h1>
     </div>
+
+    
+    <p>These data are raw data describing different types of forest cover-types from the UCI Machine Learning Database (see link below). There is one column in the data that has a few difference pieces of textual information (of variable lengths).</p>
+    
+
+        
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href = 'https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.info'>https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.info</a></p>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+
+<dt>covers</dt><dd><p>a data frame</p></dd>
+
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>covers</span>)
+<span class='fu'>str</span>(<span class='no'>covers</span>)</div><div class='output co'>#&gt; 'data.frame':	40 obs. of  1 variable:
+#&gt;  $ description: chr  "1,cathedral family,rock outcrop complex,extremely stony" "2,vanet,ratake families complex,very stony" "3,haploborolis,rock outcrop complex,rubbly" "4,ratake family,rock outcrop complex,rubbly" ...</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#source">Source</a></li>
+
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

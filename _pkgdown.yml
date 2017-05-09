@@ -8,7 +8,7 @@ reference:
     - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)")
   - title: Example Datasets
     contents:
-    - matches("(okc)|(biomass)|(credit)")
+    - matches("(okc)|(biomass)|(credit)|(covers)")
   - title: Step Functions
     contents:
     - matches("step_")

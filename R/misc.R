@@ -182,6 +182,16 @@ sub_args <- function(func, options, removals = NULL) {
     args[removals] <- NULL
   args
 }
+## Same as above but starts with a call object
+mod_call_args <- function(cl, args, removals = NULL) {
+  if(!is.null(removals))
+    for(i in removals)
+      cl[[i]] <- NULL
+    arg_names <- names(args)
+    for(i in arg_names) 
+      cl[[i]] <- args[[i]]
+    cl
+}
 
 #' Sequences of Names with Padded Zeros
 #'
