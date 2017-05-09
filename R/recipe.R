@@ -231,7 +231,6 @@ learn   <- function(x, ...) UseMethod("learn")
 #'
 #' @rdname learn
 #' @importFrom tibble as_tibble is_tibble tibble
-#' @importFrom dplyr left_join
 #' @export
 learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE,
                          retain = FALSE, stringsAsFactors = TRUE, ...) {
@@ -265,12 +264,13 @@ learn.recipe <- function(x, training = NULL, fresh = FALSE, verbose = TRUE,
 
       x$steps[[i]] <- learn(x$steps[[i]], training = training, info = x$term_info)
       training <- process(x$steps[[i]], newdata = training)
-      x$term_info <- left_join(get_types(training), x$term_info, by = c("variable", "type"))
+      x$term_info <- merge_term_info(get_types(training), x$term_info)
 
       ## Update the roles and the term source
       ## These next two steps needs to be smarter to find diffs
       if(!is.na(x$steps[[i]]$role))
         x$term_info$role[is.na(x$term_info$role)] <- x$steps[[i]]$role
+      
       x$term_info$source[is.na(x$term_info$source)] <- "derived"
     } else {
       if(verbose)

@@ -1,8 +1,4 @@
-
-
-
 filter_terms <- function(x, ...) UseMethod("filter_terms")
-
 
 ## Buckets variables into discrete, mutally exclusive types
 #' @importFrom tibble tibble
@@ -264,3 +260,25 @@ is_negated <- function(x) {
   is_lang(x, "-", n = 1)
 }
 
+## `merge_term_info` takes the information on the current variable 
+## list and the information on the new set of variables (after each step)
+## and merges them. Special attention is paid to cases where the 
+## _type_ of data is changed for a common column in the data. 
+
+#' @importFrom dplyr left_join
+merge_term_info <- function(.new, .old) {
+  # Look for conflicts where the new variable type is different from
+  # the original value
+  tmp_new <- .new
+  names(tmp_new)[names(tmp_new) == "type"] <- "new_type"
+  tmp <- left_join(tmp_new[, c("variable", "new_type")], 
+                   .old[, c("variable", "type")], 
+                   by = "variable")
+  tmp <- tmp[!(is.na(tmp$new_type) | is.na(tmp$type)), ]
+  diff_type <- !(tmp$new_type == tmp$type)
+  if(any(diff_type)) {
+    ## Override old type to facilitate merge
+    .old$type[which(diff_type)] <- .new$type[which(diff_type)]
+  }
+  left_join(.new, .old, by = c("variable", "type"))
+}
