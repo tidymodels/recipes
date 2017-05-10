@@ -100,8 +100,15 @@ learn.step_interact <- function(x, training, info = NULL, ...) {
 
 #' @export
 process.step_interact <- function(object, newdata, ...) {
+  ## `na.action` cannot be passed to `model.matrix` but we 
+  ## can change it globally for a bit
+  
+  old_opt <- options()$na.action
+  options(na.action = 'na.pass')
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
+  options(na.action = old_opt)
+  
   res <- lapply(res, function(x) x[, grepl(":", colnames(x)), drop = FALSE])
   ncols <- vapply(res, ncol, c(int = 1L))
   out <- matrix(NA, nrow = nrow(newdata), ncol = sum(ncols))
