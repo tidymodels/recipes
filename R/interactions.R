@@ -105,9 +105,12 @@ process.step_interact <- function(object, newdata, ...) {
   
   old_opt <- options()$na.action
   options(na.action = 'na.pass')
+  on.exit(options(na.action = old_opt))
+  
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
   options(na.action = old_opt)
+  on.exit(expr = NULL)
   
   res <- lapply(res, function(x) x[, grepl(":", colnames(x)), drop = FALSE])
   ncols <- vapply(res, ncol, c(int = 1L))

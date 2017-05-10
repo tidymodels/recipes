@@ -105,6 +105,13 @@ learn.step_dummy <- function(x, training, info = NULL, ...) {
 process.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)
+  
+  ## `na.action` cannot be passed to `model.matrix` but we 
+  ## can change it globally for a bit
+  old_opt <- options()$na.action
+  options(na.action = 'na.pass')
+  on.exit(options(na.action = old_opt))
+  
   for(i in seq_along(object$levels)) {
     form <- as.formula(paste0("~", object$levels[i]))
     indicators <- model.matrix(
@@ -112,6 +119,9 @@ process.step_dummy <- function(object, newdata, ...) {
       data = newdata
       # contrasts.arg = x$contrast
     )
+    options(na.action = old_opt)
+    on.exit(expr = NULL)
+    
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
