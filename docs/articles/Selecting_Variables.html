@@ -108,7 +108,7 @@ rec</code></pre></div>
 ##  predictor          4</code></pre>
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(rec, <span class="dt">original =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## # A tibble: 5 × 4
+<pre><code>## # A tibble: 5 x 4
 ##    variable    type      role   source
 ##       &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
 ## 1 Seniority numeric predictor original
@@ -128,7 +128,7 @@ dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span cl
 <pre><code>## step 1 dummy training</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">with_dummy &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(dummied, <span class="dt">newdata =</span> credit_data)
 with_dummy</code></pre></div>
-<pre><code>## # A tibble: 4,454 × 4
+<pre><code>## # A tibble: 4,454 x 4
 ##    Seniority  Time   Age Records_yes
 ##        &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
 ##  1         9    60    30           0

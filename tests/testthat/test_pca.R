@@ -30,6 +30,19 @@ test_that('correct PCA values', {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
+test_that('correct PCA values with threshold', {
+  pca_extract <- rec %>% 
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>% 
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, threshold = .5)
+  
+  pca_extract_trained <- learn(pca_extract, training = biomass_tr, verbose = FALSE)
+  pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
+  # cumsum(pca_exp$sdev^2)/sum(pca_exp$sdev^2)
+
+  expect_equal(pca_extract_trained$steps[[3]]$num, 2)
+})
+
 
 test_that('Reduced rotation size', {
   pca_extract <- rec %>% 

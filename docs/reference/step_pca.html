@@ -93,8 +93,7 @@
     
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>retx</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)</pre>
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -120,12 +119,16 @@
       <td><p>The number of PCA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></td>
     </tr>
     <tr>
+      <th>threshold</th>
+      <td><p>A fraction of the total variance that should be covered by the components. For example, <code>threshold = .75</code> means that <code>step_pca</code> should generate enough components to capture 75% of the variability in the variables. Note: using this argument will override and resent any value given to <code>num</code>.</p></td>
+    </tr>
+    <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>. Defaults are set for the arguments <code>center</code> and <code>scale.</code> but others can be passed in (e.g. <code>tol</code>). <b>Note</b> that the argument <code>x</code> should not be passed here (or at all).</p></td>
+      <td><p>A list of options to the default method for <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>. Argument defaults are set to <code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and <code>tol = NULL</code>. <b>Note</b> that the argument <code>x</code> should not be passed here (or at all).</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp.default</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -140,8 +143,9 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Principal component analysis (PCA) is a transformation of a group of variables that produces a new set of artificial features or components. These components are designed to capture the maximum amount of information (i.e. variance) in the original variables. Also, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set.</p>
-<p>It is advisable to standardized the variables prior to running PCA. Here, each variable will be centered and scaled prior to the PCA calculation. This can be changed using the <code>options</code> argument. The means and standard deviation are estimated from the training set and are applied to any data sets that are converted to principal components.</p>
+<p>It is advisable to standardized the variables prior to running PCA. Here, each variable will be centered and scaled prior to the PCA calculation. This can be changed using the <code>options</code> argument or by using <code><a href='step_center.html'>step_center</a></code> and <code><a href='step_scale.html'>step_scale</a></code>.</p>
 <p>The argument <code>num</code> controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with <code>prefix</code> and a sequence of numbers. The variable names are padded with zeros. For example, if <code>num &lt; 10</code>, their names will be <code>PC1</code> - <code>PC9</code>. If <code>num = 101</code>, the names would be <code>PC001</code> - <code>PC101</code>.</p>
+<p>Alternatively, <code>threshold</code> can be used to determine the number of components that are required to capture a specified fraction of the total variance in the variables.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -154,12 +158,37 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='no'>pca_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_pca</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
+<span class='no'>pca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training 
+#&gt; step 3 pca training </div><div class='input'><span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
 <span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_pca-4.png' alt='' width='540' height='400' /></pre>
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_pca-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.99</span>)
+<span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>with_thresh</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training 
+#&gt; step 3 pca training </div><div class='input'><span class='fu'><a href='process.html'>process</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; # A tibble: 50 x 4
+#&gt;            PC1         PC2         PC3          PC4
+#&gt;          &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1 -0.97566045  1.12200121 -0.43980366  0.154696581
+#&gt;  2 -1.93053788  1.06242692  2.01950027 -0.434175454
+#&gt;  3 -1.74544285 -0.73845954  0.05423025 -0.826264240
+#&gt;  4  0.13999894  1.10854226  0.11342217 -0.180973554
+#&gt;  5 -2.49861285 -1.52742672  0.59254100 -0.338559240
+#&gt;  6 -1.49934074 -0.97762966  1.08400162  0.001450164
+#&gt;  7  1.34499236 -1.07798362 -0.63679250 -0.117278736
+#&gt;  8 -0.04722981 -0.32208890 -0.71141032 -0.873113315
+#&gt;  9 -2.98275967  0.03883425 -0.57103206 -0.095317042
+#&gt; 10 -1.62280742  1.26608838 -0.33901818  1.065974459
+#&gt; # ... with 40 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
