@@ -81,11 +81,13 @@ process.step_rm <- function(object, newdata, ...) {
 
 print.step_rm <- function(x, width = max(20, options()$width - 22), ...) {
   if(x$trained) {
-    cat("Removed ")
-    cat(format_ch_vec(x$removals, width = width))
+    if(length(x$removals) > 0) {
+      cat("Variables removed ")
+      cat(format_ch_vec(x$removals, width = width))
+    } else cat("No variables were removed")
   } else {
     cat("Delete terms ", sep = "")
-    cat(format_formula(x$terms, wdth = width))
+    cat(format_selectors(x$terms, wdth = width))
   }
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)

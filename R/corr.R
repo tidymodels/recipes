@@ -109,11 +109,13 @@ process.step_corr <- function(object, newdata, ...) {
 
 print.step_corr <- function(x,  width = max(20, options()$width - 36), ...) {
   if(x$trained) {
-    cat("Correlation filter removed ")
-    cat(format_ch_vec(x$removals, width = width))
+    if(length(x$removals) > 0) {
+      cat("Correlation filter removed ")
+      cat(format_ch_vec(x$removals, width = width))
+    } else cat("Correlation filter removed no terms")
   } else {
     cat("Correlation filter on ", sep = "")
-    cat(format_formula(x$terms, wdth = width))
+    cat(format_selectors(x$terms, wdth = width))
   }
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)

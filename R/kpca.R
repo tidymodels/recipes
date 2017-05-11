@@ -132,7 +132,7 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
     cat(format_ch_vec(colnames(x$res@org.data), width = width))
   } else {
     cat("Kernel PCA extraction with ", sep = "")
-    cat(format_formula(x$terms, wdth = width))
+    cat(format_selectors(x$terms, wdth = width))
   }
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
