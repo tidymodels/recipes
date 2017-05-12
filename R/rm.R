@@ -34,23 +34,21 @@ step_rm <- function(recipe,
                     trained = FALSE,
                     removals = NULL) {
   terms <- quos(...)
-  if(is_empty(terms))
+  if (is_empty(terms))
     stop("Please supply at least one variable specification. See ?selections.")
-  add_step(
-    recipe,
-    step_rm_new(
-      terms = terms,
-      role = role,
-      trained = trained,
-      removals = removals
-    )
-  )
+  add_step(recipe,
+           step_rm_new(
+             terms = terms,
+             role = role,
+             trained = trained,
+             removals = removals
+           ))
 }
 
 step_rm_new <- function(terms = NULL,
-                          role = NA,
-                          trained = FALSE,
-                          removals = NULL) {
+                        role = NA,
+                        trained = FALSE,
+                        removals = NULL) {
   step(
     subclass = "rm",
     terms = terms,
@@ -63,7 +61,6 @@ step_rm_new <- function(terms = NULL,
 #' @export
 learn.step_rm <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
-
   step_rm_new(
     terms = x$terms,
     role = x$role,
@@ -74,21 +71,26 @@ learn.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 process.step_rm <- function(object, newdata, ...) {
-  if(length(object$removals) > 0)
+  if (length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)
 }
 
-print.step_rm <- function(x, width = max(20, options()$width - 22), ...) {
-  if(x$trained) {
-    if(length(x$removals) > 0) {
-      cat("Variables removed ")
-      cat(format_ch_vec(x$removals, width = width))
-    } else cat("No variables were removed")
-  } else {
-    cat("Delete terms ", sep = "")
-    cat(format_selectors(x$terms, wdth = width))
+print.step_rm <-
+  function(x, width = max(20, options()$width - 22), ...) {
+    if (x$trained) {
+      if (length(x$removals) > 0) {
+        cat("Variables removed ")
+        cat(format_ch_vec(x$removals, width = width))
+      } else
+        cat("No variables were removed")
+    } else {
+      cat("Delete terms ", sep = "")
+      cat(format_selectors(x$terms, wdth = width))
+    }
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
   }
-  if(x$trained) cat(" [trained]\n") else cat("\n")
-  invisible(x)
-}
