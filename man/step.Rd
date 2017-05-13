@@ -7,7 +7,9 @@
 step(subclass, ...)
 }
 \arguments{
-\item{subclass}{A character string for the resulting class. For example, if \code{subclass = "blah"} the step object that is returned has class \code{step_blah}.}
+\item{subclass}{A character string for the resulting class. For example, 
+if \code{subclass = "blah"} the step object that is returned has class 
+\code{step_blah}.}
 
 \item{...}{All arguments to the step that should be returned.}
 }

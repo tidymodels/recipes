@@ -14,32 +14,54 @@ imp_vars(...)
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For \code{step_bagimpute}, this indicates the variables to be imputed. When used with \code{imp_vars}, the dots indicates which variables are used to predict the missing data in each variable. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose variables. For 
+\code{step_bagimpute}, this indicates the variables to be imputed. When 
+used with \code{imp_vars}, the dots indicates which variables are used to 
+predict the missing data in each variable. See \code{\link{selections}} 
+for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here once this bagged trees have be trained by \code{\link{learn.recipe}}.}
+\item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here 
+once this bagged trees have be trained by \code{\link{learn.recipe}}.}
 
-\item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults are set for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \bold{Note} that the arguments \code{X} and \code{y} should not be passed here.}
+\item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults 
+are set for the arguments \code{nbagg} and \code{keepX} but others can be 
+passed in. \bold{Note} that the arguments \code{X} and \code{y} should not 
+be passed here.}
 
-\item{impute_with}{A call to \code{imp_vars} to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see \code{\link{selections}}).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.}
+\item{impute_with}{A call to \code{imp_vars} to specify which variables are 
+used to impute the variables that can inlcude specific variable names 
+seperated by commas or different selectors (see 
+\code{\link{selections}}).  If a column is included in both lists to be 
+imputed and to be an imputation predictor, it will be removed from the 
+latter and not used to impute itself.}
 
-\item{seed_val}{A integer used to create reproducible models. The same seed is used across all imputation models.}
+\item{seed_val}{A integer used to create reproducible models. The same seed 
+is used across all imputation models.}
 }
 \value{
-\code{step_bagimpute} returns an object of class \code{step_bagimpute}.
+\code{step_bagimpute} returns an object of class 
+  \code{step_bagimpute}.
 }
 \description{
-\code{step_bagimpute} creates a \emph{specification} of a recipe step that will create bagged tree models to impute missing data.
+\code{step_bagimpute} creates a \emph{specification} of a recipe step that 
+  will create bagged tree models to impute missing data.
 }
 \details{
-For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the \code{impute_with} formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.
-
-Note that if a variable that is to be imputed is also in \code{impute_with}, this variable will be ignored.
-
-It is possible that missing values will still occur after imputation if a large majority (or all) of the imputing variables are also missing.
+For each variables requiring imputation, a bagged tree is created 
+  where the outcome is the variable of interest and the predictors are any 
+  other variables listed in the \code{impute_with} formula. One advantage to 
+  the bagged tree is that is can accept predictors that have missing values 
+  themselves. This imputation method can be used when the variable of 
+  interest (and predictors) are numeric or categorical. Imputed categorical 
+  variables will remain categorical.
+Note that if a variable that is to be imputed is also in \code{impute_with}, 
+  this variable will be ignored.
+It is possible that missing values will still occur after imputation if a 
+  large majority (or all) of the imputing variables are also missing.
 }
 \examples{
 data("credit_data")
@@ -67,7 +89,8 @@ credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]
 }
 \references{
-Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}. Springer Verlag.
+Kuhn, M. and Johnson, K. (2013). 
+  \emph{Applied Predictive Modeling}. Springer Verlag.
 }
 \concept{
 preprocessing imputation

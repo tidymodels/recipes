@@ -30,9 +30,10 @@ NULL
 #' @docType data
 #' @return \item{okc}{a data frame} 
 #'
-#' @source Kim, A. Y., and A. Escobedo-Land. 2015. "OkCupid Data for Introductory 
-#' Statistics and Data Science Courses." \emph{Journal of Statistics Education: An 
-#' International Journal on the Teaching and Learning of Statistics}.
+#' @source Kim, A. Y., and A. Escobedo-Land. 2015. "OkCupid Data for 
+#'   Introductory Statistics and Data Science Courses." \emph{Journal of 
+#'   Statistics Education: An International Journal on the Teaching and 
+#'   Learning of Statistics}.
 #'
 #' @keywords datasets
 #' @examples 
@@ -65,7 +66,10 @@ NULL
 
 #' Raw Cover Type Data
 #'
-#' These data are raw data describing different types of forest cover-types from the UCI Machine Learning Database (see link below). There is one column in the data that has a few difference pieces of textual information (of variable lengths). 
+#' These data are raw data describing different types of forest cover-types 
+#'   from the UCI Machine Learning Database (see link below). There is one 
+#'   column in the data that has a few difference pieces of textual 
+#'   information (of variable lengths). 
 #'
 #' @name covers
 #' @aliases covers

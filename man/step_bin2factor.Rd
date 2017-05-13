@@ -10,33 +10,43 @@ step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{...}{Selector functions that choose which variables will be converted. See \code{\link{selections}} for more details.}
+\item{...}{Selector functions that choose which variables will be converted.
+See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{levels}{A length 2 character string that indicate the factor levels for the 1's (in the first position) and the zeros (second)}
+\item{levels}{A length 2 character string that indicate the factor levels
+for the 1's (in the first position) and the zeros (second)}
 
-\item{objects}{A vector with the selected variable names. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{objects}{A vector with the selected variable names. This is
+\code{NULL} until computed by \code{\link{learn.recipe}}.}
 }
 \value{
-\code{step_bin2factor}  returns an object of class \code{step_bin2factor}. The variables selected will be replaced by their factor doppelgängers by  \code{\link{process.recipe}}.
+\code{step_bin2factor}  returns an object of class
+  \code{step_bin2factor}. The variables selected will be replaced by their
+  factor doppelgängers by  \code{\link{process.recipe}}.
 }
 \description{
-\code{step_bin2factor} creates a \emph{specification} of a recipe step that will create a two-level factor from a single dummy variable.
+\code{step_bin2factor} creates a \emph{specification} of a recipe step that
+will create a two-level factor from a single dummy variable.
 }
 \details{
-This operation may be useful for situations where a binary piece of information may need to be represented as categorical instead of numeric. For example, naive Bayes models would do better to have factor predictors so that the binomial distribution is modeled in stead of a Gaussian probability density of numeric binary data.
-
-Note that the numeric data is only verified to be numeric (and does not count levels).
+This operation may be useful for situations where a binary piece of
+  information may need to be represented as categorical instead of numeric.
+  For example, naive Bayes models would do better to have factor predictors
+  so that the binomial distribution is modeled in stead of a Gaussian
+  probability density of numeric binary data.
+Note that the numeric data is only verified to be numeric (and does not
+count levels).
 }
 \examples{
 data(covers)
 
-rec <- recipe(~ description, covers) \%>\% 
- step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\% 
- step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%   
+rec <- recipe(~ description, covers) \%>\%
+ step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
+ step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
  step_bin2factor(rocks)
 
 rec <- learn(rec, training = covers)
