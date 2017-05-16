@@ -259,7 +259,6 @@ has_selector <- function(x, allowed = selectors) {
 #'   \code{\link{learn.recipe}}
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @importFrom rlang names2
-#' @importFrom dplyr combine_indices set_current_vars quo_is_select_helper
 #' @export
 #' @examples
 #' library(rlang)
@@ -281,11 +280,11 @@ select_terms <- function(info, args) {
   lapply(args, check_elements)
   
   # Set current_info so available to helpers
-  old <- set_current_info(info)
-  on.exit(set_current_info(old), add = TRUE)
+  old_info <- set_current_info(info)
+  on.exit(set_current_info(old_info), add = TRUE)
   # Set current_vars so available to select_helpers
-  old <- set_current_vars(vars)
-  on.exit(set_current_vars(old), add = TRUE)
+  old_vars <- dplyr:::set_current_vars(vars)
+  on.exit(dplyr:::set_current_vars(old_vars), add = TRUE)
   
   # Map variable names to their positions: this keeps integer semantics
   names_list <- set_names(as.list(seq_along(vars)), vars)
@@ -300,7 +299,7 @@ select_terms <- function(info, args) {
   
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment)
-  is_helper <- map_lgl(args, quo_is_select_helper)
+  is_helper <- map_lgl(args, quo_is_helper)
   ind_list <- map_if(args, is_helper, eval_tidy)
   ind_list <- map_if(ind_list, !is_helper, eval_tidy, names_list)
   
@@ -311,7 +310,7 @@ select_terms <- function(info, args) {
   if (any(!is_numeric))
     stop("No variables or terms were selected.", call. = FALSE)
   
-  incl <- combine_indices(vars, ind_list)
+  incl <- dplyr:::combine_vars(vars, ind_list)
   
   # Include/exclude specified variables
   sel <- set_names(vars[incl], names(incl))
@@ -419,3 +418,36 @@ set_current_info <- function(x) {
 current_info <- function() {
   cur_info_env %||% stop("Variable context not set", call. = FALSE)
 }
+
+
+
+## These are in the devel version of dplyr; use their exported versions once it 
+## is on CRAN
+
+#' @importFrom rlang f_rhs is_lang
+quo_is_helper <- function(quo) {
+  expr <- rlang::f_rhs(quo)
+  
+  if (!rlang::is_lang(expr)) {
+    return(FALSE)
+  }
+  
+  if (is_data_pronoun(expr)) {
+    return(FALSE)
+  }
+  
+  if (rlang::is_lang(expr, c("-", ":", "c"))) {
+    return(FALSE)
+  }
+  
+  TRUE
+}
+
+sym_dollar <- quote(`$`)
+sym_brackets2 <- quote(`[[`)
+is_data_pronoun <- function(expr) {
+  is_lang(expr, list(sym_dollar, sym_brackets2)) &&
+    identical(rlang::node_cadr(expr), quote(.data))
+}
+
+
