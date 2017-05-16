@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>discretize</code> converts a numeric vector into a factor with bins having approximately the same number of data points (based on a training set).</p>
+    <p><code>discretize</code> converts a numeric vector into a factor with bins having
+  approximately the same number of data points (based on a training set).</p>
     
 
     <pre class="usage"><span class='fu'>discretize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -116,7 +117,11 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>For <code>discretize</code>: options to pass to <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or <code>probs</code>. For <code>step_discretize</code>, the dots specify one or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>For <code>discretize</code>: options to pass to
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a></code> that should not include <code>x</code> or
+<code>probs</code>. For <code>step_discretize</code>, the dots specify one or more
+selector functions to choose which variables are affected by the step. See
+<code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>cuts</th>
@@ -124,23 +129,32 @@
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>A character vector defining the factor levels that will be in the new factor (from smallest to largest). This should have length <code>cuts+1</code> and should not include a level for missing (see <code>keep_na</code> below).</p></td>
+      <td><p>A character vector defining the factor levels that will be in
+the new factor (from smallest to largest). This should have length
+ <code>cuts+1</code> and should not include a level for missing (see
+ <code>keep_na</code> below).</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A single parameter value to be used as a prefix for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If the string is not a valid R name, it is coerced to one.</p></td>
+      <td><p>A single parameter value to be used as a prefix for the factor
+levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If the string is not a valid
+R name, it is coerced to one.</p></td>
     </tr>
     <tr>
       <th>keep_na</th>
-      <td><p>A logical for whether a factor level should be created to identify missing values in <code>x</code>.</p></td>
+      <td><p>A logical for whether a factor level should be created to
+identify missing values in <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>infs</th>
-      <td><p>A logical indicating whether the smallest and largest cut point should be infinite.</p></td>
+      <td><p>A logical indicating whether the smallest and largest cut point
+should be infinite.</p></td>
     </tr>
     <tr>
       <th>min_unique</th>
-      <td><p>An integer defining a sample size line of dignity for the binning. If (the number of unique values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no discretization takes place.</p></td>
+      <td><p>An integer defining a sample size line of dignity for the
+binning. If (the number of unique values)<code>/(cuts+1)</code> is less than
+<code>min_unique</code>, no discretization takes place.</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -152,7 +166,8 @@
     </tr>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -160,30 +175,43 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>The <code>discretize</code> objects are stored here once the recipe has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code>discretize</code> objects are stored here once
+the recipe has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code>discretize</code>. A defaults is set for the argument <code>x</code>. Note that the using the options <code>prefix</code> and <code>labels</code> when more than one variable is being transformed might be problematic as all variables inherit those values.</p></td>
+      <td><p>A list of options to <code>discretize</code>. A defaults is
+set for the argument <code>x</code>. Note that the using the options
+<code>prefix</code> and <code>labels</code> when more than one variable is being
+transformed might be problematic as all variables inherit those values.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>discretize</code> returns an object of class <code>discretize</code>. <code>predict.discretize</code> returns a factor vector.
+    <p><code>discretize</code> returns an object of class <code>discretize</code>.
+  <code>predict.discretize</code> returns a factor vector.
 
-<code>step_discretize</code> returns an object of class <code>step_discretize</code>.</p>
+<code>step_discretize</code> returns an object of class
+  <code>step_discretize</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>discretize</code> estimates the cut points from <code>x</code> using percentiles. For example, if <code>cuts = 3</code>, the function estimates the quartiles of <code>x</code> and uses these as the cut points. If <code>cuts = 2</code>, the bins are defined as being above or below the median of <code>x</code>.</p>
-<p>The <code>predict</code> method can then be used to turn numeric vectors into factor vectors.</p>
-<p>If <code>keep_na = TRUE</code>, a suffix of "_missing" is used as a factor level (see the examples below).</p>
-<p>If <code>infs = FALSE</code> and a new value is greater than the largest value of <code>x</code>, a missing value will result.</p>
+    <p><code>discretize</code> estimates the cut points from <code>x</code> using
+  percentiles. For example, if <code>cuts = 3</code>, the function estimates the
+ quartiles of <code>x</code> and uses these as the cut points. If <code>cuts = 2</code>,
+ the bins are defined as being above or below the median of <code>x</code>.</p>
+<p>The <code>predict</code> method can then be used to turn numeric vectors into
+ factor vectors.</p>
+<p>If <code>keep_na = TRUE</code>, a suffix of "_missing" is used as a factor level
+ (see the examples below).</p>
+<p>If <code>infs = FALSE</code> and a new value is greater than the largest value of
+ <code>x</code>, a missing value will result.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

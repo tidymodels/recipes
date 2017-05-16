@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_bagimpute</code> creates a <em>specification</em> of a recipe step that will create bagged tree models to impute missing data.</p>
+    <p><code>step_bagimpute</code> creates a <em>specification</em> of a recipe step that 
+  will create bagged tree models to impute missing data.</p>
     
 
     <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -103,11 +104,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose variables. For <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with <code>imp_vars</code>, the dots indicates which variables are used to predict the missing data in each variable. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables. For 
+<code>step_bagimpute</code>, this indicates the variables to be imputed. When 
+used with <code>imp_vars</code>, the dots indicates which variables are used to 
+predict the missing data in each variable. See <code><a href='selections.html'>selections</a></code> 
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -115,39 +121,60 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here 
+once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code>. Defaults are set for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <b>Note</b> that the arguments <code>X</code> and <code>y</code> should not be passed here.</p></td>
+      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code>. Defaults 
+are set for the arguments <code>nbagg</code> and <code>keepX</code> but others can be 
+passed in. <b>Note</b> that the arguments <code>X</code> and <code>y</code> should not 
+be passed here.</p></td>
     </tr>
     <tr>
       <th>impute_with</th>
-      <td><p>A call to <code>imp_vars</code> to specify which variables are used to impute the variables that can inlcude specific variable names seperated by commas or different selectors (see <code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be imputed and to be an imputation predictor, it will be removed from the latter and not used to impute itself.</p></td>
+      <td><p>A call to <code>imp_vars</code> to specify which variables are 
+used to impute the variables that can inlcude specific variable names 
+seperated by commas or different selectors (see 
+<code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be 
+imputed and to be an imputation predictor, it will be removed from the 
+latter and not used to impute itself.</p></td>
     </tr>
     <tr>
       <th>seed_val</th>
-      <td><p>A integer used to create reproducible models. The same seed is used across all imputation models.</p></td>
+      <td><p>A integer used to create reproducible models. The same seed 
+is used across all imputation models.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_bagimpute</code> returns an object of class <code>step_bagimpute</code>.</p>
+    <p><code>step_bagimpute</code> returns an object of class 
+  <code>step_bagimpute</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For each variables requiring imputation, a bagged tree is created where the outcome is the variable of interest and the predictors are any other variables listed in the <code>impute_with</code> formula. One advantage to the bagged tree is that is can accept predictors that have missing values themselves. This imputation method can be used when the variable of interest (and predictors) are numeric or categorical. Imputed categorical variables will remain categorical.</p>
-<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>, this variable will be ignored.</p>
-<p>It is possible that missing values will still occur after imputation if a large majority (or all) of the imputing variables are also missing.</p>
+    <p>For each variables requiring imputation, a bagged tree is created 
+  where the outcome is the variable of interest and the predictors are any 
+  other variables listed in the <code>impute_with</code> formula. One advantage to 
+  the bagged tree is that is can accept predictors that have missing values 
+  themselves. This imputation method can be used when the variable of 
+  interest (and predictors) are numeric or categorical. Imputed categorical 
+  variables will remain categorical.</p>
+<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>, 
+  this variable will be ignored.</p>
+<p>It is possible that missing values will still occur after imputation if a 
+  large majority (or all) of the imputing variables are also missing.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Kuhn, M. and Johnson, K. (2013). <em>Applied Predictive Modeling</em>. Springer Verlag.</p>
+    <p>Kuhn, M. and Johnson, K. (2013). 
+  <em>Applied Predictive Modeling</em>. Springer Verlag.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

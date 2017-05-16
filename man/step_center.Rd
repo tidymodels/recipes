@@ -8,26 +8,36 @@ step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
   na.rm = TRUE)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{means}{A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until 
+computed by \code{\link{learn.recipe}}.}
 
-\item{na.rm}{A logical value indicating whether \code{NA} values should be removed when averaging.}
+\item{na.rm}{A logical value indicating whether \code{NA} values should be 
+removed when averaging.}
 }
 \value{
 \code{step_center} returns an object of class \code{step_center}.
 }
 \description{
-\code{step_center} creates a \emph{specification} of a recipe step that will normalize numeric data to have a mean of zero.
+\code{step_center} creates a \emph{specification} of a recipe step that 
+  will normalize numeric data to have a mean of zero.
 }
 \details{
-Centering data means that the average of a variable is subtracted from the data. \code{step_center} estimates the variable means from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the centering to new data sets using these means.
+Centering data means that the average of a variable is subtracted 
+  from the data. \code{step_center} estimates the variable means from the 
+  data used in the \code{training} argument of \code{learn.recipe}. 
+  \code{process.recipe} then applies the centering to new data sets using 
+  these means.
 }
 \examples{
 data(biomass)
@@ -49,7 +59,8 @@ biomass_te[1:10, names(transformed_te)]
 transformed_te
 }
 \seealso{
-\code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{recipe}} \code{\link{learn.recipe}} 
+  \code{\link{process.recipe}}
 }
 \concept{
 preprocessing normalization_methods

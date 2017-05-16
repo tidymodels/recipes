@@ -9,32 +9,56 @@ step_date(recipe, ..., role = "predictor", trained = FALSE,
   ordinal = FALSE, variables = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables that will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables that
+will be used to create the new variables. The selected variables should
+have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
+more details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new variable
+columns created by the original variables will be used as predictors in a
+model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{features}{A character string that includes at least one of the following values: \code{month}, \code{dow} (day of week), \code{doy} (day of year), \code{week}, \code{month}, \code{decimal} (decimal date, e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.}
+\item{features}{A character string that includes at least one of the
+following values: \code{month}, \code{dow} (day of week), \code{doy}
+(day of year), \code{week}, \code{month}, \code{decimal} (decimal date,
+e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.}
 
-\item{abbr}{A logical. Only available for features \code{month} or \code{dow}. \code{FALSE} will display the day of the week as an ordered factor of character strings, such as "Sunday". \code{TRUE} will display an abbreviated version of the label, such as "Sun". \code{abbr} is disregarded if \code{label = FALSE}.}
+\item{abbr}{A logical. Only available for features \code{month} or
+\code{dow}. \code{FALSE} will display the day of the week as an ordered
+factor of character strings, such as "Sunday". \code{TRUE} will display
+an abbreviated version of the label, such as "Sun". \code{abbr} is
+disregarded if \code{label = FALSE}.}
 
-\item{label}{A logical. Only available for features \code{month} or \code{dow}. \code{TRUE} will display the day of the week as an ordered factor of character strings, such as "Sunday." \code{FALSE} will display the day of the week as a number.}
+\item{label}{A logical. Only available for features \code{month} or
+\code{dow}. \code{TRUE} will display the day of the week as an ordered
+factor of character strings, such as "Sunday." \code{FALSE} will display
+the day of the week as a number.}
 
-\item{ordinal}{A logical: should factors be ordered? Only available for features \code{month} or \code{dow}.}
+\item{ordinal}{A logical: should factors be ordered? Only available for
+features \code{month} or \code{dow}.}
 
-\item{variables}{A character string of variables that will be used as inputs. This field is a placeholder and will be populated once \code{\link{learn.recipe}} is used.}
+\item{variables}{A character string of variables that will be used as
+inputs. This field is a placeholder and will be populated once
+ \code{\link{learn.recipe}} is used.}
 }
 \value{
 \code{step_date} returns an object of class \code{step_date}.
 }
 \description{
-\code{step_date} creates a a \emph{specification} of a recipe step that will convert date data into one or more factor or numeric variables.
+\code{step_date} creates a a \emph{specification} of a recipe step that will
+  convert date data into one or more factor or numeric variables.
 }
 \details{
-Unlike other steps, \code{step_date} does \emph{not} remove the original date variables. \code{\link{step_rm}} can be used for this purpose.
+Unlike other steps, \code{step_date} does \emph{not} remove the
+  original date variables. \code{\link{step_rm}} can be used for this
+  purpose.
 }
 \examples{
 library(lubridate)
@@ -49,7 +73,8 @@ date_values <- process(date_rec, newdata = examples)
 date_values
 }
 \seealso{
-\code{\link{step_holiday}} \code{\link{step_rm}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_holiday}} \code{\link{step_rm}} 
+  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

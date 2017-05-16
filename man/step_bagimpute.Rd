@@ -12,7 +12,8 @@ step_bagimpute(recipe, ..., role = NA, trained = FALSE, models = NULL,
 imp_vars(...)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables. For 
 \code{step_bagimpute}, this indicates the variables to be imputed. When 
@@ -22,7 +23,8 @@ for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
 \item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here 
 once this bagged trees have be trained by \code{\link{learn.recipe}}.}
@@ -58,8 +60,10 @@ For each variables requiring imputation, a bagged tree is created
   themselves. This imputation method can be used when the variable of 
   interest (and predictors) are numeric or categorical. Imputed categorical 
   variables will remain categorical.
+
 Note that if a variable that is to be imputed is also in \code{impute_with}, 
   this variable will be ignored.
+
 It is possible that missing values will still occur after imputation if a 
   large majority (or all) of the imputing variables are also missing.
 }

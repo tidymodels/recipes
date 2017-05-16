@@ -7,21 +7,26 @@
 step_sqrt(recipe, ..., role = NA, trained = FALSE, vars = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be transformed. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables will be
+transformed. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually) populated by the \code{terms} argument.}
+\item{vars}{A character string of variable names that will be (eventually)
+populated by the \code{terms} argument.}
 }
 \value{
 \code{step_sqrt}  returns an object of class \code{step_sqrt}.
 }
 \description{
-\code{step_sqrt} creates a \emph{specification} of a recipe step that will square root transform the data.
+\code{step_sqrt} creates a \emph{specification} of a recipe step that will
+  square root transform the data.
 }
 \examples{
 set.seed(313)
@@ -39,7 +44,9 @@ transformed_te <- process(sqrt_obj, examples)
 plot(examples$V1, transformed_te$V1)
 }
 \seealso{
-\code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_logit}} \code{\link{step_invlogit}}
+  \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
+  \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing transformation_methods

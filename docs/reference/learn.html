@@ -89,7 +89,9 @@
     </div>
 
     
-    <p>For a recipe with at least one preprocessing step, estimate the required parameters from a training set that can be later applied to other data sets.</p>
+    <p>For a recipe with at least one preprocessing step, estimate the required
+  parameters from a training set that can be later applied to other data 
+  sets.</p>
     
 
     <pre class="usage"><span class='fu'>learn</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -107,41 +109,60 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>further arguments passed to or from other methods (not currently used).</p></td>
+      <td><p>further arguments passed to or from other methods (not currently
+used).</p></td>
     </tr>
     <tr>
       <th>training</th>
-      <td><p>A data frame or tibble that will be used to estimate parameters for preprocessing.</p></td>
+      <td><p>A data frame or tibble that will be used to estimate
+parameters for preprocessing.</p></td>
     </tr>
     <tr>
       <th>fresh</th>
-      <td><p>A logical indicating whether already trained steps should be re-trained. If <code>TRUE</code>, you should pass in a data set to the argument <code>training</code>.</p></td>
+      <td><p>A logical indicating whether already trained steps should be
+re-trained. If <code>TRUE</code>, you should pass in a data set to the argument
+<code>training</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>A logical that controls wether progress is reported as steps are executed.</p></td>
+      <td><p>A logical that controls wether progress is reported as steps
+are executed.</p></td>
     </tr>
     <tr>
       <th>retain</th>
-      <td><p>A logical: should the <em>processed</em> training set be saved into the <code>template</code> slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.</p></td>
+      <td><p>A logical: should the <em>processed</em> training set be saved
+into the <code>template</code> slot of the recipe after training? This is a good
+  idea if you want to add more steps later but want to avoid re-training
+  the existing steps.</p></td>
     </tr>
     <tr>
       <th>stringsAsFactors</th>
-      <td><p>A logical: should character columns be converted to factors? This affects the processed training set (when <code>retain = TRUE</code>) as well as the results of <code>process.recipe</code>.</p></td>
+      <td><p>A logical: should character columns be converted to
+factors? This affects the processed training set (when
+<code>retain = TRUE</code>) as well as the results of <code>process.recipe</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the <code>term_info</code> object is likely to be modified as the steps are executed.</p>
+    <p>A recipe whose step objects have been updated with the required
+  quantities (e.g. parameter estimates, model objects, etc). Also, the
+  <code>term_info</code> object is likely to be modified as the steps are
+  executed.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Given a data set, this function estimates the required quantities and statistics required by any steps.
+    <p>Given a data set, this function estimates the required quantities
+  and statistics required by any steps.
     <code>learn</code> returns an updated recipe with the estimates.</p>
-<p>Note that missing data handling is handled in the steps; there is no global <code>na.rm</code> option at the recipe-level or in  <code>learn</code>.</p>
-<p>Also, if a recipe has been trained using <code>learn</code> and then steps are added, <code>learn</code> will only update the new steps. If <code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
-<p>As the steps are executed, the <code>training</code> set is updated. For example, if the first step is to center the data and the second is to scale the data, the step for scaling is given the centered data.</p>
+<p>Note that missing data handling is handled in the steps; there is no global
+  <code>na.rm</code> option at the recipe-level or in  <code>learn</code>.</p>
+<p>Also, if a recipe has been trained using <code>learn</code> and then steps
+  are added, <code>learn</code> will only update the new steps. If
+  <code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
+<p>As the steps are executed, the <code>training</code> set is updated. For example,
+  if the first step is to center the data and the second is to scale the
+  data, the step for scaling is given the centered data.</p>
     
 
   </div>

@@ -8,26 +8,38 @@ step_meanimpute(recipe, ..., role = NA, trained = FALSE, means = NULL,
   trim = 0)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{means}{A named numeric vector of means. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until
+computed by \code{\link{learn.recipe}}.}
 
-\item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each end of the variables before the mean is computed. Values of trim outside that range are taken as the nearest endpoint.}
+\item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
+end of the variables before the mean is computed. Values of trim outside
+that range are taken as the nearest endpoint.}
 }
 \value{
-\code{step_meanimpute}  returns an object of class \code{step_meanimpute}.
+\code{step_meanimpute}  returns an object of class
+  \code{step_meanimpute}.
 }
 \description{
-\code{step_meanimpute} creates a \emph{specification} of a recipe step that will substitute missing values of numeric variables by the training set mean of those variables.
+\code{step_meanimpute} creates a \emph{specification} of a recipe step that
+  will substitute missing values of numeric variables by the training set
+  mean of those variables.
 }
 \details{
-\code{step_meanimpute} estimates the variable means from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the new values to new data sets using these averages.
+\code{step_meanimpute} estimates the variable means from the data
+  used in the \code{training} argument of \code{learn.recipe}.
+  \code{process.recipe} then applies the new values to new data sets using
+  these averages.
 }
 \examples{
 data("credit_data")

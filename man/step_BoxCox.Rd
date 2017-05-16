@@ -8,32 +8,49 @@ step_BoxCox(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
   limits = c(-5, 5), nunique = 5)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{lambdas}{A numeric vector of transformation values. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{lambdas}{A numeric vector of transformation values. This is
+\code{NULL} until computed by \code{\link{learn.recipe}}.}
 
-\item{limits}{A length 2 numeric vector defining the range to compute the transformation parameter lambda.}
+\item{limits}{A length 2 numeric vector defining the range to compute the
+transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible values will not be evaluate for a transformation}
+\item{nunique}{An integer where data that have less possible values will
+not be evaluate for a transformation}
 }
 \value{
 \code{step_BoxCox} returns an object of class \code{step_BoxCox}.
 }
 \description{
-\code{step_BoxCox} creates a \emph{specification} of a recipe step that will transform data using a simple Box-Cox transformation.
+\code{step_BoxCox} creates a \emph{specification} of a recipe step that will
+   transform data using a simple Box-Cox transformation.
 }
 \details{
-The Box-Cox transformation, which requires a strictly positive variable, can be used to rescale a variable to be more similar to a normal distribution. In this package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user).
+The Box-Cox transformation, which requires a strictly positive
+  variable, can be used to rescale a variable to be more similar to a
+ normal distribution. In this package, the partial log-likelihood function
+ is directly optimized within a reasonable set of transformation values
+ (which can be changed by the user).
 
-This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the \emph{predictor} variables individually. This can have the effect of making the variable distributions more symmetric.
+This transformation is typically done on the outcome variable using the
+  residuals for a statistical model (such as ordinary least squares).
+  Here, a simple null model (intercept only) is used to apply the
+  transformation to the \emph{predictor} variables individually. This can
+  have the effect of making the variable distributions more symmetric.
 
-If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of \code{NA} is used and no transformation is applied.
+If the transformation parameters are estimated to be very closed to the
+  bounds, or if the optimization fails, a value of \code{NA} is used and
+  no transformation is applied.
 }
 \examples{
 
@@ -49,10 +66,12 @@ plot(density(state.x77[, "Illiteracy"]), main = "before")
 plot(density(bc_data$Illiteracy), main = "after")
 }
 \references{
-Sakia, R. M. (1992). The Box-Cox transformation technique: A review. \emph{The Statistician}, 169-178..
+Sakia, R. M. (1992). The Box-Cox transformation technique:
+  A review. \emph{The Statistician}, 169-178..
 }
 \seealso{
-\code{\link{step_YeoJohnson}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_YeoJohnson}} \code{\link{recipe}}
+  \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing transformation_methods

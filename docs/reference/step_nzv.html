@@ -89,22 +89,26 @@
     </div>
 
     
-    <p><code>step_nzv</code> creates a <em>specification</em> of a recipe step that will potentially remove variables that are highly sparse and unbalanced.</p>
+    <p><code>step_nzv</code> creates a <em>specification</em> of a recipe step that will
+  potentially remove variables that are highly sparse and unbalanced.</p>
     
 
-    <pre class="usage"><span class='fu'>step_nzv</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>freqCut</span> <span class='kw'>=</span>
-  <span class='fl'>95</span>/<span class='fl'>5</span>, <span class='kw'>uniqueCut</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>step_nzv</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>freq_cut</span>
+  <span class='kw'>=</span> <span class='fl'>95</span>/<span class='fl'>5</span>, <span class='kw'>unique_cut</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables that will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables that
+will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for
+more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,7 +116,8 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -120,7 +125,9 @@
     </tr>
     <tr>
       <th>removals</th>
-      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+      <td><p>A character string that contains the names of columns that
+should be removed. These values are not determined until
+<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -130,17 +137,28 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This step diagnoses predictors that have one unique value (i.e. are zero variance predictors) or predictors that are have both of the following characteristics:</p><ol>
-<li><p>they have very few unique values relative to the number of samples and</p></li>
-<li><p>the ratio of the frequency of the most common value to the frequency of the second most common value is large.</p></li>
+    <p>This step diagnoses predictors that have one unique value (i.e.
+  are zero variance predictors) or predictors that are have both of the
+  following characteristics:</p><ol>
+<li><p>they have very few unique values relative to the number of samples
+    and</p></li>
+<li><p>the ratio of the frequency of the most common value to the
+    frequency of the second most common value is large.</p></li>
 </ol>
-    <p>For example, an example of near zero variance predictor is one that, for 1000 samples, has two distinct values and 999 of them are a single value.</p>
-<p>To be flagged, first the frequency of the most prevalent value over the second most frequent value (called the "frequency ratio") must be above <code>freqCut</code>. Secondly, the "percent of unique values," the number of unique values divided by the total number of samples (times 100), must also be below <code>uniqueCut</code>.</p>
-<p>In the above example, the frequency ratio is 999 and the unique value percentage is 0.0001.</p>
+    <p>For example, an example of near zero variance predictor is one that, for
+  1000 samples, has two distinct values and 999 of them are a single value.</p>
+<p>To be flagged, first the frequency of the most prevalent value over the
+  second most frequent value (called the "frequency ratio") must be above
+  <code>freq_cut</code>. Secondly, the "percent of unique values," the number of
+  unique values divided by the total number of samples (times 100), must
+  also be below <code>unique_cut</code>.</p>
+<p>In the above example, the frequency ratio is 999 and the unique value
+  percentage is 0.0001.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_corr.html'>step_corr</a></code>    <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_corr.html'>step_corr</a></code> <code><a href='recipe.html'>recipe</a></code>
+  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

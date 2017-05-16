@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_BoxCox</code> creates a <em>specification</em> of a recipe step that will transform data using a simple Box-Cox transformation.</p>
+    <p><code>step_BoxCox</code> creates a <em>specification</em> of a recipe step that will
+   transform data using a simple Box-Cox transformation.</p>
     
 
     <pre class="usage"><span class='fu'>step_BoxCox</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -100,11 +101,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,19 +115,23 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>lambdas</th>
-      <td><p>A numeric vector of transformation values. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>A numeric vector of transformation values. This is
+<code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>limits</th>
-      <td><p>A length 2 numeric vector defining the range to compute the transformation parameter lambda.</p></td>
+      <td><p>A length 2 numeric vector defining the range to compute the
+transformation parameter lambda.</p></td>
     </tr>
     <tr>
       <th>nunique</th>
-      <td><p>An integer where data that have less possible values will not be evaluate for a transformation</p></td>
+      <td><p>An integer where data that have less possible values will
+not be evaluate for a transformation</p></td>
     </tr>
     </table>
     
@@ -134,17 +141,29 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Box-Cox transformation, which requires a strictly positive variable, can be used to rescale a variable to be more similar to a normal distribution. In this package, the partial log-likelihood function is directly optimized within a reasonable set of transformation values (which can be changed by the user).</p>
-<p>This transformation is typically done on the outcome variable using the residuals for a statistical model (such as ordinary least squares). Here, a simple null model (intercept only) is used to apply the transformation to the <em>predictor</em> variables individually. This can have the effect of making the variable distributions more symmetric.</p>
-<p>If the transformation parameters are estimated to be very closed to the bounds, or if the optimization fails, a value of <code>NA</code> is used and no transformation is applied.</p>
+    <p>The Box-Cox transformation, which requires a strictly positive
+  variable, can be used to rescale a variable to be more similar to a
+ normal distribution. In this package, the partial log-likelihood function
+ is directly optimized within a reasonable set of transformation values
+ (which can be changed by the user).</p>
+<p>This transformation is typically done on the outcome variable using the
+  residuals for a statistical model (such as ordinary least squares).
+  Here, a simple null model (intercept only) is used to apply the
+  transformation to the <em>predictor</em> variables individually. This can
+  have the effect of making the variable distributions more symmetric.</p>
+<p>If the transformation parameters are estimated to be very closed to the
+  bounds, or if the optimization fails, a value of <code>NA</code> is used and
+  no transformation is applied.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Sakia, R. M. (1992). The Box-Cox transformation technique: A review. <em>The Statistician</em>, 169-178..</p>
+    <p>Sakia, R. M. (1992). The Box-Cox transformation technique:
+  A review. <em>The Statistician</em>, 169-178..</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_YeoJohnson.html'>step_YeoJohnson</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_YeoJohnson.html'>step_YeoJohnson</a></code> <code><a href='recipe.html'>recipe</a></code>
+  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

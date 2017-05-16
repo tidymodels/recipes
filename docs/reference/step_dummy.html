@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_dummy</code> creates a a <em>specification</em> of a recipe step that will convert nominal data (e.g. character or factors) into one or more numeric binary model terms for the levels of the original data.</p>
+    <p><code>step_dummy</code> creates a a <em>specification</em> of a recipe step that
+  will convert nominal data (e.g. character or factors) into one or more
+  numeric binary model terms for the levels of the original data.</p>
     
 
     <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -101,31 +103,44 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be used to create the dummy variables. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will
+be used to create the dummy variables. See <code><a href='selections.html'>selections</a></code> for
+more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the binary
+dummy variable columns created by the original variables will be used as
+predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>contrast</th>
-      <td><p>A specification for which type of contrast should be used to make a set of full rank dummy variables. See <code><a href='http://www.rdocumentation.org/packages/stats/topics/contrasts'>contrasts</a></code> for more details. <b>not currently working</b></p></td>
+      <td><p>A specification for which type of contrast should be used
+to make a set of full rank dummy variables. See
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/contrasts'>contrasts</a></code> for more details. <b>not currently
+working</b></p></td>
     </tr>
     <tr>
       <th>naming</th>
-      <td><p>A function that defines the naming convention for new binary columns. See Details below.</p></td>
+      <td><p>A function that defines the naming convention for new binary
+columns. See Details below.</p></td>
     </tr>
     <tr>
       <th>levels</th>
-      <td><p>A list that contains the information needed to create dummy variables for each variable contained in <code>terms</code>. This is <code>NULL</code> until the step is trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>A list that contains the information needed to create dummy
+variables for each variable contained in <code>terms</code>. This is
+<code>NULL</code> until the step is trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -135,9 +150,20 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_dummy</code> will create a set of binary dummy variables from a factor variable. For example, if a factor column in the data set has levels of "red", "green", "blue", the dummy variable process will create two additional columns of 0/1 data for two of those three values (and remove the original column).</p>
-<p>By default, the missing dummy variable will correspond to the first level of the factor being converted.</p>
-<p>The function allows for non-standard naming of the resulting variables. For a factor named <code>x</code>, with levels <code>"a"</code> and <code>"b"</code>, the default naming convention would be to create a new variable called <code>x_b</code>. Note that if the factor levels are not valid variable names (e.g. "some text with spaces"), it will be changed by <code><a href='http://www.rdocumentation.org/packages/base/topics/make.names'>make.names</a></code> to be valid (see the example below). The naming format can be changed using the <code>naming</code> argument.</p>
+    <p><code>step_dummy</code> will create a set of binary dummy variables 
+  from a factor variable. For example, if a factor column in the data set
+  has levels of "red", "green", "blue", the dummy variable process will
+  create two additional columns of 0/1 data for two of those three values
+  (and remove the original column).</p>
+<p>By default, the missing dummy variable will correspond to the first level
+  of the factor being converted.</p>
+<p>The function allows for non-standard naming of the resulting variables. For
+  a factor named <code>x</code>, with levels <code>"a"</code> and <code>"b"</code>, the
+  default naming convention would be to create a new variable called
+  <code>x_b</code>. Note that if the factor levels are not valid variable names
+  (e.g. "some text with spaces"), it will be changed by
+  <code><a href='http://www.rdocumentation.org/packages/base/topics/make.names'>make.names</a></code> to be valid (see the example below). The
+  naming format can be changed using the <code>naming</code> argument.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

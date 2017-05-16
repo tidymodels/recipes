@@ -8,30 +8,42 @@ step_corr(recipe, ..., role = NA, trained = FALSE, threshold = 0.9,
   use = "pairwise.complete.obs", method = "pearson", removals = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{threshold}{A value for the threshold of absolute correlation values. The step will try to remove the minimum number of columns so that all the resulting absolute correlations are less than this value.}
+\item{threshold}{A value for the threshold of absolute correlation values.
+The step will try to remove the minimum number of columns so that all the
+resulting absolute correlations are less than this value.}
 
-\item{use}{A character string for the \code{use} argument to the \code{\link[stats]{cor}} function.}
+\item{use}{A character string for the \code{use} argument to the
+\code{\link[stats]{cor}} function.}
 
-\item{method}{A character string for the \code{method} argument to the \code{\link[stats]{cor}} function.}
+\item{method}{A character string for the \code{method} argument to the
+\code{\link[stats]{cor}} function.}
 
-\item{removals}{A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until
+\code{\link{learn.recipe}} is called.}
 }
 \value{
 \code{step_corr}  returns an object of class \code{step_corr}.
 }
 \description{
-\code{step_corr} creates a \emph{specification} of a recipe step that will potentially remove variables that have large absolute correlations with other variables.
+\code{step_corr} creates a \emph{specification} of a recipe step that will
+  potentially remove variables that have large absolute correlations with
+  other variables.
 }
 \details{
-This step attempts to remove variables to keep the largest absolute correlation between the variables less than \code{threshold}.
+This step attempts to remove variables to keep the largest absolute
+  correlation between the variables less than \code{threshold}.
 }
 \examples{
 data(biomass)
@@ -42,7 +54,8 @@ biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
+                    sulfur + duplicate,
               data = biomass_tr)
 
 corr_filter <- rec \%>\%
@@ -55,10 +68,13 @@ round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 round(abs(cor(filtered_te)), 2)
 }
 \seealso{
-\code{\link{step_nzv}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_nzv}} \code{\link{recipe}}
+  \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \author{
-Original R code for filtering algorithm by Dong Li, modified by Max Kuhn. Contributions by Reynald Lescarbeau (for original in \code{caret} package). Max Kuhn for the \code{step} function.
+Original R code for filtering algorithm by Dong Li, modified by
+  Max Kuhn. Contributions by Reynald Lescarbeau (for original in
+  \code{caret} package). Max Kuhn for the \code{step} function.
 }
 \concept{
 preprocessing variable_filters

@@ -1,19 +1,29 @@
 #' Spatial Sign Preprocessing
 #'
-#' \code{step_spatialsign} is a \emph{specification} of a recipe step that will convert numeric data into a projection on to a unit sphere.
+#' \code{step_spatialsign} is a \emph{specification} of a recipe step that
+#'   will convert numeric data into a projection on to a unit sphere.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables will be used for the normalization. See \code{\link{selections}} for more details.
-#' @param role For model terms created by this step, what analysis role should they be assigned?
-#' @param vars A character string of variable names that will be (eventually) populated by the \code{terms} argument.
-#' @return \code{step_spatialsign} returns an object of class \code{step_spatialsign}.
+#' @param ... One or more selector functions to choose which variables will be
+#'   used for the normalization. See \code{\link{selections}} for more details.
+#' @param role For model terms created by this step, what analysis role should
+#'   they be assigned?
+#' @param vars A character string of variable names that will be (eventually)
+#'   populated by the \code{terms} argument.
+#' @return \code{step_spatialsign} returns an object of class
+#'   \code{step_spatialsign}.
 #' @keywords datagen
 #' @concept preprocessing projection_methods
 #' @export
-#' @details The spatial sign transformation projects the variables onto a unit sphere and is related to global contrast normalization. The spatial sign of a vector \code{w} is \code{w/norm(w)}.
+#' @details The spatial sign transformation projects the variables onto a unit
+#'   sphere and is related to global contrast normalization. The spatial sign
+#'   of a vector \code{w} is \code{w/norm(w)}.
 #'
 #' The variables should be centered and scaled prior to the computations.
-#' @references Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign preprocessing: a simple way to impart moderate robustness to multivariate estimators. \emph{Journal of Chemical Information and Modeling}, 46(3), 1402-1409.
+#' @references Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial
+#'   sign preprocessing: a simple way to impart moderate robustness to
+#'   multivariate estimators. \emph{Journal of Chemical Information and
+#'   Modeling}, 46(3), 1402-1409.
 #' @examples
 #' data(biomass)
 #'
@@ -36,41 +46,41 @@
 #'
 #' plot(transformed_te$carbon, transformed_te$hydrogen)
 
+step_spatialsign <-
+  function(recipe,
+           ...,
+           role = "predictor",
+           trained = FALSE,
+           vars = NULL) {
+    
+    terms <- quos(...)
+    if (is_empty(terms))
+      stop("Please supply at least one variable specification.",
+           "See ?selections.",
+           call. = FALSE)
+    
+    add_step(recipe,
+             step_spatialsign_new(
+               terms = terms,
+               role = role,
+               trained = trained,
+               vars = vars
+             ))
+  }
 
-
-
-step_spatialsign <- function(recipe,
-                             ...,
-                             role = "predictor",
-                             trained = FALSE,
-                             vars = NULL) {
-  terms <- quos(...)
-  if(is_empty(terms))
-    stop("Please supply at least one variable specification. See ?selections.")
-  add_step(
-    recipe,
-    step_spatialsign_new(
+step_spatialsign_new <-
+  function(terms = NULL,
+           role = "predictor",
+           trained = FALSE,
+           vars = NULL) {
+    step(
+      subclass = "spatialsign",
       terms = terms,
       role = role,
       trained = trained,
       vars = vars
     )
-  )
-}
-
-step_spatialsign_new <- function(terms = NULL,
-                                 role = "predictor",
-                                 trained = FALSE,
-                                 vars = NULL) {
-
-  step(
-    subclass = "spatialsign",
-    terms = terms,
-    role = role,
-    trained = trained,
-    vars = vars
-  )
-}
+  }
 
 #' @export
 learn.step_spatialsign <- function(x, training, info = NULL, ...) {
@@ -86,16 +96,23 @@ learn.step_spatialsign <- function(x, training, info = NULL, ...) {
 #' @export
 process.step_spatialsign <- function(object, newdata, ...) {
   col_names <- object$vars
-  ss <- function(x) x/sqrt(sum(x^2))
-  newdata[, col_names] <- t(apply(as.matrix(newdata[, col_names]), 1, ss))
+  ss <- function(x)
+    x / sqrt(sum(x ^ 2))
+  newdata[, col_names] <-
+    t(apply(as.matrix(newdata[, col_names]), 1, ss))
   as_tibble(newdata)
 }
 
-print.step_spatialsign <- function(x, width = max(20, options()$width - 26), ...) {
-  cat("Spatial sign on  ", sep = "")
-  if(x$trained) {
-    cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_selectors(x$terms, wdth = width))
-  if(x$trained) cat(" [trained]\n") else cat("\n")
-  invisible(x)
-}
+print.step_spatialsign <-
+  function(x, width = max(20, options()$width - 26), ...) {
+    cat("Spatial sign on  ", sep = "")
+    if (x$trained) {
+      cat(format_ch_vec(x$vars, width = width))
+    } else
+      cat(format_selectors(x$terms, wdth = width))
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
+  }

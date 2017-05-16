@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_isomap</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more new dimensions.</p>
+    <p><code>step_isomap</code> creates a <em>specification</em> of a recipe step that will
+  convert numeric data into one or more new dimensions.</p>
     
 
     <pre class="usage"><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
@@ -101,23 +102,32 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be used to compute the dimensions. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will be
+used to compute the dimensions. See <code><a href='selections.html'>selections</a></code> for more
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dimension columns created by the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new
+dimension columns created by the original variables will be used as
+predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>num</th>
-      <td><p>The number of isomap dimensions to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible dimensions, a smaller value will be used.</p></td>
+      <td><p>The number of isomap dimensions to retain as new predictors. If
+<code>num</code> is greater than the number of columns or the number of
+possible dimensions, a smaller value will be used.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -125,11 +135,13 @@
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>Isomap</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>Isomap</a></code> object is stored here once this
+preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the resulting new variables. See notes below</p></td>
+      <td><p>A character string that will be the prefix to the resulting
+new variables. See notes below</p></td>
     </tr>
     </table>
     
@@ -139,18 +151,34 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a reduced set of dimensions such that the geometric distances between the original data points are preserved. This version of MDS uses nearest neighbors in the data as a method for increasing the fidelity of the new dimensions to the original data values.</p>
-<p>It is advisable to center and scale the variables prior to running Isomap (<code>step_center</code> and <code>step_scale</code> can be used for this purpose).</p>
-<p>The argument <code>num</code> controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with <code>prefix</code> and a sequence of numbers. The variable names are padded with zeros. For example, if <code>num &lt; 10</code>, their names will be <code>Isomap1</code> - <code>Isomap9</code>. If <code>num = 101</code>, the names would be <code>Isomap001</code> - <code>Isomap101</code>.</p>
+    <p>Isomap is a form of multidimensional scaling (MDS). MDS methods
+  try to find a reduced set of dimensions such that the geometric distances
+  between the original data points are preserved. This version of MDS uses
+  nearest neighbors in the data as a method for increasing the fidelity of
+  the new dimensions to the original data values.</p>
+<p>It is advisable to center and scale the variables prior to running Isomap
+  (<code>step_center</code> and <code>step_scale</code> can be used for this purpose).</p>
+<p>The argument <code>num</code> controls the number of components that will be
+  retained (the original variables that are used to derive the components
+  are removed from the data). The new components will have names that begin
+  with <code>prefix</code> and a sequence of numbers. The variable names are
+  padded with zeros. For example, if <code>num &lt; 10</code>, their names will be
+  <code>Isomap1</code> - <code>Isomap9</code>. If <code>num = 101</code>, the names would be
+  <code>Isomap001</code> - <code>Isomap101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>De Silva, V., and Tenenbaum, J. B. (2003). Global versus local methods in nonlinear dimensionality reduction. <em>Advances in Neural Information Processing Systems</em>. 721-728.
-    <span class="pkg">dimRed</span>, a framework for dimensionality reduction, <a href = 'https://github.com/gdkrmr'>https://github.com/gdkrmr</a></p>
+    <p>De Silva, V., and Tenenbaum, J. B. (2003). Global versus local
+  methods in nonlinear dimensionality reduction. <em>Advances in Neural
+  Information Processing Systems</em>. 721-728.
+    <span class="pkg">dimRed</span>, a framework for dimensionality reduction,
+  <a href = 'https://github.com/gdkrmr'>https://github.com/gdkrmr</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_kpca.html'>step_kpca</a></code> <code><a href='step_ica.html'>step_ica</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_kpca.html'>step_kpca</a></code>
+  <code><a href='step_ica.html'>step_ica</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
+  <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -173,8 +201,8 @@
 <span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
 #&gt; step 2 center training 
 #&gt; step 3 scale training 
-#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:19: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:19: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-05-11 16:34:21: DONE</span></div><div class='input'>
+#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:45: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: DONE</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-05-16 13:05:46: DONE</span></div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
 <span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_isomap-20.png' alt='' width='540' height='400' /></pre>

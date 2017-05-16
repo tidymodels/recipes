@@ -9,9 +9,11 @@
 \arguments{
 \item{x}{A \code{recipe} object}
 
-\item{form_width}{The number of characters used to print the variables or terms in a formula}
+\item{form_width}{The number of characters used to print the variables or
+terms in a formula}
 
-\item{...}{further arguments passed to or from other methods (not currently used).}
+\item{...}{further arguments passed to or from other methods (not currently
+used).}
 }
 \value{
 The original object (invisibly)

@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_kpca</code> a <em>specification</em> of a recipe step that will convert numeric data into one or more principal components using a kernel basis expansion.</p>
+    <p><code>step_kpca</code> a <em>specification</em> of a recipe step that will convert
+  numeric data into one or more principal components using a kernel basis
+  expansion.</p>
     
 
     <pre class="usage"><span class='fu'>step_kpca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
@@ -101,35 +103,49 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will be
+used to compute the components. See <code><a href='selections.html'>selections</a></code> for more
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new principal
+component columns created by the original variables will be used as
+predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>num</th>
-      <td><p>The number of PCA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></td>
+      <td><p>The number of PCA components to retain as new predictors. If
+<code>num</code> is greater than the number of columns or the number of possible
+components, a smaller value will be used.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this
+preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code>. Defaults are set for the arguments <code>kernel</code> and <code>kpar</code> but others can be passed in. <b>Note</b> that the arguments <code>x</code> and <code>features</code> should not be passed here (or at all).</p></td>
+      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code>. Defaults
+are set for the arguments <code>kernel</code> and <code>kpar</code> but others can be
+passed in. <b>Note</b> that the arguments <code>x</code> and <code>features</code>
+should not be passed here (or at all).</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the resulting new variables. See notes below</p></td>
+      <td><p>A character string that will be the prefix to the resulting
+new variables. See notes below</p></td>
     </tr>
     </table>
     
@@ -139,19 +155,43 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Kernel principal component analysis (kPCA) is an extension a PCA analysis that conducts the calculations in a broader dimensionality defined by a kernel function. For example, if a quadratic kernel function were used, each variable would be represented by its original values as well as its square. This nonlinear mapping is used  during the PCA analysis and can potentially help find better representations of the original data.</p>
-<p>As with ordinary PCA, it is important to standardized the variables prior to running PCA (<code>step_center</code> and <code>step_scale</code> can be used for this purpose).</p>
-<p>When performing kPCA, the kernel function (and any important kernel parameters) must be chosen. The <span class="pkg">kernlab</span> package is used and the reference below discusses the types of kernels available and their parameter(s). These specifications can be made in the <code>kernel</code> and <code>kpar</code> slots of the <code>options</code> argument to <code>step_kpca</code>.</p>
-<p>The argument <code>num</code> controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with <code>prefix</code> and a sequence of numbers. The variable names are padded with zeros. For example, if <code>num &lt; 10</code>, their names will be <code>kPC1</code> - <code>kPC9</code>. If <code>num = 101</code>, the names would be <code>kPC001</code> - <code>kPC101</code>.</p>
+    <p>Kernel principal component analysis (kPCA) is an extension a PCA
+  analysis that conducts the calculations in a broader dimensionality
+  defined by a kernel function. For example, if a quadratic kernel function
+  were used, each variable would be represented by its original values as
+  well as its square. This nonlinear mapping is used  during the PCA
+  analysis and can potentially help find better representations of the
+  original data.</p>
+<p>As with ordinary PCA, it is important to standardized the variables prior
+  to running PCA (<code>step_center</code> and <code>step_scale</code> can be used for
+  this purpose).</p>
+<p>When performing kPCA, the kernel function (and any important kernel
+  parameters) must be chosen. The <span class="pkg">kernlab</span> package is used and the
+  reference below discusses the types of kernels available and their
+  parameter(s). These specifications can be made in the <code>kernel</code> and
+  <code>kpar</code> slots of the <code>options</code> argument to <code>step_kpca</code>.</p>
+<p>The argument <code>num</code> controls the number of components that will be
+  retained (the original variables that are used to derive the components
+  are removed from the data). The new components will have names that begin
+  with <code>prefix</code> and a sequence of numbers. The variable names are
+  padded with zeros. For example, if <code>num &lt; 10</code>, their names will be
+  <code>kPC1</code> - <code>kPC9</code>. If <code>num = 101</code>, the names would be
+  <code>kPC001</code> - <code>kPC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Scholkopf, B., Smola, A., and Muller, K. (1997). Kernel principal component analysis. <em>Lecture Notes in Computer Science</em>, 1327, 583-588.</p>
-<p>Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab - An S4 package for kernel methods in R. <em>Journal of Statistical Software</em>, 11(1), 1-20.</p>
+    <p>Scholkopf, B., Smola, A., and Muller, K. (1997). Kernel
+  principal component analysis. <em>Lecture Notes in Computer Science</em>,
+  1327, 583-588.</p>
+<p>Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab -
+  An S4 package for kernel methods in R. <em>Journal of Statistical
+  Software</em>, 11(1), 1-20.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_ica.html'>step_ica</a></code> <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_ica.html'>step_ica</a></code>
+  <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
+  <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

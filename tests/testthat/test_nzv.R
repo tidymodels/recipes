@@ -29,8 +29,8 @@ test_that('nzv filtering', {
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
   
   removed <- vars[
-    pct_uni <= filtering_trained$steps[[1]]$options$uniqueCut & 
-      f_ratio >= filtering_trained$steps[[1]]$options$freqCut]
+    pct_uni <= filtering_trained$steps[[1]]$options$unique_cut & 
+      f_ratio >= filtering_trained$steps[[1]]$options$freq_cut]
   
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
@@ -39,13 +39,13 @@ test_that('altered options', {
   rec <- recipe(y ~ ., data = dat)
   filtering <- rec %>% 
     step_nzv(x1, x2, x3, x4, 
-             options = list(freqCut = 50, uniqueCut = 10))
+             options = list(freq_cut = 50, unique_cut = 10))
   
   filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
   
   removed <- vars[
-    pct_uni <= filtering_trained$steps[[1]]$options$uniqueCut & 
-      f_ratio >= filtering_trained$steps[[1]]$options$freqCut]
+    pct_uni <= filtering_trained$steps[[1]]$options$unique_cut & 
+      f_ratio >= filtering_trained$steps[[1]]$options$freq_cut]
   
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })

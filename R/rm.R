@@ -1,11 +1,16 @@
 #' General Variable Filter
 #'
-#' \code{step_rm} creates a \emph{specification} of a recipe step that will remove variables based on their name, type, or role.
+#' \code{step_rm} creates a \emph{specification} of a recipe step that will
+#'   remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables that will evaluated by the filtering process. See \code{\link{selections}} for more details.
+#' @param ... One or more selector functions to choose which variables that
+#'   will evaluated by the filtering process. See \code{\link{selections}} for
+#'   more details.
 #' @param role Not used by this step since no new variables are created.
-#' @param removals A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until
+#'   \code{\link{learn.recipe}} is called.
 #' @return \code{step_rm}  returns an object of class \code{step_rm}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -35,7 +40,9 @@ step_rm <- function(recipe,
                     removals = NULL) {
   terms <- quos(...)
   if (is_empty(terms))
-    stop("Please supply at least one variable specification. See ?selections.")
+    stop("Please supply at least one variable specification.",
+         "See ?selections.",
+         call. = FALSE)
   add_step(recipe,
            step_rm_new(
              terms = terms,

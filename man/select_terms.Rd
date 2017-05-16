@@ -7,15 +7,21 @@
 select_terms(info, args)
 }
 \arguments{
-\item{info}{A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source} that represent the current state of the data. The function \code{\link{summary.recipe}} can be used to get this information from a recipe.}
+\item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
+and \code{source} that represent the current state of the data. The
+function \code{\link{summary.recipe}} can be used to get this information
+from a recipe.}
 
-\item{args}{A list of formulas whose right-hand side contains quoted expressions. See \code{\link[rlang]{quos}} for examples.}
+\item{args}{A list of formulas whose right-hand side contains quoted
+expressions. See \code{\link[rlang]{quos}} for examples.}
 }
 \value{
-A character string of column names or an error of there are no selectors or if no variables are selected.
+A character string of column names or an error of there are no
+  selectors or if no variables are selected.
 }
 \description{
-This function processes the step function selectors and might be useful when creating custom steps.
+This function processes the step function selectors and might be useful
+  when creating custom steps.
 }
 \examples{
 library(rlang)
@@ -25,7 +31,8 @@ info <- summary(rec)
 select_terms(info = info, quos(all_predictors()))
 }
 \seealso{
-\code{\link{recipe}} \code{\link{summary.recipe}} \code{\link{learn.recipe}}
+\code{\link{recipe}} \code{\link{summary.recipe}}
+  \code{\link{learn.recipe}}
 }
 \concept{
 preprocessing

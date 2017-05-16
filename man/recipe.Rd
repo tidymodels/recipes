@@ -22,38 +22,78 @@ recipe(x, ...)
 \method{recipe}{matrix}(x, ...)
 }
 \arguments{
-\item{x, data}{A data frame or tibble of the \emph{template} data set (see below).}
+\item{x, data}{A data frame or tibble of the \emph{template} data set
+(see below).}
 
-\item{...}{Further arguments passed to or from other methods (not currently used).}
+\item{...}{Further arguments passed to or from other methods (not currently
+used).}
 
-\item{formula}{A model formula. No in-line functions should be used here (e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations should be enacted using \code{step} functions in this package. Dots are allowed as are simple multivariate outcome terms (i.e. no need for \code{cbind}; see Examples).}
+\item{formula}{A model formula. No in-line functions should be used here
+(e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations
+should be enacted using \code{step} functions in this package. Dots are
+allowed as are simple multivariate outcome terms (i.e. no need for
+\code{cbind}; see Examples).}
 
-\item{vars}{A character string of column names corresponding to variables that will be used in any context (see below)}
+\item{vars}{A character string of column names corresponding to variables
+that will be used in any context (see below)}
 
-\item{roles}{A character string (the same length of \code{vars}) that describes a single role that the variable will take. This value could be anything but common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}}
+\item{roles}{A character string (the same length of \code{vars}) that
+describes a single role that the variable will take. This value could be
+anything but common roles are \code{"outcome"}, \code{"predictor"},
+\code{"case_weight"}, or \code{"ID"}}
 }
 \value{
-An object of class \code{recipe} with sub-objects: \item{var_info}{A tibble containing information about the original data set columns}\item{term_info}{A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in \code{var_info}.}\item{steps}{A list of \code{step} objects that define the sequence of preprocessing steps that will be applied to data. The default value is \code{NULL}}\item{template}{A tibble of the data. This is initialized to be the same as the data given in the \code{data} argument but can be different after the recipe is trained.}
+An object of class \code{recipe} with sub-objects:
+  \item{var_info}{A tibble containing information about the original data
+  set columns}
+  \item{term_info}{A tibble that contains the current set of terms in the
+  data set. This initially defaults to the same data contained in
+  \code{var_info}.}
+  \item{steps}{A list of \code{step} objects that define the sequence of
+  preprocessing steps that will be applied to data. The default value is
+  \code{NULL}}
+  \item{template}{A tibble of the data. This is initialized to be the same
+  as the data given in the \code{data} argument but can be different after
+  the recipe is trained.}
 }
 \description{
-A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
+A recipe is a description of what steps should be applied to a data set in
+  order to get it ready for data analysis.
 }
 \details{
-Recipes are alternative methods for creating design matrices and for preprocessing data.
+Recipes are alternative methods for creating design matrices and
+  for preprocessing data.
 
-Variables in recipes can have any type of \emph{role} in subsequent analyses such as: outcome, predictor, case weights, stratification variables, etc.
+Variables in recipes can have any type of \emph{role} in subsequent analyses
+  such as: outcome, predictor, case weights, stratification variables, etc.
 
-\code{recipe} objects can be created in several ways. If the analysis only contains outcomes and predictors, the simplest way to create one is to use a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline functions such as \code{log(x3)}. An example is given below.
+\code{recipe} objects can be created in several ways. If the analysis only
+  contains outcomes and predictors, the simplest way to create one is to use
+  a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline
+  functions such as \code{log(x3)}. An example is given below.
 
-Alternatively, a \code{recipe} object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
+Alternatively, a \code{recipe} object can be created by first specifying
+  which variables in a data set should be used and then sequentially
+  defining their roles (see the last example).
 
-Steps to the recipe can be added sequentially. Steps can include common operations like logging a variable, creating dummy variables or interactions and so on. More computationally complex actions such as dimension reduction or imputation can also be specified.
+Steps to the recipe can be added sequentially. Steps can include common
+  operations like logging a variable, creating dummy variables or
+  interactions and so on. More computationally complex actions such as
+  dimension reduction or imputation can also be specified.
 
-Once a recipe has been defined, the \code{\link{learn}} function can be used to estimate quants required in the steps from a data set (a.k.a. the training data). \code{\link{learn}} returns another recipe.
+Once a recipe has been defined, the \code{\link{learn}} function can be
+  used to estimate quants required in the steps from a data set (a.k.a. the
+  training data). \code{\link{learn}} returns another recipe.
 
-To apply the recipe to a data set, the \code{\link{process}} function is used in the same manner as \code{predict} would be for models. This applies the steps to any data set.
+To apply the recipe to a data set, the \code{\link{process}} function is
+  used in the same manner as \code{predict} would be for models. This
+  applies the steps to any data set.
 
-Note that the data passed to \code{recipe} need not be the complete data that will be used to train the steps (by \code{\link{learn}}). The recipe only needs to know the names and types of data that will be used. For large data sets, \code{head} could be used to pass the recipe a smaller data set to save time and memory.
+Note that the data passed to \code{recipe} need not be the complete data
+  that will be used to train the steps (by \code{\link{learn}}). The recipe
+  only needs to know the names and types of data that will be used. For
+  large data sets, \code{head} could be used to pass the recipe a smaller
+  data set to save time and memory.
 }
 \examples{
 
@@ -84,8 +124,9 @@ sp_signed_trained
 # apply the preprocessing to a data set
 test_set_values <- process(sp_signed_trained, newdata = biomass_te)
 
-# or use pipes for the entire workflow: 
-rec <- biomass_tr \%>\% recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
+# or use pipes for the entire workflow:
+rec <- biomass_tr \%>\%
+  recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
   step_center(all_predictors()) \%>\%
   step_scale(all_predictors()) \%>\%
   step_spatialsign(all_predictors())
@@ -94,7 +135,8 @@ rec <- biomass_tr \%>\% recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sul
 # multivariate example
 
 # no need for `cbind(carbon, hydrogen)` for left-hand side
-multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass_tr)
+multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
+                  data = biomass_tr)
 multi_y <- multi_y \%>\%
   step_center(all_outcomes()) \%>\%
   step_scale(all_predictors())

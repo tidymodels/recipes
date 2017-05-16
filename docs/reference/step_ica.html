@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_ica</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more independent components.</p>
+    <p><code>step_ica</code> creates a <em>specification</em> of a recipe step that will
+  convert numeric data into one or more independent components.</p>
     
 
     <pre class="usage"><span class='fu'>step_ica</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
@@ -100,35 +101,48 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will be
+used to compute the components. See <code><a href='selections.html'>selections</a></code> for more
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new
+independent component columns created by the original variables will be
+used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>num</th>
-      <td><p>The number of ICA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></td>
+      <td><p>The number of ICA components to retain as new predictors. If
+<code>num</code> is greater than the number of columns or the number of possible
+components, a smaller value will be used.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA</a></code>. No defaults are set here. <b>Note</b> that the arguments <code>X</code> and <code>n.comp</code> should not be passed here.</p></td>
+      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA</a></code>. No
+defaults are set here. <b>Note</b> that the arguments <code>X</code> and
+<code>n.comp</code> should not be passed here.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA</a></code> object is stored here once
+this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the resulting new variables. See notes below</p></td>
+      <td><p>A character string that will be the prefix to the resulting
+new variables. See notes below</p></td>
     </tr>
     </table>
     
@@ -138,17 +152,35 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Independent component analysis (ICA) is a transformation of a group of variables that produces a new set of artificial features or components. ICA assumes that the variables are mixtures of a set of distinct, non-Gaussian signals and attempts to transform the data to isolate these signals. Like PCA, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. Also like PCA, it is advisable to center and scale the variables prior to running ICA.</p>
-<p>This package produces components using the "FastICA" methodology (see reference below).</p>
-<p>The argument <code>num</code> controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with <code>prefix</code> and a sequence of numbers. The variable names are padded with zeros. For example, if <code>num &lt; 10</code>, their names will be <code>IC1</code> - <code>IC9</code>. If <code>num = 101</code>, the names would be <code>IC001</code> - <code>IC101</code>.</p>
+    <p>Independent component analysis (ICA) is a transformation of a
+  group of variables that produces a new set of artificial features or
+  components. ICA assumes that the variables are mixtures of a set of
+  distinct, non-Gaussian signals and attempts to transform the data to
+  isolate these signals. Like PCA, the components are statistically
+  independent from one another. This means that they can be used to combat
+  large inter-variables correlations in a data set. Also like PCA, it is
+  advisable to center and scale the variables prior to running ICA.</p>
+<p>This package produces components using the "FastICA" methodology (see
+  reference below).</p>
+<p>The argument <code>num</code> controls the number of components that will be
+  retained (the original variables that are used to derive the components
+  are removed from the data). The new components will have names that begin
+  with <code>prefix</code> and a sequence of numbers. The variable names are
+  padded with zeros. For example, if <code>num &lt; 10</code>, their names will be
+  <code>IC1</code> - <code>IC9</code>. If <code>num = 101</code>, the names would be
+  <code>IC001</code> - <code>IC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hyvarinen, A., and Oja, E. (2000). Independent component analysis: algorithms and applications. <em>Neural Networks</em>, 13(4-5), 411-430.</p>
+    <p>Hyvarinen, A., and Oja, E. (2000). Independent component
+  analysis: algorithms and applications. <em>Neural Networks</em>, 13(4-5),
+  411-430.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_kpca.html'>step_kpca</a></code> <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_kpca.html'>step_kpca</a></code>
+  <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
+  <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

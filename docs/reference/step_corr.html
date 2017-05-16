@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_corr</code> creates a <em>specification</em> of a recipe step that will potentially remove variables that have large absolute correlations with other variables.</p>
+    <p><code>step_corr</code> creates a <em>specification</em> of a recipe step that will
+  potentially remove variables that have large absolute correlations with
+  other variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_corr</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
@@ -100,11 +102,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,23 +116,30 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value for the threshold of absolute correlation values. The step will try to remove the minimum number of columns so that all the resulting absolute correlations are less than this value.</p></td>
+      <td><p>A value for the threshold of absolute correlation values.
+The step will try to remove the minimum number of columns so that all the
+resulting absolute correlations are less than this value.</p></td>
     </tr>
     <tr>
       <th>use</th>
-      <td><p>A character string for the <code>use</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
+      <td><p>A character string for the <code>use</code> argument to the
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>A character string for the <code>method</code> argument to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
+      <td><p>A character string for the <code>method</code> argument to the
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> function.</p></td>
     </tr>
     <tr>
       <th>removals</th>
-      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+      <td><p>A character string that contains the names of columns that
+should be removed. These values are not determined until
+<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -138,11 +149,13 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This step attempts to remove variables to keep the largest absolute correlation between the variables less than <code>threshold</code>.</p>
+    <p>This step attempts to remove variables to keep the largest absolute
+  correlation between the variables less than <code>threshold</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_nzv.html'>step_nzv</a></code>    <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_nzv.html'>step_nzv</a></code> <code><a href='recipe.html'>recipe</a></code>
+  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -154,7 +167,8 @@
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span> + <span class='no'>duplicate</span>,
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> +
+                    <span class='no'>sulfur</span> + <span class='no'>duplicate</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>corr_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
@@ -190,7 +204,9 @@
 
     <h2>Author</h2>
     
-Original R code for filtering algorithm by Dong Li, modified by Max Kuhn. Contributions by Reynald Lescarbeau (for original in <code>caret</code> package). Max Kuhn for the <code>step</code> function.
+Original R code for filtering algorithm by Dong Li, modified by
+  Max Kuhn. Contributions by Reynald Lescarbeau (for original in
+  <code>caret</code> package). Max Kuhn for the <code>step</code> function.
 
   </div>
 </div>

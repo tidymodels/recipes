@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_range</code> creates a <em>specification</em> of a recipe step that will normalize numeric data to have a standard deviation of one.</p>
+    <p><code>step_range</code> creates a <em>specification</em> of a recipe step that will
+  normalize numeric data to have a standard deviation of one.</p>
     
 
     <pre class="usage"><span class='fu'>step_range</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
@@ -100,11 +101,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be scaled. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will be
+scaled. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,7 +115,8 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -124,7 +128,9 @@
     </tr>
     <tr>
       <th>ranges</th>
-      <td><p>A character vector of variables that will be normalized. Note that this is ignored until the values are determined by <code><a href='learn.html'>learn.recipe</a></code>. Setting this value will be ineffective.</p></td>
+      <td><p>A character vector of variables that will be normalized. Note
+that this is ignored until the values are determined by
+<code><a href='learn.html'>learn.recipe</a></code>. Setting this value will be ineffective.</p></td>
     </tr>
     </table>
     
@@ -134,7 +140,11 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Scaling data means that the standard deviation of a variable is divided out of the data. <code>step_range</code> estimates the variable standard deviations from the data used in the <code>training</code> argument of <code>learn.recipe</code>. <code>process.recipe</code> then applies the scaling to new data sets using these standard deviations.</p>
+    <p>Scaling data means that the standard deviation of a variable is
+  divided out of the data. <code>step_range</code> estimates the variable standard
+  deviations from the data used in the <code>training</code> argument of
+  <code>learn.recipe</code>. <code>process.recipe</code> then applies the scaling to new
+  data sets using these standard deviations.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

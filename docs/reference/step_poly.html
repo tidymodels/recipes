@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_poly</code> creates a <em>specification</em> of a recipe step that will create new columns that are basis expansions of variables using orthogonal polynomials.</p>
+    <p><code>step_poly</code> creates a <em>specification</em> of a recipe step that will
+  create new columns that are basis expansions of variables using orthogonal
+  polynomials.</p>
     
 
     <pre class="usage"><span class='fu'>step_poly</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -100,27 +102,36 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new columns
+created from the original variables will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>A list of <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> objects created once the step has been learned.</p></td>
+      <td><p>A list of <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> objects created once the
+step has been learned.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options for  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> which should not include <code>x</code> or <code>simple</code>. Note that the option <code>raw = TRUE</code> will produce the regular polynomial values (not orthogonalized).</p></td>
+      <td><p>A list of options for  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code> which should
+not include <code>x</code> or <code>simple</code>. Note that the option
+<code>raw = TRUE</code> will produce the regular polynomial values (not
+orthogonalized).</p></td>
     </tr>
     </table>
     
@@ -130,11 +141,17 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_poly</code> can new features from a single variable that enable fitting routines to model this variable in a nonlinear manner. The extent of the possible nonlinearity is determined by the <code>degree</code> argument of  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code>. The original variables are removed from the data and new columns are added. The naming convention for the new variables is <code>varname_poly_1</code> and so on.</p>
+    <p><code>step_poly</code> can new features from a single variable that
+  enable fitting routines to model this variable in a nonlinear manner. The
+  extent of the possible nonlinearity is determined by the <code>degree</code>
+  argument of  <code><a href='http://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></code>. The original variables are
+  removed from the data and new columns are added. The naming convention
+  for the new variables is <code>varname_poly_1</code> and so on.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_ns.html'>step_ns</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_ns.html'>step_ns</a></code> <code><a href='recipe.html'>recipe</a></code>
+  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -12,7 +12,7 @@ add_step(rec, object)
 \item{object}{A step object.}
 }
 \value{
-A updated \code{\link{recipe}} with the new step in the last slot 
+A updated \code{\link{recipe}} with the new step in the last slot
   for processing.
 }
 \description{

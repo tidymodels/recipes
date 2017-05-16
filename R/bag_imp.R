@@ -70,40 +70,42 @@
 #' imputed_te[missing_examples, names(credit_te)]
 
 
-step_bagimpute <- function(recipe,
-                           ...,
-                           role = NA,
-                           trained = FALSE,
-                           models = NULL,
-                           options = list(nbagg = 25, keepX = FALSE),
-                           impute_with = imp_vars(all_predictors()),
-                           seed_val = sample.int(10 ^ 4, 1)) {
-  if (is.null(impute_with))
-    stop("Please list some variables in `impute_with`", call. = FALSE)
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification. See ?selections.")
-  add_step(
-    recipe,
-    step_bagimpute_new(
-      terms = terms,
-      role = role,
-      trained = trained,
-      models = models,
-      options = options,
-      impute_with = impute_with,
-      seed_val = seed_val
+step_bagimpute <- 
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           models = NULL,
+           options = list(nbagg = 25, keepX = FALSE),
+           impute_with = imp_vars(all_predictors()),
+           seed_val = sample.int(10 ^ 4, 1)) {
+    if (is.null(impute_with))
+      stop("Please list some variables in `impute_with`", call. = FALSE)
+    terms <- quos(...)
+    if (is_empty(terms))
+      stop("Please supply at least one variable specification. See ?selections.")
+    add_step(
+      recipe,
+      step_bagimpute_new(
+        terms = terms,
+        role = role,
+        trained = trained,
+        models = models,
+        options = options,
+        impute_with = impute_with,
+        seed_val = seed_val
+      )
     )
-  )
 }
 
-step_bagimpute_new <- function(terms = NULL,
-                               role = NA,
-                               trained = FALSE,
-                               models = NULL,
-                               options = NULL,
-                               impute_with = NULL,
-                               seed_val = NA) {
+step_bagimpute_new <- 
+  function(terms = NULL,
+           role = NA,
+           trained = FALSE,
+           models = NULL,
+           options = NULL,
+           impute_with = NULL,
+           seed_val = NA) {
   step(
     subclass = "bagimpute",
     terms = terms,

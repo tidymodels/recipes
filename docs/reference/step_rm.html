@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_rm</code> creates a <em>specification</em> of a recipe step that will remove variables based on their name, type, or role.</p>
+    <p><code>step_rm</code> creates a <em>specification</em> of a recipe step that will
+  remove variables based on their name, type, or role.</p>
     
 
     <pre class="usage"><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -99,11 +100,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables that will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables that
+will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for
+more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -111,11 +115,14 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>removals</th>
-      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+      <td><p>A character string that contains the names of columns that
+should be removed. These values are not determined until
+<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     

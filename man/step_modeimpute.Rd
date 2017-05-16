@@ -7,24 +7,35 @@
 step_modeimpute(recipe, ..., role = NA, trained = FALSE, modes = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{modes}{A named character vector of modes. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{modes}{A named character vector of modes. This is \code{NULL} until
+computed by \code{\link{learn.recipe}}.}
 }
 \value{
-\code{step_modeimpute}  returns an object of class \code{step_modeimpute}.
+\code{step_modeimpute}  returns an object of class
+  \code{step_modeimpute}.
 }
 \description{
-\code{step_modeimpute} creates a \emph{specification} of a recipe step that will substitute missing values of nominal variables by the training set mode of those variables.
+\code{step_modeimpute} creates a \emph{specification} of a recipe step that
+  will substitute missing values of nominal variables by the training set
+  mode of those variables.
 }
 \details{
-\code{step_modeimpute} estimates the variable modes from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the new values to new data sets using these values. If the training set data has more than one mode, one is selected at random.
+\code{step_modeimpute} estimates the variable modes from the data
+  used in the \code{training} argument of \code{learn.recipe}.
+  \code{process.recipe} then applies the new values to new data sets using
+  these values. If the training set data has more than one mode, one is
+  selected at random.
 }
 \examples{
 data("credit_data")

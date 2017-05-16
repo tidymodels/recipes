@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_other</code> creates a <em>specification</em> of a recipe step that will potentially pool infrequently occurring values into an "other" category.</p>
+    <p><code>step_other</code> creates a <em>specification</em> of a recipe step that will
+   potentially pool infrequently occurring values into an "other" category.</p>
     
 
     <pre class="usage"><span class='fu'>step_other</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
@@ -100,11 +101,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables that will potentially be reduced. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables that
+will potentially be reduced. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,7 +115,8 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -124,7 +128,8 @@
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>A list of objects that contain the information to pool infrequent levels that is determined by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>A list of objects that contain the information to pool
+infrequent levels that is determined by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -134,10 +139,18 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The overall proportion of the categories are computed. The "other" category is used in place of any categorical levels whose individual proportion in the training set is less than <code>threshold</code>.</p>
-<p>If no pooling is done the data are unmodified (although character data may be changed to factors based on the value of <code>stringsAsFactors</code> in <code><a href='learn.html'>learn.recipe</a></code>). Otherwise, a factor is always returned with different factor levels.</p>
-<p>If <code>threshold</code> is less than the largest category proportion, all levels except for the most frequent are collapsed to the <code>other</code> level.</p>
-<p>If the retained categories include the value of <code>other</code>, an error is thrown. If <code>other</code> is in the list of discarded levels, no error occurs.</p>
+    <p>The overall proportion of the categories are computed. The "other"
+  category is used in place of any categorical levels whose individual
+  proportion in the training set is less than <code>threshold</code>.</p>
+<p>If no pooling is done the data are unmodified (although character data may
+  be changed to factors based on the value of <code>stringsAsFactors</code> in
+  <code><a href='learn.html'>learn.recipe</a></code>). Otherwise, a factor is always returned with
+  different factor levels.</p>
+<p>If <code>threshold</code> is less than the largest category proportion, all levels
+  except for the most frequent are collapsed to the <code>other</code> level.</p>
+<p>If the retained categories include the value of <code>other</code>, an error is
+  thrown. If <code>other</code> is in the list of discarded levels, no error
+  occurs.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -152,7 +165,8 @@
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
 
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)</div><div class='output co'>#&gt; step 1 other training </div><div class='input'>
 <span class='no'>collapsed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
 <span class='fu'>table</span>(<span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='no'>collapsed</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      

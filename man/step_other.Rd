@@ -8,34 +8,47 @@ step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables that will potentially be reduced. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables that
+will potentially be reduced. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
 \item{threshold}{A single numeric value in (0, 1) for pooling.}
 
 \item{other}{A single character value for the "other" category.}
 
-\item{objects}{A list of objects that contain the information to pool infrequent levels that is determined by \code{\link{learn.recipe}}.}
+\item{objects}{A list of objects that contain the information to pool
+infrequent levels that is determined by \code{\link{learn.recipe}}.}
 }
 \value{
 \code{step_other}  returns an object of class \code{step_other}.
 }
 \description{
-\code{step_other} creates a \emph{specification} of a recipe step that will potentially pool infrequently occurring values into an "other" category.
+\code{step_other} creates a \emph{specification} of a recipe step that will
+   potentially pool infrequently occurring values into an "other" category.
 }
 \details{
-The overall proportion of the categories are computed. The "other" category is used in place of any categorical levels whose individual proportion in the training set is less than \code{threshold}.  
+The overall proportion of the categories are computed. The "other"
+  category is used in place of any categorical levels whose individual
+  proportion in the training set is less than \code{threshold}.
 
-If no pooling is done the data are unmodified (although character data may be changed to factors based on the value of \code{stringsAsFactors} in \code{\link{learn.recipe}}). Otherwise, a factor is always returned with different factor levels. 
+If no pooling is done the data are unmodified (although character data may
+  be changed to factors based on the value of \code{stringsAsFactors} in
+  \code{\link{learn.recipe}}). Otherwise, a factor is always returned with
+  different factor levels.
 
-If \code{threshold} is less than the largest category proportion, all levels except for the most frequent are collapsed to the \code{other} level. 
+If \code{threshold} is less than the largest category proportion, all levels
+  except for the most frequent are collapsed to the \code{other} level.
 
-If the retained categories include the value of \code{other}, an error is thrown. If \code{other} is in the list of discarded levels, no error occurs.
+If the retained categories include the value of \code{other}, an error is
+  thrown. If \code{other} is in the list of discarded levels, no error
+  occurs.
 }
 \examples{
 data(okc)
@@ -49,7 +62,8 @@ okc_te <- okc[-in_train,]
 rec <- recipe(~ diet + location, data = okc_tr)
 
 
-rec <- rec \%>\% step_other(diet, location, threshold = .1, other = "other values")
+rec <- rec \%>\%
+  step_other(diet, location, threshold = .1, other = "other values")
 rec <- learn(rec, training = okc_tr)
 
 collapsed <- process(rec, okc_te)

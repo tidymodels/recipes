@@ -9,38 +9,56 @@ step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   objects = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
-\item{class}{A single character string that specifies a single categorical variable to be used as the class.}
+\item{class}{A single character string that specifies a single categorical
+variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that resulting
+distances will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
 \item{mean_func}{A function to compute the center of the distribution.}
 
 \item{cov_func}{A function that computes the covariance matrix}
 
-\item{pool}{A logical: should the covariance matrix be computed by pooling the data for all of the classes?}
+\item{pool}{A logical: should the covariance matrix be computed by pooling
+the data for all of the classes?}
 
-\item{log}{A logical: should the distances be transformed by the natural log function?}
+\item{log}{A logical: should the distances be transformed by the natural
+log function?}
 
-\item{objects}{Statistics are stored here once this step has been trained by \code{\link{learn.recipe}}.}
+\item{objects}{Statistics are stored here once this step has been trained
+by \code{\link{learn.recipe}}.}
 }
 \value{
-\code{step_classdist} returns an object of class \code{step_classdist}.
+\code{step_classdist} returns an object of class
+  \code{step_classdist}.
 }
 \description{
-\code{step_classdist} creates a a \emph{specification} of a recipe step that will convert numeric data into Mahalanobis distance measurements to the data centroid. This is done for each value of a categorical class variable.
+\code{step_classdist} creates a a \emph{specification} of a recipe step
+  that will convert numeric data into Mahalanobis distance measurements to
+  the data centroid. This is done for each value of a categorical class
+  variable.
 }
 \details{
 \code{step_classdist} will create a
 
-The function will create a new column for every unique value of the \code{class} variable. The resulting variables will not replace the original values and have the prefix \code{classdist_}.
+The function will create a new column for every unique value of the
+  \code{class} variable. The resulting variables will not replace the
+  original values and have the prefix \code{classdist_}.
 
-Note that, by default,  the default covariance function requires that each class should have at least as many rows as variables listed in the \code{terms} argument. If \code{pool = TRUE}, there must be at least as many data points are variables overall.
+Note that, by default,  the default covariance function requires that each
+  class should have at least as many rows as variables listed in the
+  \code{terms} argument. If \code{pool = TRUE}, there must be at least as
+  many data points are variables overall.
 }
 \examples{
 
@@ -55,7 +73,8 @@ rec_dists <- learn(rec, training = iris)
 
 dists_to_species <- process(rec_dists, newdata = iris, everything())
 ## on log scale:
-dists_to_species[, c("Species", grep("classdist", names(dists_to_species), value = TRUE))]
+dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
+dists_to_species[, c("Species", dist_cols)]
 }
 \concept{
 preprocessing dimension_reduction

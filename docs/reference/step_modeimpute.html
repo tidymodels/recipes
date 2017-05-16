@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_modeimpute</code> creates a <em>specification</em> of a recipe step that will substitute missing values of nominal variables by the training set mode of those variables.</p>
+    <p><code>step_modeimpute</code> creates a <em>specification</em> of a recipe step that
+  will substitute missing values of nominal variables by the training set
+  mode of those variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_modeimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -99,11 +101,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -111,21 +115,28 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>modes</th>
-      <td><p>A named character vector of modes. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>A named character vector of modes. This is <code>NULL</code> until
+computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_modeimpute</code>  returns an object of class <code>step_modeimpute</code>.</p>
+    <p><code>step_modeimpute</code>  returns an object of class
+  <code>step_modeimpute</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_modeimpute</code> estimates the variable modes from the data used in the <code>training</code> argument of <code>learn.recipe</code>. <code>process.recipe</code> then applies the new values to new data sets using these values. If the training set data has more than one mode, one is selected at random.</p>
+    <p><code>step_modeimpute</code> estimates the variable modes from the data
+  used in the <code>training</code> argument of <code>learn.recipe</code>.
+  <code>process.recipe</code> then applies the new values to new data sets using
+  these values. If the training set data has more than one mode, one is
+  selected at random.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

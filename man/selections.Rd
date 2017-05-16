@@ -4,25 +4,42 @@
 \alias{selections}
 \title{Methods for Select Variables in Step Functions}
 \description{
-When selecting variables or model terms in \code{step} functions, \code{dplyr}-like tools are used. The \emph{selector} functions can choose variables based on their name, current role, data type, or any combination of these. The selectors are passed as any other argument to the step. If the variables are explicitly stated in the step function, this might be similar to:
+When selecting variables or model terms in \code{step}
+  functions, \code{dplyr}-like tools are used. The \emph{selector}
+  functions can choose variables based on their name, current role, data
+  type, or any combination of these. The selectors are passed as any other
+  argument to the step. If the variables are explicitly stated in the step
+  function, this might be similar to:
 
 \preformatted{
   recipe( ~ ., data = USArrests) \%>\%
     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 }
 
-The first four arguments indicate which variables should be used in the PCA while the last argument is a specific argument to  \code{\link{step_pca}}.
+The first four arguments indicate which variables should be used in the
+  PCA while the last argument is a specific argument to
+  \code{\link{step_pca}}.
 
 Note that:
 
   \enumerate{
-    \item The selector arguments should not contain functions beyond those supported (see below).
-    \item These arguments are not processed until the \code{learn} function for the step is executed.
-    \item The \code{dplyr}-like syntax allows for negative sings to exclude variables (e.g. \code{-Murder}) and the set of selectors will processed in order.
-    \item A leading exclusion in these arguments (e.g. \code{-Murder}) has the effect of adding all variables to the list except the excluded variable(s).
+    \item The selector arguments should not contain functions beyond those
+      supported (see below).
+    \item These arguments are not processed until the \code{learn} function
+      for the step is executed.
+    \item The \code{dplyr}-like syntax allows for negative sings to exclude
+      variables (e.g. \code{-Murder}) and the set of selectors will
+      processed in order.
+    \item A leading exclusion in these arguments (e.g. \code{-Murder}) has
+      the effect of adding all variables to the list except the excluded
+      variable(s).
   }
 
-Also, select helpers from the \code{dplyr} package can also be used: \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}. For example:
+Also, select helpers from the \code{dplyr} package can also be used:
+  \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}},
+  \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}},
+  \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}.
+  For example:
 
 \preformatted{
   recipe(Species ~ ., data = iris) \%>\%
@@ -31,11 +48,24 @@ Also, select helpers from the \code{dplyr} package can also be used: \code{\link
 
 would only select \code{Sepal.Length}
 
-\bold{Inline} functions that specify computations, such as \code{log(x)}, should not be used in selectors and will produce an error. A list of allowed selector functions is below.
+\bold{Inline} functions that specify computations, such as \code{log(x)},
+  should not be used in selectors and will produce an error. A list of
+  allowed selector functions is below.
 
-Columns of the design matrix that may not exist when the step is coded can also be selected. For example, when using \code{step_pca}, the number of columns created by feature extraction may not be known when subsequent steps are defined. In this case, using \code{matches("^PC")} will select all of the columns whose names start with "PC" \emph{once those columns are created}.
+Columns of the design matrix that may not exist when the step is coded can
+  also be selected. For example, when using \code{step_pca}, the number of
+  columns created by feature extraction may not be known when subsequent
+  steps are defined. In this case, using \code{matches("^PC")} will select
+  all of the columns whose names start with "PC" \emph{once those columns
+  are created}.
 
-There are sets of functions that can be used to select variables based on their role or type: \code{\link{has_role}} and \code{\link{has_type}}. For convenience, there are also functions that are more specific: \code{\link{all_numeric}}, \code{\link{all_nominal}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can be used in conjunction with the previous functions described for selecting variables using their names:
+There are sets of functions that can be used to select variables based on
+  their role or type: \code{\link{has_role}} and \code{\link{has_type}}.
+  For convenience, there are also functions that are more specific:
+  \code{\link{all_numeric}}, \code{\link{all_nominal}},
+  \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can
+  be used in conjunction with the previous functions described for
+  selecting variables using their names:
 
 \preformatted{
   data(biomass)
@@ -43,17 +73,27 @@ There are sets of functions that can be used to select variables based on their 
     step_center(all_numeric(), -all_outcomes())
 }
 
-This results in all the numeric predictors: carbon, hydrogen, oxygen, nitrogen, and sulfur.
+This results in all the numeric predictors: carbon, hydrogen, oxygen,
+  nitrogen, and sulfur.
 
-If a role for a variable has not been defined, it will never be selected using role-specific selectors.
+If a role for a variable has not been defined, it will never be selected
+  using role-specific selectors.
 
-All steps use these techniques to define variables for steps \emph{except one}: \code{\link{step_interact}} requires traditional model formula representations of the interactions and takes a single formula as the argument to select the variables.
+All steps use these techniques to define variables for steps
+  \emph{except one}: \code{\link{step_interact}} requires traditional model
+  formula representations of the interactions and takes a single formula
+  as the argument to select the variables.
 
 The complete list of allowable functions in steps:
 
   \itemize{
-    \item \bold{By name}: \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}
-    \item \bold{By role}: \code{\link{has_role}}, \code{\link{all_predictors}}, and \code{\link{all_outcomes}}
-    \item \bold{By type}: \code{\link{has_type}}, \code{\link{all_numeric}}, and \code{\link{all_nominal}}
+    \item \bold{By name}: \code{\link[dplyr]{starts_with}},
+      \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}},
+      \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and
+      \code{\link[dplyr]{everything}}
+    \item \bold{By role}: \code{\link{has_role}},
+      \code{\link{all_predictors}}, and \code{\link{all_outcomes}}
+    \item \bold{By type}: \code{\link{has_type}}, \code{\link{all_numeric}},
+      and \code{\link{all_nominal}}
   }
 }

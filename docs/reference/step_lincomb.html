@@ -89,7 +89,9 @@
     </div>
 
     
-    <p><code>step_lincomb</code> creates a <em>specification</em> of a recipe step that will potentially remove numeric variables that have linear combinations between them.</p>
+    <p><code>step_lincomb</code> creates a <em>specification</em> of a recipe step that
+  will potentially remove numeric variables that have linear combinations
+  between them.</p>
     
 
     <pre class="usage"><span class='fu'>step_lincomb</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max_steps</span> <span class='kw'>=</span> <span class='fl'>5</span>,
@@ -100,11 +102,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,7 +116,8 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>max_steps</th>
@@ -120,7 +125,9 @@
     </tr>
     <tr>
       <th>removals</th>
-      <td><p>A character string that contains the names of columns that should be removed. These values are not determined until <code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+      <td><p>A character string that contains the names of columns that
+should be removed. These values are not determined until
+<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -130,11 +137,16 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This step finds exact linear combinations between two or more variables and recommends which column(s) should be removed to resolve the issue. This algorithm may need to be applied multiple times (as defined by <code>max_steps</code>).</p>
+    <p>This step finds exact linear combinations between two or more
+  variables and recommends which column(s) should be removed to resolve the
+  issue. This algorithm may need to be applied multiple times (as defined
+  by <code>max_steps</code>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_nzv.html'>step_nzv</a></code><code><a href='step_corr.html'>step_corr</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_nzv.html'>step_nzv</a></code><code><a href='step_corr.html'>step_corr</a></code>
+  <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
+  <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

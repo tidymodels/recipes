@@ -8,39 +8,49 @@ step_lincomb(recipe, ..., role = NA, trained = FALSE, max_steps = 5,
   removals = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
 \item{max_steps}{A value .}
 
-\item{removals}{A character string that contains the names of columns that should be removed. These values are not determined until \code{\link{learn.recipe}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until
+\code{\link{learn.recipe}} is called.}
 }
 \value{
 \code{step_lincomb}  returns an object of class \code{step_lincomb}.
 }
 \description{
-\code{step_lincomb} creates a \emph{specification} of a recipe step that will potentially remove numeric variables that have linear combinations between them.
+\code{step_lincomb} creates a \emph{specification} of a recipe step that
+  will potentially remove numeric variables that have linear combinations
+  between them.
 }
 \details{
-This step finds exact linear combinations between two or more variables and recommends which column(s) should be removed to resolve the issue. This algorithm may need to be applied multiple times (as defined by \code{max_steps}).
+This step finds exact linear combinations between two or more
+  variables and recommends which column(s) should be removed to resolve the
+  issue. This algorithm may need to be applied multiple times (as defined
+  by \code{max_steps}).
 }
 \examples{
 data(biomass)
 
-biomass$new_1 <- with(biomass, 
+biomass$new_1 <- with(biomass,
                       .1*carbon - .2*hydrogen + .6*sulfur)
-biomass$new_2 <- with(biomass, 
+biomass$new_2 <- with(biomass,
                       .5*carbon - .2*oxygen + .6*nitrogen)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + 
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
                 sulfur + new_1 + new_2,
               data = biomass_tr)
 
@@ -50,7 +60,9 @@ lincomb_filter <- rec \%>\%
 learn(lincomb_filter, training = biomass_tr)
 }
 \seealso{
-\code{\link{step_nzv}}\code{\link{step_corr}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_nzv}}\code{\link{step_corr}}
+  \code{\link{recipe}} \code{\link{learn.recipe}}
+  \code{\link{process.recipe}}
 }
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing

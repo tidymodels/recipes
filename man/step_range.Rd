@@ -8,28 +8,38 @@ step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
   ranges = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be scaled. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables will be
+scaled. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
 \item{min}{A single numeric value for the smallest value in the range}
 
 \item{max}{A single numeric value for the largest value in the range}
 
-\item{ranges}{A character vector of variables that will be normalized. Note that this is ignored until the values are determined by \code{\link{learn.recipe}}. Setting this value will be ineffective.}
+\item{ranges}{A character vector of variables that will be normalized. Note
+that this is ignored until the values are determined by
+\code{\link{learn.recipe}}. Setting this value will be ineffective.}
 }
 \value{
 \code{step_range}  returns an object of class \code{step_range}.
 }
 \description{
-\code{step_range} creates a \emph{specification} of a recipe step that will normalize numeric data to have a standard deviation of one.
+\code{step_range} creates a \emph{specification} of a recipe step that will
+  normalize numeric data to have a standard deviation of one.
 }
 \details{
-Scaling data means that the standard deviation of a variable is divided out of the data. \code{step_range} estimates the variable standard deviations from the data used in the \code{training} argument of \code{learn.recipe}. \code{process.recipe} then applies the scaling to new data sets using these standard deviations.
+Scaling data means that the standard deviation of a variable is
+  divided out of the data. \code{step_range} estimates the variable standard
+  deviations from the data used in the \code{training} argument of
+  \code{learn.recipe}. \code{process.recipe} then applies the scaling to new
+  data sets using these standard deviations.
 }
 \examples{
 data(biomass)

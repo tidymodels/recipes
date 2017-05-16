@@ -9,33 +9,50 @@ step_regex(recipe, ..., role = "predictor", trained = FALSE,
   input = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{A single selector functions to choose which variable will be searched for the pattern. The selector should resolve into a single variable. See \code{\link{selections}} for more details.}
+\item{...}{A single selector functions to choose which variable will be
+searched for the pattern. The selector should resolve into a single
+variable. See \code{\link{selections}} for more details.}
 
-\item{role}{For a variable created by this step, what analysis role should they be assigned?. By default, the function assumes that the new dummy variable column created by the original variable will be used as a predictors in a model.}
+\item{role}{For a variable created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new dummy
+variable column created by the original variable will be used as a
+predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{pattern}{A character string containing a regular expression (or character string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{as.character} to a character string if possible.}
+\item{pattern}{A character string containing a regular expression (or
+character string for \code{fixed = TRUE}) to be matched in the given
+character vector. Coerced by \code{as.character} to a character string
+if possible.}
 
-\item{options}{A list of options to \code{\link{grepl}} that should not include \code{x} or \code{pattern}.}
+\item{options}{A list of options to \code{\link{grepl}} that should not
+include \code{x} or \code{pattern}.}
 
-\item{result}{A single character value for the name of the new variable. It should be a valid column name.}
+\item{result}{A single character value for the name of the new variable. It
+should be a valid column name.}
 
-\item{input}{A single character value for the name of the variable being searched. This is \code{NULL} until computed by \code{\link{learn.recipe}}.}
+\item{input}{A single character value for the name of the variable being
+searched. This is \code{NULL} until computed by
+\code{\link{learn.recipe}}.}
 }
 \value{
-\code{step_regex}  returns an object of class \code{step_regex}. A new variable will be created in the data set by \code{\link{process.recipe}}.
+\code{step_regex}  returns an object of class \code{step_regex}. A
+  new variable will be created in the data set by
+  \code{\link{process.recipe}}.
 }
 \description{
-\code{step_regex} creates a \emph{specification} of a recipe step that will create a new dummy variable based on a regular expression.
+\code{step_regex} creates a \emph{specification} of a recipe step that will
+  create a new dummy variable based on a regular expression.
 }
 \examples{
 data(covers)
 
-rec <- recipe(~ description, covers) \%>\% 
-  step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\% 
+rec <- recipe(~ description, covers) \%>\%
+  step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
   step_regex(description, pattern = "ratake families")
 
 rec2 <- learn(rec, training = covers)

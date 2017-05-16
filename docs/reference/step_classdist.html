@@ -89,7 +89,10 @@
     </div>
 
     
-    <p><code>step_classdist</code> creates a a <em>specification</em> of a recipe step that will convert numeric data into Mahalanobis distance measurements to the data centroid. This is done for each value of a categorical class variable.</p>
+    <p><code>step_classdist</code> creates a a <em>specification</em> of a recipe step
+  that will convert numeric data into Mahalanobis distance measurements to
+  the data centroid. This is done for each value of a categorical class
+  variable.</p>
     
 
     <pre class="usage"><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -101,23 +104,29 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables are 
+affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>class</th>
-      <td><p>A single character string that specifies a single categorical variable to be used as the class.</p></td>
+      <td><p>A single character string that specifies a single categorical
+variable to be used as the class.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that resulting distances will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that resulting
+distances will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>mean_func</th>
@@ -129,27 +138,36 @@
     </tr>
     <tr>
       <th>pool</th>
-      <td><p>A logical: should the covariance matrix be computed by pooling the data for all of the classes?</p></td>
+      <td><p>A logical: should the covariance matrix be computed by pooling
+the data for all of the classes?</p></td>
     </tr>
     <tr>
       <th>log</th>
-      <td><p>A logical: should the distances be transformed by the natural log function?</p></td>
+      <td><p>A logical: should the distances be transformed by the natural
+log function?</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>Statistics are stored here once this step has been trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>Statistics are stored here once this step has been trained
+by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_classdist</code> returns an object of class <code>step_classdist</code>.</p>
+    <p><code>step_classdist</code> returns an object of class
+  <code>step_classdist</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_classdist</code> will create a</p>
-<p>The function will create a new column for every unique value of the <code>class</code> variable. The resulting variables will not replace the original values and have the prefix <code>classdist_</code>.</p>
-<p>Note that, by default,  the default covariance function requires that each class should have at least as many rows as variables listed in the <code>terms</code> argument. If <code>pool = TRUE</code>, there must be at least as many data points are variables overall.</p>
+<p>The function will create a new column for every unique value of the
+  <code>class</code> variable. The resulting variables will not replace the
+  original values and have the prefix <code>classdist_</code>.</p>
+<p>Note that, by default,  the default covariance function requires that each
+  class should have at least as many rows as variables listed in the
+  <code>terms</code> argument. If <code>pool = TRUE</code>, there must be at least as
+  many data points are variables overall.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -164,7 +182,8 @@
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>
 <span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='fu'>everything</span>())
 <span class='co'>## on log scale:</span>
-<span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))]</div><div class='output co'>#&gt; # A tibble: 150 x 4
+<span class='no'>dist_cols</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='no'>dist_cols</span>)]</div><div class='output co'>#&gt; # A tibble: 150 x 4
 #&gt;    Species classdist_setosa classdist_versicolor classdist_virginica
 #&gt;     &lt;fctr&gt;            &lt;dbl&gt;                &lt;dbl&gt;               &lt;dbl&gt;
 #&gt;  1  setosa       -0.8004790             4.743231            5.209136

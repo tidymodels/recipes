@@ -8,26 +8,42 @@ step_poly(recipe, ..., role = "predictor", trained = FALSE,
   objects = NULL, options = list(degree = 2))
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables are 
+affected by the step. See \code{\link{selections}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new columns created from the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new columns
+created from the original variables will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{objects}{A list of \code{\link[stats]{poly}} objects created once the step has been learned.}
+\item{objects}{A list of \code{\link[stats]{poly}} objects created once the
+step has been learned.}
 
-\item{options}{A list of options for  \code{\link[stats]{poly}} which should not include \code{x} or \code{simple}. Note that the option \code{raw = TRUE} will produce the regular polynomial values (not orthogonalized).}
+\item{options}{A list of options for  \code{\link[stats]{poly}} which should
+not include \code{x} or \code{simple}. Note that the option
+\code{raw = TRUE} will produce the regular polynomial values (not
+orthogonalized).}
 }
 \value{
 \code{step_poly} returns an object of class \code{step_poly}.
 }
 \description{
-\code{step_poly} creates a \emph{specification} of a recipe step that will create new columns that are basis expansions of variables using orthogonal polynomials.
+\code{step_poly} creates a \emph{specification} of a recipe step that will
+  create new columns that are basis expansions of variables using orthogonal
+  polynomials.
 }
 \details{
-\code{step_poly} can new features from a single variable that enable fitting routines to model this variable in a nonlinear manner. The extent of the possible nonlinearity is determined by the \code{degree} argument of  \code{\link[stats]{poly}}. The original variables are removed from the data and new columns are added. The naming convention for the new variables is \code{varname_poly_1} and so on.
+\code{step_poly} can new features from a single variable that
+  enable fitting routines to model this variable in a nonlinear manner. The
+  extent of the possible nonlinearity is determined by the \code{degree}
+  argument of  \code{\link[stats]{poly}}. The original variables are
+  removed from the data and new columns are added. The naming convention
+  for the new variables is \code{varname_poly_1} and so on.
 }
 \examples{
 data(biomass)
@@ -46,7 +62,8 @@ expanded <- process(quadratic, biomass_te)
 expanded
 }
 \seealso{
-\code{\link{step_ns}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_ns}} \code{\link{recipe}}
+  \code{\link{learn.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing basis_expansion

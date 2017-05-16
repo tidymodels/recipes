@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_pca</code> creates a <em>specification</em> of a recipe step that will convert numeric data into one or more principal components.</p>
+    <p><code>step_pca</code> creates a <em>specification</em> of a recipe step that will
+  convert numeric data into one or more principal components.</p>
     
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
@@ -100,39 +101,58 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be used to compute the components. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which variables will be
+used to compute the components. See <code><a href='selections.html'>selections</a></code> for more
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new principal component columns created by the original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new principal
+component columns created by the original variables will be used as
+predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>num</th>
-      <td><p>The number of PCA components to retain as new predictors. If <code>num</code> is greater than the number of columns or the number of possible components, a smaller value will be used.</p></td>
+      <td><p>The number of PCA components to retain as new predictors. If
+<code>num</code> is greater than the number of columns or the number of
+possible components, a smaller value will be used.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A fraction of the total variance that should be covered by the components. For example, <code>threshold = .75</code> means that <code>step_pca</code> should generate enough components to capture 75% of the variability in the variables. Note: using this argument will override and resent any value given to <code>num</code>.</p></td>
+      <td><p>A fraction of the total variance that should be covered
+by the components. For example, <code>threshold = .75</code> means that
+<code>step_pca</code> should generate enough components to capture 75% of the
+variability in the variables. Note: using this argument will override and
+resent any value given to <code>num</code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to the default method for <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>. Argument defaults are set to <code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and <code>tol = NULL</code>. <b>Note</b> that the argument <code>x</code> should not be passed here (or at all).</p></td>
+      <td><p>A list of options to the default method for
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>. Argument defaults are set to
+<code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and
+<code>tol = NULL</code>. <b>Note</b> that the argument <code>x</code> should not be
+passed here (or at all).</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp.default</a></code> object is stored here once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp.default</a></code> object is stored here
+once this preprocessing step has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the resulting new variables. See notes below</p></td>
+      <td><p>A character string that will be the prefix to the resulting
+new variables. See notes below</p></td>
     </tr>
     </table>
     
@@ -142,18 +162,37 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Principal component analysis (PCA) is a transformation of a group of variables that produces a new set of artificial features or components. These components are designed to capture the maximum amount of information (i.e. variance) in the original variables. Also, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set.</p>
-<p>It is advisable to standardized the variables prior to running PCA. Here, each variable will be centered and scaled prior to the PCA calculation. This can be changed using the <code>options</code> argument or by using <code><a href='step_center.html'>step_center</a></code> and <code><a href='step_scale.html'>step_scale</a></code>.</p>
-<p>The argument <code>num</code> controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with <code>prefix</code> and a sequence of numbers. The variable names are padded with zeros. For example, if <code>num &lt; 10</code>, their names will be <code>PC1</code> - <code>PC9</code>. If <code>num = 101</code>, the names would be <code>PC001</code> - <code>PC101</code>.</p>
-<p>Alternatively, <code>threshold</code> can be used to determine the number of components that are required to capture a specified fraction of the total variance in the variables.</p>
+    <p>Principal component analysis (PCA) is a transformation of a group of
+  variables that produces a new set of artificial features or components.
+  These components are designed to capture the maximum amount of information
+  (i.e. variance) in the original variables. Also, the components are
+  statistically independent from one another. This means that they can be
+  used to combat large inter-variables correlations in a data set.</p>
+<p>It is advisable to standardized the variables prior to running PCA. Here,
+  each variable will be centered and scaled prior to the PCA calculation.
+  This can be changed using the <code>options</code> argument or by using
+  <code><a href='step_center.html'>step_center</a></code> and <code><a href='step_scale.html'>step_scale</a></code>.</p>
+<p>The argument <code>num</code> controls the number of components that will be
+  retained (the original variables that are used to derive the components
+  are removed from the data). The new components will have names that begin
+  with <code>prefix</code> and a sequence of numbers. The variable names are
+  padded with zeros. For example, if <code>num &lt; 10</code>, their names will be
+  <code>PC1</code> - <code>PC9</code>. If <code>num = 101</code>, the names would be
+  <code>PC001</code> - <code>PC101</code>.</p>
+<p>Alternatively, <code>threshold</code> can be used to determine the number of
+  components that are required to capture a specified fraction of the total
+  variance in the variables.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Jolliffe, I. T. (2010). <em>Principal Component Analysis</em>. Springer.</p>
+    <p>Jolliffe, I. T. (2010). <em>Principal Component Analysis</em>.
+  Springer.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_ica.html'>step_ica</a></code> <code><a href='step_kpca.html'>step_kpca</a></code> <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+    <p><code><a href='step_ica.html'>step_ica</a></code> <code><a href='step_kpca.html'>step_kpca</a></code>
+  <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
+  <code><a href='process.html'>process.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

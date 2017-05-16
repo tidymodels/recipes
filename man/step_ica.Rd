@@ -8,34 +8,62 @@ step_ica(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   options = list(), res = NULL, prefix = "IC")
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of 
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be used to compute the components. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which variables will be
+used to compute the components. See \code{\link{selections}} for more
+details.}
 
-\item{role}{For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new independent component columns created by the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new
+independent component columns created by the original variables will be
+used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing 
+have been estimated.}
 
-\item{num}{The number of ICA components to retain as new predictors. If \code{num} is greater than the number of columns or the number of possible components, a smaller value will be used.}
+\item{num}{The number of ICA components to retain as new predictors. If
+\code{num} is greater than the number of columns or the number of possible
+components, a smaller value will be used.}
 
-\item{options}{A list of options to \code{\link[fastICA]{fastICA}}. No defaults are set here. \bold{Note} that the arguments \code{X} and \code{n.comp} should not be passed here.}
+\item{options}{A list of options to \code{\link[fastICA]{fastICA}}. No
+defaults are set here. \bold{Note} that the arguments \code{X} and
+\code{n.comp} should not be passed here.}
 
-\item{res}{The \code{\link[fastICA]{fastICA}} object is stored here once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
+\item{res}{The \code{\link[fastICA]{fastICA}} object is stored here once
+this preprocessing step has be trained by \code{\link{learn.recipe}}.}
 
-\item{prefix}{A character string that will be the prefix to the resulting new variables. See notes below}
+\item{prefix}{A character string that will be the prefix to the resulting
+new variables. See notes below}
 }
 \value{
 \code{step_ica} returns an object of class \code{step_ica}.
 }
 \description{
-\code{step_ica} creates a \emph{specification} of a recipe step that will convert numeric data into one or more independent components.
+\code{step_ica} creates a \emph{specification} of a recipe step that will
+  convert numeric data into one or more independent components.
 }
 \details{
-Independent component analysis (ICA) is a transformation of a group of variables that produces a new set of artificial features or components. ICA assumes that the variables are mixtures of a set of distinct, non-Gaussian signals and attempts to transform the data to isolate these signals. Like PCA, the components are statistically independent from one another. This means that they can be used to combat large inter-variables correlations in a data set. Also like PCA, it is advisable to center and scale the variables prior to running ICA.
+Independent component analysis (ICA) is a transformation of a
+  group of variables that produces a new set of artificial features or
+  components. ICA assumes that the variables are mixtures of a set of
+  distinct, non-Gaussian signals and attempts to transform the data to
+  isolate these signals. Like PCA, the components are statistically
+  independent from one another. This means that they can be used to combat
+  large inter-variables correlations in a data set. Also like PCA, it is
+  advisable to center and scale the variables prior to running ICA.
 
-This package produces components using the "FastICA" methodology (see reference below).
+This package produces components using the "FastICA" methodology (see
+  reference below).
 
-The argument \code{num} controls the number of components that will be retained (the original variables that are used to derive the components are removed from the data). The new components will have names that begin with \code{prefix} and a sequence of numbers. The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{IC1} - \code{IC9}. If \code{num = 101}, the names would be \code{IC001} - \code{IC101}.
+The argument \code{num} controls the number of components that will be
+  retained (the original variables that are used to derive the components
+  are removed from the data). The new components will have names that begin
+  with \code{prefix} and a sequence of numbers. The variable names are
+  padded with zeros. For example, if \code{num < 10}, their names will be
+  \code{IC1} - \code{IC9}. If \code{num = 101}, the names would be
+  \code{IC001} - \code{IC101}.
 }
 \examples{
 # from fastICA::fastICA
@@ -59,10 +87,14 @@ plot(te$V1, te$V2)
 plot(ica_data$IC1, ica_data$IC2)
 }
 \references{
-Hyvarinen, A., and Oja, E. (2000). Independent component analysis: algorithms and applications. \emph{Neural Networks}, 13(4-5), 411-430.
+Hyvarinen, A., and Oja, E. (2000). Independent component
+  analysis: algorithms and applications. \emph{Neural Networks}, 13(4-5),
+  411-430.
 }
 \seealso{
-\code{\link{step_pca}} \code{\link{step_kpca}} \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+\code{\link{step_pca}} \code{\link{step_kpca}}
+  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}}
+  \code{\link{process.recipe}}
 }
 \concept{
 preprocessing ica projection_methods

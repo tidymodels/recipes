@@ -89,7 +89,8 @@
     </div>
 
     
-    <p><code>step_bin2factor</code> creates a <em>specification</em> of a recipe step that will create a two-level factor from a single dummy variable.</p>
+    <p><code>step_bin2factor</code> creates a <em>specification</em> of a recipe step that
+will create a two-level factor from a single dummy variable.</p>
     
 
     <pre class="usage"><span class='fu'>step_bin2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>,
@@ -100,11 +101,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the sequence of 
+operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Selector functions that choose which variables will be converted. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>Selector functions that choose which variables will be converted.
+See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -112,26 +115,36 @@
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing 
+have been estimated.</p></td>
     </tr>
     <tr>
       <th>levels</th>
-      <td><p>A length 2 character string that indicate the factor levels for the 1's (in the first position) and the zeros (second)</p></td>
+      <td><p>A length 2 character string that indicate the factor levels
+for the 1's (in the first position) and the zeros (second)</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>A vector with the selected variable names. This is <code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+      <td><p>A vector with the selected variable names. This is
+<code>NULL</code> until computed by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_bin2factor</code>  returns an object of class <code>step_bin2factor</code>. The variables selected will be replaced by their factor doppelgängers by  <code><a href='process.html'>process.recipe</a></code>.</p>
+    <p><code>step_bin2factor</code>  returns an object of class
+  <code>step_bin2factor</code>. The variables selected will be replaced by their
+  factor doppelgängers by  <code><a href='process.html'>process.recipe</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This operation may be useful for situations where a binary piece of information may need to be represented as categorical instead of numeric. For example, naive Bayes models would do better to have factor predictors so that the binomial distribution is modeled in stead of a Gaussian probability density of numeric binary data.</p>
-<p>Note that the numeric data is only verified to be numeric (and does not count levels).</p>
+    <p>This operation may be useful for situations where a binary piece of
+  information may need to be represented as categorical instead of numeric.
+  For example, naive Bayes models would do better to have factor predictors
+  so that the binomial distribution is modeled in stead of a Gaussian
+  probability density of numeric binary data.
+Note that the numeric data is only verified to be numeric (and does not
+count levels).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

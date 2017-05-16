@@ -14,34 +14,55 @@ learn(x, ...)
 \arguments{
 \item{x}{an object}
 
-\item{...}{further arguments passed to or from other methods (not currently used).}
+\item{...}{further arguments passed to or from other methods (not currently
+used).}
 
-\item{training}{A data frame or tibble that will be used to estimate parameters for preprocessing.}
+\item{training}{A data frame or tibble that will be used to estimate
+parameters for preprocessing.}
 
-\item{fresh}{A logical indicating whether already trained steps should be re-trained. If \code{TRUE}, you should pass in a data set to the argument \code{training}.}
+\item{fresh}{A logical indicating whether already trained steps should be
+re-trained. If \code{TRUE}, you should pass in a data set to the argument
+\code{training}.}
 
-\item{verbose}{A logical that controls wether progress is reported as steps are executed.}
+\item{verbose}{A logical that controls wether progress is reported as steps
+are executed.}
 
-\item{retain}{A logical: should the \emph{processed} training set be saved into the \code{template} slot of the recipe after training? This is a good idea if you want to add more steps later but want to avoid re-training the existing steps.}
+\item{retain}{A logical: should the \emph{processed} training set be saved
+into the \code{template} slot of the recipe after training? This is a good
+  idea if you want to add more steps later but want to avoid re-training
+  the existing steps.}
 
-\item{stringsAsFactors}{A logical: should character columns be converted to factors? This affects the processed training set (when \code{retain = TRUE}) as well as the results of \code{process.recipe}.}
+\item{stringsAsFactors}{A logical: should character columns be converted to
+factors? This affects the processed training set (when
+\code{retain = TRUE}) as well as the results of \code{process.recipe}.}
 }
 \value{
-A recipe whose step objects have been updated with the required quantities (e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object is likely to be modified as the steps are executed.
+A recipe whose step objects have been updated with the required
+  quantities (e.g. parameter estimates, model objects, etc). Also, the
+  \code{term_info} object is likely to be modified as the steps are
+  executed.
 }
 \description{
-For a recipe with at least one preprocessing step, estimate the required parameters from a training set that can be later applied to other data sets.
+For a recipe with at least one preprocessing step, estimate the required
+  parameters from a training set that can be later applied to other data 
+  sets.
 }
 \details{
-Given a data set, this function estimates the required quantities and statistics required by any steps.
+Given a data set, this function estimates the required quantities
+  and statistics required by any steps.
 
 \code{\link{learn}} returns an updated recipe with the estimates.
 
-Note that missing data handling is handled in the steps; there is no global \code{na.rm} option at the recipe-level or in  \code{\link{learn}}.
+Note that missing data handling is handled in the steps; there is no global
+  \code{na.rm} option at the recipe-level or in  \code{\link{learn}}.
 
-Also, if a recipe has been trained using \code{\link{learn}} and then steps are added, \code{\link{learn}} will only update the new steps. If \code{fresh = TRUE}, all of the steps will be (re)estimated.
+Also, if a recipe has been trained using \code{\link{learn}} and then steps
+  are added, \code{\link{learn}} will only update the new steps. If
+  \code{fresh = TRUE}, all of the steps will be (re)estimated.
 
-As the steps are executed, the \code{training} set is updated. For example, if the first step is to center the data and the second is to scale the data, the step for scaling is given the centered data.
+As the steps are executed, the \code{training} set is updated. For example,
+  if the first step is to center the data and the second is to scale the
+  data, the step for scaling is given the centered data.
 }
 \author{
 Max Kuhn

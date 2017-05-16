@@ -9,18 +9,23 @@
 \arguments{
 \item{object}{A \code{recipe} object}
 
-\item{original}{A logical: show the current set of variables or the original set when the recipe was defined.}
+\item{original}{A logical: show the current set of variables or the original
+set when the recipe was defined.}
 
-\item{...}{further arguments passed to or from other methods (not currently used).}
+\item{...}{further arguments passed to or from other methods (not currently
+used).}
 }
 \value{
-A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source}.
+A tibble with columns \code{variable}, \code{type}, \code{role},
+  and \code{source}.
 }
 \description{
-This function prints the current set of variables/features and some of their characteristics.
+This function prints the current set of variables/features and some of their
+  characteristics.
 }
 \details{
-Note that, until the recipe has been learned, the currrent and original variables are the same.
+Note that, until the recipe has been learned, the currrent and
+  original variables are the same.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)
