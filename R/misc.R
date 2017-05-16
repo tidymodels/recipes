@@ -83,10 +83,8 @@ get_rhs_vars <- function(formula, data) {
   predictor_names
 }
 
-get_lhs_terms <- function(x)
-  x
-get_rhs_terms <- function(x)
-  x
+get_lhs_terms <- function(x) x
+get_rhs_terms <- function(x) x
 
 ## ancillary step functions
 
@@ -98,7 +96,7 @@ get_rhs_terms <- function(x)
 #' @param object A step object.
 #' @keywords datagen
 #' @concept preprocessing
-#' @return A updated \code{\link{recipe}} with the new step in the last slot 
+#' @return A updated \code{\link{recipe}} with the new step in the last slot
 #'   for processing.
 #' @export
 add_step <- function(rec, object) {
@@ -123,8 +121,8 @@ var_by_role <-
 #'
 #' \code{step} sets the class of the step.
 #'
-#' @param subclass A character string for the resulting class. For example, 
-#'   if \code{subclass = "blah"} the step object that is returned has class 
+#' @param subclass A character string for the resulting class. For example,
+#'   if \code{subclass = "blah"} the step object that is returned has class
 #'   \code{step_blah}.
 #' @param ... All arguments to the step that should be returned.
 #' @keywords datagen
@@ -210,8 +208,8 @@ mod_call_args <- function(cl, args, removals = NULL) {
 
 #' Sequences of Names with Padded Zeros
 #'
-#' This function creates a series of \code{num} names with a common prefix. 
-#'   The names are numbered with leading zeros (e.g. 
+#' This function creates a series of \code{num} names with a common prefix.
+#'   The names are numbered with leading zeros (e.g.
 #'   \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
 #'
 #' @param num A single integer for how many elements are created.
@@ -239,11 +237,9 @@ fun_calls <- function(f) {
     fun_calls(body(f))
   } else if (is.call(f)) {
     fname <- as.character(f[[1]])
-    
     # Calls inside .Internal are special and shouldn't be included
     if (identical(fname, ".Internal"))
       return(fname)
-    
     unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
   }
 }

@@ -1,13 +1,17 @@
 #' Hyperbolic Transformations
 #'
-#' \code{step_hyperbolic} creates a \emph{specification} of a recipe step that will transform data using a hyperbolic function.
+#' \code{step_hyperbolic} creates a \emph{specification} of a recipe step that
+#'   will transform data using a hyperbolic function.
 #'
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created.
-#' @param func A character value for the function. Valid values are "sin", "cos", or "tan".
+#' @param func A character value for the function. Valid values are "sin",
+#'   "cos", or "tan".
 #' @param inverse A logical: should the inverse function be used?
-#' @param vars A character string of variable names that will be (eventually) populated by the \code{terms} argument.
-#' @return \code{step_hyperbolic} returns an object of class \code{step_hyperbolic}.
+#' @param vars A character string of variable names that will be (eventually)
+#'   populated by the \code{terms} argument.
+#' @return \code{step_hyperbolic} returns an object of class
+#'   \code{step_hyperbolic}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
@@ -26,20 +30,48 @@
 #'
 #' transformed_te <- process(cos_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
-#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}} \code{\link{step_log}}  \code{\link{step_sqrt}}    \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
+#'   \code{\link{step_log}}  \code{\link{step_sqrt}} \code{\link{recipe}}
+#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
 
-step_hyperbolic <- function(recipe, ..., role = NA, trained = FALSE,
-                            func = "sin", inverse = TRUE, vars = NULL) {
-  funcs <- c("sin", "cos", "tan")
-  if(!(func %in% funcs))
-    stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
+step_hyperbolic <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           func = "sin",
+           inverse = TRUE,
+           vars = NULL) {
+    funcs <- c("sin", "cos", "tan")
+    if (!(func %in% funcs))
+      stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
+    
+    terms <- quos(...)
+    if (is_empty(terms))
+      stop("Please supply at least one variable specification.",
+           "See ?selections.", call. = FALSE)
+    add_step(
+      recipe,
+      step_hyperbolic_new(
+        terms = terms,
+        role = role,
+        trained = trained,
+        func = func,
+        inverse = inverse,
+        vars = vars
+      )
+    )
+  }
 
-  terms <- quos(...)
-  if(is_empty(terms))
-    stop("Please supply at least one variable specification. See ?selections.")
-  add_step(
-    recipe,
-    step_hyperbolic_new(
+step_hyperbolic_new <-
+  function(terms = NULL,
+           role = NA,
+           trained = FALSE,
+           func = NULL,
+           inverse = NULL,
+           vars = NULL) {
+    step(
+      subclass = "hyperbolic",
       terms = terms,
       role = role,
       trained = trained,
@@ -47,21 +79,7 @@ step_hyperbolic <- function(recipe, ..., role = NA, trained = FALSE,
       inverse = inverse,
       vars = vars
     )
-  )
-}
-
-step_hyperbolic_new <- function(terms = NULL, role = NA, trained = FALSE,
-                                func = NULL, inverse = NULL, vars = NULL) {
-  step(
-    subclass = "hyperbolic",
-    terms = terms,
-    role = role,
-    trained = trained,
-    func = func,
-    inverse = inverse,
-    vars = vars
-  )
-}
+  }
 
 #' @export
 learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
@@ -78,22 +96,30 @@ learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 process.step_hyperbolic <- function(object, newdata, ...) {
-  func <- if(object$inverse)
-    get(paste0("a", object$func)) else
-      get(object$func)
+  func <- if (object$inverse)
+    get(paste0("a", object$func))
+  else
+    get(object$func)
   col_names <- object$vars
-  for(i in seq_along(col_names))
-    newdata[ , col_names[i] ] <- func(getElement(newdata, col_names[i]))
+  for (i in seq_along(col_names))
+    newdata[, col_names[i]] <-
+    func(getElement(newdata, col_names[i]))
   as_tibble(newdata)
 }
 
-print.step_hyperbolic <- function(x, width = max(20, options()$width - 32), ...) {
-  ttl <- paste("Hyperbolic", x$func)
-  if(x$inverse) ttl <- paste(ttl, "(inv)")
-  cat(ttl, "transformation on ")
-  if(x$trained) {
-    cat(format_ch_vec(x$vars, width = width))
-  } else cat(format_selectors(x$terms, wdth = width))
-  if(x$trained) cat(" [trained]\n") else cat("\n")
-  invisible(x)
-}
+print.step_hyperbolic <-
+  function(x, width = max(20, options()$width - 32), ...) {
+    ttl <- paste("Hyperbolic", x$func)
+    if (x$inverse)
+      ttl <- paste(ttl, "(inv)")
+    cat(ttl, "transformation on ")
+    if (x$trained) {
+      cat(format_ch_vec(x$vars, width = width))
+    } else
+      cat(format_selectors(x$terms, wdth = width))
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
+  }

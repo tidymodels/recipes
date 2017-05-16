@@ -1,18 +1,32 @@
 #' Holiday Feature Generator
 #'
-#' \code{step_holiday} creates a a \emph{specification} of a recipe step that will convert date data into one or more binary indicator variables for common holidays.
+#' \code{step_holiday} creates a a \emph{specification} of a recipe step that
+#'   will convert date data into one or more binary indicator variables for
+#'   common holidays.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables will be used to create the new variables. The selected variables should have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for more details.
-#' @param role For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the new variable columns created by the original variables will be used as predictors in a model.
-#' @param holidays A character string that includes at least one holdiay supported by the \code{timeDate} package. See \code{\link[timeDate]{listHolidays}} for a complete list.
+#' @param ... One or more selector functions to choose which variables will be
+#'   used to create the new variables. The selected variables should have
+#'   class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
+#'   more details.
+#' @param role For model terms created by this step, what analysis role should
+#'   they be assigned?. By default, the function assumes that the new variable
+#'   columns created by the original variables will be used as predictors in
+#'   a model.
+#' @param holidays A character string that includes at least one holdiay
+#'   supported by the \code{timeDate} package. See
+#'   \code{\link[timeDate]{listHolidays}} for a complete list.
 
-#' @param variables A character string of variables that will be used as inputs. This field is a placeholder and will be populated once \code{\link{learn.recipe}} is used.
+#' @param variables A character string of variables that will be used as
+#'   inputs. This field is a placeholder and will be populated once
+#'   \code{\link{learn.recipe}} is used.
 #' @return \code{step_holiday} returns an object of class \code{step_holiday}.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export
-#' @details Unlike other steps, \code{step_holiday} does \emph{not} remove the original date variables. \code{\link{step_rm}} can be used for this purpose.
+#' @details Unlike other steps, \code{step_holiday} does \emph{not} remove the
+#'   original date variables. \code{\link{step_rm}} can be used for
+#'   this purpose.
 #' @examples
 #' library(lubridate)
 #'
@@ -23,21 +37,27 @@
 #' holiday_rec <- learn(holiday_rec, training = examples)
 #' holiday_values <- process(holiday_rec, newdata = examples)
 #' holiday_values
-#' @seealso \code{\link{step_date}} \code{\link{step_rm}} \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}} \code{\link[timeDate]{listHolidays}}
+#' @seealso \code{\link{step_date}} \code{\link{step_rm}}
+#'   \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{process.recipe}} \code{\link[timeDate]{listHolidays}}
 #' @import timeDate
-step_holiday <- function(recipe,
-                         ...,
-                         role = "predictor",
-                         trained = FALSE,
-                         holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-                         variables = NULL) {
+step_holiday <-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+    variables = NULL
+  ) {
   all_days <- listHolidays()
-  if(!all(holidays %in% all_days))
-    stop("Invalid `holidays` value. See timeDate::listHolidays")
-
+  if (!all(holidays %in% all_days))
+    stop("Invalid `holidays` value. See timeDate::listHolidays", call. = FALSE)
+  
   terms <- quos(...)
-  if(is_empty(terms))
-    stop("Please supply at least one variable specification. See ?selections.")
+  if (is_empty(terms))
+    stop("Please supply at least one variable specification.",
+         "See ?selections.", call. = FALSE)
   add_step(
     recipe,
     step_holiday_new(
@@ -45,14 +65,19 @@ step_holiday <- function(recipe,
       role = role,
       trained = trained,
       holidays = holidays,
-      variables = variables))
+      variables = variables
+    )
+  )
 }
 
-step_holiday_new <- function(terms = NULL,
-                          role = "predictor",
-                          trained = FALSE,
-                          holidays = holidays,
-                          variables = variables) {
+step_holiday_new <-
+  function(
+    terms = NULL,
+    role = "predictor",
+    trained = FALSE,
+    holidays = holidays,
+    variables = variables
+    ) {
   step(
     subclass = "holiday",
     terms = terms,
@@ -67,11 +92,12 @@ step_holiday_new <- function(terms = NULL,
 #' @export
 learn.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
-
-  holiday_data <- info[info$variable %in% col_names,]
-  if(any(holiday_data$type != "date"))
-    stop("All variables for `step_holiday` should be either `Date` or `POSIXct` classes.")
-
+  
+  holiday_data <- info[info$variable %in% col_names, ]
+  if (any(holiday_data$type != "date"))
+    stop("All variables for `step_holiday` should be either `Date` ",
+         "or `POSIXct` classes.", call. = FALSE)
+  
   step_holiday_new(
     terms = x$terms,
     role = x$role,
@@ -92,7 +118,8 @@ is_holiday <- function(hol, dt) {
 
 #' @importFrom lubridate year is.Date
 get_holiday_features <- function(dt, hdays) {
-  if(!is.Date(dt)) dt <- as.Date(dt)
+  if (!is.Date(dt))
+    dt <- as.Date(dt)
   hdays <- as.list(hdays)
   hfeat <- lapply(hdays, is_holiday, dt = dt)
   hfeat <- do.call("cbind", hfeat)
@@ -103,42 +130,45 @@ get_holiday_features <- function(dt, hdays) {
 #' @importFrom tibble as_tibble is_tibble
 #' @export
 process.step_holiday <- function(object, newdata, ...) {
-  new_cols <- rep(length(object$holidays), each = length(object$variables))
-  holiday_values <- matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+  new_cols <-
+    rep(length(object$holidays), each = length(object$variables))
+  holiday_values <-
+    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
   colnames(holiday_values) <- rep("", sum(new_cols))
   holiday_values <- as_tibble(holiday_values)
-
+  
   strt <- 1
-  for(i in seq_along(object$variables)) {
-    cols <- (strt):(strt+new_cols[i]-1)
-
-    tmp <- get_holiday_features(
-      dt = getElement(newdata, object$variables[i]),
-      hdays = object$holidays
-    )
-
+  for (i in seq_along(object$variables)) {
+    cols <- (strt):(strt + new_cols[i] - 1)
+    
+    tmp <- get_holiday_features(dt = getElement(newdata, object$variables[i]),
+                                hdays = object$holidays)
+    
     holiday_values[, cols] <- tmp
-
+    
     names(holiday_values)[cols] <-
-      paste(
-        object$variables[i],
-        names(tmp),
-        sep = "_"
-      )
-
-    strt <- max(cols)+1
-    # newdata[, object$variables[i] ] <- NULL
+      paste(object$variables[i],
+            names(tmp),
+            sep = "_")
+    
+    strt <- max(cols) + 1
   }
   newdata <- cbind(newdata, as_tibble(holiday_values))
-  if(!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  if (!is_tibble(newdata))
+    newdata <- as_tibble(newdata)
   newdata
 }
 
-print.step_holiday <- function(x, width = max(20, options()$width - 29), ...) {
-  cat("Holiday features from ")
-  if(x$trained) {
-    cat(format_ch_vec(x$variables, width = width))
-  } else cat(format_selectors(x$terms, wdth = width))
-  if(x$trained) cat(" [trained]\n") else cat("\n")
-  invisible(x)
-}
+print.step_holiday <-
+  function(x, width = max(20, options()$width - 29), ...) {
+    cat("Holiday features from ")
+    if (x$trained) {
+      cat(format_ch_vec(x$variables, width = width))
+    } else
+      cat(format_selectors(x$terms, wdth = width))
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
+  }
