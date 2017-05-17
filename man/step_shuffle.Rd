@@ -27,17 +27,18 @@ should be shuffled. These values are not determined until
 }
 \description{
 \code{step_shuffle} creates a \emph{specification} of a recipe step that will
-  randomly change the order of variables based on their name, type, or role.
+  randomly change the order of rows for selected variables.
 }
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
 
 library(dplyr)
-rec <- recipe(~ A + B+ C, data = integers) \%>\%
+rec <- recipe(~ A + B + C, data = integers) \%>\%
   step_shuffle(A, B)
 
 rand_set <- learn(rec, training = integers)
 
+set.seed(5377)
 process(rand_set, integers)
 }
 \concept{
