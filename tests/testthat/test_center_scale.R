@@ -15,7 +15,7 @@ test_that('correct means and std devs', {
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  standardized_trained <- learn(standardized, training = biomass, verbose = FALSE)
+  standardized_trained <- prepare(standardized, training = biomass, verbose = FALSE)
 
   expect_equal(standardized_trained$steps[[1]]$means, means)
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
@@ -26,16 +26,16 @@ test_that('training in stages', {
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  at_once_trained <- learn(at_once, training = biomass, verbose = FALSE)
+  at_once_trained <- prepare(at_once, training = biomass, verbose = FALSE)
 
   ## not train in stages
   center_first <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  center_first_trained <- learn(center_first, training = biomass, verbose = FALSE)
+  center_first_trained <- prepare(center_first, training = biomass, verbose = FALSE)
   in_stages <- center_first_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  in_stages_trained <- learn(in_stages, training = biomass, verbose = FALSE)
-  in_stages_retrained <- learn(in_stages, training = biomass, verbose = FALSE, fresh = TRUE)
+  in_stages_trained <- prepare(in_stages, training = biomass, verbose = FALSE)
+  in_stages_retrained <- prepare(in_stages, training = biomass, verbose = FALSE, fresh = TRUE)
 
   expect_equal(at_once_trained, in_stages_trained)
   expect_equal(at_once_trained, in_stages_retrained)
@@ -48,7 +48,7 @@ test_that('single predictor', {
     step_center(carbon) %>%
     step_scale(hydrogen)
 
-  standardized_trained <- learn(standardized, training = biomass, verbose = FALSE)
+  standardized_trained <- prepare(standardized, training = biomass, verbose = FALSE)
   results <- process(standardized_trained, biomass)
 
   exp_res <- biomass[, 3:8]

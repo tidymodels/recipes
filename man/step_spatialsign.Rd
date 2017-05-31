@@ -52,7 +52,7 @@ ss_trans <- rec \%>\%
   step_scale(carbon, hydrogen) \%>\%
   step_spatialsign(carbon, hydrogen)
 
-ss_obj <- learn(ss_trans, training = biomass_tr)
+ss_obj <- prepare(ss_trans, training = biomass_tr)
 
 transformed_te <- process(ss_obj, biomass_te)
 

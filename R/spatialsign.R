@@ -38,7 +38,7 @@
 #'   step_scale(carbon, hydrogen) %>%
 #'   step_spatialsign(carbon, hydrogen)
 #'
-#' ss_obj <- learn(ss_trans, training = biomass_tr)
+#' ss_obj <- prepare(ss_trans, training = biomass_tr)
 #'
 #' transformed_te <- process(ss_obj, biomass_te)
 #'
@@ -83,7 +83,7 @@ step_spatialsign_new <-
   }
 
 #' @export
-learn.step_spatialsign <- function(x, training, info = NULL, ...) {
+prepare.step_spatialsign <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   step_spatialsign_new(
     terms = x$terms,

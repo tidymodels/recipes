@@ -12,7 +12,7 @@ test_that('simple sqrt trans', {
       rec <- recipe(~., data = ex_dat) %>% 
         step_sqrt(x1, x2)
       
-      rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
+      rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
       rec_trans <- process(rec_trained, newdata = ex_dat)
 
       exp_res <- as_tibble(lapply(ex_dat, sqrt))

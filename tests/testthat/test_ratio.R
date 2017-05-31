@@ -17,7 +17,7 @@ rec <- recipe( ~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
 test_that('1:many', {
   rec1 <- rec %>% 
     step_ratio(x1, denom = denom_vars(all_numeric()))
-  rec1 <- learn(rec1, ex_dat, verbose = FALSE)
+  rec1 <- prepare(rec1, ex_dat, verbose = FALSE)
   obs1 <- process(rec1, ex_dat)
   res1 <- tibble(
     x1_o_x2   = ex_dat$x1/ex_dat$x2,
@@ -32,7 +32,7 @@ test_that('1:many', {
 test_that('many:1', {
   rec2 <- rec %>% 
     step_ratio(all_numeric(), denom = denom_vars(x1))
-  rec2 <- learn(rec2, ex_dat, verbose = FALSE)
+  rec2 <- prepare(rec2, ex_dat, verbose = FALSE)
   obs2 <- process(rec2, ex_dat)
   res2 <- tibble(
     x2_o_x1   = ex_dat$x2/ex_dat$x1,
@@ -47,7 +47,7 @@ test_that('many:1', {
 test_that('many:many', {
   rec3 <- rec %>% 
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
-  rec3 <- learn(rec3, ex_dat, verbose = FALSE)
+  rec3 <- prepare(rec3, ex_dat, verbose = FALSE)
   obs3 <- process(rec3, ex_dat)
   res3 <- tibble(
     x2_o_x1   = ex_dat$x2/ex_dat$x1,
@@ -75,15 +75,15 @@ test_that('many:many', {
 test_that('wrong type', {
   rec4 <- rec %>% 
     step_ratio(x1, denom = denom_vars(all_predictors()))
-  expect_error(learn(rec4, ex_dat, verbose = FALSE))
+  expect_error(prepare(rec4, ex_dat, verbose = FALSE))
 
   rec5 <- rec %>% 
     step_ratio(all_predictors(), denom = denom_vars(x1))
-  expect_error(learn(rec5, ex_dat, verbose = FALSE))
+  expect_error(prepare(rec5, ex_dat, verbose = FALSE))
   
   rec6 <- rec %>% 
     step_ratio(all_predictors(), denom = denom_vars(all_predictors()))
-  expect_error(learn(rec6, ex_dat, verbose = FALSE))  
+  expect_error(prepare(rec6, ex_dat, verbose = FALSE))  
 })
 
 

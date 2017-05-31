@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until
-computed by \code{\link{learn.recipe}}.}
+computed by \code{\link{prepare.recipe}}.}
 
 \item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
 end of the variables before the mean is computed. Values of trim outside
@@ -37,7 +37,7 @@ that range are taken as the nearest endpoint.}
 }
 \details{
 \code{step_meanimpute} estimates the variable means from the data
-  used in the \code{training} argument of \code{learn.recipe}.
+  used in the \code{training} argument of \code{prepare.recipe}.
   \code{process.recipe} then applies the new values to new data sets using
   these averages.
 }
@@ -59,7 +59,7 @@ rec <- recipe(Price ~ ., data = credit_tr)
 impute_rec <- rec \%>\%
   step_meanimpute(Income, Assets, Debt)
 
-imp_models <- learn(impute_rec, training = credit_tr)
+imp_models <- prepare(impute_rec, training = credit_tr)
 
 imputed_te <- process(imp_models, newdata = credit_te, everything())
 

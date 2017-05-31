@@ -7,14 +7,14 @@
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created.
 #' @param modes A named character vector of modes. This is \code{NULL} until
-#'   computed by \code{\link{learn.recipe}}.
+#'   computed by \code{\link{prepare.recipe}}.
 #' @return \code{step_modeimpute}  returns an object of class
 #'   \code{step_modeimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
 #' @details \code{step_modeimpute} estimates the variable modes from the data
-#'   used in the \code{training} argument of \code{learn.recipe}.
+#'   used in the \code{training} argument of \code{prepare.recipe}.
 #'   \code{process.recipe} then applies the new values to new data sets using
 #'   these values. If the training set data has more than one mode, one is
 #'   selected at random.
@@ -36,7 +36,7 @@
 #' impute_rec <- rec %>%
 #'   step_modeimpute(Status, Home, Marital)
 #'
-#' imp_models <- learn(impute_rec, training = credit_tr)
+#' imp_models <- prepare(impute_rec, training = credit_tr)
 #'
 #' imputed_te <- process(imp_models, newdata = credit_te, everything())
 #'
@@ -78,7 +78,7 @@ step_modeimpute_new <-
   }
 
 #' @export
-learn.step_modeimpute <- function(x, training, info = NULL, ...) {
+prepare.step_modeimpute <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   modes <- vapply(training[, col_names], mode_est, c(mode = ""))
   step_modeimpute_new(

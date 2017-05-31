@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL}
-#'   until computed by \code{\link{learn.recipe}}.
+#'   until computed by \code{\link{prepare.recipe}}.
 #' @param na.rm A logical value indicating whether \code{NA} values should be
 #'   removed when computing the standard deviation.
 #' @return \code{step_scale}  returns an object of class \code{step_scale}.
@@ -16,7 +16,7 @@
 #' @details Scaling data means that the standard deviation of a variable is
 #'   divided out of the data. \code{step_scale} estimates the variable
 #'   standard deviations from the data used in the \code{training} argument of
-#'   \code{learn.recipe}. \code{process.recipe} then applies the scaling to
+#'   \code{prepare.recipe}. \code{process.recipe} then applies the scaling to
 #'   new data sets using these standard deviations.
 #' @examples
 #' data(biomass)
@@ -30,7 +30,7 @@
 #' scaled_trans <- rec %>%
 #'   step_scale(carbon, hydrogen)
 #'
-#' scaled_obj <- learn(scaled_trans, training = biomass_tr)
+#' scaled_obj <- prepare(scaled_trans, training = biomass_tr)
 #'
 #' transformed_te <- process(scaled_obj, biomass_te)
 #'
@@ -79,7 +79,7 @@ step_scale_new <-
 
 #' @importFrom stats sd
 #' @export
-learn.step_scale <- function(x, training, info = NULL, ...) {
+prepare.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   sds <-
     vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na.rm)

@@ -23,7 +23,7 @@ have been estimated.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{learn.recipe}} is called.}
+\code{\link{prepare.recipe}} is called.}
 }
 \value{
 \code{step_lincomb}  returns an object of class \code{step_lincomb}.
@@ -57,11 +57,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 lincomb_filter <- rec \%>\%
   step_lincomb(all_predictors())
   
-learn(lincomb_filter, training = biomass_tr)
+prepare(lincomb_filter, training = biomass_tr)
 }
 \seealso{
 \code{\link{step_nzv}}\code{\link{step_corr}}
-  \code{\link{recipe}} \code{\link{learn.recipe}}
+  \code{\link{recipe}} \code{\link{prepare.recipe}}
   \code{\link{process.recipe}}
 }
 \author{

@@ -14,7 +14,7 @@ test_that('simple mean', {
   
   impute_rec <- rec %>%
     step_meanimpute(Age, Assets, Income)
-  imputed <- learn(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed <- prepare(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- process(imputed, newdata = credit_te)
 
   expect_equal(te_imputed$Age, credit_te$Age)
@@ -31,7 +31,7 @@ test_that('trimmed mean', {
   
   impute_rec <- rec %>%
     step_meanimpute(Assets, trim = .1)
-  imputed <- learn(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed <- prepare(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- process(imputed, newdata = credit_te)
   
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)], 
@@ -44,7 +44,7 @@ test_that('non-numeric', {
   
   impute_rec <- rec %>%
     step_meanimpute(Assets, Job)
-  expect_error(learn(impute_rec, training = credit_tr, verbose = FALSE))
+  expect_error(prepare(impute_rec, training = credit_tr, verbose = FALSE))
 })
 
 

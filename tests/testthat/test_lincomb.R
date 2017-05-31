@@ -32,7 +32,7 @@ biomass_rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 test_that('example 1', {
   dum_filtered <- dum_rec %>% 
     step_lincomb(all_predictors())
-  dum_filtered <- learn(dum_filtered, training = dummies, verbose = FALSE)
+  dum_filtered <- prepare(dum_filtered, training = dummies, verbose = FALSE)
   removed <- c("N1", "P1", "K1")
   expect_equal(dum_filtered$steps[[1]]$removals, removed)
 })
@@ -41,7 +41,7 @@ test_that('example 2', {
   lincomb_filter <- biomass_rec %>%
     step_lincomb(all_predictors())
   
-  filtering_trained <- learn(lincomb_filter, training = biomass_tr)
+  filtering_trained <- prepare(lincomb_filter, training = biomass_tr)
   test_res <- process(filtering_trained, newdata = biomass_te)
 
   expect_true(all(!(paste0("new_", 1:2) %in% colnames(test_res))))
@@ -52,7 +52,7 @@ test_that('no exclusions', {
   lincomb_filter_2 <- biomass_rec_2 %>%
     step_lincomb(all_predictors())
   
-  filtering_trained_2 <- learn(lincomb_filter_2, training = biomass_tr)
+  filtering_trained_2 <- prepare(lincomb_filter_2, training = biomass_tr)
   test_res_2 <- process(filtering_trained_2, newdata = biomass_te)
   
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)

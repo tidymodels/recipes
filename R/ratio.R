@@ -20,7 +20,7 @@
 #' @param naming A function that defines the naming convention for new ratio
 #'   columns.
 #' @param variables The column names used in the rations. This argument is
-#'   not populated until \code{\link{learn.recipe}} is executed.
+#'   not populated until \code{\link{prepare.recipe}} is executed.
 #' @return \code{step_ratio} returns an object of class \code{step_ratio}.
 #' @keywords datagen
 #' @concept preprocessing
@@ -44,7 +44,7 @@
 #'   step_rm(all_predictors(), -matches("_o_"))
 #'   
 #' 
-#' ratio_recipe <- learn(ratio_recipe, training = biomass_tr)
+#' ratio_recipe <- prepare(ratio_recipe, training = biomass_tr)
 #' 
 #' ratio_data <- process(ratio_recipe, biomass_te)
 #' ratio_data
@@ -100,7 +100,7 @@ step_ratio_new <-
 
 
 #' @export
-learn.step_ratio <- function(x, training, info = NULL, ...) {
+prepare.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
     top = select_terms(x$terms, info = info),
     bottom = select_terms(x$denom, info = info),

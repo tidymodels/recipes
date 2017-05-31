@@ -63,7 +63,7 @@ operations for this recipe.}
 have been estimated.}
 
 \item{objects}{The \code{\link{discretize}} objects are stored here once
-the recipe has be trained by \code{\link{learn.recipe}}.}
+the recipe has be trained by \code{\link{prepare.recipe}}.}
 
 \item{options}{A list of options to \code{\link{discretize}}. A defaults is
 set for the argument \code{x}. Note that the using the options
@@ -117,7 +117,7 @@ predict(carbon_no_infs, c(50, 100))
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 rec <- rec \%>\% step_discretize(carbon, hydrogen)
-rec <- learn(rec, biomass_tr)
+rec <- prepare(rec, biomass_tr)
 binned_te <- process(rec, biomass_te)
 table(binned_te$carbon)
 }

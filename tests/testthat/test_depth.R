@@ -6,7 +6,7 @@ library(ddalpha)
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(), class = "Species", metric = "spatial")
-  trained <- learn(rec, training = iris, verbose = FALSE)
+  trained <- prepare(rec, training = iris, verbose = FALSE)
   depths <- process(trained, newdata = iris)
   depths <- depths[, grepl("depth", names(depths))]
   depths <- as.data.frame(depths)
@@ -27,7 +27,7 @@ test_that("alt args", {
     step_depth(all_predictors(), class = "Species",
                metric = "Mahalanobis",
                options = list(mah.estimate = "MCD", mah.parMcd = .75))
-  trained <- learn(rec, training = iris, verbose = FALSE)
+  trained <- prepare(rec, training = iris, verbose = FALSE)
   depths <- process(trained, newdata = iris)
   depths <- depths[, grepl("depth", names(depths))]
   depths <- as.data.frame(depths)

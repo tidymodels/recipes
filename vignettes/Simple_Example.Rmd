@@ -83,9 +83,9 @@ standardized
 
 It is important to realize that the _specific_ variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `learn` function is used with a recipe and a data set:
+If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prepare` function is used with a recipe and a data set:
 ```{r trained}
-trained_rec <- learn(standardized, training = seg_train)
+trained_rec <- prepare(standardized, training = seg_train)
 ```
 Now that the statistics have been estimated, the processing can be applied to the training and test set:
 ```{r apply}
@@ -107,9 +107,9 @@ trained_rec <- trained_rec %>%
   step_pca(ends_with("Ch1"), contains("area"), num = 5)
 trained_rec
 ```
-Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using `learn` again:
+Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using `prepare` again:
 ```{r pca_training}
-trained_rec <- learn(trained_rec, training = seg_train)
+trained_rec <- prepare(trained_rec, training = seg_train)
 ```
 `process` can be reapplied to get the principal components in addition to the other variables:
 

@@ -9,7 +9,7 @@
 #' @param levels A length 2 character string that indicate the factor levels
 #' for the 1's (in the first position) and the zeros (second)
 #' @param objects A vector with the selected variable names. This is
-#' \code{NULL} until computed by \code{\link{learn.recipe}}.
+#' \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @return \code{step_bin2factor}  returns an object of class
 #'   \code{step_bin2factor}. The variables selected will be replaced by their
 #'   factor doppelgängers by  \code{\link{process.recipe}}.
@@ -31,7 +31,7 @@
 #'  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
 #'  step_bin2factor(rocks)
 #'
-#' rec <- learn(rec, training = covers)
+#' rec <- prepare(rec, training = covers)
 #' results <- process(rec, newdata = covers)
 #'
 #' table(results$rocks, results$more_rocks)
@@ -79,7 +79,7 @@ step_bin2factor_new <-
   }
 
 #' @export
-learn.step_bin2factor <- function(x, training, info = NULL, ...) {
+prepare.step_bin2factor <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   if (length(col_names) < 1)
     stop("The selector should only select at least one variable")

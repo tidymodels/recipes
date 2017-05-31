@@ -9,7 +9,7 @@
 #' @param max_steps A value .
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{learn.recipe}} is called.
+#'   \code{\link{prepare.recipe}} is called.
 #' @return \code{step_lincomb}  returns an object of class \code{step_lincomb}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -38,9 +38,9 @@
 #' lincomb_filter <- rec %>%
 #'   step_lincomb(all_predictors())
 #'   
-#' learn(lincomb_filter, training = biomass_tr)
+#' prepare(lincomb_filter, training = biomass_tr)
 #' @seealso \code{\link{step_nzv}}\code{\link{step_corr}}
-#'   \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{process.recipe}}
 
 step_lincomb <-
@@ -83,7 +83,7 @@ step_lincomb_new <-
   }
 
 #' @export
-learn.step_lincomb <- function(x, training, info = NULL, ...) {
+prepare.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("All variables for mean imputation should be numeric")

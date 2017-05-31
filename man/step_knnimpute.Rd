@@ -34,11 +34,11 @@ latter and not used to impute itself.}
 
 \item{ref_data}{A tibble of data that will reflect the data processing
 done up to the point of this imputation step. This is
-\code{NULL} until the step is trained by \code{\link{learn.recipe}}.}
+\code{NULL} until the step is trained by \code{\link{prepare.recipe}}.}
 
 \item{variables}{The column names that will be imputed and used for
 imputation. This is  \code{NULL} until the step is trained by
-\code{\link{learn.recipe}}.}
+\code{\link{prepare.recipe}}.}
 }
 \value{
 \code{step_knnimpute} returns an object of class
@@ -83,7 +83,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 ratio_recipe <- rec \%>\%
   step_knnimpute(all_predictors(), K = 3)
-ratio_recipe2 <- learn(ratio_recipe, training = biomass_tr)
+ratio_recipe2 <- prepare(ratio_recipe, training = biomass_tr)
 imputed <- process(ratio_recipe2, biomass_te)
 
 # how well did it work?

@@ -20,7 +20,7 @@ have been estimated.}
 
 \item{variables}{A character string that contains the names of columns that
 should be shuffled. These values are not determined until
-\code{\link{learn.recipe}} is called.}
+\code{\link{prepare.recipe}} is called.}
 }
 \value{
 \code{step_shuffle}  returns an object of class \code{step_shuffle}.
@@ -36,7 +36,7 @@ library(dplyr)
 rec <- recipe(~ A + B + C, data = integers) \%>\%
   step_shuffle(A, B)
 
-rand_set <- learn(rec, training = integers)
+rand_set <- prepare(rec, training = integers)
 
 set.seed(5377)
 process(rand_set, integers)

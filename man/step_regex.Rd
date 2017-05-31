@@ -37,7 +37,7 @@ should be a valid column name.}
 
 \item{input}{A single character value for the name of the variable being
 searched. This is \code{NULL} until computed by
-\code{\link{learn.recipe}}.}
+\code{\link{prepare.recipe}}.}
 }
 \value{
 \code{step_regex}  returns an object of class \code{step_regex}. A
@@ -55,7 +55,7 @@ rec <- recipe(~ description, covers) \%>\%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
   step_regex(description, pattern = "ratake families")
 
-rec2 <- learn(rec, training = covers)
+rec2 <- prepare(rec, training = covers)
 rec2
 
 with_dummies <- process(rec2, newdata = covers)

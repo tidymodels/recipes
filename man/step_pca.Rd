@@ -40,7 +40,7 @@ resent any value given to \code{num}.}
 passed here (or at all).}
 
 \item{res}{The \code{\link[stats]{prcomp.default}} object is stored here
-once this preprocessing step has be trained by \code{\link{learn.recipe}}.}
+once this preprocessing step has be trained by \code{\link{prepare.recipe}}.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
 new variables. See notes below}
@@ -83,7 +83,7 @@ pca_trans <- rec \%>\%
   step_center(all_numeric()) \%>\%
   step_scale(all_numeric()) \%>\%
   step_pca(all_numeric(), num = 3)
-pca_estimates <- learn(pca_trans, training = USArrests)
+pca_estimates <- prepare(pca_trans, training = USArrests)
 pca_data <- process(pca_estimates, USArrests)
 
 rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
@@ -94,7 +94,7 @@ with_thresh <- rec \%>\%
   step_center(all_numeric()) \%>\%
   step_scale(all_numeric()) \%>\%
   step_pca(all_numeric(), threshold = .99)
-with_thresh <- learn(with_thresh, training = USArrests)
+with_thresh <- prepare(with_thresh, training = USArrests)
 process(with_thresh, USArrests)
 }
 \references{
@@ -103,7 +103,7 @@ Jolliffe, I. T. (2010). \emph{Principal Component Analysis}.
 }
 \seealso{
 \code{\link{step_ica}} \code{\link{step_kpca}}
-  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}}
+  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
   \code{\link{process.recipe}}
 }
 \concept{

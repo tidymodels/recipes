@@ -24,17 +24,17 @@ This function prints the current set of variables/features and some of their
   characteristics.
 }
 \details{
-Note that, until the recipe has been learned, the currrent and
+Note that, until the recipe has been trained, the currrent and
   original variables are the same.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 summary(rec)
 rec <- step_pca(rec, all_numeric(), num = 3)
-summary(rec) # still the same since not yet learned
-rec <- learn(rec, training = USArrests)
+summary(rec) # still the same since not yet trained
+rec <- prepare(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{learn.recipe}}
+\code{\link{recipe}} \code{\link{prepare.recipe}}
 }

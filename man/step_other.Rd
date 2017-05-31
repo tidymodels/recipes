@@ -24,7 +24,7 @@ have been estimated.}
 \item{other}{A single character value for the "other" category.}
 
 \item{objects}{A list of objects that contain the information to pool
-infrequent levels that is determined by \code{\link{learn.recipe}}.}
+infrequent levels that is determined by \code{\link{prepare.recipe}}.}
 }
 \value{
 \code{step_other}  returns an object of class \code{step_other}.
@@ -40,7 +40,7 @@ The overall proportion of the categories are computed. The "other"
 
 If no pooling is done the data are unmodified (although character data may
   be changed to factors based on the value of \code{stringsAsFactors} in
-  \code{\link{learn.recipe}}). Otherwise, a factor is always returned with
+  \code{\link{prepare.recipe}}). Otherwise, a factor is always returned with
   different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
@@ -64,7 +64,7 @@ rec <- recipe(~ diet + location, data = okc_tr)
 
 rec <- rec \%>\%
   step_other(diet, location, threshold = .1, other = "other values")
-rec <- learn(rec, training = okc_tr)
+rec <- prepare(rec, training = okc_tr)
 
 collapsed <- process(rec, okc_te)
 table(okc_te$diet, collapsed$diet, useNA = "always")

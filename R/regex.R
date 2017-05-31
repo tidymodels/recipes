@@ -21,7 +21,7 @@
 #'   should be a valid column name.
 #' @param input A single character value for the name of the variable being
 #'   searched. This is \code{NULL} until computed by
-#'   \code{\link{learn.recipe}}.
+#'   \code{\link{prepare.recipe}}.
 #' @return \code{step_regex}  returns an object of class \code{step_regex}. A
 #'   new variable will be created in the data set by
 #'   \code{\link{process.recipe}}.
@@ -35,7 +35,7 @@
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
 #'   step_regex(description, pattern = "ratake families")
 #'
-#' rec2 <- learn(rec, training = covers)
+#' rec2 <- prepare(rec, training = covers)
 #' rec2
 #'
 #' with_dummies <- process(rec2, newdata = covers)
@@ -100,7 +100,7 @@ step_regex_new <- function(terms = NULL,
 }
 
 #' @export
-learn.step_regex <- function(x, training, info = NULL, ...) {
+prepare.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- select_terms(x$terms, info = info)
   if (length(col_name) != 1)
     stop("The selector should only select a single variable")

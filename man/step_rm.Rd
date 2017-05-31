@@ -21,7 +21,7 @@ have been estimated.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{learn.recipe}} is called.}
+\code{\link{prepare.recipe}} is called.}
 }
 \value{
 \code{step_rm}  returns an object of class \code{step_rm}.
@@ -43,7 +43,7 @@ library(dplyr)
 smaller_set <- rec \%>\%
   step_rm(contains("gen"))
 
-smaller_set <- learn(smaller_set, training = biomass_tr)
+smaller_set <- prepare(smaller_set, training = biomass_tr)
 
 filtered_te <- process(smaller_set, biomass_te)
 filtered_te

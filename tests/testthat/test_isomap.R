@@ -28,7 +28,7 @@ test_that('correct Isomap values', {
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
 
-  im_trained <- learn(im_rec, training = dat1, verbose = FALSE)
+  im_trained <- prepare(im_rec, training = dat1, verbose = FALSE)
 
   im_pred <- process(im_trained, newdata = dat2)
 

@@ -41,7 +41,7 @@ test_that('simple Box Cox', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_BoxCox(x1, x2, x3, x4)
   
-  rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
+  rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)
   
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))

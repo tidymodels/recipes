@@ -19,10 +19,10 @@
 #' @param K The number of neighbors.
 #' @param ref_data A tibble of data that will reflect the data processing
 #'   done up to the point of this imputation step. This is
-#'   \code{NULL} until the step is trained by \code{\link{learn.recipe}}.
+#'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
 #' @param variables The column names that will be imputed and used for
 #'   imputation. This is  \code{NULL} until the step is trained by
-#'   \code{\link{learn.recipe}}.
+#'   \code{\link{prepare.recipe}}.
 #' @return \code{step_knnimpute} returns an object of class
 #'   \code{step_knnimpute}.
 #' @keywords datagen
@@ -63,7 +63,7 @@
 #'
 #' ratio_recipe <- rec %>%
 #'   step_knnimpute(all_predictors(), K = 3)
-#' ratio_recipe2 <- learn(ratio_recipe, training = biomass_tr)
+#' ratio_recipe2 <- prepare(ratio_recipe, training = biomass_tr)
 #' imputed <- process(ratio_recipe2, biomass_te)
 #'
 #' # how well did it work?
@@ -125,7 +125,7 @@ step_knnimpute_new <-
   }
 
 #' @export
-learn.step_knnimpute <- function(x, training, info = NULL, ...) {
+prepare.step_knnimpute <- function(x, training, info = NULL, ...) {
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

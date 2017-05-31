@@ -14,7 +14,7 @@ test_that('simple modes', {
   
   impute_rec <- rec %>%
     step_modeimpute(Status, Home, Marital)
-  imputed <- learn(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed <- prepare(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- process(imputed, newdata = credit_te)
 
   expect_equal(te_imputed$Status, credit_te$Status)
@@ -36,7 +36,7 @@ test_that('non-nominal', {
   
   impute_rec <- rec %>%
     step_modeimpute(Assets, Job)
-  expect_error(learn(impute_rec, training = credit_tr, verbose = FALSE))
+  expect_error(prepare(impute_rec, training = credit_tr, verbose = FALSE))
 })
 
 

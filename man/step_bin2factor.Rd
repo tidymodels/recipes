@@ -23,7 +23,7 @@ have been estimated.}
 for the 1's (in the first position) and the zeros (second)}
 
 \item{objects}{A vector with the selected variable names. This is
-\code{NULL} until computed by \code{\link{learn.recipe}}.}
+\code{NULL} until computed by \code{\link{prepare.recipe}}.}
 }
 \value{
 \code{step_bin2factor}  returns an object of class
@@ -51,7 +51,7 @@ rec <- recipe(~ description, covers) \%>\%
  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
  step_bin2factor(rocks)
 
-rec <- learn(rec, training = covers)
+rec <- prepare(rec, training = covers)
 results <- process(rec, newdata = covers)
 
 table(results$rocks, results$more_rocks)

@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created.
 #' @param lambdas A numeric vector of transformation values. This is
-#'   \code{NULL} until computed by \code{\link{learn.recipe}}.
+#'   \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @param limits A length 2 numeric vector defining the range to compute the
 #'   transformation parameter lambda.
 #' @param nunique An integer where data that have less possible values will
@@ -46,14 +46,14 @@
 #'
 #' yj_trans <- step_YeoJohnson(rec,  all_numeric())
 #'
-#' yj_estimates <- learn(yj_trans, training = biomass_tr)
+#' yj_estimates <- prepare(yj_trans, training = biomass_tr)
 #'
 #' yj_te <- process(yj_estimates, biomass_te)
 #'
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
 #' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), nunique = 5) {
@@ -90,7 +90,7 @@ step_YeoJohnson_new <-
   }
 
 #' @export
-learn.step_YeoJohnson <- function(x, training, info = NULL, ...) {
+prepare.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   values <- vapply(
     training[, col_names],

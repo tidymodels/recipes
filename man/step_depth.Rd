@@ -39,7 +39,7 @@ See \code{\link[ddalpha]{depth.halfspace}},
 \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.}
 
 \item{data}{The training data are stored here once after
-\code{\link{learn.recipe}} is executed.}
+\code{\link{prepare.recipe}} is executed.}
 }
 \value{
 \code{step_depth} returns an object of class \code{step_depth}.
@@ -59,7 +59,7 @@ Data depth metrics attempt to measure how close data a data point
   proximity of the new value to the training set distribution.
 
 Note that the entire training set is saved to compute future depth values.
-The saved data have been learned and processed up to the point before the
+The saved data have been trained (i.e. prepared) and processed up to the point before the
 location that \code{step_depth} occupies in the recipe. Also, the data
 requirements for the different step methods may vary. For example, using
 \code{metric = "Mahalanobis"} requires that each class should have at least
@@ -75,7 +75,7 @@ original values and have the prefix \code{depth_}.
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_depth(all_predictors(), class = "Species")
 
-rec_dists <- learn(rec, training = iris)
+rec_dists <- prepare(rec, training = iris)
 
 dists_to_species <- process(rec_dists, newdata = iris)
 dists_to_species

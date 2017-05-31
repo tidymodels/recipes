@@ -25,7 +25,7 @@
 #'   \enumerate{
 #'     \item The selector arguments should not contain functions beyond those
 #'       supported (see below).
-#'     \item These arguments are not processed until the \code{learn} function
+#'     \item These arguments are not processed until the \code{prepare} function
 #'       for the step is executed.
 #'     \item The \code{dplyr}-like syntax allows for negative sings to exclude
 #'       variables (e.g. \code{-Murder}) and the set of selectors will
@@ -256,7 +256,7 @@ has_selector <- function(x, allowed = selectors) {
 #' @return A character string of column names or an error of there are no
 #'   selectors or if no variables are selected.
 #' @seealso \code{\link{recipe}} \code{\link{summary.recipe}}
-#'   \code{\link{learn.recipe}}
+#'   \code{\link{prepare.recipe}}
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @importFrom rlang names2
 #' @export

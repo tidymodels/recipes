@@ -9,7 +9,7 @@
 #'   they be assigned?. By default, the function assumes that the new columns
 #'   created from the original variables will be used as predictors in a model.
 #' @param objects A list of \code{\link[stats]{poly}} objects created once the
-#'   step has been learned.
+#'   step has been trained.
 #' @param options A list of options for  \code{\link[stats]{poly}} which should
 #'   not include \code{x} or \code{simple}. Note that the option
 #'   \code{raw = TRUE} will produce the regular polynomial values (not
@@ -35,12 +35,12 @@
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
-#' quadratic <- learn(quadratic, training = biomass_tr)
+#' quadratic <- prepare(quadratic, training = biomass_tr)
 #'
 #' expanded <- process(quadratic, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_ns}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 
 
 step_poly <-
@@ -98,7 +98,7 @@ poly_wrapper <- function(x, args) {
 
 #' @importFrom stats poly
 #' @export
-learn.step_poly <- function(x, training, info = NULL, ...) {
+prepare.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   
   obj <- lapply(training[, col_names], poly_wrapper, x$options)

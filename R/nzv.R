@@ -11,7 +11,7 @@
 #' @param options A list of options for the filter (see Details below).
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{learn.recipe}} is called.
+#'   \code{\link{prepare.recipe}} is called.
 #' @return \code{step_nzv}  returns an object of class \code{step_nzv}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -52,12 +52,12 @@
 #' nzv_filter <- rec %>%
 #'   step_nzv(all_predictors())
 #'
-#' filter_obj <- learn(nzv_filter, training = biomass_tr)
+#' filter_obj <- prepare(nzv_filter, training = biomass_tr)
 #'
 #' filtered_te <- process(filter_obj, biomass_te)
 #' any(names(filtered_te) == "sparse")
 #' @seealso \code{\link{step_corr}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 
 step_nzv <-
   function(recipe,
@@ -100,7 +100,7 @@ step_nzv_new <-
   }
 
 #' @export
-learn.step_nzv <- function(x, training, info = NULL, ...) {
+prepare.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   filter <- nzv(
     x = training[, col_names],

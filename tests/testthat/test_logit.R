@@ -12,7 +12,7 @@ test_that('simple logit trans', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_logit(x1)
   
-  rec_trained <- learn(rec, training = ex_dat, verbose = FALSE)
+  rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- process(rec_trained, newdata = ex_dat)
   
   exp_res <- as_tibble(ex_dat)
@@ -25,5 +25,5 @@ test_that('out of bounds logit trans', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_logit(x1, x2)
   
-  expect_error(learn(rec, training = ex_dat, verbose = FALSE))
+  expect_error(prepare(rec, training = ex_dat, verbose = FALSE))
 })

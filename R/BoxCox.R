@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are created.
 #' @param lambdas A numeric vector of transformation values. This is
-#'   \code{NULL} until computed by \code{\link{learn.recipe}}.
+#'   \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @param limits A length 2 numeric vector defining the range to compute the
 #'   transformation parameter lambda.
 #' @param nunique An integer where data that have less possible values will
@@ -39,14 +39,14 @@
 #'
 #' bc_trans <- step_BoxCox(rec, all_numeric())
 #'
-#' bc_estimates <- learn(bc_trans, training = as.data.frame(state.x77))
+#' bc_estimates <- prepare(bc_trans, training = as.data.frame(state.x77))
 #'
 #' bc_data <- process(bc_estimates, as.data.frame(state.x77))
 #'
 #' plot(density(state.x77[, "Illiteracy"]), main = "before")
 #' plot(density(bc_data$Illiteracy), main = "after")
 #' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 step_BoxCox <-
   function(recipe,
            ...,
@@ -92,7 +92,7 @@ step_BoxCox_new <-
   }
 
 #' @export
-learn.step_BoxCox <- function(x, training, info = NULL, ...) {
+prepare.step_BoxCox <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   values <- vapply(
     training[, col_names],

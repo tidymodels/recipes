@@ -1,3 +1,8 @@
+# recipes 0.0.1.9003
+
+ * Two of the main functions [changed names](https://github.com/topepo/recipes/issues/57). `learn` has become `prepare` and `process` has become `bake`
+
+
 # recipes 0.0.1.9002
 
 New steps:

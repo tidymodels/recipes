@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until 
-computed by \code{\link{learn.recipe}}.}
+computed by \code{\link{prepare.recipe}}.}
 
 \item{na.rm}{A logical value indicating whether \code{NA} values should be 
 removed when averaging.}
@@ -35,7 +35,7 @@ removed when averaging.}
 \details{
 Centering data means that the average of a variable is subtracted 
   from the data. \code{step_center} estimates the variable means from the 
-  data used in the \code{training} argument of \code{learn.recipe}. 
+  data used in the \code{training} argument of \code{prepare.recipe}. 
   \code{process.recipe} then applies the centering to new data sets using 
   these means.
 }
@@ -51,7 +51,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 center_trans <- rec \%>\%
   step_center(carbon, contains("gen"), -hydrogen)
 
-center_obj <- learn(center_trans, training = biomass_tr)
+center_obj <- prepare(center_trans, training = biomass_tr)
 
 transformed_te <- process(center_obj, biomass_te)
 
@@ -59,7 +59,7 @@ biomass_te[1:10, names(transformed_te)]
 transformed_te
 }
 \seealso{
-\code{\link{recipe}} \code{\link{learn.recipe}} 
+\code{\link{recipe}} \code{\link{prepare.recipe}} 
   \code{\link{process.recipe}}
 }
 \concept{

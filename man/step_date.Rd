@@ -46,7 +46,7 @@ features \code{month} or \code{dow}.}
 
 \item{variables}{A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
- \code{\link{learn.recipe}} is used.}
+ \code{\link{prepare.recipe}} is used.}
 }
 \value{
 \code{step_date} returns an object of class \code{step_date}.
@@ -68,13 +68,13 @@ examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
    step_date(all_predictors())
 
-date_rec <- learn(date_rec, training = examples)
+date_rec <- prepare(date_rec, training = examples)
 date_values <- process(date_rec, newdata = examples)
 date_values
 }
 \seealso{
 \code{\link{step_holiday}} \code{\link{step_rm}} 
-  \code{\link{recipe}} \code{\link{learn.recipe}} \code{\link{process.recipe}}
+  \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

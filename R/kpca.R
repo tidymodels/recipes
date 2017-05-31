@@ -20,7 +20,7 @@
 #'   passed in. \bold{Note} that the arguments \code{x} and \code{features}
 #'   should not be passed here (or at all).
 #' @param res An S4 \code{\link[kernlab]{kpca}} object is stored here once this
-#'   preprocessing step has be trained by \code{\link{learn.recipe}}.
+#'   preprocessing step has be trained by \code{\link{prepare.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
 #' @return \code{step_kpca} returns an object of class \code{step_kpca}.
@@ -76,7 +76,7 @@
 #'   step_scale(all_predictors()) %>%
 #'   step_kpca(all_predictors())
 #'
-#' kpca_estimates <- learn(kpca_trans, training = biomass_tr)
+#' kpca_estimates <- prepare(kpca_trans, training = biomass_tr)
 #'
 #' kpca_te <- process(kpca_estimates, biomass_te)
 #'
@@ -84,7 +84,7 @@
 #' plot(kpca_te$kPC1, kpca_te$kPC2,
 #'      xlim = rng, ylim = rng)
 #' @seealso \code{\link{step_pca}} \code{\link{step_ica}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{process.recipe}}
 #'
 step_kpca <-
@@ -137,7 +137,7 @@ step_kpca_new <-
 
 #' @importFrom dimRed kPCA dimRedData
 #' @export
-learn.step_kpca <- function(x, training, info = NULL, ...) {
+prepare.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
 
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))

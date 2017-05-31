@@ -38,7 +38,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 sqrt_trans <- rec  \%>\%
   step_sqrt(all_predictors())
 
-sqrt_obj <- learn(sqrt_trans, training = examples)
+sqrt_obj <- prepare(sqrt_trans, training = examples)
 
 transformed_te <- process(sqrt_obj, examples)
 plot(examples$V1, transformed_te$V1)
@@ -46,7 +46,7 @@ plot(examples$V1, transformed_te$V1)
 \seealso{
 \code{\link{step_logit}} \code{\link{step_invlogit}}
   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-  \code{\link{learn.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 }
 \concept{
 preprocessing transformation_methods

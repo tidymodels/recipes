@@ -9,7 +9,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param variables A character string that contains the names of columns that
 #'   should be shuffled. These values are not determined until
-#'   \code{\link{learn.recipe}} is called.
+#'   \code{\link{prepare.recipe}} is called.
 #' @return \code{step_shuffle}  returns an object of class \code{step_shuffle}.
 #' @keywords datagen
 #' @concept preprocessing randomization permutation
@@ -21,7 +21,7 @@
 #' rec <- recipe(~ A + B + C, data = integers) %>%
 #'   step_shuffle(A, B)
 #'
-#' rand_set <- learn(rec, training = integers)
+#' rand_set <- prepare(rec, training = integers)
 #'
 #' set.seed(5377)
 #' process(rand_set, integers)
@@ -59,7 +59,7 @@ step_shuffle_new <- function(terms = NULL,
 }
 
 #' @export
-learn.step_shuffle <- function(x, training, info = NULL, ...) {
+prepare.step_shuffle <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   step_shuffle_new(
     terms = x$terms,

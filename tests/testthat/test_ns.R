@@ -14,7 +14,7 @@ test_that('correct basis functions', {
   with_ns <- rec %>% 
     step_ns(carbon, hydrogen)
   
-  with_ns <- learn(with_ns, training = biomass_tr, verbose = FALSE)
+  with_ns <- prepare(with_ns, training = biomass_tr, verbose = FALSE)
   
   with_ns_pred_tr <- process(with_ns, newdata = biomass_tr)
   with_ns_pred_te <- process(with_ns, newdata = biomass_te)

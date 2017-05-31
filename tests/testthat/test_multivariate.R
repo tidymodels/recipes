@@ -10,7 +10,7 @@ test_that('multivariate outcome', {
     step_center(all_outcomes()) %>%
     step_scale(all_predictors())
   
-  rec_trained <- learn(rec, training = biomass)
+  rec_trained <- prepare(rec, training = biomass)
   
   results <- process(rec_trained, head(biomass))
   

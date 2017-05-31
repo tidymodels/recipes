@@ -25,7 +25,7 @@
 #'   \code{\link[ddalpha]{depth.simplicialVolume}},
 #'   \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
 #' @param data The training data are stored here once after
-#' \code{\link{learn.recipe}} is executed.
+#' \code{\link{prepare.recipe}} is executed.
 #' @return \code{step_depth} returns an object of class \code{step_depth}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
@@ -39,7 +39,7 @@
 #'   proximity of the new value to the training set distribution.
 #'
 #' Note that the entire training set is saved to compute future depth values.
-#' The saved data have been learned and processed up to the point before the
+#' The saved data have been trained (i.e. prepared) and processed up to the point before the
 #' location that \code{step_depth} occupies in the recipe. Also, the data
 #' requirements for the different step methods may vary. For example, using
 #' \code{metric = "Mahalanobis"} requires that each class should have at least
@@ -55,7 +55,7 @@
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_depth(all_predictors(), class = "Species")
 #'
-#' rec_dists <- learn(rec, training = iris)
+#' rec_dists <- prepare(rec, training = iris)
 #'
 #' dists_to_species <- process(rec_dists, newdata = iris)
 #' dists_to_species
@@ -111,7 +111,7 @@ step_depth_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-learn.step_depth <- function(x, training, info = NULL, ...) {
+prepare.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- select_terms(x$terms, info = info)
   x_dat <-

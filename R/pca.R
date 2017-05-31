@@ -25,7 +25,7 @@
 #'   \code{tol = NULL}. \bold{Note} that the argument \code{x} should not be
 #'   passed here (or at all).
 #' @param res The \code{\link[stats]{prcomp.default}} object is stored here
-#'   once this preprocessing step has be trained by \code{\link{learn.recipe}}.
+#'   once this preprocessing step has be trained by \code{\link{prepare.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
 #' @return \code{step_pca}  returns an object of class \code{step_pca}.
@@ -66,7 +66,7 @@
 #'   step_center(all_numeric()) %>%
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), num = 3)
-#' pca_estimates <- learn(pca_trans, training = USArrests)
+#' pca_estimates <- prepare(pca_trans, training = USArrests)
 #' pca_data <- process(pca_estimates, USArrests)
 #'
 #' rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
@@ -77,10 +77,10 @@
 #'   step_center(all_numeric()) %>%
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), threshold = .99)
-#' with_thresh <- learn(with_thresh, training = USArrests)
+#' with_thresh <- prepare(with_thresh, training = USArrests)
 #' process(with_thresh, USArrests)
 #' @seealso \code{\link{step_ica}} \code{\link{step_kpca}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{process.recipe}}
 step_pca <- function(recipe,
                      ...,
@@ -137,7 +137,7 @@ step_pca_new <- function(terms = NULL,
 #' @importFrom stats prcomp
 #' @importFrom rlang expr
 #' @export
-learn.step_pca <- function(x, training, info = NULL, ...) {
+prepare.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   
   prc_call <-

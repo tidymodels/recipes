@@ -108,7 +108,7 @@ step_percentile_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 # Define the estimation procedure
 
-You will need to create a new `learn` method for your step's class. To do this, three arguments that the method should have:
+You will need to create a new `prepare` method for your step's class. To do this, three arguments that the method should have:
 
 ```r
 function(x, training, info = NULL)
@@ -118,27 +118,27 @@ where
 
  * `x` will be the `step_percentile` object
  * `training` will be a _tibble_ that has the training set data
- * `info` will also be a tibble that has information on the current set of data available. This information is updated as each step is processed by its specific `learn` method so it may not have the variables from the original data. The columns in this tibble are `variable` (the variable name), `type` (currently either "numeric" or "nominal"), `role` (defining the variable's role), and `source` (either "original" or "derived" depending on where it originated).
+ * `info` will also be a tibble that has information on the current set of data available. This information is updated as each step is processed by its specific `prepare` method so it may not have the variables from the original data. The columns in this tibble are `variable` (the variable name), `type` (currently either "numeric" or "nominal"), `role` (defining the variable's role), and `source` (either "original" or "derived" depending on where it originated).
 
 You can define other options. 
 
-The first thing that you might want to do in the `learn` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `select_terms` that can be used to obtain this. 
+The first thing that you might want to do in the `prepare` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `select_terms` that can be used to obtain this. 
 
-```{r learn_1, eval = FALSE}
-learn.step_percentile <- function(x, training, info = NULL, ...) {
+```{r prepare_1, eval = FALSE}
+prepare.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(info = info, args = x$terms) 
 }
 ```
 
 Once we have this, we can either save the original data columns or estimate the approximation grid. For the grid, we will use a helper function that enables us to run `do.call` on a list of arguments that include the `options` list.  
 
-```{r learn_2}
+```{r prepare_2}
 get_pctl <- function(x, args) {
   args$x <- x
   do.call("quantile", args)
 }
 
-learn.step_percentile <- function(x, training, info = NULL, ...) {
+prepare.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(info = info, args = x$terms) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
@@ -162,13 +162,13 @@ learn.step_percentile <- function(x, training, info = NULL, ...) {
 
 # Create the `process` method
 
-Remember that the `learn` function does not _apply_ the step to the data; it only estimates any required values such as `ref_dist`. We will need to create a new method for our `step_percentile` class. The minimum arguments for this are
+Remember that the `prepare` function does not _apply_ the step to the data; it only estimates any required values such as `ref_dist`. We will need to create a new method for our `step_percentile` class. The minimum arguments for this are
 
 ```r
 function(object, newdata, ...)
 ```
 
-where `object` is the updated step function that has been through the corresponding `learn` code and `newdata` is a tibble of data to be processed. 
+where `object` is the updated step function that has been through the corresponding `prepare` code and `newdata` is a tibble of data to be processed. 
 
 Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output. 
 
@@ -214,7 +214,7 @@ rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
   step_percentile(all_predictors(), approx = TRUE) 
 
-rec_obj <- learn(rec_obj, training = biomass_tr)
+rec_obj <- prepare(rec_obj, training = biomass_tr)
 
 percentiles <- process(rec_obj, biomass_te)
 percentiles

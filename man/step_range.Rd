@@ -25,7 +25,7 @@ have been estimated.}
 
 \item{ranges}{A character vector of variables that will be normalized. Note
 that this is ignored until the values are determined by
-\code{\link{learn.recipe}}. Setting this value will be ineffective.}
+\code{\link{prepare.recipe}}. Setting this value will be ineffective.}
 }
 \value{
 \code{step_range}  returns an object of class \code{step_range}.
@@ -38,7 +38,7 @@ that this is ignored until the values are determined by
 Scaling data means that the standard deviation of a variable is
   divided out of the data. \code{step_range} estimates the variable standard
   deviations from the data used in the \code{training} argument of
-  \code{learn.recipe}. \code{process.recipe} then applies the scaling to new
+  \code{prepare.recipe}. \code{process.recipe} then applies the scaling to new
   data sets using these standard deviations.
 }
 \examples{
@@ -53,7 +53,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 ranged_trans <- rec \%>\%
   step_range(carbon, hydrogen)
 
-ranged_obj <- learn(ranged_trans, training = biomass_tr)
+ranged_obj <- prepare(ranged_trans, training = biomass_tr)
 
 transformed_te <- process(ranged_obj, biomass_te)
 

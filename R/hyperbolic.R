@@ -26,13 +26,13 @@
 #'   step_hyperbolic(all_predictors(),
 #'                   func = "cos", inverse = FALSE)
 #'
-#' cos_obj <- learn(cos_trans, training = examples)
+#' cos_obj <- prepare(cos_trans, training = examples)
 #'
 #' transformed_te <- process(cos_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_log}}  \code{\link{step_sqrt}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 
 step_hyperbolic <-
   function(recipe,
@@ -82,7 +82,7 @@ step_hyperbolic_new <-
   }
 
 #' @export
-learn.step_hyperbolic <- function(x, training, info = NULL, ...) {
+prepare.step_hyperbolic <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   step_hyperbolic_new(
     terms = x$terms,

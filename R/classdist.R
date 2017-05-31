@@ -18,7 +18,7 @@
 #' @param log A logical: should the distances be transformed by the natural
 #'   log function?
 #' @param objects Statistics are stored here once this step has been trained
-#'   by \code{\link{learn.recipe}}.
+#'   by \code{\link{prepare.recipe}}.
 #' @return \code{step_classdist} returns an object of class
 #'   \code{step_classdist}.
 #' @keywords datagen
@@ -43,7 +43,7 @@
 #'   step_classdist(all_predictors(), class = "Species",
 #'                  pool = FALSE, mean_func = mean2)
 #'
-#' rec_dists <- learn(rec, training = iris)
+#' rec_dists <- prepare(rec, training = iris)
 #'
 #' dists_to_species <- process(rec_dists, newdata = iris, everything())
 #' ## on log scale:
@@ -118,7 +118,7 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 
 #' @importFrom stats as.formula model.frame
 #' @export
-learn.step_classdist <- function(x, training, info = NULL, ...) {
+prepare.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- select_terms(x$terms, info = info)
   x_dat <-

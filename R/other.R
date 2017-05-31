@@ -10,7 +10,7 @@
 #' @param threshold A single numeric value in (0, 1) for pooling.
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information to pool
-#'   infrequent levels that is determined by \code{\link{learn.recipe}}.
+#'   infrequent levels that is determined by \code{\link{prepare.recipe}}.
 #' @return \code{step_other}  returns an object of class \code{step_other}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods factors
@@ -21,7 +21,7 @@
 #'
 #' If no pooling is done the data are unmodified (although character data may
 #'   be changed to factors based on the value of \code{stringsAsFactors} in
-#'   \code{\link{learn.recipe}}). Otherwise, a factor is always returned with
+#'   \code{\link{prepare.recipe}}). Otherwise, a factor is always returned with
 #'   different factor levels.
 #'
 #' If \code{threshold} is less than the largest category proportion, all levels
@@ -44,7 +44,7 @@
 #'
 #' rec <- rec %>%
 #'   step_other(diet, location, threshold = .1, other = "other values")
-#' rec <- learn(rec, training = okc_tr)
+#' rec <- prepare(rec, training = okc_tr)
 #'
 #' collapsed <- process(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
@@ -99,7 +99,7 @@ step_other_new <-
 
 #' @importFrom stats sd
 #' @export
-learn.step_other <- function(x, training, info = NULL, ...) {
+prepare.step_other <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   objects <- lapply(training[, col_names],
                     keep_levels,

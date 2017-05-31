@@ -30,7 +30,7 @@ supported by the \code{timeDate} package. See
 
 \item{variables}{A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
-\code{\link{learn.recipe}} is used.}
+\code{\link{prepare.recipe}} is used.}
 }
 \value{
 \code{step_holiday} returns an object of class \code{step_holiday}.
@@ -52,13 +52,13 @@ examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
 holiday_rec <- recipe(~ someday, examples) \%>\%
    step_holiday(all_predictors())
 
-holiday_rec <- learn(holiday_rec, training = examples)
+holiday_rec <- prepare(holiday_rec, training = examples)
 holiday_values <- process(holiday_rec, newdata = examples)
 holiday_values
 }
 \seealso{
 \code{\link{step_date}} \code{\link{step_rm}}
-  \code{\link{recipe}} \code{\link{learn.recipe}}
+  \code{\link{recipe}} \code{\link{prepare.recipe}}
   \code{\link{process.recipe}} \code{\link[timeDate]{listHolidays}}
 }
 \concept{

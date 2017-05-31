@@ -12,7 +12,7 @@ test_that('spatial sign', {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
   
-  sp_sign_trained <- learn(sp_sign, training = biomass, verbose = FALSE)
+  sp_sign_trained <- prepare(sp_sign, training = biomass, verbose = FALSE)
   
   sp_sign_pred <- process(sp_sign_trained, newdata = biomass)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]

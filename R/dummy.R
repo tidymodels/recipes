@@ -20,7 +20,7 @@
 #' columns. See Details below.
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in \code{terms}. This is
-#'   \code{NULL} until the step is trained by \code{\link{learn.recipe}}.
+#'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
 #' @return \code{step_dummy} returns an object of class \code{step_dummy}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables
@@ -49,7 +49,7 @@
 #' rec <- recipe(~ diet + age + height, data = okc)
 #'
 #' dummies <- rec %>% step_dummy(diet)
-#' dummies <- learn(dummies, training = okc)
+#' dummies <- prepare(dummies, training = okc)
 #'
 #' dummy_data <- process(dummies, newdata = okc)
 #'
@@ -105,7 +105,7 @@ step_dummy_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-learn.step_dummy <- function(x, training, info = NULL, ...) {
+prepare.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   
   ## I hate doing this but currently we are going to have

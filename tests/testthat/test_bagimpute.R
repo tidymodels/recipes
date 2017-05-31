@@ -14,7 +14,7 @@ test_that('imputation models', {
   imputed <- rec %>%
     step_bagimpute(carbon, fac, impute_with = imp_vars(hydrogen, oxygen), seed_val = 12)
 
-  imputed_trained <- learn(imputed, training = biomass, verbose = FALSE)
+  imputed_trained <- prepare(imputed, training = biomass, verbose = FALSE)
 
 
   ## make sure we get the same trees given the same random samples

@@ -9,7 +9,7 @@
 #'   they be assigned?. By default, the function assumes that the new columns
 #'   created from the original variables will be used as predictors in a model.
 #' @param objects A list of \code{\link[splines]{ns}} objects created once the
-#'   step has been learned.
+#'   step has been trained.
 #' @param options A list of options for \code{\link[splines]{ns}} which should
 #'   not include \code{x}.
 #' @return \code{step_ns} returns an object of class \code{step_ns}.
@@ -33,12 +33,12 @@
 #'
 #' with_splines <- rec %>%
 #'   step_ns(carbon, hydrogen)
-#' with_splines <- learn(with_splines, training = biomass_tr)
+#' with_splines <- prepare(with_splines, training = biomass_tr)
 #'
 #' expanded <- process(with_splines, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_poly}} \code{\link{recipe}}
-#'   \code{\link{learn.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
 
 step_ns <-
   function(recipe,
@@ -95,7 +95,7 @@ ns_wrapper <- function(x, args) {
 }
 
 #' @export
-learn.step_ns <- function(x, training, info = NULL, ...) {
+prepare.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   obj <- lapply(training[, col_names], ns_wrapper, x$options)
   for (i in seq(along = col_names))

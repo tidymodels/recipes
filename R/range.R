@@ -11,7 +11,7 @@
 #' @param max A single numeric value for the largest value in the range
 #' @param ranges A character vector of variables that will be normalized. Note
 #'   that this is ignored until the values are determined by
-#'   \code{\link{learn.recipe}}. Setting this value will be ineffective.
+#'   \code{\link{prepare.recipe}}. Setting this value will be ineffective.
 #' @return \code{step_range}  returns an object of class \code{step_range}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
@@ -19,7 +19,7 @@
 #' @details Scaling data means that the standard deviation of a variable is
 #'   divided out of the data. \code{step_range} estimates the variable standard
 #'   deviations from the data used in the \code{training} argument of
-#'   \code{learn.recipe}. \code{process.recipe} then applies the scaling to new
+#'   \code{prepare.recipe}. \code{process.recipe} then applies the scaling to new
 #'   data sets using these standard deviations.
 #' @examples
 #' data(biomass)
@@ -33,7 +33,7 @@
 #' ranged_trans <- rec %>%
 #'   step_range(carbon, hydrogen)
 #'
-#' ranged_obj <- learn(ranged_trans, training = biomass_tr)
+#' ranged_obj <- prepare(ranged_trans, training = biomass_tr)
 #'
 #' transformed_te <- process(ranged_obj, biomass_te)
 #'
@@ -86,7 +86,7 @@ step_range_new <-
 
 #' @importFrom stats sd
 #' @export
-learn.step_range <- function(x, training, info = NULL, ...) {
+prepare.step_range <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   mins <-
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)

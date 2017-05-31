@@ -15,7 +15,7 @@ test_that('high filter', {
   filtering <- rec %>% 
     step_corr(all_predictors(), threshold = .5)
   
-  filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
+  filtering_trained <- prepare(filtering, training = dat, verbose = FALSE)
   
   removed <- c("V6", "V1")
   
@@ -27,7 +27,7 @@ test_that('low filter', {
   filtering <- rec %>% 
     step_corr(all_predictors(), threshold = 1)
   
-  filtering_trained <- learn(filtering, training = dat, verbose = FALSE)
+  filtering_trained <- prepare(filtering, training = dat, verbose = FALSE)
 
   expect_equal(filtering_trained$steps[[1]]$removals, numeric(0))
 })

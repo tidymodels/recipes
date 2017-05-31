@@ -38,7 +38,7 @@ numerator and denominator, it will be removed from the listing.}
 columns.}
 
 \item{variables}{The column names used in the rations. This argument is
-not populated until \code{\link{learn.recipe}} is executed.}
+not populated until \code{\link{prepare.recipe}} is executed.}
 }
 \value{
 \code{step_ratio} returns an object of class \code{step_ratio}.
@@ -66,7 +66,7 @@ ratio_recipe <- rec \%>\%
   step_rm(all_predictors(), -matches("_o_"))
   
 
-ratio_recipe <- learn(ratio_recipe, training = biomass_tr)
+ratio_recipe <- prepare(ratio_recipe, training = biomass_tr)
 
 ratio_data <- process(ratio_recipe, biomass_te)
 ratio_data

@@ -21,12 +21,12 @@ The \code{recipes} package can be used to create design matrices for modeling
 }
 \section{Basic Functions}{
 
-The three main functions are \code{\link{recipe}}, \code{\link{learn}},
+The three main functions are \code{\link{recipe}}, \code{\link{prepare}},
   and \code{\link{process}}.
 
 \code{\link{recipe}} defines the operations on the data and the associated
   roles. Once the preprocessing steps are defined, any parameters are
-  estimated using \code{\link{learn}}. Once the data are ready for
+  estimated using \code{\link{prepare}}. Once the data are ready for
   transformation, the \code{\link{process}} function applies the operations.
 }
 

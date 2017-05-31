@@ -28,13 +28,13 @@
 #'   step_scale(carbon, hydrogen) %>%
 #'   step_invlogit(carbon, hydrogen)
 #'
-#' ilogit_obj <- learn(ilogit_trans, training = biomass_tr)
+#' ilogit_obj <- prepare(ilogit_trans, training = biomass_tr)
 #'
 #' transformed_te <- process(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
 #' @seealso \code{\link{step_logit}} \code{\link{step_log}}
 #'   \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}
-#'   \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{process.recipe}}
 
 step_invlogit <-
@@ -64,7 +64,7 @@ step_invlogit_new <-
   }
 
 #' @export
-learn.step_invlogit <- function(x, training, info = NULL, ...) {
+prepare.step_invlogit <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   step_invlogit_new(
     terms = x$terms,

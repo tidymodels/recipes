@@ -18,7 +18,7 @@
 #'   defaults are set here. \bold{Note} that the arguments \code{X} and
 #'   \code{n.comp} should not be passed here.
 #' @param res The \code{\link[fastICA]{fastICA}} object is stored here once
-#'   this preprocessing step has be trained by \code{\link{learn.recipe}}.
+#'   this preprocessing step has be trained by \code{\link{prepare.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
 #' @return \code{step_ica} returns an object of class \code{step_ica}.
@@ -64,13 +64,13 @@
 #' ica_trans <- step_center(rec,  V1, V2)
 #' ica_trans <- step_scale(rec, V1, V2)
 #' ica_trans <- step_ica(rec, V1, V2, num = 2)
-#' ica_estimates <- learn(ica_trans, training = tr)
+#' ica_estimates <- prepare(ica_trans, training = tr)
 #' ica_data <- process(ica_estimates, te)
 #'
 #' plot(te$V1, te$V2)
 #' plot(ica_data$IC1, ica_data$IC2)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{learn.recipe}}
+#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{process.recipe}}
 step_ica <-
   function(recipe,
@@ -121,7 +121,7 @@ step_ica_new <-
 
 #' @importFrom dimRed FastICA dimRedData
 #' @export
-learn.step_ica <- function(x, training, info = NULL, ...) {
+prepare.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   
   x$num <- min(x$num, length(col_names))

@@ -11,7 +11,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('non-factor variables with dot', {
   int_rec <- rec %>% step_interact(~(.-HHV)^3, sep=":")
-  int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
+  int_rec_trained <- prepare(int_rec, training = tr_biomass, verbose = FALSE)
   
   te_new <- process(int_rec_trained, newdata = te_biomass, all_predictors())
   te_new <- te_new[, sort(names(te_new))]
@@ -30,7 +30,7 @@ test_that('non-factor variables with dot', {
 
 test_that('non-factor variables with specific variables', {
   int_rec <- rec %>% step_interact(~carbon:hydrogen + oxygen:nitrogen:sulfur, sep = ":")
-  int_rec_trained <- learn(int_rec, training = tr_biomass, verbose = FALSE)
+  int_rec_trained <- prepare(int_rec, training = tr_biomass, verbose = FALSE)
   
   te_new <- process(int_rec_trained, newdata = te_biomass, all_predictors())
   te_new <- te_new[, sort(names(te_new))]
@@ -52,7 +52,7 @@ test_that('non-factor variables with specific variables', {
 # test_that('with factors', {
 #   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>% 
 #     step_interact(~ (. - Sepal.Width)^3, sep = ":")
-#   int_rec_trained <- learn(int_rec, iris)
+#   int_rec_trained <- prepare(int_rec, iris)
 #   
 #   te_new <- process(int_rec_trained, newdata = iris, role = "predictor")
 #   te_new <- te_new[, sort(names(te_new))]

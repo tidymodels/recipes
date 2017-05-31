@@ -70,7 +70,7 @@ test_that('correct ICA values', {
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
   
   set.seed(12)
-  ica_extract_trained <- learn(ica_extract, training = biomass_tr, verbose = FALSE)
+  ica_extract_trained <- prepare(ica_extract, training = biomass_tr, verbose = FALSE)
   
   ica_pred <- process(ica_extract_trained, newdata = biomass_te)
   ica_pred <- as.matrix(ica_pred)

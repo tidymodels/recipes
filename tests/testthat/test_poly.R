@@ -13,7 +13,7 @@ test_that('correct basis functions', {
   with_poly <- rec %>% 
     step_poly(carbon, hydrogen)
   
-  with_poly <- learn(with_poly, training = biomass_tr, verbose = FALSE)
+  with_poly <- prepare(with_poly, training = biomass_tr, verbose = FALSE)
   
   with_poly_pred_tr <- process(with_poly, newdata = biomass_tr)
   with_poly_pred_te <- process(with_poly, newdata = biomass_te)

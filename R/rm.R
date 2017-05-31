@@ -10,7 +10,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{learn.recipe}} is called.
+#'   \code{\link{prepare.recipe}} is called.
 #' @return \code{step_rm}  returns an object of class \code{step_rm}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -28,7 +28,7 @@
 #' smaller_set <- rec %>%
 #'   step_rm(contains("gen"))
 #'
-#' smaller_set <- learn(smaller_set, training = biomass_tr)
+#' smaller_set <- prepare(smaller_set, training = biomass_tr)
 #'
 #' filtered_te <- process(smaller_set, biomass_te)
 #' filtered_te
@@ -66,7 +66,7 @@ step_rm_new <- function(terms = NULL,
 }
 
 #' @export
-learn.step_rm <- function(x, training, info = NULL, ...) {
+prepare.step_rm <- function(x, training, info = NULL, ...) {
   col_names <- select_terms(x$terms, info = info)
   step_rm_new(
     terms = x$terms,
