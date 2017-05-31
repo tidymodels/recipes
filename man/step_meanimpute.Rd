@@ -38,7 +38,7 @@ that range are taken as the nearest endpoint.}
 \details{
 \code{step_meanimpute} estimates the variable means from the data
   used in the \code{training} argument of \code{prepare.recipe}.
-  \code{process.recipe} then applies the new values to new data sets using
+  \code{bake.recipe} then applies the new values to new data sets using
   these averages.
 }
 \examples{
@@ -61,7 +61,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prepare(impute_rec, training = credit_tr)
 
-imputed_te <- process(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, newdata = credit_te, everything())
 
 credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]

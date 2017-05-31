@@ -46,7 +46,7 @@
 #' 
 #' ratio_recipe <- prepare(ratio_recipe, training = biomass_tr)
 #' 
-#' ratio_data <- process(ratio_recipe, biomass_te)
+#' ratio_data <- bake(ratio_recipe, biomass_te)
 #' ratio_data
 
 step_ratio <-
@@ -126,7 +126,7 @@ prepare.step_ratio <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_ratio <- function(object, newdata, ...) {
+bake.step_ratio <- function(object, newdata, ...) {
   res <- newdata[, object$variables$top] /
     newdata[, object$variables$bottom]
   colnames(res) <-

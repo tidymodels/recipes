@@ -41,7 +41,7 @@
 #' prepare(lincomb_filter, training = biomass_tr)
 #' @seealso \code{\link{step_nzv}}\code{\link{step_corr}}
 #'   \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 
 step_lincomb <-
   function(recipe,
@@ -101,7 +101,7 @@ prepare.step_lincomb <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_lincomb <- function(object, newdata, ...) {
+bake.step_lincomb <- function(object, newdata, ...) {
   if (length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)

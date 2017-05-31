@@ -39,7 +39,7 @@
 #'   proximity of the new value to the training set distribution.
 #'
 #' Note that the entire training set is saved to compute future depth values.
-#' The saved data have been trained (i.e. prepared) and processed up to the point before the
+#' The saved data have been trained (i.e. prepared) and baked (i.e. processed) up to the point before the
 #' location that \code{step_depth} occupies in the recipe. Also, the data
 #' requirements for the different step methods may vary. For example, using
 #' \code{metric = "Mahalanobis"} requires that each class should have at least
@@ -57,7 +57,7 @@
 #'
 #' rec_dists <- prepare(rec, training = iris)
 #'
-#' dists_to_species <- process(rec_dists, newdata = iris)
+#' dists_to_species <- bake(rec_dists, newdata = iris)
 #' dists_to_species
 
 step_depth <-
@@ -144,7 +144,7 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 #'   depth.projection depth.simplicial depth.simplicialVolume depth.spatial
 #'   depth.zonoid
 #' @export
-process.step_depth <- function(object, newdata, ...) {
+bake.step_depth <- function(object, newdata, ...) {
   x_names <- colnames(object$data[[1]])
   newdata <- as.matrix(newdata[, x_names])
   res <- lapply(

@@ -36,7 +36,7 @@ removed when averaging.}
 Centering data means that the average of a variable is subtracted 
   from the data. \code{step_center} estimates the variable means from the 
   data used in the \code{training} argument of \code{prepare.recipe}. 
-  \code{process.recipe} then applies the centering to new data sets using 
+  \code{bake.recipe} then applies the centering to new data sets using 
   these means.
 }
 \examples{
@@ -53,14 +53,14 @@ center_trans <- rec \%>\%
 
 center_obj <- prepare(center_trans, training = biomass_tr)
 
-transformed_te <- process(center_obj, biomass_te)
+transformed_te <- bake(center_obj, biomass_te)
 
 biomass_te[1:10, names(transformed_te)]
 transformed_te
 }
 \seealso{
 \code{\link{recipe}} \code{\link{prepare.recipe}} 
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing normalization_methods

@@ -13,7 +13,7 @@ test_that('simple logit trans', {
     step_invlogit(x1)
   
   rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- process(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, newdata = ex_dat)
   
   exp_res <- as_tibble(ex_dat)
   exp_res$x1 <- binomial()$linkinv(exp_res$x1)

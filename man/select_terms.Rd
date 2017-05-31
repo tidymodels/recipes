@@ -20,7 +20,7 @@ A character string of column names or an error of there are no
   selectors or if no variables are selected.
 }
 \description{
-This function processes the step function selectors and might be useful
+This function bakees the step function selectors and might be useful
   when creating custom steps.
 }
 \examples{

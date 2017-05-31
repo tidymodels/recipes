@@ -83,16 +83,16 @@ standardized
 
 It is important to realize that the _specific_ variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prepare` function is used with a recipe and a data set:
+If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prepare` function is used with a recipe and a data set:
 ```{r trained}
 trained_rec <- prepare(standardized, training = seg_train)
 ```
-Now that the statistics have been estimated, the processing can be applied to the training and test set:
+Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:
 ```{r apply}
-train_data <- process(trained_rec, newdata = seg_train)
-test_data  <- process(trained_rec, newdata = seg_test)
+train_data <- bake(trained_rec, newdata = seg_train)
+test_data  <- bake(trained_rec, newdata = seg_test)
 ```
-`process` returns a tibble: 
+`bake` returns a tibble: 
 ```{r tibbles}
 class(test_data)
 test_data
@@ -111,10 +111,10 @@ Note that only the last step has been estimated; the first two were previously t
 ```{r pca_training}
 trained_rec <- prepare(trained_rec, training = seg_train)
 ```
-`process` can be reapplied to get the principal components in addition to the other variables:
+`bake` can be reapplied to get the principal components in addition to the other variables:
 
-```{r pca_process}
-test_data  <- process(trained_rec, newdata = seg_test)
+```{r pca_bake}
+test_data  <- bake(trained_rec, newdata = seg_test)
 names(test_data)
 ```
 

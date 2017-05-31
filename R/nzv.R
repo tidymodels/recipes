@@ -5,7 +5,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables that
-#'   will evaluated by the filtering process. See \code{\link{selections}} for
+#'   will evaluated by the filtering bake. See \code{\link{selections}} for
 #'   more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param options A list of options for the filter (see Details below).
@@ -54,10 +54,10 @@
 #'
 #' filter_obj <- prepare(nzv_filter, training = biomass_tr)
 #'
-#' filtered_te <- process(filter_obj, biomass_te)
+#' filtered_te <- bake(filter_obj, biomass_te)
 #' any(names(filtered_te) == "sparse")
 #' @seealso \code{\link{step_corr}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 step_nzv <-
   function(recipe,
@@ -118,7 +118,7 @@ prepare.step_nzv <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_nzv <- function(object, newdata, ...) {
+bake.step_nzv <- function(object, newdata, ...) {
   if (length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)

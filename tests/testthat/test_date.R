@@ -19,7 +19,7 @@ test_that('default option', {
     step_date(all_predictors(), features = feats)
   
   date_rec <- prepare(date_rec, training = examples)   
-  date_res <- process(date_rec, newdata = examples)
+  date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
     Dan = examples$Dan,
@@ -55,7 +55,7 @@ test_that('nondefault options', {
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
   
   date_rec <- prepare(date_rec, training = examples)   
-  date_res <- process(date_rec, newdata = examples)
+  date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
     Dan = examples$Dan,
@@ -75,7 +75,7 @@ test_that('ordinal values', {
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
   
   date_rec <- prepare(date_rec, training = examples)   
-  date_res <- process(date_rec, newdata = examples)
+  date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
     Dan = examples$Dan,

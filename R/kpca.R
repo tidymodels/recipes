@@ -78,14 +78,14 @@
 #'
 #' kpca_estimates <- prepare(kpca_trans, training = biomass_tr)
 #'
-#' kpca_te <- process(kpca_estimates, biomass_te)
+#' kpca_te <- bake(kpca_estimates, biomass_te)
 #'
 #' rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
 #' plot(kpca_te$kPC1, kpca_te$kPC2,
 #'      xlim = rng, ylim = rng)
 #' @seealso \code{\link{step_pca}} \code{\link{step_ica}}
 #'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 #'
 step_kpca <-
   function(recipe,
@@ -158,7 +158,7 @@ prepare.step_kpca <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_kpca <- function(object, newdata, ...) {
+bake.step_kpca <- function(object, newdata, ...) {
   pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(
     dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))

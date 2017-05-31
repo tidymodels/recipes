@@ -24,7 +24,7 @@
 #'   \code{\link{prepare.recipe}}.
 #' @return \code{step_regex}  returns an object of class \code{step_regex}. A
 #'   new variable will be created in the data set by
-#'   \code{\link{process.recipe}}.
+#'   \code{\link{bake.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables regular_expressions
 #' @export
@@ -38,7 +38,7 @@
 #' rec2 <- prepare(rec, training = covers)
 #' rec2
 #'
-#' with_dummies <- process(rec2, newdata = covers)
+#' with_dummies <- bake(rec2, newdata = covers)
 #' with_dummies
 step_regex <- function(recipe,
                        ...,
@@ -119,7 +119,7 @@ prepare.step_regex <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom rlang expr
-process.step_regex <- function(object, newdata, ...) {
+bake.step_regex <- function(object, newdata, ...) {
   ## sub in options
   regex <- expr(
     grepl(

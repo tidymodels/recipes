@@ -25,11 +25,11 @@
 #'
 #' sqrt_obj <- prepare(sqrt_trans, training = examples)
 #'
-#' transformed_te <- process(sqrt_obj, examples)
+#' transformed_te <- bake(sqrt_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, vars = NULL) {
   
@@ -74,7 +74,7 @@ prepare.step_sqrt <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_sqrt <- function(object, newdata, ...) {
+bake.step_sqrt <- function(object, newdata, ...) {
   col_names <- object$vars
   for (i in seq_along(col_names))
     newdata[, col_names[i]] <-

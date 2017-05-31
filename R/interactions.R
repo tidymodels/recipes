@@ -50,8 +50,8 @@
 #' int_mod_1 <- prepare(int_mod_1, training = biomass_tr)
 #' int_mod_2 <- prepare(int_mod_2, training = biomass_tr)
 #'
-#' dat_1 <- process(int_mod_1, biomass_te)
-#' dat_2 <- process(int_mod_2, biomass_te)
+#' dat_1 <- bake(int_mod_1, biomass_te)
+#' dat_2 <- bake(int_mod_2, biomass_te)
 #'
 #' names(dat_1)
 #' names(dat_2)
@@ -131,7 +131,7 @@ prepare.step_interact <- function(x, training, info = NULL, ...) {
 
 
 #' @export
-process.step_interact <- function(object, newdata, ...) {
+bake.step_interact <- function(object, newdata, ...) {
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
   

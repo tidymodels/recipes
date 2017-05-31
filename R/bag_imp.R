@@ -64,7 +64,7 @@
 #'
 #' imp_models <- prepare(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- process(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -171,7 +171,7 @@ prepare.step_bagimpute <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-process.step_bagimpute <- function(object, newdata, ...) {
+bake.step_bagimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if (!any(missing_rows))
     return(newdata)

@@ -11,7 +11,7 @@ step_rm(recipe, ..., role = NA, trained = FALSE, removals = NULL)
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables that
-will evaluated by the filtering process. See \code{\link{selections}} for
+will evaluated by the filtering bake. See \code{\link{selections}} for
 more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
@@ -45,7 +45,7 @@ smaller_set <- rec \%>\%
 
 smaller_set <- prepare(smaller_set, training = biomass_tr)
 
-filtered_te <- process(smaller_set, biomass_te)
+filtered_te <- bake(smaller_set, biomass_te)
 filtered_te
 }
 \concept{

@@ -44,11 +44,11 @@
 #'
 #' filter_obj <- prepare(corr_filter, training = biomass_tr)
 #'
-#' filtered_te <- process(filter_obj, biomass_te)
+#' filtered_te <- bake(filter_obj, biomass_te)
 #' round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 #' round(abs(cor(filtered_te)), 2)
 #' @seealso \code{\link{step_nzv}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 step_corr <- function(recipe,
                       ...,
@@ -120,7 +120,7 @@ prepare.step_corr <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_corr <- function(object, newdata, ...) {
+bake.step_corr <- function(object, newdata, ...) {
   if (length(object$removals) > 0)
     newdata <- newdata[,!(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)

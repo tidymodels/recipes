@@ -27,14 +27,14 @@ re-trained. If \code{TRUE}, you should pass in a data set to the argument
 \item{verbose}{A logical that controls wether progress is reported as steps
 are executed.}
 
-\item{retain}{A logical: should the \emph{processed} training set be saved
+\item{retain}{A logical: should the \emph{preprocessingcessed} training set be saved
 into the \code{template} slot of the recipe after training? This is a good
   idea if you want to add more steps later but want to avoid re-training
   the existing steps.}
 
 \item{stringsAsFactors}{A logical: should character columns be converted to
-factors? This affects the processed training set (when
-\code{retain = TRUE}) as well as the results of \code{process.recipe}.}
+factors? This affects the preprocessingcessed training set (when
+\code{retain = TRUE}) as well as the results of \code{bake.recipe}.}
 }
 \value{
 A recipe whose step objects have been updated with the required

@@ -35,11 +35,11 @@
 #'    step_holiday(all_predictors())
 #'
 #' holiday_rec <- prepare(holiday_rec, training = examples)
-#' holiday_values <- process(holiday_rec, newdata = examples)
+#' holiday_values <- bake(holiday_rec, newdata = examples)
 #' holiday_values
 #' @seealso \code{\link{step_date}} \code{\link{step_rm}}
 #'   \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}} \code{\link[timeDate]{listHolidays}}
+#'   \code{\link{bake.recipe}} \code{\link[timeDate]{listHolidays}}
 #' @import timeDate
 step_holiday <-
   function(
@@ -129,7 +129,7 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-process.step_holiday <- function(object, newdata, ...) {
+bake.step_holiday <- function(object, newdata, ...) {
   new_cols <-
     rep(length(object$holidays), each = length(object$variables))
   holiday_values <-

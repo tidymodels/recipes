@@ -15,8 +15,8 @@ test_that('correct basis functions', {
   
   with_poly <- prepare(with_poly, training = biomass_tr, verbose = FALSE)
   
-  with_poly_pred_tr <- process(with_poly, newdata = biomass_tr)
-  with_poly_pred_te <- process(with_poly, newdata = biomass_te)
+  with_poly_pred_tr <- bake(with_poly, newdata = biomass_tr)
+  with_poly_pred_te <- bake(with_poly, newdata = biomass_te)
   
   carbon_poly_tr_exp <- poly(biomass_tr$carbon, degree = 2)
   hydrogen_poly_tr_exp <- poly(biomass_tr$hydrogen, degree = 2)

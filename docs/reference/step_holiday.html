@@ -134,7 +134,7 @@ supported by the <code>timeDate</code> package. See
       <th>variables</th>
       <td><p>A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
-<code><a href='learn.html'>learn.recipe</a></code> is used.</p></td>
+<code><a href='prepare.html'>prepare.recipe</a></code> is used.</p></td>
     </tr>
     </table>
     
@@ -151,8 +151,8 @@ inputs. This field is a placeholder and will be populated once
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='step_date.html'>step_date</a></code> <code><a href='step_rm.html'>step_rm</a></code>
-  <code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code>
-  <code><a href='process.html'>process.recipe</a></code> <code><a href='http://www.rdocumentation.org/packages/timeDate/topics/holiday-Listing'>listHolidays</a></code></p>
+  <code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code>
+  <code><a href='bake.html'>bake.recipe</a></code> <code><a href='http://www.rdocumentation.org/packages/timeDate/topics/holiday-Listing'>listHolidays</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -162,7 +162,7 @@ inputs. This field is a placeholder and will be populated once
 <span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>someday</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>step_holiday</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 holiday training </div><div class='input'><span class='no'>holiday_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
+<span class='no'>holiday_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)</div><div class='output co'>#&gt; step 1 holiday training </div><div class='input'><span class='no'>holiday_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>holiday_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
 <span class='no'>holiday_values</span></div><div class='output co'>#&gt; # A tibble: 41 x 4
 #&gt;       someday someday_LaborDay someday_NewYearsDay someday_ChristmasDay
 #&gt;        &lt;date&gt;            &lt;dbl&gt;               &lt;dbl&gt;                &lt;dbl&gt;

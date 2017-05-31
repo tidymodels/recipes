@@ -124,7 +124,7 @@ have been estimated.</p></td>
     <tr>
       <th>objects</th>
       <td><p>A list of <code><a href='http://www.rdocumentation.org/packages/splines/topics/ns'>ns</a></code> objects created once the
-step has been learned.</p></td>
+step has been trained.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -149,7 +149,7 @@ not include <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='step_poly.html'>step_poly</a></code> <code><a href='recipe.html'>recipe</a></code>
-  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+  <code><a href='prepare.html'>prepare.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -163,8 +163,8 @@ not include <code>x</code>.</p></td>
 
 <span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ns</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
-<span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ns training </div><div class='input'>
-<span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
+<span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ns training </div><div class='input'>
+<span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
 <span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 x 7
 #&gt;    oxygen nitrogen sulfur carbon_ns_1 carbon_ns_2 hydrogen_ns_1 hydrogen_ns_2
 #&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;

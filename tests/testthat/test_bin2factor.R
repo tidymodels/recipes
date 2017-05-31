@@ -10,7 +10,7 @@ rec <- recipe(~ description, covers) %>%
 test_that('default options', {
   rec1 <- rec %>% step_bin2factor(rocks)
   rec1 <- prepare(rec1, training = covers)
-  res1 <- process(rec1, newdata = covers)
+  res1 <- bake(rec1, newdata = covers)
   expect_true(all(diag(table(res1$rocks, res1$more_rocks)) == 0))
 })
 
@@ -18,7 +18,7 @@ test_that('default options', {
 test_that('nondefault options', {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
   rec2 <- prepare(rec2, training = covers)
-  res2 <- process(rec2, newdata = covers)
+  res2 <- bake(rec2, newdata = covers)
   expect_true(all(diag(table(res2$rocks, res2$more_rocks)) == 0))
 })
 

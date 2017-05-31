@@ -45,7 +45,7 @@ test_that('simple YJ trans', {
     step_YeoJohnson(x1, x2, x3, x4)
   
   rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- process(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, newdata = ex_dat)
   
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
   expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tol = .001)

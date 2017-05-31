@@ -39,7 +39,7 @@ rec <- recipe(~ A + B + C, data = integers) \%>\%
 rand_set <- prepare(rec, training = integers)
 
 set.seed(5377)
-process(rand_set, integers)
+bake(rand_set, integers)
 }
 \concept{
 preprocessing randomization permutation

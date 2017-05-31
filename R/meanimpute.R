@@ -18,7 +18,7 @@
 #' @export
 #' @details \code{step_meanimpute} estimates the variable means from the data
 #'   used in the \code{training} argument of \code{prepare.recipe}.
-#'   \code{process.recipe} then applies the new values to new data sets using
+#'   \code{bake.recipe} then applies the new values to new data sets using
 #'   these averages.
 #' @examples
 #' data("credit_data")
@@ -40,7 +40,7 @@
 #'
 #' imp_models <- prepare(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- process(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -106,7 +106,7 @@ prepare.step_meanimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_meanimpute <- function(object, newdata, ...) {
+bake.step_meanimpute <- function(object, newdata, ...) {
   for (i in names(object$means)) {
     if (any(is.na(newdata[, i])))
       newdata[is.na(newdata[, i]), i] <- object$means[i]

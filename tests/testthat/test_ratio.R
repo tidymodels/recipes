@@ -18,7 +18,7 @@ test_that('1:many', {
   rec1 <- rec %>% 
     step_ratio(x1, denom = denom_vars(all_numeric()))
   rec1 <- prepare(rec1, ex_dat, verbose = FALSE)
-  obs1 <- process(rec1, ex_dat)
+  obs1 <- bake(rec1, ex_dat)
   res1 <- tibble(
     x1_o_x2   = ex_dat$x1/ex_dat$x2,
     x1_o_x3   = ex_dat$x1/ex_dat$x3,
@@ -33,7 +33,7 @@ test_that('many:1', {
   rec2 <- rec %>% 
     step_ratio(all_numeric(), denom = denom_vars(x1))
   rec2 <- prepare(rec2, ex_dat, verbose = FALSE)
-  obs2 <- process(rec2, ex_dat)
+  obs2 <- bake(rec2, ex_dat)
   res2 <- tibble(
     x2_o_x1   = ex_dat$x2/ex_dat$x1,
     x3_o_x1   = ex_dat$x3/ex_dat$x1,
@@ -48,7 +48,7 @@ test_that('many:many', {
   rec3 <- rec %>% 
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
   rec3 <- prepare(rec3, ex_dat, verbose = FALSE)
-  obs3 <- process(rec3, ex_dat)
+  obs3 <- bake(rec3, ex_dat)
   res3 <- tibble(
     x2_o_x1   = ex_dat$x2/ex_dat$x1,
     x3_o_x1   = ex_dat$x3/ex_dat$x1,

@@ -48,13 +48,13 @@ cos_trans <- rec  \%>\%
 
 cos_obj <- prepare(cos_trans, training = examples)
 
-transformed_te <- process(cos_obj, examples)
+transformed_te <- bake(cos_obj, examples)
 plot(examples$V1, transformed_te$V1)
 }
 \seealso{
 \code{\link{step_logit}} \code{\link{step_invlogit}}
   \code{\link{step_log}}  \code{\link{step_sqrt}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

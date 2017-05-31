@@ -67,7 +67,7 @@
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), num = 3)
 #' pca_estimates <- prepare(pca_trans, training = USArrests)
-#' pca_data <- process(pca_estimates, USArrests)
+#' pca_data <- bake(pca_estimates, USArrests)
 #'
 #' rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
 #' plot(pca_data$PC1, pca_data$PC2,
@@ -78,10 +78,10 @@
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), threshold = .99)
 #' with_thresh <- prepare(with_thresh, training = USArrests)
-#' process(with_thresh, USArrests)
+#' bake(with_thresh, USArrests)
 #' @seealso \code{\link{step_ica}} \code{\link{step_kpca}}
 #'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 step_pca <- function(recipe,
                      ...,
                      role = "predictor",
@@ -178,7 +178,7 @@ prepare.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @export
-process.step_pca <- function(object, newdata, ...) {
+bake.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(object$res$rotation)
   comps <- predict(object$res, newdata = newdata[, pca_vars])
   comps <- comps[, 1:object$num, drop = FALSE]

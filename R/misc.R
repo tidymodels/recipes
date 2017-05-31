@@ -96,8 +96,7 @@ get_rhs_terms <- function(x) x
 #' @param object A step object.
 #' @keywords datagen
 #' @concept preprocessing
-#' @return A updated \code{\link{recipe}} with the new step in the last slot
-#'   for processing.
+#' @return A updated \code{\link{recipe}} with the new step in the last slot.
 #' @export
 add_step <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object

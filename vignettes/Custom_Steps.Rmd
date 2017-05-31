@@ -59,7 +59,7 @@ step_percentile <- function(recipe, ..., role = NA,
                             trained = FALSE, ref_dist = NULL,
                             approx = FALSE, 
                             options = list(probs = (0:100)/100, names = TRUE)) {
-## process but do not evaluate the variable selectors with
+## bake but do not evaluate the variable selectors with
 ## the `quos` function in `rlang`
   terms <- rlang::quos(...) 
   if(length(terms) == 0)
@@ -118,7 +118,7 @@ where
 
  * `x` will be the `step_percentile` object
  * `training` will be a _tibble_ that has the training set data
- * `info` will also be a tibble that has information on the current set of data available. This information is updated as each step is processed by its specific `prepare` method so it may not have the variables from the original data. The columns in this tibble are `variable` (the variable name), `type` (currently either "numeric" or "nominal"), `role` (defining the variable's role), and `source` (either "original" or "derived" depending on where it originated).
+ * `info` will also be a tibble that has information on the current set of data available. This information is updated as each step is evaluated by its specific `prepare` method so it may not have the variables from the original data. The columns in this tibble are `variable` (the variable name), `type` (currently either "numeric" or "nominal"), `role` (defining the variable's role), and `source` (either "original" or "derived" depending on where it originated).
 
 You can define other options. 
 
@@ -160,7 +160,7 @@ prepare.step_percentile <- function(x, training, info = NULL, ...) {
 }
 ```
 
-# Create the `process` method
+# Create the `bake` method
 
 Remember that the `prepare` function does not _apply_ the step to the data; it only estimates any required values such as `ref_dist`. We will need to create a new method for our `step_percentile` class. The minimum arguments for this are
 
@@ -168,11 +168,11 @@ Remember that the `prepare` function does not _apply_ the step to the data; it o
 function(object, newdata, ...)
 ```
 
-where `object` is the updated step function that has been through the corresponding `prepare` code and `newdata` is a tibble of data to be processed. 
+where `object` is the updated step function that has been through the corresponding `prepare` code and `newdata` is a tibble of data to be preprocessingcessed. 
 
 Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output. 
 
-```{r process}
+```{r bake}
 ## Two helper functions
 pctl_by_mean <- function(x, ref) mean(ref <= x)
 
@@ -184,7 +184,7 @@ pctl_by_approx <- function(x, ref) {
   approx(x = ref, y = p_grid, xout = x)$y/100
 }
 
-process.step_percentile <- function(object, newdata, ...) {
+bake.step_percentile <- function(object, newdata, ...) {
   require(tibble)
   ## For illustration (and not speed), we will loop through the affected variables
   ## and do the computations
@@ -216,7 +216,7 @@ rec_obj <- rec_obj %>%
 
 rec_obj <- prepare(rec_obj, training = biomass_tr)
 
-percentiles <- process(rec_obj, biomass_te)
+percentiles <- bake(rec_obj, biomass_te)
 percentiles
 ```
 

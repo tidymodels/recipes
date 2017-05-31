@@ -60,7 +60,7 @@ bc_trans <- step_BoxCox(rec, all_numeric())
 
 bc_estimates <- prepare(bc_trans, training = as.data.frame(state.x77))
 
-bc_data <- process(bc_estimates, as.data.frame(state.x77))
+bc_data <- bake(bc_estimates, as.data.frame(state.x77))
 
 plot(density(state.x77[, "Illiteracy"]), main = "before")
 plot(density(bc_data$Illiteracy), main = "after")
@@ -71,7 +71,7 @@ Sakia, R. M. (1992). The Box-Cox transformation technique:
 }
 \seealso{
 \code{\link{step_YeoJohnson}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

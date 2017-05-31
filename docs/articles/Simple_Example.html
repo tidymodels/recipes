@@ -148,14 +148,14 @@ standardized</code></pre></div>
 ## Centering for all_predictors()
 ## Scaling for all_predictors()</code></pre>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
-<p>If this is the only processing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>learn</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
+<p>If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prepare</code> function is used with a recipe and a data set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
 <pre><code>## step 1 center training 
 ## step 2 scale training</code></pre>
-<p>Now that the statistics have been estimated, the processing can be applied to the training and test set:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(trained_rec, <span class="dt">newdata =</span> seg_train)
-test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)</code></pre></div>
-<p><code>process</code> returns a tibble:</p>
+<p>Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_train)
+test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)</code></pre></div>
+<p><code>bake</code> returns a tibble:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(test_data)</code></pre></div>
 <pre><code>## [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data</code></pre></div>
@@ -216,13 +216,13 @@ trained_rec</code></pre></div>
 ## Centering for AngleCh1, AreaCh1, ... [trained]
 ## Scaling for AngleCh1, AreaCh1, ... [trained]
 ## PCA extraction with ends_with("Ch1"), contains("area")</code></pre>
-<p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>learn</code> again:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/learn.html">learn</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
+<p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>prepare</code> again:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
 <pre><code>## step 1 center [pre-trained]
 ## step 2 scale [pre-trained]
 ## step 3 pca training</code></pre>
-<p><code>process</code> can be reapplied to get the principal components in addition to the other variables:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/process.html">process</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)
+<p><code>bake</code> can be reapplied to get the principal components in addition to the other variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)
 <span class="kw">names</span>(test_data)</code></pre></div>
 <pre><code>##  [1] "AvgIntenCh2"          "AvgIntenCh3"          "AvgIntenCh4"         
 ##  [4] "DiffIntenDensityCh3"  "DiffIntenDensityCh4"  "EntropyIntenCh3"     

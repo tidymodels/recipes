@@ -89,7 +89,7 @@
     </div>
 
     
-    <p>This function processes the step function selectors and might be useful
+    <p>This function bakees the step function selectors and might be useful
   when creating custom steps.</p>
     
 
@@ -120,16 +120,12 @@ expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/top
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='recipe.html'>recipe</a></code> <code><a href='summary.recipe.html'>summary.recipe</a></code>
-  <code><a href='learn.html'>learn.recipe</a></code></p>
+  <code><a href='prepare.html'>prepare.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    is_formula</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:devtools’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    ns_env, pkg_env</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)
+<span class='fu'>data</span>(<span class='no'>okc</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
 <span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"    </div></pre>

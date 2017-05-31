@@ -139,7 +139,7 @@ resulting absolute correlations are less than this value.</p></td>
       <th>removals</th>
       <td><p>A character string that contains the names of columns that
 should be removed. These values are not determined until
-<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -155,7 +155,7 @@ should be removed. These values are not determined until
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='step_nzv.html'>step_nzv</a></code> <code><a href='recipe.html'>recipe</a></code>
-  <code><a href='learn.html'>learn.recipe</a></code> <code><a href='process.html'>process.recipe</a></code></p>
+  <code><a href='prepare.html'>prepare.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -174,8 +174,8 @@ should be removed. These values are not determined until
 <span class='no'>corr_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_corr</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
 
-<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 corr training </div><div class='input'>
-<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)
+<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 corr training </div><div class='input'>
+<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>biomass_tr</span>[, <span class='fu'>c</span>(<span class='fl'>3</span>:<span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
 #&gt; carbon      1.00     0.32   0.63     0.15   0.09      1.00
 #&gt; hydrogen    0.32     1.00   0.54     0.07   0.19      0.31

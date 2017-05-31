@@ -41,12 +41,12 @@
 #'
 #' bc_estimates <- prepare(bc_trans, training = as.data.frame(state.x77))
 #'
-#' bc_data <- process(bc_estimates, as.data.frame(state.x77))
+#' bc_data <- bake(bc_estimates, as.data.frame(state.x77))
 #'
 #' plot(density(state.x77[, "Illiteracy"]), main = "before")
 #' plot(density(bc_data$Illiteracy), main = "after")
 #' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 step_BoxCox <-
   function(recipe,
            ...,
@@ -113,7 +113,7 @@ prepare.step_BoxCox <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_BoxCox <- function(object, newdata, ...) {
+bake.step_BoxCox <- function(object, newdata, ...) {
   if (length(object$lambdas) == 0)
     return(as_tibble(newdata))
   param <- names(object$lambdas)

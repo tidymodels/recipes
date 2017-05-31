@@ -28,7 +28,7 @@ for the 1's (in the first position) and the zeros (second)}
 \value{
 \code{step_bin2factor}  returns an object of class
   \code{step_bin2factor}. The variables selected will be replaced by their
-  factor doppelgängers by  \code{\link{process.recipe}}.
+  factor doppelgängers by  \code{\link{bake.recipe}}.
 }
 \description{
 \code{step_bin2factor} creates a \emph{specification} of a recipe step that
@@ -52,7 +52,7 @@ rec <- recipe(~ description, covers) \%>\%
  step_bin2factor(rocks)
 
 rec <- prepare(rec, training = covers)
-results <- process(rec, newdata = covers)
+results <- bake(rec, newdata = covers)
 
 table(results$rocks, results$more_rocks)
 }

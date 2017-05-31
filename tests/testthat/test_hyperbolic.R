@@ -19,7 +19,7 @@ test_that('simple hyperbolic trans', {
         step_hyperbolic(x1, x2, func = func, inverse = invf)
       
       rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
-      rec_trans <- process(rec_trained, newdata = ex_dat)
+      rec_trans <- bake(rec_trained, newdata = ex_dat)
       
       if(invf) {
         foo <- get(paste0("a", func))

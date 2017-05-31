@@ -33,7 +33,7 @@ computed by \code{\link{prepare.recipe}}.}
 \details{
 \code{step_modeimpute} estimates the variable modes from the data
   used in the \code{training} argument of \code{prepare.recipe}.
-  \code{process.recipe} then applies the new values to new data sets using
+  \code{bake.recipe} then applies the new values to new data sets using
   these values. If the training set data has more than one mode, one is
   selected at random.
 }
@@ -57,7 +57,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prepare(impute_rec, training = credit_tr)
 
-imputed_te <- process(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, newdata = credit_te, everything())
 
 table(credit_te$Home, imputed_te$Home, useNA = "always")
 }

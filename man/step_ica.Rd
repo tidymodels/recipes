@@ -81,7 +81,7 @@ ica_trans <- step_center(rec,  V1, V2)
 ica_trans <- step_scale(rec, V1, V2)
 ica_trans <- step_ica(rec, V1, V2, num = 2)
 ica_estimates <- prepare(ica_trans, training = tr)
-ica_data <- process(ica_estimates, te)
+ica_data <- bake(ica_estimates, te)
 
 plot(te$V1, te$V2)
 plot(ica_data$IC1, ica_data$IC2)
@@ -94,7 +94,7 @@ Hyvarinen, A., and Oja, E. (2000). Independent component
 \seealso{
 \code{\link{step_pca}} \code{\link{step_kpca}}
   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing ica projection_methods

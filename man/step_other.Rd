@@ -66,7 +66,7 @@ rec <- rec \%>\%
   step_other(diet, location, threshold = .1, other = "other values")
 rec <- prepare(rec, training = okc_tr)
 
-collapsed <- process(rec, okc_te)
+collapsed <- bake(rec, okc_te)
 table(okc_te$diet, collapsed$diet, useNA = "always")
 }
 \concept{

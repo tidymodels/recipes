@@ -80,7 +80,7 @@ im_trans <- rec \%>\%
 
 im_estimates <- prepare(im_trans, training = biomass_tr)
 
-im_te <- process(im_estimates, biomass_te)
+im_te <- bake(im_estimates, biomass_te)
 
 rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 plot(im_te$Isomap1, im_te$Isomap2,
@@ -97,7 +97,7 @@ De Silva, V., and Tenenbaum, J. B. (2003). Global versus local
 \seealso{
 \code{\link{step_pca}} \code{\link{step_kpca}}
   \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing isomap projection_methods

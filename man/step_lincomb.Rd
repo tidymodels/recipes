@@ -62,7 +62,7 @@ prepare(lincomb_filter, training = biomass_tr)
 \seealso{
 \code{\link{step_nzv}}\code{\link{step_corr}}
   \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing

@@ -17,7 +17,7 @@
 #'   imputed and to be an imputation predictor, it will be removed from the
 #'   latter and not used to impute itself.
 #' @param K The number of neighbors.
-#' @param ref_data A tibble of data that will reflect the data processing
+#' @param ref_data A tibble of data that will reflect the data preprocessing
 #'   done up to the point of this imputation step. This is
 #'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
 #' @param variables The column names that will be imputed and used for
@@ -64,7 +64,7 @@
 #' ratio_recipe <- rec %>%
 #'   step_knnimpute(all_predictors(), K = 3)
 #' ratio_recipe2 <- prepare(ratio_recipe, training = biomass_tr)
-#' imputed <- process(ratio_recipe2, biomass_te)
+#' imputed <- bake(ratio_recipe2, biomass_te)
 #'
 #' # how well did it work?
 #' summary(biomass_te_whole$carbon)
@@ -160,7 +160,7 @@ nn_pred <- function(index, dat) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-process.step_knnimpute <- function(object, newdata, ...) {
+bake.step_knnimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if (!any(missing_rows))
     return(newdata)

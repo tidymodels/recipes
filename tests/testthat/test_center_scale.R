@@ -49,7 +49,7 @@ test_that('single predictor', {
     step_scale(hydrogen)
 
   standardized_trained <- prepare(standardized, training = biomass, verbose = FALSE)
-  results <- process(standardized_trained, biomass)
+  results <- bake(standardized_trained, biomass)
 
   exp_res <- biomass[, 3:8]
   exp_res$carbon <- exp_res$carbon - mean(exp_res$carbon)

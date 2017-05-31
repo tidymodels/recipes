@@ -85,7 +85,7 @@ Once a recipe has been defined, the \code{\link{prepare}} function can be
   used to estimate quants required in the steps from a data set (a.k.a. the
   training data). \code{\link{prepare}} returns another recipe.
 
-To apply the recipe to a data set, the \code{\link{process}} function is
+To apply the recipe to a data set, the \code{\link{bake}} function is
   used in the same manner as \code{predict} would be for models. This
   applies the steps to any data set.
 
@@ -122,7 +122,7 @@ sp_signed_trained <- prepare(sp_signed, training = biomass_tr)
 sp_signed_trained
 
 # apply the preprocessing to a data set
-test_set_values <- process(sp_signed_trained, newdata = biomass_te)
+test_set_values <- bake(sp_signed_trained, newdata = biomass_te)
 
 # or use pipes for the entire workflow:
 rec <- biomass_tr \%>\%
@@ -143,7 +143,7 @@ multi_y <- multi_y \%>\%
 
 multi_y_trained <- prepare(multi_y, training = biomass_tr)
 
-results <- process(multi_y_trained, biomass_te)
+results <- bake(multi_y_trained, biomass_te)
 
 ###############################################
 # Creating a recipe manually with different roles

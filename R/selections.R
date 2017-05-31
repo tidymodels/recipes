@@ -25,7 +25,7 @@
 #'   \enumerate{
 #'     \item The selector arguments should not contain functions beyond those
 #'       supported (see below).
-#'     \item These arguments are not processed until the \code{prepare} function
+#'     \item These arguments are not evaluated until the \code{prepare} function
 #'       for the step is executed.
 #'     \item The \code{dplyr}-like syntax allows for negative sings to exclude
 #'       variables (e.g. \code{-Murder}) and the set of selectors will
@@ -227,7 +227,7 @@ check_elements <- function(x, allowed = selectors) {
     if (length(funs) > 0)
       stop(
         "No in-line functions should be used here; use steps to define ",
-        "processing actions", call. = FALSE
+        "baking actions", call. = FALSE
       )
   }
   invisible(NULL)
@@ -242,7 +242,7 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Select Terms in a Step Function.
 #'
-#' This function processes the step function selectors and might be useful
+#' This function bakees the step function selectors and might be useful
 #'   when creating custom steps.
 #'
 #' @param info A tibble with columns \code{variable}, \code{type}, \code{role},

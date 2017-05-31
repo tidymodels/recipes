@@ -24,7 +24,7 @@
 #' rand_set <- prepare(rec, training = integers)
 #'
 #' set.seed(5377)
-#' process(rand_set, integers)
+#' bake(rand_set, integers)
 
 step_shuffle <- function(recipe,
                          ...,
@@ -70,7 +70,7 @@ prepare.step_shuffle <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_shuffle <- function(object, newdata, ...) {
+bake.step_shuffle <- function(object, newdata, ...) {
   if (length(object$variables) > 0)
     for (i in seq_along(object$variables))
       newdata[, object$variables[i]] <-

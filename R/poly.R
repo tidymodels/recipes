@@ -37,10 +37,10 @@
 #'   step_poly(carbon, hydrogen)
 #' quadratic <- prepare(quadratic, training = biomass_tr)
 #'
-#' expanded <- process(quadratic, biomass_te)
+#' expanded <- bake(quadratic, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_ns}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 
 step_poly <-
@@ -117,7 +117,7 @@ prepare.step_poly <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
 #' @export
-process.step_poly <- function(object, newdata, ...) {
+bake.step_poly <- function(object, newdata, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   poly_values <-

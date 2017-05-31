@@ -28,11 +28,11 @@
 #'
 #' cos_obj <- prepare(cos_trans, training = examples)
 #'
-#' transformed_te <- process(cos_obj, examples)
+#' transformed_te <- bake(cos_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_log}}  \code{\link{step_sqrt}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 step_hyperbolic <-
   function(recipe,
@@ -95,7 +95,7 @@ prepare.step_hyperbolic <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_hyperbolic <- function(object, newdata, ...) {
+bake.step_hyperbolic <- function(object, newdata, ...) {
   func <- if (object$inverse)
     get(paste0("a", object$func))
   else

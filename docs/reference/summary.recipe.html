@@ -122,12 +122,12 @@ used).</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that, until the recipe has been learned, the currrent and
+    <p>Note that, until the recipe has been trained, the currrent and
   original variables are the same.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='learn.html'>learn.recipe</a></code></p>
+    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -139,13 +139,13 @@ used).</p></td>
 #&gt; 2  Assault numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
 #&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet learned</span></div><div class='output co'>#&gt; # A tibble: 4 x 4
+<span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet trained</span></div><div class='output co'>#&gt; # A tibble: 4 x 4
 #&gt;   variable    type      role   source
 #&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
 #&gt; 1   Murder numeric predictor original
 #&gt; 2  Assault numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
-#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
+#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; step 1 pca training </div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
 #&gt;   variable    type      role  source
 #&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
 #&gt; 1      PC1 numeric predictor derived

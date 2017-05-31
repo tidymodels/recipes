@@ -65,14 +65,14 @@
 #'
 #' im_estimates <- prepare(im_trans, training = biomass_tr)
 #'
-#' im_te <- process(im_estimates, biomass_te)
+#' im_te <- bake(im_estimates, biomass_te)
 #'
 #' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 #' plot(im_te$Isomap1, im_te$Isomap2,
 #'      xlim = rng, ylim = rng)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
 #'   \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 
 step_isomap <-
   function(recipe,
@@ -150,7 +150,7 @@ prepare.step_isomap <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_isomap <- function(object, newdata, ...) {
+bake.step_isomap <- function(object, newdata, ...) {
   isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(

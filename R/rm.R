@@ -5,7 +5,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables that
-#'   will evaluated by the filtering process. See \code{\link{selections}} for
+#'   will evaluated by the filtering bake. See \code{\link{selections}} for
 #'   more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param removals A character string that contains the names of columns that
@@ -30,7 +30,7 @@
 #'
 #' smaller_set <- prepare(smaller_set, training = biomass_tr)
 #'
-#' filtered_te <- process(smaller_set, biomass_te)
+#' filtered_te <- bake(smaller_set, biomass_te)
 #' filtered_te
 
 step_rm <- function(recipe,
@@ -77,7 +77,7 @@ prepare.step_rm <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_rm <- function(object, newdata, ...) {
+bake.step_rm <- function(object, newdata, ...) {
   if (length(object$removals) > 0)
     newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
   as_tibble(newdata)

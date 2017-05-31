@@ -118,7 +118,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 rec <- rec \%>\% step_discretize(carbon, hydrogen)
 rec <- prepare(rec, biomass_tr)
-binned_te <- process(rec, biomass_te)
+binned_te <- bake(rec, biomass_te)
 table(binned_te$carbon)
 }
 \concept{

@@ -87,7 +87,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prepare(impute_rec, training = credit_tr)
 
-imputed_te <- process(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, newdata = credit_te, everything())
 
 credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]

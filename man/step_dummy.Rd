@@ -47,7 +47,7 @@ variables for each variable contained in \code{terms}. This is
 \details{
 \code{step_dummy} will create a set of binary dummy variables 
   from a factor variable. For example, if a factor column in the data set
-  has levels of "red", "green", "blue", the dummy variable process will
+  has levels of "red", "green", "blue", the dummy variable bake will
   create two additional columns of 0/1 data for two of those three values
   (and remove the original column).
 
@@ -71,7 +71,7 @@ rec <- recipe(~ diet + age + height, data = okc)
 dummies <- rec \%>\% step_dummy(diet)
 dummies <- prepare(dummies, training = okc)
 
-dummy_data <- process(dummies, newdata = okc)
+dummy_data <- bake(dummies, newdata = okc)
 
 unique(okc$diet)
 grep("^diet", names(dummy_data), value = TRUE)

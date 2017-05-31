@@ -69,12 +69,12 @@ date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
    step_date(all_predictors())
 
 date_rec <- prepare(date_rec, training = examples)
-date_values <- process(date_rec, newdata = examples)
+date_values <- bake(date_rec, newdata = examples)
 date_values
 }
 \seealso{
 \code{\link{step_holiday}} \code{\link{step_rm}} 
-  \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

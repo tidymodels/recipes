@@ -16,12 +16,12 @@
 #'
 #' @section Basic Functions:
 #' The three main functions are \code{\link{recipe}}, \code{\link{prepare}},
-#'   and \code{\link{process}}.
+#'   and \code{\link{bake}}.
 #'
 #' \code{\link{recipe}} defines the operations on the data and the associated
 #'   roles. Once the preprocessing steps are defined, any parameters are
 #'   estimated using \code{\link{prepare}}. Once the data are ready for
-#'   transformation, the \code{\link{process}} function applies the operations.
+#'   transformation, the \code{\link{bake}} function applies the operations.
 #'
 #' @section Step Functions:
 #' These functions are used to add new actions to the recipe and have the

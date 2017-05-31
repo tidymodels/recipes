@@ -74,7 +74,7 @@ discretize.default <- function(x, ...)
 #'               data = biomass_tr)
 #' rec <- rec %>% step_discretize(carbon, hydrogen)
 #' rec <- prepare(rec, biomass_tr)
-#' binned_te <- process(rec, biomass_te)
+#' binned_te <- bake(rec, biomass_te)
 #' table(binned_te$carbon)
 
 #' @importFrom stats quantile
@@ -281,7 +281,7 @@ prepare.step_discretize <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
 #' @export
-process.step_discretize <- function(object, newdata, ...) {
+bake.step_discretize <- function(object, newdata, ...) {
   for (i in names(object$objects))
     newdata[, i] <-
       predict(object$objects[[i]], getElement(newdata, i))

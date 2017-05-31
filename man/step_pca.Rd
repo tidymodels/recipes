@@ -84,7 +84,7 @@ pca_trans <- rec \%>\%
   step_scale(all_numeric()) \%>\%
   step_pca(all_numeric(), num = 3)
 pca_estimates <- prepare(pca_trans, training = USArrests)
-pca_data <- process(pca_estimates, USArrests)
+pca_data <- bake(pca_estimates, USArrests)
 
 rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
 plot(pca_data$PC1, pca_data$PC2,
@@ -95,7 +95,7 @@ with_thresh <- rec \%>\%
   step_scale(all_numeric()) \%>\%
   step_pca(all_numeric(), threshold = .99)
 with_thresh <- prepare(with_thresh, training = USArrests)
-process(with_thresh, USArrests)
+bake(with_thresh, USArrests)
 }
 \references{
 Jolliffe, I. T. (2010). \emph{Principal Component Analysis}.
@@ -104,7 +104,7 @@ Jolliffe, I. T. (2010). \emph{Principal Component Analysis}.
 \seealso{
 \code{\link{step_ica}} \code{\link{step_kpca}}
   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing pca projection_methods

@@ -12,7 +12,7 @@ test_that('multivariate outcome', {
   
   rec_trained <- prepare(rec, training = biomass)
   
-  results <- process(rec_trained, head(biomass))
+  results <- bake(rec_trained, head(biomass))
   
   exp_res <- biomass
   

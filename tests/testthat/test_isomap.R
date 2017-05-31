@@ -30,7 +30,7 @@ test_that('correct Isomap values', {
 
   im_trained <- prepare(im_rec, training = dat1, verbose = FALSE)
 
-  im_pred <- process(im_trained, newdata = dat2)
+  im_pred <- bake(im_trained, newdata = dat2)
 
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
 })

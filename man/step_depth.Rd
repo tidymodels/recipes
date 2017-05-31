@@ -59,7 +59,7 @@ Data depth metrics attempt to measure how close data a data point
   proximity of the new value to the training set distribution.
 
 Note that the entire training set is saved to compute future depth values.
-The saved data have been trained (i.e. prepared) and processed up to the point before the
+The saved data have been trained (i.e. prepared) and baked (i.e. processed) up to the point before the
 location that \code{step_depth} occupies in the recipe. Also, the data
 requirements for the different step methods may vary. For example, using
 \code{metric = "Mahalanobis"} requires that each class should have at least
@@ -77,7 +77,7 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 
 rec_dists <- prepare(rec, training = iris)
 
-dists_to_species <- process(rec_dists, newdata = iris)
+dists_to_species <- bake(rec_dists, newdata = iris)
 dists_to_species
 }
 \concept{

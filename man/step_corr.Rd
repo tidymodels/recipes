@@ -63,13 +63,13 @@ corr_filter <- rec \%>\%
 
 filter_obj <- prepare(corr_filter, training = biomass_tr)
 
-filtered_te <- process(filter_obj, biomass_te)
+filtered_te <- bake(filter_obj, biomass_te)
 round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 round(abs(cor(filtered_te)), 2)
 }
 \seealso{
 \code{\link{step_nzv}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \author{
 Original R code for filtering algorithm by Dong Li, modified by

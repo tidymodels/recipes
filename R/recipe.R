@@ -69,7 +69,7 @@ recipe.default <- function(x, ...)
 #'   used to estimate quants required in the steps from a data set (a.k.a. the
 #'   training data). \code{\link{prepare}} returns another recipe.
 #'
-#' To apply the recipe to a data set, the \code{\link{process}} function is
+#' To apply the recipe to a data set, the \code{\link{bake}} function is
 #'   used in the same manner as \code{predict} would be for models. This
 #'   applies the steps to any data set.
 #'
@@ -110,7 +110,7 @@ recipe.default <- function(x, ...)
 #' sp_signed_trained
 #'
 #' # apply the preprocessing to a data set
-#' test_set_values <- process(sp_signed_trained, newdata = biomass_te)
+#' test_set_values <- bake(sp_signed_trained, newdata = biomass_te)
 #'
 #' # or use pipes for the entire workflow:
 #' rec <- biomass_tr %>%
@@ -131,7 +131,7 @@ recipe.default <- function(x, ...)
 #'
 #' multi_y_trained <- prepare(multi_y, training = biomass_tr)
 #'
-#' results <- process(multi_y_trained, biomass_te)
+#' results <- bake(multi_y_trained, biomass_te)
 #'
 #' ###############################################
 #' # Creating a recipe manually with different roles
@@ -279,13 +279,13 @@ prepare   <- function(x, ...)
 #'   \code{training}.
 #' @param verbose A logical that controls wether progress is reported as steps
 #'   are executed.
-#' @param retain A logical: should the \emph{processed} training set be saved
+#' @param retain A logical: should the \emph{preprocessingcessed} training set be saved
 #'   into the \code{template} slot of the recipe after training? This is a good
 #'     idea if you want to add more steps later but want to avoid re-training
 #'     the existing steps.
 #' @param stringsAsFactors A logical: should character columns be converted to
-#'   factors? This affects the processed training set (when
-#'   \code{retain = TRUE}) as well as the results of \code{process.recipe}.
+#'   factors? This affects the preprocessingcessed training set (when
+#'   \code{retain = TRUE}) as well as the results of \code{bake.recipe}.
 #' @return A recipe whose step objects have been updated with the required
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
 #'   \code{term_info} object is likely to be modified as the steps are
@@ -344,14 +344,14 @@ prepare.recipe <-
         if (verbose)
           cat(note, "training", "\n")
         
-        # Compute anything needed for the pre-processing steps
+        # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
         
         x$steps[[i]] <-
           prepare(x$steps[[i]],
                 training = training,
                 info = x$term_info)
-        training <- process(x$steps[[i]], newdata = training)
+        training <- bake(x$steps[[i]], newdata = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
         
@@ -379,14 +379,14 @@ prepare.recipe <-
     x
   }
 
-#' @rdname process
-#' @aliases process process.recipe
+#' @rdname bake
+#' @aliases bake bake.recipe
 #' @author Max Kuhn
 #' @keywords datagen
 #' @concept preprocessing model_specification
 #' @export
-process <- function(object, ...)
-  UseMethod("process")
+bake <- function(object, ...)
+  UseMethod("bake")
 
 #' Apply a Trained Data Recipe
 #'
@@ -402,7 +402,7 @@ process <- function(object, ...)
 #'   \code{\link{all_predictors}}.
 #' @return A tibble that may have different columns than the original columns
 #'   in \code{newdata}.
-#' @details \code{\link{process}} takes a trained recipe and applies the
+#' @details \code{\link{bake}} takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
 #'
 #' If the original data used to train the data are to be processed, time can be
@@ -411,12 +411,12 @@ process <- function(object, ...)
 #'
 #' A tibble is always returned but can be easily converted to a data frame or
 #'   matrix as needed.
-#' @rdname process
+#' @rdname bake
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter
 #' @export
 
-process.recipe <- function(object, newdata = object$template, ...) {
+bake.recipe <- function(object, newdata = object$template, ...) {
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(all_predictors())
@@ -430,7 +430,7 @@ process.recipe <- function(object, newdata = object$template, ...) {
     newdata[, object$var_info$variable]
   
   for (i in seq(along = object$steps)) {
-    newdata <- process(object$steps[[i]], newdata = newdata)
+    newdata <- bake(object$steps[[i]], newdata = newdata)
     if (!is_tibble(newdata))
       as_tibble(newdata)
   }

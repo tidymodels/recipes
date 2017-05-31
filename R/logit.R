@@ -26,11 +26,11 @@
 #'
 #' logit_obj <- prepare(logit_trans, training = examples)
 #'
-#' transformed_te <- process(logit_obj, examples)
+#' transformed_te <- bake(logit_obj, examples)
 #' plot(examples$X1, transformed_te$X1)
 #' @seealso \code{\link{step_invlogit}} \code{\link{step_log}}
 #' \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-#' \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#' \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
 step_logit <-
   function(recipe,
@@ -79,7 +79,7 @@ prepare.step_logit <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-process.step_logit <- function(object, newdata, ...) {
+bake.step_logit <- function(object, newdata, ...) {
   for (i in seq_along(object$vars))
     newdata[, object$vars[i]] <-
       binomial()$linkfun(getElement(newdata, object$vars[i]))

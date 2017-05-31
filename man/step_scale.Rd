@@ -36,7 +36,7 @@ removed when computing the standard deviation.}
 Scaling data means that the standard deviation of a variable is
   divided out of the data. \code{step_scale} estimates the variable
   standard deviations from the data used in the \code{training} argument of
-  \code{prepare.recipe}. \code{process.recipe} then applies the scaling to
+  \code{prepare.recipe}. \code{bake.recipe} then applies the scaling to
   new data sets using these standard deviations.
 }
 \examples{
@@ -53,7 +53,7 @@ scaled_trans <- rec \%>\%
 
 scaled_obj <- prepare(scaled_trans, training = biomass_tr)
 
-transformed_te <- process(scaled_obj, biomass_te)
+transformed_te <- bake(scaled_obj, biomass_te)
 
 biomass_te[1:10, names(transformed_te)]
 transformed_te

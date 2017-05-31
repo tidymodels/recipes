@@ -181,7 +181,7 @@ have been estimated.</p></td>
     <tr>
       <th>objects</th>
       <td><p>The <code>discretize</code> objects are stored here once
-the recipe has be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+the recipe has be trained by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -235,7 +235,7 @@ transformed might be problematic as all variables inherit those values.</p></td>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 discretize training </div><div class='input'><span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; 
 #&gt; bin_missing        bin1        bin2        bin3        bin4 
 #&gt;           0          22          17          25          16 </div></pre>

@@ -16,8 +16,8 @@ test_that('correct basis functions', {
   
   with_ns <- prepare(with_ns, training = biomass_tr, verbose = FALSE)
   
-  with_ns_pred_tr <- process(with_ns, newdata = biomass_tr)
-  with_ns_pred_te <- process(with_ns, newdata = biomass_te)
+  with_ns_pred_tr <- bake(with_ns, newdata = biomass_tr)
+  with_ns_pred_te <- bake(with_ns, newdata = biomass_te)
   
   carbon_ns_tr_exp <- ns(biomass_tr$carbon, df = 2)
   hydrogen_ns_tr_exp <- ns(biomass_tr$hydrogen, df = 2)

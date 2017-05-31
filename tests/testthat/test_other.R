@@ -15,7 +15,7 @@ rec <- recipe(~ diet + location, data = okc_tr)
 test_that('default inputs', {
   others <- rec %>% step_other(diet, location)
   others <- prepare(others, training = okc_tr)
-  others_te <- process(others, newdata = okc_te)
+  others_te <- bake(others, newdata = okc_te)
   
   diet_props <- table(okc_tr$diet)/sum(!is.na(okc_tr$diet))
   diet_props <- sort(diet_props, decreasing = TRUE)
@@ -47,7 +47,7 @@ test_that('default inputs', {
 test_that('high threshold - much removals', {
   others <- rec %>% step_other(diet, location, threshold = .5)
   others <- prepare(others, training = okc_tr)
-  others_te <- process(others, newdata = okc_te)
+  others_te <- bake(others, newdata = okc_te)
   
   diet_props <- table(okc_tr$diet)
   diet_levels <- others$steps[[1]]$objects$diet$keep
@@ -77,7 +77,7 @@ test_that('high threshold - much removals', {
 test_that('low threshold - no removals', {
   others <- rec %>% step_other(diet, location, threshold = 10^-10)
   others <- prepare(others, training = okc_tr, stringsAsFactors = FALSE)
-  others_te <- process(others, newdata = okc_te)
+  others_te <- bake(others, newdata = okc_te)
   
   expect_equal(others$steps[[1]]$objects$diet$collapse, FALSE)
   expect_equal(others$steps[[1]]$objects$location$collapse, FALSE)
@@ -99,7 +99,7 @@ test_that('factor inputs', {
   
   others <- rec %>% step_other(diet, location)
   others <- prepare(others, training = okc_tr)
-  others_te <- process(others, newdata = okc_te)
+  others_te <- bake(others, newdata = okc_te)
   
   diet_props <- table(okc_tr$diet)/sum(!is.na(okc_tr$diet))
   diet_props <- sort(diet_props, decreasing = TRUE)

@@ -45,7 +45,7 @@
 #'
 #' rec_dists <- prepare(rec, training = iris)
 #'
-#' dists_to_species <- process(rec_dists, newdata = iris, everything())
+#' dists_to_species <- bake(rec_dists, newdata = iris, everything())
 #' ## on log scale:
 #' dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 #' dists_to_species[, c("Species", dist_cols)]
@@ -160,7 +160,7 @@ mah_pooled <- function(means, x, cov_mat)
 
 #' @importFrom tibble as_tibble
 #' @export
-process.step_classdist <- function(object, newdata, ...) {
+bake.step_classdist <- function(object, newdata, ...) {
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     res <- lapply(

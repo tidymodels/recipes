@@ -149,7 +149,7 @@ log function?</p></td>
     <tr>
       <th>objects</th>
       <td><p>Statistics are stored here once this step has been trained
-by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -179,8 +179,8 @@ by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
   <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
                  <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>)
 
-<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>
-<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='fu'>everything</span>())
+<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 classdist training </div><div class='input'>
+<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='fu'>everything</span>())
 <span class='co'>## on log scale:</span>
 <span class='no'>dist_cols</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='no'>dist_cols</span>)]</div><div class='output co'>#&gt; # A tibble: 150 x 4

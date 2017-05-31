@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a Trained Data Recipe — process • recipes</title>
+<title>Train a Data Recipe — prepare • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -85,55 +85,84 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a Trained Data Recipe</h1>
+    <h1>Train a Data Recipe</h1>
     </div>
 
     
-    <p>For a recipe with at least one preprocessing step that has been trained by
-  <code><a href='learn.html'>learn.recipe</a></code>, apply the computations to new data.</p>
+    <p>For a recipe with at least one preprocessing step, estimate the required
+  parameters from a training set that can be later applied to other data 
+  sets.</p>
     
 
-    <pre class="usage"><span class='fu'>process</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>prepare</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>process</span>(<span class='no'>object</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>template</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>prepare</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>A trained object such as a <code><a href='recipe.html'>recipe</a></code> with at least
-one preprocessing step.</p></td>
+      <th>x</th>
+      <td><p>an object</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be
-returned by the function. See <code><a href='selections.html'>selections</a></code> for more details.
-If no selectors are given, the default is to use
-<code><a href='has_role.html'>all_predictors</a></code>.</p></td>
+      <td><p>further arguments passed to or from other methods (not currently
+used).</p></td>
     </tr>
     <tr>
-      <th>newdata</th>
-      <td><p>A data frame or tibble for whom the preprocessing will be
-applied.</p></td>
+      <th>training</th>
+      <td><p>A data frame or tibble that will be used to estimate
+parameters for preprocessing.</p></td>
+    </tr>
+    <tr>
+      <th>fresh</th>
+      <td><p>A logical indicating whether already trained steps should be
+re-trained. If <code>TRUE</code>, you should pass in a data set to the argument
+<code>training</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>A logical that controls wether progress is reported as steps
+are executed.</p></td>
+    </tr>
+    <tr>
+      <th>retain</th>
+      <td><p>A logical: should the <em>preprocessingcessed</em> training set be saved
+into the <code>template</code> slot of the recipe after training? This is a good
+  idea if you want to add more steps later but want to avoid re-training
+  the existing steps.</p></td>
+    </tr>
+    <tr>
+      <th>stringsAsFactors</th>
+      <td><p>A logical: should character columns be converted to
+factors? This affects the preprocessingcessed training set (when
+<code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble that may have different columns than the original columns
-  in <code>newdata</code>.</p>
+    <p>A recipe whose step objects have been updated with the required
+  quantities (e.g. parameter estimates, model objects, etc). Also, the
+  <code>term_info</code> object is likely to be modified as the steps are
+  executed.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>process</code> takes a trained recipe and applies the
-  operations to a data set to create a design matrix.</p>
-<p>If the original data used to train the data are to be processed, time can be
-  saved by using the <code>retain = TRUE</code> option of <code><a href='learn.html'>learn</a></code> to
-  avoid duplicating the same operations.</p>
-<p>A tibble is always returned but can be easily converted to a data frame or
-  matrix as needed.</p>
+    <p>Given a data set, this function estimates the required quantities
+  and statistics required by any steps.
+    <code>prepare</code> returns an updated recipe with the estimates.</p>
+<p>Note that missing data handling is handled in the steps; there is no global
+  <code>na.rm</code> option at the recipe-level or in  <code>prepare</code>.</p>
+<p>Also, if a recipe has been trained using <code>prepare</code> and then steps
+  are added, <code>prepare</code> will only update the new steps. If
+  <code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
+<p>As the steps are executed, the <code>training</code> set is updated. For example,
+  if the first step is to center the data and the second is to scale the
+  data, the step for scaling is given the centered data.</p>
     
 
   </div>

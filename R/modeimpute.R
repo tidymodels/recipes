@@ -15,7 +15,7 @@
 #' @export
 #' @details \code{step_modeimpute} estimates the variable modes from the data
 #'   used in the \code{training} argument of \code{prepare.recipe}.
-#'   \code{process.recipe} then applies the new values to new data sets using
+#'   \code{bake.recipe} then applies the new values to new data sets using
 #'   these values. If the training set data has more than one mode, one is
 #'   selected at random.
 #' @examples
@@ -38,7 +38,7 @@
 #'
 #' imp_models <- prepare(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- process(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
 #' table(credit_te$Home, imputed_te$Home, useNA = "always")
 
@@ -90,7 +90,7 @@ prepare.step_modeimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_modeimpute <- function(object, newdata, ...) {
+bake.step_modeimpute <- function(object, newdata, ...) {
   for (i in names(object$modes)) {
     if (any(is.na(newdata[, i])))
       newdata[is.na(newdata[, i]), i] <- object$modes[i]

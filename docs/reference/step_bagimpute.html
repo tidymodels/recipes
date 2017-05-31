@@ -127,7 +127,7 @@ have been estimated.</p></td>
     <tr>
       <th>models</th>
       <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipredbagg</a></code> objects are stored here 
-once this bagged trees have be trained by <code><a href='learn.html'>learn.recipe</a></code>.</p></td>
+once this bagged trees have be trained by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -199,8 +199,8 @@ is used across all imputation models.</p></td>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='input'>
-<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 bagimpute training </div><div class='input'>
+<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
 <span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
 #&gt; 30      bad         0 &lt;NA&gt;   48  37  single      no  &lt;NA&gt;       35     NA

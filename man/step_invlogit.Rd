@@ -49,14 +49,14 @@ ilogit_trans <- rec  \%>\%
 
 ilogit_obj <- prepare(ilogit_trans, training = biomass_tr)
 
-transformed_te <- process(ilogit_obj, biomass_te)
+transformed_te <- bake(ilogit_obj, biomass_te)
 plot(biomass_te$carbon, transformed_te$carbon)
 }
 \seealso{
 \code{\link{step_logit}} \code{\link{step_log}}
   \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}
   \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

@@ -12,7 +12,7 @@
 #' \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @return \code{step_bin2factor}  returns an object of class
 #'   \code{step_bin2factor}. The variables selected will be replaced by their
-#'   factor doppelgängers by  \code{\link{process.recipe}}.
+#'   factor doppelgängers by  \code{\link{bake.recipe}}.
 #' @details This operation may be useful for situations where a binary piece of
 #'   information may need to be represented as categorical instead of numeric.
 #'   For example, naive Bayes models would do better to have factor predictors
@@ -32,7 +32,7 @@
 #'  step_bin2factor(rocks)
 #'
 #' rec <- prepare(rec, training = covers)
-#' results <- process(rec, newdata = covers)
+#' results <- bake(rec, newdata = covers)
 #'
 #' table(results$rocks, results$more_rocks)
 step_bin2factor <-
@@ -94,7 +94,7 @@ prepare.step_bin2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
-process.step_bin2factor <- function(object, newdata, ...) {
+bake.step_bin2factor <- function(object, newdata, ...) {
   for (i in seq_along(object$objects))
     newdata[, object$objects[i]] <-
       factor(ifelse(

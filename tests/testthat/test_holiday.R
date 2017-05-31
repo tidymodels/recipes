@@ -13,7 +13,7 @@ test_that('Date class', {
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prepare(holiday_rec, training = test_data)
-  holiday_ind <- process(holiday_rec, test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
 
   all.equal(holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
             exp_dates$date[exp_dates$holiday == "USMemorialDay"])
@@ -35,7 +35,7 @@ test_that('POSIXct class', {
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prepare(holiday_rec, training = test_data)
-  holiday_ind <- process(holiday_rec, test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
 
   all.equal(holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
             exp_dates$date[exp_dates$holiday == "USMemorialDay"])

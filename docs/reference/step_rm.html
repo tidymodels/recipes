@@ -106,7 +106,7 @@ operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables that
-will evaluated by the filtering process. See <code><a href='selections.html'>selections</a></code> for
+will evaluated by the filtering bake. See <code><a href='selections.html'>selections</a></code> for
 more details.</p></td>
     </tr>
     <tr>
@@ -122,7 +122,7 @@ have been estimated.</p></td>
       <th>removals</th>
       <td><p>A character string that contains the names of columns that
 should be removed. These values are not determined until
-<code><a href='learn.html'>learn.recipe</a></code> is called.</p></td>
+<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -144,8 +144,8 @@ should be removed. These values are not determined until
 <span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rm</span>(<span class='fu'>contains</span>(<span class='st'>"gen"</span>))
 
-<span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='learn.html'>learn</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 rm training </div><div class='input'>
-<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='process.html'>process</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>)
+<span class='no'>smaller_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 rm training </div><div class='input'>
+<span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>)
 <span class='no'>filtered_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 2
 #&gt;    carbon sulfur
 #&gt;     &lt;dbl&gt;  &lt;dbl&gt;

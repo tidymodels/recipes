@@ -46,7 +46,7 @@
 #'   step_other(diet, location, threshold = .1, other = "other values")
 #' rec <- prepare(rec, training = okc_tr)
 #'
-#' collapsed <- process(rec, okc_te)
+#' collapsed <- bake(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
 
 step_other <-
@@ -117,7 +117,7 @@ prepare.step_other <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-process.step_other <- function(object, newdata, ...) {
+bake.step_other <- function(object, newdata, ...) {
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
       tmp <- if (!is.character(newdata[, i]))

@@ -24,12 +24,12 @@
 #'
 #' log_obj <- prepare(log_trans, training = examples)
 #'
-#' transformed_te <- process(log_obj, examples)
+#' transformed_te <- bake(log_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}
 #'   \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 
 step_log <-
   function(recipe,
@@ -83,7 +83,7 @@ prepare.step_log <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_log <- function(object, newdata, ...) {
+bake.step_log <- function(object, newdata, ...) {
   col_names <- object$vars
   for (i in seq_along(col_names))
     newdata[, col_names[i]] <-

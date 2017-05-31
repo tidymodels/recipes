@@ -13,7 +13,7 @@ test_that('simple logit trans', {
     step_rm(x1)
   
   rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
-  rec_rm <- process(rec_trained, newdata = ex_dat)
+  rec_rm <- bake(rec_trained, newdata = ex_dat)
   
   expect_equal(colnames(rec_rm), "x2")
 })

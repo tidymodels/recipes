@@ -45,13 +45,13 @@ logit_trans <- rec  \%>\%
 
 logit_obj <- prepare(logit_trans, training = examples)
 
-transformed_te <- process(logit_obj, examples)
+transformed_te <- bake(logit_obj, examples)
 plot(examples$X1, transformed_te$X1)
 }
 \seealso{
 \code{\link{step_invlogit}} \code{\link{step_log}}
 \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-\code{\link{prepare.recipe}} \code{\link{process.recipe}}
+\code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

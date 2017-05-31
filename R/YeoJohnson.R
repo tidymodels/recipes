@@ -48,12 +48,12 @@
 #'
 #' yj_estimates <- prepare(yj_trans, training = biomass_tr)
 #'
-#' yj_te <- process(yj_estimates, biomass_te)
+#' yj_te <- bake(yj_estimates, biomass_te)
 #'
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
 #' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), nunique = 5) {
@@ -111,7 +111,7 @@ prepare.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_YeoJohnson <- function(object, newdata, ...) {
+bake.step_YeoJohnson <- function(object, newdata, ...) {
   if (length(object$lambdas) == 0)
     return(as_tibble(newdata))
   param <- names(object$lambdas)

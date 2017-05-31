@@ -19,7 +19,7 @@
 #' @details Scaling data means that the standard deviation of a variable is
 #'   divided out of the data. \code{step_range} estimates the variable standard
 #'   deviations from the data used in the \code{training} argument of
-#'   \code{prepare.recipe}. \code{process.recipe} then applies the scaling to new
+#'   \code{prepare.recipe}. \code{bake.recipe} then applies the scaling to new
 #'   data sets using these standard deviations.
 #' @examples
 #' data(biomass)
@@ -35,7 +35,7 @@
 #'
 #' ranged_obj <- prepare(ranged_trans, training = biomass_tr)
 #'
-#' transformed_te <- process(ranged_obj, biomass_te)
+#' transformed_te <- bake(ranged_obj, biomass_te)
 #'
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
@@ -103,7 +103,7 @@ prepare.step_range <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_range <- function(object, newdata, ...) {
+bake.step_range <- function(object, newdata, ...) {
   tmp <- as.matrix(newdata[, colnames(object$ranges)])
   tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
   tmp <- tmp * (object$max - object$min)

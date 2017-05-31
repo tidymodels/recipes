@@ -91,7 +91,7 @@ kpca_trans <- rec \%>\%
 
 kpca_estimates <- prepare(kpca_trans, training = biomass_tr)
 
-kpca_te <- process(kpca_estimates, biomass_te)
+kpca_te <- bake(kpca_estimates, biomass_te)
 
 rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
 plot(kpca_te$kPC1, kpca_te$kPC2,
@@ -109,7 +109,7 @@ Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab -
 \seealso{
 \code{\link{step_pca}} \code{\link{step_ica}}
   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
-  \code{\link{process.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing pca projection_methods kernel_methods

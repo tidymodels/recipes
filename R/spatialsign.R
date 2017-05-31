@@ -40,7 +40,7 @@
 #'
 #' ss_obj <- prepare(ss_trans, training = biomass_tr)
 #'
-#' transformed_te <- process(ss_obj, biomass_te)
+#' transformed_te <- bake(ss_obj, biomass_te)
 #'
 #' plot(biomass_te$carbon, biomass_te$hydrogen)
 #'
@@ -94,7 +94,7 @@ prepare.step_spatialsign <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-process.step_spatialsign <- function(object, newdata, ...) {
+bake.step_spatialsign <- function(object, newdata, ...) {
   col_names <- object$vars
   ss <- function(x)
     x / sqrt(sum(x ^ 2))

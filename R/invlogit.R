@@ -30,12 +30,12 @@
 #'
 #' ilogit_obj <- prepare(ilogit_trans, training = biomass_tr)
 #'
-#' transformed_te <- process(ilogit_obj, biomass_te)
+#' transformed_te <- bake(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
 #' @seealso \code{\link{step_logit}} \code{\link{step_log}}
 #'   \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}
 #'   \code{\link{recipe}} \code{\link{prepare.recipe}}
-#'   \code{\link{process.recipe}}
+#'   \code{\link{bake.recipe}}
 
 step_invlogit <-
   function(recipe, ...,  role = NA, trained = FALSE, vars = NULL) {
@@ -77,7 +77,7 @@ prepare.step_invlogit <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-process.step_invlogit <- function(object, newdata, ...) {
+bake.step_invlogit <- function(object, newdata, ...) {
   for (i in seq_along(object$vars))
     newdata[, object$vars[i]] <-
       binomial()$linkinv(unlist(getElement(newdata, object$vars[i]),

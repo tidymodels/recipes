@@ -54,7 +54,7 @@ ss_trans <- rec \%>\%
 
 ss_obj <- prepare(ss_trans, training = biomass_tr)
 
-transformed_te <- process(ss_obj, biomass_te)
+transformed_te <- bake(ss_obj, biomass_te)
 
 plot(biomass_te$carbon, biomass_te$hydrogen)
 

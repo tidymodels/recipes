@@ -67,7 +67,7 @@ yj_trans <- step_YeoJohnson(rec,  all_numeric())
 
 yj_estimates <- prepare(yj_trans, training = biomass_tr)
 
-yj_te <- process(yj_estimates, biomass_te)
+yj_te <- bake(yj_estimates, biomass_te)
 
 plot(density(biomass_te$sulfur), main = "before")
 plot(density(yj_te$sulfur), main = "after")
@@ -78,7 +78,7 @@ Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 }
 \seealso{
 \code{\link{step_BoxCox}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

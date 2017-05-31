@@ -12,7 +12,7 @@ step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables that
-will evaluated by the filtering process. See \code{\link{selections}} for
+will evaluated by the filtering bake. See \code{\link{selections}} for
 more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
@@ -72,12 +72,12 @@ nzv_filter <- rec \%>\%
 
 filter_obj <- prepare(nzv_filter, training = biomass_tr)
 
-filtered_te <- process(filter_obj, biomass_te)
+filtered_te <- bake(filter_obj, biomass_te)
 any(names(filtered_te) == "sparse")
 }
 \seealso{
 \code{\link{step_corr}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{process.recipe}}
+  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing variable_filters
