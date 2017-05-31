@@ -21,7 +21,8 @@ Imports:
     timeDate,
     ddalpha,
     purrr,
-    rlang (>= 0.1)
+    rlang (>= 0.1),
+    gower 
 Suggests:
     testthat,
     magrittr,
