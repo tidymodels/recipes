@@ -143,7 +143,7 @@ prepare.step_knnimpute <- function(x, training, info = NULL, ...) {
 
 #' @importFrom gower gower_topn
 nn_index <- function(.new, .old, vars, K) {
-  gower_topn(.old[, vars], .new[, vars], n = K)$index
+  gower_topn(.old[, vars], .new[, vars], n = K, nthread = 1)$index
 }
 
 nn_pred <- function(index, dat) {
