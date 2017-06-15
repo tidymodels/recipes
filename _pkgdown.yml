@@ -22,6 +22,8 @@ navbar:
     href: articles/Selecting_Variables.html     
   - text: Custom Steps
     href: articles/Custom_Steps.html
+  - text: The Order of Steps
+    href: articles/Ordering.html    
   - text: Reference
     href: reference/index.html
   - text: News
