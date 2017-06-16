@@ -22,7 +22,8 @@ Imports:
     ddalpha,
     purrr,
     rlang (>= 0.1),
-    gower 
+    gower,
+    RcppRoll
 Suggests:
     testthat,
     magrittr,
