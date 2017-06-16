@@ -64,3 +64,12 @@ test_that('Reduced rotation size', {
   
   expect_equal(pca_pred, pca_pred_exp)
 })
+
+
+test_that('printing', {
+  pca_extract <- rec %>% 
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
+  expect_output(print(pca_extract))
+  expect_output(prepare(pca_extract, training = biomass_tr))
+})
+

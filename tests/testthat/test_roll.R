@@ -66,5 +66,11 @@ test_that('creating new variables', {
   expect_equal(new_names_res$new2, simple_ma_res$y2)  
 })
 
+test_that('printing', {
+  new_names <- rec %>%
+    step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
+  expect_output(print(new_names))
+  expect_output(prepare(new_names, training = sim_dat))
+})
 
 

@@ -19,3 +19,10 @@ test_that('simple logit trans', {
   exp_res$x1 <- binomial()$linkinv(exp_res$x1)
   expect_equal(rec_trans, exp_res)
 })
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_invlogit(x1)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})

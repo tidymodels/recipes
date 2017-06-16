@@ -38,3 +38,11 @@ test_that('bad selector(s)', {
   rec4 <- rec %>% step_regex(rows, pattern = "(rock|stony)")
   expect_error(prepare(rec4, training = covers))
 })
+
+
+test_that('printing', {
+  rec1 <- rec %>%
+    step_regex(description, pattern = "(rock|stony)")
+  expect_output(print(rec1))
+  expect_output(prepare(rec1, training = covers))
+})

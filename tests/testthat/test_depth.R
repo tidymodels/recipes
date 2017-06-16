@@ -45,3 +45,12 @@ test_that("alt args", {
   for(i in 1:ncol(exp_res))
     expect_equal(depths[, i], exp_res[, i])
 })
+
+
+test_that('printing', {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(all_predictors(), class = "Species", metric = "spatial")
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = iris))
+})
+

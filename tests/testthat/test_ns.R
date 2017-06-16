@@ -49,3 +49,11 @@ test_that('correct basis functions', {
   expect_equal(hydrogen_ns_tr_res, hydrogen_ns_tr_exp)
   expect_equal(hydrogen_ns_te_res, hydrogen_ns_te_exp)  
 })
+
+
+test_that('printing', {
+  with_ns <- rec %>%  step_ns(carbon, hydrogen)
+  expect_output(print(with_ns))
+  expect_output(prepare(with_ns, training = biomass_tr))
+})
+

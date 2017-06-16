@@ -34,3 +34,13 @@ test_that('simple hyperbolic trans', {
   }
   
 })
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_hyperbolic(x1, x2, func = "sin", inverse = TRUE)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})
+
+

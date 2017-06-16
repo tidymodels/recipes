@@ -48,3 +48,10 @@ test_that('non-numeric', {
 })
 
 
+test_that('printing', {
+  impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
+    step_meanimpute(Age, Assets, Income)
+  expect_output(print(impute_rec))
+  expect_output(prepare(impute_rec, training = credit_tr))
+})
+

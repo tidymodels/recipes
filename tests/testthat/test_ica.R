@@ -80,3 +80,10 @@ test_that('correct ICA values', {
   expect_equal(ica_pred, exp_comp)
 })
 
+
+test_that('printing', {
+  ica_extract <- rec %>% 
+    step_ica(carbon, hydrogen, num = 2)
+  expect_output(print(ica_extract))
+  expect_output(prepare(ica_extract, training = biomass_tr))
+})

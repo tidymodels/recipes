@@ -116,51 +116,6 @@ type_selectors <- c("has_type", "all_numeric", "all_nominal", "_F")
 selectors <-
   unique(c(name_selectors, role_selectors, type_selectors))
 
-parse_terms_formula <- function(f, info) {
-  var_vals <- info$variable
-  role_vals <- info$role
-  type_vals <- info$type
-  
-  ## split the terms up using +/- as seperators
-  f_info <- f_elements(f)
-  elmts <- f_info$terms
-  elmts_sign <- f_info$signs
-  
-  ## Look for inappropriate functions in elements
-  check_elements(f)
-  
-  ## determine if there is a selector involved
-  has_func <- has_selector(elmts)
-  
-  indices <- vector(mode = "list", length = length(elmts) - 1)
-  
-  for (i in seq_along(elmts)[-1]) {
-    if (has_func[i - 1]) {
-      cll <- as.call(elmts[[i]])
-      cll <- add_arg(cll)
-      indices[[i - 1]] <- eval(cll)
-    } else {
-      indices[[i - 1]] <- which(as.character(elmts[[i]]) == var_vals)
-    }
-    if (elmts_sign[i - 1] == "-")
-      indices[[i - 1]] <- -indices[[i - 1]]
-  }
-  indices <- unlist(unique(indices))
-  
-  ## add/subtract based on sign of elements
-  if (!all(sign(indices) == 1)) {
-    pos <- indices[indices > 0]
-    neg <- indices[indices < 0]
-    indices <- pos[!(pos %in% abs(neg))]
-  }
-  
-  if (length(indices) == 0)
-    stop("No columns were selected by the `terms` formula for this step.",
-         call. = FALSE)
-  
-  var_vals[indices]
-}
-
 ## Get the components of the formula split by +/-. The
 ## function also returns the sign
 f_elements <- function(x) {

@@ -31,8 +31,9 @@ test_that('NA values from out of range', {
 })
 
 
-
-
-
-
-
+test_that('printing', {
+  rec <- recipe(~., data = ex_tr) %>% 
+    step_discretize(x1)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_tr))
+})

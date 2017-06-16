@@ -19,3 +19,12 @@ test_that('simple sqrt trans', {
       expect_equal(rec_trans, exp_res)
   
 })
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_sqrt(x1, x2)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})
+

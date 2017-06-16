@@ -55,7 +55,10 @@ test_that('imputation values', {
 })
 
 
-
-
-
+test_that('printing', {
+  discr_rec <- rec %>%
+    step_discretize(nitrogen, options = list(keep_na = FALSE))
+  expect_output(print(discr_rec))
+  expect_output(prepare(discr_rec, training = biomass_tr))
+})
 

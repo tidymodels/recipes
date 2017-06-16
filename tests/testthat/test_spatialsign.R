@@ -24,3 +24,13 @@ test_that('spatial sign', {
 })
 
 
+test_that('printing', {
+  sp_sign <- rec %>% 
+    step_center(carbon, hydrogen) %>% 
+    step_scale(carbon, hydrogen) %>%
+    step_spatialsign(carbon, hydrogen)
+  expect_output(print(sp_sign))
+  expect_output(prepare(sp_sign, training = biomass))
+})
+
+

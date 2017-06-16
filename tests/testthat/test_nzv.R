@@ -49,3 +49,11 @@ test_that('altered options', {
   
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
+
+
+test_that('printing', {
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_nzv(x1, x2, x3, x4)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = dat))
+})

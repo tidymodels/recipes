@@ -56,3 +56,12 @@ test_that('all data', {
     isTRUE(all.equal(dat[, i], getElement(dat3, names(dat)[i])))
   expect_equal(exp3, obs3)
 })
+
+
+test_that('printing', {
+  rec3 <- recipe(y ~ ., data = dat) %>%
+    step_shuffle(everything())
+  expect_output(print(rec3))
+  expect_output(prepare(rec3, training = dat))
+})
+

@@ -39,3 +39,10 @@ test_that("alt args", {
   for(i in 1:ncol(exp_res))
     expect_equal(dists[, i], exp_res[, i])
 })
+
+test_that('printing', {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species", log = FALSE)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = iris))
+})

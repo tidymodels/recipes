@@ -29,3 +29,11 @@ test_that('bad options', {
   expect_error(rec %>% step_bin2factor(rocks, levels = letters[1:5]))
   expect_error(rec %>% step_bin2factor(rocks, levels = 1:2))
 })
+
+
+test_that('printing', {
+  rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
+  expect_output(print(rec2))
+  expect_output(prepare(rec2, training = covers))
+})
+

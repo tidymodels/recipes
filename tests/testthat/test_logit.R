@@ -27,3 +27,11 @@ test_that('out of bounds logit trans', {
   
   expect_error(prepare(rec, training = ex_dat, verbose = FALSE))
 })
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_logit(x1)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})

@@ -48,6 +48,13 @@ test_that('non-factor variables with specific variables', {
 })
 
 
+test_that('printing', {
+  int_rec <- rec %>% step_interact(~carbon:hydrogen)
+  expect_output(print(int_rec))
+  expect_output(prepare(int_rec, training = tr_biomass))
+})
+
+
 # currently failing; try to figure out why
 # test_that('with factors', {
 #   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>% 

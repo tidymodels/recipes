@@ -24,7 +24,6 @@ rec <- recipe( ~ ., data = dat1)
 
 test_that('correct Isomap values', {
   skip_on_cran()
-  skip_on_travis()
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
 
@@ -33,5 +32,13 @@ test_that('correct Isomap values', {
   im_pred <- bake(im_trained, newdata = dat2)
 
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
+})
+
+
+test_that('printing', {
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
+  expect_output(print(im_rec))
+  expect_output(prepare(im_rec, training = dat1))
 })
 

@@ -17,3 +17,19 @@ test_that('simple logit trans', {
   
   expect_equal(colnames(rec_rm), "x2")
 })
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_rm(x1)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_rm(x1)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})
+

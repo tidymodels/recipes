@@ -10,8 +10,6 @@ ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),
                      x3 = rep(1:2, each = n/2),
                      x4 = rexp(n))
 
-
-
 test_that('simple log trans', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_log(x1, x2, x3, x4)
@@ -37,4 +35,11 @@ test_that('alt base', {
   expect_equal(rec_trans, exp_res)
 })
 
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_dat) %>% 
+    step_log(x1, x2, x3, x4)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = ex_dat))
+})
 

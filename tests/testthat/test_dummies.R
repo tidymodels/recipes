@@ -29,3 +29,12 @@ test_that('dummy variables with string inputs', {
   rownames(exp_res) <- NULL
   expect_equal(dummy_pred, exp_res)
 })
+
+
+test_that('printing', {
+  rec <- recipe(age ~ ., data = okc)
+  dummy <- rec %>% step_dummy(diet, location)
+  expect_output(print(dummy))
+  expect_output(prepare(dummy, training = okc))
+})
+

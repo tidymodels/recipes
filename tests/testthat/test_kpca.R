@@ -33,3 +33,11 @@ test_that('correct kernel PCA values', {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
+
+test_that('printing', {
+  kpca_rec <- rec %>%
+    step_kpca(X2, X3, X4, X5, X6)
+  expect_output(print(kpca_rec))
+  expect_output(prepare(kpca_rec, training = tr_dat))
+})
+

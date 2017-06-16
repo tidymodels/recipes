@@ -126,3 +126,11 @@ test_that('factor inputs', {
   expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
   expect_equal(is.na(okc_te$location), is.na(others_te$location))
 })
+
+
+test_that('printing', {
+  rec <- rec %>% step_other(diet, location)
+  expect_output(print(rec))
+  expect_output(prepare(rec, training = okc_tr))
+})
+

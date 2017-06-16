@@ -59,3 +59,11 @@ test_that('single predictor', {
 })
 
 
+test_that('printing', {
+  standardized <- rec %>%
+    step_center(carbon) %>%
+    step_scale(hydrogen)
+  expect_output(print(standardized))
+  expect_output(prepare(standardized, training = biomass))
+})
+

@@ -88,3 +88,11 @@ test_that('ordinal values', {
   
   expect_equal(date_res, date_exp)
 })
+
+
+test_that('printing', {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats)
+  expect_output(print(date_rec))
+  expect_output(prepare(date_rec, training = examples))
+})

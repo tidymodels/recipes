@@ -44,6 +44,14 @@ test_that('imputation models', {
 })
 
 
+test_that('printing', {
+  imputed <- rec %>%
+    step_bagimpute(carbon, impute_with = imp_vars(hydrogen), seed_val = 12)
+  
+  expect_output(print(imputed))
+  expect_output(prepare(imputed, training = biomass))
+})
+
 
 
 

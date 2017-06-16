@@ -58,3 +58,11 @@ test_that('no exclusions', {
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
 })
+
+
+test_that('printing', {
+  dum_filtered <- dum_rec %>% 
+    step_lincomb(all_predictors())
+  expect_output(print(dum_filtered))
+  expect_output(prepare(dum_filtered, training = dummies))
+})

@@ -48,3 +48,11 @@ test_that('POSIXct class', {
                exp_dates$date[exp_dates$holiday == "Easter"])
 })
 
+
+test_that('printing', {
+  holiday_rec <- recipe(~ day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+  expect_output(print(holiday_rec))
+  expect_output(prepare(holiday_rec, training = test_data))
+})
+

@@ -39,4 +39,9 @@ test_that('non-nominal', {
   expect_error(prepare(impute_rec, training = credit_tr, verbose = FALSE))
 })
 
-
+test_that('printing', {
+  impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
+    step_modeimpute(Status, Home, Marital)
+  expect_output(print(impute_rec))
+  expect_output(prepare(impute_rec, training = credit_tr))
+})

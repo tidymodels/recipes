@@ -31,3 +31,14 @@ test_that('low filter', {
 
   expect_equal(filtering_trained$steps[[1]]$removals, numeric(0))
 })
+
+
+test_that('printing', {
+  set.seed(1)
+  rec <- recipe(~ ., data = dat)
+  filtering <- rec %>% 
+    step_corr(all_predictors(), threshold = .5)
+  expect_output(print(filtering))
+  expect_output(prepare(filtering, training = dat))
+})
+
