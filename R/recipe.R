@@ -197,7 +197,8 @@ recipe.data.frame <-
       term_info = var_info,
       steps = NULL,
       template = x,
-      levels = NULL
+      levels = NULL,
+      retained = NA
     )
     class(out) <- "recipe"
     out
@@ -376,6 +377,7 @@ prepare.recipe <-
       x$template <- training
     x$tr_info <- tr_data
     x$levels <- lvls
+    x$retained <- retain
     x
   }
 
@@ -529,3 +531,69 @@ summary.recipe <- function(object, original = FALSE, ...) {
   else
     object$term_info
 }
+
+
+#' Extract Baked Training Set
+#'
+#' This function can extract variables from the baked training 
+#'   set without rebaking. 
+#' @param object A \code{recipe} object
+#' @param ... One or more selector functions to choose which variables will be
+#'   returned by the function. See \code{\link{selections}} for more details.
+#'   If no selectors are given, the default is to use
+#'   \code{\link{all_predictors}}.
+#' @return A tibble.
+#' @details When preparing a recipe, if the training data set is retained using \code{retain = TRUE}, there is no need to \code{bake} the recipe to get the preprocessed training set. 
+#' @examples
+#' data(biomass)
+#' 
+#' biomass_tr <- biomass[biomass$dataset == "Training",]
+#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' 
+#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'               data = biomass_tr)
+#' 
+#' sp_signed <- rec %>%
+#'   step_center(all_predictors()) %>%
+#'   step_scale(all_predictors()) %>%
+#'   step_spatialsign(all_predictors())
+#' 
+#' sp_signed_trained <- prepare(sp_signed, training = biomass_tr, retain = TRUE)
+#' 
+#' tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
+#' og_values <- extract(sp_signed_trained, all_predictors())
+#' 
+#' all.equal(tr_values, og_values)
+#' @export
+#' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+extract <- function(object, ...) {
+  if(!isTRUE(object$retained))
+    stop("Use `retain = TRUE` in `prepare` to be able to extract the training set",
+         call. = FALSE)
+  tr_steps <- vapply(object$steps, function(x) x$trained, c(logic = TRUE))
+  if(!all(tr_steps))
+    stop("At least one step has not be prepared; cannot extract.", 
+         call. = FALSE)
+  terms <- quos(...)
+  if (is_empty(terms))
+    terms <- quos(all_predictors())
+  keepers <- select_terms(args = terms, info = object$term_info)
+  
+  newdata <- object$template[, names(object$template) %in% keepers]
+  
+  ## Since most models require factors, do the conversion from character
+  if (!is.null(object$levels)) {
+    var_levels <- object$levels
+    var_levels <- var_levels[keepers]
+    check_values <-
+      vapply(var_levels, function(x)
+        (!all(is.na(x))), c(all = TRUE))
+    var_levels <- var_levels[check_values]
+    if (length(var_levels) > 0)
+      newdata <- strings2factors(newdata, var_levels)
+  }
+  newdata
+}
+
+
+
