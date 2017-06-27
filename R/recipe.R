@@ -419,22 +419,18 @@ bake <- function(object, ...)
 #' @export
 
 bake.recipe <- function(object, newdata = object$template, ...) {
+  if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(all_predictors())
   
   ## determine return variables
   keepers <- select_terms(args = terms, info = object$term_info)
-  
-  newdata <- if (!is_tibble(newdata))
-    as_tibble(newdata[, object$var_info$variable, drop = FALSE])
-  else
-    newdata[, object$var_info$variable]
-  
+
   for (i in seq(along = object$steps)) {
     newdata <- bake(object$steps[[i]], newdata = newdata)
-    if (!is_tibble(newdata))
-      as_tibble(newdata)
+    if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
   }
   
   newdata <- newdata[, names(newdata) %in% keepers]
