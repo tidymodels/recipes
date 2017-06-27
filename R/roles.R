@@ -51,7 +51,7 @@ add_role <- function(recipe, ..., new_role = "predictor") {
     has_role <-
       !is.na(recipe$var_info$role[recipe$var_info$variable %in% vars2])
     if (any(has_role)) {
-      warning("Changing role for",
+      warning("Changing role(s) for ",
               paste0(vars2[has_role], collapse = ", "),
               call. = FALSE)
     }
