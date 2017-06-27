@@ -243,26 +243,30 @@ fun_calls <- function(f) {
   }
 }
 
+
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x))
-    return(NA)
+    return(list(values = NA, ordered = NA))
   out <- if (is.factor(x))
-    levels(x)
+    list(values = levels(x), ordered = is.ordered(x))
   else
-    sort(unique(x))
+    list(values = sort(unique(x)), ordered = FALSE)
   out
 }
 
-strings2factors <- function(x, lvl) {
-  if (is.null(lvl))
+has_lvls <- function(info)
+  !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
+
+strings2factors <- function(x, info) {
+  check_lvls <- has_lvls(info)
+  if (!any(check_lvls))
     return(x)
-  lvl <- lvl[!is.na(lvl)]
-  if (any(!is.na(lvl))) {
-    for (i in seq_along(lvl)) {
-      lcol <- names(lvl)[i]
-      if (!is.factor(x[, lcol]))
-        x[, lcol] <- factor(getElement(x, lcol), levels = lvl[[i]])
-    }
+  info <- info[check_lvls]
+  for (i in seq_along(info)) {
+    lcol <- names(info)[i]
+    x[, lcol] <- factor(as.character(getElement(x, lcol)), 
+                        levels = info[[i]]$values, 
+                        ordered = info[[i]]$ordered)
   }
   x
 }

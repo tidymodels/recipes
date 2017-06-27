@@ -370,11 +370,15 @@ prepare.recipe <-
     }
     
     ## The steps may have changed the data so reassess the levels
-    if (stringsAsFactors)
+    if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
+      check_lvls <- has_lvls(lvls)
+      if (!any(check_lvls)) lvls <- NULL
+    } else lvls <- NULL
     
     if (retain)
       x$template <- training
+    
     x$tr_info <- tr_data
     x$levels <- lvls
     x$retained <- retain
@@ -435,7 +439,8 @@ bake.recipe <- function(object, newdata = object$template, ...) {
   
   newdata <- newdata[, names(newdata) %in% keepers]
   
-  ## Since most models require factors, do the conversion from character
+  ## the Levels are not null when no nominal data are present or
+  ## if stringsAsFactors = FALSE in `prepare`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
     var_levels <- var_levels[keepers]
