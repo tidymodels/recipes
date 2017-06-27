@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
 library(tibble)
-library(dplyr)
+library(tidyselect)
 library(rlang)
 
 data(okc)

@@ -238,8 +238,8 @@ select_terms <- function(info, args) {
   old_info <- set_current_info(info)
   on.exit(set_current_info(old_info), add = TRUE)
   # Set current_vars so available to select_helpers
-  old_vars <- dplyr:::set_current_vars(vars)
-  on.exit(dplyr:::set_current_vars(old_vars), add = TRUE)
+  old_vars <- tidyselect:::set_current_vars(vars)
+  on.exit(tidyselect:::set_current_vars(old_vars), add = TRUE)
   
   # Map variable names to their positions: this keeps integer semantics
   names_list <- set_names(as.list(seq_along(vars)), vars)
@@ -265,7 +265,7 @@ select_terms <- function(info, args) {
   if (any(!is_numeric))
     stop("No variables or terms were selected.", call. = FALSE)
   
-  incl <- dplyr:::combine_vars(vars, ind_list)
+  incl <- tidyselect:::inds_combine(vars, ind_list)
   
   # Include/exclude specified variables
   sel <- set_names(vars[incl], names(incl))
