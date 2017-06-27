@@ -136,7 +136,13 @@ print.step_YeoJohnson <-
     invisible(x)
   }
 
-## computes the new data
+## computes the new data given a lambda
+#' Internal Functions
+#' 
+#' These are not to be used directly by the users.
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
 yj_trans <- function(x, lambda, eps = .001) {
   if (is.na(lambda))
     return(x)
@@ -193,8 +199,11 @@ yj_obj <- function(lam, dat){
   ll_yj(lambda = lam, y = dat)
 }
 
-#' @importFrom stats optimize
 ## estimates the values
+#' @importFrom stats optimize
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
 estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5) {
   eps <- .001
   if (length(unique(dat)) < nunique)
