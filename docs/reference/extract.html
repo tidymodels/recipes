@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select Terms in a Step Function. — select_terms • recipes</title>
+<title>Extract Baked Training Set — extract • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -88,54 +88,66 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select Terms in a Step Function.</h1>
+    <h1>Extract Baked Training Set</h1>
     </div>
 
     
-    <p>This function bakees the step function selectors and might be useful
-  when creating custom steps.</p>
+    <p>This function can extract variables from the baked training 
+  set without rebaking.</p>
     
 
-    <pre class="usage"><span class='fu'>select_terms</span>(<span class='no'>info</span>, <span class='no'>args</span>)</pre>
+    <pre class="usage"><span class='fu'>extract</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>info</th>
-      <td><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
-and <code>source</code> that represent the current state of the data. The
-function <code><a href='summary.recipe.html'>summary.recipe</a></code> can be used to get this information
-from a recipe.</p></td>
+      <th>object</th>
+      <td><p>A <code>recipe</code> object</p></td>
     </tr>
     <tr>
-      <th>args</th>
-      <td><p>A list of formulas whose right-hand side contains quoted
-expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quosures'>quos</a></code> for examples.</p></td>
+      <th>...</th>
+      <td><p>One or more selector functions to choose which variables will be
+returned by the function. See <code><a href='selections.html'>selections</a></code> for more details.
+If no selectors are given, the default is to use
+<code><a href='has_role.html'>all_predictors</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string of column names or an error of there are no
-  selectors or if no variables are selected.</p>
+    <p>A tibble.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When preparing a recipe, if the training data set is retained using <code>retain = TRUE</code>, there is no need to <code>bake</code> the recipe to get the preprocessed training set.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='summary.recipe.html'>summary.recipe</a></code>
-  <code><a href='prepare.html'>prepare.recipe</a></code></p>
+    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    is_formula</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:devtools’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    ns_env, pkg_env</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
-<span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
-<span class='fu'>select_terms</span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='fu'>quos</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"    </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+
+<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
+<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
+              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+
+<span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+
+<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 center training 
+#&gt; step 2 scale training 
+#&gt; step 3 spatialsign training </div><div class='input'>
+<span class='no'>tr_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='no'>og_values</span> <span class='kw'>&lt;-</span> <span class='fu'>extract</span>(<span class='no'>sp_signed_trained</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+
+<span class='fu'>all.equal</span>(<span class='no'>tr_values</span>, <span class='no'>og_values</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -143,6 +155,8 @@ expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/top
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
