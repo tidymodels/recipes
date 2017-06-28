@@ -146,17 +146,17 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 #' @export
 bake.step_depth <- function(object, newdata, ...) {
   x_names <- colnames(object$data[[1]])
-  newdata <- as.matrix(newdata[, x_names])
+  x_data <- as.matrix(newdata[, x_names])
   res <- lapply(
     object$data,
     get_depth,
-    new_dat = newdata,
+    new_dat = x_data,
     metric = object$metric,
     opts = object$options
   )
   res <- as_tibble(res)
   colnames(res) <- paste0("depth_", colnames(res))
-  res <- cbind(as_tibble(newdata), res)
+  res <- cbind(newdata, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res
@@ -164,7 +164,7 @@ bake.step_depth <- function(object, newdata, ...) {
 
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Distances to", x$class, "for ")
+    cat("Data depth by ", x$class, "for ")
     if (x$trained) {
       x_names <- colnames(x$data[[1]])
       cat(format_ch_vec(x_names, width = width))
