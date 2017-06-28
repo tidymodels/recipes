@@ -51,7 +51,7 @@ linear_values <- recipe(~ item + fail_severity, data = ord_data) \%>\%
 
 linear_values <- prepare(linear_values, training = ord_data, retain = TRUE)
 
-extract(linear_values, everything())
+juice(linear_values, everything())
 
 custom <- function(x) {
   new_values <- c(1, 3, 7)
@@ -64,7 +64,7 @@ nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) \%>\%
 
 nonlin_scores <- prepare(nonlin_scores, training = ord_data, retain = TRUE)
 
-extract(nonlin_scores, everything())
+juice(nonlin_scores, everything())
 }
 \concept{
 preprocessing ordinal_data

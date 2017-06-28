@@ -534,11 +534,14 @@ summary.recipe <- function(object, original = FALSE, ...) {
 }
 
 
-#' Extract Baked Training Set
+#' Extract Finalized Training Set
 #'
-#' This function can extract variables from the baked training 
-#'   set without rebaking. 
-#' @param object A \code{recipe} object
+#' As steps are estimated by \code{prepare}, these operations are
+#'  applied to the training set. Rather than running \code{bake} 
+#'  to duplicate this processing, this function will return
+#'  variables from the processed training set. 
+#' @param object A \code{recipe} object that has been prepared 
+#'   with the option \code{retain = TRUE}. 
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See \code{\link{selections}} for more details.
 #'   If no selectors are given, the default is to use
@@ -562,12 +565,12 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' sp_signed_trained <- prepare(sp_signed, training = biomass_tr, retain = TRUE)
 #' 
 #' tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
-#' og_values <- extract(sp_signed_trained, all_predictors())
+#' og_values <- juice(sp_signed_trained, all_predictors())
 #' 
 #' all.equal(tr_values, og_values)
 #' @export
 #' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
-extract <- function(object, ...) {
+juice <- function(object, ...) {
   if(!isTRUE(object$retained))
     stop("Use `retain = TRUE` in `prepare` to be able to extract the training set",
          call. = FALSE)
