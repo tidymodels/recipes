@@ -1,5 +1,13 @@
-Contributors to `recipes` package
+Contributors to `recipes` package (sorted alphabetically)
 -------
+* **[Lionel Henry](https://github.com/lionel-)**
 
-* Kirk Mettler: : for `caret` code for linear combination identification. 
-* Jed Wing: for `caret` code for linear combination identification. 
+ * [PR](https://github.com/topepo/recipes/pull/66) that greatly simplified the selection code. 
+ 
+* **Kirk Mettler**
+
+ * Contributed to the imported `caret` code for linear combination identification. 
+
+* **Jed Wing**
+
+ * Contributed to the imported `caret` code for linear combination identification. 
