@@ -222,64 +222,31 @@ has_selector <- function(x, allowed = selectors) {
 #' info <- summary(rec)
 #' select_terms(info = info, quos(all_predictors()))
 select_terms <- function(info, args) {
-  ## This is a modified version of dplyr:::select_vars
-  
   vars <- info$variable
   roles <- info$role
   types <- info$type
-  
-  if (is_empty(args))
-    stop("At least one selector should be used")
-  
+
+  if (is_empty(args)) {
+    stop("At least one selector should be used", call. = FALSE)
+  }
+
   ## check arguments against whitelist
   lapply(args, check_elements)
-  
+
   # Set current_info so available to helpers
   old_info <- set_current_info(info)
   on.exit(set_current_info(old_info), add = TRUE)
-  # Set current_vars so available to select_helpers
-  old_vars <- dplyr:::set_current_vars(vars)
-  on.exit(dplyr:::set_current_vars(old_vars), add = TRUE)
-  
-  # Map variable names to their positions: this keeps integer semantics
-  names_list <- set_names(as.list(seq_along(vars)), vars)
-  
-  # if the first selector is exclusive (negative), start with all columns
-  first <- f_rhs(args[[1]])
-  initial_case <-
-    if (is_negated(first))
-      list(seq_along(vars))
-  else
-    integer(0)
-  
-  # Evaluate symbols in an environment where columns are bound, but
-  # not calls (select helpers are scoped in the calling environment)
-  is_helper <- map_lgl(args, quo_is_helper)
-  ind_list <- map_if(args, is_helper, eval_tidy)
-  ind_list <- map_if(ind_list, !is_helper, eval_tidy, names_list)
-  
-  ind_list <- c(initial_case, ind_list)
-  names(ind_list) <- c(names2(initial_case), names2(args))
-  
-  is_numeric <- map_lgl(ind_list, is.numeric)
-  if (any(!is_numeric))
-    stop("No variables or terms were selected.", call. = FALSE)
-  
-  incl <- dplyr:::combine_vars(vars, ind_list)
-  
-  # Include/exclude specified variables
-  sel <- set_names(vars[incl], names(incl))
-  
-  # Ensure all output vars named
-  if (is_empty(sel)) {
-    stop("No variables or terms were selected.", call. = FALSE)
-  } else {
-    unnamed <- names2(sel) == ""
-    names(sel)[unnamed] <- sel[unnamed]
-  }
-  
+
+  sel <- with_handlers(tidyselect::vars_select(vars, !!! args),
+    tidyselect_empty = abort_selection
+  )
+
   unname(sel)
 }
+
+abort_selection <- exiting(function(cnd) {
+  abort("No variables or terms were selected.")
+})
 
 #' Role Selection
 #'
