@@ -134,8 +134,8 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 ## This figures out which data should be used to predict each variable 
 ## scheduled for imputation
 impute_var_lists <- function(to_impute, impute_using, info) {
-  to_impute <- terms_select(args = to_impute, info = info)
-  impute_using <- terms_select(args = impute_using, info = info)
+  to_impute <- terms_select(terms = to_impute, info = info)
+  impute_using <- terms_select(terms = impute_using, info = info)
   var_lists <- vector(mode = "list", length = length(to_impute))
   for (i in seq_along(var_lists)) {
     var_lists[[i]] <- list(y = to_impute[i],

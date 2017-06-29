@@ -4,16 +4,16 @@
 \alias{terms_select}
 \title{Select Terms in a Step Function.}
 \usage{
-terms_select(info, args)
+terms_select(terms, info)
 }
 \arguments{
+\item{terms}{A list of formulas whose right-hand side contains quoted
+expressions. See \code{\link[rlang]{quos}} for examples.}
+
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
 function \code{\link{summary.recipe}} can be used to get this information
 from a recipe.}
-
-\item{args}{A list of formulas whose right-hand side contains quoted
-expressions. See \code{\link[rlang]{quos}} for examples.}
 }
 \value{
 A character string of column names or an error of there are no

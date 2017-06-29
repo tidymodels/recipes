@@ -430,7 +430,7 @@ bake.recipe <- function(object, newdata = object$template, ...) {
     terms <- quos(all_predictors())
   
   ## determine return variables
-  keepers <- terms_select(args = terms, info = object$term_info)
+  keepers <- terms_select(terms = terms, info = object$term_info)
 
   for (i in seq(along = object$steps)) {
     newdata <- bake(object$steps[[i]], newdata = newdata)
@@ -581,7 +581,7 @@ juice <- function(object, ...) {
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(all_predictors())
-  keepers <- terms_select(args = terms, info = object$term_info)
+  keepers <- terms_select(terms = terms, info = object$term_info)
   
   newdata <- object$template[, names(object$template) %in% keepers]
   

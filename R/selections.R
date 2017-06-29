@@ -204,7 +204,7 @@ has_selector <- function(x, allowed = selectors) {
 #'   and \code{source} that represent the current state of the data. The
 #'   function \code{\link{summary.recipe}} can be used to get this information
 #'   from a recipe.
-#' @param args A list of formulas whose right-hand side contains quoted
+#' @param terms A list of formulas whose right-hand side contains quoted
 #'   expressions. See \code{\link[rlang]{quos}} for examples.
 #' @keywords datagen
 #' @concept preprocessing
@@ -221,23 +221,23 @@ has_selector <- function(x, allowed = selectors) {
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
-terms_select <- function(info, args) {
+terms_select <- function(terms, info) {
   vars <- info$variable
   roles <- info$role
   types <- info$type
 
-  if (is_empty(args)) {
+  if (is_empty(terms)) {
     stop("At least one selector should be used", call. = FALSE)
   }
 
   ## check arguments against whitelist
-  lapply(args, check_elements)
+  lapply(terms, check_elements)
 
   # Set current_info so available to helpers
   old_info <- set_current_info(info)
   on.exit(set_current_info(old_info), add = TRUE)
 
-  sel <- with_handlers(tidyselect::vars_select(vars, !!! args),
+  sel <- with_handlers(tidyselect::vars_select(vars, !!! terms),
     tidyselect_empty = abort_selection
   )
 

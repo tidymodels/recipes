@@ -126,7 +126,7 @@ The first thing that you might want to do in the `prepare` function is to transl
 
 ```{r prepare_1, eval = FALSE}
 prepare.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(info = info, args = x$terms) 
+  col_names <- terms_select(terms = x$terms, info = info) 
 }
 ```
 
@@ -139,7 +139,7 @@ get_pctl <- function(x, args) {
 }
 
 prepare.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(info = info, args = x$terms) 
+  col_names <- terms_select(terms = x$terms, info = info) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   if(x$options$names == FALSE)
