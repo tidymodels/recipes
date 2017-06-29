@@ -55,7 +55,7 @@ step_shuffle_new <- function(terms = NULL,
 
 #' @export
 prepare.step_shuffle <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   step_shuffle_new(
     terms = x$terms,
     role = x$role,

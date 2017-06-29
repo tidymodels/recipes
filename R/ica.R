@@ -118,7 +118,7 @@ step_ica_new <-
 #' @importFrom dimRed FastICA dimRedData
 #' @export
 prepare.step_ica <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   x$num <- min(x$num, length(col_names))
   

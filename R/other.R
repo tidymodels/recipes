@@ -95,7 +95,7 @@ step_other_new <-
 #' @importFrom stats sd
 #' @export
 prepare.step_other <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   objects <- lapply(training[, col_names],
                     keep_levels,
                     prop = x$threshold,

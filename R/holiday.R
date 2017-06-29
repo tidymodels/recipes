@@ -87,7 +87,7 @@ step_holiday_new <-
 #' @importFrom stats as.formula model.frame
 #' @export
 prepare.step_holiday <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   holiday_data <- info[info$variable %in% col_names, ]
   if (any(holiday_data$type != "date"))

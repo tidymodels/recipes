@@ -134,7 +134,7 @@ step_kpca_new <-
 #' @importFrom dimRed kPCA dimRedData
 #' @export
 prepare.step_kpca <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
 
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
   kprc <- kprc@fun(

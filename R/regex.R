@@ -97,7 +97,7 @@ step_regex_new <- function(terms = NULL,
 
 #' @export
 prepare.step_regex <- function(x, training, info = NULL, ...) {
-  col_name <- select_terms(x$terms, info = info)
+  col_name <- terms_select(x$terms, info = info)
   if (length(col_name) != 1)
     stop("The selector should only select a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))

@@ -115,7 +115,7 @@ step_date_new <-
 #' @importFrom stats as.formula model.frame
 #' @export
 prepare.step_date <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   date_data <- info[info$variable %in% col_names, ]
   if (any(date_data$type != "date"))

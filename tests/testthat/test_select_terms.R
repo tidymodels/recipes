@@ -19,31 +19,31 @@ info2 <- summary(rec2)
 
 test_that('simple role selections', {
   expect_equal(
-    select_terms(info = info1, quos(all_predictors())),
+    terms_select(info = info1, quos(all_predictors())),
     info1$variable
   )
-  expect_error(select_terms(info = info1, quos(all_outcomes())))
+  expect_error(terms_select(info = info1, quos(all_outcomes())))
   expect_equal(
-    select_terms(info = info2, quos(all_outcomes())),
+    terms_select(info = info2, quos(all_outcomes())),
     "HHV"
   )
   expect_equal(
-    select_terms(info = info2, quos(has_role("splitting indicator"))),
+    terms_select(info = info2, quos(has_role("splitting indicator"))),
     "dataset"
   )
 })
 
 test_that('simple type selections', {
   expect_equal(
-    select_terms(info = info1, quos(all_numeric())),
+    terms_select(info = info1, quos(all_numeric())),
     c("age", "height")
   )
   expect_equal(
-    select_terms(info = info1, quos(has_type("date"))),
+    terms_select(info = info1, quos(has_type("date"))),
     "date"
   )
   expect_equal(
-    select_terms(info = info1, quos(all_nominal())),
+    terms_select(info = info1, quos(all_nominal())),
     c("diet", "location")
   )
 })
@@ -51,53 +51,53 @@ test_that('simple type selections', {
 
 test_that('simple name selections', {
   expect_equal(
-    select_terms(info = info1, quos(matches("e$"))),
+    terms_select(info = info1, quos(matches("e$"))),
     c("age", "date")
   )
   expect_equal(
-    select_terms(info = info2, quos(contains("gen"))),
+    terms_select(info = info2, quos(contains("gen"))),
     c("hydrogen", "oxygen", "nitrogen")
   )
   expect_equal(
-    select_terms(info = info2, quos(contains("gen"), -nitrogen)),
+    terms_select(info = info2, quos(contains("gen"), -nitrogen)),
     c("hydrogen", "oxygen")
   )
   expect_equal(
-    select_terms(info = info1, quos(date, age)),
+    terms_select(info = info1, quos(date, age)),
     c("date", "age")
   )
   ## This is weird but consistent with `dplyr::select_vars`
   expect_equal(
-    select_terms(info = info1, quos(-age, date)),
+    terms_select(info = info1, quos(-age, date)),
     c("diet", "height", "location", "date")
   )
   expect_equal(
-    select_terms(info = info1, quos(date, -age)),
+    terms_select(info = info1, quos(date, -age)),
     "date"
   )
-  expect_error(select_terms(info = info1, quos(log(date))))
-  expect_error(select_terms(info = info1, quos(date:age)))
-  expect_error(select_terms(info = info1, quos(I(date:age))))
-  expect_error(select_terms(info = info1, quos(matches("blahblahblah"))))
-  expect_error(select_terms(info = info1))
+  expect_error(terms_select(info = info1, quos(log(date))))
+  expect_error(terms_select(info = info1, quos(date:age)))
+  expect_error(terms_select(info = info1, quos(I(date:age))))
+  expect_error(terms_select(info = info1, quos(matches("blahblahblah"))))
+  expect_error(terms_select(info = info1))
 })
 
 
 test_that('combinations', {
   expect_equal(
-    select_terms(info = info2, quos(matches("[hH]"), -all_outcomes())),
+    terms_select(info = info2, quos(matches("[hH]"), -all_outcomes())),
     "hydrogen"
   )
   expect_equal(
-    select_terms(info = info2, quos(all_numeric(), -all_predictors())),
+    terms_select(info = info2, quos(all_numeric(), -all_predictors())),
     "HHV"
   )
   expect_equal(
-    select_terms(info = info2, quos(all_numeric(), -all_predictors(), dataset)),
+    terms_select(info = info2, quos(all_numeric(), -all_predictors(), dataset)),
     c("HHV", "dataset")
   )
   expect_equal(
-    select_terms(info = info2, quos(all_numeric(), -all_predictors(), dataset, -dataset)),
+    terms_select(info = info2, quos(all_numeric(), -all_predictors(), dataset, -dataset)),
     "HHV"
   )
 })

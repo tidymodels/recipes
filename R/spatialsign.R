@@ -77,7 +77,7 @@ step_spatialsign_new <-
 
 #' @export
 prepare.step_spatialsign <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,

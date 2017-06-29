@@ -133,7 +133,7 @@ step_pca_new <- function(terms = NULL,
 #' @importFrom rlang expr
 #' @export
 prepare.step_pca <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   prc_call <-
     expr(prcomp(

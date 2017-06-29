@@ -101,7 +101,7 @@ step_dummy_new <-
 #' @importFrom stats as.formula model.frame
 #' @export
 prepare.step_dummy <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   ## I hate doing this but currently we are going to have
   ## to save the terms object form the original (= training)

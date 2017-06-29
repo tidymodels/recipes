@@ -96,7 +96,7 @@ step_nzv_new <-
 
 #' @export
 prepare.step_nzv <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   filter <- nzv(
     x = training[, col_names],
     freq_cut = x$options$freq_cut,

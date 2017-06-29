@@ -94,7 +94,7 @@ poly_wrapper <- function(x, args) {
 #' @importFrom stats poly
 #' @export
 prepare.step_poly <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   obj <- lapply(training[, col_names], poly_wrapper, x$options)
   for (i in seq(along = col_names))

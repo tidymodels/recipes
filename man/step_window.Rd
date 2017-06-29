@@ -80,7 +80,7 @@ rec <- prepare(rec, training = sim_dat)
 
 # If you aren't sure how to set the names, see which variables are selected
 # and the order that they are selected:
-select_terms(info = summary(rec), args = quos(starts_with("y")))
+terms_select(info = summary(rec), args = quos(starts_with("y")))
 
 smoothed_dat <- bake(rec, sim_dat, everything())
 

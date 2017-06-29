@@ -36,7 +36,7 @@ add_role <- function(recipe, ..., new_role = "predictor") {
   terms <- quos(...)
   if (is_empty(terms))
     warning("No selectors were found", call. = FALSE)
-  vars <- select_terms(args = terms, info = summary(recipe))
+  vars <- terms_select(args = terms, info = summary(recipe))
   ## check if there are newly defined variables in the list
   existing_var <- vars %in% recipe$var_info$variable
   if (any(!existing_var)) {

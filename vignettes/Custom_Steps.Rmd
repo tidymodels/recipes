@@ -122,11 +122,11 @@ where
 
 You can define other options. 
 
-The first thing that you might want to do in the `prepare` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `select_terms` that can be used to obtain this. 
+The first thing that you might want to do in the `prepare` function is to translate the specification listed in the `terms` argument to column names in the current data. There is an internal function called `terms_select` that can be used to obtain this. 
 
 ```{r prepare_1, eval = FALSE}
 prepare.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(info = info, args = x$terms) 
+  col_names <- terms_select(info = info, args = x$terms) 
 }
 ```
 
@@ -139,7 +139,7 @@ get_pctl <- function(x, args) {
 }
 
 prepare.step_percentile <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(info = info, args = x$terms) 
+  col_names <- terms_select(info = info, args = x$terms) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   if(x$options$names == FALSE)

@@ -82,7 +82,7 @@ step_range_new <-
 #' @importFrom stats sd
 #' @export
 prepare.step_range <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   mins <-
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
   maxs <-

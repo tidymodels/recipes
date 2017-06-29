@@ -57,7 +57,7 @@
 #'
 #' # If you aren't sure how to set the names, see which variables are selected
 #' # and the order that they are selected:
-#' select_terms(info = summary(rec), args = quos(starts_with("y")))
+#' terms_select(info = summary(rec), args = quos(starts_with("y")))
 #'
 #' smoothed_dat <- bake(rec, sim_dat, everything())
 #'
@@ -147,7 +147,7 @@ step_window_new <-
 
 #' @export
 prepare.step_window <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("The selected variables should be numeric")

@@ -97,8 +97,8 @@ step_ratio_new <-
 #' @export
 prepare.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
-    top = select_terms(x$terms, info = info),
-    bottom = select_terms(x$denom, info = info),
+    top = terms_select(x$terms, info = info),
+    bottom = terms_select(x$denom, info = info),
     stringsAsFactors = FALSE
   )
   col_names <- col_names[!(col_names$top == col_names$bottom), ]

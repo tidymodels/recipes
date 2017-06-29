@@ -220,8 +220,8 @@ has_selector <- function(x, allowed = selectors) {
 #' data(okc)
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
-#' select_terms(info = info, quos(all_predictors()))
-select_terms <- function(info, args) {
+#' terms_select(info = info, quos(all_predictors()))
+terms_select <- function(info, args) {
   vars <- info$variable
   roles <- info$role
   types <- info$type

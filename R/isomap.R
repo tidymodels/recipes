@@ -120,7 +120,7 @@ step_isomap_new <-
 #' @importFrom dimRed embed dimRedData
 #' @export
 prepare.step_isomap <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))

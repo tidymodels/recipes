@@ -83,7 +83,7 @@ step_ordinalscore_new <-
 #' @export
 prepare.step_ordinalscore <-
   function(x, training, info = NULL, ...) {
-    col_names <- select_terms(x$terms, info = info)
+    col_names <- terms_select(x$terms, info = info)
     ord_check <-
       vapply(training[, col_names], is.ordered, c(logic = TRUE))
     if (!all(ord_check))

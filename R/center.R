@@ -81,7 +81,7 @@ step_center_new <-
   }
 
 prepare.step_center <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   
   means <-
     vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)

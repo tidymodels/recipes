@@ -257,7 +257,7 @@ bin_wrapper <- function(x, args) {
 
 #' @export
 prepare.step_discretize <- function(x, training, info = NULL, ...) {
-  col_names <- select_terms(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   if (length(col_names) > 1 &
       any(names(x$options) %in% c("prefix", "labels"))) {
     warning("Note that the options `prefix` and `labels`",

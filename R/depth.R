@@ -109,7 +109,7 @@ step_depth_new <-
 #' @export
 prepare.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
-  x_names <- select_terms(x$terms, info = info)
+  x_names <- terms_select(x$terms, info = info)
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
   x_dat <- lapply(x_dat, as.matrix)
