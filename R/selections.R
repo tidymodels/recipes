@@ -340,36 +340,3 @@ set_current_info <- function(x) {
 current_info <- function() {
   cur_info_env %||% stop("Variable context not set", call. = FALSE)
 }
-
-
-
-## These are in the devel version of dplyr; use their exported versions once it 
-## is on CRAN
-
-#' @importFrom rlang f_rhs is_lang
-quo_is_helper <- function(quo) {
-  expr <- rlang::f_rhs(quo)
-  
-  if (!rlang::is_lang(expr)) {
-    return(FALSE)
-  }
-  
-  if (is_data_pronoun(expr)) {
-    return(FALSE)
-  }
-  
-  if (rlang::is_lang(expr, c("-", ":", "c"))) {
-    return(FALSE)
-  }
-  
-  TRUE
-}
-
-sym_dollar <- quote(`$`)
-sym_brackets2 <- quote(`[[`)
-is_data_pronoun <- function(expr) {
-  is_lang(expr, list(sym_dollar, sym_brackets2)) &&
-    identical(rlang::node_cadr(expr), quote(.data))
-}
-
-
