@@ -31,14 +31,9 @@ step_shuffle <- function(recipe,
                          role = NA,
                          trained = FALSE,
                          variables = NULL) {
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.",
-         call. = FALSE)
   add_step(recipe,
            step_shuffle_new(
-             terms = terms,
+             terms = check_ellipses(...),
              role = role,
              trained = trained,
              variables = variables

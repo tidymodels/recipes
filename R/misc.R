@@ -304,3 +304,15 @@ merge_term_info <- function(.new, .old) {
   }
   left_join(.new, .old, by = c("variable", "type"))
 }
+
+#' @importFrom rlang quos is_empty
+check_ellipses <- function(...) {
+  terms <- quos(...)
+  if (is_empty(terms))
+    stop("Please supply at least one variable specification.",
+         "See ?selections.",
+         call. = FALSE)
+  terms
+}
+
+

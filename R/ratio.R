@@ -58,18 +58,13 @@ step_ratio <-
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
            variables = NULL) {
-    
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one numerator variable specification. ",
-           "See ?selections.", call. = FALSE)
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",
            "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_ratio_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         denom = denom,

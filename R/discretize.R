@@ -219,14 +219,10 @@ step_discretize <- function(recipe,
                             trained = FALSE,
                             objects = NULL,
                             options = list()) {
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.", call. = FALSE)
   add_step(
     recipe,
     step_discretize_new(
-      terms = terms,
+      terms = check_ellipses(...),
       trained = trained,
       role = role,
       objects = objects,

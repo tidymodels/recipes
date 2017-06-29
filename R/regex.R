@@ -58,11 +58,7 @@ step_regex <- function(recipe,
          paste0(valid_args, collapse = ", "),
          call. = FALSE)
   
-  terms <- quos(...)
-  
-  if (is_empty(terms))
-    stop("Please supply a single variable specification. See ?selections.",
-         call. = FALSE)
+  terms <- check_ellipses(...)
   if (length(terms) > 1)
     stop("For this step, only a single selector can be used.", call. = FALSE)
   

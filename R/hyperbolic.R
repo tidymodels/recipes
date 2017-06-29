@@ -45,15 +45,10 @@ step_hyperbolic <-
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
       stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
-    
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_hyperbolic_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         func = func,

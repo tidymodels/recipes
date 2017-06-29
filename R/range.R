@@ -48,15 +48,10 @@ step_range <-
            min = 0,
            max = 1,
            ranges = NULL) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.",
-           call. = FALSE)
     add_step(
       recipe,
       step_range_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         min = min,

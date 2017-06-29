@@ -66,15 +66,10 @@ step_dummy <-
            naming = function(var, lvl)
              paste(var, make.names(lvl), sep = "_"),
            levels = NULL) {
-    
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.", call. = FALSE)
   add_step(
     recipe,
     step_dummy_new(
-      terms = terms,
+      terms = check_ellipses(...),
       role = role,
       trained = trained,
       contrast = contrast,

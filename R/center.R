@@ -51,14 +51,10 @@ step_center <-
            trained = FALSE,
            means = NULL,
            na.rm = TRUE) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_center_new(
-        terms = terms,
+        terms = check_ellipses(...),
         trained = trained,
         role = role,
         means = means,

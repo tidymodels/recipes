@@ -86,14 +86,10 @@ step_knnimpute <-
            variables = NULL) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification. ",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_knnimpute_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         K = K,

@@ -91,17 +91,12 @@ step_pca <- function(recipe,
                      options = list(),
                      res = NULL,
                      prefix = "PC") {
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.",
-         call. = FALSE)
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
   add_step(
     recipe,
     step_pca_new(
-      terms = terms,
+      terms = check_ellipses(...),
       role = role,
       trained = trained,
       num = num,

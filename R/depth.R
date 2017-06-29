@@ -71,14 +71,10 @@ step_depth <-
            data = NULL) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_depth_new(
-        terms = terms,
+        terms = check_ellipses(...),
         class = class,
         role = role,
         trained = trained,

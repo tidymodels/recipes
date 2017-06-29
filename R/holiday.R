@@ -53,15 +53,11 @@ step_holiday <-
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
     stop("Invalid `holidays` value. See timeDate::listHolidays", call. = FALSE)
-  
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.", call. = FALSE)
+
   add_step(
     recipe,
     step_holiday_new(
-      terms = terms,
+      terms = check_ellipses(...),
       role = role,
       trained = trained,
       holidays = holidays,

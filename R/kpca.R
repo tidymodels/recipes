@@ -97,14 +97,10 @@ step_kpca <-
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC") {
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.", call. = FALSE)
   add_step(
     recipe,
     step_kpca_new(
-      terms = terms,
+      terms = check_ellipses(...),
       role = role,
       trained = trained,
       num = num,

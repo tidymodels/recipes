@@ -83,14 +83,10 @@ step_isomap <-
            options = list(knn = 50, .mute = c("message", "output")),
            res = NULL,
            prefix = "Isomap") {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_isomap_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         num = num,

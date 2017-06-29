@@ -48,14 +48,10 @@ step_modeimpute <-
            role = NA,
            trained = FALSE,
            modes = NULL) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_modeimpute_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         modes = modes

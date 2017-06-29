@@ -38,14 +38,10 @@ step_log <-
            trained = FALSE,
            base = exp(1),
            vars = NULL) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_log_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         base = base,

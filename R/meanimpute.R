@@ -52,15 +52,10 @@ step_meanimpute <-
            trained = FALSE,
            means = NULL,
            trim = 0) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.",
-           call. = FALSE)
     add_step(
       recipe,
       step_meanimpute_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         means = means,

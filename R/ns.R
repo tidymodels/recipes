@@ -47,14 +47,10 @@ step_ns <-
            trained = FALSE,
            objects = NULL,
            options = list(df = 2)) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_ns_new(
-        terms = terms,
+        terms = check_ellipses(...),
         trained = trained,
         role = role,
         objects = objects,

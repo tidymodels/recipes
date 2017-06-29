@@ -44,16 +44,10 @@ step_bin2factor <-
            objects = NULL) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
-    
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification. ", 
-           "See ?selections.", call. = FALSE)
-    
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         levels = levels,

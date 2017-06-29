@@ -73,15 +73,10 @@ step_date <-
   if (!all(features %in% feat))
     stop("Possible values of `features` should include: ",
          paste0("'", feat, "'", collapse = ", "))
-  
-  terms <- quos(...)
-  if (is_empty(terms))
-    stop("Please supply at least one variable specification.", 
-         "See ?selections.", call. = FALSE)
   add_step(
     recipe,
     step_date_new(
-      terms = terms,
+      terms = check_ellipses(...),
       role = role,
       trained = trained,
       features = features,

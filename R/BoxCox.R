@@ -55,15 +55,10 @@ step_BoxCox <-
            lambdas = NULL,
            limits = c(-5, 5),
            nunique = 5) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification. ",
-           "See ?selections.",
-           call. = FALSE)
     add_step(
       recipe,
       step_BoxCox_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         lambdas = lambdas,

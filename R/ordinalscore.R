@@ -52,15 +52,10 @@ step_ordinalscore <-
            trained = FALSE,
            vars = NULL,
            convert = as.numeric) {
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.",
-           call. = FALSE)
     add_step(
       recipe,
       step_ordinalscore_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         vars = vars,

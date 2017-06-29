@@ -61,15 +61,10 @@ step_other <-
       stop("`threshold` should be greater than zero", call. = FALSE)
     if (threshold >= 1)
       stop("`threshold` should be less than one", call. = FALSE)
-    
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_other_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         threshold = threshold,

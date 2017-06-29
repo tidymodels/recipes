@@ -81,13 +81,10 @@ step_bagimpute <-
            seed_val = sample.int(10 ^ 4, 1)) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
-    terms <- quos(...)
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification. See ?selections.")
     add_step(
       recipe,
       step_bagimpute_new(
-        terms = terms,
+        terms = check_ellipses(...),
         role = role,
         trained = trained,
         models = models,

@@ -87,11 +87,6 @@ step_window <-
            na.rm = TRUE,
            statistic = "mean",
            names = NULL) {
-    terms <- quos(...)
-    
-    if (is_empty(terms))
-      stop("Please supply at least one variable specification.",
-           "See ?selections.", call. = FALSE)
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
@@ -117,7 +112,7 @@ step_window <-
     add_step(
       recipe,
       step_window_new(
-        terms = terms,
+        terms = check_ellipses(...),
         trained = trained,
         role = role,
         size = size,
