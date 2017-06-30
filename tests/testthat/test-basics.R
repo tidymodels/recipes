@@ -1,6 +1,5 @@
 library(testthat)
 context("Testing basic functionalities")
-library(magrittr)
 library(tibble)
 
 library(recipes)

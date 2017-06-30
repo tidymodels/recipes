@@ -315,4 +315,6 @@ check_ellipses <- function(...) {
   terms
 }
 
-
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`

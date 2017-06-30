@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(recipes)
 
 ## expected results form the `dimRed` package

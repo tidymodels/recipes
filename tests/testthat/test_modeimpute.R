@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(recipes)
 data("credit_data")
 

@@ -1,4 +1,3 @@
-library(magrittr)
 library(tibble)
 library(recipes)
 data("biomass")

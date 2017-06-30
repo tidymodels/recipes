@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(gower)
 library(recipes)
 library(dplyr)

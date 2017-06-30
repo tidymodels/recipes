@@ -42,7 +42,6 @@ summary(rec, original = TRUE)
 We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:
 
 ```{r dummy_1}
-library(magrittr)
 dummied <- rec %>% step_dummy(all_nominal())
 ```
 

@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(kernlab)
 library(recipes)
 

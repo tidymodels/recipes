@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(recipes)
 
 dummies <- cbind(model.matrix( ~ block - 1, npk), 

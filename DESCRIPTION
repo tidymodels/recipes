@@ -24,10 +24,10 @@ Imports:
     rlang (>= 0.1),
     gower,
     RcppRoll,
-    tidyselect
+    tidyselect,
+    magrittr
 Suggests:
     testthat,
-    magrittr,
     rpart,
     kernlab,
     fastICA,

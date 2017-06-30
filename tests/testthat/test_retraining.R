@@ -1,6 +1,5 @@
 context("Testing retraining")
 
-library(magrittr)
 data(biomass)
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,

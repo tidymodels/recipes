@@ -1,4 +1,3 @@
-library(magrittr)
 library(testthat)
 library(recipes)
 

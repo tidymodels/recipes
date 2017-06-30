@@ -1,5 +1,4 @@
 library(testthat)
-library(magrittr)
 library(ipred)
 library(rpart)
 library(recipes)
