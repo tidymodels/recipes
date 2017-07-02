@@ -76,37 +76,38 @@
 <p><code>recipes</code> contains a number of different steps included in the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
 steps &lt;-<span class="st"> </span><span class="kw">apropos</span>(<span class="st">"^step_"</span>)
-steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"new$"</span>, steps)]</code></pre></div>
-<pre><code>##  [1] "step_bagimpute"    "step_bin2factor"   "step_BoxCox"      
-##  [4] "step_center"       "step_classdist"    "step_corr"        
-##  [7] "step_date"         "step_depth"        "step_discretize"  
-## [10] "step_dummy"        "step_holiday"      "step_hyperbolic"  
-## [13] "step_ica"          "step_interact"     "step_invlogit"    
-## [16] "step_isomap"       "step_knnimpute"    "step_kpca"        
-## [19] "step_lincomb"      "step_log"          "step_logit"       
-## [22] "step_meanimpute"   "step_modeimpute"   "step_ns"          
-## [25] "step_nzv"          "step_ordinalscore" "step_other"       
-## [28] "step_pca"          "step_poly"         "step_range"       
-## [31] "step_ratio"        "step_regex"        "step_rm"          
-## [34] "step_scale"        "step_shuffle"      "step_spatialsign" 
-## [37] "step_sqrt"         "step_window"       "step_YeoJohnson"</code></pre>
+steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"new$"</span>, steps)]
+<span class="co">#&gt;  [1] "step_bagimpute"    "step_bin2factor"   "step_BoxCox"      </span>
+<span class="co">#&gt;  [4] "step_center"       "step_classdist"    "step_corr"        </span>
+<span class="co">#&gt;  [7] "step_date"         "step_depth"        "step_discretize"  </span>
+<span class="co">#&gt; [10] "step_dummy"        "step_holiday"      "step_hyperbolic"  </span>
+<span class="co">#&gt; [13] "step_ica"          "step_interact"     "step_invlogit"    </span>
+<span class="co">#&gt; [16] "step_isomap"       "step_knnimpute"    "step_kpca"        </span>
+<span class="co">#&gt; [19] "step_lincomb"      "step_log"          "step_logit"       </span>
+<span class="co">#&gt; [22] "step_meanimpute"   "step_modeimpute"   "step_ns"          </span>
+<span class="co">#&gt; [25] "step_nzv"          "step_ordinalscore" "step_other"       </span>
+<span class="co">#&gt; [28] "step_pca"          "step_poly"         "step_range"       </span>
+<span class="co">#&gt; [31] "step_ratio"        "step_regex"        "step_rm"          </span>
+<span class="co">#&gt; [34] "step_scale"        "step_shuffle"      "step_spatialsign" </span>
+<span class="co">#&gt; [37] "step_sqrt"         "step_window"       "step_YeoJohnson"</span></code></pre></div>
 <p>You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/topepo/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/topepo/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <div id="a-new-step-definition" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-new-step-definition" class="anchor"></a>A new step definition</h1>
 <p>At an example, let’s create a step that replaces the value of a variable with its percentile from the training set. The date that I’ll use is from the <code>recipes</code> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(biomass)
-<span class="kw">str</span>(biomass)</code></pre></div>
-<pre><code>## 'data.frame':    536 obs. of  8 variables:
-##  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...
-##  $ dataset : chr  "Training" "Training" "Training" "Training" ...
-##  $ carbon  : num  49.8 49.5 47.8 45.1 46.8 ...
-##  $ hydrogen: num  5.64 5.7 5.8 4.97 5.4 5.75 5.99 5.7 5.5 5.9 ...
-##  $ oxygen  : num  42.9 41.3 46.2 35.6 40.7 ...
-##  $ nitrogen: num  0.41 0.2 0.11 3.3 1 2.04 2.68 1.7 0.8 1.2 ...
-##  $ sulfur  : num  0 0 0.02 0.16 0.02 0.1 0.2 0.2 0 0.1 ...
-##  $ HHV     : num  20 19.2 18.3 18.2 18.4 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]
+<span class="kw">str</span>(biomass)
+<span class="co">#&gt; 'data.frame':    536 obs. of  8 variables:</span>
+<span class="co">#&gt;  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...</span>
+<span class="co">#&gt;  $ dataset : chr  "Training" "Training" "Training" "Training" ...</span>
+<span class="co">#&gt;  $ carbon  : num  49.8 49.5 47.8 45.1 46.8 ...</span>
+<span class="co">#&gt;  $ hydrogen: num  5.64 5.7 5.8 4.97 5.4 5.75 5.99 5.7 5.5 5.9 ...</span>
+<span class="co">#&gt;  $ oxygen  : num  42.9 41.3 46.2 35.6 40.7 ...</span>
+<span class="co">#&gt;  $ nitrogen: num  0.41 0.2 0.11 3.3 1 2.04 2.68 1.7 0.8 1.2 ...</span>
+<span class="co">#&gt;  $ sulfur  : num  0 0 0.02 0.16 0.02 0.1 0.2 0.2 0 0.1 ...</span>
+<span class="co">#&gt;  $ HHV     : num  20 19.2 18.3 18.2 18.4 ...</span>
+
+biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]
 biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]</code></pre></div>
 <p>To illustrate the transformation with the <code>carbon</code> variable, the training set distribution of that variables is shown below with a vertical line for the first value of the test set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
@@ -182,9 +183,9 @@ biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span
 <code>info</code> will also be a tibble that has information on the current set of data available. This information is updated as each step is evaluated by its specific <code>prepare</code> method so it may not have the variables from the original data. The columns in this tibble are <code>variable</code> (the variable name), <code>type</code> (currently either “numeric” or “nominal”), <code>role</code> (defining the variable’s role), and <code>source</code> (either “original” or “derived” depending on where it originated).</li>
 </ul>
 <p>You can define other options.</p>
-<p>The first thing that you might want to do in the <code>prepare</code> function is to translate the specification listed in the <code>terms</code> argument to column names in the current data. There is an internal function called <code>select_terms</code> that can be used to obtain this.</p>
+<p>The first thing that you might want to do in the <code>prepare</code> function is to translate the specification listed in the <code>terms</code> argument to column names in the current data. There is an internal function called <code>terms_select</code> that can be used to obtain this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prepare.step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(x, training, <span class="dt">info =</span> <span class="ot">NULL</span>, ...) {
-  col_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_terms.html">select_terms</a></span>(<span class="dt">info =</span> info, <span class="dt">args =</span> x<span class="op">$</span>terms) 
+  col_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/terms_select.html">terms_select</a></span>(<span class="dt">terms =</span> x<span class="op">$</span>terms, <span class="dt">info =</span> info) 
 }</code></pre></div>
 <p>Once we have this, we can either save the original data columns or estimate the approximation grid. For the grid, we will use a helper function that enables us to run <code>do.call</code> on a list of arguments that include the <code>options</code> list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_pctl &lt;-<span class="st"> </span><span class="cf">function</span>(x, args) {
@@ -193,7 +194,7 @@ biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span
 }
 
 prepare.step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(x, training, <span class="dt">info =</span> <span class="ot">NULL</span>, ...) {
-  col_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_terms.html">select_terms</a></span>(<span class="dt">info =</span> info, <span class="dt">args =</span> x<span class="op">$</span>terms) 
+  col_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/terms_select.html">terms_select</a></span>(<span class="dt">terms =</span> x<span class="op">$</span>terms, <span class="dt">info =</span> info) 
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   <span class="cf">if</span>(x<span class="op">$</span>options<span class="op">$</span>names <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>)
@@ -253,30 +254,29 @@ bake.step_percentile &lt;-<span class="st"> </span><span class="cf">function</sp
 <h1 class="hasAnchor">
 <a href="#running-the-example" class="anchor"></a>Running the example</h1>
 <p>Let’s use the example data to make sure that it works:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(magrittr)
-rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> biomass_tr[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> biomass_tr[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])
 rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">step_percentile</span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>(), <span class="dt">approx =</span> <span class="ot">TRUE</span>) 
 
-rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(rec_obj, <span class="dt">training =</span> biomass_tr)</code></pre></div>
-<pre><code>## step 1 percentile training</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentiles &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(rec_obj, biomass_te)
-percentiles</code></pre></div>
-<pre><code>## # A tibble: 80 x 5
-##        carbon   hydrogen     oxygen  nitrogen    sulfur
-##         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-##  1 0.42093897 0.45000000 0.90262697 0.2150000 0.7350000
-##  2 0.18000000 0.38500000 0.92174978 0.9284932 0.8387097
-##  3 0.15613527 0.38500000 0.94471429 0.9000000 0.8050000
-##  4 0.42328638 0.77500000 0.28000000 0.8451613 0.9020000
-##  5 0.66620690 0.86666667 0.63142857 0.1550000 0.0900000
-##  6 0.21751880 0.38500000 0.53626866 0.4950000 0.7000000
-##  7 0.08030053 0.27130435 0.98591215 0.6950000 0.9033333
-##  8 0.13946463 0.12600000 0.16040445 0.6060000 0.7000000
-##  9 0.02258870 0.10345572 0.13124688 0.1258333 0.9959504
-## 10 0.01777328 0.08207885 0.09869775 0.9715133 0.9739877
-## # ... with 70 more rows</code></pre>
+rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(rec_obj, <span class="dt">training =</span> biomass_tr)
+<span class="co">#&gt; step 1 percentile training</span>
+
+percentiles &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(rec_obj, biomass_te)
+percentiles
+<span class="co">#&gt; # A tibble: 80 x 5</span>
+<span class="co">#&gt;    carbon hydrogen oxygen nitrogen sulfur</span>
+<span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 0.4209   0.4500 0.9026    0.215  0.735</span>
+<span class="co">#&gt;  2 0.1800   0.3850 0.9217    0.928  0.839</span>
+<span class="co">#&gt;  3 0.1561   0.3850 0.9447    0.900  0.805</span>
+<span class="co">#&gt;  4 0.4233   0.7750 0.2800    0.845  0.902</span>
+<span class="co">#&gt;  5 0.6662   0.8667 0.6314    0.155  0.090</span>
+<span class="co">#&gt;  6 0.2175   0.3850 0.5363    0.495  0.700</span>
+<span class="co">#&gt;  7 0.0803   0.2713 0.9859    0.695  0.903</span>
+<span class="co">#&gt;  8 0.1395   0.1260 0.1604    0.606  0.700</span>
+<span class="co">#&gt;  9 0.0226   0.1035 0.1312    0.126  0.996</span>
+<span class="co">#&gt; 10 0.0178   0.0821 0.0987    0.972  0.974</span>
+<span class="co">#&gt; # ... with 70 more rows</span></code></pre></div>
 <p>The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:</p>
 <p><img src="Custom_Steps_files/figure-html/cdf_plot-1.png" width="672"></p>
 </div>

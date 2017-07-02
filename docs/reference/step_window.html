@@ -170,8 +170,8 @@ will be selected, use the <code>summary</code> function (see the example below).
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>recipes</span>)
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='fu'>library</span>(<span class='no'>rlang</span>)
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Want to understand how all the pieces fit together? Buy the ggplot2</span>
-#&gt; <span class='message'>book: http://ggplot2.org/book/</span></div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='fu'>set.seed</span>(<span class='fl'>5522</span>)
 <span class='no'>sim_dat</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>x1</span> <span class='kw'>=</span> (<span class='fl'>20</span>:<span class='fl'>100</span>) / <span class='fl'>10</span>)
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>nrow</span>(<span class='no'>sim_dat</span>)
@@ -191,14 +191,14 @@ will be selected, use the <code>summary</code> function (see the example below).
 #&gt; step 2 window training </div><div class='input'>
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
-<span class='fu'><a href='select_terms.html'>select_terms</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>quos</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
+<span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'>quos</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
 <span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
 
 <span class='fu'>ggplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>geom_line</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
   <span class='fu'>geom_line</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'>theme_bw</span>()</div><img src='step_window-8.png' alt='' width='540' height='400' /><div class='input'>
+  <span class='fu'>theme_bw</span>()</div><img src='step_window-6.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># If you want to replace the selected variables with the rolling statistic</span>
 <span class='co'># don't set `names`</span>
 <span class='no'>sim_dat</span>$<span class='no'>original</span> <span class='kw'>&lt;-</span> <span class='no'>sim_dat</span>$<span class='no'>y1</span>
@@ -207,7 +207,7 @@ will be selected, use the <code>summary</code> function (see the example below).
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training </div><div class='input'><span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
 <span class='fu'>ggplot</span>(<span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
   <span class='fu'>geom_point</span>() +
-  <span class='fu'>theme_bw</span>()</div><img src='step_window-12.png' alt='' width='540' height='400' /></pre>
+  <span class='fu'>theme_bw</span>()</div><img src='step_window-10.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
   )
+options(digits = 3)
 ```
 
 This document demonstrates some basic uses of recipes. First, some definitions are required: 
@@ -28,9 +29,9 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 The cell segmentation data will be used. It has 58 predictor columns, a factor variable `Class` (the outcome), and two extra labelling columns. Each of the predictors has a suffix for the optical channel (`"Ch1"`-`"Ch4"`). We will first separate the data into a training and test set then remove unimportant variables:
 
 ```{r data}
+library(recipes)
 library(caret)
 data(segmentationData)
-library(dplyr)
 
 seg_train <- segmentationData %>% 
   filter(Case == "Train") %>% 
@@ -51,7 +52,6 @@ Recipes can be created manually by sequentially adding roles to variables in a d
 If the analysis only required **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
 
 ```{r first_rec}
-library(recipes)
 rec_obj <- recipe(Class ~ ., data = seg_train)
 rec_obj
 ```

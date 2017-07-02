@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
   )
+options(digits = 3)
 ```
 
 When recipe steps are used, there are different approaches that can be used to select which variables or features should be used. 

@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
   )
+options(digits = 3)
 ```
 
 `recipes` contains a number of different steps included in the package:
@@ -213,7 +214,6 @@ bake.step_percentile <- function(object, newdata, ...) {
 Let's use the example data to make sure that it works: 
 
 ```{r example}
-library(dplyr)
 rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
 rec_obj <- rec_obj %>%
   step_percentile(all_predictors(), approx = TRUE) 

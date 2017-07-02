@@ -86,9 +86,9 @@
 <h2 class="hasAnchor">
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The cell segmentation data will be used. It has 58 predictor columns, a factor variable <code>Class</code> (the outcome), and two extra labelling columns. Each of the predictors has a suffix for the optical channel (<code>"Ch1"</code>-<code>"Ch4"</code>). We will first separate the data into a training and test set then remove unimportant variables:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
+<span class="kw">library</span>(caret)
 <span class="kw">data</span>(segmentationData)
-<span class="kw">library</span>(dplyr)
 
 seg_train &lt;-<span class="st"> </span>segmentationData <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(Case <span class="op">==</span><span class="st"> "Train"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -104,16 +104,15 @@ seg_test  &lt;-<span class="st"> </span>segmentationData <span class="op">%&gt;%
 <p>For a first recipe, let’s plan on centering and scaling the predictors. First, we will create a recipe from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only required <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
-rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> seg_train)
-rec_obj</code></pre></div>
-<pre><code>## Data Recipe
-## 
-## Inputs:
-## 
-##       role #variables
-##    outcome          1
-##  predictor         58</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> seg_train)
+rec_obj
+<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Inputs:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       role #variables</span>
+<span class="co">#&gt;    outcome          1</span>
+<span class="co">#&gt;  predictor         58</span></code></pre></div>
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
 <p>(Note that the formula method here is used to declare the variables and their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
@@ -137,65 +136,65 @@ rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardized &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/step_center.html">step_center</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/step_scale.html">step_scale</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) 
-standardized</code></pre></div>
-<pre><code>## Data Recipe
-## 
-## Inputs:
-## 
-##       role #variables
-##    outcome          1
-##  predictor         58
-## 
-## Steps:
-## 
-## Centering for all_predictors()
-## Scaling for all_predictors()</code></pre>
+standardized
+<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Inputs:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       role #variables</span>
+<span class="co">#&gt;    outcome          1</span>
+<span class="co">#&gt;  predictor         58</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Steps:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Centering for all_predictors()</span>
+<span class="co">#&gt; Scaling for all_predictors()</span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prepare</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
-<pre><code>## step 1 center training 
-## step 2 scale training</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(standardized, <span class="dt">training =</span> seg_train)
+<span class="co">#&gt; step 1 center training </span>
+<span class="co">#&gt; step 2 scale training</span></code></pre></div>
 <p>Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_train)
 test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)</code></pre></div>
 <p><code>bake</code> returns a tibble:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(test_data)</code></pre></div>
-<pre><code>## [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data</code></pre></div>
-<pre><code>## # A tibble: 1,010 x 58
-##       AngleCh1    AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3 AvgIntenCh4
-##          &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-##  1  1.06561586 -0.6470674  -0.6841090  -1.1769586  -0.9256508 -0.92379995
-##  2 -1.80403073 -0.1852916  -0.6318946  -0.4791016  -0.8088369 -0.66664196
-##  3 -1.02997656 -0.7070983   1.2073287   3.0354287   0.3481220  1.38644713
-##  4  1.69348204 -0.6840095   0.8056903   2.6640591   0.2962628  0.89335632
-##  5  1.81293423 -0.3422954  -0.6681004  -1.1719298  -0.8434861 -0.92822767
-##  6 -1.47591871  0.7844377  -0.6820300  -0.6280328  -0.8810829 -0.59391141
-##  7  1.27016162  0.2718665  -0.6717198  -0.6251114  -0.8091589 -0.51558489
-##  8 -1.58365831  0.4565769   0.2831505   1.3198321  -0.6133099 -0.08913901
-##  9 -0.79573603 -0.4115617  -0.6689980  -1.1680446  -0.8450346 -0.92583231
-## 10  0.03629088 -0.6378319  -0.5345582   0.1818292  -0.5552296 -0.02530285
-## # ... with 1,000 more rows, and 52 more variables:
-## #   ConvexHullAreaRatioCh1 &lt;dbl&gt;, ConvexHullPerimRatioCh1 &lt;dbl&gt;,
-## #   DiffIntenDensityCh1 &lt;dbl&gt;, DiffIntenDensityCh3 &lt;dbl&gt;,
-## #   DiffIntenDensityCh4 &lt;dbl&gt;, EntropyIntenCh1 &lt;dbl&gt;,
-## #   EntropyIntenCh3 &lt;dbl&gt;, EntropyIntenCh4 &lt;dbl&gt;, EqCircDiamCh1 &lt;dbl&gt;,
-## #   EqEllipseLWRCh1 &lt;dbl&gt;, EqEllipseOblateVolCh1 &lt;dbl&gt;,
-## #   EqEllipseProlateVolCh1 &lt;dbl&gt;, EqSphereAreaCh1 &lt;dbl&gt;,
-## #   EqSphereVolCh1 &lt;dbl&gt;, FiberAlign2Ch3 &lt;dbl&gt;, FiberAlign2Ch4 &lt;dbl&gt;,
-## #   FiberLengthCh1 &lt;dbl&gt;, FiberWidthCh1 &lt;dbl&gt;, IntenCoocASMCh3 &lt;dbl&gt;,
-## #   IntenCoocASMCh4 &lt;dbl&gt;, IntenCoocContrastCh3 &lt;dbl&gt;,
-## #   IntenCoocContrastCh4 &lt;dbl&gt;, IntenCoocEntropyCh3 &lt;dbl&gt;,
-## #   IntenCoocEntropyCh4 &lt;dbl&gt;, IntenCoocMaxCh3 &lt;dbl&gt;,
-## #   IntenCoocMaxCh4 &lt;dbl&gt;, KurtIntenCh1 &lt;dbl&gt;, KurtIntenCh3 &lt;dbl&gt;,
-## #   KurtIntenCh4 &lt;dbl&gt;, LengthCh1 &lt;dbl&gt;, NeighborAvgDistCh1 &lt;dbl&gt;,
-## #   NeighborMinDistCh1 &lt;dbl&gt;, NeighborVarDistCh1 &lt;dbl&gt;, PerimCh1 &lt;dbl&gt;,
-## #   ShapeBFRCh1 &lt;dbl&gt;, ShapeLWRCh1 &lt;dbl&gt;, ShapeP2ACh1 &lt;dbl&gt;,
-## #   SkewIntenCh1 &lt;dbl&gt;, SkewIntenCh3 &lt;dbl&gt;, SkewIntenCh4 &lt;dbl&gt;,
-## #   SpotFiberCountCh3 &lt;dbl&gt;, SpotFiberCountCh4 &lt;dbl&gt;, TotalIntenCh1 &lt;dbl&gt;,
-## #   TotalIntenCh2 &lt;dbl&gt;, TotalIntenCh3 &lt;dbl&gt;, TotalIntenCh4 &lt;dbl&gt;,
-## #   VarIntenCh1 &lt;dbl&gt;, VarIntenCh3 &lt;dbl&gt;, VarIntenCh4 &lt;dbl&gt;,
-## #   WidthCh1 &lt;dbl&gt;, XCentroid &lt;dbl&gt;, YCentroid &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(test_data)
+<span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
+test_data
+<span class="co">#&gt; # A tibble: 1,010 x 58</span>
+<span class="co">#&gt;    AngleCh1 AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3 AvgIntenCh4</span>
+<span class="co">#&gt;       &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1   1.0656  -0.647      -0.684      -1.177      -0.926     -0.9238</span>
+<span class="co">#&gt;  2  -1.8040  -0.185      -0.632      -0.479      -0.809     -0.6666</span>
+<span class="co">#&gt;  3  -1.0300  -0.707       1.207       3.035       0.348      1.3864</span>
+<span class="co">#&gt;  4   1.6935  -0.684       0.806       2.664       0.296      0.8934</span>
+<span class="co">#&gt;  5   1.8129  -0.342      -0.668      -1.172      -0.843     -0.9282</span>
+<span class="co">#&gt;  6  -1.4759   0.784      -0.682      -0.628      -0.881     -0.5939</span>
+<span class="co">#&gt;  7   1.2702   0.272      -0.672      -0.625      -0.809     -0.5156</span>
+<span class="co">#&gt;  8  -1.5837   0.457       0.283       1.320      -0.613     -0.0891</span>
+<span class="co">#&gt;  9  -0.7957  -0.412      -0.669      -1.168      -0.845     -0.9258</span>
+<span class="co">#&gt; 10   0.0363  -0.638      -0.535       0.182      -0.555     -0.0253</span>
+<span class="co">#&gt; # ... with 1,000 more rows, and 52 more variables:</span>
+<span class="co">#&gt; #   ConvexHullAreaRatioCh1 &lt;dbl&gt;, ConvexHullPerimRatioCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   DiffIntenDensityCh1 &lt;dbl&gt;, DiffIntenDensityCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   DiffIntenDensityCh4 &lt;dbl&gt;, EntropyIntenCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   EntropyIntenCh3 &lt;dbl&gt;, EntropyIntenCh4 &lt;dbl&gt;, EqCircDiamCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   EqEllipseLWRCh1 &lt;dbl&gt;, EqEllipseOblateVolCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   EqEllipseProlateVolCh1 &lt;dbl&gt;, EqSphereAreaCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   EqSphereVolCh1 &lt;dbl&gt;, FiberAlign2Ch3 &lt;dbl&gt;, FiberAlign2Ch4 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   FiberLengthCh1 &lt;dbl&gt;, FiberWidthCh1 &lt;dbl&gt;, IntenCoocASMCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   IntenCoocASMCh4 &lt;dbl&gt;, IntenCoocContrastCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   IntenCoocContrastCh4 &lt;dbl&gt;, IntenCoocEntropyCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   IntenCoocEntropyCh4 &lt;dbl&gt;, IntenCoocMaxCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   IntenCoocMaxCh4 &lt;dbl&gt;, KurtIntenCh1 &lt;dbl&gt;, KurtIntenCh3 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   KurtIntenCh4 &lt;dbl&gt;, LengthCh1 &lt;dbl&gt;, NeighborAvgDistCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   NeighborMinDistCh1 &lt;dbl&gt;, NeighborVarDistCh1 &lt;dbl&gt;, PerimCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   ShapeBFRCh1 &lt;dbl&gt;, ShapeLWRCh1 &lt;dbl&gt;, ShapeP2ACh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   SkewIntenCh1 &lt;dbl&gt;, SkewIntenCh3 &lt;dbl&gt;, SkewIntenCh4 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   SpotFiberCountCh3 &lt;dbl&gt;, SpotFiberCountCh4 &lt;dbl&gt;, TotalIntenCh1 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   TotalIntenCh2 &lt;dbl&gt;, TotalIntenCh3 &lt;dbl&gt;, TotalIntenCh4 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   VarIntenCh1 &lt;dbl&gt;, VarIntenCh3 &lt;dbl&gt;, VarIntenCh4 &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   WidthCh1 &lt;dbl&gt;, XCentroid &lt;dbl&gt;, YCentroid &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="adding-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -203,59 +202,59 @@ test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <p>After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the predictors from channel 1 and any predictors that are areas:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span>trained_rec <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/step_pca.html">step_pca</a></span>(<span class="kw">ends_with</span>(<span class="st">"Ch1"</span>), <span class="kw">contains</span>(<span class="st">"area"</span>), <span class="dt">num =</span> <span class="dv">5</span>)
-trained_rec</code></pre></div>
-<pre><code>## Data Recipe
-## 
-## Inputs:
-## 
-##       role #variables
-##    outcome          1
-##  predictor         58
-## 
-## Training data contained 1009 data points and no missing data.
-## 
-## Steps:
-## 
-## Centering for AngleCh1, AreaCh1, ... [trained]
-## Scaling for AngleCh1, AreaCh1, ... [trained]
-## PCA extraction with ends_with("Ch1"), contains("area")</code></pre>
+trained_rec
+<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Inputs:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       role #variables</span>
+<span class="co">#&gt;    outcome          1</span>
+<span class="co">#&gt;  predictor         58</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Training data contained 1009 data points and no missing data.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Steps:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Centering for AngleCh1, AreaCh1, ... [trained]</span>
+<span class="co">#&gt; Scaling for AngleCh1, AreaCh1, ... [trained]</span>
+<span class="co">#&gt; PCA extraction with ends_with("Ch1"), contains("area")</span></code></pre></div>
 <p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>prepare</code> again:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
-<pre><code>## step 1 center [pre-trained]
-## step 2 scale [pre-trained]
-## step 3 pca training</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(trained_rec, <span class="dt">training =</span> seg_train)
+<span class="co">#&gt; step 1 center [pre-trained]</span>
+<span class="co">#&gt; step 2 scale [pre-trained]</span>
+<span class="co">#&gt; step 3 pca training</span></code></pre></div>
 <p><code>bake</code> can be reapplied to get the principal components in addition to the other variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)
-<span class="kw">names</span>(test_data)</code></pre></div>
-<pre><code>##  [1] "AvgIntenCh2"          "AvgIntenCh3"          "AvgIntenCh4"         
-##  [4] "DiffIntenDensityCh3"  "DiffIntenDensityCh4"  "EntropyIntenCh3"     
-##  [7] "EntropyIntenCh4"      "FiberAlign2Ch3"       "FiberAlign2Ch4"      
-## [10] "IntenCoocASMCh3"      "IntenCoocASMCh4"      "IntenCoocContrastCh3"
-## [13] "IntenCoocContrastCh4" "IntenCoocEntropyCh3"  "IntenCoocEntropyCh4" 
-## [16] "IntenCoocMaxCh3"      "IntenCoocMaxCh4"      "KurtIntenCh3"        
-## [19] "KurtIntenCh4"         "SkewIntenCh3"         "SkewIntenCh4"        
-## [22] "SpotFiberCountCh3"    "SpotFiberCountCh4"    "TotalIntenCh2"       
-## [25] "TotalIntenCh3"        "TotalIntenCh4"        "VarIntenCh3"         
-## [28] "VarIntenCh4"          "XCentroid"            "YCentroid"           
-## [31] "PC1"                  "PC2"                  "PC3"                 
-## [34] "PC4"                  "PC5"</code></pre>
+<span class="kw">names</span>(test_data)
+<span class="co">#&gt;  [1] "AvgIntenCh2"          "AvgIntenCh3"          "AvgIntenCh4"         </span>
+<span class="co">#&gt;  [4] "DiffIntenDensityCh3"  "DiffIntenDensityCh4"  "EntropyIntenCh3"     </span>
+<span class="co">#&gt;  [7] "EntropyIntenCh4"      "FiberAlign2Ch3"       "FiberAlign2Ch4"      </span>
+<span class="co">#&gt; [10] "IntenCoocASMCh3"      "IntenCoocASMCh4"      "IntenCoocContrastCh3"</span>
+<span class="co">#&gt; [13] "IntenCoocContrastCh4" "IntenCoocEntropyCh3"  "IntenCoocEntropyCh4" </span>
+<span class="co">#&gt; [16] "IntenCoocMaxCh3"      "IntenCoocMaxCh4"      "KurtIntenCh3"        </span>
+<span class="co">#&gt; [19] "KurtIntenCh4"         "SkewIntenCh3"         "SkewIntenCh4"        </span>
+<span class="co">#&gt; [22] "SpotFiberCountCh3"    "SpotFiberCountCh4"    "TotalIntenCh2"       </span>
+<span class="co">#&gt; [25] "TotalIntenCh3"        "TotalIntenCh4"        "VarIntenCh3"         </span>
+<span class="co">#&gt; [28] "VarIntenCh4"          "XCentroid"            "YCentroid"           </span>
+<span class="co">#&gt; [31] "PC1"                  "PC2"                  "PC3"                 </span>
+<span class="co">#&gt; [34] "PC4"                  "PC5"</span></code></pre></div>
 <p>Note that the PCA components have replaced the original variables that were from channel 1 or measured an area aspect of the cells.</p>
 <p>There are a number of different steps included in the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">steps &lt;-<span class="st"> </span><span class="kw">apropos</span>(<span class="st">"^step_"</span>)
-steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"new$"</span>, steps)]</code></pre></div>
-<pre><code>##  [1] "step_bagimpute"    "step_bin2factor"   "step_BoxCox"      
-##  [4] "step_center"       "step_classdist"    "step_corr"        
-##  [7] "step_date"         "step_depth"        "step_discretize"  
-## [10] "step_dummy"        "step_holiday"      "step_hyperbolic"  
-## [13] "step_ica"          "step_interact"     "step_invlogit"    
-## [16] "step_isomap"       "step_knnimpute"    "step_kpca"        
-## [19] "step_lincomb"      "step_log"          "step_logit"       
-## [22] "step_meanimpute"   "step_modeimpute"   "step_ns"          
-## [25] "step_nzv"          "step_ordinalscore" "step_other"       
-## [28] "step_pca"          "step_poly"         "step_range"       
-## [31] "step_ratio"        "step_regex"        "step_rm"          
-## [34] "step_scale"        "step_shuffle"      "step_spatialsign" 
-## [37] "step_sqrt"         "step_window"       "step_YeoJohnson"</code></pre>
+steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"new$"</span>, steps)]
+<span class="co">#&gt;  [1] "step_bagimpute"    "step_bin2factor"   "step_BoxCox"      </span>
+<span class="co">#&gt;  [4] "step_center"       "step_classdist"    "step_corr"        </span>
+<span class="co">#&gt;  [7] "step_date"         "step_depth"        "step_discretize"  </span>
+<span class="co">#&gt; [10] "step_dummy"        "step_holiday"      "step_hyperbolic"  </span>
+<span class="co">#&gt; [13] "step_ica"          "step_interact"     "step_invlogit"    </span>
+<span class="co">#&gt; [16] "step_isomap"       "step_knnimpute"    "step_kpca"        </span>
+<span class="co">#&gt; [19] "step_lincomb"      "step_log"          "step_logit"       </span>
+<span class="co">#&gt; [22] "step_meanimpute"   "step_modeimpute"   "step_ns"          </span>
+<span class="co">#&gt; [25] "step_nzv"          "step_ordinalscore" "step_other"       </span>
+<span class="co">#&gt; [28] "step_pca"          "step_poly"         "step_range"       </span>
+<span class="co">#&gt; [31] "step_ratio"        "step_regex"        "step_rm"          </span>
+<span class="co">#&gt; [34] "step_scale"        "step_shuffle"      "step_spatialsign" </span>
+<span class="co">#&gt; [37] "step_sqrt"         "step_window"       "step_YeoJohnson"</span></code></pre></div>
 </div>
 </div>
   </div>
