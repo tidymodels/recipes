@@ -318,8 +318,6 @@ prepare.recipe <-
            retain = FALSE,
            stringsAsFactors = TRUE,
            ...) {
-    if (length(x$steps) == 0)
-      stop("Add some steps", call. = FALSE)
     if (is.null(training)) {
       if (fresh)
         stop("A training set must be supplied to the `training` argument ",
@@ -350,8 +348,8 @@ prepare.recipe <-
         
         x$steps[[i]] <-
           prepare(x$steps[[i]],
-                training = training,
-                info = x$term_info)
+                  training = training,
+                  info = x$term_info)
         training <- bake(x$steps[[i]], newdata = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
