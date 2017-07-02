@@ -10,7 +10,12 @@ output:
 ---
 
 ```{r ex_setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, digits = 3)
+knitr::opts_chunk$set(
+  message = FALSE,
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+  )
 ```
 
 `recipes` contains a number of different steps included in the package:

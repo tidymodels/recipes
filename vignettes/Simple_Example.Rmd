@@ -9,7 +9,12 @@ output:
 ---
 
 ```{r ex_setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(
+  message = FALSE,
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+  )
 ```
 
 This document demonstrates some basic uses of recipes. First, some definitions are required: 

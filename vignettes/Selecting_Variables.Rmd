@@ -9,7 +9,12 @@ output:
 ---
 
 ```{r ex_setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, digits  = 3)
+knitr::opts_chunk$set(
+  message = FALSE,
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+  )
 ```
 
 When recipe steps are used, there are different approaches that can be used to select which variables or features should be used. 

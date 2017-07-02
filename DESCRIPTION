@@ -35,7 +35,8 @@ Suggests:
     igraph,
     knitr,
     caret,
-    ggplot2
+    ggplot2,
+    rmarkdown
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
