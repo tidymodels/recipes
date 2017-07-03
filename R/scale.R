@@ -4,12 +4,12 @@
 #'   will normalize numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL}
 #'   until computed by \code{\link{prepare.recipe}}.
 #' @param na.rm A logical value indicating whether \code{NA} values should be
 #'   removed when computing the standard deviation.
-#' @return \code{step_scale}  returns an object of class \code{step_scale}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export

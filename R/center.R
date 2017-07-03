@@ -14,7 +14,8 @@
 #'   computed by \code{\link{prepare.recipe}}.
 #' @param na.rm A logical value indicating whether \code{NA} values should be 
 #'   removed when averaging.
-#' @return \code{step_center} returns an object of class \code{step_center}.
+#' @return An updated version of \code{recipe} with the
+#'   new step added to the sequence of existing steps (if any). 
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export

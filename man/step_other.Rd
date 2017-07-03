@@ -27,7 +27,8 @@ have been estimated.}
 infrequent levels that is determined by \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_other}  returns an object of class \code{step_other}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_other} creates a \emph{specification} of a recipe step that will

@@ -49,7 +49,8 @@ inputs. This field is a placeholder and will be populated once
  \code{\link{prepare.recipe}} is used.}
 }
 \value{
-\code{step_date} returns an object of class \code{step_date}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_date} creates a a \emph{specification} of a recipe step that will

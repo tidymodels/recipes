@@ -4,14 +4,13 @@
 #'   will convert numeric data into a projection on to a unit sphere.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   used for the normalization. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_spatialsign} returns an object of class
-#'   \code{step_spatialsign}.
 #' @keywords datagen
 #' @concept preprocessing projection_methods
 #' @export

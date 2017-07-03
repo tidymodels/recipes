@@ -27,8 +27,8 @@ end of the variables before the mean is computed. Values of trim outside
 that range are taken as the nearest endpoint.}
 }
 \value{
-\code{step_meanimpute}  returns an object of class
-  \code{step_meanimpute}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_meanimpute} creates a \emph{specification} of a recipe step that

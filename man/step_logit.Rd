@@ -22,7 +22,8 @@ have been estimated.}
 populated by the \code{terms} argument.}
 }
 \value{
-\code{step_logit} returns an object of class \code{step_logit}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_logit} creates a \emph{specification} of a recipe step that will

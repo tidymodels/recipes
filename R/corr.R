@@ -5,6 +5,7 @@
 #'   other variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param threshold A value for the threshold of absolute correlation values.
 #'   The step will try to remove the minimum number of columns so that all the
@@ -16,7 +17,6 @@
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
 #'   \code{\link{prepare.recipe}} is called.
-#' @return \code{step_corr}  returns an object of class \code{step_corr}.
 #' @keywords datagen
 #' @author Original R code for filtering algorithm by Dong Li, modified by
 #'   Max Kuhn. Contributions by Reynald Lescarbeau (for original in

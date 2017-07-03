@@ -5,14 +5,13 @@
 #'   mean of those variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is \code{NULL} until
 #'   computed by \code{\link{prepare.recipe}}.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'   end of the variables before the mean is computed. Values of trim outside
 #'   that range are taken as the nearest endpoint.
-#' @return \code{step_meanimpute}  returns an object of class
-#'   \code{step_meanimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export

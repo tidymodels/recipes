@@ -4,6 +4,7 @@
 #'   will create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For 
 #'   \code{step_bagimpute}, this indicates the variables to be imputed. When 
 #'   used with \code{imp_vars}, the dots indicates which variables are used to 
@@ -24,8 +25,6 @@
 #'   is used across all imputation models.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here 
 #'   once this bagged trees have be trained by \code{\link{prepare.recipe}}.
-#' @return \code{step_bagimpute} returns an object of class 
-#'   \code{step_bagimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export

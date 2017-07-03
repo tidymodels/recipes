@@ -4,6 +4,7 @@
 #'   convert numeric data into one or more independent components.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   used to compute the components. See \code{\link{selections}} for more
 #'   details.
@@ -20,8 +21,7 @@
 #' @param res The \code{\link[fastICA]{fastICA}} object is stored here once
 #'   this preprocessing step has be trained by \code{\link{prepare.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
-#'   new variables. See notes below
-#' @return \code{step_ica} returns an object of class \code{step_ica}.
+#'   new variables. See notes below.
 #' @keywords datagen
 #' @concept preprocessing ica projection_methods
 #' @export

@@ -5,6 +5,7 @@
 #'   common holidays.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   used to create the new variables. The selected variables should have
 #'   class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
@@ -20,7 +21,6 @@
 #' @param variables A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
 #'   \code{\link{prepare.recipe}} is used.
-#' @return \code{step_holiday} returns an object of class \code{step_holiday}.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export

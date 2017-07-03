@@ -26,10 +26,11 @@ have been estimated.}
 transformation parameter lambda.}
 
 \item{nunique}{An integer where data that have less possible values will
-not be evaluate for a transformation}
+not be evaluate for a transformation.}
 }
 \value{
-\code{step_BoxCox} returns an object of class \code{step_BoxCox}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_BoxCox} creates a \emph{specification} of a recipe step that will

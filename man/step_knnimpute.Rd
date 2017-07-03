@@ -41,8 +41,8 @@ imputation. This is  \code{NULL} until the step is trained by
 \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_knnimpute} returns an object of class
-  \code{step_knnimpute}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_knnimpute} creates a \emph{specification} of a recipe step that

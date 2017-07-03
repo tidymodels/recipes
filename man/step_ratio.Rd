@@ -41,7 +41,8 @@ columns.}
 not populated until \code{\link{prepare.recipe}} is executed.}
 }
 \value{
-\code{step_ratio} returns an object of class \code{step_ratio}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ratio} creates a a \emph{specification} of a recipe step that

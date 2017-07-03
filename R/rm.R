@@ -4,6 +4,7 @@
 #'   remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables that
 #'   will evaluated by the filtering bake. See \code{\link{selections}} for
 #'   more details.
@@ -11,7 +12,6 @@
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
 #'   \code{\link{prepare.recipe}} is called.
-#' @return \code{step_rm}  returns an object of class \code{step_rm}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export

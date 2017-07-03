@@ -4,6 +4,7 @@
 #'   convert date data into one or more factor or numeric variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables that
 #'   will be used to create the new variables. The selected variables should
 #'   have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
@@ -30,7 +31,6 @@
 #' @param variables A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
 #'    \code{\link{prepare.recipe}} is used.
-#' @return \code{step_date} returns an object of class \code{step_date}.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export

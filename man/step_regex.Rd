@@ -40,9 +40,8 @@ searched. This is \code{NULL} until computed by
 \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_regex}  returns an object of class \code{step_regex}. A
-  new variable will be created in the data set by
-  \code{\link{bake.recipe}}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_regex} creates a \emph{specification} of a recipe step that will

@@ -4,14 +4,14 @@
 #'    transform data using a simple Box-Cox transformation.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param lambdas A numeric vector of transformation values. This is
 #'   \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @param limits A length 2 numeric vector defining the range to compute the
 #'   transformation parameter lambda.
 #' @param nunique An integer where data that have less possible values will
-#'   not be evaluate for a transformation
-#' @return \code{step_BoxCox} returns an object of class \code{step_BoxCox}.
+#'   not be evaluate for a transformation.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

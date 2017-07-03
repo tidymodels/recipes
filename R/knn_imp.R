@@ -4,6 +4,7 @@
 #'   will impute missing data using nearest neighbors.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For
 #'   \code{step_knnimpute}, this indicates the variables to be imputed. When
 #'   used with \code{imp_vars}, the dots indicates which variables are used to
@@ -23,8 +24,6 @@
 #' @param variables The column names that will be imputed and used for
 #'   imputation. This is  \code{NULL} until the step is trained by
 #'   \code{\link{prepare.recipe}}.
-#' @return \code{step_knnimpute} returns an object of class
-#'   \code{step_knnimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export

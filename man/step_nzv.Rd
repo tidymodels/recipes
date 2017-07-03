@@ -27,7 +27,8 @@ should be removed. These values are not determined until
 \code{\link{prepare.recipe}} is called.}
 }
 \value{
-\code{step_nzv}  returns an object of class \code{step_nzv}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step that will

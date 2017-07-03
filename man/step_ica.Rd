@@ -35,10 +35,11 @@ defaults are set here. \bold{Note} that the arguments \code{X} and
 this preprocessing step has be trained by \code{\link{prepare.recipe}}.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
-new variables. See notes below}
+new variables. See notes below.}
 }
 \value{
-\code{step_ica} returns an object of class \code{step_ica}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ica} creates a \emph{specification} of a recipe step that will

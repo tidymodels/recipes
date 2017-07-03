@@ -24,8 +24,8 @@ have been estimated.}
 populated by the \code{terms} argument.}
 }
 \value{
-\code{step_spatialsign} returns an object of class
-  \code{step_spatialsign}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_spatialsign} is a \emph{specification} of a recipe step that

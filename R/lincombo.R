@@ -5,12 +5,12 @@
 #'   between them.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param max_steps A value .
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
 #'   \code{\link{prepare.recipe}} is called.
-#' @return \code{step_lincomb}  returns an object of class \code{step_lincomb}.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing

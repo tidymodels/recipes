@@ -4,12 +4,12 @@
 #'   square root transform the data.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   transformed. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_sqrt}  returns an object of class \code{step_sqrt}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

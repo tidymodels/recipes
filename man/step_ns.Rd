@@ -28,7 +28,8 @@ step has been trained.}
 not include \code{x}.}
 }
 \value{
-\code{step_ns} returns an object of class \code{step_ns}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ns} creates a \emph{specification} of a recipe step that will

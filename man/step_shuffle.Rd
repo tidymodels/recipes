@@ -23,7 +23,8 @@ should be shuffled. These values are not determined until
 \code{\link{prepare.recipe}} is called.}
 }
 \value{
-\code{step_shuffle}  returns an object of class \code{step_shuffle}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_shuffle} creates a \emph{specification} of a recipe step that will

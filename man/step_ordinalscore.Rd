@@ -25,7 +25,8 @@ until computed by \code{\link{prepare.recipe}}.}
 \item{convert}{A function that takes an ordinal factor vector as an input and outputs a single numeric variable.}
 }
 \value{
-\code{step_ordinalscore} returns an object of class \code{step_ordinalscore}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ordinalscore} creates a \emph{specification} of a recipe step that

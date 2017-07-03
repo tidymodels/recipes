@@ -4,6 +4,7 @@
 #'   convert numeric data into one or more new dimensions.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   used to compute the dimensions. See \code{\link{selections}} for more
 #'   details.
@@ -19,7 +20,6 @@
 #'   preprocessing step has be trained by \code{\link{prepare.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
-#' @return \code{step_isomap} returns an object of class \code{step_isomap}.
 #' @keywords datagen
 #' @concept preprocessing isomap projection_methods
 #' @export

@@ -25,7 +25,8 @@ have been estimated.}
 populated by the \code{terms} argument.}
 }
 \value{
-\code{step_log} returns an object of class \code{step_log}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_log} creates a \emph{specification} of a recipe step that will

@@ -5,6 +5,7 @@
 #'   variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param terms A traditional R formula that contains interaction terms.
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?. By default, the function assumes that the new columns
@@ -12,7 +13,6 @@
 #' @param objects A list of \code{terms} objects for each individual interation.
 #' @param sep A character value used to delinate variables in an interaction
 #'   (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).
-#' @return \code{step_interact} returns an object of class \code{step_interact}.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export

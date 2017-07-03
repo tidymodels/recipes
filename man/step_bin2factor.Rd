@@ -26,9 +26,8 @@ for the 1's (in the first position) and the zeros (second)}
 \code{NULL} until computed by \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_bin2factor}  returns an object of class
-  \code{step_bin2factor}. The variables selected will be replaced by their
-  factor doppelgängers by  \code{\link{bake.recipe}}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_bin2factor} creates a \emph{specification} of a recipe step that

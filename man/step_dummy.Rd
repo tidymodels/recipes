@@ -37,7 +37,8 @@ variables for each variable contained in \code{terms}. This is
 \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_dummy} returns an object of class \code{step_dummy}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_dummy} creates a a \emph{specification} of a recipe step that

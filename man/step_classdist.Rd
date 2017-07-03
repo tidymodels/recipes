@@ -39,8 +39,8 @@ log function?}
 by \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_classdist} returns an object of class
-  \code{step_classdist}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_classdist} creates a a \emph{specification} of a recipe step

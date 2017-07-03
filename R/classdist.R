@@ -6,6 +6,7 @@
 #'   variable.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param class A single character string that specifies a single categorical
 #'   variable to be used as the class.
 #' @param role For model terms created by this step, what analysis role should
@@ -19,8 +20,6 @@
 #'   log function?
 #' @param objects Statistics are stored here once this step has been trained
 #'   by \code{\link{prepare.recipe}}.
-#' @return \code{step_classdist} returns an object of class
-#'   \code{step_classdist}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export

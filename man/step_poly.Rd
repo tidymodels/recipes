@@ -30,7 +30,8 @@ not include \code{x} or \code{simple}. Note that the option
 orthogonalized).}
 }
 \value{
-\code{step_poly} returns an object of class \code{step_poly}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_poly} creates a \emph{specification} of a recipe step that will

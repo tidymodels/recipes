@@ -22,8 +22,8 @@ have been estimated.}
 computed by \code{\link{prepare.recipe}}.}
 }
 \value{
-\code{step_modeimpute}  returns an object of class
-  \code{step_modeimpute}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_modeimpute} creates a \emph{specification} of a recipe step that

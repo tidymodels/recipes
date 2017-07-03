@@ -4,10 +4,10 @@
 #'   logit transform the data.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_logit} returns an object of class \code{step_logit}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

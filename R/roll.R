@@ -5,6 +5,7 @@
 #'   statistics across moving windows.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned? If \code{names} is left to be \code{NULL}, the rolling
 #'   statistics replace the original columns and the roles are left unchanged.
@@ -20,7 +21,6 @@
 #' @param names An optional character string that is the same length of the
 #'   number of terms selected by \code{terms}. If you are not sure what columns
 #'   will be selected, use the \code{summary} function (see the example below).
-#' @return \code{step_window} returns an object of class \code{step_window}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export

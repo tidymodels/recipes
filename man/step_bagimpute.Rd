@@ -45,8 +45,8 @@ latter and not used to impute itself.}
 is used across all imputation models.}
 }
 \value{
-\code{step_bagimpute} returns an object of class 
-  \code{step_bagimpute}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_bagimpute} creates a \emph{specification} of a recipe step that 

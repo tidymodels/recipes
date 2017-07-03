@@ -5,6 +5,7 @@
 #'   done for each value of a categorical class variable.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables that
 #'   will be used to create the new features. See \code{\link{selections}} for
 #'   more details.
@@ -26,7 +27,6 @@
 #'   \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
 #' @param data The training data are stored here once after
 #' \code{\link{prepare.recipe}} is executed.
-#' @return \code{step_depth} returns an object of class \code{step_depth}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export

@@ -28,7 +28,8 @@ that this is ignored until the values are determined by
 \code{\link{prepare.recipe}}. Setting this value will be ineffective.}
 }
 \value{
-\code{step_range}  returns an object of class \code{step_range}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_range} creates a \emph{specification} of a recipe step that will

@@ -26,7 +26,8 @@ until computed by \code{\link{prepare.recipe}}.}
 removed when computing the standard deviation.}
 }
 \value{
-\code{step_scale}  returns an object of class \code{step_scale}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe step that

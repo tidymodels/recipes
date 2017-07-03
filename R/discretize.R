@@ -202,6 +202,7 @@ print.discretize <-
 
 #' @rdname discretize
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param objects The \code{\link{discretize}} objects are stored here once
 #'   the recipe has be trained by \code{\link{prepare.recipe}}.
@@ -209,8 +210,6 @@ print.discretize <-
 #'   set for the argument \code{x}. Note that the using the options
 #'   \code{prefix} and \code{labels} when more than one variable is being
 #'   transformed might be problematic as all variables inherit those values.
-#' @return \code{step_discretize} returns an object of class
-#'   \code{step_discretize}.
 #' @export
 
 step_discretize <- function(recipe,

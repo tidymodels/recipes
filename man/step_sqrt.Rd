@@ -22,7 +22,8 @@ have been estimated.}
 populated by the \code{terms} argument.}
 }
 \value{
-\code{step_sqrt}  returns an object of class \code{step_sqrt}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_sqrt} creates a \emph{specification} of a recipe step that will

@@ -4,6 +4,7 @@
 #'    potentially pool infrequently occurring values into an "other" category.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables that
 #'   will potentially be reduced. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
@@ -11,7 +12,6 @@
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information to pool
 #'   infrequent levels that is determined by \code{\link{prepare.recipe}}.
-#' @return \code{step_other}  returns an object of class \code{step_other}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods factors
 #' @export

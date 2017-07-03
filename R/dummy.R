@@ -5,6 +5,7 @@
 #'   numeric binary model terms for the levels of the original data.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will
 #'   be used to create the dummy variables. See \code{\link{selections}} for
 #'   more details.
@@ -21,7 +22,6 @@
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in \code{terms}. This is
 #'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
-#' @return \code{step_dummy} returns an object of class \code{step_dummy}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables
 #'   variable_encodings

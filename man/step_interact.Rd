@@ -26,7 +26,8 @@ have been estimated.}
 (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).}
 }
 \value{
-\code{step_interact} returns an object of class \code{step_interact}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_interact} creates a \emph{specification} of a recipe step that

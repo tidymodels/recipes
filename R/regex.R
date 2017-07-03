@@ -4,6 +4,7 @@
 #'   create a new dummy variable based on a regular expression.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... A single selector functions to choose which variable will be
 #'   searched for the pattern. The selector should resolve into a single
 #'   variable. See \code{\link{selections}} for more details.
@@ -22,9 +23,6 @@
 #' @param input A single character value for the name of the variable being
 #'   searched. This is \code{NULL} until computed by
 #'   \code{\link{prepare.recipe}}.
-#' @return \code{step_regex}  returns an object of class \code{step_regex}. A
-#'   new variable will be created in the data set by
-#'   \code{\link{bake.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables regular_expressions
 #' @export

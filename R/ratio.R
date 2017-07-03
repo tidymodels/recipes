@@ -4,6 +4,7 @@
 #'   will create one or more ratios out of numeric variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will
 #'   be used in the \emph{numerator} of the ratio. When used with
 #'   \code{denom_vars}, the dots indicates which variables are used in the
@@ -21,7 +22,6 @@
 #'   columns.
 #' @param variables The column names used in the rations. This argument is
 #'   not populated until \code{\link{prepare.recipe}} is executed.
-#' @return \code{step_ratio} returns an object of class \code{step_ratio}.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export

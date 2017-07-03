@@ -38,7 +38,8 @@ number of terms selected by \code{terms}. If you are not sure what columns
 will be selected, use the \code{summary} function (see the example below).}
 }
 \value{
-\code{step_window} returns an object of class \code{step_window}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_window} creates a \emph{specification} of a recipe step that will

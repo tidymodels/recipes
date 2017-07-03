@@ -4,11 +4,11 @@
 #'   will convert ordinal factor variables into numeric scores.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param vars A character string of variables that will be converted. This is \code{NULL}
 #'   until computed by \code{\link{prepare.recipe}}.
 #' @param convert A function that takes an ordinal factor vector as an input and outputs a single numeric variable.
-#' @return \code{step_ordinalscore} returns an object of class \code{step_ordinalscore}.
 #' @keywords datagen
 #' @concept preprocessing ordinal_data
 #' @export

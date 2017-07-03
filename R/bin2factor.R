@@ -3,6 +3,7 @@
 #' \code{step_bin2factor} creates a \emph{specification} of a recipe step that
 #' will create a two-level factor from a single dummy variable.
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... Selector functions that choose which variables will be converted.
 #'   See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
@@ -10,9 +11,6 @@
 #' for the 1's (in the first position) and the zeros (second)
 #' @param objects A vector with the selected variable names. This is
 #' \code{NULL} until computed by \code{\link{prepare.recipe}}.
-#' @return \code{step_bin2factor}  returns an object of class
-#'   \code{step_bin2factor}. The variables selected will be replaced by their
-#'   factor doppelgängers by  \code{\link{bake.recipe}}.
 #' @details This operation may be useful for situations where a binary piece of
 #'   information may need to be represented as categorical instead of numeric.
 #'   For example, naive Bayes models would do better to have factor predictors

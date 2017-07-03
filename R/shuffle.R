@@ -4,13 +4,13 @@
 #'   randomly change the order of rows for selected variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will
 #'    permuted. See \code{\link{selections}} for  more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param variables A character string that contains the names of columns that
 #'   should be shuffled. These values are not determined until
 #'   \code{\link{prepare.recipe}} is called.
-#' @return \code{step_shuffle}  returns an object of class \code{step_shuffle}.
 #' @keywords datagen
 #' @concept preprocessing randomization permutation
 #' @export

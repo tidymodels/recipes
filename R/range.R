@@ -4,6 +4,7 @@
 #'   normalize numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'   scaled. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
@@ -12,7 +13,6 @@
 #' @param ranges A character vector of variables that will be normalized. Note
 #'   that this is ignored until the values are determined by
 #'   \code{\link{prepare.recipe}}. Setting this value will be ineffective.
-#' @return \code{step_range}  returns an object of class \code{step_range}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export

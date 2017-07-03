@@ -4,14 +4,13 @@
 #'   will transform data using a hyperbolic function.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param func A character value for the function. Valid values are "sin",
 #'   "cos", or "tan".
 #' @param inverse A logical: should the inverse function be used?
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_hyperbolic} returns an object of class
-#'   \code{step_hyperbolic}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

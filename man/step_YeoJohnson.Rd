@@ -29,8 +29,8 @@ transformation parameter lambda.}
 not be evaluate for a transformation}
 }
 \value{
-\code{step_YeoJohnson} return an object of class
-  \code{step_YeoJohnson}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that

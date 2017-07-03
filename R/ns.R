@@ -5,6 +5,7 @@
 #'   splines.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?. By default, the function assumes that the new columns
 #'   created from the original variables will be used as predictors in a model.
@@ -12,7 +13,6 @@
 #'   step has been trained.
 #' @param options A list of options for \code{\link[splines]{ns}} which should
 #'   not include \code{x}.
-#' @return \code{step_ns} returns an object of class \code{step_ns}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export

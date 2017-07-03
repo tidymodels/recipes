@@ -4,11 +4,11 @@
 #'   log transform data.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param base A numeric value for the base.
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_log} returns an object of class \code{step_log}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

@@ -26,7 +26,8 @@ should be removed. These values are not determined until
 \code{\link{prepare.recipe}} is called.}
 }
 \value{
-\code{step_lincomb}  returns an object of class \code{step_lincomb}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_lincomb} creates a \emph{specification} of a recipe step that

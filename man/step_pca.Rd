@@ -46,7 +46,8 @@ once this preprocessing step has be trained by \code{\link{prepare.recipe}}.}
 new variables. See notes below}
 }
 \value{
-\code{step_pca}  returns an object of class \code{step_pca}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_pca} creates a \emph{specification} of a recipe step that will

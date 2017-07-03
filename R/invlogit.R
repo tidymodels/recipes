@@ -4,10 +4,10 @@
 #'   will transform the data from real values to be between zero and one.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param vars A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
-#' @return \code{step_invlogit} returns an object of class \code{step_invlogit}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

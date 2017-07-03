@@ -5,6 +5,7 @@
 #'   polynomials.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?. By default, the function assumes that the new columns
 #'   created from the original variables will be used as predictors in a model.
@@ -14,7 +15,6 @@
 #'   not include \code{x} or \code{simple}. Note that the option
 #'   \code{raw = TRUE} will produce the regular polynomial values (not
 #'   orthogonalized).
-#' @return \code{step_poly} returns an object of class \code{step_poly}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export

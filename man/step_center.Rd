@@ -26,7 +26,8 @@ computed by \code{\link{prepare.recipe}}.}
 removed when averaging.}
 }
 \value{
-\code{step_center} returns an object of class \code{step_center}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_center} creates a \emph{specification} of a recipe step that 

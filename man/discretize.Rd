@@ -73,9 +73,6 @@ transformed might be problematic as all variables inherit those values.}
 \value{
 \code{discretize} returns an object of class \code{discretize}.
   \code{predict.discretize} returns a factor vector.
-
-\code{step_discretize} returns an object of class
-  \code{step_discretize}.
 }
 \description{
 \code{discretize} converts a numeric vector into a factor with bins having

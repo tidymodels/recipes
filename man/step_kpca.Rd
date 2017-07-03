@@ -37,10 +37,11 @@ passed in. \bold{Note} that the arguments \code{x} and \code{features}
 should not be passed here (or at all).}
 
 \item{prefix}{A character string that will be the prefix to the resulting
-new variables. See notes below}
+new variables. See notes below.}
 }
 \value{
-\code{step_kpca} returns an object of class \code{step_kpca}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_kpca} a \emph{specification} of a recipe step that will convert

@@ -4,6 +4,7 @@
 #'   will transform data using a simple Yeo-Johnson transformation.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param lambdas A numeric vector of transformation values. This is
 #'   \code{NULL} until computed by \code{\link{prepare.recipe}}.
@@ -11,8 +12,6 @@
 #'   transformation parameter lambda.
 #' @param nunique An integer where data that have less possible values will
 #'   not be evaluate for a transformation
-#' @return \code{step_YeoJohnson} return an object of class
-#'   \code{step_YeoJohnson}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export

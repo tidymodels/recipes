@@ -42,7 +42,8 @@ See \code{\link[ddalpha]{depth.halfspace}},
 \code{\link{prepare.recipe}} is executed.}
 }
 \value{
-\code{step_depth} returns an object of class \code{step_depth}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_depth} creates a a \emph{specification} of a recipe step that

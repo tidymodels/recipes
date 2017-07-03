@@ -37,7 +37,8 @@ preprocessing step has be trained by \code{\link{prepare.recipe}}.}
 new variables. See notes below}
 }
 \value{
-\code{step_isomap} returns an object of class \code{step_isomap}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_isomap} creates a \emph{specification} of a recipe step that will

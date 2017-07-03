@@ -5,11 +5,10 @@
 #'   mode of those variables.
 #'
 #' @inheritParams step_center
+#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param modes A named character vector of modes. This is \code{NULL} until
 #'   computed by \code{\link{prepare.recipe}}.
-#' @return \code{step_modeimpute}  returns an object of class
-#'   \code{step_modeimpute}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export

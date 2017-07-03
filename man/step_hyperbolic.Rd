@@ -28,8 +28,8 @@ have been estimated.}
 populated by the \code{terms} argument.}
 }
 \value{
-\code{step_hyperbolic} returns an object of class
-  \code{step_hyperbolic}.
+An updated version of \code{recipe} with the
+  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_hyperbolic} creates a \emph{specification} of a recipe step that
