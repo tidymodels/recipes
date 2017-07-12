@@ -66,6 +66,12 @@ prepare.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, newdata, ...) {
+  if (nrow(newdata) == 1) {
+    warning("`newdata` contains a single row; unable to shuffle",
+            call. = FALSE)
+    return(newdata)
+  }
+  
   if (length(object$variables) > 0)
     for (i in seq_along(object$variables))
       newdata[, object$variables[i]] <-

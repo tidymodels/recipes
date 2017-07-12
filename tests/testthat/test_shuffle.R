@@ -64,3 +64,11 @@ test_that('printing', {
   expect_output(prepare(rec3, training = dat))
 })
 
+test_that('bake a single row', {
+  rec4 <- recipe(y ~ ., data = dat) %>%
+    step_shuffle(everything())
+  
+  rec4 <- prepare(rec4, training = dat, verbose = FALSE)
+  expect_warning(dat4 <- bake(rec4, dat[1,], everything()))
+  expect_equal(dat4, dat[1,])
+})
