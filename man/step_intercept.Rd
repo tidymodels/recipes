@@ -5,7 +5,7 @@
 \title{Add intercept (or constant) column}
 \usage{
 step_intercept(recipe, ..., role = "predictor", trained = FALSE,
-  value = 1)
+  name = "intercept", value = 1)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -19,6 +19,8 @@ specification functions.}
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
 
+\item{name}{Character name for new added column}
+
 \item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
 }
 \value{
@@ -28,10 +30,10 @@ An updated version of \code{recipe} with the
 \description{
 \code{step_intercept} creates a \emph{specification} of a recipe step that
   will add an intercept or constant term in the first column of a data
-  matrix. \code{step_intercept} has \emph{predictor} role so that it is
-  by default called in the bake step. This means you should always call
-  \code{step_intercept} last to avoid unintentional transformations such as
-  centering, scaling, etc.
+  matrix. \code{step_intercept} has defaults to \emph{predictor} role so
+  that it is by default called in the bake step. Be careful to avoid
+  unintentional transformations when calling steps with
+  \code{all_predictors}.
 }
 \examples{
 data(biomass)
@@ -41,8 +43,8 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
-rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
-step_intercept(value = 2)
+rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) \%>\%
+  step_intercept(value = 2)
 
 rec_obj <- prepare(rec_trans, training = biomass_tr)
 

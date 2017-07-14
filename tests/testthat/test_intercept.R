@@ -4,26 +4,26 @@ library(tibble)
 
 ex_dat <- data.frame(cat = rep(c("A", "B"), each = 5), numer = 1:10)
 
-test_that('adds column of ones', {
+test_that('add appropriate column with default settings', {
   rec <- recipe(~ ., data = ex_dat) %>%
     step_intercept()
 
   rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, newdata = ex_dat)
 
-  exp_res <- tibble::add_column(ex_dat, intercept = 1, .before = TRUE)
+  exp_res <- tibble::add_column(ex_dat, "intercept" = 1, .before = TRUE)
 
   expect_equal(rec_trans, exp_res)
 })
 
 test_that('adds arbitrary numeric column', {
   rec <- recipe(~ ., data = ex_dat) %>%
-    step_intercept(value = 2.5)
+    step_intercept(name = "(Intercept)", value = 2.5)
 
   rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, newdata = ex_dat)
 
-  exp_res <- tibble::add_column(ex_dat, intercept = 2.5, .before = TRUE)
+  exp_res <- tibble::add_column(ex_dat, "(Intercept)" = 2.5, .before = TRUE)
 
   expect_equal(rec_trans, exp_res)
 })
@@ -35,6 +35,13 @@ test_that('deals with bad input', {
       step_intercept(value = "Pie") %>%
       prepare(),
     "Intercept value must be numeric."
+  )
+
+  expect_error(
+    recipe(~ ., data = ex_dat) %>%
+      step_intercept(name = 4) %>%
+      prepare(),
+    "Intercept/constant column name must be character."
   )
 
   expect_warning(
