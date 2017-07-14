@@ -41,12 +41,12 @@
 #'   \code{\link{bake.recipe}}
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept", value = 1) {
-  if(length(list(...)) > 0)
-    warning("Term arguments passed to step_intercept have no effect.")
+  if (length(list(...)) > 0)
+    warning("Selectors are not used for this step.", call. = FALSE)
   if (!is.numeric(value))
-    stop("Intercept value must be numeric.")
-  if(!is.character(name))
-    stop("Intercept/constant column name must be character.")
+    stop("Intercept value must be numeric.", call. = FALSE)
+  if (!is.character(name) | length(name) != 1)
+    stop("Intercept/constant column name must be a character value.", call. = FALSE)
   add_step(
     recipe,
     step_intercept_new(
@@ -72,8 +72,7 @@ prepare.step_intercept <- function(x, training, info = NULL, ...) {
   x
 }
 
+#' @importFrom tibble add_column
 bake.step_intercept <- function(object, newdata, ...) {
-  if (all(newdata[1, ] == 1))
-    message("Data appears to already contain intercept column.")
   tibble::add_column(newdata, !!object$name := object$value, .before = TRUE)
 }
