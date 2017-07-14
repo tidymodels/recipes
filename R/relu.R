@@ -29,16 +29,14 @@
 #'   according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
 #'   also be applied to this transformation.
 #'
-#' @section Connection to MARS, neural networks and SVMs:
+#' @section Connection to MARS
 #'
 #' The rectified linear transformation is used in the Multivariate Adaptive
 #' Regression Splines as basis function to fit piecewise linear functions to
 #' data in a strategy similar to that employeed in tree based models. The
 #' transformation is a population choice as an activation function in many
 #' neural networks, which could then seen as a stacked generalization of MARS
-#' when making use of ReLu activations. Additionally, the rectified
-#' linear transformation is related to the loss function of Support Vector
-#' Machines, which select separating hyperplanes by adjusting the shift \eqn{c}.
+#' when making use of ReLu activations.
 #'
 #' @examples
 #' data(biomass)
@@ -67,11 +65,11 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE) {
     if (!is.numeric(shift))
-      stop("Shift argument must be numeric.")
+      stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
-      stop("Reverse argument must be logical.")
+      stop("Reverse argument must be a logical value.", call. = FALSE)
     if (!is.logical(smooth))
-      stop("smooth argument must be logical.")
+      stop("Smooth argument must be logical value.", call. = FALSE)
     add_step(
       recipe,
       step_relu_new(
@@ -108,6 +106,7 @@ prepare.step_relu <- function(x, training, info = NULL, ...) {
   x
 }
 
+#' @importFrom dplyr mutate_at
 bake.step_relu <- function(object, newdata, ...) {
   dplyr::mutate_at(
     newdata,
@@ -121,7 +120,7 @@ bake.step_relu <- function(object, newdata, ...) {
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (!is.numeric(x))
-    stop("Rectified linear and softplus can only apply to numeric data.")
+    stop("step_relu can only be applied to numeric data.", call. = FALSE)
 
   if (reverse) shifted <- shift - x
   else shifted <- x - shift
