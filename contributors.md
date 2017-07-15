@@ -10,4 +10,8 @@ Contributors to `recipes` package (sorted alphabetically)
 
 * **Jed Wing**
 
- * Contributed to the imported `caret` code for linear combination identification. 
+ * Contributed to the imported `caret` code for linear combination identification.
+ 
+* **[Alex Hayes](https://github.com/alexpghayes)**
+
+ * Contributed initial implementations of `step_intercept` and `step_relu`.

@@ -10,7 +10,7 @@ test_that('default relu settings', {
     bake(df)
 
   expected_baked <- df %>%
-    dplyr::mutate(val1 = pmax(rep(0, length(val1)), val1))
+    dplyr::mutate(right_relu_val1 = pmax(rep(0, length(val1)), val1))
 
   expect_equal(expected_baked, baked)
 })
@@ -23,33 +23,33 @@ test_that('shifted and reversed relu', {
     bake(df)
 
   expected_baked <- df %>%
-    dplyr::mutate(val1 = pmax(rep(0, length(val1)), -(val1 - 5)))
+    dplyr::mutate(left_relu_val1 = pmax(rep(0, length(val1)), -(val1 - 5)))
 
   expect_equal(expected_baked, baked)
 })
 
 
-test_that('default softplus settings', {
+test_that('reversed softplus', {
   baked <- recipe(~ ., data = df) %>%
-    step_relu(val1, smooth = TRUE) %>%
+    step_relu(val1, smooth = TRUE, reverse = TRUE) %>%
     prepare(df, verbose = FALSE) %>%
     bake(df)
 
   expected_baked <- df %>%
-    dplyr::mutate(val1 = log1p(exp(val1)))
+    dplyr::mutate(left_relu_val1 = log1p(exp(-val1)))
 
   expect_equal(expected_baked, baked)
 })
 
 
-test_that('shifted and reversed softplus', {
+test_that('shifted and prefixed softplus', {
   baked <- recipe(~ ., data = df) %>%
-    step_relu(val1, shift = 5, reverse = TRUE, smooth = TRUE) %>%
+    step_relu(val1, shift = 5,  smooth = TRUE, prefix = "sp_") %>%
     prepare(df, verbose = FALSE) %>%
     bake(df)
 
   expected_baked <- df %>%
-    dplyr::mutate(val1 = log1p(exp(-(val1 - 5))))
+    dplyr::mutate(sp_val1 = log1p(exp(val1 - 5)))
 
   expect_equal(expected_baked, baked)
 })

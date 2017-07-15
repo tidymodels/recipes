@@ -4,8 +4,8 @@
 \alias{step_relu}
 \title{Apply (smoothed) rectified linear transformation}
 \usage{
-step_relu(recipe, ..., role = NA, trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE)
+step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
+  reverse = FALSE, smooth = FALSE, prefix = "right_relu_")
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -26,6 +26,10 @@ opposed to the right hinge.}
 
 \item{smooth}{A logical indicating if the softplus function, a smooth
 appromixation to the rectified linear transformation, should be used.}
+
+\item{prefix}{A prefix for generated column names, default to "right_relu_"
+when right hinge transformation and "left_relu_" for reversed/left hinge
+transformations.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -34,7 +38,7 @@ An updated version of \code{recipe} with the
 \description{
 \code{step_relu} creates a \emph{specification} of a recipe step that
   will apply the rectified linear or softplus transformations to numeric
-  data.
+  data. The transformed data is added to the data matrix as new columns.
 }
 \details{
 The rectified linear transformation is calculated as
@@ -45,17 +49,17 @@ The rectified linear transformation is calculated as
   according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
   also be applied to this transformation.
 }
-\section{Connection to MARS, neural networks and SVMs}{
+\section{Connection to MARS}{
 
 
 The rectified linear transformation is used in the Multivariate Adaptive
 Regression Splines as basis function to fit piecewise linear functions to
 data in a strategy similar to that employeed in tree based models. The
 transformation is a population choice as an activation function in many
-neural networks, which could then seen as a stacked generalization of MARS
-when making use of ReLu activations. Additionally, the rectified
-linear transformation is related to the loss function of Support Vector
-Machines, which select separating hyperplanes by adjusting the shift \eqn{c}.
+neural networks, which could then be seen as a stacked generalization of
+MARS when making use of ReLu activations. The hinge function also appears
+in the loss function of Support Vector Machines, where it penalizes
+residuals only if they are within a certain margin of the decision boundary.
 }
 
 \examples{

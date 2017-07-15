@@ -2,7 +2,7 @@
 #'
 #' \code{step_relu} creates a \emph{specification} of a recipe step that
 #'   will apply the rectified linear or softplus transformations to numeric
-#'   data.
+#'   data. The transformed data is added as new columns to the data matrix.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
@@ -16,6 +16,9 @@
 #'   opposed to the right hinge.
 #' @param smooth A logical indicating if the softplus function, a smooth
 #'   appromixation to the rectified linear transformation, should be used.
+#' @param prefix A prefix for generated column names, default to "right_relu_"
+#'   when right hinge transformation and "left_relu_" for reversed/left hinge
+#'   transformations.
 #'
 #' @return An updated version of \code{recipe} with the
 #'   new step added to the sequence of existing steps (if any).
@@ -29,14 +32,16 @@
 #'   according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
 #'   also be applied to this transformation.
 #'
-#' @section Connection to MARS
+#' @section Connection to MARS:
 #'
 #' The rectified linear transformation is used in the Multivariate Adaptive
 #' Regression Splines as basis function to fit piecewise linear functions to
 #' data in a strategy similar to that employeed in tree based models. The
 #' transformation is a population choice as an activation function in many
-#' neural networks, which could then seen as a stacked generalization of MARS
-#' when making use of ReLu activations.
+#' neural networks, which could then be seen as a stacked generalization of
+#' MARS when making use of ReLu activations. The hinge function also appears
+#' in the loss function of Support Vector Machines, where it penalizes
+#' residuals only if they are within a certain margin of the decision boundary.
 #'
 #' @examples
 #' data(biomass)
@@ -59,17 +64,20 @@
 step_relu <-
   function(recipe,
            ...,
-           role = NA,
+           role = "predictor",
            trained = FALSE,
            shift = 0,
            reverse = FALSE,
-           smooth = FALSE) {
+           smooth = FALSE,
+           prefix = "right_relu_") {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
       stop("Reverse argument must be a logical value.", call. = FALSE)
     if (!is.logical(smooth))
       stop("Smooth argument must be logical value.", call. = FALSE)
+    if (reverse & prefix == "right_relu_")
+      prefix <- "left_relu_"
     add_step(
       recipe,
       step_relu_new(
@@ -78,7 +86,8 @@ step_relu <-
         trained = trained,
         shift = shift,
         reverse = reverse,
-        smooth = smooth
+        smooth = smooth,
+        prefix = prefix
       )
     )
   }
@@ -89,7 +98,8 @@ step_relu_new <-
            trained = FALSE,
            shift = 0,
            reverse = FALSE,
-           smooth = FALSE) {
+           smooth = FALSE,
+           prefix = "right_relu_") {
     step(
       subclass = "relu",
       terms = terms,
@@ -97,7 +107,8 @@ step_relu_new <-
       trained = trained,
       shift = shift,
       reverse = reverse,
-      smooth = smooth
+      smooth = smooth,
+      prefix = prefix
     )
   }
 
@@ -106,16 +117,18 @@ prepare.step_relu <- function(x, training, info = NULL, ...) {
   x
 }
 
-#' @importFrom dplyr mutate_at
+#' @importFrom dplyr select mutate_all select_vars tbl_vars
 bake.step_relu <- function(object, newdata, ...) {
-  dplyr::mutate_at(
-    newdata,
-    vars(!!!object$terms),
-    relu,
+  col_names <- dplyr::select_vars(dplyr::tbl_vars(newdata), !!!object$terms)
+  new_cols <- paste0(object$prefix, col_names)
+
+  newdata[, new_cols] <- dplyr::mutate_all(
+    dplyr::select(newdata, col_names),
+    funs(relu),
     object$shift,
     object$reverse,
-    object$smooth
-  )
+    object$smooth)
+  as_tibble(newdata)
 }
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
