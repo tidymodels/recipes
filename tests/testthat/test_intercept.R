@@ -41,25 +41,14 @@ test_that('deals with bad input', {
     recipe(~ ., data = ex_dat) %>%
       step_intercept(name = 4) %>%
       prepare(),
-    "Intercept/constant column name must be character."
+    "Intercept/constant column name must be a character value."
   )
 
   expect_warning(
     recipe(~ ., data = ex_dat) %>%
       step_intercept(all_predictors()) %>%
       prepare(),
-    "Term arguments passed to step_intercept have no effect."
-  )
-
-  ex_dat2 <- data.frame(numer = rep(1, 10))
-
-  rec_trained <- recipe(~ ., data = ex_dat2) %>%
-    step_intercept() %>%
-    prepare(training = ex_dat2, verbose = FALSE)
-
-  expect_message(
-    bake(rec_trained, newdata = ex_dat2),
-    "Data appears to already contain intercept column."
+    "Selectors are not used for this step."
   )
 })
 
