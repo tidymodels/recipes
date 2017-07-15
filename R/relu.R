@@ -118,7 +118,7 @@ prepare.step_relu <- function(x, training, info = NULL, ...) {
   x
 }
 
-#' @importFrom dplyr select mutate_all select_vars tbl_vars
+#' @importFrom dplyr select mutate_all select_vars tbl_vars funs
 bake.step_relu <- function(object, newdata, ...) {
   col_names <- dplyr::select_vars(dplyr::tbl_vars(newdata), !!!object$terms)
   new_cols <- paste0(object$prefix, col_names)
