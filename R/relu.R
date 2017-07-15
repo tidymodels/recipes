@@ -54,11 +54,10 @@
 #'
 #' transformed_te <- rec %>%
 #'   step_relu(carbon, shift = 40) %>%
-#'   prepare(training = biomass_tr) %>%
+#'   prepare(biomass_tr) %>%
 #'   bake(biomass_te)
 #'
 #' transformed_te
-#' biomass_te[1:10, names(transformed_te)]
 #'
 #' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{bake.recipe}}

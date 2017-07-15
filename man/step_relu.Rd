@@ -38,7 +38,7 @@ An updated version of \code{recipe} with the
 \description{
 \code{step_relu} creates a \emph{specification} of a recipe step that
   will apply the rectified linear or softplus transformations to numeric
-  data. The transformed data is added to the data matrix as new columns.
+  data. The transformed data is added as new columns to the data matrix.
 }
 \details{
 The rectified linear transformation is calculated as
@@ -73,11 +73,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 transformed_te <- rec \%>\%
   step_relu(carbon, shift = 40) \%>\%
-  prepare(training = biomass_tr) \%>\%
+  prepare(biomass_tr) \%>\%
   bake(biomass_te)
 
-biomass_te[1:10, names(transformed_te)]
 transformed_te
+
 }
 \seealso{
 \code{\link{recipe}} \code{\link{prepare.recipe}}
