@@ -57,8 +57,9 @@
 #'   prepare(training = biomass_tr) %>%
 #'   bake(biomass_te)
 #'
-#' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
+#' biomass_te[1:10, names(transformed_te)]
+#'
 #' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}}
 #'   \code{\link{bake.recipe}}
 step_relu <-
@@ -124,7 +125,7 @@ bake.step_relu <- function(object, newdata, ...) {
 
   newdata[, new_cols] <- dplyr::mutate_all(
     dplyr::select(newdata, col_names),
-    funs(relu),
+    dplyr::funs(relu),
     object$shift,
     object$reverse,
     object$smooth)
