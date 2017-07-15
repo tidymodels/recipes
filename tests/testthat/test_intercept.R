@@ -41,14 +41,14 @@ test_that('deals with bad input', {
     recipe(~ ., data = ex_dat) %>%
       step_intercept(name = 4) %>%
       prepare(),
-    "character"
+    "Intercept/constant column name must be a character value."
   )
 
   expect_warning(
     recipe(~ ., data = ex_dat) %>%
       step_intercept(all_predictors()) %>%
       prepare(),
-    "Selectors"
+    "Selectors are not used for this step."
   )
 })
 
