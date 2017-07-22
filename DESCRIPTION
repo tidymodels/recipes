@@ -21,10 +21,10 @@ Imports:
     timeDate,
     ddalpha,
     purrr,
-    rlang (>= 0.1),
+    rlang (>= 0.1.1),
     gower,
     RcppRoll,
-    tidyselect,
+    tidyselect (>= 0.1.0),
     magrittr
 Suggests:
     testthat,
