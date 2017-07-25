@@ -187,13 +187,6 @@ print.step_knnimpute <-
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
     cat(x$K, "-nearest neighbor imputation for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(all_x_vars, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(all_x_vars, x$terms, x$trained, width = width)
     invisible(x)
   }

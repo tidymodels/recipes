@@ -166,13 +166,6 @@ bake.step_isomap <- function(object, newdata, ...) {
 print.step_isomap <-
   function(x, width = max(20, options()$width - 35), ...) {
     cat("Isomap approximation with ")
-    if (x$trained) {
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
     invisible(x)
   }

@@ -119,14 +119,7 @@ bake.step_YeoJohnson <- function(object, newdata, ...) {
 print.step_YeoJohnson <-
   function(x, width = max(20, options()$width - 39), ...) {
     cat("Yeo-Johnson transformation on ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$lambdas), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$lambdas), x$terms, x$trained, width = width)
     invisible(x)
   }
 

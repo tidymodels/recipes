@@ -81,19 +81,7 @@ bake.step_shuffle <- function(object, newdata, ...) {
 
 print.step_shuffle <-
   function(x, width = max(20, options()$width - 22), ...) {
-    if (x$trained) {
-      if (length(x$columns) > 0) {
-        cat("Variables shuffled ")
-        cat(format_ch_vec(x$columns, width = width))
-      } else
-        cat("No variables were shuffled")
-    } else {
-      cat("Shuffled terms ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    cat("Shuffled ")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }

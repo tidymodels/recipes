@@ -187,13 +187,6 @@ bake.step_pca <- function(object, newdata, ...) {
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
     cat("PCA extraction with ")
-    if (x$trained) {
-      cat(format_ch_vec(rownames(x$res$rotation), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
     invisible(x)
   }

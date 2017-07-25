@@ -107,13 +107,6 @@ bake.step_center <- function(object, newdata, ...) {
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Centering for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$means), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$means), x$terms, x$trained, width = width)
     invisible(x)
   }

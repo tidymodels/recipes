@@ -100,13 +100,6 @@ bake.step_scale <- function(object, newdata, ...) {
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Scaling for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$sds), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$sds), x$terms, x$trained, width = width)
     invisible(x)
   }

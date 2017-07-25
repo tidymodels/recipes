@@ -162,13 +162,6 @@ bake.step_dummy <- function(object, newdata, ...) {
 print.step_dummy <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Dummy variables from ")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$levels), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$levels, x$terms, x$trained, width = width)
     invisible(x)
   }

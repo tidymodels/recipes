@@ -107,13 +107,6 @@ print.step_hyperbolic <-
     if (x$inverse)
       ttl <- paste(ttl, "(inv)")
     cat(ttl, "transformation on ")
-    if (x$trained) {
-      cat(format_ch_vec(x$columns, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }

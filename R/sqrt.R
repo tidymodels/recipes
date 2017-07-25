@@ -77,14 +77,7 @@ bake.step_sqrt <- function(object, newdata, ...) {
 
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
   cat("Square root transformation on ", sep = "")
-  if (x$trained) {
-    cat(format_ch_vec(x$columns, width = width))
-  } else
-    cat(format_selectors(x$terms, wdth = width))
-  if (x$trained)
-    cat(" [trained]\n")
-  else
-    cat("\n")
+  printer(x$columns, x$terms, x$trained, width = width)
   invisible(x)
 }
 

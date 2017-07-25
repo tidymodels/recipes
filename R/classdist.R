@@ -186,13 +186,7 @@ print.step_classdist <-
         names(x$objects[["center"]][[1]])
       else
         names(x$objects[[1]]$center)
-      
-      cat(format_ch_vec(x_names, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    } else x_names <- NULL
+    printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }

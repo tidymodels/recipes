@@ -101,13 +101,6 @@ bake.step_bin2factor <- function(object, newdata, ...) {
 print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Dummy variable to factor conversion for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(x$columns, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }

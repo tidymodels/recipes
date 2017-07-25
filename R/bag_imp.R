@@ -196,14 +196,7 @@ bake.step_bagimpute <- function(object, newdata, ...) {
 print.step_bagimpute <-
   function(x, width = max(20, options()$width - 31), ...) {
     cat("Bagged tree imputation for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$models), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$models), x$terms, x$trained, width = width)
     invisible(x)
   }
 

@@ -96,14 +96,7 @@ bake.step_modeimpute <- function(object, newdata, ...) {
 print.step_modeimpute <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Mode Imputation for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$modes), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$modes), x$terms, x$trained, width = width)
     invisible(x)
   }
 

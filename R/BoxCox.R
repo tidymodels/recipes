@@ -121,14 +121,7 @@ bake.step_BoxCox <- function(object, newdata, ...) {
 print.step_BoxCox <-
   function(x, width = max(20, options()$width - 35), ...) {
     cat("Box-Cox transformation on ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$lambdas), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$lambdas), x$terms, x$trained, width = width)
     invisible(x)
   }
 

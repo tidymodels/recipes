@@ -86,13 +86,6 @@ bake.step_logit <- function(object, newdata, ...) {
 print.step_logit <-
   function(x, width = max(20, options()$width - 33), ...) {
     cat("Logit transformation on ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(x$columns, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
