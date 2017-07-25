@@ -71,6 +71,6 @@ collapsed <- bake(rec, okc_te)
 table(okc_te$diet, collapsed$diet, useNA = "always")
 }
 \concept{
-preprocessing normalization_methods factors
+preprocessing factors
 }
 \keyword{datagen}
