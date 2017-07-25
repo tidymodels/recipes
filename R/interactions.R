@@ -14,7 +14,7 @@
 #' @param sep A character value used to delinate variables in an interaction
 #'   (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).
 #' @keywords datagen
-#' @concept preprocessing
+#' @concept preprocessing model_specification
 #' @export
 #' @details \code{step_interact} can create interactions between variables. It
 #'   is primarily intended for \bold{numeric data}; categorical variables

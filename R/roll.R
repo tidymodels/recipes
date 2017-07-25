@@ -26,7 +26,7 @@
 #'   will be selected, use the \code{summary} function (see the example below).
 #'   These will be the names of the new columns created by the step. 
 #' @keywords datagen
-#' @concept preprocessing basis_expansion
+#' @concept preprocessing moving_windows
 #' @export
 #' @details The calculations use a somewhat atypical method for handling the
 #'   beginning and end parts of the rolling statistics. The process starts

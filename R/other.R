@@ -13,7 +13,7 @@
 #' @param objects A list of objects that contain the information to pool
 #'   infrequent levels that is determined by \code{\link{prepare.recipe}}.
 #' @keywords datagen
-#' @concept preprocessing normalization_methods factors
+#' @concept preprocessing factors
 #' @export
 #' @details The overall proportion of the categories are computed. The "other"
 #'   category is used in place of any categorical levels whose individual
