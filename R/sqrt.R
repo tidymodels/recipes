@@ -8,7 +8,7 @@
 #' @param ... One or more selector functions to choose which variables will be
 #'   transformed. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
-#' @param vars A character string of variable names that will be (eventually)
+#' @param columns A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
@@ -31,26 +31,26 @@
 #'   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
 #'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
 
-step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, vars = NULL) {
+step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, columns = NULL) {
   add_step(
     recipe,
     step_sqrt_new(
       terms = check_ellipses(...),
       role = role,
       trained = trained,
-      vars = vars
+      columns = columns
     )
   )
 }
 
 step_sqrt_new <-
-  function(terms = NULL, role = NA, trained = FALSE, vars = NULL) {
+  function(terms = NULL, role = NA, trained = FALSE, columns = NULL) {
     step(
       subclass = "sqrt",
       terms = terms,
       role = role,
       trained = trained,
-      vars = vars
+      columns = columns
     )
   }
 
@@ -62,13 +62,13 @@ prepare.step_sqrt <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    vars = col_names
+    columns = col_names
   )
 }
 
 #' @export
 bake.step_sqrt <- function(object, newdata, ...) {
-  col_names <- object$vars
+  col_names <- object$columns
   for (i in seq_along(col_names))
     newdata[, col_names[i]] <-
       sqrt(getElement(newdata, col_names[i]))
@@ -78,7 +78,7 @@ bake.step_sqrt <- function(object, newdata, ...) {
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
   cat("Square root transformation on ", sep = "")
   if (x$trained) {
-    cat(format_ch_vec(x$vars, width = width))
+    cat(format_ch_vec(x$columns, width = width))
   } else
     cat(format_selectors(x$terms, wdth = width))
   if (x$trained)

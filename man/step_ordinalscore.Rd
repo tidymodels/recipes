@@ -4,7 +4,7 @@
 \alias{step_ordinalscore}
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
-step_ordinalscore(recipe, ..., role = NA, trained = FALSE, vars = NULL,
+step_ordinalscore(recipe, ..., role = NA, trained = FALSE, columns = NULL,
   convert = as.numeric)
 }
 \arguments{
@@ -19,7 +19,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variables that will be converted. This is \code{NULL}
+\item{columns}{A character string of variables that will be converted. This is \code{NULL}
 until computed by \code{\link{prepare.recipe}}.}
 
 \item{convert}{A function that takes an ordinal factor vector as an input and outputs a single numeric variable.}

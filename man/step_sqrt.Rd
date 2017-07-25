@@ -4,7 +4,7 @@
 \alias{step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, ..., role = NA, trained = FALSE, vars = NULL)
+step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -18,7 +18,7 @@ transformed. See \code{\link{selections}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{

@@ -4,7 +4,7 @@
 \alias{step_shuffle}
 \title{Shuffle Variables}
 \usage{
-step_shuffle(recipe, ..., role = NA, trained = FALSE, variables = NULL)
+step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -18,7 +18,7 @@ permuted. See \code{\link{selections}} for  more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{variables}{A character string that contains the names of columns that
+\item{columns}{A character string that contains the names of columns that
 should be shuffled. These values are not determined until
 \code{\link{prepare.recipe}} is called.}
 }

@@ -5,7 +5,7 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  vars = NULL)
+  columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -21,7 +21,7 @@ have been estimated.}
 
 \item{base}{A numeric value for the base.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{

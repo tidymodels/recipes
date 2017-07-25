@@ -7,7 +7,7 @@
 \usage{
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   denom = denom_vars(), naming = function(numer, denom)
-  make.names(paste(numer, denom, sep = "_o_")), variables = NULL)
+  make.names(paste(numer, denom, sep = "_o_")), columns = NULL)
 
 denom_vars(...)
 }
@@ -37,7 +37,7 @@ numerator and denominator, it will be removed from the listing.}
 \item{naming}{A function that defines the naming convention for new ratio
 columns.}
 
-\item{variables}{The column names used in the rations. This argument is
+\item{columns}{The column names used in the ratios. This argument is
 not populated until \code{\link{prepare.recipe}} is executed.}
 }
 \value{

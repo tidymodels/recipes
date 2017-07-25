@@ -5,7 +5,7 @@
 \title{Hyperbolic Transformations}
 \usage{
 step_hyperbolic(recipe, ..., role = NA, trained = FALSE, func = "sin",
-  inverse = TRUE, vars = NULL)
+  inverse = TRUE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -24,7 +24,7 @@ have been estimated.}
 
 \item{inverse}{A logical: should the inverse function be used?}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{

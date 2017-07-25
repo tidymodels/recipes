@@ -21,7 +21,7 @@
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'   done up to the point of this imputation step. This is
 #'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
-#' @param variables The column names that will be imputed and used for
+#' @param columns The column names that will be imputed and used for
 #'   imputation. This is  \code{NULL} until the step is trained by
 #'   \code{\link{prepare.recipe}}.
 #' @keywords datagen
@@ -82,7 +82,7 @@ step_knnimpute <-
            K = 5,
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
-           variables = NULL) {
+           columns = NULL) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
@@ -94,7 +94,7 @@ step_knnimpute <-
         K = K,
         impute_with = impute_with,
         ref_data = ref_data,
-        variables = variables
+        columns = columns
       )
     )
   }
@@ -106,7 +106,7 @@ step_knnimpute_new <-
            K = NULL,
            impute_with = NULL,
            ref_data = NULL,
-           variables = NA) {
+           columns = NA) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -115,7 +115,7 @@ step_knnimpute_new <-
       K = K,
       impute_with = impute_with,
       ref_data = ref_data,
-      variables = variables
+      columns = columns
     )
   }
 
@@ -130,7 +130,7 @@ prepare.step_knnimpute <- function(x, training, info = NULL, ...) {
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
   
-  x$variables <- var_lists
+  x$columns <- var_lists
   x$ref_data <- training[, all_x_vars]
   x$trained <- TRUE
   x
@@ -161,11 +161,11 @@ bake.step_knnimpute <- function(object, newdata, ...) {
     return(newdata)
   
   old_data <- newdata
-  for (i in seq(along = object$variables)) {
-    imp_var <- object$variables[[i]]$y
+  for (i in seq(along = object$columns)) {
+    imp_var <- object$columns[[i]]$y
     missing_rows <- !complete.cases(newdata[, imp_var])
     if (any(missing_rows)) {
-      preds <- object$variables[[i]]$x
+      preds <- object$columns[[i]]$x
       new_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(new_data))) {
@@ -184,7 +184,7 @@ bake.step_knnimpute <- function(object, newdata, ...) {
 
 print.step_knnimpute <-
   function(x, width = max(20, options()$width - 31), ...) {
-    all_x_vars <- lapply(x$variables, function(x) x$x)
+    all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
     cat(x$K, "-nearest neighbor imputation for ", sep = "")
     if (x$trained) {

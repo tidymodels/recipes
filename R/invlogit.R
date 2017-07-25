@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
-#' @param vars A character string of variable names that will be (eventually)
+#' @param columns A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
@@ -38,24 +38,24 @@
 #'   \code{\link{bake.recipe}}
 
 step_invlogit <-
-  function(recipe, ...,  role = NA, trained = FALSE, vars = NULL) {
+  function(recipe, ...,  role = NA, trained = FALSE, columns = NULL) {
     add_step(recipe,
              step_invlogit_new(
                terms = check_ellipses(...),
                role = role,
                trained = trained,
-               vars = vars
+               columns = columns
              ))
   }
 
 step_invlogit_new <-
-  function(terms = NULL, role = NA, trained = FALSE, vars = NULL) {
+  function(terms = NULL, role = NA, trained = FALSE, columns = NULL) {
     step(
       subclass = "invlogit",
       terms = terms,
       role = role,
       trained = trained,
-      vars = vars
+      columns = columns
     )
   }
 
@@ -66,7 +66,7 @@ prepare.step_invlogit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    vars = col_names
+    columns = col_names
   )
 }
 
@@ -74,9 +74,9 @@ prepare.step_invlogit <- function(x, training, info = NULL, ...) {
 #' @importFrom stats binomial
 #' @export
 bake.step_invlogit <- function(object, newdata, ...) {
-  for (i in seq_along(object$vars))
-    newdata[, object$vars[i]] <-
-      binomial()$linkinv(unlist(getElement(newdata, object$vars[i]),
+  for (i in seq_along(object$columns))
+    newdata[, object$columns[i]] <-
+      binomial()$linkinv(unlist(getElement(newdata, object$columns[i]),
                                 use.names = FALSE))
   as_tibble(newdata)
 }
@@ -86,7 +86,7 @@ print.step_invlogit <-
   function(x, width = max(20, options()$width - 26), ...) {
     cat("Inverse logit on ", sep = "")
     if (x$trained) {
-      cat(format_ch_vec(x$vars, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, wdth = width))
     if (x$trained)

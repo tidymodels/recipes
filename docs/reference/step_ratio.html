@@ -98,7 +98,7 @@
 
     <pre class="usage"><span class='fu'>step_ratio</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>numer</span>, <span class='no'>denom</span>)
-  <span class='fu'>make.names</span>(<span class='fu'>paste</span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='fu'>make.names</span>(<span class='fu'>paste</span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>denom_vars</span>(<span class='no'>...</span>)</pre>
     
@@ -143,8 +143,8 @@ numerator and denominator, it will be removed from the listing.</p></td>
 columns.</p></td>
     </tr>
     <tr>
-      <th>variables</th>
-      <td><p>The column names used in the rations. This argument is
+      <th>columns</th>
+      <td><p>The column names used in the ratios. This argument is
 not populated until <code><a href='prepare.html'>prepare.recipe</a></code> is executed.</p></td>
     </tr>
     </table>

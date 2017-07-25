@@ -98,7 +98,7 @@
 
     <pre class="usage"><span class='fu'>step_knnimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>K</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -145,7 +145,7 @@ done up to the point of this imputation step. This is
 <code>NULL</code> until the step is trained by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>
     <tr>
-      <th>variables</th>
+      <th>columns</th>
       <td><p>The column names that will be imputed and used for
 imputation. This is  <code>NULL</code> until the step is trained by
 <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>

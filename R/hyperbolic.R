@@ -9,7 +9,7 @@
 #' @param func A character value for the function. Valid values are "sin",
 #'   "cos", or "tan".
 #' @param inverse A logical: should the inverse function be used?
-#' @param vars A character string of variable names that will be (eventually)
+#' @param columns A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
@@ -40,7 +40,7 @@ step_hyperbolic <-
            trained = FALSE,
            func = "sin",
            inverse = TRUE,
-           vars = NULL) {
+           columns = NULL) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
       stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
@@ -52,7 +52,7 @@ step_hyperbolic <-
         trained = trained,
         func = func,
         inverse = inverse,
-        vars = vars
+        columns = columns
       )
     )
   }
@@ -63,7 +63,7 @@ step_hyperbolic_new <-
            trained = FALSE,
            func = NULL,
            inverse = NULL,
-           vars = NULL) {
+           columns = NULL) {
     step(
       subclass = "hyperbolic",
       terms = terms,
@@ -71,7 +71,7 @@ step_hyperbolic_new <-
       trained = trained,
       func = func,
       inverse = inverse,
-      vars = vars
+      columns = columns
     )
   }
 
@@ -84,7 +84,7 @@ prepare.step_hyperbolic <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     func = x$func,
     inverse = x$inverse,
-    vars = col_names
+    columns = col_names
   )
 }
 
@@ -94,7 +94,7 @@ bake.step_hyperbolic <- function(object, newdata, ...) {
     get(paste0("a", object$func))
   else
     get(object$func)
-  col_names <- object$vars
+  col_names <- object$columns
   for (i in seq_along(col_names))
     newdata[, col_names[i]] <-
     func(getElement(newdata, col_names[i]))
@@ -108,7 +108,7 @@ print.step_hyperbolic <-
       ttl <- paste(ttl, "(inv)")
     cat(ttl, "transformation on ")
     if (x$trained) {
-      cat(format_ch_vec(x$vars, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, wdth = width))
     if (x$trained)

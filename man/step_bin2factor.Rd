@@ -5,7 +5,7 @@
 \title{Create a Factors from A Dummy Variable}
 \usage{
 step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
-  "no"), objects = NULL)
+  "no"), columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -22,7 +22,7 @@ have been estimated.}
 \item{levels}{A length 2 character string that indicate the factor levels
 for the 1's (in the first position) and the zeros (second)}
 
-\item{objects}{A vector with the selected variable names. This is
+\item{columns}{A vector with the selected variable names. This is
 \code{NULL} until computed by \code{\link{prepare.recipe}}.}
 }
 \value{

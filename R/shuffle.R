@@ -8,7 +8,7 @@
 #' @param ... One or more selector functions to choose which variables will
 #'    permuted. See \code{\link{selections}} for  more details.
 #' @param role Not used by this step since no new variables are created.
-#' @param variables A character string that contains the names of columns that
+#' @param columns A character string that contains the names of columns that
 #'   should be shuffled. These values are not determined until
 #'   \code{\link{prepare.recipe}} is called.
 #' @keywords datagen
@@ -30,26 +30,26 @@ step_shuffle <- function(recipe,
                          ...,
                          role = NA,
                          trained = FALSE,
-                         variables = NULL) {
+                         columns = NULL) {
   add_step(recipe,
            step_shuffle_new(
              terms = check_ellipses(...),
              role = role,
              trained = trained,
-             variables = variables
+             columns = columns
            ))
 }
 
 step_shuffle_new <- function(terms = NULL,
                              role = NA,
                              trained = FALSE,
-                             variables = NULL) {
+                             columns = NULL) {
   step(
     subclass = "shuffle",
     terms = terms,
     role = role,
     trained = trained,
-    variables = variables
+    columns = columns
   )
 }
 
@@ -60,7 +60,7 @@ prepare.step_shuffle <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    variables = col_names
+    columns = col_names
   )
 }
 
@@ -72,19 +72,19 @@ bake.step_shuffle <- function(object, newdata, ...) {
     return(newdata)
   }
   
-  if (length(object$variables) > 0)
-    for (i in seq_along(object$variables))
-      newdata[, object$variables[i]] <-
-        sample(getElement(newdata, object$variables[i]))
+  if (length(object$columns) > 0)
+    for (i in seq_along(object$columns))
+      newdata[, object$columns[i]] <-
+        sample(getElement(newdata, object$columns[i]))
     as_tibble(newdata)
 }
 
 print.step_shuffle <-
   function(x, width = max(20, options()$width - 22), ...) {
     if (x$trained) {
-      if (length(x$variables) > 0) {
+      if (length(x$columns) > 0) {
         cat("Variables shuffled ")
-        cat(format_ch_vec(x$variables, width = width))
+        cat(format_ch_vec(x$columns, width = width))
       } else
         cat("No variables were shuffled")
     } else {

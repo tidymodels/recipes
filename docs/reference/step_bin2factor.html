@@ -97,7 +97,7 @@ will create a two-level factor from a single dummy variable.</p>
     
 
     <pre class="usage"><span class='fu'>step_bin2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>,
-  <span class='st'>"no"</span>), <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='st'>"no"</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,7 +127,7 @@ have been estimated.</p></td>
 for the 1's (in the first position) and the zeros (second)</p></td>
     </tr>
     <tr>
-      <th>objects</th>
+      <th>columns</th>
       <td><p>A vector with the selected variable names. This is
 <code>NULL</code> until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>

@@ -5,7 +5,7 @@
 \title{Moving Window Functions}
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
-  na.rm = TRUE, statistic = "mean", names = NULL)
+  na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -33,9 +33,14 @@ be calculated for each moving window. Possible values are: \code{'max'},
 \code{'mean'}, \code{'median'}, \code{'min'}, \code{'prod'}, \code{'sd'},
 \code{'sum'}, \code{'var'}}
 
+\item{columns}{A character string that contains the names of columns that
+should be processed. These values are not determined until
+\code{\link{prepare.recipe}} is called.}
+
 \item{names}{An optional character string that is the same length of the
 number of terms selected by \code{terms}. If you are not sure what columns
-will be selected, use the \code{summary} function (see the example below).}
+will be selected, use the \code{summary} function (see the example below).
+These will be the names of the new columns created by the step.}
 }
 \value{
 An updated version of \code{recipe} with the

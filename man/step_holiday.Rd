@@ -5,7 +5,7 @@
 \title{Holiday Feature Generator}
 \usage{
 step_holiday(recipe, ..., role = "predictor", trained = FALSE,
-  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), variables = NULL)
+  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -28,7 +28,7 @@ have been estimated.}
 supported by the \code{timeDate} package. See
 \code{\link[timeDate]{listHolidays}} for a complete list.}
 
-\item{variables}{A character string of variables that will be used as
+\item{columns}{A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
 \code{\link{prepare.recipe}} is used.}
 }

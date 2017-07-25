@@ -9,7 +9,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param levels A length 2 character string that indicate the factor levels
 #' for the 1's (in the first position) and the zeros (second)
-#' @param objects A vector with the selected variable names. This is
+#' @param columns A vector with the selected variable names. This is
 #' \code{NULL} until computed by \code{\link{prepare.recipe}}.
 #' @details This operation may be useful for situations where a binary piece of
 #'   information may need to be represented as categorical instead of numeric.
@@ -39,7 +39,7 @@ step_bin2factor <-
            role = NA,
            trained = FALSE,
            levels = c("yes", "no"),
-           objects = NULL) {
+           columns = NULL) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
     add_step(
@@ -49,7 +49,7 @@ step_bin2factor <-
         role = role,
         trained = trained,
         levels = levels,
-        objects = objects
+        columns = columns
       )
     )
   }
@@ -59,14 +59,14 @@ step_bin2factor_new <-
            role = NA,
            trained = FALSE,
            levels = NULL,
-           objects = NULL) {
+           columns = NULL) {
     step(
       subclass = "bin2factor",
       terms = terms,
       role = role,
       trained = trained,
       levels = levels,
-      objects = objects
+      columns = columns
     )
   }
 
@@ -82,15 +82,15 @@ prepare.step_bin2factor <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     levels = x$levels,
-    objects = col_names
+    columns = col_names
   )
 }
 
 bake.step_bin2factor <- function(object, newdata, ...) {
-  for (i in seq_along(object$objects))
-    newdata[, object$objects[i]] <-
+  for (i in seq_along(object$columns))
+    newdata[, object$columns[i]] <-
       factor(ifelse(
-        getElement(newdata, object$objects[i]) == 1,
+        getElement(newdata, object$columns[i]) == 1,
         object$levels[1],
         object$levels[2]
       ),
@@ -102,7 +102,7 @@ print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Dummy variable to factor conversion for ", sep = "")
     if (x$trained) {
-      cat(format_ch_vec(x$objects, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, wdth = width))
     if (x$trained)

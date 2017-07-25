@@ -6,7 +6,7 @@
 \usage{
 step_knnimpute(recipe, ..., role = NA, trained = FALSE, K = 5,
   impute_with = imp_vars(all_predictors()), ref_data = NULL,
-  variables = NULL)
+  columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -36,7 +36,7 @@ latter and not used to impute itself.}
 done up to the point of this imputation step. This is
 \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.}
 
-\item{variables}{The column names that will be imputed and used for
+\item{columns}{The column names that will be imputed and used for
 imputation. This is  \code{NULL} until the step is trained by
 \code{\link{prepare.recipe}}.}
 }

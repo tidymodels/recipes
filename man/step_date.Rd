@@ -6,7 +6,7 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, variables = NULL)
+  ordinal = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -44,7 +44,7 @@ the day of the week as a number.}
 \item{ordinal}{A logical: should factors be ordered? Only available for
 features \code{month} or \code{dow}.}
 
-\item{variables}{A character string of variables that will be used as
+\item{columns}{A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
  \code{\link{prepare.recipe}} is used.}
 }

@@ -9,7 +9,7 @@
 #'   used for the normalization. See \code{\link{selections}} for more details.
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?
-#' @param vars A character string of variable names that will be (eventually)
+#' @param columns A character string of variable names that will be (eventually)
 #'   populated by the \code{terms} argument.
 #' @keywords datagen
 #' @concept preprocessing projection_methods
@@ -50,13 +50,13 @@ step_spatialsign <-
            ...,
            role = "predictor",
            trained = FALSE,
-           vars = NULL) {
+           columns = NULL) {
     add_step(recipe,
              step_spatialsign_new(
                terms = check_ellipses(...),
                role = role,
                trained = trained,
-               vars = vars
+               columns = columns
              ))
   }
 
@@ -64,13 +64,13 @@ step_spatialsign_new <-
   function(terms = NULL,
            role = "predictor",
            trained = FALSE,
-           vars = NULL) {
+           columns = NULL) {
     step(
       subclass = "spatialsign",
       terms = terms,
       role = role,
       trained = trained,
-      vars = vars
+      columns = columns
     )
   }
 
@@ -81,13 +81,13 @@ prepare.step_spatialsign <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    vars = col_names
+    columns = col_names
   )
 }
 
 #' @export
 bake.step_spatialsign <- function(object, newdata, ...) {
-  col_names <- object$vars
+  col_names <- object$columns
   ss <- function(x)
     x / sqrt(sum(x ^ 2))
   newdata[, col_names] <-
@@ -99,7 +99,7 @@ print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
     cat("Spatial sign on  ", sep = "")
     if (x$trained) {
-      cat(format_ch_vec(x$vars, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, wdth = width))
     if (x$trained)

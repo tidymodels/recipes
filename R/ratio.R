@@ -20,7 +20,7 @@
 #'   numerator and denominator, it will be removed from the listing.
 #' @param naming A function that defines the naming convention for new ratio
 #'   columns.
-#' @param variables The column names used in the rations. This argument is
+#' @param columns The column names used in the ratios. This argument is
 #'   not populated until \code{\link{prepare.recipe}} is executed.
 #' @keywords datagen
 #' @concept preprocessing
@@ -57,7 +57,7 @@ step_ratio <-
            denom = denom_vars(),
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
-           variables = NULL) {
+           columns = NULL) {
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",
            "See ?selections.", call. = FALSE)
@@ -69,7 +69,7 @@ step_ratio <-
         trained = trained,
         denom = denom,
         naming = naming,
-        variables = variables
+        columns = columns
       )
     )
   }
@@ -80,7 +80,7 @@ step_ratio_new <-
            trained = FALSE,
            denom = NULL,
            naming = NULL,
-           variables = NULL
+           columns = NULL
   ) {
     step(
       subclass = "ratio",
@@ -89,7 +89,7 @@ step_ratio_new <-
       trained = trained,
       denom = denom,
       naming = naming,
-      variables = variables
+      columns = columns
     )
   }
 
@@ -116,16 +116,16 @@ prepare.step_ratio <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     denom = x$denom,
     naming = x$naming,
-    variables = col_names
+    columns = col_names
   )
 }
 
 #' @export
 bake.step_ratio <- function(object, newdata, ...) {
-  res <- newdata[, object$variables$top] /
-    newdata[, object$variables$bottom]
+  res <- newdata[, object$columns$top] /
+    newdata[, object$columns$bottom]
   colnames(res) <-
-    apply(object$variables, 1, function(x)
+    apply(object$columns, 1, function(x)
       object$naming(x[1], x[2]))
   if (!is_tibble(res))
     res <- as_tibble(res)
@@ -140,7 +140,7 @@ print.step_ratio <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Ratios from ")
     if (x$trained) {
-      vars <- c(unique(x$variables$top), unique(x$variables$bottom))
+      vars <- c(unique(x$columns$top), unique(x$columns$bottom))
       cat(format_ch_vec(vars, width = width))
     } else
       cat(format_selectors(c(x$terms, x$denom), wdth = width))

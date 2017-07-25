@@ -18,7 +18,7 @@
 #'   supported by the \code{timeDate} package. See
 #'   \code{\link[timeDate]{listHolidays}} for a complete list.
 
-#' @param variables A character string of variables that will be used as
+#' @param columns A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
 #'   \code{\link{prepare.recipe}} is used.
 #' @keywords datagen
@@ -48,7 +48,7 @@ step_holiday <-
     role = "predictor",
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-    variables = NULL
+    columns = NULL
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
@@ -61,7 +61,7 @@ step_holiday <-
       role = role,
       trained = trained,
       holidays = holidays,
-      variables = variables
+      columns = columns
     )
   )
 }
@@ -72,7 +72,7 @@ step_holiday_new <-
     role = "predictor",
     trained = FALSE,
     holidays = holidays,
-    variables = variables
+    columns = columns
     ) {
   step(
     subclass = "holiday",
@@ -80,7 +80,7 @@ step_holiday_new <-
     role = role,
     trained = trained,
     holidays = holidays,
-    variables = variables
+    columns = columns
   )
 }
 
@@ -99,7 +99,7 @@ prepare.step_holiday <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     holidays = x$holidays,
-    variables = col_names
+    columns = col_names
   )
 }
 
@@ -127,23 +127,23 @@ get_holiday_features <- function(dt, hdays) {
 #' @export
 bake.step_holiday <- function(object, newdata, ...) {
   new_cols <-
-    rep(length(object$holidays), each = length(object$variables))
+    rep(length(object$holidays), each = length(object$columns))
   holiday_values <-
     matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
   colnames(holiday_values) <- rep("", sum(new_cols))
   holiday_values <- as_tibble(holiday_values)
   
   strt <- 1
-  for (i in seq_along(object$variables)) {
+  for (i in seq_along(object$columns)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     
-    tmp <- get_holiday_features(dt = getElement(newdata, object$variables[i]),
+    tmp <- get_holiday_features(dt = getElement(newdata, object$columns[i]),
                                 hdays = object$holidays)
     
     holiday_values[, cols] <- tmp
     
     names(holiday_values)[cols] <-
-      paste(object$variables[i],
+      paste(object$columns[i],
             names(tmp),
             sep = "_")
     
@@ -159,7 +159,7 @@ print.step_holiday <-
   function(x, width = max(20, options()$width - 29), ...) {
     cat("Holiday features from ")
     if (x$trained) {
-      cat(format_ch_vec(x$variables, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, wdth = width))
     if (x$trained)

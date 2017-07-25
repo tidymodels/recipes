@@ -18,9 +18,13 @@
 #'   be calculated for each moving window. Possible values are: \code{'max'},
 #'   \code{'mean'}, \code{'median'}, \code{'min'}, \code{'prod'}, \code{'sd'},
 #'   \code{'sum'}, \code{'var'}
+#' @param columns A character string that contains the names of columns that
+#'   should be processed. These values are not determined until
+#'   \code{\link{prepare.recipe}} is called.
 #' @param names An optional character string that is the same length of the
 #'   number of terms selected by \code{terms}. If you are not sure what columns
 #'   will be selected, use the \code{summary} function (see the example below).
+#'   These will be the names of the new columns created by the step. 
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
@@ -86,6 +90,7 @@ step_window <-
            size = 3,
            na.rm = TRUE,
            statistic = "mean",
+           columns = NULL,
            names = NULL) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
@@ -118,6 +123,7 @@ step_window <-
         size = size,
         na.rm = na.rm,
         statistic = statistic,
+        columns = columns,
         names = names
       )
     )
@@ -132,6 +138,7 @@ step_window_new <-
            size = NULL,
            na.rm = NULL,
            statistic = NULL,
+           columns = NULL,
            names = names) {
     step(
       subclass = "window",
@@ -141,6 +148,7 @@ step_window_new <-
       size = size,
       na.rm = na.rm,
       statistic = statistic,
+      columns = columns,
       names = names
     )
   }
@@ -160,12 +168,13 @@ prepare.step_window <- function(x, training, info = NULL, ...) {
   }
   
   step_window_new(
-    terms = col_names,
+    terms = x$terms,
     role = x$role,
     trained = TRUE,
     size = x$size,
     na.rm = x$na.rm,
     statistic = x$statistic,
+    columns = col_names,
     names = x$names
   )
 }
@@ -210,16 +219,16 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
 #' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_window <- function(object, newdata, ...) {
-  for (i in seq(along = object$terms)) {
+  for (i in seq(along = object$columns)) {
     if (!is.null(object$names)) {
       newdata[, object$names[i]] <-
-        roller(x = getElement(newdata, object$terms[i]),
+        roller(x = getElement(newdata, object$columns[i]),
                stat = object$statistic,
                na.rm = object$na.rm,
                window = object$size)
     } else {
-      newdata[, object$terms[i]] <-
-        roller(x = getElement(newdata, object$terms[i]),
+      newdata[, object$columns[i]] <-
+        roller(x = getElement(newdata, object$columns[i]),
                stat = object$statistic,
                na.rm = object$na.rm,
                window = object$size)
@@ -233,7 +242,7 @@ print.step_window <-
   function(x, width = max(20, options()$width - 28), ...) {
     cat("Moving ", x$size, "-point ", x$statistic, " on ", sep = "")
     if (x$trained) {
-      cat(format_ch_vec(x$terms, width = width))
+      cat(format_ch_vec(x$columns, width = width))
     } else
       cat(format_selectors(x$terms, width = width))
     if (x$trained)

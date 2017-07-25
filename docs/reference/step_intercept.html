@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Inverse Logit Transformation — step_invlogit • recipes</title>
+<title>Add intercept (or constant) column — step_intercept • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -88,42 +88,50 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Inverse Logit Transformation</h1>
+    <h1>Add intercept (or constant) column</h1>
     </div>
 
     
-    <p><code>step_invlogit</code> creates a <em>specification</em> of a recipe step that
-  will transform the data from real values to be between zero and one.</p>
+    <p><code>step_intercept</code> creates a <em>specification</em> of a recipe step that
+  will add an intercept or constant term in the first column of a data
+  matrix. <code>step_intercept</code> has defaults to <em>predictor</em> role so
+  that it is by default called in the bake step. Be careful to avoid
+  unintentional transformations when calling steps with
+  <code>all_predictors</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>step_invlogit</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>step_intercept</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"intercept"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
+      <td><p>A recipe object. The step will be added to the sequence of
 operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>Argument ignored; included for consistency with other step
+specification functions.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Defaults to "predictor"</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for preprocessing
+have been estimated. Again included for consistency.</p></td>
     </tr>
     <tr>
-      <th>columns</th>
-      <td><p>A character string of variable names that will be (eventually)
-populated by the <code>terms</code> argument.</p></td>
+      <th>name</th>
+      <td><p>Character name for new added column</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>A numeric constant to fill the intercept column. Defaults to 1.</p></td>
     </tr>
     </table>
     
@@ -132,17 +140,9 @@ populated by the <code>terms</code> argument.</p></td>
     <p>An updated version of <code>recipe</code> with the
   new step added to the sequence of existing steps (if any).</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The inverse logit transformation takes values on the real line and
-  translates them to be between zero and one using the function
-  <code>f(x) = 1/(1+exp(-x))</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_logit.html'>step_logit</a></code> <code><a href='step_log.html'>step_log</a></code>
-  <code><a href='step_sqrt.html'>step_sqrt</a></code>  <code><a href='step_hyperbolic.html'>step_hyperbolic</a></code>
-  <code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code>
+    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code>
   <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
@@ -154,17 +154,26 @@ populated by the <code>terms</code> argument.</p></td>
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='no'>rec_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>[, -(<span class='fl'>1</span>:<span class='fl'>2</span>)]) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_intercept</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>ilogit_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span>  <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_invlogit</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
-
-<span class='no'>ilogit_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>ilogit_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
-#&gt; step 2 scale training 
-#&gt; step 3 invlogit training </div><div class='input'>
-<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ilogit_obj</span>, <span class='no'>biomass_te</span>)
-<span class='fu'>plot</span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>carbon</span>)</div><img src='step_invlogit-4.png' alt='' width='540' height='400' /></pre>
+<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 intercept training </div><div class='input'>
+<span class='no'>with_intercept</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_obj</span>, <span class='no'>biomass_te</span>)
+<span class='no'>with_intercept</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
+#&gt;    intercept carbon hydrogen oxygen nitrogen sulfur
+#&gt;        &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1         2  46.35     5.67  47.20     0.30   0.22
+#&gt;  2         2  43.25     5.50  48.06     2.85   0.34
+#&gt;  3         2  42.70     5.50  49.10     2.40   0.30
+#&gt;  4         2  46.40     6.10  37.30     1.80   0.50
+#&gt;  5         2  48.76     6.32  42.77     0.20   0.00
+#&gt;  6         2  44.30     5.50  41.70     0.70   0.20
+#&gt;  7         2  38.94     5.23  54.13     1.19   0.51
+#&gt;  8         2  42.10     4.66  33.80     0.95   0.20
+#&gt;  9         2  29.20     4.40  31.10     0.14   4.90
+#&gt; 10         2  27.80     3.77  23.69     4.63   1.05
+#&gt; # ... with 70 more rows</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -172,8 +181,6 @@ populated by the <code>terms</code> argument.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
