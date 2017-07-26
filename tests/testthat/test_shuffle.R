@@ -15,7 +15,7 @@ test_that('numeric data', {
   rec1 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_numeric())
   
-  rec1 <- prepare(rec1, training = dat, verbose = FALSE)
+  rec1 <- prep(rec1, training = dat, verbose = FALSE)
   set.seed(7046)
   dat1 <- bake(rec1, dat)
   exp1 <- c(FALSE, FALSE, TRUE, TRUE)
@@ -30,7 +30,7 @@ test_that('nominal data', {
   rec2 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_nominal())
   
-  rec2 <- prepare(rec2, training = dat, verbose = FALSE)
+  rec2 <- prep(rec2, training = dat, verbose = FALSE)
   set.seed(804)
   dat2 <- bake(rec2, dat)
   exp2 <- c(TRUE, TRUE, FALSE, TRUE)
@@ -45,7 +45,7 @@ test_that('all data', {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
   
-  rec3 <- prepare(rec3, training = dat, verbose = FALSE)
+  rec3 <- prep(rec3, training = dat, verbose = FALSE)
   set.seed(2516)
   dat3 <- bake(rec3, dat)
   exp3 <- c(FALSE, FALSE, FALSE, TRUE)
@@ -61,14 +61,14 @@ test_that('printing', {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
   expect_output(print(rec3))
-  expect_output(prepare(rec3, training = dat))
+  expect_output(prep(rec3, training = dat))
 })
 
 test_that('bake a single row', {
   rec4 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
   
-  rec4 <- prepare(rec4, training = dat, verbose = FALSE)
+  rec4 <- prep(rec4, training = dat, verbose = FALSE)
   expect_warning(dat4 <- bake(rec4, dat[1,], everything()))
   expect_equal(dat4, dat[1,])
 })

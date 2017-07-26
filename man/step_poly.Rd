@@ -57,14 +57,14 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 quadratic <- rec \%>\%
   step_poly(carbon, hydrogen)
-quadratic <- prepare(quadratic, training = biomass_tr)
+quadratic <- prep(quadratic, training = biomass_tr)
 
 expanded <- bake(quadratic, biomass_te)
 expanded
 }
 \seealso{
 \code{\link{step_ns}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing basis_expansion

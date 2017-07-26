@@ -39,7 +39,7 @@ See \code{\link[ddalpha]{depth.halfspace}},
 \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.}
 
 \item{data}{The training data are stored here once after
-\code{\link{prepare.recipe}} is executed.}
+\code{\link{prep.recipe}} is executed.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -76,7 +76,7 @@ original values and have the prefix \code{depth_}.
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_depth(all_predictors(), class = "Species")
 
-rec_dists <- prepare(rec, training = iris)
+rec_dists <- prep(rec, training = iris)
 
 dists_to_species <- bake(rec_dists, newdata = iris)
 dists_to_species

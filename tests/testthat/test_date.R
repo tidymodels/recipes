@@ -17,7 +17,7 @@ test_that('default option', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   
-  date_rec <- prepare(date_rec, training = examples)   
+  date_rec <- prep(date_rec, training = examples)   
   date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
@@ -53,7 +53,7 @@ test_that('nondefault options', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
   
-  date_rec <- prepare(date_rec, training = examples)   
+  date_rec <- prep(date_rec, training = examples)   
   date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
@@ -73,7 +73,7 @@ test_that('ordinal values', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
   
-  date_rec <- prepare(date_rec, training = examples)   
+  date_rec <- prep(date_rec, training = examples)   
   date_res <- bake(date_rec, newdata = examples)
   
   date_exp <- tibble(
@@ -93,5 +93,5 @@ test_that('printing', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   expect_output(print(date_rec))
-  expect_output(prepare(date_rec, training = examples))
+  expect_output(prep(date_rec, training = examples))
 })

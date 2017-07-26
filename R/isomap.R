@@ -17,7 +17,7 @@
 #'   possible dimensions, a smaller value will be used.
 #' @param options A list of options to \code{\link[dimRed]{Isomap}}.
 #' @param res The \code{\link[dimRed]{Isomap}} object is stored here once this
-#'   preprocessing step has be trained by \code{\link{prepare.recipe}}.
+#'   preprocessing step has be trained by \code{\link{prep.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
 #' @keywords datagen
@@ -63,7 +63,7 @@
 #'               options = list(knn = 100),
 #'               num = 2)
 #'
-#' im_estimates <- prepare(im_trans, training = biomass_tr)
+#' im_estimates <- prep(im_trans, training = biomass_tr)
 #'
 #' im_te <- bake(im_estimates, biomass_te)
 #'
@@ -71,7 +71,7 @@
 #' plot(im_te$Isomap1, im_te$Isomap2,
 #'      xlim = rng, ylim = rng)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
-#'   \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 
 step_isomap <-
@@ -119,7 +119,7 @@ step_isomap_new <-
 
 #' @importFrom dimRed embed dimRedData
 #' @export
-prepare.step_isomap <- function(x, training, info = NULL, ...) {
+prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   x$num <- min(x$num, ncol(training))

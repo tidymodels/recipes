@@ -47,8 +47,8 @@
 #' int_mod_2 <- int_mod_1 %>%
 #'   step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)
 #'
-#' int_mod_1 <- prepare(int_mod_1, training = biomass_tr)
-#' int_mod_2 <- prepare(int_mod_2, training = biomass_tr)
+#' int_mod_1 <- prep(int_mod_1, training = biomass_tr)
+#' int_mod_2 <- prep(int_mod_2, training = biomass_tr)
 #'
 #' dat_1 <- bake(int_mod_1, biomass_te)
 #' dat_2 <- bake(int_mod_2, biomass_te)
@@ -96,7 +96,7 @@ step_interact_new <-
 ## The idea is to save a bunch of x-factor interaction terms instead of
 ## one large set of collected terms.
 #' @export
-prepare.step_interact <- function(x, training, info = NULL, ...) {
+prep.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
   

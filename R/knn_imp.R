@@ -20,10 +20,10 @@
 #' @param K The number of neighbors.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'   done up to the point of this imputation step. This is
-#'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
+#'   \code{NULL} until the step is trained by \code{\link{prep.recipe}}.
 #' @param columns The column names that will be imputed and used for
 #'   imputation. This is  \code{NULL} until the step is trained by
-#'   \code{\link{prepare.recipe}}.
+#'   \code{\link{prep.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -62,7 +62,7 @@
 #'
 #' ratio_recipe <- rec %>%
 #'   step_knnimpute(all_predictors(), K = 3)
-#' ratio_recipe2 <- prepare(ratio_recipe, training = biomass_tr)
+#' ratio_recipe2 <- prep(ratio_recipe, training = biomass_tr)
 #' imputed <- bake(ratio_recipe2, biomass_te)
 #'
 #' # how well did it work?
@@ -120,7 +120,7 @@ step_knnimpute_new <-
   }
 
 #' @export
-prepare.step_knnimpute <- function(x, training, info = NULL, ...) {
+prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

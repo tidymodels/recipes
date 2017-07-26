@@ -13,7 +13,7 @@ test_that('simple log trans', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_log(x1, x2, x3, x4)
   
-  rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, newdata = ex_dat)
   
   exp_res <- as_tibble(lapply(ex_dat, log))
@@ -26,7 +26,7 @@ test_that('alt base', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_log(x1, x2, x3, x4, base = pi)
   
-  rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, newdata = ex_dat)
   
   exp_res <- as_tibble(lapply(ex_dat, log, base = pi))
@@ -39,6 +39,6 @@ test_that('printing', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_log(x1, x2, x3, x4)
   expect_output(print(rec))
-  expect_output(prepare(rec, training = ex_dat))
+  expect_output(prep(rec, training = ex_dat))
 })
 

@@ -10,7 +10,7 @@
 #' @param levels A length 2 character string that indicate the factor levels
 #' for the 1's (in the first position) and the zeros (second)
 #' @param columns A vector with the selected variable names. This is
-#' \code{NULL} until computed by \code{\link{prepare.recipe}}.
+#' \code{NULL} until computed by \code{\link{prep.recipe}}.
 #' @details This operation may be useful for situations where a binary piece of
 #'   information may need to be represented as categorical instead of numeric.
 #'   For example, naive Bayes models would do better to have factor predictors
@@ -29,7 +29,7 @@
 #'  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
 #'  step_bin2factor(rocks)
 #'
-#' rec <- prepare(rec, training = covers)
+#' rec <- prep(rec, training = covers)
 #' results <- bake(rec, newdata = covers)
 #'
 #' table(results$rocks, results$more_rocks)
@@ -71,7 +71,7 @@ step_bin2factor_new <-
   }
 
 #' @export
-prepare.step_bin2factor <- function(x, training, info = NULL, ...) {
+prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   if (length(col_names) < 1)
     stop("The selector should only select at least one variable")

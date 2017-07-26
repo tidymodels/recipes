@@ -12,7 +12,7 @@
 #' @param options A list of options for the filter (see Details below).
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{prepare.recipe}} is called.
+#'   \code{\link{prep.recipe}} is called.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
@@ -52,12 +52,12 @@
 #' nzv_filter <- rec %>%
 #'   step_nzv(all_predictors())
 #'
-#' filter_obj <- prepare(nzv_filter, training = biomass_tr)
+#' filter_obj <- prep(nzv_filter, training = biomass_tr)
 #'
 #' filtered_te <- bake(filter_obj, biomass_te)
 #' any(names(filtered_te) == "sparse")
 #' @seealso \code{\link{step_corr}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
 step_nzv <-
   function(recipe,
@@ -95,7 +95,7 @@ step_nzv_new <-
   }
 
 #' @export
-prepare.step_nzv <- function(x, training, info = NULL, ...) {
+prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   filter <- nzv(
     x = training[, col_names],

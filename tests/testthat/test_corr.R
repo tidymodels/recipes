@@ -14,7 +14,7 @@ test_that('high filter', {
   filtering <- rec %>% 
     step_corr(all_predictors(), threshold = .5)
   
-  filtering_trained <- prepare(filtering, training = dat, verbose = FALSE)
+  filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
   
   removed <- c("V6", "V1")
   
@@ -26,7 +26,7 @@ test_that('low filter', {
   filtering <- rec %>% 
     step_corr(all_predictors(), threshold = 1)
   
-  filtering_trained <- prepare(filtering, training = dat, verbose = FALSE)
+  filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
   expect_equal(filtering_trained$steps[[1]]$removals, numeric(0))
 })
@@ -38,6 +38,6 @@ test_that('printing', {
   filtering <- rec %>% 
     step_corr(all_predictors(), threshold = .5)
   expect_output(print(filtering))
-  expect_output(prepare(filtering, training = dat))
+  expect_output(prep(filtering, training = dat))
 })
 

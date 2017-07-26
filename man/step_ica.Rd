@@ -32,7 +32,7 @@ defaults are set here. \bold{Note} that the arguments \code{X} and
 \code{n.comp} should not be passed here.}
 
 \item{res}{The \code{\link[fastICA]{fastICA}} object is stored here once
-this preprocessing step has be trained by \code{\link{prepare.recipe}}.}
+this preprocessing step has be trained by \code{\link{prep.recipe}}.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
 new variables. See notes below.}
@@ -81,7 +81,7 @@ rec <- recipe( ~ ., data = tr)
 ica_trans <- step_center(rec,  V1, V2)
 ica_trans <- step_scale(rec, V1, V2)
 ica_trans <- step_ica(rec, V1, V2, num = 2)
-ica_estimates <- prepare(ica_trans, training = tr)
+ica_estimates <- prep(ica_trans, training = tr)
 ica_data <- bake(ica_estimates, te)
 
 plot(te$V1, te$V2)
@@ -94,7 +94,7 @@ Hyvarinen, A., and Oja, E. (2000). Independent component
 }
 \seealso{
 \code{\link{step_pca}} \code{\link{step_kpca}}
-  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \concept{

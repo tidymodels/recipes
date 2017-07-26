@@ -30,7 +30,7 @@
 #'   features \code{month} or \code{dow}.
 #' @param columns A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
-#'    \code{\link{prepare.recipe}} is used.
+#'    \code{\link{prep.recipe}} is used.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export
@@ -45,11 +45,11 @@
 #' date_rec <- recipe(~ Dan + Stefan, examples) %>%
 #'    step_date(all_predictors())
 #'
-#' date_rec <- prepare(date_rec, training = examples)
+#' date_rec <- prep(date_rec, training = examples)
 #' date_values <- bake(date_rec, newdata = examples)
 #' date_values
 #' @seealso \code{\link{step_holiday}} \code{\link{step_rm}} 
-#'   \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 step_date <-
   function(recipe,
            ...,
@@ -114,7 +114,7 @@ step_date_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_date <- function(x, training, info = NULL, ...) {
+prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   date_data <- info[info$variable %in% col_names, ]

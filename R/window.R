@@ -20,7 +20,7 @@
 #'   \code{'sum'}, \code{'var'}
 #' @param columns A character string that contains the names of columns that
 #'   should be processed. These values are not determined until
-#'   \code{\link{prepare.recipe}} is called.
+#'   \code{\link{prep.recipe}} is called.
 #' @param names An optional character string that is the same length of the
 #'   number of terms selected by \code{terms}. If you are not sure what columns
 #'   will be selected, use the \code{summary} function (see the example below).
@@ -57,7 +57,7 @@
 #'   step_window(starts_with("y"),
 #'               names = paste0("mean_3pt_", 1:2),
 #'               role = "outcome")
-#' rec <- prepare(rec, training = sim_dat)
+#' rec <- prep(rec, training = sim_dat)
 #'
 #' # If you aren't sure how to set the names, see which variables are selected
 #' # and the order that they are selected:
@@ -76,7 +76,7 @@
 #' sim_dat$original <- sim_dat$y1
 #' rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) %>%
 #'   step_window(starts_with("y"))
-#' rec <- prepare(rec, training = sim_dat)
+#' rec <- prep(rec, training = sim_dat)
 #' smoothed_dat <- bake(rec, sim_dat, everything())
 #' ggplot(smoothed_dat, aes(x = original, y = y1)) + 
 #'   geom_point() + 
@@ -154,7 +154,7 @@ step_window_new <-
   }
 
 #' @export
-prepare.step_window <- function(x, training, info = NULL, ...) {
+prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   if (any(info$type[info$variable %in% col_names] != "numeric"))

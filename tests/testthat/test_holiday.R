@@ -11,7 +11,7 @@ test_that('Date class', {
   holiday_rec <- recipe(~ day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
-  holiday_rec <- prepare(holiday_rec, training = test_data)
+  holiday_rec <- prep(holiday_rec, training = test_data)
   holiday_ind <- bake(holiday_rec, test_data)
 
   all.equal(holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
@@ -33,7 +33,7 @@ test_that('POSIXct class', {
   holiday_rec <- recipe(~ day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
-  holiday_rec <- prepare(holiday_rec, training = test_data)
+  holiday_rec <- prep(holiday_rec, training = test_data)
   holiday_ind <- bake(holiday_rec, test_data)
 
   all.equal(holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
@@ -52,6 +52,6 @@ test_that('printing', {
   holiday_rec <- recipe(~ day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
   expect_output(print(holiday_rec))
-  expect_output(prepare(holiday_rec, training = test_data))
+  expect_output(prep(holiday_rec, training = test_data))
 })
 

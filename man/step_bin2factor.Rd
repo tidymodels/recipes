@@ -23,7 +23,7 @@ have been estimated.}
 for the 1's (in the first position) and the zeros (second)}
 
 \item{columns}{A vector with the selected variable names. This is
-\code{NULL} until computed by \code{\link{prepare.recipe}}.}
+\code{NULL} until computed by \code{\link{prep.recipe}}.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -50,7 +50,7 @@ rec <- recipe(~ description, covers) \%>\%
  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
  step_bin2factor(rocks)
 
-rec <- prepare(rec, training = covers)
+rec <- prep(rec, training = covers)
 results <- bake(rec, newdata = covers)
 
 table(results$rocks, results$more_rocks)

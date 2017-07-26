@@ -67,8 +67,8 @@ int_mod_1 <- rec \%>\%
 int_mod_2 <- int_mod_1 \%>\%
   step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)
 
-int_mod_1 <- prepare(int_mod_1, training = biomass_tr)
-int_mod_2 <- prepare(int_mod_2, training = biomass_tr)
+int_mod_1 <- prep(int_mod_1, training = biomass_tr)
+int_mod_2 <- prep(int_mod_2, training = biomass_tr)
 
 dat_1 <- bake(int_mod_1, biomass_te)
 dat_2 <- bake(int_mod_2, biomass_te)

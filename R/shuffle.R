@@ -10,7 +10,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param columns A character string that contains the names of columns that
 #'   should be shuffled. These values are not determined until
-#'   \code{\link{prepare.recipe}} is called.
+#'   \code{\link{prep.recipe}} is called.
 #' @keywords datagen
 #' @concept preprocessing randomization permutation
 #' @export
@@ -21,7 +21,7 @@
 #' rec <- recipe(~ A + B + C, data = integers) %>%
 #'   step_shuffle(A, B)
 #'
-#' rand_set <- prepare(rec, training = integers)
+#' rand_set <- prep(rec, training = integers)
 #'
 #' set.seed(5377)
 #' bake(rand_set, integers)
@@ -54,7 +54,7 @@ step_shuffle_new <- function(terms = NULL,
 }
 
 #' @export
-prepare.step_shuffle <- function(x, training, info = NULL, ...) {
+prep.step_shuffle <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   step_shuffle_new(
     terms = x$terms,

@@ -20,7 +20,7 @@
 
 #' @param columns A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
-#'   \code{\link{prepare.recipe}} is used.
+#'   \code{\link{prep.recipe}} is used.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export
@@ -34,11 +34,11 @@
 #' holiday_rec <- recipe(~ someday, examples) %>%
 #'    step_holiday(all_predictors())
 #'
-#' holiday_rec <- prepare(holiday_rec, training = examples)
+#' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, newdata = examples)
 #' holiday_values
 #' @seealso \code{\link{step_date}} \code{\link{step_rm}}
-#'   \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}} \code{\link[timeDate]{listHolidays}}
 #' @import timeDate
 step_holiday <-
@@ -86,7 +86,7 @@ step_holiday_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_holiday <- function(x, training, info = NULL, ...) {
+prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   holiday_data <- info[info$variable %in% col_names, ]

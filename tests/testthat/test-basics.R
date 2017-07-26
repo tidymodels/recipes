@@ -26,12 +26,20 @@ test_that("return character or factor values", {
   centered <- raw_recipe %>% 
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
   
-  centered_char <- prepare(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
+  centered_char <- prep(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
   char_var <- bake(centered_char, newdata = head(biomass))
   expect_equal(class(char_var$sample), "character")
   
-  centered_fac <- prepare(centered, training = biomass, stringsAsFactors = TRUE, retain = TRUE)
+  centered_fac <- prep(centered, training = biomass, stringsAsFactors = TRUE, retain = TRUE)
   fac_var <- bake(centered_fac, newdata = head(biomass))
   expect_equal(class(fac_var$sample), "factor")  
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))  
+})
+
+
+test_that("Using prepare", {
+  expect_error(prepare(recipe(HHV ~ ., data = biomass), 
+                       training = biomass),
+               paste0("As of version 0.0.1.9006, used `prep` ",
+                      "instead of `prepare`"))
 })

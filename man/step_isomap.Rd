@@ -31,7 +31,7 @@ possible dimensions, a smaller value will be used.}
 \item{options}{A list of options to \code{\link[dimRed]{Isomap}}.}
 
 \item{res}{The \code{\link[dimRed]{Isomap}} object is stored here once this
-preprocessing step has be trained by \code{\link{prepare.recipe}}.}
+preprocessing step has be trained by \code{\link{prep.recipe}}.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
 new variables. See notes below}
@@ -79,7 +79,7 @@ im_trans <- rec \%>\%
               options = list(knn = 100),
               num = 2)
 
-im_estimates <- prepare(im_trans, training = biomass_tr)
+im_estimates <- prep(im_trans, training = biomass_tr)
 
 im_te <- bake(im_estimates, biomass_te)
 
@@ -97,7 +97,7 @@ De Silva, V., and Tenenbaum, J. B. (2003). Global versus local
 }
 \seealso{
 \code{\link{step_pca}} \code{\link{step_kpca}}
-  \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \concept{

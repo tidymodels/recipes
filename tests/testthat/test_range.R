@@ -12,7 +12,7 @@ test_that('correct values', {
   standardized <- rec %>% 
     step_range(carbon, hydrogen, min = -12) 
   
-  standardized_trained <- prepare(standardized, training = biomass_tr, verbose = FALSE)
+  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
   
   obs_pred <- bake(standardized_trained, newdata = biomass_te)
   obs_pred <- as.matrix(obs_pred)
@@ -44,7 +44,7 @@ test_that('defaults', {
   standardized <- rec %>% 
     step_range(carbon, hydrogen) 
   
-  standardized_trained <- prepare(standardized, training = biomass_tr, verbose = FALSE)
+  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
   
   obs_pred <- bake(standardized_trained, newdata = biomass_te)
   obs_pred <- as.matrix(obs_pred)
@@ -76,7 +76,7 @@ test_that('one variable', {
   standardized <- rec %>% 
     step_range(carbon) 
   
-  standardized_trained <- prepare(standardized, training = biomass_tr, verbose = FALSE)
+  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
   
   obs_pred <- bake(standardized_trained, newdata = biomass_te)
 
@@ -100,6 +100,6 @@ test_that('printing', {
   standardized <- rec %>% 
     step_range(carbon, hydrogen, min = -12) 
   expect_output(print(standardized))
-  expect_output(prepare(standardized, training = biomass_tr))
+  expect_output(prep(standardized, training = biomass_tr))
 })
 

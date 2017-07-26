@@ -65,16 +65,16 @@ recipe.default <- function(x, ...)
 #'   interactions and so on. More computationally complex actions such as
 #'   dimension reduction or imputation can also be specified.
 #'
-#' Once a recipe has been defined, the \code{\link{prepare}} function can be
+#' Once a recipe has been defined, the \code{\link{prep}} function can be
 #'   used to estimate quants required in the steps from a data set (a.k.a. the
-#'   training data). \code{\link{prepare}} returns another recipe.
+#'   training data). \code{\link{prep}} returns another recipe.
 #'
 #' To apply the recipe to a data set, the \code{\link{bake}} function is
 #'   used in the same manner as \code{predict} would be for models. This
 #'   applies the steps to any data set.
 #'
 #' Note that the data passed to \code{recipe} need not be the complete data
-#'   that will be used to train the steps (by \code{\link{prepare}}). The recipe
+#'   that will be used to train the steps (by \code{\link{prep}}). The recipe
 #'   only needs to know the names and types of data that will be used. For
 #'   large data sets, \code{head} could be used to pass the recipe a smaller
 #'   data set to save time and memory.
@@ -106,7 +106,7 @@ recipe.default <- function(x, ...)
 #' sp_signed
 #'
 #' # now estimate required parameters
-#' sp_signed_trained <- prepare(sp_signed, training = biomass_tr)
+#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 #' sp_signed_trained
 #'
 #' # apply the preprocessing to a data set
@@ -129,7 +129,7 @@ recipe.default <- function(x, ...)
 #'   step_center(all_outcomes()) %>%
 #'   step_scale(all_predictors())
 #'
-#' multi_y_trained <- prepare(multi_y, training = biomass_tr)
+#' multi_y_trained <- prep(multi_y, training = biomass_tr)
 #'
 #' results <- bake(multi_y_trained, biomass_te)
 #'
@@ -257,7 +257,7 @@ form2args <- function(formula, data, ...) {
 }
 
 
-#' @aliases prepare prepare.recipe
+#' @aliases prep prep.recipe
 #' @param x an object
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
@@ -265,8 +265,8 @@ form2args <- function(formula, data, ...) {
 #' @keywords datagen
 #' @concept preprocessing model_specification
 #' @export
-prepare   <- function(x, ...)
-  UseMethod("prepare")
+prep   <- function(x, ...)
+  UseMethod("prep")
 
 #' Train a Data Recipe
 #'
@@ -294,23 +294,23 @@ prepare   <- function(x, ...)
 #' @details Given a data set, this function estimates the required quantities
 #'   and statistics required by any steps.
 #'
-#' \code{\link{prepare}} returns an updated recipe with the estimates.
+#' \code{\link{prep}} returns an updated recipe with the estimates.
 #'
 #' Note that missing data handling is handled in the steps; there is no global
-#'   \code{na.rm} option at the recipe-level or in  \code{\link{prepare}}.
+#'   \code{na.rm} option at the recipe-level or in  \code{\link{prep}}.
 #'
-#' Also, if a recipe has been trained using \code{\link{prepare}} and then steps
-#'   are added, \code{\link{prepare}} will only update the new steps. If
+#' Also, if a recipe has been trained using \code{\link{prep}} and then steps
+#'   are added, \code{\link{prep}} will only update the new steps. If
 #'   \code{fresh = TRUE}, all of the steps will be (re)estimated.
 #'
 #' As the steps are executed, the \code{training} set is updated. For example,
 #'   if the first step is to center the data and the second is to scale the
 #'   data, the step for scaling is given the centered data.
 #'
-#' @rdname prepare
+#' @rdname prep
 #' @importFrom tibble as_tibble is_tibble tibble
 #' @export
-prepare.recipe <-
+prep.recipe <-
   function(x,
            training = NULL,
            fresh = FALSE,
@@ -347,7 +347,7 @@ prepare.recipe <-
         # then apply it to the current training set
         
         x$steps[[i]] <-
-          prepare(x$steps[[i]],
+          prep(x$steps[[i]],
                   training = training,
                   info = x$term_info)
         training <- bake(x$steps[[i]], newdata = training)
@@ -395,7 +395,7 @@ bake <- function(object, ...)
 #' Apply a Trained Data Recipe
 #'
 #' For a recipe with at least one preprocessing step that has been trained by
-#'   \code{\link{prepare.recipe}}, apply the computations to new data.
+#'   \code{\link{prep.recipe}}, apply the computations to new data.
 #' @param object A trained object such as a \code{\link{recipe}} with at least
 #'   one preprocessing step.
 #' @param newdata A data frame or tibble for whom the preprocessing will be
@@ -410,7 +410,7 @@ bake <- function(object, ...)
 #'   operations to a data set to create a design matrix.
 #'
 #' If the original data used to train the data are to be processed, time can be
-#'   saved by using the \code{retain = TRUE} option of \code{\link{prepare}} to
+#'   saved by using the \code{retain = TRUE} option of \code{\link{prep}} to
 #'   avoid duplicating the same operations.
 #'
 #' A tibble is always returned but can be easily converted to a data frame or
@@ -438,7 +438,7 @@ bake.recipe <- function(object, newdata = object$template, ...) {
   newdata <- newdata[, names(newdata) %in% keepers]
   
   ## the Levels are not null when no nominal data are present or
-  ## if stringsAsFactors = FALSE in `prepare`
+  ## if stringsAsFactors = FALSE in `prep`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
     var_levels <- var_levels[keepers]
@@ -520,10 +520,10 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' summary(rec)
 #' rec <- step_pca(rec, all_numeric(), num = 3)
 #' summary(rec) # still the same since not yet trained
-#' rec <- prepare(rec, training = USArrests)
+#' rec <- prep(rec, training = USArrests)
 #' summary(rec)
 #' @export
-#' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}}
+#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original)
     object$var_info
@@ -534,7 +534,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 
 #' Extract Finalized Training Set
 #'
-#' As steps are estimated by \code{prepare}, these operations are
+#' As steps are estimated by \code{prep}, these operations are
 #'  applied to the training set. Rather than running \code{bake} 
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set. 
@@ -560,17 +560,17 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'   step_scale(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #' 
-#' sp_signed_trained <- prepare(sp_signed, training = biomass_tr, retain = TRUE)
+#' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
 #' 
 #' tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
 #' og_values <- juice(sp_signed_trained, all_predictors())
 #' 
 #' all.equal(tr_values, og_values)
 #' @export
-#' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 juice <- function(object, ...) {
   if(!isTRUE(object$retained))
-    stop("Use `retain = TRUE` in `prepare` to be able to extract the training set",
+    stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
          call. = FALSE)
   tr_steps <- vapply(object$steps, function(x) x$trained, c(logic = TRUE))
   if(!all(tr_steps))

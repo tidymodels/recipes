@@ -24,7 +24,7 @@
 #' @param seed_val A integer used to create reproducible models. The same seed 
 #'   is used across all imputation models.
 #' @param models The \code{\link[ipred]{ipredbagg}} objects are stored here 
-#'   once this bagged trees have be trained by \code{\link{prepare.recipe}}.
+#'   once this bagged trees have be trained by \code{\link{prep.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -61,7 +61,7 @@
 #' impute_rec <- rec %>%
 #'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 #'
-#' imp_models <- prepare(impute_rec, training = credit_tr)
+#' imp_models <- prep(impute_rec, training = credit_tr)
 #'
 #' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
@@ -144,7 +144,7 @@ impute_var_lists <- function(to_impute, impute_using, info) {
 }
 
 #' @export
-prepare.step_bagimpute <- function(x, training, info = NULL, ...) {
+prep.step_bagimpute <- function(x, training, info = NULL, ...) {
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

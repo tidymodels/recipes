@@ -32,7 +32,7 @@ terms_select(info = info, quos(all_predictors()))
 }
 \seealso{
 \code{\link{recipe}} \code{\link{summary.recipe}}
-  \code{\link{prepare.recipe}}
+  \code{\link{prep.recipe}}
 }
 \concept{
 preprocessing

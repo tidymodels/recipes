@@ -25,7 +25,7 @@ Note that:
   \enumerate{
     \item The selector arguments should not contain functions beyond those
       supported (see below).
-    \item These arguments are not evaluated until the \code{prepare} function
+    \item These arguments are not evaluated until the \code{prep} function
       for the step is executed.
     \item The \code{dplyr}-like syntax allows for negative sings to exclude
       variables (e.g. \code{-Murder}) and the set of selectors will

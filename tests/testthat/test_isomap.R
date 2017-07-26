@@ -26,7 +26,7 @@ test_that('correct Isomap values', {
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
 
-  im_trained <- prepare(im_rec, training = dat1, verbose = FALSE)
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
 
   im_pred <- bake(im_trained, newdata = dat2)
 
@@ -38,6 +38,6 @@ test_that('printing', {
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
   expect_output(print(im_rec))
-  expect_output(prepare(im_rec, training = dat1))
+  expect_output(prep(im_rec, training = dat1))
 })
 

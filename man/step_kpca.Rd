@@ -29,7 +29,7 @@ have been estimated.}
 components, a smaller value will be used.}
 
 \item{res}{An S4 \code{\link[kernlab]{kpca}} object is stored here once this
-preprocessing step has be trained by \code{\link{prepare.recipe}}.}
+preprocessing step has be trained by \code{\link{prep.recipe}}.}
 
 \item{options}{A list of options to \code{\link[kernlab]{kpca}}. Defaults
 are set for the arguments \code{kernel} and \code{kpar} but others can be
@@ -90,7 +90,7 @@ kpca_trans <- rec \%>\%
   step_scale(all_predictors()) \%>\%
   step_kpca(all_predictors())
 
-kpca_estimates <- prepare(kpca_trans, training = biomass_tr)
+kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
 kpca_te <- bake(kpca_estimates, biomass_te)
 
@@ -109,7 +109,7 @@ Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab -
 }
 \seealso{
 \code{\link{step_pca}} \code{\link{step_ica}}
-  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \concept{

@@ -23,7 +23,7 @@ have been estimated.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{prepare.recipe}} is called.}
+\code{\link{prep.recipe}} is called.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -58,11 +58,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 lincomb_filter <- rec \%>\%
   step_lincomb(all_predictors())
   
-prepare(lincomb_filter, training = biomass_tr)
+prep(lincomb_filter, training = biomass_tr)
 }
 \seealso{
 \code{\link{step_nzv}}\code{\link{step_corr}}
-  \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \author{

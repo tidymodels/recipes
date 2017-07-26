@@ -20,7 +20,7 @@ have been estimated.}
 
 \item{columns}{A character string that contains the names of columns that
 should be shuffled. These values are not determined until
-\code{\link{prepare.recipe}} is called.}
+\code{\link{prep.recipe}} is called.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -37,7 +37,7 @@ library(dplyr)
 rec <- recipe(~ A + B + C, data = integers) \%>\%
   step_shuffle(A, B)
 
-rand_set <- prepare(rec, training = integers)
+rand_set <- prep(rec, training = integers)
 
 set.seed(5377)
 bake(rand_set, integers)

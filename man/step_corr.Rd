@@ -31,7 +31,7 @@ resulting absolute correlations are less than this value.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{prepare.recipe}} is called.}
+\code{\link{prep.recipe}} is called.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -62,7 +62,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 corr_filter <- rec \%>\%
   step_corr(all_predictors(), threshold = .5)
 
-filter_obj <- prepare(corr_filter, training = biomass_tr)
+filter_obj <- prep(corr_filter, training = biomass_tr)
 
 filtered_te <- bake(filter_obj, biomass_te)
 round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
@@ -70,7 +70,7 @@ round(abs(cor(filtered_te)), 2)
 }
 \seealso{
 \code{\link{step_nzv}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \author{
 Original R code for filtering algorithm by Dong Li, modified by

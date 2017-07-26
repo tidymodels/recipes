@@ -36,7 +36,7 @@ the data for all of the classes?}
 log function?}
 
 \item{objects}{Statistics are stored here once this step has been trained
-by \code{\link{prepare.recipe}}.}
+by \code{\link{prep.recipe}}.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -69,7 +69,7 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
   step_classdist(all_predictors(), class = "Species",
                  pool = FALSE, mean_func = mean2)
 
-rec_dists <- prepare(rec, training = iris)
+rec_dists <- prep(rec, training = iris)
 
 dists_to_species <- bake(rec_dists, newdata = iris, everything())
 ## on log scale:

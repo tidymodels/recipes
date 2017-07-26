@@ -19,7 +19,7 @@ If no selectors are given, the default is to use
 A tibble.
 }
 \description{
-As steps are estimated by \code{prepare}, these operations are
+As steps are estimated by \code{prep}, these operations are
  applied to the training set. Rather than running \code{bake} 
  to duplicate this processing, this function will return
  variables from the processed training set.
@@ -41,7 +41,7 @@ sp_signed <- rec \%>\%
   step_scale(all_predictors()) \%>\%
   step_spatialsign(all_predictors())
 
-sp_signed_trained <- prepare(sp_signed, training = biomass_tr, retain = TRUE)
+sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
 
 tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
 og_values <- juice(sp_signed_trained, all_predictors())
@@ -49,5 +49,5 @@ og_values <- juice(sp_signed_trained, all_predictors())
 all.equal(tr_values, og_values)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+\code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }

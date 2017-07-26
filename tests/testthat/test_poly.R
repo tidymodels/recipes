@@ -12,7 +12,7 @@ test_that('correct basis functions', {
   with_poly <- rec %>% 
     step_poly(carbon, hydrogen)
   
-  with_poly <- prepare(with_poly, training = biomass_tr, verbose = FALSE)
+  with_poly <- prep(with_poly, training = biomass_tr, verbose = FALSE)
   
   with_poly_pred_tr <- bake(with_poly, newdata = biomass_tr)
   with_poly_pred_te <- bake(with_poly, newdata = biomass_te)
@@ -53,6 +53,6 @@ test_that('printing', {
   with_poly <- rec %>% 
     step_poly(carbon, hydrogen)
   expect_output(print(with_poly))
-  expect_output(prepare(with_poly, training = biomass_tr))
+  expect_output(prep(with_poly, training = biomass_tr))
 })
 

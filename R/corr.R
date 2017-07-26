@@ -16,7 +16,7 @@
 #'   \code{\link[stats]{cor}} function.
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{prepare.recipe}} is called.
+#'   \code{\link{prep.recipe}} is called.
 #' @keywords datagen
 #' @author Original R code for filtering algorithm by Dong Li, modified by
 #'   Max Kuhn. Contributions by Reynald Lescarbeau (for original in
@@ -42,13 +42,13 @@
 #' corr_filter <- rec %>%
 #'   step_corr(all_predictors(), threshold = .5)
 #'
-#' filter_obj <- prepare(corr_filter, training = biomass_tr)
+#' filter_obj <- prep(corr_filter, training = biomass_tr)
 #'
 #' filtered_te <- bake(filter_obj, biomass_te)
 #' round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 #' round(abs(cor(filtered_te)), 2)
 #' @seealso \code{\link{step_nzv}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
 step_corr <- function(recipe,
                       ...,
@@ -95,7 +95,7 @@ step_corr_new <-
   }
 
 #' @export
-prepare.step_corr <- function(x, training, info = NULL, ...) {
+prep.step_corr <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   filter <- corr_filter(
     x = training[, col_names],

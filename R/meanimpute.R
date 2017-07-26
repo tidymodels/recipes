@@ -8,7 +8,7 @@
 #' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is \code{NULL} until
-#'   computed by \code{\link{prepare.recipe}}.
+#'   computed by \code{\link{prep.recipe}}.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'   end of the variables before the mean is computed. Values of trim outside
 #'   that range are taken as the nearest endpoint.
@@ -16,7 +16,7 @@
 #' @concept preprocessing imputation
 #' @export
 #' @details \code{step_meanimpute} estimates the variable means from the data
-#'   used in the \code{training} argument of \code{prepare.recipe}.
+#'   used in the \code{training} argument of \code{prep.recipe}.
 #'   \code{bake.recipe} then applies the new values to new data sets using
 #'   these averages.
 #' @examples
@@ -37,7 +37,7 @@
 #' impute_rec <- rec %>%
 #'   step_meanimpute(Income, Assets, Debt)
 #'
-#' imp_models <- prepare(impute_rec, training = credit_tr)
+#' imp_models <- prep(impute_rec, training = credit_tr)
 #'
 #' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
@@ -80,7 +80,7 @@ step_meanimpute_new <-
   }
 
 #' @export
-prepare.step_meanimpute <- function(x, training, info = NULL, ...) {
+prep.step_meanimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("All variables for mean imputation should be numeric")

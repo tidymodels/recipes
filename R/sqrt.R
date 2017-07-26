@@ -23,13 +23,13 @@
 #' sqrt_trans <- rec  %>%
 #'   step_sqrt(all_predictors())
 #'
-#' sqrt_obj <- prepare(sqrt_trans, training = examples)
+#' sqrt_obj <- prep(sqrt_trans, training = examples)
 #'
 #' transformed_te <- bake(sqrt_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
 step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, columns = NULL) {
   add_step(
@@ -56,7 +56,7 @@ step_sqrt_new <-
 
 
 #' @export
-prepare.step_sqrt <- function(x, training, info = NULL, ...) {
+prep.step_sqrt <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   step_sqrt_new(
     terms = x$terms,

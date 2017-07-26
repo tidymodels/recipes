@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{columns}{A character string of variables that will be converted. This is \code{NULL}
-until computed by \code{\link{prepare.recipe}}.}
+until computed by \code{\link{prep.recipe}}.}
 
 \item{convert}{A function that takes an ordinal factor vector as an input and outputs a single numeric variable.}
 }
@@ -50,7 +50,7 @@ linear_values <- recipe(~ item + fail_severity, data = ord_data) \%>\%
   step_dummy(item) \%>\%
   step_ordinalscore(fail_severity)
 
-linear_values <- prepare(linear_values, training = ord_data, retain = TRUE)
+linear_values <- prep(linear_values, training = ord_data, retain = TRUE)
 
 juice(linear_values, everything())
 
@@ -63,7 +63,7 @@ nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) \%>\%
   step_dummy(item) \%>\%
   step_ordinalscore(fail_severity, convert = custom)
 
-nonlin_scores <- prepare(nonlin_scores, training = ord_data, retain = TRUE)
+nonlin_scores <- prep(nonlin_scores, training = ord_data, retain = TRUE)
 
 juice(nonlin_scores, everything())
 }

@@ -32,9 +32,9 @@ rec <- recipe( ~ ., data = USArrests)
 summary(rec)
 rec <- step_pca(rec, all_numeric(), num = 3)
 summary(rec) # still the same since not yet trained
-rec <- prepare(rec, training = USArrests)
+rec <- prep(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prepare.recipe}}
+\code{\link{recipe}} \code{\link{prep.recipe}}
 }

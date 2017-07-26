@@ -69,7 +69,7 @@ test_that('correct ICA values', {
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
   
   set.seed(12)
-  ica_extract_trained <- prepare(ica_extract, training = biomass_tr, verbose = FALSE)
+  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
   
   ica_pred <- bake(ica_extract_trained, newdata = biomass_te)
   ica_pred <- as.matrix(ica_pred)
@@ -84,5 +84,5 @@ test_that('printing', {
   ica_extract <- rec %>% 
     step_ica(carbon, hydrogen, num = 2)
   expect_output(print(ica_extract))
-  expect_output(prepare(ica_extract, training = biomass_tr))
+  expect_output(prep(ica_extract, training = biomass_tr))
 })

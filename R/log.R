@@ -22,13 +22,13 @@
 #' log_trans <- rec  %>%
 #'   step_log(all_predictors())
 #'
-#' log_obj <- prepare(log_trans, training = examples)
+#' log_obj <- prep(log_trans, training = examples)
 #'
 #' transformed_te <- bake(log_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}
-#'   \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 
 step_log <-
@@ -67,7 +67,7 @@ step_log_new <-
   }
 
 #' @export
-prepare.step_log <- function(x, training, info = NULL, ...) {
+prep.step_log <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   step_log_new(
     terms = x$terms,

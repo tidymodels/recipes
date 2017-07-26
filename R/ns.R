@@ -33,12 +33,12 @@
 #'
 #' with_splines <- rec %>%
 #'   step_ns(carbon, hydrogen)
-#' with_splines <- prepare(with_splines, training = biomass_tr)
+#' with_splines <- prep(with_splines, training = biomass_tr)
 #'
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_poly}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
 step_ns <-
   function(recipe,
@@ -91,7 +91,7 @@ ns_wrapper <- function(x, args) {
 }
 
 #' @export
-prepare.step_ns <- function(x, training, info = NULL, ...) {
+prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   obj <- lapply(training[, col_names], ns_wrapper, x$options)
   for (i in seq(along = col_names))

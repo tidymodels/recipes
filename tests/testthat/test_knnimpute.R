@@ -27,7 +27,7 @@ test_that('imputation values', {
                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
                    K = 3)
 
-  discr_rec <- prepare(discr_rec, training = biomass_tr, verbose = FALSE)
+  discr_rec <- prep(discr_rec, training = biomass_tr, verbose = FALSE)
   tr_data <- bake(discr_rec, newdata = biomass_tr)
   te_data <- bake(discr_rec, newdata = biomass_te) %>%
     dplyr::select(hydrogen, oxygen, nitrogen, carbon)
@@ -36,7 +36,7 @@ test_that('imputation values', {
                    tr_data[, c("hydrogen", "oxygen", "nitrogen")],
                    n = 3)$index
   
-  impute_rec <- prepare(impute_rec, training = biomass_tr, verbose = FALSE)
+  impute_rec <- prep(impute_rec, training = biomass_tr, verbose = FALSE)
   imputed_te <- bake(impute_rec, newdata = biomass_te)
   
   for(i in carb_missing) {
@@ -58,6 +58,6 @@ test_that('printing', {
   discr_rec <- rec %>%
     step_discretize(nitrogen, options = list(keep_na = FALSE))
   expect_output(print(discr_rec))
-  expect_output(prepare(discr_rec, training = biomass_tr))
+  expect_output(prep(discr_rec, training = biomass_tr))
 })
 

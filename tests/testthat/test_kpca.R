@@ -14,7 +14,7 @@ test_that('correct kernel PCA values', {
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6)
   
-  kpca_trained <- prepare(kpca_rec, training = tr_dat, verbose = FALSE)
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
   
   pca_pred <- bake(kpca_trained, newdata = te_dat)
   pca_pred <- as.matrix(pca_pred)
@@ -37,6 +37,6 @@ test_that('printing', {
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6)
   expect_output(print(kpca_rec))
-  expect_output(prepare(kpca_rec, training = tr_dat))
+  expect_output(prep(kpca_rec, training = tr_dat))
 })
 

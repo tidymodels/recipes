@@ -35,12 +35,12 @@
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
-#' quadratic <- prepare(quadratic, training = biomass_tr)
+#' quadratic <- prep(quadratic, training = biomass_tr)
 #'
 #' expanded <- bake(quadratic, biomass_te)
 #' expanded
 #' @seealso \code{\link{step_ns}} \code{\link{recipe}}
-#'   \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
 
 step_poly <-
@@ -93,7 +93,7 @@ poly_wrapper <- function(x, args) {
 
 #' @importFrom stats poly
 #' @export
-prepare.step_poly <- function(x, training, info = NULL, ...) {
+prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   obj <- lapply(training[, col_names], poly_wrapper, x$options)

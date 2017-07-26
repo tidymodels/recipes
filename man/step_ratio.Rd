@@ -38,7 +38,7 @@ numerator and denominator, it will be removed from the listing.}
 columns.}
 
 \item{columns}{The column names used in the ratios. This argument is
-not populated until \code{\link{prepare.recipe}} is executed.}
+not populated until \code{\link{prep.recipe}} is executed.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -67,7 +67,7 @@ ratio_recipe <- rec \%>\%
   step_rm(all_predictors(), -matches("_o_"))
   
 
-ratio_recipe <- prepare(ratio_recipe, training = biomass_tr)
+ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
