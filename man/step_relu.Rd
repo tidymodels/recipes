@@ -53,9 +53,9 @@ The rectified linear transformation is calculated as
 
 
 The rectified linear transformation is used in the Multivariate Adaptive
-Regression Splines as basis function to fit piecewise linear functions to
+Regression Splines as a basis function to fit piecewise linear functions to
 data in a strategy similar to that employeed in tree based models. The
-transformation is a population choice as an activation function in many
+transformation is a popular choice as an activation function in many
 neural networks, which could then be seen as a stacked generalization of
 MARS when making use of ReLu activations. The hinge function also appears
 in the loss function of Support Vector Machines, where it penalizes
@@ -73,7 +73,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 transformed_te <- rec \%>\%
   step_relu(carbon, shift = 40) \%>\%
-  prepare(biomass_tr) \%>\%
+  prep(biomass_tr) \%>\%
   bake(biomass_te)
 
 transformed_te

@@ -35,9 +35,9 @@
 #' @section Connection to MARS:
 #'
 #' The rectified linear transformation is used in the Multivariate Adaptive
-#' Regression Splines as basis function to fit piecewise linear functions to
+#' Regression Splines as a basis function to fit piecewise linear functions to
 #' data in a strategy similar to that employeed in tree based models. The
-#' transformation is a population choice as an activation function in many
+#' transformation is a popular choice as an activation function in many
 #' neural networks, which could then be seen as a stacked generalization of
 #' MARS when making use of ReLu activations. The hinge function also appears
 #' in the loss function of Support Vector Machines, where it penalizes
@@ -54,7 +54,7 @@
 #'
 #' transformed_te <- rec %>%
 #'   step_relu(carbon, shift = 40) %>%
-#'   prepare(biomass_tr) %>%
+#'   prep(biomass_tr) %>%
 #'   bake(biomass_te)
 #'
 #' transformed_te
@@ -112,33 +112,41 @@ step_relu_new <-
     )
   }
 
-prepare.step_relu <- function(x, training, info = NULL, ...) {
+prep.step_relu <- function(x, training, info = NULL, ...) {
   x$trained <- TRUE
   x
 }
 
-#' @importFrom dplyr select mutate_all select_vars tbl_vars funs
+#' @importFrom dplyr select_vars tbl_vars
+#' @importFrom rlang lang sym
 bake.step_relu <- function(object, newdata, ...) {
-  col_names <- dplyr::select_vars(dplyr::tbl_vars(newdata), !!!object$terms)
-  new_cols <- paste0(object$prefix, col_names)
+  col_names <- select_vars(tbl_vars(newdata), !!!object$terms)
 
-  newdata[, new_cols] <- dplyr::mutate_all(
-    dplyr::select(newdata, col_names),
-    dplyr::funs(relu),
-    object$shift,
-    object$reverse,
-    object$smooth)
-  as_tibble(newdata)
+  make_relu_call <- function(col) {
+    lang("relu", sym(col), object$shift, object$reverse, object$smooth)
+  }
+
+  names(col_names) <- paste0(object$prefix, col_names)
+  exprs <- purrr::map(col_names, make_relu_call)
+
+  dplyr::mutate(newdata, !!!exprs)
 }
+
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (!is.numeric(x))
     stop("step_relu can only be applied to numeric data.", call. = FALSE)
 
-  if (reverse) shifted <- shift - x
-  else shifted <- x - shift
+  if (reverse) {
+    shifted <- shift - x
+  } else {
+    shifted <- x - shift
+  }
 
-  if (smooth) out <- log1p(exp(shifted))  # use log1p for numerical accuracy
-  else out <- pmax(shifted, rep(0, length(shifted)))
+  if (smooth) {
+    out <- log1p(exp(shifted))  # use log1p for numerical accuracy
+  } else {
+    out <- pmax(shifted, rep(0, length(shifted)))
+  }
   out
 }
