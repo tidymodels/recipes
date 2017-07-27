@@ -59,7 +59,7 @@
 #'
 #' transformed_te
 #'
-#' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}}
+#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 step_relu <-
   function(recipe,

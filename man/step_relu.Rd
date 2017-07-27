@@ -80,6 +80,6 @@ transformed_te
 
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prepare.recipe}}
+\code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
