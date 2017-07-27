@@ -29,6 +29,7 @@ To install it, use:
 ```r
 install.packages("recipes")
 
+## for development version:
 require("devtools")
 install_github("topepo/recipes")
 ```
