@@ -69,10 +69,10 @@ rec_obj <- rec_obj %>% step_name(arguments)
 ```
 `step_center` and the other functions will always return updated recipes. 
 
-One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but [`dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)-like selector functions can be used: 
+One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but [`dplyr`](https://cran.r-project.org/package=dplyr)-like selector functions can be used: 
 
  * use basic variable names (e.g. `x1, x2`),
- *  [`dplyr`](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) functions for selecting variables: `contains`, `ends_with`, `everything`, `matches`, `num_range`, and `starts_with`,
+ *  [`dplyr`](https://cran.r-project.org/package=dplyr) functions for selecting variables: `contains`, `ends_with`, `everything`, `matches`, `num_range`, and `starts_with`,
  * functions that subset on the role of the variables that have been specified so far: `all_outcomes`, `all_predictors`, `has_role`, or 
  * similar functions for the type of data: `all_nominal`, `all_numeric`, and `has_type`. 
 

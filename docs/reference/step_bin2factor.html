@@ -129,7 +129,7 @@ for the 1's (in the first position) and the zeros (second)</p></td>
     <tr>
       <th>columns</th>
       <td><p>A vector with the selected variable names. This is
-<code>NULL</code> until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -157,7 +157,7 @@ count levels).</p>
  <span class='fu'><a href='step_regex.html'>step_regex</a></span>(<span class='no'>description</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"(rock|stony)"</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='st'>"more_rocks"</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>step_bin2factor</span>(<span class='no'>rocks</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>covers</span>)</div><div class='output co'>#&gt; step 1 regex training 
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>covers</span>)</div><div class='output co'>#&gt; step 1 regex training 
 #&gt; step 2 regex training 
 #&gt; step 3 bin2factor training </div><div class='input'><span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>covers</span>)
 

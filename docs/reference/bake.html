@@ -93,7 +93,7 @@
 
     
     <p>For a recipe with at least one preprocessing step that has been trained by
-  <code><a href='prepare.html'>prepare.recipe</a></code>, apply the computations to new data.</p>
+  <code><a href='prep.html'>prep.recipe</a></code>, apply the computations to new data.</p>
     
 
     <pre class="usage"><span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -133,7 +133,7 @@ applied.</p></td>
     <p><code>bake</code> takes a trained recipe and applies the
   operations to a data set to create a design matrix.</p>
 <p>If the original data used to train the data are to be processed, time can be
-  saved by using the <code>retain = TRUE</code> option of <code><a href='prepare.html'>prepare</a></code> to
+  saved by using the <code>retain = TRUE</code> option of <code><a href='prep.html'>prep</a></code> to
   avoid duplicating the same operations.</p>
 <p>A tibble is always returned but can be easily converted to a data frame or
   matrix as needed.</p>

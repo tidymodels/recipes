@@ -127,7 +127,7 @@ rec
 dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>(), <span class="op">-</span><span class="st"> </span>Status) <span class="co"># or</span>
 dummied &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw"><a href="../reference/has_role.html">all_nominal</a></span>(), <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/has_role.html">all_outcomes</a></span>()) </code></pre></div>
 <p>Using the last definition:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(dummied, <span class="dt">training =</span> credit_data)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummied &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(dummied, <span class="dt">training =</span> credit_data)
 <span class="co">#&gt; step 1 dummy training</span>
 with_dummy &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(dummied, <span class="dt">newdata =</span> credit_data)
 with_dummy

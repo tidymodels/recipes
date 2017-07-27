@@ -146,7 +146,7 @@ be calculated for each moving window. Possible values are: <code>'max'</code>,
       <th>columns</th>
       <td><p>A character string that contains the names of columns that
 should be processed. These values are not determined until
-<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
+<code><a href='prep.html'>prep.recipe</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>names</th>
@@ -195,7 +195,7 @@ These will be the names of the new columns created by the step.</p></td>
   <span class='fu'>step_window</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>),
               <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
               <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training 
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training 
 #&gt; step 2 window training </div><div class='input'>
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
@@ -212,7 +212,7 @@ These will be the names of the new columns created by the step.</p></td>
 <span class='no'>sim_dat</span>$<span class='no'>original</span> <span class='kw'>&lt;-</span> <span class='no'>sim_dat</span>$<span class='no'>y1</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>y1</span> + <span class='no'>y2</span> + <span class='no'>original</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_window</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>))
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training </div><div class='input'><span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training </div><div class='input'><span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
 <span class='fu'>ggplot</span>(<span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>theme_bw</span>()</div><img src='step_window-10.png' alt='' width='540' height='400' /></pre>

@@ -147,7 +147,7 @@ should be a valid column name.</p></td>
       <th>input</th>
       <td><p>A single character value for the name of the variable being
 searched. This is <code>NULL</code> until computed by
-<code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+<code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -164,7 +164,7 @@ searched. This is <code>NULL</code> until computed by
   <span class='fu'>step_regex</span>(<span class='no'>description</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"(rock|stony)"</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='st'>"rocks"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_regex</span>(<span class='no'>description</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"ratake families"</span>)
 
-<span class='no'>rec2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>covers</span>)</div><div class='output co'>#&gt; step 1 regex training 
+<span class='no'>rec2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>covers</span>)</div><div class='output co'>#&gt; step 1 regex training 
 #&gt; step 2 regex training </div><div class='input'><span class='no'>rec2</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:

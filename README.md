@@ -8,7 +8,7 @@ The `recipes` package is an alternative method for creating and preprocessing de
 
  > In statistics, a **design matrix** (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object.
 
-While R already has long-standing methods for creating these matrices (e.g. [formulas](https://www.rstudio.com/rviews/2017/02/01/the-r-formula-method-the-good-parts) and `model.matrix`), there are some limitations to what the existing infrastructure can do. 
+While R already has long-standing methods for creating these matrices (e.g. [formulas](https://www.rstudio.com/rviews/2017/02/01/the-r-formula-method-the-good-parts) and `model.matrix`), there are some [limitations to what the existing infrastructure can do](https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/). 
 
 The idea of the `recipes` package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. "feature engineering"). For example, to create a simple recipe containing only an outcome and predictors and have the predictors centered and scaled:
 
@@ -22,11 +22,11 @@ sonar_rec <- recipe(Class ~ ., data = Sonar) %>%
   step_scale(all_predictors())
 ```
 
-The package is still in development and is not yet on CRAN. To install it, use:
+To install it, use:
 
 ```r
-if (packageVersion("devtools") < 1.6) {
-  install.packages("devtools")
-}
-devtools::install_github("topepo/recipes")
+install.packages("recipes")
+
+require("devtools")
+install_github("topepo/recipes")
 ```

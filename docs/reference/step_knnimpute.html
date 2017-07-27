@@ -142,13 +142,13 @@ latter and not used to impute itself.</p></td>
       <th>ref_data</th>
       <td><p>A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is
-<code>NULL</code> until the step is trained by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+<code>NULL</code> until the step is trained by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>The column names that will be imputed and used for
 imputation. This is  <code>NULL</code> until the step is trained by
-<code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+<code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -196,7 +196,7 @@ imputation. This is  <code>NULL</code> until the step is trained by
 
 <span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_knnimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>K</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>ratio_recipe2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 knnimpute training </div><div class='input'><span class='no'>imputed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe2</span>, <span class='no'>biomass_te</span>)
+<span class='no'>ratio_recipe2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 knnimpute training </div><div class='input'><span class='no'>imputed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe2</span>, <span class='no'>biomass_te</span>)
 
 <span class='co'># how well did it work?</span>
 <span class='fu'>summary</span>(<span class='no'>biomass_te_whole</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 

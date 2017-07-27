@@ -136,7 +136,7 @@ components, a smaller value will be used.</p></td>
     <tr>
       <th>res</th>
       <td><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code> object is stored here once this
-preprocessing step has be trained by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+preprocessing step has be trained by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -194,7 +194,7 @@ new variables. See notes below.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_ica.html'>step_ica</a></code>
-  <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code>
+  <code><a href='step_isomap.html'>step_isomap</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='prep.html'>prep.recipe</a></code>
   <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
@@ -213,7 +213,7 @@ new variables. See notes below.</p></td>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_kpca</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
+<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
 #&gt; step 2 center training 
 #&gt; step 3 scale training 
 #&gt; step 4 kpca training </div><div class='input'>

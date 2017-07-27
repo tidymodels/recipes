@@ -145,7 +145,7 @@ columns.</p></td>
     <tr>
       <th>columns</th>
       <td><p>The column names used in the ratios. This argument is
-not populated until <code><a href='prepare.html'>prepare.recipe</a></code> is executed.</p></td>
+not populated until <code><a href='prep.html'>prep.recipe</a></code> is executed.</p></td>
     </tr>
     </table>
     
@@ -174,7 +174,7 @@ not populated until <code><a href='prepare.html'>prepare.recipe</a></code> is ex
   <span class='fu'><a href='step_rm.html'>step_rm</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), -<span class='fu'>matches</span>(<span class='st'>"_o_"</span>))
 
 
-<span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ratio training 
+<span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ratio training 
 #&gt; step 2 rm training </div><div class='input'>
 <span class='no'>ratio_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe</span>, <span class='no'>biomass_te</span>)
 <span class='no'>ratio_data</span></div><div class='output co'>#&gt; # A tibble: 80 x 5

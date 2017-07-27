@@ -124,7 +124,7 @@ have been estimated.</p></td>
     <tr>
       <th>columns</th>
       <td><p>A character string of variables that will be converted. This is <code>NULL</code>
-until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>convert</th>
@@ -165,7 +165,7 @@ until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></t
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>)
 
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
+<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
 #&gt; step 2 ordinalscore training </div><div class='input'>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
@@ -182,7 +182,7 @@ until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></t
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
 
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
+<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
 #&gt; step 2 ordinalscore training </div><div class='input'>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter

@@ -1,3 +1,9 @@
+# recipes 0.1.0
+
+First CRAN release. 
+
+* Changed `prepare` to `prep` per [issue #59](https://github.com/topepo/recipes/issues/59)
+
 # recipes 0.0.1.9003
 
  * Two of the main functions [changed names](https://github.com/topepo/recipes/issues/57). `learn` has become `prepare` and `process` has become `bake`
@@ -19,5 +25,5 @@ Other changes:
 # recipes 0.0.1.9001
 
 * The class system for `recipe` objects was changed so that [pipes can be used to create the recipe with a formula](https://github.com/topepo/recipes/issues/46).
-* [`process.recipe`](https://topepo.github.io/recipes/reference/process.html) lost the `role` argument in factor of a general set of [selectors](https://topepo.github.io/recipes/articles/Selecting_Variables.html). If no selector is used, all the predictors are returned. 
+* `process.recipe` lost the `role` argument in factor of a general set of [selectors](https://topepo.github.io/recipes/articles/Selecting_Variables.html). If no selector is used, all the predictors are returned. 
 * Two steps for simple imputation using the mean or mode were added. 

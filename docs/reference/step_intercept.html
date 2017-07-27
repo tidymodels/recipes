@@ -142,7 +142,7 @@ have been estimated. Again included for consistency.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prepare.html'>prepare.recipe</a></code>
+    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prep.html'>prep.recipe</a></code>
   <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
@@ -157,7 +157,7 @@ have been estimated. Again included for consistency.</p></td>
 <span class='no'>rec_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>[, -(<span class='fl'>1</span>:<span class='fl'>2</span>)]) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_intercept</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 intercept training </div><div class='input'>
+<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 intercept training </div><div class='input'>
 <span class='no'>with_intercept</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_obj</span>, <span class='no'>biomass_te</span>)
 <span class='no'>with_intercept</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
 #&gt;    intercept carbon hydrogen oxygen nitrogen sulfur

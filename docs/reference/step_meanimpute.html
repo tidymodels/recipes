@@ -125,7 +125,7 @@ have been estimated.</p></td>
     <tr>
       <th>means</th>
       <td><p>A named numeric vector of means. This is <code>NULL</code> until
-computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     <tr>
       <th>trim</th>
@@ -143,7 +143,7 @@ that range are taken as the nearest endpoint.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_meanimpute</code> estimates the variable means from the data
-  used in the <code>training</code> argument of <code>prepare.recipe</code>.
+  used in the <code>training</code> argument of <code>prep.recipe</code>.
   <code>bake.recipe</code> then applies the new values to new data sets using
   these averages.</p>
     
@@ -170,7 +170,7 @@ that range are taken as the nearest endpoint.</p></td>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_meanimpute</span>(<span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 meanimpute training </div><div class='input'>
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 meanimpute training </div><div class='input'>
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
 <span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income

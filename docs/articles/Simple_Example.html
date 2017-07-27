@@ -150,8 +150,8 @@ standardized
 <span class="co">#&gt; Centering for all_predictors()</span>
 <span class="co">#&gt; Scaling for all_predictors()</span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
-<p>If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prepare</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(standardized, <span class="dt">training =</span> seg_train)
+<p>If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(standardized, <span class="dt">training =</span> seg_train)
 <span class="co">#&gt; step 1 center training </span>
 <span class="co">#&gt; step 2 scale training</span></code></pre></div>
 <p>Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:</p>
@@ -218,8 +218,8 @@ trained_rec
 <span class="co">#&gt; Centering for AngleCh1, AreaCh1, ... [trained]</span>
 <span class="co">#&gt; Scaling for AngleCh1, AreaCh1, ... [trained]</span>
 <span class="co">#&gt; PCA extraction with ends_with("Ch1"), contains("area")</span></code></pre></div>
-<p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>prepare</code> again:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(trained_rec, <span class="dt">training =</span> seg_train)
+<p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>prep</code> again:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(trained_rec, <span class="dt">training =</span> seg_train)
 <span class="co">#&gt; step 1 center [pre-trained]</span>
 <span class="co">#&gt; step 2 scale [pre-trained]</span>
 <span class="co">#&gt; step 3 pca training</span></code></pre></div>

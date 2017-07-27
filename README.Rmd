@@ -3,6 +3,9 @@
 
 [![Build Status](https://travis-ci.org/topepo/recipes.svg?branch=master)](https://travis-ci.org/topepo/recipes)
 [![Coverage Status](https://img.shields.io/codecov/c/github/topepo/recipes/master.svg)](https://codecov.io/github/topepo/recipes?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes)
+[![Downloads](http://cranlogs.r-pkg.org/badges/recipes)](http://cran.rstudio.com/package=recipes)
+
 
 The `recipes` package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From [wikipedia](https://en.wikipedia.org/wiki/Design_matrix):
 
@@ -21,10 +24,11 @@ sonar_rec <- recipe(Class ~ ., data = Sonar) %>%
   step_scale(all_predictors())
 ```
 
-The package is still in development and is not yet on CRAN. To install it, use:
+To install it, use:
 ```{r install, eval = FALSE}
-if (packageVersion("devtools") < 1.6) {
-  install.packages("devtools")
-}
-devtools::install_github("topepo/recipes")
+install.packages("recipes")
+
+## for development version:
+require("devtools")
+install_github("topepo/recipes")
 ```

@@ -132,7 +132,7 @@ have been estimated.</p></td>
     <tr>
       <th>objects</th>
       <td><p>A list of objects that contain the information to pool
-infrequent levels that is determined by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
+infrequent levels that is determined by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
     </tr>
     </table>
     
@@ -148,7 +148,7 @@ infrequent levels that is determined by <code><a href='prepare.html'>prepare.rec
   proportion in the training set is less than <code>threshold</code>.</p>
 <p>If no pooling is done the data are unmodified (although character data may
   be changed to factors based on the value of <code>stringsAsFactors</code> in
-  <code><a href='prepare.html'>prepare.recipe</a></code>). Otherwise, a factor is always returned with
+  <code><a href='prep.html'>prep.recipe</a></code>). Otherwise, a factor is always returned with
   different factor levels.</p>
 <p>If <code>threshold</code> is less than the largest category proportion, all levels
   except for the most frequent are collapsed to the <code>other</code> level.</p>
@@ -171,7 +171,7 @@ infrequent levels that is determined by <code><a href='prepare.html'>prepare.rec
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)</div><div class='output co'>#&gt; step 1 other training </div><div class='input'>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)</div><div class='output co'>#&gt; step 1 other training </div><div class='input'>
 <span class='no'>collapsed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
 <span class='fu'>table</span>(<span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='no'>collapsed</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      
 #&gt;                       anything mostly anything strictly anything other values

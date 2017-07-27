@@ -124,7 +124,7 @@ have been estimated.</p></td>
       <th>columns</th>
       <td><p>A character string that contains the names of columns that
 should be shuffled. These values are not determined until
-<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
+<code><a href='prep.html'>prep.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -141,7 +141,7 @@ should be shuffled. These values are not determined until
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>A</span> + <span class='no'>B</span> + <span class='no'>C</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>integers</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_shuffle</span>(<span class='no'>A</span>, <span class='no'>B</span>)
 
-<span class='no'>rand_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>integers</span>)</div><div class='output co'>#&gt; step 1 shuffle training </div><div class='input'>
+<span class='no'>rand_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>integers</span>)</div><div class='output co'>#&gt; step 1 shuffle training </div><div class='input'>
 <span class='fu'>set.seed</span>(<span class='fl'>5377</span>)
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rand_set</span>, <span class='no'>integers</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 3
 #&gt;        A     B     C

@@ -179,14 +179,14 @@ anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>,
   operations like logging a variable, creating dummy variables or
   interactions and so on. More computationally complex actions such as
   dimension reduction or imputation can also be specified.</p>
-<p>Once a recipe has been defined, the <code><a href='prepare.html'>prepare</a></code> function can be
+<p>Once a recipe has been defined, the <code><a href='prep.html'>prep</a></code> function can be
   used to estimate quants required in the steps from a data set (a.k.a. the
-  training data). <code><a href='prepare.html'>prepare</a></code> returns another recipe.</p>
+  training data). <code><a href='prep.html'>prep</a></code> returns another recipe.</p>
 <p>To apply the recipe to a data set, the <code><a href='bake.html'>bake</a></code> function is
   used in the same manner as <code>predict</code> would be for models. This
   applies the steps to any data set.</p>
 <p>Note that the data passed to <code>recipe</code> need not be the complete data
-  that will be used to train the steps (by <code><a href='prepare.html'>prepare</a></code>). The recipe
+  that will be used to train the steps (by <code><a href='prep.html'>prep</a></code>). The recipe
   only needs to know the names and types of data that will be used. For
   large data sets, <code>head</code> could be used to pass the recipe a smaller
   data set to save time and memory.</p>
@@ -226,7 +226,7 @@ anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>,
 #&gt; Scaling for all_predictors()
 #&gt; Spatial sign on  all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
-<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
+<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training 
 #&gt; step 3 spatialsign training </div><div class='input'><span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
@@ -263,7 +263,7 @@ anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>,
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
+<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training 
 #&gt; step 2 scale training </div><div class='input'>
 <span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)
 

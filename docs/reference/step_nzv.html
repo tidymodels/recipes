@@ -130,7 +130,7 @@ have been estimated.</p></td>
       <th>removals</th>
       <td><p>A character string that contains the names of columns that
 should be removed. These values are not determined until
-<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
+<code><a href='prep.html'>prep.recipe</a></code> is called.</p></td>
     </tr>
     </table>
     
@@ -162,7 +162,7 @@ should be removed. These values are not determined until
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='step_corr.html'>step_corr</a></code> <code><a href='recipe.html'>recipe</a></code>
-  <code><a href='prepare.html'>prepare.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
+  <code><a href='prep.html'>prep.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -179,7 +179,7 @@ should be removed. These values are not determined until
 <span class='no'>nzv_filter</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_nzv</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepare.html'>prepare</a></span>(<span class='no'>nzv_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 nzv training </div><div class='input'>
+<span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nzv_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 nzv training </div><div class='input'>
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>any</span>(<span class='fu'>names</span>(<span class='no'>filtered_te</span>) <span class='kw'>==</span> <span class='st'>"sparse"</span>)</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
