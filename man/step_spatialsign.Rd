@@ -5,7 +5,7 @@
 \title{Spatial Sign Preprocessing}
 \usage{
 step_spatialsign(recipe, ..., role = "predictor", trained = FALSE,
-  vars = NULL)
+  columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -20,7 +20,7 @@ they be assigned?}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{
@@ -52,7 +52,7 @@ ss_trans <- rec \%>\%
   step_scale(carbon, hydrogen) \%>\%
   step_spatialsign(carbon, hydrogen)
 
-ss_obj <- prepare(ss_trans, training = biomass_tr)
+ss_obj <- prep(ss_trans, training = biomass_tr)
 
 transformed_te <- bake(ss_obj, biomass_te)
 

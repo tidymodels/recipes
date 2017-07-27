@@ -11,9 +11,9 @@
 #' @param threshold A single numeric value in (0, 1) for pooling.
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information to pool
-#'   infrequent levels that is determined by \code{\link{prepare.recipe}}.
+#'   infrequent levels that is determined by \code{\link{prep.recipe}}.
 #' @keywords datagen
-#' @concept preprocessing normalization_methods factors
+#' @concept preprocessing factors
 #' @export
 #' @details The overall proportion of the categories are computed. The "other"
 #'   category is used in place of any categorical levels whose individual
@@ -21,7 +21,7 @@
 #'
 #' If no pooling is done the data are unmodified (although character data may
 #'   be changed to factors based on the value of \code{stringsAsFactors} in
-#'   \code{\link{prepare.recipe}}). Otherwise, a factor is always returned with
+#'   \code{\link{prep.recipe}}). Otherwise, a factor is always returned with
 #'   different factor levels.
 #'
 #' If \code{threshold} is less than the largest category proportion, all levels
@@ -44,7 +44,7 @@
 #'
 #' rec <- rec %>%
 #'   step_other(diet, location, threshold = .1, other = "other values")
-#' rec <- prepare(rec, training = okc_tr)
+#' rec <- prep(rec, training = okc_tr)
 #'
 #' collapsed <- bake(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
@@ -94,7 +94,7 @@ step_other_new <-
 
 #' @importFrom stats sd
 #' @export
-prepare.step_other <- function(x, training, info = NULL, ...) {
+prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   objects <- lapply(training[, col_names],
                     keep_levels,
@@ -138,17 +138,9 @@ bake.step_other <- function(object, newdata, ...) {
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Collapsing factor levels for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$objects), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }
-
 
 keep_levels <- function(x, prop = .1, other = "other") {
   if (!is.factor(x))

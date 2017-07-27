@@ -4,7 +4,7 @@
 \alias{step_invlogit}
 \title{Inverse Logit Transformation}
 \usage{
-step_invlogit(recipe, ..., role = NA, trained = FALSE, vars = NULL)
+step_invlogit(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -18,7 +18,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{
@@ -48,7 +48,7 @@ ilogit_trans <- rec  \%>\%
   step_scale(carbon, hydrogen) \%>\%
   step_invlogit(carbon, hydrogen)
 
-ilogit_obj <- prepare(ilogit_trans, training = biomass_tr)
+ilogit_obj <- prep(ilogit_trans, training = biomass_tr)
 
 transformed_te <- bake(ilogit_obj, biomass_te)
 plot(biomass_te$carbon, transformed_te$carbon)
@@ -56,7 +56,7 @@ plot(biomass_te$carbon, transformed_te$carbon)
 \seealso{
 \code{\link{step_logit}} \code{\link{step_log}}
   \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}}
-  \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \concept{

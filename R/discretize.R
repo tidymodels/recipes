@@ -73,7 +73,7 @@ discretize.default <- function(x, ...)
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #' rec <- rec %>% step_discretize(carbon, hydrogen)
-#' rec <- prepare(rec, biomass_tr)
+#' rec <- prep(rec, biomass_tr)
 #' binned_te <- bake(rec, biomass_te)
 #' table(binned_te$carbon)
 
@@ -205,7 +205,7 @@ print.discretize <-
 #' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param objects The \code{\link{discretize}} objects are stored here once
-#'   the recipe has be trained by \code{\link{prepare.recipe}}.
+#'   the recipe has be trained by \code{\link{prep.recipe}}.
 #' @param options A list of options to \code{\link{discretize}}. A defaults is
 #'   set for the argument \code{x}. Note that the using the options
 #'   \code{prefix} and \code{labels} when more than one variable is being
@@ -255,7 +255,7 @@ bin_wrapper <- function(x, args) {
 }
 
 #' @export
-prepare.step_discretize <- function(x, training, info = NULL, ...) {
+prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   if (length(col_names) > 1 &
       any(names(x$options) %in% c("prefix", "labels"))) {
@@ -286,13 +286,6 @@ bake.step_discretize <- function(object, newdata, ...) {
 print.step_discretize <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Dummy variables from ")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$objects), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }

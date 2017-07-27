@@ -35,5 +35,5 @@ test_that('printing', {
   rec <- recipe(~., data = ex_tr) %>% 
     step_discretize(x1)
   expect_output(print(rec))
-  expect_output(prepare(rec, training = ex_tr))
+  expect_output(prep(rec, training = ex_tr))
 })

@@ -13,7 +13,7 @@ test_that('simple modes', {
   
   impute_rec <- rec %>%
     step_modeimpute(Status, Home, Marital)
-  imputed <- prepare(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, newdata = credit_te)
 
   expect_equal(te_imputed$Status, credit_te$Status)
@@ -35,12 +35,12 @@ test_that('non-nominal', {
   
   impute_rec <- rec %>%
     step_modeimpute(Assets, Job)
-  expect_error(prepare(impute_rec, training = credit_tr, verbose = FALSE))
+  expect_error(prep(impute_rec, training = credit_tr, verbose = FALSE))
 })
 
 test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_modeimpute(Status, Home, Marital)
   expect_output(print(impute_rec))
-  expect_output(prepare(impute_rec, training = credit_tr))
+  expect_output(prep(impute_rec, training = credit_tr))
 })

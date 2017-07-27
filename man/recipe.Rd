@@ -81,16 +81,16 @@ Steps to the recipe can be added sequentially. Steps can include common
   interactions and so on. More computationally complex actions such as
   dimension reduction or imputation can also be specified.
 
-Once a recipe has been defined, the \code{\link{prepare}} function can be
+Once a recipe has been defined, the \code{\link{prep}} function can be
   used to estimate quants required in the steps from a data set (a.k.a. the
-  training data). \code{\link{prepare}} returns another recipe.
+  training data). \code{\link{prep}} returns another recipe.
 
 To apply the recipe to a data set, the \code{\link{bake}} function is
   used in the same manner as \code{predict} would be for models. This
   applies the steps to any data set.
 
 Note that the data passed to \code{recipe} need not be the complete data
-  that will be used to train the steps (by \code{\link{prepare}}). The recipe
+  that will be used to train the steps (by \code{\link{prep}}). The recipe
   only needs to know the names and types of data that will be used. For
   large data sets, \code{head} could be used to pass the recipe a smaller
   data set to save time and memory.
@@ -118,7 +118,7 @@ sp_signed <- rec \%>\%
 sp_signed
 
 # now estimate required parameters
-sp_signed_trained <- prepare(sp_signed, training = biomass_tr)
+sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 sp_signed_trained
 
 # apply the preprocessing to a data set
@@ -141,7 +141,7 @@ multi_y <- multi_y \%>\%
   step_center(all_outcomes()) \%>\%
   step_scale(all_predictors())
 
-multi_y_trained <- prepare(multi_y, training = biomass_tr)
+multi_y_trained <- prep(multi_y, training = biomass_tr)
 
 results <- bake(multi_y_trained, biomass_te)
 

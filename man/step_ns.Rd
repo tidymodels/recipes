@@ -55,14 +55,14 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 with_splines <- rec \%>\%
   step_ns(carbon, hydrogen)
-with_splines <- prepare(with_splines, training = biomass_tr)
+with_splines <- prep(with_splines, training = biomass_tr)
 
 expanded <- bake(with_splines, biomass_te)
 expanded
 }
 \seealso{
 \code{\link{step_poly}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing basis_expansion

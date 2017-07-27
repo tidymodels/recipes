@@ -12,14 +12,14 @@
 #' @param max A single numeric value for the largest value in the range
 #' @param ranges A character vector of variables that will be normalized. Note
 #'   that this is ignored until the values are determined by
-#'   \code{\link{prepare.recipe}}. Setting this value will be ineffective.
+#'   \code{\link{prep.recipe}}. Setting this value will be ineffective.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
 #' @details Scaling data means that the standard deviation of a variable is
 #'   divided out of the data. \code{step_range} estimates the variable standard
 #'   deviations from the data used in the \code{training} argument of
-#'   \code{prepare.recipe}. \code{bake.recipe} then applies the scaling to new
+#'   \code{prep.recipe}. \code{bake.recipe} then applies the scaling to new
 #'   data sets using these standard deviations.
 #' @examples
 #' data(biomass)
@@ -33,7 +33,7 @@
 #' ranged_trans <- rec %>%
 #'   step_range(carbon, hydrogen)
 #'
-#' ranged_obj <- prepare(ranged_trans, training = biomass_tr)
+#' ranged_obj <- prep(ranged_trans, training = biomass_tr)
 #'
 #' transformed_te <- bake(ranged_obj, biomass_te)
 #'
@@ -81,7 +81,7 @@ step_range_new <-
 
 #' @importFrom stats sd
 #' @export
-prepare.step_range <- function(x, training, info = NULL, ...) {
+prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   mins <-
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
@@ -117,13 +117,6 @@ bake.step_range <- function(object, newdata, ...) {
 print.step_range <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Range scaling to [", x$min, ",", x$max, "] for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(colnames(x$ranges), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$ranges), x$terms, x$trained, width = width)
     invisible(x)
   }

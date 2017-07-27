@@ -4,7 +4,7 @@ library(recipes)
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
-  trained <- prepare(rec, training = iris, verbose = FALSE)
+  trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, newdata = iris)
   dists <- dists[, grepl("classdist", names(dists))]
   dists <- as.data.frame(dists)
@@ -23,7 +23,7 @@ test_that("defaults", {
 test_that("alt args", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE, mean_func = median)
-  trained <- prepare(rec, training = iris, verbose = FALSE)
+  trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, newdata = iris)
   dists <- dists[, grepl("classdist", names(dists))]
   dists <- as.data.frame(dists)
@@ -43,5 +43,5 @@ test_that('printing', {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
   expect_output(print(rec))
-  expect_output(prepare(rec, training = iris))
+  expect_output(prep(rec, training = iris))
 })

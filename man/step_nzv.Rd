@@ -24,7 +24,7 @@ have been estimated.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{prepare.recipe}} is called.}
+\code{\link{prep.recipe}} is called.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -71,14 +71,14 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + sparse,
 nzv_filter <- rec \%>\%
   step_nzv(all_predictors())
 
-filter_obj <- prepare(nzv_filter, training = biomass_tr)
+filter_obj <- prep(nzv_filter, training = biomass_tr)
 
 filtered_te <- bake(filter_obj, biomass_te)
 any(names(filtered_te) == "sparse")
 }
 \seealso{
 \code{\link{step_corr}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing variable_filters

@@ -10,7 +10,7 @@
 #' @param max_steps A value .
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
-#'   \code{\link{prepare.recipe}} is called.
+#'   \code{\link{prep.recipe}} is called.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing
@@ -38,9 +38,9 @@
 #' lincomb_filter <- rec %>%
 #'   step_lincomb(all_predictors())
 #'   
-#' prepare(lincomb_filter, training = biomass_tr)
+#' prep(lincomb_filter, training = biomass_tr)
 #' @seealso \code{\link{step_nzv}}\code{\link{step_corr}}
-#'   \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 
 step_lincomb <-
@@ -79,7 +79,7 @@ step_lincomb_new <-
   }
 
 #' @export
-prepare.step_lincomb <- function(x, training, info = NULL, ...) {
+prep.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("All variables for mean imputation should be numeric")

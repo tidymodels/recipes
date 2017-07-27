@@ -96,7 +96,7 @@
   will convert ordinal factor variables into numeric scores.</p>
     
 
-    <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -122,7 +122,7 @@ affected by the step. See <code><a href='selections.html'>selections</a></code> 
 have been estimated.</p></td>
     </tr>
     <tr>
-      <th>vars</th>
+      <th>columns</th>
       <td><p>A character string of variables that will be converted. This is <code>NULL</code>
 until computed by <code><a href='prepare.html'>prepare.recipe</a></code>.</p></td>
     </tr>

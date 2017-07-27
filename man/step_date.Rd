@@ -6,7 +6,7 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, variables = NULL)
+  ordinal = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -44,9 +44,9 @@ the day of the week as a number.}
 \item{ordinal}{A logical: should factors be ordered? Only available for
 features \code{month} or \code{dow}.}
 
-\item{variables}{A character string of variables that will be used as
+\item{columns}{A character string of variables that will be used as
 inputs. This field is a placeholder and will be populated once
- \code{\link{prepare.recipe}} is used.}
+ \code{\link{prep.recipe}} is used.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -69,13 +69,13 @@ examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
    step_date(all_predictors())
 
-date_rec <- prepare(date_rec, training = examples)
+date_rec <- prep(date_rec, training = examples)
 date_values <- bake(date_rec, newdata = examples)
 date_values
 }
 \seealso{
 \code{\link{step_holiday}} \code{\link{step_rm}} 
-  \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

@@ -15,7 +15,7 @@ test_that('correct PCA values', {
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, 
              options = list(retx = TRUE))
   
-  pca_extract_trained <- prepare(pca_extract, training = biomass_tr, verbose = FALSE)
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
   
   pca_pred <- bake(pca_extract_trained, newdata = biomass_te)
   pca_pred <- as.matrix(pca_pred)
@@ -35,7 +35,7 @@ test_that('correct PCA values with threshold', {
     step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, threshold = .5)
   
-  pca_extract_trained <- prepare(pca_extract, training = biomass_tr, verbose = FALSE)
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
   pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
   # cumsum(pca_exp$sdev^2)/sum(pca_exp$sdev^2)
 
@@ -49,7 +49,7 @@ test_that('Reduced rotation size', {
     step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 3)
   
-  pca_extract_trained <- prepare(pca_extract, training = biomass_tr, verbose = FALSE)
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
   
   pca_pred <- bake(pca_extract_trained, newdata = biomass_te)
   pca_pred <- as.matrix(pca_pred)
@@ -69,6 +69,6 @@ test_that('printing', {
   pca_extract <- rec %>% 
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
   expect_output(print(pca_extract))
-  expect_output(prepare(pca_extract, training = biomass_tr))
+  expect_output(prep(pca_extract, training = biomass_tr))
 })
 

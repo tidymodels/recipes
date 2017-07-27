@@ -22,7 +22,7 @@
 #'   should be a valid column name.
 #' @param input A single character value for the name of the variable being
 #'   searched. This is \code{NULL} until computed by
-#'   \code{\link{prepare.recipe}}.
+#'   \code{\link{prep.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables regular_expressions
 #' @export
@@ -33,7 +33,7 @@
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
 #'   step_regex(description, pattern = "ratake families")
 #'
-#' rec2 <- prepare(rec, training = covers)
+#' rec2 <- prep(rec, training = covers)
 #' rec2
 #'
 #' with_dummies <- bake(rec2, newdata = covers)
@@ -94,7 +94,7 @@ step_regex_new <- function(terms = NULL,
 }
 
 #' @export
-prepare.step_regex <- function(x, training, info = NULL, ...) {
+prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- terms_select(x$terms, info = info)
   if (length(col_name) != 1)
     stop("The selector should only select a single variable")

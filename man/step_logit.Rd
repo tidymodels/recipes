@@ -4,7 +4,7 @@
 \alias{step_logit}
 \title{Logit Transformation}
 \usage{
-step_logit(recipe, ..., role = NA, trained = FALSE, vars = NULL)
+step_logit(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -18,7 +18,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{
@@ -44,7 +44,7 @@ rec <- recipe(~ X1 + X2, data = examples)
 logit_trans <- rec  \%>\%
   step_logit(all_predictors())
 
-logit_obj <- prepare(logit_trans, training = examples)
+logit_obj <- prep(logit_trans, training = examples)
 
 transformed_te <- bake(logit_obj, examples)
 plot(examples$X1, transformed_te$X1)
@@ -52,7 +52,7 @@ plot(examples$X1, transformed_te$X1)
 \seealso{
 \code{\link{step_invlogit}} \code{\link{step_log}}
 \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-\code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+\code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

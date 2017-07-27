@@ -12,7 +12,7 @@ okc_fac <- data.frame(okc)
 test_that('dummy variables with string inputs', {
   rec <- recipe(age ~ ., data = okc)
   dummy <- rec %>% step_dummy(diet, location)
-  dummy_trained <- prepare(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
+  dummy_trained <- prep(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
   dummy_pred <- bake(dummy_trained, newdata = okc)
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
@@ -34,6 +34,6 @@ test_that('printing', {
   rec <- recipe(age ~ ., data = okc)
   dummy <- rec %>% step_dummy(diet, location)
   expect_output(print(dummy))
-  expect_output(prepare(dummy, training = okc))
+  expect_output(prep(dummy, training = okc))
 })
 

@@ -24,18 +24,18 @@ test_that('error checks', {
   expect_error(rec %>% step_window(y1, size = 2)) 
   expect_error(rec %>% step_window(y1, size = -1))
   expect_warning(rec %>% step_window(y1, size = pi)) 
-  expect_error(prepare(rec %>% step_window(fac), training = sim_dat)) 
-  expect_error(prepare(rec %>% step_window(y1, size = 1000L), training = sim_dat))   
+  expect_error(prep(rec %>% step_window(fac), training = sim_dat)) 
+  expect_error(prep(rec %>% step_window(y1, size = 1000L), training = sim_dat))   
   bad_names <- rec %>%
     step_window(starts_with("y"), names = "only_one_name")
-  expect_error(prepare(bad_names, training = sim_dat))
+  expect_error(prep(bad_names, training = sim_dat))
   
 })
 
 test_that('basic moving average', {
   simple_ma <- rec %>%
     step_window(starts_with("y"))
-  simple_ma <- prepare(simple_ma, training = sim_dat)
+  simple_ma <- prep(simple_ma, training = sim_dat)
   simple_ma_res <- bake(simple_ma, newdata = sim_dat)
   expect_equal(names(sim_dat), names(simple_ma_res))
   
@@ -53,12 +53,12 @@ test_that('basic moving average', {
 test_that('creating new variables', {
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
-  new_names <- prepare(new_names, training = sim_dat)
+  new_names <- prep(new_names, training = sim_dat)
   new_names_res <- bake(new_names, newdata = sim_dat)
   
   simple_ma <- rec %>%
     step_window(starts_with("y"))
-  simple_ma <- prepare(simple_ma, training = sim_dat)
+  simple_ma <- prep(simple_ma, training = sim_dat)
   simple_ma_res <- bake(simple_ma, newdata = sim_dat)
   
   expect_equal(new_names_res$new1, simple_ma_res$y1)
@@ -69,7 +69,7 @@ test_that('printing', {
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
   expect_output(print(new_names))
-  expect_output(prepare(new_names, training = sim_dat))
+  expect_output(prep(new_names, training = sim_dat))
 })
 
 

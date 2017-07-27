@@ -21,7 +21,7 @@ have been estimated.}
 
 \item{removals}{A character string that contains the names of columns that
 should be removed. These values are not determined until
-\code{\link{prepare.recipe}} is called.}
+\code{\link{prep.recipe}} is called.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -44,7 +44,7 @@ library(dplyr)
 smaller_set <- rec \%>\%
   step_rm(contains("gen"))
 
-smaller_set <- prepare(smaller_set, training = biomass_tr)
+smaller_set <- prep(smaller_set, training = biomass_tr)
 
 filtered_te <- bake(smaller_set, biomass_te)
 filtered_te

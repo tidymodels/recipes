@@ -21,7 +21,7 @@
 #' columns. See Details below.
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in \code{terms}. This is
-#'   \code{NULL} until the step is trained by \code{\link{prepare.recipe}}.
+#'   \code{NULL} until the step is trained by \code{\link{prep.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification dummy_variables
 #'   variable_encodings
@@ -49,7 +49,7 @@
 #' rec <- recipe(~ diet + age + height, data = okc)
 #'
 #' dummies <- rec %>% step_dummy(diet)
-#' dummies <- prepare(dummies, training = okc)
+#' dummies <- prep(dummies, training = okc)
 #'
 #' dummy_data <- bake(dummies, newdata = okc)
 #'
@@ -100,7 +100,7 @@ step_dummy_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_dummy <- function(x, training, info = NULL, ...) {
+prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   ## I hate doing this but currently we are going to have
@@ -162,13 +162,6 @@ bake.step_dummy <- function(object, newdata, ...) {
 print.step_dummy <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Dummy variables from ")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$levels), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$levels, x$terms, x$trained, width = width)
     invisible(x)
   }

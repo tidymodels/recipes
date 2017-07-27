@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This is
-\code{NULL} until computed by \code{\link{prepare.recipe}}.}
+\code{NULL} until computed by \code{\link{prep.recipe}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to compute the
 transformation parameter lambda.}
@@ -59,7 +59,7 @@ rec <- recipe(~ ., data = as.data.frame(state.x77))
 
 bc_trans <- step_BoxCox(rec, all_numeric())
 
-bc_estimates <- prepare(bc_trans, training = as.data.frame(state.x77))
+bc_estimates <- prep(bc_trans, training = as.data.frame(state.x77))
 
 bc_data <- bake(bc_estimates, as.data.frame(state.x77))
 
@@ -72,7 +72,7 @@ Sakia, R. M. (1992). The Box-Cox transformation technique:
 }
 \seealso{
 \code{\link{step_YeoJohnson}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

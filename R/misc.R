@@ -133,22 +133,6 @@ step <- function(subclass, ...) {
             class = c(paste0("step_", subclass), "step"))
 }
 
-
-
-## needs to handle minus and plus signs
-## extend to work with variable names
-## rewrite print methods
-
-#' @importFrom rlang f_rhs
-format_formula <- function(x, wdth = options()$width - 9, ...) {
-  x <- f_elements(x)
-  if (x$signs[1] == "+")
-    x$signs[1] <- ""
-  x_items <- unlist(lapply(x$terms, deparse))[-1] # -1 for "list"
-  x_items <- paste0(x$signs, x_items)
-  format_ch_vec(x_items, width = wdth, sep = " ")
-}
-
 ## then 9 is to keep space for "[trained]"
 format_ch_vec <-
   function(x,
@@ -318,3 +302,25 @@ check_ellipses <- function(...) {
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`
+
+printer <- function(tr_obj = NULL, 
+                    untr_obj = NULL, 
+                    trained = FALSE,
+                    width = max(20, options()$width - 30)) {
+  if (trained) {
+    cat(format_ch_vec(tr_obj, width = width))
+  } else
+    cat(format_selectors(untr_obj, wdth = width))
+  if (trained)
+    cat(" [trained]\n")
+  else
+    cat("\n")
+}
+
+
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
+prepare   <- function(x, ...) 
+  stop("As of version 0.0.1.9006, used `prep` ",
+       "instead of `prepare`", call. = FALSE)

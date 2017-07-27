@@ -5,7 +5,7 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  vars = NULL)
+  columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -21,7 +21,7 @@ have been estimated.}
 
 \item{base}{A numeric value for the base.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{
@@ -42,7 +42,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 log_trans <- rec  \%>\%
   step_log(all_predictors())
 
-log_obj <- prepare(log_trans, training = examples)
+log_obj <- prep(log_trans, training = examples)
 
 transformed_te <- bake(log_obj, examples)
 plot(examples$V1, transformed_te$V1)
@@ -50,7 +50,7 @@ plot(examples$V1, transformed_te$V1)
 \seealso{
 \code{\link{step_logit}} \code{\link{step_invlogit}}
   \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}
-  \code{\link{recipe}} \code{\link{prepare.recipe}}
+  \code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }
 \concept{

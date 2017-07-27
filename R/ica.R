@@ -19,7 +19,7 @@
 #'   defaults are set here. \bold{Note} that the arguments \code{X} and
 #'   \code{n.comp} should not be passed here.
 #' @param res The \code{\link[fastICA]{fastICA}} object is stored here once
-#'   this preprocessing step has be trained by \code{\link{prepare.recipe}}.
+#'   this preprocessing step has be trained by \code{\link{prep.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below.
 #' @keywords datagen
@@ -64,13 +64,13 @@
 #' ica_trans <- step_center(rec,  V1, V2)
 #' ica_trans <- step_scale(rec, V1, V2)
 #' ica_trans <- step_ica(rec, V1, V2, num = 2)
-#' ica_estimates <- prepare(ica_trans, training = tr)
+#' ica_estimates <- prep(ica_trans, training = tr)
 #' ica_data <- bake(ica_estimates, te)
 #'
 #' plot(te$V1, te$V2)
 #' plot(ica_data$IC1, ica_data$IC2)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 step_ica <-
   function(recipe,
@@ -117,7 +117,7 @@ step_ica_new <-
 
 #' @importFrom dimRed FastICA dimRedData
 #' @export
-prepare.step_ica <- function(x, training, info = NULL, ...) {
+prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   x$num <- min(x$num, length(col_names))
@@ -159,13 +159,6 @@ bake.step_ica <- function(object, newdata, ...) {
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
     cat("ICA extraction with ")
-    if (x$trained) {
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
     invisible(x)
   }

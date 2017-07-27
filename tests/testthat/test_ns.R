@@ -13,7 +13,7 @@ test_that('correct basis functions', {
   with_ns <- rec %>% 
     step_ns(carbon, hydrogen)
   
-  with_ns <- prepare(with_ns, training = biomass_tr, verbose = FALSE)
+  with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
   
   with_ns_pred_tr <- bake(with_ns, newdata = biomass_tr)
   with_ns_pred_te <- bake(with_ns, newdata = biomass_te)
@@ -53,6 +53,6 @@ test_that('correct basis functions', {
 test_that('printing', {
   with_ns <- rec %>%  step_ns(carbon, hydrogen)
   expect_output(print(with_ns))
-  expect_output(prepare(with_ns, training = biomass_tr))
+  expect_output(prep(with_ns, training = biomass_tr))
 })
 

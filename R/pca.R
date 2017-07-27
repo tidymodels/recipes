@@ -26,7 +26,7 @@
 #'   \code{tol = NULL}. \bold{Note} that the argument \code{x} should not be
 #'   passed here (or at all).
 #' @param res The \code{\link[stats]{prcomp.default}} object is stored here
-#'   once this preprocessing step has be trained by \code{\link{prepare.recipe}}.
+#'   once this preprocessing step has be trained by \code{\link{prep.recipe}}.
 #' @param prefix A character string that will be the prefix to the resulting
 #'   new variables. See notes below
 #' @keywords datagen
@@ -66,7 +66,7 @@
 #'   step_center(all_numeric()) %>%
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), num = 3)
-#' pca_estimates <- prepare(pca_trans, training = USArrests)
+#' pca_estimates <- prep(pca_trans, training = USArrests)
 #' pca_data <- bake(pca_estimates, USArrests)
 #'
 #' rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
@@ -77,10 +77,10 @@
 #'   step_center(all_numeric()) %>%
 #'   step_scale(all_numeric()) %>%
 #'   step_pca(all_numeric(), threshold = .99)
-#' with_thresh <- prepare(with_thresh, training = USArrests)
+#' with_thresh <- prep(with_thresh, training = USArrests)
 #' bake(with_thresh, USArrests)
 #' @seealso \code{\link{step_ica}} \code{\link{step_kpca}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prepare.recipe}}
+#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 step_pca <- function(recipe,
                      ...,
@@ -132,7 +132,7 @@ step_pca_new <- function(terms = NULL,
 #' @importFrom stats prcomp
 #' @importFrom rlang expr
 #' @export
-prepare.step_pca <- function(x, training, info = NULL, ...) {
+prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   prc_call <-
@@ -187,13 +187,6 @@ bake.step_pca <- function(object, newdata, ...) {
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
     cat("PCA extraction with ")
-    if (x$trained) {
-      cat(format_ch_vec(rownames(x$res$rotation), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
     invisible(x)
   }

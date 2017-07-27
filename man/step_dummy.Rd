@@ -34,7 +34,7 @@ columns. See Details below.}
 
 \item{levels}{A list that contains the information needed to create dummy
 variables for each variable contained in \code{terms}. This is
-\code{NULL} until the step is trained by \code{\link{prepare.recipe}}.}
+\code{NULL} until the step is trained by \code{\link{prep.recipe}}.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -70,7 +70,7 @@ okc <- okc[complete.cases(okc),]
 rec <- recipe(~ diet + age + height, data = okc)
 
 dummies <- rec \%>\% step_dummy(diet)
-dummies <- prepare(dummies, training = okc)
+dummies <- prep(dummies, training = okc)
 
 dummy_data <- bake(dummies, newdata = okc)
 

@@ -28,9 +28,9 @@
 #'   disregarded if \code{label = FALSE}.
 #' @param ordinal A logical: should factors be ordered? Only available for
 #'   features \code{month} or \code{dow}.
-#' @param variables A character string of variables that will be used as
+#' @param columns A character string of variables that will be used as
 #'   inputs. This field is a placeholder and will be populated once
-#'    \code{\link{prepare.recipe}} is used.
+#'    \code{\link{prep.recipe}} is used.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export
@@ -45,11 +45,11 @@
 #' date_rec <- recipe(~ Dan + Stefan, examples) %>%
 #'    step_date(all_predictors())
 #'
-#' date_rec <- prepare(date_rec, training = examples)
+#' date_rec <- prep(date_rec, training = examples)
 #' date_values <- bake(date_rec, newdata = examples)
 #' date_values
 #' @seealso \code{\link{step_holiday}} \code{\link{step_rm}} 
-#'   \code{\link{recipe}} \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+#'   \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 step_date <-
   function(recipe,
            ...,
@@ -59,7 +59,7 @@ step_date <-
            abbr = TRUE,
            label = TRUE,
            ordinal = FALSE,
-           variables = NULL
+           columns = NULL
   ) {
   feat <-
     c("year",
@@ -83,7 +83,7 @@ step_date <-
       abbr = abbr,
       label = label,
       ordinal = ordinal,
-      variables = variables
+      columns = columns
     )
   )
 }
@@ -97,7 +97,7 @@ step_date_new <-
     abbr = abbr,
     label = label,
     ordinal = ordinal,
-    variables = variables
+    columns = columns
   ) {
   step(
     subclass = "date",
@@ -108,13 +108,13 @@ step_date_new <-
     abbr = abbr,
     label = label,
     ordinal = ordinal,
-    variables = variables
+    columns = columns
   )
 }
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_date <- function(x, training, info = NULL, ...) {
+prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   date_data <- info[info$variable %in% col_names, ]
@@ -130,7 +130,7 @@ prepare.step_date <- function(x, training, info = NULL, ...) {
     abbr = x$abbr,
     label = x$label,
     ordinal = x$ordinal,
-    variables = col_names
+    columns = col_names
   )
 }
 
@@ -186,18 +186,18 @@ get_date_features <-
 #' @export
 bake.step_date <- function(object, newdata, ...) {
   new_cols <-
-    rep(length(object$features), each = length(object$variables))
+    rep(length(object$features), each = length(object$columns))
   date_values <-
     matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
   colnames(date_values) <- rep("", sum(new_cols))
   date_values <- as_tibble(date_values)
   
   strt <- 1
-  for (i in seq_along(object$variables)) {
+  for (i in seq_along(object$columns)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     
     tmp <- get_date_features(
-      dt = getElement(newdata, object$variables[i]),
+      dt = getElement(newdata, object$columns[i]),
       feats = object$features,
       abbr = object$abbr,
       label = object$label,
@@ -207,7 +207,7 @@ bake.step_date <- function(object, newdata, ...) {
     date_values[, cols] <- tmp
     
     names(date_values)[cols] <-
-      paste(object$variables[i],
+      paste(object$columns[i],
             names(tmp),
             sep = "_")
     
@@ -223,13 +223,6 @@ bake.step_date <- function(object, newdata, ...) {
 print.step_date <-
   function(x, width = max(20, options()$width - 29), ...) {
     cat("Date features from ")
-    if (x$trained) {
-      cat(format_ch_vec(x$variables, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }

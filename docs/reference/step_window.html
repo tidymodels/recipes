@@ -98,7 +98,7 @@
     
 
     <pre class="usage"><span class='fu'>step_window</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -143,10 +143,17 @@ be calculated for each moving window. Possible values are: <code>'max'</code>,
 <code>'sum'</code>, <code>'var'</code></p></td>
     </tr>
     <tr>
+      <th>columns</th>
+      <td><p>A character string that contains the names of columns that
+should be processed. These values are not determined until
+<code><a href='prepare.html'>prepare.recipe</a></code> is called.</p></td>
+    </tr>
+    <tr>
       <th>names</th>
       <td><p>An optional character string that is the same length of the
 number of terms selected by <code>terms</code>. If you are not sure what columns
-will be selected, use the <code>summary</code> function (see the example below).</p></td>
+will be selected, use the <code>summary</code> function (see the example below).
+These will be the names of the new columns created by the step.</p></td>
     </tr>
     </table>
     

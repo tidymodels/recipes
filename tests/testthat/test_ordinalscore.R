@@ -24,7 +24,7 @@ score <- function(x) as.numeric(x)^2
 test_that('linear scores', {
   rec1 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
-  rec1 <- prepare(rec1, training = ex_dat, retain = TRUE, 
+  rec1 <- prep(rec1, training = ex_dat, retain = TRUE, 
                   stringsAsFactors = FALSE, verbose = FALSE)
   rec1_scores <- bake(rec1, newdata = ex_dat)
   rec1_scores_NA <- bake(rec1, newdata = ex_miss)
@@ -41,7 +41,7 @@ test_that('nonlinear scores', {
   rec2 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"), 
                       convert = score)
-  rec2 <- prepare(rec2, training = ex_dat, retain = TRUE, 
+  rec2 <- prep(rec2, training = ex_dat, retain = TRUE, 
                   stringsAsFactors = FALSE, verbose = FALSE)
   rec2_scores <- bake(rec2, newdata = ex_dat)
   rec2_scores_NA <- bake(rec2, newdata = ex_miss)
@@ -57,7 +57,7 @@ test_that('nonlinear scores', {
 test_that('bad spec', {
   rec3 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(everything())
-  expect_error(prepare(rec3, training = ex_dat, verbose = FALSE))
+  expect_error(prep(rec3, training = ex_dat, verbose = FALSE))
   rec4 <- recipe(~ ., data = ex_dat) 
   expect_error(rec4 %>% step_ordinalscore())  
 })
@@ -67,6 +67,6 @@ test_that('printing', {
   rec5 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
   expect_output(print(rec5))
-  expect_output(prepare(rec5, training = ex_dat))
+  expect_output(prep(rec5, training = ex_dat))
 })
 

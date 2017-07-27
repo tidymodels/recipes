@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This is
-\code{NULL} until computed by \code{\link{prepare.recipe}}.}
+\code{NULL} until computed by \code{\link{prep.recipe}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to compute the
 transformation parameter lambda.}
@@ -65,7 +65,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 yj_trans <- step_YeoJohnson(rec,  all_numeric())
 
-yj_estimates <- prepare(yj_trans, training = biomass_tr)
+yj_estimates <- prep(yj_trans, training = biomass_tr)
 
 yj_te <- bake(yj_estimates, biomass_te)
 
@@ -78,7 +78,7 @@ Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 }
 \seealso{
 \code{\link{step_BoxCox}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

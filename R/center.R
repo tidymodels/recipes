@@ -11,7 +11,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing 
 #'   have been estimated.
 #' @param means A named numeric vector of means. This is \code{NULL} until 
-#'   computed by \code{\link{prepare.recipe}}.
+#'   computed by \code{\link{prep.recipe}}.
 #' @param na.rm A logical value indicating whether \code{NA} values should be 
 #'   removed when averaging.
 #' @return An updated version of \code{recipe} with the
@@ -21,7 +21,7 @@
 #' @export
 #' @details Centering data means that the average of a variable is subtracted 
 #'   from the data. \code{step_center} estimates the variable means from the 
-#'   data used in the \code{training} argument of \code{prepare.recipe}. 
+#'   data used in the \code{training} argument of \code{prep.recipe}. 
 #'   \code{bake.recipe} then applies the centering to new data sets using 
 #'   these means.
 #'
@@ -37,13 +37,13 @@
 #' center_trans <- rec %>%
 #'   step_center(carbon, contains("gen"), -hydrogen)
 #'
-#' center_obj <- prepare(center_trans, training = biomass_tr)
+#' center_obj <- prep(center_trans, training = biomass_tr)
 #'
 #' transformed_te <- bake(center_obj, biomass_te)
 #'
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
-#' @seealso \code{\link{recipe}} \code{\link{prepare.recipe}} 
+#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}} 
 #'   \code{\link{bake.recipe}}
 step_center <-
   function(recipe,
@@ -81,7 +81,7 @@ step_center_new <-
     )
   }
 
-prepare.step_center <- function(x, training, info = NULL, ...) {
+prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   
   means <-
@@ -107,13 +107,6 @@ bake.step_center <- function(object, newdata, ...) {
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Centering for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$means), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(names(x$means), x$terms, x$trained, width = width)
     invisible(x)
   }

@@ -17,7 +17,7 @@ test_that('simple hyperbolic trans', {
       rec <- recipe(~., data = ex_dat) %>% 
         step_hyperbolic(x1, x2, func = func, inverse = invf)
       
-      rec_trained <- prepare(rec, training = ex_dat, verbose = FALSE)
+      rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
       rec_trans <- bake(rec_trained, newdata = ex_dat)
       
       if(invf) {
@@ -39,7 +39,7 @@ test_that('printing', {
   rec <- recipe(~., data = ex_dat) %>% 
     step_hyperbolic(x1, x2, func = "sin", inverse = TRUE)
   expect_output(print(rec))
-  expect_output(prepare(rec, training = ex_dat))
+  expect_output(prep(rec, training = ex_dat))
 })
 
 

@@ -4,7 +4,7 @@
 \alias{step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, ..., role = NA, trained = FALSE, vars = NULL)
+step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of 
@@ -18,7 +18,7 @@ transformed. See \code{\link{selections}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing 
 have been estimated.}
 
-\item{vars}{A character string of variable names that will be (eventually)
+\item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
 }
 \value{
@@ -39,7 +39,7 @@ rec <- recipe(~ V1 + V2, data = examples)
 sqrt_trans <- rec  \%>\%
   step_sqrt(all_predictors())
 
-sqrt_obj <- prepare(sqrt_trans, training = examples)
+sqrt_obj <- prep(sqrt_trans, training = examples)
 
 transformed_te <- bake(sqrt_obj, examples)
 plot(examples$V1, transformed_te$V1)
@@ -47,7 +47,7 @@ plot(examples$V1, transformed_te$V1)
 \seealso{
 \code{\link{step_logit}} \code{\link{step_invlogit}}
   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-  \code{\link{prepare.recipe}} \code{\link{bake.recipe}}
+  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing transformation_methods

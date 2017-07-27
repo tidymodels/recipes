@@ -6,8 +6,8 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
-#' @param vars A character string of variables that will be converted. This is \code{NULL}
-#'   until computed by \code{\link{prepare.recipe}}.
+#' @param columns A character string of variables that will be converted. This is \code{NULL}
+#'   until computed by \code{\link{prep.recipe}}.
 #' @param convert A function that takes an ordinal factor vector as an input and outputs a single numeric variable.
 #' @keywords datagen
 #' @concept preprocessing ordinal_data
@@ -28,7 +28,7 @@
 #'   step_dummy(item) %>%
 #'   step_ordinalscore(fail_severity)
 #' 
-#' linear_values <- prepare(linear_values, training = ord_data, retain = TRUE)
+#' linear_values <- prep(linear_values, training = ord_data, retain = TRUE)
 #' 
 #' juice(linear_values, everything())
 #' 
@@ -41,7 +41,7 @@
 #'   step_dummy(item) %>%
 #'   step_ordinalscore(fail_severity, convert = custom)
 #' 
-#' nonlin_scores <- prepare(nonlin_scores, training = ord_data, retain = TRUE)
+#' nonlin_scores <- prep(nonlin_scores, training = ord_data, retain = TRUE)
 #' 
 #' juice(nonlin_scores, everything())
 
@@ -50,7 +50,7 @@ step_ordinalscore <-
            ...,
            role = NA,
            trained = FALSE,
-           vars = NULL,
+           columns = NULL,
            convert = as.numeric) {
     add_step(
       recipe,
@@ -58,7 +58,7 @@ step_ordinalscore <-
         terms = check_ellipses(...),
         role = role,
         trained = trained,
-        vars = vars,
+        columns = columns,
         convert = convert
       )
     )
@@ -68,20 +68,20 @@ step_ordinalscore_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           vars = NULL,
+           columns = NULL,
            convert = NULL) {
     step(
       subclass = "ordinalscore",
       terms = terms,
       role = role,
       trained = trained,
-      vars = vars,
+      columns = columns,
       convert = convert
     )
   }
 
 #' @export
-prepare.step_ordinalscore <-
+prep.step_ordinalscore <-
   function(x, training, info = NULL, ...) {
     col_names <- terms_select(x$terms, info = info)
     ord_check <-
@@ -94,15 +94,15 @@ prepare.step_ordinalscore <-
       terms = x$terms,
       role = x$role,
       trained = TRUE,
-      vars = col_names,
+      columns = col_names,
       convert = x$convert
     )
   }
 
 #' @export
 bake.step_ordinalscore <- function(object, newdata, ...) {
-  scores <- lapply(newdata[, object$vars], object$convert)
-  for (i in object$vars)
+  scores <- lapply(newdata[, object$columns], object$convert)
+  for (i in object$columns)
     newdata[, i] <- scores[[i]]
   as_tibble(newdata)
 }
@@ -110,13 +110,6 @@ bake.step_ordinalscore <- function(object, newdata, ...) {
 print.step_ordinalscore <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Scoring for ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(names(x$vars), width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }

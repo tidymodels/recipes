@@ -62,7 +62,7 @@ dummied <- rec %>% step_dummy(all_nominal(), - all_outcomes())
 Using the last definition: 
 
 ```{r dummy_3}
-dummied <- prepare(dummied, training = credit_data)
+dummied <- prep(dummied, training = credit_data)
 with_dummy <- bake(dummied, newdata = credit_data)
 with_dummy
 ```

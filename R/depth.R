@@ -26,7 +26,7 @@
 #'   \code{\link[ddalpha]{depth.simplicialVolume}},
 #'   \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
 #' @param data The training data are stored here once after
-#' \code{\link{prepare.recipe}} is executed.
+#' \code{\link{prep.recipe}} is executed.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
@@ -55,7 +55,7 @@
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_depth(all_predictors(), class = "Species")
 #'
-#' rec_dists <- prepare(rec, training = iris)
+#' rec_dists <- prep(rec, training = iris)
 #'
 #' dists_to_species <- bake(rec_dists, newdata = iris)
 #' dists_to_species
@@ -107,7 +107,7 @@ step_depth_new <-
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_depth <- function(x, training, info = NULL, ...) {
+prep.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
   x_dat <-
@@ -161,14 +161,11 @@ bake.step_depth <- function(object, newdata, ...) {
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Data depth by ", x$class, "for ")
+    
     if (x$trained) {
-      x_names <- colnames(x$data[[1]])
       cat(format_ch_vec(x_names, width = width))
     } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+      x_names <- NULL
+    printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }

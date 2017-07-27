@@ -20,7 +20,7 @@ affected by the step. See \code{\link{selections}} for more details.}
 have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations This is \code{NULL}
-until computed by \code{\link{prepare.recipe}}.}
+until computed by \code{\link{prep.recipe}}.}
 
 \item{na.rm}{A logical value indicating whether \code{NA} values should be
 removed when computing the standard deviation.}
@@ -37,7 +37,7 @@ An updated version of \code{recipe} with the
 Scaling data means that the standard deviation of a variable is
   divided out of the data. \code{step_scale} estimates the variable
   standard deviations from the data used in the \code{training} argument of
-  \code{prepare.recipe}. \code{bake.recipe} then applies the scaling to
+  \code{prep.recipe}. \code{bake.recipe} then applies the scaling to
   new data sets using these standard deviations.
 }
 \examples{
@@ -52,7 +52,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 scaled_trans <- rec \%>\%
   step_scale(carbon, hydrogen)
 
-scaled_obj <- prepare(scaled_trans, training = biomass_tr)
+scaled_obj <- prep(scaled_trans, training = biomass_tr)
 
 transformed_te <- bake(scaled_obj, biomass_te)
 

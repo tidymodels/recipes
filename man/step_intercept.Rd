@@ -46,13 +46,13 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) \%>\%
   step_intercept(value = 2)
 
-rec_obj <- prepare(rec_trans, training = biomass_tr)
+rec_obj <- prep(rec_trans, training = biomass_tr)
 
 with_intercept <- bake(rec_obj, biomass_te)
 with_intercept
 
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prepare.recipe}}
+\code{\link{recipe}} \code{\link{prep.recipe}}
   \code{\link{bake.recipe}}
 }

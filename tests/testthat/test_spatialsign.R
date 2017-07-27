@@ -11,7 +11,7 @@ test_that('spatial sign', {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
   
-  sp_sign_trained <- prepare(sp_sign, training = biomass, verbose = FALSE)
+  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
   
   sp_sign_pred <- bake(sp_sign_trained, newdata = biomass)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
@@ -29,7 +29,7 @@ test_that('printing', {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
   expect_output(print(sp_sign))
-  expect_output(prepare(sp_sign, training = biomass))
+  expect_output(prep(sp_sign, training = biomass))
 })
 
 

@@ -27,7 +27,7 @@ for more details.}
 have been estimated.}
 
 \item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here 
-once this bagged trees have be trained by \code{\link{prepare.recipe}}.}
+once this bagged trees have be trained by \code{\link{prep.recipe}}.}
 
 \item{options}{A list of options to \code{\link[ipred]{ipredbagg}}. Defaults 
 are set for the arguments \code{nbagg} and \code{keepX} but others can be 
@@ -85,7 +85,7 @@ rec <- recipe(Price ~ ., data = credit_tr)
 impute_rec <- rec \%>\%
   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 
-imp_models <- prepare(impute_rec, training = credit_tr)
+imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, newdata = credit_te, everything())
 

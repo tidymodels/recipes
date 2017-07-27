@@ -19,7 +19,7 @@
 #' @param log A logical: should the distances be transformed by the natural
 #'   log function?
 #' @param objects Statistics are stored here once this step has been trained
-#'   by \code{\link{prepare.recipe}}.
+#'   by \code{\link{prep.recipe}}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
@@ -42,7 +42,7 @@
 #'   step_classdist(all_predictors(), class = "Species",
 #'                  pool = FALSE, mean_func = mean2)
 #'
-#' rec_dists <- prepare(rec, training = iris)
+#' rec_dists <- prep(rec, training = iris)
 #'
 #' dists_to_species <- bake(rec_dists, newdata = iris, everything())
 #' ## on log scale:
@@ -112,7 +112,7 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 
 #' @importFrom stats as.formula model.frame
 #' @export
-prepare.step_classdist <- function(x, training, info = NULL, ...) {
+prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
   x_dat <-
@@ -186,13 +186,7 @@ print.step_classdist <-
         names(x$objects[["center"]][[1]])
       else
         names(x$objects[[1]]$center)
-      
-      cat(format_ch_vec(x_names, width = width))
-    } else
-      cat(format_selectors(x$terms, wdth = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    } else x_names <- NULL
+    printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }

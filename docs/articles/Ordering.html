@@ -78,6 +78,7 @@
 <li>If using a Box-Cox transformation, don’t center the data first or do any operations that might make the data non-positive. Alternatively, use the Yeo-Johnson transformation so you don’t have to worry about this.</li>
 <li>Recipes do not automatically create dummy variables (unlike <em>most</em> formula methods). If you want to center, scale, or do any other operations on <em>all</em> of the predictors, run <code>step_dummy</code> first so that numeric columns are in the data set instead of factors.</li>
 <li>As noted in the help file for <code>step_interact</code>, you should make dummy variables <em>before</em> creating the interactions.</li>
+<li>If you are lumping infrequently categories together with <code>step_other</code>, call <code>step_other</code> before <code>step_dummy</code>.</li>
 </ul>
 <p>While your project’s needs may vary, here is a suggested order of <em>potential</em> steps that should work for most problems:</p>
 <ol style="list-style-type: decimal">
@@ -87,7 +88,7 @@
 <li>Create dummy variables</li>
 <li>Create interactions</li>
 <li>Normalization steps (center, scale, range, etc)</li>
-<li>Multivariate transformation (e.g. PCA, spatial sign, etc.)</li>
+<li>Multivariate transformation (e.g. PCA, spatial sign, etc)</li>
 </ol>
 <p>Again, your milage may vary for your particular problem.</p>
 </div>

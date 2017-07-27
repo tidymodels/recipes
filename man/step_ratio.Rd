@@ -7,7 +7,7 @@
 \usage{
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   denom = denom_vars(), naming = function(numer, denom)
-  make.names(paste(numer, denom, sep = "_o_")), variables = NULL)
+  make.names(paste(numer, denom, sep = "_o_")), columns = NULL)
 
 denom_vars(...)
 }
@@ -37,8 +37,8 @@ numerator and denominator, it will be removed from the listing.}
 \item{naming}{A function that defines the naming convention for new ratio
 columns.}
 
-\item{variables}{The column names used in the rations. This argument is
-not populated until \code{\link{prepare.recipe}} is executed.}
+\item{columns}{The column names used in the ratios. This argument is
+not populated until \code{\link{prep.recipe}} is executed.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -67,7 +67,7 @@ ratio_recipe <- rec \%>\%
   step_rm(all_predictors(), -matches("_o_"))
   
 
-ratio_recipe <- prepare(ratio_recipe, training = biomass_tr)
+ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
