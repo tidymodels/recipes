@@ -1,3 +1,7 @@
+# recipes 0.1.1
+
+* `step_unorder` converts ordered factors to unordered factors. 
+
 # recipes 0.1.0
 
 First CRAN release. 
