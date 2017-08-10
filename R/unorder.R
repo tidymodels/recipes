@@ -1,4 +1,4 @@
-#' Transform Ordered Factors to Unordered Factors
+#' Convert Ordered Factors to Unordered Factors
 #'
 #' \code{step_unorder} creates a \emph{specification} of a recipe step that will
 #'   transform the data.

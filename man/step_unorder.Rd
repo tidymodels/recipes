@@ -2,7 +2,7 @@
 % Please edit documentation in R/unorder.R
 \name{step_unorder}
 \alias{step_unorder}
-\title{Transform Ordered Factors to Unordered Factors}
+\title{Convert Ordered Factors to Unordered Factors}
 \usage{
 step_unorder(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
@@ -54,6 +54,6 @@ table(transformed_te$X2, examples$X2)
 \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \concept{
-preprocessing transformation_methods
+preprocessing ordinal_data
 }
 \keyword{datagen}
