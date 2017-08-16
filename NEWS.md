@@ -1,6 +1,7 @@
 # recipes 0.1.1
 
 * `step_unorder` converts ordered factors to unordered factors. 
+* [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors 
 
 # recipes 0.1.0
 

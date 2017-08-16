@@ -106,6 +106,7 @@ name_selectors <- c("starts_with",
                     "matches",
                     "num_range",
                     "everything",
+                    "one_of",
                     "_F")
 
 role_selectors <-
