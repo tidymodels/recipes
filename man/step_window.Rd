@@ -8,10 +8,10 @@ step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
   na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are 
+\item{...}{One or more selector functions to choose which variables are
 affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
@@ -20,7 +20,7 @@ statistics replace the original columns and the roles are left unchanged.
 If \code{names} is set, those new columns will have a role of \code{NULL}
 unless this argument has a value.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{size}{An odd integer \code{>= 3} for the window size.}

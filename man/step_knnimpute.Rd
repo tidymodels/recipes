@@ -9,7 +9,7 @@ step_knnimpute(recipe, ..., role = NA, trained = FALSE, K = 5,
   columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables. For
@@ -20,7 +20,7 @@ for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{K}{The number of neighbors.}

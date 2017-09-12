@@ -8,7 +8,7 @@ step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables that
@@ -16,7 +16,7 @@ will potentially be reduced. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{threshold}{A single numeric value in (0, 1) for pooling.}

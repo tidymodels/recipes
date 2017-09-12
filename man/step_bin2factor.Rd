@@ -8,7 +8,7 @@ step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
   "no"), columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{Selector functions that choose which variables will be converted.
@@ -16,7 +16,7 @@ See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{levels}{A length 2 character string that indicate the factor levels

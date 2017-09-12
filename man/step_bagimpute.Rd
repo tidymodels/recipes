@@ -12,7 +12,7 @@ step_bagimpute(recipe, ..., role = NA, trained = FALSE, models = NULL,
 imp_vars(...)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables. For 
@@ -23,7 +23,7 @@ for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here 

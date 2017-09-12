@@ -8,15 +8,15 @@ step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
   columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are 
+\item{...}{One or more selector functions to choose which variables are
 affected by the step. See \code{\link{selections}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{base}{A numeric value for the base.}

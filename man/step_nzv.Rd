@@ -8,7 +8,7 @@ step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
   = 95/5, unique_cut = 10), removals = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables that
@@ -17,7 +17,7 @@ more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{options}{A list of options for the filter (see Details below).}

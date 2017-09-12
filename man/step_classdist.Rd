@@ -9,10 +9,10 @@ step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   objects = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are 
+\item{...}{One or more selector functions to choose which variables are
 affected by the step. See \code{\link{selections}} for more details.}
 
 \item{class}{A single character string that specifies a single categorical
@@ -22,7 +22,7 @@ variable to be used as the class.}
 they be assigned?. By default, the function assumes that resulting
 distances will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{mean_func}{A function to compute the center of the distribution.}

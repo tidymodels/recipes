@@ -9,7 +9,7 @@ step_count(recipe, ..., role = "predictor", trained = FALSE,
   result = make.names(pattern), input = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{A single selector functions to choose which variable
@@ -22,7 +22,7 @@ role should they be assigned?. By default, the function assumes
 that the new dummy variable column created by the original
 variable will be used as a predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{pattern}{A character string containing a regular

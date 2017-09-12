@@ -3,6 +3,7 @@
 * `step_unorder` converts ordered factors to unordered factors. 
 * `step_count` counts the number of instances that a pattern exists in a string. 
 * [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors 
+* `step_YeoJohnson` gained a `na.rm` option
 
 # recipes 0.1.0
 

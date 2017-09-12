@@ -8,7 +8,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
   objects = NULL, sep = "_x_")
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{terms}{A traditional R formula that contains interaction terms.}
@@ -17,7 +17,7 @@ operations for this recipe.}
 they be assigned?. By default, the function assumes that the new columns
 created from the original variables will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{objects}{A list of \code{terms} objects for each individual interation.}

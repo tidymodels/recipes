@@ -54,12 +54,12 @@ binning. If (the number of unique values)\code{/(cuts+1)} is less than
 
 \item{newdata}{A new numeric object to be binned.}
 
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{objects}{The \code{\link{discretize}} objects are stored here once

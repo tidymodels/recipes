@@ -7,7 +7,7 @@
 step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will
@@ -15,7 +15,7 @@ permuted. See \code{\link{selections}} for  more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{columns}{A character string that contains the names of columns that

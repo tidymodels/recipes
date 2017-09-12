@@ -8,7 +8,7 @@ step_spatialsign(recipe, ..., role = "predictor", trained = FALSE,
   columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will be
@@ -17,7 +17,7 @@ used for the normalization. See \code{\link{selections}} for more details.}
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned?}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{columns}{A character string of variable names that will be (eventually)

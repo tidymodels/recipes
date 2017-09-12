@@ -8,7 +8,7 @@ step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   threshold = NA, options = list(), res = NULL, prefix = "PC")
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of 
+\item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will be
@@ -20,7 +20,7 @@ they be assigned?. By default, the function assumes that the new principal
 component columns created by the original variables will be used as
 predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing 
+\item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
 
 \item{num}{The number of PCA components to retain as new predictors. If

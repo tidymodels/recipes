@@ -55,7 +55,8 @@
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
-           lambdas = NULL, limits = c(-5, 5), nunique = 5) {
+           lambdas = NULL, limits = c(-5, 5), nunique = 5,
+           na.rm = TRUE) {
     add_step(
       recipe,
       step_YeoJohnson_new(
@@ -64,14 +65,16 @@ step_YeoJohnson <-
         trained = trained,
         lambdas = lambdas,
         limits = sort(limits)[1:2],
-        nunique = nunique
+        nunique = nunique,
+        na.rm = na.rm
       )
     )
   }
 
 step_YeoJohnson_new <-
   function(terms = NULL, role = NA, trained = FALSE,
-           lambdas = NULL, limits = NULL, nunique = NULL) {
+           lambdas = NULL, limits = NULL, nunique = NULL,
+           na.rm = NULL) {
     step(
       subclass = "YeoJohnson",
       terms = terms,
@@ -79,7 +82,8 @@ step_YeoJohnson_new <-
       trained = trained,
       lambdas = lambdas,
       limits = limits,
-      nunique = nunique
+      nunique = nunique,
+      na.rm = na.rm
     )
   }
 
@@ -91,7 +95,8 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     estimate_yj,
     c(lambda = 0),
     limits = x$limits,
-    nunique = x$nunique
+    nunique = x$nunique,
+    na.rm = x$na.rm
   )
   values <- values[!is.na(values)]
   step_YeoJohnson_new(
@@ -100,7 +105,8 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     lambdas = values,
     limits = x$limits,
-    nunique = x$nunique
+    nunique = x$nunique,
+    na.rm = x$na.rm
   )
 }
 
@@ -125,7 +131,7 @@ print.step_YeoJohnson <-
 
 ## computes the new data given a lambda
 #' Internal Functions
-#' 
+#'
 #' These are not to be used directly by the users.
 #' @export
 #' @keywords internal
@@ -139,26 +145,27 @@ yj_trans <- function(x, lambda, eps = .001) {
     if (!is.vector(x))
       x <- as.vector(x)
   }
-  
-  not_neg <- x >= 0
-  
+
+  not_neg <- which(x >= 0)
+  is_neg <- which(x < 0)
+
   nn_trans <- function(x, lambda)
     if (abs(lambda) < eps)
       log(x + 1)
   else
     ((x + 1) ^ lambda - 1) / lambda
-  
+
   ng_trans <- function(x, lambda)
     if (abs(lambda - 2) < eps)
       - log(-x + 1)
   else
     - ((-x + 1) ^ (2 - lambda) - 1) / (2 - lambda)
-  
-  if (any(not_neg))
+
+  if (length(not_neg) > 0)
     x[not_neg] <- nn_trans(x[not_neg], lambda)
-  
-  if (any(!not_neg))
-    x[!not_neg] <- ng_trans(x[!not_neg], lambda)
+
+  if (length(is_neg) > 0)
+    x[is_neg] <- ng_trans(x[is_neg], lambda)
   x
 }
 
@@ -169,6 +176,7 @@ yj_trans <- function(x, lambda, eps = .001) {
 
 #' @importFrom stats var
 ll_yj <- function(lambda, y, eps = .001) {
+  y <- y[!is.na(y)]
   n <- length(y)
   nonneg <- all(y > 0)
   y_t <- yj_trans(y, lambda)
@@ -191,7 +199,17 @@ yj_obj <- function(lam, dat){
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5) {
+estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5,
+                        na.rm = TRUE) {
+  na_rows <- which(is.na(dat))
+  if (length(na_rows) > 0) {
+    if (na.rm) {
+      dat <- dat[-na_rows]
+    } else {
+      stop("Missing values in data. See `na.rm` option", call. = FALSE)
+    }
+  }
+
   eps <- .001
   if (length(unique(dat)) < nunique)
     return(NA)

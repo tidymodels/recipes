@@ -1,28 +1,28 @@
 #' Centering Numeric Data
 #'
-#' \code{step_center} creates a \emph{specification} of a recipe step that 
+#' \code{step_center} creates a \emph{specification} of a recipe step that
 #'   will normalize numeric data to have a mean of zero.
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of 
+#' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are 
+#' @param ... One or more selector functions to choose which variables are
 #'   affected by the step. See \code{\link{selections}} for more details.
 #' @param role Not used by this step since no new variables are created.
-#' @param trained A logical to indicate if the quantities for preprocessing 
+#' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
-#' @param means A named numeric vector of means. This is \code{NULL} until 
+#' @param means A named numeric vector of means. This is \code{NULL} until
 #'   computed by \code{\link{prep.recipe}}.
-#' @param na.rm A logical value indicating whether \code{NA} values should be 
-#'   removed when averaging.
+#' @param na.rm A logical value indicating whether \code{NA} values should be
+#'   removed during computations.
 #' @return An updated version of \code{recipe} with the
-#'   new step added to the sequence of existing steps (if any). 
+#'   new step added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
-#' @details Centering data means that the average of a variable is subtracted 
-#'   from the data. \code{step_center} estimates the variable means from the 
-#'   data used in the \code{training} argument of \code{prep.recipe}. 
-#'   \code{bake.recipe} then applies the centering to new data sets using 
+#' @details Centering data means that the average of a variable is subtracted
+#'   from the data. \code{step_center} estimates the variable means from the
+#'   data used in the \code{training} argument of \code{prep.recipe}.
+#'   \code{bake.recipe} then applies the centering to new data sets using
 #'   these means.
 #'
 #' @examples
@@ -43,7 +43,7 @@
 #'
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
-#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}} 
+#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 step_center <-
   function(recipe,
@@ -83,7 +83,7 @@ step_center_new <-
 
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   means <-
     vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)
   step_center_new(
