@@ -14,7 +14,7 @@ operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will
 be used to create the dummy variables. See \code{\link{selections}} for
-more details.}
+more details. The selected variables must be factors.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned?. By default, the function assumes that the binary
@@ -29,7 +29,7 @@ to make a set of full rank dummy variables. See
 \code{\link[stats]{contrasts}} for more details. \bold{not currently
 working}}
 
-\item{naming}{A function that defines the naming convention for new binary
+\item{naming}{A function that defines the naming convention for new dummy
 columns. See Details below.}
 
 \item{levels}{A list that contains the information needed to create dummy
@@ -46,7 +46,7 @@ An updated version of \code{recipe} with the
   numeric binary model terms for the levels of the original data.
 }
 \details{
-\code{step_dummy} will create a set of binary dummy variables 
+\code{step_dummy} will create a set of binary dummy variables
   from a factor variable. For example, if a factor column in the data set
   has levels of "red", "green", "blue", the dummy variable bake will
   create two additional columns of 0/1 data for two of those three values
@@ -76,6 +76,9 @@ dummy_data <- bake(dummies, newdata = okc)
 
 unique(okc$diet)
 grep("^diet", names(dummy_data), value = TRUE)
+}
+\seealso{
+\code{\link{step_factor2string}} \code{\link{step_string2factor}}
 }
 \concept{
 preprocessing dummy_variables model_specification dummy_variables
