@@ -6,6 +6,7 @@
 * `step_YeoJohnson` gained a `na.rm` option.
 * `step_string2factor` and `step_factor2string` can be used to move between encodings. 
 * [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs. 
+* A step to remove simple zero-variance variables was added (`step_zv`).
 
 # recipes 0.1.0
 
