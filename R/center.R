@@ -49,6 +49,9 @@
 #'
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
+#'
+#' tidy(center_trans, number = 1)
+#' tidy(center_obj, number = 1)
 #' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
 step_center <-
