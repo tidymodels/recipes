@@ -5,7 +5,9 @@
 #'   splines.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned?. By default, the function assumes that the new columns
 #'   created from the original variables will be used as predictors in a model.

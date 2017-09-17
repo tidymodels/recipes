@@ -5,7 +5,9 @@
 #'   mean of those variables.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is \code{NULL} until
 #'   computed by \code{\link{prep.recipe}}.

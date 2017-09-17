@@ -8,11 +8,12 @@ step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
   na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables are affected by the step. See \code{\link{selections}}
+for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? If \code{names} is left to be \code{NULL}, the rolling
@@ -20,8 +21,8 @@ statistics replace the original columns and the roles are left unchanged.
 If \code{names} is set, those new columns will have a role of \code{NULL}
 unless this argument has a value.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{size}{An odd integer \code{>= 3} for the window size.}
 
@@ -41,10 +42,6 @@ should be processed. These values are not determined until
 number of terms selected by \code{terms}. If you are not sure what columns
 will be selected, use the \code{summary} function (see the example below).
 These will be the names of the new columns created by the step.}
-}
-\value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_window} creates a \emph{specification} of a recipe step that will

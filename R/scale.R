@@ -4,7 +4,9 @@
 #'   will normalize numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role Not used by this step since no new variables are created.
 #' @param sds A named numeric vector of standard deviations This is \code{NULL}
 #'   until computed by \code{\link{prep.recipe}}.

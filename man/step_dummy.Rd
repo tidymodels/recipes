@@ -9,8 +9,8 @@ step_dummy(recipe, ..., role = "predictor", trained = FALSE,
   make.names(lvl), sep = "_"), levels = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will
 be used to create the dummy variables. See \code{\link{selections}} for
@@ -21,8 +21,8 @@ they be assigned?. By default, the function assumes that the binary
 dummy variable columns created by the original variables will be used as
 predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{contrast}{A specification for which type of contrast should be used
 to make a set of full rank dummy variables. See
@@ -37,8 +37,10 @@ variables for each variable contained in \code{terms}. This is
 \code{NULL} until the step is trained by \code{\link{prep.recipe}}.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_dummy} creates a a \emph{specification} of a recipe step that

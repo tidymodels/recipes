@@ -8,8 +8,8 @@ step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
   = 95/5, unique_cut = 10), removals = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will evaluated by the filtering. See
@@ -18,8 +18,8 @@ variables that will evaluated by the filtering. See
 \item{role}{Not used by this step since no new variables are
 created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{options}{A list of options for the filter (see Details
 below).}
@@ -29,8 +29,10 @@ columns that should be removed. These values are not determined
 until \code{\link{prep.recipe}} is called.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step

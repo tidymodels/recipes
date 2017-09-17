@@ -5,9 +5,11 @@
 #'   between them.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role Not used by this step since no new variables are created.
-#' @param max_steps A value .
+#' @param max_steps A value.
 #' @param removals A character string that contains the names of columns that
 #'   should be removed. These values are not determined until
 #'   \code{\link{prep.recipe}} is called.

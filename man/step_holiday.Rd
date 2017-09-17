@@ -8,8 +8,8 @@ step_holiday(recipe, ..., role = "predictor", trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will be
 used to create the new variables. The selected variables should have
@@ -21,8 +21,8 @@ they be assigned?. By default, the function assumes that the new variable
 columns created by the original variables will be used as predictors in
 a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{holidays}{A character string that includes at least one holdiay
 supported by the \code{timeDate} package. See
@@ -33,8 +33,10 @@ inputs. This field is a placeholder and will be populated once
 \code{\link{prep.recipe}} is used.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_holiday} creates a a \emph{specification} of a recipe step that

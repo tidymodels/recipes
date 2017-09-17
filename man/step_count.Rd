@@ -9,8 +9,8 @@ step_count(recipe, ..., role = "predictor", trained = FALSE,
   result = make.names(pattern), input = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
@@ -22,8 +22,8 @@ role should they be assigned?. By default, the function assumes
 that the new dummy variable column created by the original
 variable will be used as a predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{pattern}{A character string containing a regular
 expression (or character string for \code{fixed = TRUE}) to be
@@ -44,8 +44,10 @@ variable being searched. This is \code{NULL} until computed by
 \code{\link{prep.recipe}}.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_count} creates a \emph{specification} of a recipe

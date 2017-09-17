@@ -8,26 +8,23 @@ step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
   na.rm = TRUE)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables are affected by the step. See \code{\link{selections}}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations This is \code{NULL}
 until computed by \code{\link{prep.recipe}}.}
 
 \item{na.rm}{A logical value indicating whether \code{NA} values should be
 removed when computing the standard deviation.}
-}
-\value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe step that

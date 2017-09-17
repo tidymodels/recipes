@@ -90,10 +90,10 @@ discretize.numeric <-
            ...) {
     unique_vals <- length(unique(x))
     missing_lab <- "_missing"
-    
+
     if (cuts < 2)
       stop("There should be at least 2 cuts")
-    
+
     if (unique_vals / (cuts + 1) >= min_unique) {
       breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
       num_breaks <- length(breaks)
@@ -112,7 +112,7 @@ discretize.numeric <-
         breaks[length(breaks)] <- Inf
       }
       breaks <- unique(breaks)
-      
+
       if (is.null(labels)) {
         prefix <- prefix[1]
         if (make.names(prefix) != prefix) {
@@ -174,7 +174,7 @@ predict.discretize <- function(object, newdata, ...) {
     }
   } else
     out <- newdata
-  
+
   out
 }
 
@@ -186,7 +186,7 @@ print.discretize <-
       if (any(grepl("_missing", x$labels)))
         cat(" (includes missing category)")
       cat("\n")
-      
+
       if (length(x$breaks) <= 6) {
         cat("Breaks:",
             paste(signif(x$breaks, digits = digits), collapse = ", "))
@@ -202,7 +202,6 @@ print.discretize <-
 
 #' @rdname discretize
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param role Not used by this step since no new variables are created.
 #' @param objects The \code{\link{discretize}} objects are stored here once
 #'   the recipe has be trained by \code{\link{prep.recipe}}.
@@ -262,7 +261,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
     warning("Note that the options `prefix` and `labels`",
             "will be applied to all variables")
   }
-  
+
   obj <- lapply(training[, col_names], bin_wrapper, x$options)
   step_discretize_new(
     terms = x$terms,

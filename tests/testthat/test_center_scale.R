@@ -14,9 +14,18 @@ test_that('correct means and std devs', {
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
+  cent_tibble_un <-
+    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+           value = rep(NA, 5))
+
+  expect_equal(tidy(standardized, 1), cent_tibble_un)
+
   standardized_trained <- prep(standardized, training = biomass, verbose = FALSE)
 
   expect_equal(standardized_trained$steps[[1]]$means, means)
+
+
+
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
 })
 

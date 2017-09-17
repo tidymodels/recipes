@@ -5,7 +5,9 @@
 #'   statistics across moving windows.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role For model terms created by this step, what analysis role should
 #'   they be assigned? If \code{names} is left to be \code{NULL}, the rolling
 #'   statistics replace the original columns and the roles are left unchanged.

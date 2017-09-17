@@ -1,29 +1,35 @@
 #' Centering Numeric Data
 #'
-#' \code{step_center} creates a \emph{specification} of a recipe step that
-#'   will normalize numeric data to have a mean of zero.
+#' \code{step_center} creates a \emph{specification} of a recipe
+#'  step that will normalize numeric data to have a mean of zero.
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'   affected by the step. See \code{\link{selections}} for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated.
-#' @param means A named numeric vector of means. This is \code{NULL} until
-#'   computed by \code{\link{prep.recipe}}.
-#' @param na.rm A logical value indicating whether \code{NA} values should be
-#'   removed during computations.
-#' @return An updated version of \code{recipe} with the
-#'   new step added to the sequence of existing steps (if any).
+#' @param recipe A recipe object. The step will be added to the
+#'  sequence of operations for this recipe.
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param trained A logical to indicate if the quantities for
+#'  preprocessing have been estimated.
+#' @param means A named numeric vector of means. This is
+#'  \code{NULL} until computed by \code{\link{prep.recipe}}.
+#' @param na.rm A logical value indicating whether \code{NA}
+#'  values should be removed during computations.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{value} (the means).
+#'
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
-#' @details Centering data means that the average of a variable is subtracted
-#'   from the data. \code{step_center} estimates the variable means from the
-#'   data used in the \code{training} argument of \code{prep.recipe}.
-#'   \code{bake.recipe} then applies the centering to new data sets using
-#'   these means.
+#' @details Centering data means that the average of a variable is
+#'  subtracted from the data. \code{step_center} estimates the
+#'  variable means from the data used in the \code{training}
+#'  argument of \code{prep.recipe}. \code{bake.recipe} then applies
+#'  the centering to new data sets using these means.
 #'
 #' @examples
 #' data(biomass)
@@ -110,3 +116,18 @@ print.step_center <-
     printer(names(x$means), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @rdname step_center
+#' @param x A \code{step_center} object.
+tidy.step_center <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = names(x$means),
+                  value = x$means)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  value = NA)
+  }
+  res
+}

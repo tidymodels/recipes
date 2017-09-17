@@ -8,8 +8,8 @@ step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   threshold = NA, options = list(), res = NULL, prefix = "PC")
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will be
 used to compute the components. See \code{\link{selections}} for more
@@ -20,8 +20,8 @@ they be assigned?. By default, the function assumes that the new principal
 component columns created by the original variables will be used as
 predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{num}{The number of PCA components to retain as new predictors. If
 \code{num} is greater than the number of columns or the number of
@@ -46,8 +46,10 @@ once this preprocessing step has be trained by \code{\link{prep.recipe}}.}
 new variables. See notes below}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_pca} creates a \emph{specification} of a recipe step that will

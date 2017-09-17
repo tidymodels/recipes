@@ -8,18 +8,19 @@ step_poly(recipe, ..., role = "predictor", trained = FALSE,
   objects = NULL, options = list(degree = 2))
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables are affected by the step. See \code{\link{selections}}
+for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned?. By default, the function assumes that the new columns
 created from the original variables will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{objects}{A list of \code{\link[stats]{poly}} objects created once the
 step has been trained.}
@@ -28,10 +29,6 @@ step has been trained.}
 not include \code{x} or \code{simple}. Note that the option
 \code{raw = TRUE} will produce the regular polynomial values (not
 orthogonalized).}
-}
-\value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_poly} creates a \emph{specification} of a recipe step that will

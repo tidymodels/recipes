@@ -4,7 +4,9 @@
 #'   will transform data using a simple Yeo-Johnson transformation.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role Not used by this step since no new variables are created.
 #' @param lambdas A numeric vector of transformation values. This is
 #'   \code{NULL} until computed by \code{\link{prep.recipe}}.

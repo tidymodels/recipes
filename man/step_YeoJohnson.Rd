@@ -8,16 +8,17 @@ step_YeoJohnson(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
   limits = c(-5, 5), nunique = 5, na.rm = TRUE)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables are affected by the step. See \code{\link{selections}}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This is
 \code{NULL} until computed by \code{\link{prep.recipe}}.}
@@ -28,12 +29,8 @@ transformation parameter lambda.}
 \item{nunique}{An integer where data that have less possible values will
 not be evaluate for a transformation}
 
-\item{na.rm}{A logical value indicating whether \code{NA} values should be
-removed during computations.}
-}
-\value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+\item{na.rm}{A logical value indicating whether \code{NA}
+values should be removed during computations.}
 }
 \description{
 \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that

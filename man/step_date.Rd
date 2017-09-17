@@ -2,64 +2,77 @@
 % Please edit documentation in R/date.R
 \name{step_date}
 \alias{step_date}
+\alias{tidy.step_date}
 \title{Date Feature Generator}
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
   ordinal = FALSE, columns = NULL)
+
+\method{tidy}{step_date}(x, ...)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables that
-will be used to create the new variables. The selected variables should
-have class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
-more details.}
+\item{...}{One or more selector functions to choose which
+variables that will be used to create the new variables. The
+selected variables should have class \code{Date} or
+\code{POSIXct}. See \code{\link{selections}} for more details.
+For the \code{tidy} method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new variable
-columns created by the original variables will be used as predictors in a
-model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new variable columns created by the original variables
+will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
-\item{features}{A character string that includes at least one of the
-following values: \code{month}, \code{dow} (day of week), \code{doy}
-(day of year), \code{week}, \code{month}, \code{decimal} (decimal date,
-e.g. 2002.197), \code{quarter}, \code{semester}, \code{year}.}
+\item{features}{A character string that includes at least one
+of the following values: \code{month}, \code{dow} (day of week),
+\code{doy} (day of year), \code{week}, \code{month},
+\code{decimal} (decimal date, e.g. 2002.197), \code{quarter},
+\code{semester}, \code{year}.}
 
-\item{abbr}{A logical. Only available for features \code{month} or
-\code{dow}. \code{FALSE} will display the day of the week as an ordered
-factor of character strings, such as "Sunday". \code{TRUE} will display
-an abbreviated version of the label, such as "Sun". \code{abbr} is
-disregarded if \code{label = FALSE}.}
+\item{abbr}{A logical. Only available for features \code{month}
+or \code{dow}. \code{FALSE} will display the day of the week as
+an ordered factor of character strings, such as "Sunday".
+\code{TRUE} will display an abbreviated version of the label,
+such as "Sun". \code{abbr} is disregarded if \code{label =
+FALSE}.}
 
-\item{label}{A logical. Only available for features \code{month} or
-\code{dow}. \code{TRUE} will display the day of the week as an ordered
-factor of character strings, such as "Sunday." \code{FALSE} will display
-the day of the week as a number.}
+\item{label}{A logical. Only available for features
+\code{month} or \code{dow}. \code{TRUE} will display the day of
+the week as an ordered factor of character strings, such as
+"Sunday." \code{FALSE} will display the day of the week as a
+number.}
 
-\item{ordinal}{A logical: should factors be ordered? Only available for
-features \code{month} or \code{dow}.}
+\item{ordinal}{A logical: should factors be ordered? Only
+available for features \code{month} or \code{dow}.}
 
-\item{columns}{A character string of variables that will be used as
-inputs. This field is a placeholder and will be populated once
- \code{\link{prep.recipe}} is used.}
+\item{columns}{A character string of variables that will be
+used as inputs. This field is a placeholder and will be
+populated once \code{\link{prep.recipe}} is used.}
+
+\item{x}{A \code{step_date} object.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+For \code{step_date}, an updated version of recipe with
+ the new step added to the sequence of existing steps (if any).
+ For the \code{tidy} method, a tibble with columns \code{terms}
+ (the selectors or variables selected), \code{value} (the feature
+ names), and \code{ordinal} (a logical).
 }
 \description{
-\code{step_date} creates a a \emph{specification} of a recipe step that will
-  convert date data into one or more factor or numeric variables.
+\code{step_date} creates a a \emph{specification} of a recipe
+ step that will convert date data into one or more factor or
+ numeric variables.
 }
 \details{
-Unlike other steps, \code{step_date} does \emph{not} remove the
-  original date variables. \code{\link{step_rm}} can be used for this
-  purpose.
+Unlike other steps, \code{step_date} does \emph{not}
+ remove the original date variables. \code{\link{step_rm}} can be
+ used for this purpose.
 }
 \examples{
 library(lubridate)
@@ -69,13 +82,20 @@ examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
    step_date(all_predictors())
 
+tidy(date_rec, number = 1)
+
 date_rec <- prep(date_rec, training = examples)
+
 date_values <- bake(date_rec, newdata = examples)
 date_values
+
+tidy(date_rec, number = 1)
+
 }
 \seealso{
-\code{\link{step_holiday}} \code{\link{step_rm}} 
-  \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link{step_holiday}} \code{\link{step_rm}}
+  \code{\link{recipe}} \code{\link{prep.recipe}}
+  \code{\link{bake.recipe}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

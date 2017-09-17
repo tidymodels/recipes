@@ -12,8 +12,8 @@ step_bagimpute(recipe, ..., role = NA, trained = FALSE, models = NULL,
 imp_vars(...)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables. For 
 \code{step_bagimpute}, this indicates the variables to be imputed. When 
@@ -23,8 +23,8 @@ for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{models}{The \code{\link[ipred]{ipredbagg}} objects are stored here 
 once this bagged trees have be trained by \code{\link{prep.recipe}}.}
@@ -45,8 +45,10 @@ latter and not used to impute itself.}
 is used across all imputation models.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_bagimpute} creates a \emph{specification} of a recipe step that 

@@ -8,8 +8,8 @@ step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
   metric = "halfspace", options = list(), data = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables that
 will be used to create the new features. See \code{\link{selections}} for
@@ -22,8 +22,8 @@ variable to be used as the class.}
 they be assigned?. By default, the function assumes that resulting depth
 estimates will be used as predictors in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{metric}{A character string specifying the depth metric. Possible
 values are "potential", "halfspace", "Mahalanobis", "simplicialVolume",
@@ -42,8 +42,10 @@ See \code{\link[ddalpha]{depth.halfspace}},
 \code{\link{prep.recipe}} is executed.}
 }
 \value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_depth} creates a a \emph{specification} of a recipe step that

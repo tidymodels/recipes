@@ -4,7 +4,9 @@
 #'   will transform data using a hyperbolic function.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param role Not used by this step since no new variables are created.
 #' @param func A character value for the function. Valid values are "sin",
 #'   "cos", or "tan".

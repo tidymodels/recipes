@@ -6,7 +6,9 @@
 #'   variable.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables are affected by the step. See \code{\link{selections}}
+#'  for more details. 
 #' @param class A single character string that specifies a single categorical
 #'   variable to be used as the class.
 #' @param role For model terms created by this step, what analysis role should

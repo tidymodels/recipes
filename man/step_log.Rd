@@ -8,25 +8,22 @@ step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
   columns = NULL)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables are affected by the step. See \code{\link{selections}}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{base}{A numeric value for the base.}
 
 \item{columns}{A character string of variable names that will be (eventually)
 populated by the \code{terms} argument.}
-}
-\value{
-An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_log} creates a \emph{specification} of a recipe step that will
