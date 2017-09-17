@@ -1,33 +1,42 @@
 #' High Correlation Filter
 #'
-#' \code{step_corr} creates a \emph{specification} of a recipe step that will
-#'   potentially remove variables that have large absolute correlations with
-#'   other variables.
+#' \code{step_corr} creates a \emph{specification} of a recipe
+#'  step that will potentially remove variables that have large
+#'  absolute correlations with other variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param threshold A value for the threshold of absolute correlation values.
-#'   The step will try to remove the minimum number of columns so that all the
-#'   resulting absolute correlations are less than this value.
-#' @param use A character string for the \code{use} argument to the
-#'   \code{\link[stats]{cor}} function.
-#' @param method A character string for the \code{method} argument to the
-#'   \code{\link[stats]{cor}} function.
-#' @param removals A character string that contains the names of columns that
-#'   should be removed. These values are not determined until
-#'   \code{\link{prep.recipe}} is called.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param threshold A value for the threshold of absolute
+#'  correlation values. The step will try to remove the minimum
+#'  number of columns so that all the resulting absolute
+#'  correlations are less than this value.
+#' @param use A character string for the \code{use} argument to
+#'  the \code{\link[stats]{cor}} function.
+#' @param method A character string for the \code{method} argument
+#'  to the \code{\link[stats]{cor}} function.
+#' @param removals A character string that contains the names of
+#'  columns that should be removed. These values are not determined
+#'  until \code{\link{prep.recipe}} is called.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be removed.
 #' @keywords datagen
-#' @author Original R code for filtering algorithm by Dong Li, modified by
-#'   Max Kuhn. Contributions by Reynald Lescarbeau (for original in
-#'   \code{caret} package). Max Kuhn for the \code{step} function.
+#' @author Original R code for filtering algorithm by Dong Li,
+#'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
+#'  original in \code{caret} package). Max Kuhn for the \code{step}
+#'  function.
 #' @concept preprocessing variable_filters
 #' @export
 #'
-#' @details This step attempts to remove variables to keep the largest absolute
-#'   correlation between the variables less than \code{threshold}.
+#' @details This step attempts to remove variables to keep the
+#'  largest absolute correlation between the variables less than
+#'  \code{threshold}.
 #' @examples
 #' data(biomass)
 #'
@@ -49,6 +58,9 @@
 #' filtered_te <- bake(filter_obj, biomass_te)
 #' round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 #' round(abs(cor(filtered_te)), 2)
+#'
+#' tidy(corr_filter, number = 1)
+#' tidy(filter_obj, number = 1)
 #' @seealso \code{\link{step_nzv}} \code{\link{recipe}}
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
@@ -74,7 +86,7 @@ step_corr <- function(recipe,
   )
 }
 
-step_corr_new <- 
+step_corr_new <-
   function(
     terms = NULL,
     role = NA,
@@ -105,7 +117,7 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
     use = x$use,
     method = x$method
   )
-  
+
   step_corr_new(
     terms = x$terms,
     role = x$role,
@@ -151,21 +163,21 @@ corr_filter <-
            use = "pairwise.complete.obs",
            method = "pearson") {
     x <- cor(x, use = use, method = method)
-    
+
     if (any(!complete.cases(x)))
       stop("The correlation matrix has some missing values.")
     averageCorr <- colMeans(abs(x))
     averageCorr <- as.numeric(as.factor(averageCorr))
     x[lower.tri(x, diag = TRUE)] <- NA
     combsAboveCutoff <- which(abs(x) > cutoff)
-    
+
     colsToCheck <- ceiling(combsAboveCutoff / nrow(x))
     rowsToCheck <- combsAboveCutoff %% nrow(x)
-    
+
     colsToDiscard <-
       averageCorr[colsToCheck] > averageCorr[rowsToCheck]
     rowsToDiscard <- !colsToDiscard
-    
+
     deletecol <-
       c(colsToCheck[colsToDiscard], rowsToCheck[rowsToDiscard])
     deletecol <- unique(deletecol)
@@ -173,3 +185,17 @@ corr_filter <-
       deletecol <- colnames(x)[deletecol]
     deletecol
   }
+
+tidy_filter <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = x$removals)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = na_chr)
+  }
+  res
+}
+
+#' @rdname step_corr
+#' @param x A \code{step_corr} object.
+tidy.step_corr <- tidy_filter

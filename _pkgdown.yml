@@ -6,6 +6,7 @@ reference:
   - title: Basic Functions
     contents:
     - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)")
+    - tidy.recipes
   - title: Example Datasets
     contents:
     - matches("(okc)|(biomass)|(credit)|(covers)")

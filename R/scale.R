@@ -1,6 +1,6 @@
 #' Scaling Numeric Data
 #'
-#'   \code{step_scale} creates a \emph{specification} of a recipe
+#' \code{step_scale} creates a \emph{specification} of a recipe
 #'  step that will normalize numeric data to have a standard
 #'  deviation of one.
 #'
@@ -127,7 +127,7 @@ tidy.step_scale <- function(x, ...) {
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
-                  value = NA)
+                  value = na_dbl)
   }
   res
 }

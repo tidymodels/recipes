@@ -2,9 +2,12 @@
 % Please edit documentation in R/zv.R
 \name{step_zv}
 \alias{step_zv}
+\alias{tidy.step_zv}
 \title{Zero Variance Filter}
 \usage{
 step_zv(recipe, ..., role = NA, trained = FALSE, removals = NULL)
+
+\method{tidy}{step_zv}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -12,7 +15,8 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will evaluated by the filtering. See
-\code{\link{selections}} for more details.}
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -23,12 +27,14 @@ preprocessing have been estimated.}
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
 until \code{\link{prep.recipe}} is called.}
+
+\item{x}{A \code{step_zv} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be removed.
 }
 \description{
 \code{step_zv} creates a \emph{specification} of a recipe step
@@ -53,6 +59,9 @@ filter_obj <- prep(zv_filter, training = biomass_tr)
 
 filtered_te <- bake(filter_obj, biomass_te)
 any(names(filtered_te) == "one_value")
+
+tidy(zv_filter, number = 1)
+tidy(filter_obj, number = 1)
 }
 \seealso{
 \code{\link{step_nzv}} \code{\link{step_corr}}

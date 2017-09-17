@@ -2,10 +2,13 @@
 % Please edit documentation in R/nzv.R
 \name{step_nzv}
 \alias{step_nzv}
+\alias{tidy.step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
 step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
   = 95/5, unique_cut = 10), removals = NULL)
+
+\method{tidy}{step_nzv}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,7 +16,8 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will evaluated by the filtering. See
-\code{\link{selections}} for more details.}
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -27,12 +31,14 @@ below).}
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
 until \code{\link{prep.recipe}} is called.}
+
+\item{x}{A \code{step_nzv} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be removed.
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step
@@ -83,6 +89,9 @@ filter_obj <- prep(nzv_filter, training = biomass_tr)
 
 filtered_te <- bake(filter_obj, biomass_te)
 any(names(filtered_te) == "sparse")
+
+tidy(nzv_filter, number = 1)
+tidy(filter_obj, number = 1)
 }
 \seealso{
 \code{\link{step_corr}} \code{\link{recipe}}

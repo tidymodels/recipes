@@ -1,46 +1,56 @@
 #' Linear Combination Filter
 #'
-#' \code{step_lincomb} creates a \emph{specification} of a recipe step that
-#'   will potentially remove numeric variables that have linear combinations
-#'   between them.
+#' \code{step_lincomb} creates a \emph{specification} of a recipe
+#'  step that will potentially remove numeric variables that have
+#'  linear combinations between them.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
 #' @param max_steps A value.
-#' @param removals A character string that contains the names of columns that
-#'   should be removed. These values are not determined until
-#'   \code{\link{prep.recipe}} is called.
+#' @param removals A character string that contains the names of
+#'  columns that should be removed. These values are not determined
+#'  until \code{\link{prep.recipe}} is called.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing
 #' @export
 #'
-#' @details This step finds exact linear combinations between two or more
-#'   variables and recommends which column(s) should be removed to resolve the
-#'   issue. This algorithm may need to be applied multiple times (as defined
-#'   by \code{max_steps}).
+#' @details This step finds exact linear combinations between two
+#'  or more variables and recommends which column(s) should be
+#'  removed to resolve the issue. This algorithm may need to be
+#'  applied multiple times (as defined by \code{max_steps}).
 #' @examples
 #' data(biomass)
-#' 
+#'
 #' biomass$new_1 <- with(biomass,
 #'                       .1*carbon - .2*hydrogen + .6*sulfur)
 #' biomass$new_2 <- with(biomass,
 #'                       .5*carbon - .2*oxygen + .6*nitrogen)
-#' 
+#'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 #'                 sulfur + new_1 + new_2,
 #'               data = biomass_tr)
-#' 
+#'
 #' lincomb_filter <- rec %>%
 #'   step_lincomb(all_predictors())
-#'   
-#' prep(lincomb_filter, training = biomass_tr)
+#'
+#' lincomb_filter_trained <- prep(lincomb_filter, training = biomass_tr)
+#' lincomb_filter_trained
+#'
+#' tidy(lincomb_filter, number = 1)
+#' tidy(lincomb_filter_trained, number = 1)
 #' @seealso \code{\link{step_nzv}}\code{\link{step_corr}}
 #'   \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
@@ -85,10 +95,10 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("All variables for mean imputation should be numeric")
-  
+
   filter <- iter_lc_rm(x = training[, col_names],
                        max_steps = x$max_steps)
-  
+
   step_lincomb_new(
     terms = x$terms,
     role = x$role,
@@ -130,13 +140,13 @@ recommend_rm <- function(x, eps  = 1e-6, ...) {
     x <- as.matrix(x)
   if (is.null(colnames(x)))
     stop("`x` should have column names", call. = FALSE)
-  
+
   qr_decomp <- qr(x)
   qr_decomp_R <- qr.R(qr_decomp)           # extract R matrix
   num_cols <- ncol(qr_decomp_R)            # number of columns in R
   rank <- qr_decomp$rank                   # number of independent columns
   pivot <- qr_decomp$pivot                 # get the pivot vector
-  
+
   if (is.null(num_cols) || rank == num_cols) {
     rm_list <- character(0)                 # there are no linear combinations
   } else {
@@ -147,7 +157,7 @@ recommend_rm <- function(x, eps  = 1e-6, ...) {
     b <- qr.coef(b, Y)                      # get regression coefficients of
                                             # the dependent columns
     b[abs(b) < eps] <- 0                    # zap small values
-    
+
     # generate a list with one element for each dependent column
     combos <- lapply(1:ncol(Y),
                      function(i)
@@ -164,16 +174,16 @@ iter_lc_rm <- function(x,
                        verbose = FALSE) {
   if (is.null(colnames(x)))
     stop("`x` should have column names", call. = FALSE)
-  
+
   orig_names <- colnames(x)
   if (!is.matrix(x))
     x <- as.matrix(x)
-  
+
   # converting to matrix may alter column names
   name_df <- data.frame(orig = orig_names,
                         current = colnames(x),
                         stringsAsFactors = FALSE)
-  
+
   for (i in 1:max_steps) {
     if (verbose)
       cat(i)
@@ -193,3 +203,8 @@ iter_lc_rm <- function(x,
   name_df <- name_df[!(name_df$current %in% colnames(x)), ]
   name_df$orig
 }
+
+
+#' @rdname step_lincomb
+#' @param x A \code{step_lincomb} object.
+tidy.step_lincomb <- tidy_filter

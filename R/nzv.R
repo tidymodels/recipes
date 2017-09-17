@@ -3,13 +3,12 @@
 #' \code{step_nzv} creates a \emph{specification} of a recipe step
 #'  that will potentially remove variables that are highly sparse
 #'  and unbalanced.
-
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will evaluated by the filtering. See
-#'  \code{\link{selections}} for more details.
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param options A list of options for the filter (see Details
@@ -17,7 +16,10 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until \code{\link{prep.recipe}} is called.
-
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
@@ -66,6 +68,9 @@
 #'
 #' filtered_te <- bake(filter_obj, biomass_te)
 #' any(names(filtered_te) == "sparse")
+#'
+#' tidy(nzv_filter, number = 1)
+#' tidy(filter_obj, number = 1)
 #' @seealso \code{\link{step_corr}} \code{\link{recipe}}
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
@@ -180,3 +185,8 @@ nzv <- function(x,
   names(out) <- NULL
   colnames(x)[out]
 }
+
+#' @rdname step_nzv
+#' @param x A \code{step_nzv} object.
+tidy.step_nzv <- tidy_filter
+

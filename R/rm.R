@@ -1,17 +1,22 @@
 #' General Variable Filter
 #'
-#' \code{step_rm} creates a \emph{specification} of a recipe step that will
-#'   remove variables based on their name, type, or role.
+#' \code{step_rm} creates a \emph{specification} of a recipe step
+#'  that will remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables that
-#'   will evaluated by the filtering bake. See \code{\link{selections}} for
-#'   more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param removals A character string that contains the names of columns that
-#'   should be removed. These values are not determined until
-#'   \code{\link{prep.recipe}} is called.
+#' @param ... One or more selector functions to choose which
+#'  variables that will evaluated by the filtering bake. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param removals A character string that contains the names of
+#'  columns that should be removed. These values are not determined
+#'  until \code{\link{prep.recipe}} is called.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
 #' @export
@@ -32,7 +37,8 @@
 #'
 #' filtered_te <- bake(smaller_set, biomass_te)
 #' filtered_te
-
+#'
+#' tidy(smaller_set, number = 1)
 step_rm <- function(recipe,
                     ...,
                     role = NA,
@@ -96,3 +102,8 @@ print.step_rm <-
       cat("\n")
     invisible(x)
   }
+
+
+#' @rdname step_rm
+#' @param x A \code{step_rm} object.
+tidy.step_rm <- tidy_filter

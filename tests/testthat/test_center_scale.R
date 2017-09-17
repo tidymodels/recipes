@@ -16,7 +16,7 @@ test_that('correct means and std devs', {
 
   cent_tibble_un <-
     tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = rep(NA, 5))
+           value = rep(na_dbl, 5))
 
   expect_equal(tidy(standardized, 1), cent_tibble_un)
   expect_equal(tidy(standardized, 2), cent_tibble_un)

@@ -7,3 +7,4 @@ README.html
 ^_pkgdown\.yml$
 contributors.md
 presentations
+^~/tmp/rec_pkg$

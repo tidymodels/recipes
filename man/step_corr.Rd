@@ -2,10 +2,13 @@
 % Please edit documentation in R/corr.R
 \name{step_corr}
 \alias{step_corr}
+\alias{tidy.step_corr}
 \title{High Correlation Filter}
 \usage{
 step_corr(recipe, ..., role = NA, trained = FALSE, threshold = 0.9,
   use = "pairwise.complete.obs", method = "pearson", removals = NULL)
+
+\method{tidy}{step_corr}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,35 +16,47 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A value for the threshold of absolute correlation values.
-The step will try to remove the minimum number of columns so that all the
-resulting absolute correlations are less than this value.}
+\item{threshold}{A value for the threshold of absolute
+correlation values. The step will try to remove the minimum
+number of columns so that all the resulting absolute
+correlations are less than this value.}
 
-\item{use}{A character string for the \code{use} argument to the
-\code{\link[stats]{cor}} function.}
+\item{use}{A character string for the \code{use} argument to
+the \code{\link[stats]{cor}} function.}
 
-\item{method}{A character string for the \code{method} argument to the
-\code{\link[stats]{cor}} function.}
+\item{method}{A character string for the \code{method} argument
+to the \code{\link[stats]{cor}} function.}
 
-\item{removals}{A character string that contains the names of columns that
-should be removed. These values are not determined until
-\code{\link{prep.recipe}} is called.}
+\item{removals}{A character string that contains the names of
+columns that should be removed. These values are not determined
+until \code{\link{prep.recipe}} is called.}
+
+\item{x}{A \code{step_corr} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be removed.
 }
 \description{
-\code{step_corr} creates a \emph{specification} of a recipe step that will
-  potentially remove variables that have large absolute correlations with
-  other variables.
+\code{step_corr} creates a \emph{specification} of a recipe
+ step that will potentially remove variables that have large
+ absolute correlations with other variables.
 }
 \details{
-This step attempts to remove variables to keep the largest absolute
-  correlation between the variables less than \code{threshold}.
+This step attempts to remove variables to keep the
+ largest absolute correlation between the variables less than
+ \code{threshold}.
 }
 \examples{
 data(biomass)
@@ -64,15 +79,19 @@ filter_obj <- prep(corr_filter, training = biomass_tr)
 filtered_te <- bake(filter_obj, biomass_te)
 round(abs(cor(biomass_tr[, c(3:7, 9)])), 2)
 round(abs(cor(filtered_te)), 2)
+
+tidy(corr_filter, number = 1)
+tidy(filter_obj, number = 1)
 }
 \seealso{
 \code{\link{step_nzv}} \code{\link{recipe}}
   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 }
 \author{
-Original R code for filtering algorithm by Dong Li, modified by
-  Max Kuhn. Contributions by Reynald Lescarbeau (for original in
-  \code{caret} package). Max Kuhn for the \code{step} function.
+Original R code for filtering algorithm by Dong Li,
+ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
+ original in \code{caret} package). Max Kuhn for the \code{step}
+ function.
 }
 \concept{
 preprocessing variable_filters

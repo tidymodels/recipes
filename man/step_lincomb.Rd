@@ -2,10 +2,13 @@
 % Please edit documentation in R/lincombo.R
 \name{step_lincomb}
 \alias{step_lincomb}
+\alias{tidy.step_lincomb}
 \title{Linear Combination Filter}
 \usage{
 step_lincomb(recipe, ..., role = NA, trained = FALSE, max_steps = 5,
   removals = NULL)
+
+\method{tidy}{step_lincomb}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,29 +16,39 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
 \item{max_steps}{A value.}
 
-\item{removals}{A character string that contains the names of columns that
-should be removed. These values are not determined until
-\code{\link{prep.recipe}} is called.}
+\item{removals}{A character string that contains the names of
+columns that should be removed. These values are not determined
+until \code{\link{prep.recipe}} is called.}
+
+\item{x}{A \code{step_lincomb} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be removed.
 }
 \description{
-\code{step_lincomb} creates a \emph{specification} of a recipe step that
-  will potentially remove numeric variables that have linear combinations
-  between them.
+\code{step_lincomb} creates a \emph{specification} of a recipe
+ step that will potentially remove numeric variables that have
+ linear combinations between them.
 }
 \details{
-This step finds exact linear combinations between two or more
-  variables and recommends which column(s) should be removed to resolve the
-  issue. This algorithm may need to be applied multiple times (as defined
-  by \code{max_steps}).
+This step finds exact linear combinations between two
+ or more variables and recommends which column(s) should be
+ removed to resolve the issue. This algorithm may need to be
+ applied multiple times (as defined by \code{max_steps}).
 }
 \examples{
 data(biomass)
@@ -54,8 +67,12 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 
 lincomb_filter <- rec \%>\%
   step_lincomb(all_predictors())
-  
-prep(lincomb_filter, training = biomass_tr)
+
+lincomb_filter_trained <- prep(lincomb_filter, training = biomass_tr)
+lincomb_filter_trained
+
+tidy(lincomb_filter, number = 1)
+tidy(lincomb_filter_trained, number = 1)
 }
 \seealso{
 \code{\link{step_nzv}}\code{\link{step_corr}}
