@@ -1,37 +1,47 @@
 #' Box-Cox Transformation for Non-Negative Data
 #'
-#' \code{step_BoxCox} creates a \emph{specification} of a recipe step that will
-#'    transform data using a simple Box-Cox transformation.
+#' \code{step_BoxCox} creates a \emph{specification} of a recipe
+#'  step that will transform data using a simple Box-Cox
+#'  transformation.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param lambdas A numeric vector of transformation values. This is
-#'   \code{NULL} until computed by \code{\link{prep.recipe}}.
-#' @param limits A length 2 numeric vector defining the range to compute the
-#'   transformation parameter lambda.
-#' @param nunique An integer where data that have less possible values will
-#'   not be evaluate for a transformation.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param lambdas A numeric vector of transformation values. This
+#'  is \code{NULL} until computed by \code{\link{prep.recipe}}.
+#' @param limits A length 2 numeric vector defining the range to
+#'  compute the transformation parameter lambda.
+#' @param nunique An integer where data that have less possible
+#'  values will not be evaluate for a transformation.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{value} (the
+#'  lambda estimate).
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
-#' @details The Box-Cox transformation, which requires a strictly positive
-#'   variable, can be used to rescale a variable to be more similar to a
-#'  normal distribution. In this package, the partial log-likelihood function
-#'  is directly optimized within a reasonable set of transformation values
-#'  (which can be changed by the user).
+#' @details The Box-Cox transformation, which requires a strictly
+#'  positive variable, can be used to rescale a variable to be more
+#'  similar to a normal distribution. In this package, the partial
+#'  log-likelihood function is directly optimized within a
+#'  reasonable set of transformation values (which can be changed by
+#'  the user).
 #'
-#' This transformation is typically done on the outcome variable using the
-#'   residuals for a statistical model (such as ordinary least squares).
-#'   Here, a simple null model (intercept only) is used to apply the
-#'   transformation to the \emph{predictor} variables individually. This can
-#'   have the effect of making the variable distributions more symmetric.
+#'   This transformation is typically done on the outcome variable
+#'  using the residuals for a statistical model (such as ordinary
+#'  least squares). Here, a simple null model (intercept only) is
+#'  used to apply the transformation to the \emph{predictor}
+#'  variables individually. This can have the effect of making the
+#'  variable distributions more symmetric.
 #'
-#' If the transformation parameters are estimated to be very closed to the
-#'   bounds, or if the optimization fails, a value of \code{NA} is used and
-#'   no transformation is applied.
+#' If the transformation parameters are estimated to be very
+#'  closed to the bounds, or if the optimization fails, a value of
+#'  \code{NA} is used and no transformation is applied.
 #'
 #' @references Sakia, R. M. (1992). The Box-Cox transformation technique:
 #'   A review. \emph{The Statistician}, 169-178..
@@ -47,6 +57,10 @@
 #'
 #' plot(density(state.x77[, "Illiteracy"]), main = "before")
 #' plot(density(bc_data$Illiteracy), main = "after")
+#'
+#' tidy(bc_trans, number = 1)
+#' tidy(bc_estimates, number = 1)
+#'
 #' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}}
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 step_BoxCox <-
@@ -147,7 +161,7 @@ ll_bc <- function(lambda, y, gm, eps = .001) {
     log(y) / gm0
   else
     (y ^ lambda - 1) / (lambda * gm0)
-  var_z <- var(z) * (n - 1) / n 
+  var_z <- var(z) * (n - 1) / n
   - .5 * n * log(var_z)
 }
 
@@ -179,4 +193,19 @@ estimate_bc <- function(dat,
   if (abs(limits[1] - lam) <= eps | abs(limits[2] - lam) <= eps)
     lam <- NA
   lam
+}
+
+
+#' @rdname step_BoxCox
+#' @param x A \code{step_BoxCox} object.
+tidy.step_BoxCox <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = names(x$lambdas),
+                  value = x$lambdas)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  value = NA)
+  }
+  res
 }

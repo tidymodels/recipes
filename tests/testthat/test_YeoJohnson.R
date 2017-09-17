@@ -43,6 +43,11 @@ test_that('simple YJ trans', {
   rec <- recipe(~., data = ex_dat) %>%
     step_YeoJohnson(x1, x2, x3, x4)
 
+  yj_tibble_un <-
+    tibble(terms = c("x1", "x2", "x3", "x4"),
+           value = rep(NA, 4))
+  expect_equal(yj_tibble_un, tidy(rec, number = 1))
+
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, newdata = ex_dat)
 

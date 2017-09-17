@@ -2,10 +2,13 @@
 % Please edit documentation in R/YeoJohnson.R
 \name{step_YeoJohnson}
 \alias{step_YeoJohnson}
+\alias{tidy.step_YeoJohnson}
 \title{Yeo-Johnson Transformation}
 \usage{
 step_YeoJohnson(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
   limits = c(-5, 5), nunique = 5, na.rm = TRUE)
+
+\method{tidy}{step_YeoJohnson}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,45 +16,58 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{lambdas}{A numeric vector of transformation values. This is
-\code{NULL} until computed by \code{\link{prep.recipe}}.}
+\item{lambdas}{A numeric vector of transformation values. This
+is \code{NULL} until computed by \code{\link{prep.recipe}}.}
 
-\item{limits}{A length 2 numeric vector defining the range to compute the
-transformation parameter lambda.}
+\item{limits}{A length 2 numeric vector defining the range to
+compute the transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible values will
-not be evaluate for a transformation}
+\item{nunique}{An integer where data that have less possible
+values will not be evaluate for a transformation.}
 
 \item{na.rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
+
+\item{x}{A \code{step_YeoJohnson} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{value} (the
+ lambda estimate).
 }
 \description{
-\code{step_YeoJohnson} creates a \emph{specification} of a recipe step that
-  will transform data using a simple Yeo-Johnson transformation.
+\code{step_YeoJohnson} creates a \emph{specification} of a
+ recipe step that will transform data using a simple Yeo-Johnson
+ transformation.
 }
 \details{
-The Yeo-Johnson transformation is very similar to the Box-Cox but
-  does not require the input variables to be strictly positive. In the
-  package, the partial log-likelihood function is directly optimized within
-  a reasonable set of transformation values (which can be changed by the
-  user).
+The Yeo-Johnson transformation is very similar to the
+ Box-Cox but does not require the input variables to be strictly
+ positive. In the package, the partial log-likelihood function is
+ directly optimized within a reasonable set of transformation
+ values (which can be changed by the user).
 
-This transformation is typically done on the outcome variable using the
-  residuals for a statistical model (such as ordinary least squares). Here,
-  a simple null model (intercept only) is used to apply the transformation
-  to the \emph{predictor} variables individually. This can have the effect
-  of making the variable distributions more symmetric.
+This transformation is typically done on the outcome variable
+ using the residuals for a statistical model (such as ordinary
+ least squares). Here, a simple null model (intercept only) is
+ used to apply the transformation to the \emph{predictor}
+ variables individually. This can have the effect of making the
+ variable distributions more symmetric.
 
-If the transformation parameters are estimated to be very closed to the
-  bounds, or if the optimization fails, a value of \code{NA} is used and
-  no transformation is applied.
+If the transformation parameters are estimated to be very
+ closed to the bounds, or if the optimization fails, a value of
+ \code{NA} is used and no transformation is applied.
 }
 \examples{
 
@@ -71,6 +87,9 @@ yj_te <- bake(yj_estimates, biomass_te)
 
 plot(density(biomass_te$sulfur), main = "before")
 plot(density(yj_te$sulfur), main = "after")
+
+tidy(yj_trans, number = 1)
+tidy(yj_estimates, number = 1)
 }
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power

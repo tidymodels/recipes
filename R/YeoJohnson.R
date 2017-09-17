@@ -1,37 +1,46 @@
 #' Yeo-Johnson Transformation
 #'
-#' \code{step_YeoJohnson} creates a \emph{specification} of a recipe step that
-#'   will transform data using a simple Yeo-Johnson transformation.
+#' \code{step_YeoJohnson} creates a \emph{specification} of a
+#'  recipe step that will transform data using a simple Yeo-Johnson
+#'  transformation.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param lambdas A numeric vector of transformation values. This is
-#'   \code{NULL} until computed by \code{\link{prep.recipe}}.
-#' @param limits A length 2 numeric vector defining the range to compute the
-#'   transformation parameter lambda.
-#' @param nunique An integer where data that have less possible values will
-#'   not be evaluate for a transformation
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param lambdas A numeric vector of transformation values. This
+#'  is \code{NULL} until computed by \code{\link{prep.recipe}}.
+#' @param limits A length 2 numeric vector defining the range to
+#'  compute the transformation parameter lambda.
+#' @param nunique An integer where data that have less possible
+#'  values will not be evaluate for a transformation.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{value} (the
+#'  lambda estimate).
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
-#' @details The Yeo-Johnson transformation is very similar to the Box-Cox but
-#'   does not require the input variables to be strictly positive. In the
-#'   package, the partial log-likelihood function is directly optimized within
-#'   a reasonable set of transformation values (which can be changed by the
-#'   user).
+#' @details The Yeo-Johnson transformation is very similar to the
+#'  Box-Cox but does not require the input variables to be strictly
+#'  positive. In the package, the partial log-likelihood function is
+#'  directly optimized within a reasonable set of transformation
+#'  values (which can be changed by the user).
 #'
-#' This transformation is typically done on the outcome variable using the
-#'   residuals for a statistical model (such as ordinary least squares). Here,
-#'   a simple null model (intercept only) is used to apply the transformation
-#'   to the \emph{predictor} variables individually. This can have the effect
-#'   of making the variable distributions more symmetric.
+#' This transformation is typically done on the outcome variable
+#'  using the residuals for a statistical model (such as ordinary
+#'  least squares). Here, a simple null model (intercept only) is
+#'  used to apply the transformation to the \emph{predictor}
+#'  variables individually. This can have the effect of making the
+#'  variable distributions more symmetric.
 #'
-#' If the transformation parameters are estimated to be very closed to the
-#'   bounds, or if the optimization fails, a value of \code{NA} is used and
-#'   no transformation is applied.
+#' If the transformation parameters are estimated to be very
+#'  closed to the bounds, or if the optimization fails, a value of
+#'  \code{NA} is used and no transformation is applied.
 #'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. \emph{Biometrika}.
@@ -53,6 +62,9 @@
 #'
 #' plot(density(biomass_te$sulfur), main = "before")
 #' plot(density(yj_te$sulfur), main = "after")
+#'
+#' tidy(yj_trans, number = 1)
+#' tidy(yj_estimates, number = 1)
 #' @seealso \code{\link{step_BoxCox}} \code{\link{recipe}}
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 step_YeoJohnson <-
@@ -227,3 +239,8 @@ estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5,
     lam <- NA
   lam
 }
+
+
+#' @rdname step_YeoJohnson
+#' @param x A \code{step_YeoJohnson} object.
+tidy.step_YeoJohnson <- tidy.step_BoxCox
