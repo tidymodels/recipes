@@ -2,11 +2,14 @@
 % Please edit documentation in R/classdist.R
 \name{step_classdist}
 \alias{step_classdist}
+\alias{tidy.step_classdist}
 \title{Distances to Class Centroids}
 \usage{
 step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   mean_func = mean, cov_func = cov, pool = FALSE, log = TRUE,
   objects = NULL)
+
+\method{tidy}{step_classdist}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -14,48 +17,61 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{class}{A single character string that specifies a single categorical
-variable to be used as the class.}
+\item{class}{A single character string that specifies a single
+categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that resulting
-distances will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that resulting distances will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{mean_func}{A function to compute the center of the distribution.}
+\item{mean_func}{A function to compute the center of the
+distribution.}
 
 \item{cov_func}{A function that computes the covariance matrix}
 
-\item{pool}{A logical: should the covariance matrix be computed by pooling
-the data for all of the classes?}
+\item{pool}{A logical: should the covariance matrix be computed
+by pooling the data for all of the classes?}
 
-\item{log}{A logical: should the distances be transformed by the natural
-log function?}
+\item{log}{A logical: should the distances be transformed by
+the natural log function?}
 
-\item{objects}{Statistics are stored here once this step has been trained
-by \code{\link{prep.recipe}}.}
+\item{objects}{Statistics are stored here once this step has
+been trained by \code{\link{prep.recipe}}.}
+
+\item{x}{A \code{step_classdist} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected), \code{value} (the centroid of
+ the class), and \code{class}.
 }
 \description{
-\code{step_classdist} creates a a \emph{specification} of a recipe step
-  that will convert numeric data into Mahalanobis distance measurements to
-  the data centroid. This is done for each value of a categorical class
-  variable.
+\code{step_classdist} creates a a \emph{specification} of a
+ recipe step that will convert numeric data into Mahalanobis
+ distance measurements to the data centroid. This is done for
+ each value of a categorical class variable.
 }
 \details{
 \code{step_classdist} will create a
 
-The function will create a new column for every unique value of the
-  \code{class} variable. The resulting variables will not replace the
-  original values and have the prefix \code{classdist_}.
+The function will create a new column for every unique value of
+ the \code{class} variable. The resulting variables will not
+ replace the original values and have the prefix
+ \code{classdist_}.
 
-Note that, by default,  the default covariance function requires that each
-  class should have at least as many rows as variables listed in the
-  \code{terms} argument. If \code{pool = TRUE}, there must be at least as
-  many data points are variables overall.
+Note that, by default, the default covariance function requires
+ that each class should have at least as many rows as variables
+ listed in the \code{terms} argument. If \code{pool = TRUE},
+ there must be at least as many data points are variables
+ overall.
 }
 \examples{
 
@@ -72,6 +88,9 @@ dists_to_species <- bake(rec_dists, newdata = iris, everything())
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 dists_to_species[, c("Species", dist_cols)]
+
+tidy(rec, number = 1)
+tidy(rec_dists, number = 1)
 }
 \concept{
 preprocessing dimension_reduction

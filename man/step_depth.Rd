@@ -2,75 +2,87 @@
 % Please edit documentation in R/depth.R
 \name{step_depth}
 \alias{step_depth}
+\alias{tidy.step_depth}
 \title{Data Depths}
 \usage{
 step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
   metric = "halfspace", options = list(), data = NULL)
+
+\method{tidy}{step_depth}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables that
-will be used to create the new features. See \code{\link{selections}} for
-more details.}
+\item{...}{One or more selector functions to choose which
+variables that will be used to create the new features. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{class}{A single character string that specifies a single categorical
-variable to be used as the class.}
+\item{class}{A single character string that specifies a single
+categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that resulting depth
-estimates will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that resulting depth estimates will be used as predictors in a
+model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{metric}{A character string specifying the depth metric. Possible
-values are "potential", "halfspace", "Mahalanobis", "simplicialVolume",
-"spatial", and "zonoid".}
+\item{metric}{A character string specifying the depth metric.
+Possible values are "potential", "halfspace", "Mahalanobis",
+"simplicialVolume", "spatial", and "zonoid".}
 
-\item{options}{A list of options to pass to the underlying depth functions.
-See \code{\link[ddalpha]{depth.halfspace}},
+\item{options}{A list of options to pass to the underlying
+depth functions. See \code{\link[ddalpha]{depth.halfspace}},
 \code{\link[ddalpha]{depth.Mahalanobis}},
 \code{\link[ddalpha]{depth.potential}},
 \code{\link[ddalpha]{depth.projection}},
 \code{\link[ddalpha]{depth.simplicial}},
 \code{\link[ddalpha]{depth.simplicialVolume}},
-\code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.}
+\code{\link[ddalpha]{depth.spatial}},
+\code{\link[ddalpha]{depth.zonoid}}.}
 
 \item{data}{The training data are stored here once after
 \code{\link{prep.recipe}} is executed.}
+
+\item{x}{A \code{step_depth} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected) and \code{class}.
 }
 \description{
-\code{step_depth} creates a a \emph{specification} of a recipe step that
-  will convert numeric data into measurement of \emph{data depth}. This is
-  done for each value of a categorical class variable.
+\code{step_depth} creates a a \emph{specification} of a recipe
+ step that will convert numeric data into measurement of
+ \emph{data depth}. This is done for each value of a categorical
+ class variable.
 }
 \details{
-Data depth metrics attempt to measure how close data a data point
-  is to the center of its distribution.  There are a number of methods for
-  calculating death but a simple example is the inverse of the distance of
-  a data point to the centroid of the distribution. Generally, small values
-  indicate that a data point not close to the centroid. \code{step_depth}
-  can compute a class-specific depth for a new data point based on the
-  proximity of the new value to the training set distribution.
+Data depth metrics attempt to measure how close data a
+ data point is to the center of its distribution. There are a
+ number of methods for calculating death but a simple example is
+ the inverse of the distance of a data point to the centroid of
+ the distribution. Generally, small values indicate that a data
+ point not close to the centroid. \code{step_depth} can compute a
+ class-specific depth for a new data point based on the proximity
+ of the new value to the training set distribution.
 
-Note that the entire training set is saved to compute future depth values.
-The saved data have been trained (i.e. prepared) and baked (i.e. processed) up to the point before the
-location that \code{step_depth} occupies in the recipe. Also, the data
-requirements for the different step methods may vary. For example, using
-\code{metric = "Mahalanobis"} requires that each class should have at least
-as many rows as variables listed in the \code{terms} argument.
+  Note that the entire training set is saved to compute future
+ depth values. The saved data have been trained (i.e. prepared)
+ and baked (i.e. processed) up to the point before the location
+ that \code{step_depth} occupies in the recipe. Also, the data
+ requirements for the different step methods may vary. For
+ example, using \code{metric = "Mahalanobis"} requires that each
+ class should have at least as many rows as variables listed in
+ the \code{terms} argument.
 
-The function will create a new column for every unique value of the
-\code{class} variable. The resulting variables will not replace the
-original values and have the prefix \code{depth_}.
+  The function will create a new column for every unique value of
+ the \code{class} variable. The resulting variables will not
+ replace the original values and have the prefix \code{depth_}.
 }
 \examples{
 
@@ -82,6 +94,9 @@ rec_dists <- prep(rec, training = iris)
 
 dists_to_species <- bake(rec_dists, newdata = iris)
 dists_to_species
+
+tidy(rec, number = 1)
+tidy(rec_dists, number = 1)
 }
 \concept{
 preprocessing dimension_reduction

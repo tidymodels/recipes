@@ -1,53 +1,64 @@
 #' Data Depths
 #'
-#' \code{step_depth} creates a a \emph{specification} of a recipe step that
-#'   will convert numeric data into measurement of \emph{data depth}. This is
-#'   done for each value of a categorical class variable.
+#' \code{step_depth} creates a a \emph{specification} of a recipe
+#'  step that will convert numeric data into measurement of
+#'  \emph{data depth}. This is done for each value of a categorical
+#'  class variable.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables that
-#'   will be used to create the new features. See \code{\link{selections}} for
-#'   more details.
-#' @param class A single character string that specifies a single categorical
-#'   variable to be used as the class.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that resulting depth
-#'   estimates will be used as predictors in a model.
-#' @param metric A character string specifying the depth metric. Possible
-#'   values are "potential", "halfspace", "Mahalanobis", "simplicialVolume",
-#'   "spatial", and "zonoid".
-#' @param options A list of options to pass to the underlying depth functions.
-#'   See \code{\link[ddalpha]{depth.halfspace}},
-#'   \code{\link[ddalpha]{depth.Mahalanobis}},
-#'   \code{\link[ddalpha]{depth.potential}},
-#'   \code{\link[ddalpha]{depth.projection}},
-#'   \code{\link[ddalpha]{depth.simplicial}},
-#'   \code{\link[ddalpha]{depth.simplicialVolume}},
-#'   \code{\link[ddalpha]{depth.spatial}}, \code{\link[ddalpha]{depth.zonoid}}.
+#' @param ... One or more selector functions to choose which
+#'  variables that will be used to create the new features. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param class A single character string that specifies a single
+#'  categorical variable to be used as the class.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that resulting depth estimates will be used as predictors in a
+#'  model.
+#' @param metric A character string specifying the depth metric.
+#'  Possible values are "potential", "halfspace", "Mahalanobis",
+#'  "simplicialVolume", "spatial", and "zonoid".
+#' @param options A list of options to pass to the underlying
+#'  depth functions. See \code{\link[ddalpha]{depth.halfspace}},
+#'  \code{\link[ddalpha]{depth.Mahalanobis}},
+#'  \code{\link[ddalpha]{depth.potential}},
+#'  \code{\link[ddalpha]{depth.projection}},
+#'  \code{\link[ddalpha]{depth.simplicial}},
+#'  \code{\link[ddalpha]{depth.simplicialVolume}},
+#'  \code{\link[ddalpha]{depth.spatial}},
+#'  \code{\link[ddalpha]{depth.zonoid}}.
 #' @param data The training data are stored here once after
-#' \code{\link{prep.recipe}} is executed.
+#'  \code{\link{prep.recipe}} is executed.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{class}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
-#' @details Data depth metrics attempt to measure how close data a data point
-#'   is to the center of its distribution.  There are a number of methods for
-#'   calculating death but a simple example is the inverse of the distance of
-#'   a data point to the centroid of the distribution. Generally, small values
-#'   indicate that a data point not close to the centroid. \code{step_depth}
-#'   can compute a class-specific depth for a new data point based on the
-#'   proximity of the new value to the training set distribution.
+#' @details Data depth metrics attempt to measure how close data a
+#'  data point is to the center of its distribution. There are a
+#'  number of methods for calculating death but a simple example is
+#'  the inverse of the distance of a data point to the centroid of
+#'  the distribution. Generally, small values indicate that a data
+#'  point not close to the centroid. \code{step_depth} can compute a
+#'  class-specific depth for a new data point based on the proximity
+#'  of the new value to the training set distribution.
 #'
-#' Note that the entire training set is saved to compute future depth values.
-#' The saved data have been trained (i.e. prepared) and baked (i.e. processed) up to the point before the
-#' location that \code{step_depth} occupies in the recipe. Also, the data
-#' requirements for the different step methods may vary. For example, using
-#' \code{metric = "Mahalanobis"} requires that each class should have at least
-#' as many rows as variables listed in the \code{terms} argument.
+#'   Note that the entire training set is saved to compute future
+#'  depth values. The saved data have been trained (i.e. prepared)
+#'  and baked (i.e. processed) up to the point before the location
+#'  that \code{step_depth} occupies in the recipe. Also, the data
+#'  requirements for the different step methods may vary. For
+#'  example, using \code{metric = "Mahalanobis"} requires that each
+#'  class should have at least as many rows as variables listed in
+#'  the \code{terms} argument.
 #'
-#' The function will create a new column for every unique value of the
-#' \code{class} variable. The resulting variables will not replace the
-#' original values and have the prefix \code{depth_}.
+#'   The function will create a new column for every unique value of
+#'  the \code{class} variable. The resulting variables will not
+#'  replace the original values and have the prefix \code{depth_}.
 #'
 #' @examples
 #'
@@ -59,6 +70,9 @@
 #'
 #' dists_to_species <- bake(rec_dists, newdata = iris)
 #' dists_to_species
+#'
+#' tidy(rec, number = 1)
+#' tidy(rec_dists, number = 1)
 
 step_depth <-
   function(recipe,
@@ -161,7 +175,7 @@ bake.step_depth <- function(object, newdata, ...) {
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Data depth by ", x$class, "for ")
-    
+
     if (x$trained) {
       cat(format_ch_vec(x_names, width = width))
     } else
@@ -169,3 +183,20 @@ print.step_depth <-
     printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+
+#' @rdname step_depth
+#' @param x A \code{step_depth} object.
+tidy.step_depth <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = colnames(x$data[[1]]),
+                  class = x$class)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  class = na_chr)
+  }
+  res
+}
+

@@ -1,65 +1,76 @@
 #' Kernel PCA Signal Extraction
 #'
-#' \code{step_kpca} a \emph{specification} of a recipe step that will convert
-#'   numeric data into one or more principal components using a kernel basis
-#'   expansion.
+#' \code{step_kpca} a \emph{specification} of a recipe step that
+#'  will convert numeric data into one or more principal components
+#'  using a kernel basis expansion.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'   used to compute the components. See \code{\link{selections}} for more
-#'   details.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new principal
-#'   component columns created by the original variables will be used as
-#'   predictors in a model.
-#' @param num The number of PCA components to retain as new predictors. If
-#'   \code{num} is greater than the number of columns or the number of possible
-#'   components, a smaller value will be used.
-#' @param options A list of options to \code{\link[kernlab]{kpca}}. Defaults
-#'   are set for the arguments \code{kernel} and \code{kpar} but others can be
-#'   passed in. \bold{Note} that the arguments \code{x} and \code{features}
-#'   should not be passed here (or at all).
-#' @param res An S4 \code{\link[kernlab]{kpca}} object is stored here once this
-#'   preprocessing step has be trained by \code{\link{prep.recipe}}.
-#' @param prefix A character string that will be the prefix to the resulting
-#'   new variables. See notes below.
+#' @param ... One or more selector functions to choose which
+#'  variables will be used to compute the components. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new principal component columns created by the original
+#'  variables will be used as predictors in a model.
+#' @param num The number of PCA components to retain as new
+#'  predictors. If \code{num} is greater than the number of columns
+#'  or the number of possible components, a smaller value will be
+#'  used.
+#' @param options A list of options to
+#'  \code{\link[kernlab]{kpca}}. Defaults are set for the arguments
+#'  \code{kernel} and \code{kpar} but others can be passed in.
+#'  \bold{Note} that the arguments \code{x} and \code{features}
+#'  should not be passed here (or at all).
+#' @param res An S4 \code{\link[kernlab]{kpca}} object is stored
+#'  here once this preprocessing step has be trained by
+#'  \code{\link{prep.recipe}}.
+#' @param prefix A character string that will be the prefix to the
+#'  resulting new variables. See notes below.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected).
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods kernel_methods
 #' @export
-#' @details Kernel principal component analysis (kPCA) is an extension a PCA
-#'   analysis that conducts the calculations in a broader dimensionality
-#'   defined by a kernel function. For example, if a quadratic kernel function
-#'   were used, each variable would be represented by its original values as
-#'   well as its square. This nonlinear mapping is used  during the PCA
-#'   analysis and can potentially help find better representations of the
-#'   original data.
+#' @details Kernel principal component analysis (kPCA) is an
+#'  extension a PCA analysis that conducts the calculations in a
+#'  broader dimensionality defined by a kernel function. For
+#'  example, if a quadratic kernel function were used, each variable
+#'  would be represented by its original values as well as its
+#'  square. This nonlinear mapping is used during the PCA analysis
+#'  and can potentially help find better representations of the
+#'  original data.
 #'
-#' As with ordinary PCA, it is important to standardized the variables prior
-#'   to running PCA (\code{step_center} and \code{step_scale} can be used for
-#'   this purpose).
+#' As with ordinary PCA, it is important to standardized the
+#'  variables prior to running PCA (\code{step_center} and
+#'  \code{step_scale} can be used for this purpose).
 #'
-#' When performing kPCA, the kernel function (and any important kernel
-#'   parameters) must be chosen. The \pkg{kernlab} package is used and the
-#'   reference below discusses the types of kernels available and their
-#'   parameter(s). These specifications can be made in the \code{kernel} and
-#'   \code{kpar} slots of the \code{options} argument to \code{step_kpca}.
+#' When performing kPCA, the kernel function (and any important
+#'  kernel parameters) must be chosen. The \pkg{kernlab} package is
+#'  used and the reference below discusses the types of kernels
+#'  available and their parameter(s). These specifications can be
+#'  made in the \code{kernel} and \code{kpar} slots of the
+#'  \code{options} argument to \code{step_kpca}.
 #'
-#' The argument \code{num} controls the number of components that will be
-#'   retained (the original variables that are used to derive the components
-#'   are removed from the data). The new components will have names that begin
-#'   with \code{prefix} and a sequence of numbers. The variable names are
-#'   padded with zeros. For example, if \code{num < 10}, their names will be
-#'   \code{kPC1} - \code{kPC9}. If \code{num = 101}, the names would be
-#'   \code{kPC001} - \code{kPC101}.
+#' The argument \code{num} controls the number of components that
+#'  will be retained (the original variables that are used to derive
+#'  the components are removed from the data). The new components
+#'  will have names that begin with \code{prefix} and a sequence of
+#'  numbers. The variable names are padded with zeros. For example,
+#'  if \code{num < 10}, their names will be \code{kPC1} -
+#'  \code{kPC9}. If \code{num = 101}, the names would be
+#'  \code{kPC001} - \code{kPC101}.
 #'
-#' @references Scholkopf, B., Smola, A., and Muller, K. (1997). Kernel
-#'   principal component analysis. \emph{Lecture Notes in Computer Science},
-#'   1327, 583-588.
+#' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
+#'  Kernel principal component analysis. \emph{Lecture Notes in
+#'  Computer Science}, 1327, 583-588.
 #'
-#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004). kernlab -
-#'   An S4 package for kernel methods in R. \emph{Journal of Statistical
-#'   Software}, 11(1), 1-20.
+#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
+#'  kernlab - An S4 package for kernel methods in R. \emph{Journal
+#'  of Statistical Software}, 11(1), 1-20.
 #'
 #' @examples
 #' data(biomass)
@@ -83,6 +94,9 @@
 #' rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
 #' plot(kpca_te$kPC1, kpca_te$kPC2,
 #'      xlim = rng, ylim = rng)
+#'
+#' tidy(kpca_trans, number = 4)
+#' tidy(kpca_estimates, number = 4)
 #' @seealso \code{\link{step_pca}} \code{\link{step_ica}}
 #'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
@@ -177,3 +191,17 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
   if(x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
+
+
+#' @rdname step_kpca
+#' @param x A \code{step_kpca} object
+tidy.step_kpca <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = colnames(x$res@org.data))
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names)
+  }
+  res
+}
+

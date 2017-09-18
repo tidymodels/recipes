@@ -1,40 +1,49 @@
 #' Distances to Class Centroids
 #'
-#' \code{step_classdist} creates a a \emph{specification} of a recipe step
-#'   that will convert numeric data into Mahalanobis distance measurements to
-#'   the data centroid. This is done for each value of a categorical class
-#'   variable.
+#' \code{step_classdist} creates a a \emph{specification} of a
+#'  recipe step that will convert numeric data into Mahalanobis
+#'  distance measurements to the data centroid. This is done for
+#'  each value of a categorical class variable.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param class A single character string that specifies a single categorical
-#'   variable to be used as the class.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that resulting
-#'   distances will be used as predictors in a model.
-#' @param mean_func A function to compute the center of the distribution.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param class A single character string that specifies a single
+#'  categorical variable to be used as the class.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that resulting distances will be used as predictors in a model.
+#' @param mean_func A function to compute the center of the
+#'  distribution.
 #' @param cov_func A function that computes the covariance matrix
-#' @param pool A logical: should the covariance matrix be computed by pooling
-#'   the data for all of the classes?
-#' @param log A logical: should the distances be transformed by the natural
-#'   log function?
-#' @param objects Statistics are stored here once this step has been trained
-#'   by \code{\link{prep.recipe}}.
+#' @param pool A logical: should the covariance matrix be computed
+#'  by pooling the data for all of the classes?
+#' @param log A logical: should the distances be transformed by
+#'  the natural log function?
+#' @param objects Statistics are stored here once this step has
+#'  been trained by \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected), \code{value} (the centroid of
+#'  the class), and \code{class}.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
 #' @details \code{step_classdist} will create a
 #'
-#' The function will create a new column for every unique value of the
-#'   \code{class} variable. The resulting variables will not replace the
-#'   original values and have the prefix \code{classdist_}.
+#' The function will create a new column for every unique value of
+#'  the \code{class} variable. The resulting variables will not
+#'  replace the original values and have the prefix
+#'  \code{classdist_}.
 #'
-#' Note that, by default,  the default covariance function requires that each
-#'   class should have at least as many rows as variables listed in the
-#'   \code{terms} argument. If \code{pool = TRUE}, there must be at least as
-#'   many data points are variables overall.
+#' Note that, by default, the default covariance function requires
+#'  that each class should have at least as many rows as variables
+#'  listed in the \code{terms} argument. If \code{pool = TRUE},
+#'  there must be at least as many data points are variables
+#'  overall.
 #' @examples
 #'
 #' # in case of missing data...
@@ -50,6 +59,9 @@
 #' ## on log scale:
 #' dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 #' dists_to_species[, c("Species", dist_cols)]
+#'
+#' tidy(rec, number = 1)
+#' tidy(rec_dists, number = 1)
 #' @importFrom stats cov
 step_classdist <- function(recipe,
                            ...,
@@ -124,7 +136,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
       center = lapply(x_dat, get_center, mfun = x$mean_func),
       scale = x$cov_func(training[, x_names])
     )
-    
+
   } else {
     res <-
       lapply(x_dat,
@@ -192,3 +204,29 @@ print.step_classdist <-
     printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+
+get_centroid <- function(x) {
+  tibble(terms = names(x$center),
+         value = unname(x$center))
+}
+
+#' @rdname step_classdist
+#' @param x A \code{step_classdist} object.
+#' @importFrom dplyr bind_rows
+tidy.step_classdist <- function(x, ...) {
+  if (is_trained(x)) {
+    centroids <- lapply(x$objects, get_centroid)
+    num_rows <- vapply(centroids, nrow, numeric(1))
+    classes <- rep(names(centroids), num_rows)
+    res <- dplyr::bind_rows(centroids)
+    res$class <- classes
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  value = na_dbl,
+                  class = na_chr)
+  }
+  res
+}

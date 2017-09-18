@@ -1,53 +1,66 @@
 #' ICA Signal Extraction
 #'
-#' \code{step_ica} creates a \emph{specification} of a recipe step that will
-#'   convert numeric data into one or more independent components.
+#' \code{step_ica} creates a \emph{specification} of a recipe step
+#'  that will convert numeric data into one or more independent
+#'  components.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'   used to compute the components. See \code{\link{selections}} for more
-#'   details.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new
-#'   independent component columns created by the original variables will be
-#'   used as predictors in a model.
-#' @param num The number of ICA components to retain as new predictors. If
-#'   \code{num} is greater than the number of columns or the number of possible
-#'   components, a smaller value will be used.
-#' @param options A list of options to \code{\link[fastICA]{fastICA}}. No
-#'   defaults are set here. \bold{Note} that the arguments \code{X} and
-#'   \code{n.comp} should not be passed here.
-#' @param res The \code{\link[fastICA]{fastICA}} object is stored here once
-#'   this preprocessing step has be trained by \code{\link{prep.recipe}}.
-#' @param prefix A character string that will be the prefix to the resulting
-#'   new variables. See notes below.
+#' @param ... One or more selector functions to choose which
+#'  variables will be used to compute the components. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new independent component columns created by the
+#'  original variables will be used as predictors in a model.
+#' @param num The number of ICA components to retain as new
+#'  predictors. If \code{num} is greater than the number of columns
+#'  or the number of possible components, a smaller value will be
+#'  used.
+#' @param options A list of options to
+#'  \code{\link[fastICA]{fastICA}}. No defaults are set here.
+#'  \bold{Note} that the arguments \code{X} and \code{n.comp} should
+#'  not be passed here.
+#' @param res The \code{\link[fastICA]{fastICA}} object is stored
+#'  here once this preprocessing step has be trained by
+#'  \code{\link{prep.recipe}}.
+#' @param prefix A character string that will be the prefix to the
+#'  resulting new variables. See notes below.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected), \code{value} (the loading),
+#'  and \code{component}.
 #' @keywords datagen
 #' @concept preprocessing ica projection_methods
 #' @export
-#' @details Independent component analysis (ICA) is a transformation of a
-#'   group of variables that produces a new set of artificial features or
-#'   components. ICA assumes that the variables are mixtures of a set of
-#'   distinct, non-Gaussian signals and attempts to transform the data to
-#'   isolate these signals. Like PCA, the components are statistically
-#'   independent from one another. This means that they can be used to combat
-#'   large inter-variables correlations in a data set. Also like PCA, it is
-#'   advisable to center and scale the variables prior to running ICA.
+#' @details Independent component analysis (ICA) is a
+#'  transformation of a group of variables that produces a new set
+#'  of artificial features or components. ICA assumes that the
+#'  variables are mixtures of a set of distinct, non-Gaussian
+#'  signals and attempts to transform the data to isolate these
+#'  signals. Like PCA, the components are statistically independent
+#'  from one another. This means that they can be used to combat
+#'  large inter-variables correlations in a data set. Also like PCA,
+#'  it is advisable to center and scale the variables prior to
+#'  running ICA.
 #'
-#' This package produces components using the "FastICA" methodology (see
-#'   reference below).
+#' This package produces components using the "FastICA"
+#'  methodology (see reference below).
 #'
-#' The argument \code{num} controls the number of components that will be
-#'   retained (the original variables that are used to derive the components
-#'   are removed from the data). The new components will have names that begin
-#'   with \code{prefix} and a sequence of numbers. The variable names are
-#'   padded with zeros. For example, if \code{num < 10}, their names will be
-#'   \code{IC1} - \code{IC9}. If \code{num = 101}, the names would be
-#'   \code{IC001} - \code{IC101}.
+#' The argument \code{num} controls the number of components that
+#'  will be retained (the original variables that are used to derive
+#'  the components are removed from the data). The new components
+#'  will have names that begin with \code{prefix} and a sequence of
+#'  numbers. The variable names are padded with zeros. For example,
+#'  if \code{num < 10}, their names will be \code{IC1} - \code{IC9}.
+#'  If \code{num = 101}, the names would be \code{IC001} -
+#'  \code{IC101}.
 #'
-#' @references Hyvarinen, A., and Oja, E. (2000). Independent component
-#'   analysis: algorithms and applications. \emph{Neural Networks}, 13(4-5),
-#'   411-430.
+#' @references Hyvarinen, A., and Oja, E. (2000). Independent
+#'  component analysis: algorithms and applications. \emph{Neural
+#'  Networks}, 13(4-5), 411-430.
 #'
 #' @examples
 #' # from fastICA::fastICA
@@ -62,13 +75,16 @@
 #' rec <- recipe( ~ ., data = tr)
 #'
 #' ica_trans <- step_center(rec,  V1, V2)
-#' ica_trans <- step_scale(rec, V1, V2)
-#' ica_trans <- step_ica(rec, V1, V2, num = 2)
+#' ica_trans <- step_scale(ica_trans, V1, V2)
+#' ica_trans <- step_ica(ica_trans, V1, V2, num = 2)
 #' ica_estimates <- prep(ica_trans, training = tr)
 #' ica_data <- bake(ica_estimates, te)
 #'
 #' plot(te$V1, te$V2)
 #' plot(ica_data$IC1, ica_data$IC2)
+#'
+#' tidy(ica_trans, number = 3)
+#' tidy(ica_estimates, number = 3)
 #' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
 #'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
@@ -119,14 +135,14 @@ step_ica_new <-
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   x$num <- min(x$num, length(col_names))
-  
+
   indc <- FastICA(stdpars = x$options)
   indc <-
     indc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
              list(ndim = x$num))
-  
+
   step_ica_new(
     terms = x$terms,
     role = x$role,
@@ -162,3 +178,34 @@ print.step_ica <-
     printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @importFrom utils stack
+#' @importFrom dimRed getRotationMatrix
+#' @rdname step_ica
+#' @param x A \code{step_ica} object.
+tidy.step_ica <- function(x, ...) {
+  if (is_trained(x)) {
+    rot <- dimRed::getRotationMatrix(x$res)
+    colnames(rot) <- names0(ncol(rot), x$prefix)
+    rot <- as.data.frame(rot)
+    vars <- colnames(x$res@org.data)
+    npc <- ncol(rot)
+    res <- utils::stack(rot)
+    colnames(res) <- c("value", "component")
+    res$component <- as.character(res$component)
+    res$terms <- rep(vars, npc)
+    res <- as_tibble(res)
+  } else {
+    term_names <- sel2char(x$terms)
+    comp_names <- names0(x$num, x$prefix)
+    res <- expand.grid(terms = term_names,
+                       value = na_dbl,
+                       component  = comp_names)
+    res$terms <- as.character(res$terms)
+    res$component <- as.character(res$component)
+    res <- as_tibble(res)
+  }
+  res
+}
+

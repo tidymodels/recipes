@@ -2,83 +2,97 @@
 % Please edit documentation in R/pca.R
 \name{step_pca}
 \alias{step_pca}
+\alias{tidy.step_pca}
 \title{PCA Signal Extraction}
 \usage{
 step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   threshold = NA, options = list(), res = NULL, prefix = "PC")
+
+\method{tidy}{step_pca}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-used to compute the components. See \code{\link{selections}} for more
-details.}
+\item{...}{One or more selector functions to choose which
+variables will be used to compute the components. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new principal
-component columns created by the original variables will be used as
-predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new principal component columns created by the original
+variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new predictors. If
-\code{num} is greater than the number of columns or the number of
-possible components, a smaller value will be used.}
+\item{num}{The number of PCA components to retain as new
+predictors. If \code{num} is greater than the number of columns
+or the number of possible components, a smaller value will be
+used.}
 
-\item{threshold}{A fraction of the total variance that should be covered
-by the components. For example, \code{threshold = .75} means that
-\code{step_pca} should generate enough components to capture 75\% of the
-variability in the variables. Note: using this argument will override and
-resent any value given to \code{num}.}
+\item{threshold}{A fraction of the total variance that should
+be covered by the components. For example, \code{threshold =
+.75} means that \code{step_pca} should generate enough
+components to capture 75\% of the variability in the variables.
+Note: using this argument will override and resent any value
+given to \code{num}.}
 
 \item{options}{A list of options to the default method for
 \code{\link[stats]{prcomp}}. Argument defaults are set to
-\code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and
-\code{tol = NULL}. \bold{Note} that the argument \code{x} should not be
-passed here (or at all).}
+\code{retx = FALSE}, \code{center = FALSE}, \code{scale. =
+FALSE}, and \code{tol = NULL}. \bold{Note} that the argument
+\code{x} should not be passed here (or at all).}
 
-\item{res}{The \code{\link[stats]{prcomp.default}} object is stored here
-once this preprocessing step has be trained by \code{\link{prep.recipe}}.}
+\item{res}{The \code{\link[stats]{prcomp.default}} object is
+stored here once this preprocessing step has be trained by
+\code{\link{prep.recipe}}.}
 
-\item{prefix}{A character string that will be the prefix to the resulting
-new variables. See notes below}
+\item{prefix}{A character string that will be the prefix to the
+resulting new variables. See notes below}
+
+\item{x}{A \code{step_pca} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected), \code{value} (the
+ loading), and \code{component}.
 }
 \description{
-\code{step_pca} creates a \emph{specification} of a recipe step that will
-  convert numeric data into one or more principal components.
+\code{step_pca} creates a \emph{specification} of a recipe step
+ that will convert numeric data into one or more principal
+ components.
 }
 \details{
-Principal component analysis (PCA) is a transformation of a group of
-  variables that produces a new set of artificial features or components.
-  These components are designed to capture the maximum amount of information
-  (i.e. variance) in the original variables. Also, the components are
-  statistically independent from one another. This means that they can be
-  used to combat large inter-variables correlations in a data set.
+Principal component analysis (PCA) is a transformation of a
+ group of variables that produces a new set of artificial
+ features or components. These components are designed to capture
+ the maximum amount of information (i.e. variance) in the
+ original variables. Also, the components are statistically
+ independent from one another. This means that they can be used
+ to combat large inter-variables correlations in a data set.
 
-It is advisable to standardized the variables prior to running PCA. Here,
-  each variable will be centered and scaled prior to the PCA calculation.
-  This can be changed using the \code{options} argument or by using
-  \code{\link{step_center}} and \code{\link{step_scale}}.
+It is advisable to standardized the variables prior to running
+ PCA. Here, each variable will be centered and scaled prior to
+ the PCA calculation. This can be changed using the
+ \code{options} argument or by using \code{\link{step_center}}
+ and \code{\link{step_scale}}.
 
-The argument \code{num} controls the number of components that will be
-  retained (the original variables that are used to derive the components
-  are removed from the data). The new components will have names that begin
-  with \code{prefix} and a sequence of numbers. The variable names are
-  padded with zeros. For example, if \code{num < 10}, their names will be
-  \code{PC1} - \code{PC9}. If \code{num = 101}, the names would be
-  \code{PC001} - \code{PC101}.
+The argument \code{num} controls the number of components that
+ will be retained (the original variables that are used to derive
+ the components are removed from the data). The new components
+ will have names that begin with \code{prefix} and a sequence of
+ numbers. The variable names are padded with zeros. For example,
+ if \code{num < 10}, their names will be \code{PC1} - \code{PC9}.
+ If \code{num = 101}, the names would be \code{PC001} -
+ \code{PC101}.
 
-Alternatively, \code{threshold} can be used to determine the number of
-  components that are required to capture a specified fraction of the total
-  variance in the variables.
+Alternatively, \code{threshold} can be used to determine the
+ number of components that are required to capture a specified
+ fraction of the total variance in the variables.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)
@@ -99,10 +113,13 @@ with_thresh <- rec \%>\%
   step_pca(all_numeric(), threshold = .99)
 with_thresh <- prep(with_thresh, training = USArrests)
 bake(with_thresh, USArrests)
+
+tidy(pca_trans, number = 3)
+tidy(pca_estimates, number = 3)
 }
 \references{
-Jolliffe, I. T. (2010). \emph{Principal Component Analysis}.
-  Springer.
+Jolliffe, I. T. (2010). \emph{Principal Component
+ Analysis}. Springer.
 }
 \seealso{
 \code{\link{step_ica}} \code{\link{step_kpca}}

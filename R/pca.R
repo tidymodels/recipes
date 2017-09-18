@@ -1,64 +1,77 @@
 #' PCA Signal Extraction
 #'
-#' \code{step_pca} creates a \emph{specification} of a recipe step that will
-#'   convert numeric data into one or more principal components.
+#' \code{step_pca} creates a \emph{specification} of a recipe step
+#'  that will convert numeric data into one or more principal
+#'  components.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'   used to compute the components. See \code{\link{selections}} for more
-#'   details.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new principal
-#'   component columns created by the original variables will be used as
-#'   predictors in a model.
-#' @param num The number of PCA components to retain as new predictors. If
-#'   \code{num} is greater than the number of columns or the number of
-#'   possible components, a smaller value will be used.
-#' @param threshold A fraction of the total variance that should be covered
-#'   by the components. For example, \code{threshold = .75} means that
-#'   \code{step_pca} should generate enough components to capture 75\% of the
-#'   variability in the variables. Note: using this argument will override and
-#'   resent any value given to \code{num}.
+#' @param ... One or more selector functions to choose which
+#'  variables will be used to compute the components. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new principal component columns created by the original
+#'  variables will be used as predictors in a model.
+#' @param num The number of PCA components to retain as new
+#'  predictors. If \code{num} is greater than the number of columns
+#'  or the number of possible components, a smaller value will be
+#'  used.
+#' @param threshold A fraction of the total variance that should
+#'  be covered by the components. For example, \code{threshold =
+#'  .75} means that \code{step_pca} should generate enough
+#'  components to capture 75\% of the variability in the variables.
+#'  Note: using this argument will override and resent any value
+#'  given to \code{num}.
 #' @param options A list of options to the default method for
-#'   \code{\link[stats]{prcomp}}. Argument defaults are set to
-#'   \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and
-#'   \code{tol = NULL}. \bold{Note} that the argument \code{x} should not be
-#'   passed here (or at all).
-#' @param res The \code{\link[stats]{prcomp.default}} object is stored here
-#'   once this preprocessing step has be trained by \code{\link{prep.recipe}}.
-#' @param prefix A character string that will be the prefix to the resulting
-#'   new variables. See notes below
+#'  \code{\link[stats]{prcomp}}. Argument defaults are set to
+#'  \code{retx = FALSE}, \code{center = FALSE}, \code{scale. =
+#'  FALSE}, and \code{tol = NULL}. \bold{Note} that the argument
+#'  \code{x} should not be passed here (or at all).
+#' @param res The \code{\link[stats]{prcomp.default}} object is
+#'  stored here once this preprocessing step has be trained by
+#'  \code{\link{prep.recipe}}.
+#' @param prefix A character string that will be the prefix to the
+#'  resulting new variables. See notes below
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected), \code{value} (the
+#'  loading), and \code{component}.
 #' @keywords datagen
 #' @concept preprocessing pca projection_methods
 #' @export
 #' @details
-#' Principal component analysis (PCA) is a transformation of a group of
-#'   variables that produces a new set of artificial features or components.
-#'   These components are designed to capture the maximum amount of information
-#'   (i.e. variance) in the original variables. Also, the components are
-#'   statistically independent from one another. This means that they can be
-#'   used to combat large inter-variables correlations in a data set.
+#' Principal component analysis (PCA) is a transformation of a
+#'  group of variables that produces a new set of artificial
+#'  features or components. These components are designed to capture
+#'  the maximum amount of information (i.e. variance) in the
+#'  original variables. Also, the components are statistically
+#'  independent from one another. This means that they can be used
+#'  to combat large inter-variables correlations in a data set.
 #'
-#' It is advisable to standardized the variables prior to running PCA. Here,
-#'   each variable will be centered and scaled prior to the PCA calculation.
-#'   This can be changed using the \code{options} argument or by using
-#'   \code{\link{step_center}} and \code{\link{step_scale}}.
+#' It is advisable to standardized the variables prior to running
+#'  PCA. Here, each variable will be centered and scaled prior to
+#'  the PCA calculation. This can be changed using the
+#'  \code{options} argument or by using \code{\link{step_center}}
+#'  and \code{\link{step_scale}}.
 #'
-#' The argument \code{num} controls the number of components that will be
-#'   retained (the original variables that are used to derive the components
-#'   are removed from the data). The new components will have names that begin
-#'   with \code{prefix} and a sequence of numbers. The variable names are
-#'   padded with zeros. For example, if \code{num < 10}, their names will be
-#'   \code{PC1} - \code{PC9}. If \code{num = 101}, the names would be
-#'   \code{PC001} - \code{PC101}.
+#' The argument \code{num} controls the number of components that
+#'  will be retained (the original variables that are used to derive
+#'  the components are removed from the data). The new components
+#'  will have names that begin with \code{prefix} and a sequence of
+#'  numbers. The variable names are padded with zeros. For example,
+#'  if \code{num < 10}, their names will be \code{PC1} - \code{PC9}.
+#'  If \code{num = 101}, the names would be \code{PC001} -
+#'  \code{PC101}.
 #'
-#' Alternatively, \code{threshold} can be used to determine the number of
-#'   components that are required to capture a specified fraction of the total
-#'   variance in the variables.
+#' Alternatively, \code{threshold} can be used to determine the
+#'  number of components that are required to capture a specified
+#'  fraction of the total variance in the variables.
 #'
-#' @references Jolliffe, I. T. (2010). \emph{Principal Component Analysis}.
-#'   Springer.
+#' @references Jolliffe, I. T. (2010). \emph{Principal Component
+#'  Analysis}. Springer.
 #'
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
@@ -79,6 +92,9 @@
 #'   step_pca(all_numeric(), threshold = .99)
 #' with_thresh <- prep(with_thresh, training = USArrests)
 #' bake(with_thresh, USArrests)
+#'
+#' tidy(pca_trans, number = 3)
+#' tidy(pca_estimates, number = 3)
 #' @seealso \code{\link{step_ica}} \code{\link{step_kpca}}
 #'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
 #'   \code{\link{bake.recipe}}
@@ -134,7 +150,7 @@ step_pca_new <- function(terms = NULL,
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   prc_call <-
     expr(prcomp(
       retx = FALSE,
@@ -146,7 +162,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     prc_call <- mod_call_args(prc_call, args = x$options)
   prc_call$x <- expr(training[, col_names, drop = FALSE])
   prc_obj <- eval(prc_call)
-  
+
   x$num <- min(x$num, length(col_names))
   if (!is.na(x$threshold)) {
     total_var <- sum(prc_obj$sdev ^ 2)
@@ -158,7 +174,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   }
   ## decide on removing prc elements that aren't used in new projections
   ## e.g. `sdev` etc.
-  
+
   step_pca_new(
     terms = x$terms,
     role = x$role,
@@ -190,3 +206,25 @@ print.step_pca <-
     printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @importFrom utils stack
+#' @rdname step_pca
+#' @param x A \code{step_pca} object.
+tidy.step_pca <- function(x, ...) {
+  if (is_trained(x)) {
+    rot <- as.data.frame(x$res$rotation)
+    vars <- rownames(rot)
+    npc <- ncol(rot)
+    res <- utils::stack(rot)
+    colnames(res) <- c("value", "component")
+    res$component <- as.character(res$component)
+    res$terms <- rep(vars, npc)
+    res <- as_tibble(res)[, c("terms", "value", "component")]
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  value = na_dbl,
+                  component  = na_chr)
+  }
+  res
+}

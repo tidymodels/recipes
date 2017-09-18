@@ -18,6 +18,23 @@ test_that("defaults", {
 
   for(i in 1:ncol(exp_res))
     expect_equal(dists[, i], exp_res[, i])
+
+  tidy_exp_un <- tibble(
+    terms = "all_predictors()",
+    value = NA_real_,
+    class = NA_character_
+  )
+  expect_equal(tidy_exp_un, tidy(rec, number = 1))
+  means <- lapply(split_up, colMeans)
+  means <- unlist(unname(means))
+
+  tidy_exp_tr <- tibble(
+    terms = names(means),
+    value = unname(means),
+    class = rep(names(split_up), each = 4)
+  )
+  expect_equal(tidy_exp_tr, tidy(trained, number = 1))
+
 })
 
 test_that("alt args", {
