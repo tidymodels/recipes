@@ -1,46 +1,59 @@
 #' Imputation via K-Nearest Neighbors
 #'
-#' \code{step_knnimpute} creates a \emph{specification} of a recipe step that
-#'   will impute missing data using nearest neighbors.
+#'   \code{step_knnimpute} creates a \emph{specification} of a
+#'  recipe step that will impute missing data using nearest
+#'  neighbors.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#'   \code{step_knnimpute}, this indicates the variables to be imputed. When
-#'   used with \code{imp_vars}, the dots indicates which variables are used to
-#'   predict the missing data in each variable. See \code{\link{selections}}
-#'   for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param impute_with A call to \code{imp_vars} to specify which variables are
-#'   used to impute the variables that can include specific variable names
-#'   separated by commas or different selectors (see
-#'   \code{\link{selections}}).  If a column is included in both lists to be
-#'   imputed and to be an imputation predictor, it will be removed from the
-#'   latter and not used to impute itself.
+#' @param ... One or more selector functions to choose variables.
+#'  For \code{step_knnimpute}, this indicates the variables to be
+#'  imputed. When used with \code{imp_vars}, the dots indicates
+#'  which variables are used to predict the missing data in each
+#'  variable. See \code{\link{selections}} for more details. For the
+#'  \code{tidy} method, these are not currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param impute_with A call to \code{imp_vars} to specify which
+#'  variables are used to impute the variables that can include
+#'  specific variable names separated by commas or different
+#'  selectors (see \code{\link{selections}}). If a column is
+#'  included in both lists to be imputed and to be an imputation
+#'  predictor, it will be removed from the latter and not used to
+#'  impute itself.
 #' @param K The number of neighbors.
-#' @param ref_data A tibble of data that will reflect the data preprocessing
-#'   done up to the point of this imputation step. This is
-#'   \code{NULL} until the step is trained by \code{\link{prep.recipe}}.
-#' @param columns The column names that will be imputed and used for
-#'   imputation. This is  \code{NULL} until the step is trained by
-#'   \code{\link{prep.recipe}}.
+#' @param ref_data A tibble of data that will reflect the data
+#'  preprocessing done up to the point of this imputation step. This
+#'  is \code{NULL} until the step is trained by
+#'  \code{\link{prep.recipe}}.
+#' @param columns The column names that will be imputed and used
+#'  for imputation. This is \code{NULL} until the step is trained by
+#'  \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables for imputation), \code{predictors}
+#'  (those variables used to impute), and \code{K}.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details The step uses the training set to impute any other data sets. The
-#'   only distance function available is Gower's distance which can be used for
-#'   mixtures of nominal and numeric data.
+#' @details The step uses the training set to impute any other
+#'  data sets. The only distance function available is Gower's
+#'  distance which can be used for mixtures of nominal and numeric
+#'  data.
 #'
-#' Once the nearest neighbors are determined, the mode is used to predictor
-#'   nominal variables and the mean is used for numeric data.
+#'   Once the nearest neighbors are determined, the mode is used to
+#'  predictor nominal variables and the mean is used for numeric
+#'  data.
 #'
-#' Note that if a variable that is to be imputed is also in \code{impute_with},
-#'   this variable will be ignored.
+#'   Note that if a variable that is to be imputed is also in
+#'  \code{impute_with}, this variable will be ignored.
 #'
-#' It is possible that missing values will still occur after imputation if a
-#'   large majority (or all) of the imputing variables are also missing.
-#' @references Gower, C. (1971) "A general coefficient of similarity and some
-#'   of its properties," Biometrics, 857-871.
+#'   It is possible that missing values will still occur after
+#'  imputation if a large majority (or all) of the imputing
+#'  variables are also missing.
+#' @references Gower, C. (1971) "A general coefficient of
+#'  similarity and some of its properties," Biometrics, 857-871.
 #' @examples
 #' library(recipes)
 #' data(biomass)
@@ -73,6 +86,9 @@
 #' summary(biomass_te_whole$nitrogen)
 #' cbind(before = biomass_te_whole$nitrogen[nitro_missing],
 #'       after = imputed$nitrogen[nitro_missing])
+#'
+#' tidy(ratio_recipe, number = 1)
+#' tidy(ratio_recipe2, number = 1)
 
 step_knnimpute <-
   function(recipe,
@@ -129,7 +145,7 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     )
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
-  
+
   x$columns <- var_lists
   x$ref_data <- training[, all_x_vars]
   x$trained <- TRUE
@@ -159,7 +175,7 @@ bake.step_knnimpute <- function(object, newdata, ...) {
   missing_rows <- !complete.cases(newdata)
   if (!any(missing_rows))
     return(newdata)
-  
+
   old_data <- newdata
   for (i in seq(along = object$columns)) {
     imp_var <- object$columns[[i]]$y
@@ -190,3 +206,26 @@ print.step_knnimpute <-
     printer(all_x_vars, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @importFrom purrr map_df
+#' @rdname step_knnimpute
+#' @param x A \code{step_knnimpute} object.
+tidy.step_knnimpute <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- purrr::map_df(x$columns,
+                         function(x)
+                           data.frame(
+                             terms = x$y,
+                             predictors = x$x,
+                             stringsAsFactors = FALSE
+                           )
+    )
+    res <- as_tibble(res)
+    res$K <- rep(x$K, nrow(res))
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names, predictors = na_chr, K = x$K)
+  }
+  res
+}
+

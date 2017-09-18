@@ -1,24 +1,31 @@
 #' Impute Nominal Data Using the Most Common Value
 #'
-#' \code{step_modeimpute} creates a \emph{specification} of a recipe step that
-#'   will substitute missing values of nominal variables by the training set
-#'   mode of those variables.
+#'   \code{step_modeimpute} creates a \emph{specification} of a
+#'  recipe step that will substitute missing values of nominal
+#'  variables by the training set mode of those variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param modes A named character vector of modes. This is \code{NULL} until
-#'   computed by \code{\link{prep.recipe}}.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param modes A named character vector of modes. This is
+#'  \code{NULL} until computed by \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{model} (the mode
+#'  value).
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details \code{step_modeimpute} estimates the variable modes from the data
-#'   used in the \code{training} argument of \code{prep.recipe}.
-#'   \code{bake.recipe} then applies the new values to new data sets using
-#'   these values. If the training set data has more than one mode, one is
-#'   selected at random.
+#' @details \code{step_modeimpute} estimates the variable modes
+#'  from the data used in the \code{training} argument of
+#'  \code{prep.recipe}. \code{bake.recipe} then applies the new
+#'  values to new data sets using these values. If the training set
+#'  data has more than one mode, one is selected at random.
 #' @examples
 #' data("credit_data")
 #'
@@ -42,7 +49,9 @@
 #' imputed_te <- bake(imp_models, newdata = credit_te, everything())
 #'
 #' table(credit_te$Home, imputed_te$Home, useNA = "always")
-
+#'
+#' tidy(impute_rec, number = 1)
+#' tidy(imp_models, number = 1)
 step_modeimpute <-
   function(recipe,
            ...,
@@ -109,4 +118,17 @@ mode_est <- function(x) {
   tab <- table(x)
   modes <- names(tab)[tab == max(tab)]
   sample(modes, size = 1)
+}
+
+#' @rdname step_modeimpute
+#' @param x A \code{step_modeimpute} object.
+tidy.step_modeimpute <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = names(x$modes),
+                  model = x$modes)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names, model = na_chr)
+  }
+  res
 }

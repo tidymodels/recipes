@@ -40,13 +40,26 @@ test_that('imputation models', {
     expect_equal(fac_mod$splits,
                  imputed_trained$steps[[1]]$models[["fac"]]$mtrees[[i]]$btree$splits)
   }
+
+  imp_tibble_un <-
+    tibble(terms = c("carbon", "fac"),
+           model = rep(NA, 2))
+  imp_tibble_tr <-
+    tibble(terms = c("carbon", "fac"),
+           model = imputed_trained$steps[[1]]$models)
+
+  expect_equal(tidy(imputed, 1), imp_tibble_un)
+  expect_equal(tidy(imputed_trained, 1)$terms, imp_tibble_tr$terms)
+  expect_equal(tidy(imputed_trained, 1)$model, imp_tibble_tr$model)
+
+
 })
 
 
 test_that('printing', {
   imputed <- rec %>%
     step_bagimpute(carbon, impute_with = imp_vars(hydrogen), seed_val = 12)
-  
+
   expect_output(print(imputed))
   expect_output(prep(imputed, training = biomass))
 })
