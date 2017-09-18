@@ -1,3 +1,5 @@
+#' Collapse Some Categorical Levels
+#'
 #' \code{step_other} creates a \emph{specification} of a recipe
 #'  step that will potentially pool infrequently occurring values
 #'  into an "other" category.

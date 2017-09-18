@@ -3,9 +3,7 @@
 \name{step_other}
 \alias{step_other}
 \alias{tidy.step_other}
-\title{\code{step_other} creates a \emph{specification} of a recipe
- step that will potentially pool infrequently occurring values
- into an "other" category.}
+\title{Collapse Some Categorical Levels}
 \usage{
 step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
