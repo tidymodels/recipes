@@ -5,8 +5,9 @@ template:
 reference:
   - title: Basic Functions
     contents:
-    - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)")
-    - tidy.recipes
+    - matches("(learn)|(recipe)|(selection)|(^is)|(has_role)|(juice)")
+    - add_role
+    - tidy.recipe
   - title: Example Datasets
     contents:
     - matches("(okc)|(biomass)|(credit)|(covers)")

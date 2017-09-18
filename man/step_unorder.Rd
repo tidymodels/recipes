@@ -2,9 +2,12 @@
 % Please edit documentation in R/unorder.R
 \name{step_unorder}
 \alias{step_unorder}
+\alias{tidy.step_unorder}
 \title{Convert Ordered Factors to Unordered Factors}
 \usage{
 step_unorder(recipe, ..., role = NA, trained = FALSE, columns = NULL)
+
+\method{tidy}{step_unorder}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -12,19 +15,29 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will be (eventually)
-populated by the \code{terms} argument.}
+\item{columns}{A character string of variable names that will
+be (eventually) populated by the \code{terms} argument.}
+
+\item{x}{A \code{step_unorder} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ columns that will be affected).
 }
 \description{
-\code{step_unorder} creates a \emph{specification} of a recipe step that will
-  transform the data.
+\code{step_unorder} creates a \emph{specification} of a recipe
+ step that will transform the data.
 }
 \details{
 The factors level order is preserved during the transformation.
@@ -45,6 +58,9 @@ factor_obj <- prep(factor_trans, training = examples)
 
 transformed_te <- bake(factor_obj, examples)
 table(transformed_te$X2, examples$X2)
+
+tidy(factor_trans, number = 1)
+tidy(factor_obj, number = 1)
 }
 \seealso{
 \code{\link{step_ordinalscore}} \code{\link{recipe}}

@@ -1,21 +1,28 @@
 #' Inverse Logit Transformation
 #'
-#' \code{step_invlogit} creates a \emph{specification} of a recipe step that
-#'   will transform the data from real values to be between zero and one.
+#' \code{step_invlogit} creates a \emph{specification} of a recipe
+#'  step that will transform the data from real values to be between
+#'  zero and one.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param columns A character string of variable names that will be (eventually)
-#'   populated by the \code{terms} argument.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param columns A character string of variable names that will
+#'  be (eventually) populated by the \code{terms} argument.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
-#' @details The inverse logit transformation takes values on the real line and
-#'   translates them to be between zero and one using the function
-#'   \code{f(x) = 1/(1+exp(-x))}.
+#' @details The inverse logit transformation takes values on the
+#'  real line and translates them to be between zero and one using
+#'  the function \code{f(x) = 1/(1+exp(-x))}.
 #' @examples
 #' data(biomass)
 #'
@@ -90,3 +97,9 @@ print.step_invlogit <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_invlogit
+#' @param x A \code{step_invlogit} object.
+tidy.step_invlogit <- function(x, ...) {
+  simple_terms(x, ...)
+}

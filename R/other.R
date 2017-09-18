@@ -1,17 +1,25 @@
-#' Collapse Some Categorical Levels
-#'
-#' \code{step_other} creates a \emph{specification} of a recipe step that will
-#'    potentially pool infrequently occurring values into an "other" category.
+#' \code{step_other} creates a \emph{specification} of a recipe
+#'  step that will potentially pool infrequently occurring values
+#'  into an "other" category.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables that
-#'   will potentially be reduced. See \code{\link{selections}} for more details.
-#' @param role Not used by this step since no new variables are created.
+#' @param ... One or more selector functions to choose which
+#'  variables that will potentially be reduced. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
 #' @param threshold A single numeric value in (0, 1) for pooling.
 #' @param other A single character value for the "other" category.
-#' @param objects A list of objects that contain the information to pool
-#'   infrequent levels that is determined by \code{\link{prep.recipe}}.
+#' @param objects A list of objects that contain the information
+#'  to pool infrequent levels that is determined by
+#'  \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected) and \code{retained} (the factor
+#'  levels that were not pulled into "other")
 #' @keywords datagen
 #' @concept preprocessing factors
 #' @export
@@ -48,6 +56,8 @@
 #'
 #' collapsed <- bake(rec, okc_te)
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
+#'
+#' tidy(rec, number = 1)
 
 step_other <-
   function(recipe,
@@ -119,7 +129,7 @@ bake.step_other <- function(object, newdata, ...) {
         as.character(getElement(newdata, i))
       else
         getElement(newdata, i)
-      
+
       tmp <- ifelse(tmp %in% object$objects[[i]]$keep,
                     tmp,
                     object$objects[[i]]$other)
@@ -166,4 +176,22 @@ keep_levels <- function(x, prop = .1, other = "other") {
   list(keep = orig[orig %in% keepers],
        collapse = collapse,
        other = other)
+}
+
+
+#' @rdname step_other
+#' @param x A \code{step_other} object.
+#' @importFrom purrr map
+tidy.step_other <- function(x, ...) {
+  if (is_trained(x)) {
+    values <- purrr::map(x$objects, function(x) x$keep)
+    n <- vapply(values, length, integer(1))
+    res <- tibble(terms = rep(names(n), n),
+                  retained = unname(unlist(values)))
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  retained = rep(na_chr, length(term_names)))
+  }
+  res
 }

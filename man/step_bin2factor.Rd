@@ -2,47 +2,56 @@
 % Please edit documentation in R/bin2factor.R
 \name{step_bin2factor}
 \alias{step_bin2factor}
+\alias{tidy.step_bin2factor}
 \title{Create a Factors from A Dummy Variable}
 \usage{
 step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
   "no"), columns = NULL)
+
+\method{tidy}{step_bin2factor}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{Selector functions that choose which variables will be converted.
-See \code{\link{selections}} for more details.}
+\item{...}{Selector functions that choose which variables will
+be converted. See \code{\link{selections}} for more details. For
+the \code{tidy} method, these are not currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{levels}{A length 2 character string that indicate the factor levels
-for the 1's (in the first position) and the zeros (second)}
+\item{levels}{A length 2 character string that indicate the
+factor levels for the 1's (in the first position) and the zeros
+(second)}
 
-\item{columns}{A vector with the selected variable names. This is
-\code{NULL} until computed by \code{\link{prep.recipe}}.}
+\item{columns}{A vector with the selected variable names. This
+is \code{NULL} until computed by \code{\link{prep.recipe}}.}
+
+\item{x}{A \code{step_bin2factor} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ columns that will be affected).
 }
 \description{
-\code{step_bin2factor} creates a \emph{specification} of a recipe step that
-will create a two-level factor from a single dummy variable.
+\code{step_bin2factor} creates a \emph{specification} of a
+ recipe step that will create a two-level factor from a single
+ dummy variable.
 }
 \details{
-This operation may be useful for situations where a binary piece of
-  information may need to be represented as categorical instead of numeric.
-  For example, naive Bayes models would do better to have factor predictors
-  so that the binomial distribution is modeled in stead of a Gaussian
-  probability density of numeric binary data.
-Note that the numeric data is only verified to be numeric (and does not
-count levels).
+This operation may be useful for situations where a
+ binary piece of information may need to be represented as
+ categorical instead of numeric. For example, naive Bayes models
+ would do better to have factor predictors so that the binomial
+ distribution is modeled in stead of a Gaussian probability
+ density of numeric binary data. Note that the numeric data is
+ only verified to be numeric (and does not count levels).
 }
 \examples{
 data(covers)
@@ -52,10 +61,14 @@ rec <- recipe(~ description, covers) \%>\%
  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
  step_bin2factor(rocks)
 
+tidy(rec, number = 3)
+
 rec <- prep(rec, training = covers)
 results <- bake(rec, newdata = covers)
 
 table(results$rocks, results$more_rocks)
+
+tidy(rec, number = 3)
 }
 \concept{
 preprocessing dummy_variables factors

@@ -2,10 +2,13 @@
 % Please edit documentation in R/string2factor.R
 \name{step_string2factor}
 \alias{step_string2factor}
+\alias{tidy.step_string2factor}
 \title{Convert Strings to Factors}
 \usage{
 step_string2factor(recipe, ..., role = NA, trained = FALSE, levels = NULL,
   ordered = FALSE)
+
+\method{tidy}{step_string2factor}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,7 +16,8 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will converted to factors. See
-\code{\link{selections}} for more details.}
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -27,12 +31,14 @@ values present when \code{bake} is called will be used.}
 
 \item{ordered}{A single logical value; should the factor(s) be
 ordered?}
+
+\item{x}{A \code{step_string2factor} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected) and \code{ordered}.
 }
 \description{
 \code{step_string2factor} will convert one or more character
@@ -60,6 +66,7 @@ make_factor <- prep(make_factor,
 # note that `diet` is a factor
 juice(make_factor) \%>\% head
 okc \%>\% head
+tidy(make_factor, number = 1)
 }
 \seealso{
 \code{\link{step_factor2string}} \code{\link{step_dummy}}

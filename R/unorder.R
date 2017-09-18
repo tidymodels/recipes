@@ -1,22 +1,28 @@
 #' Convert Ordered Factors to Unordered Factors
 #'
-#' \code{step_unorder} creates a \emph{specification} of a recipe step that will
-#'   transform the data.
+#' \code{step_unorder} creates a \emph{specification} of a recipe
+#'  step that will transform the data.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param columns A character string of variable names that will be (eventually)
-#'   populated by the \code{terms} argument.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param columns A character string of variable names that will
+#'  be (eventually) populated by the \code{terms} argument.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected).
 #' @keywords datagen
 #' @concept preprocessing ordinal_data
 #' @export
-#' @details The factors level order is preserved during the transformation. 
+#' @details The factors level order is preserved during the transformation.
 #' @examples
 #' lmh <- c("Low", "Med", "High")
-#' 
+#'
 #' examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
 #'                        X2 = ordered(rep(lmh, each = 4),
 #'                                     levels = lmh))
@@ -30,6 +36,9 @@
 #'
 #' transformed_te <- bake(factor_obj, examples)
 #' table(transformed_te$X2, examples$X2)
+#'
+#' tidy(factor_trans, number = 1)
+#' tidy(factor_obj, number = 1)
 #' @seealso \code{\link{step_ordinalscore}} \code{\link{recipe}}
 #' \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
@@ -65,7 +74,7 @@ step_unorder_new <-
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  order_check <- vapply(training[, col_names], 
+  order_check <- vapply(training[, col_names],
                         is.ordered,
                         logical(1L))
   if(all(!order_check)) {
@@ -80,7 +89,7 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
       col_names <- names(order_check)[order_check]
     }
   }
-  
+
   step_unorder_new(
     terms = x$terms,
     role = x$role,
@@ -106,3 +115,10 @@ print.step_unorder <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @rdname step_unorder
+#' @param x A \code{step_unorder} object.
+tidy.step_unorder <- function(x, ...) {
+  simple_terms(x, ...)
+}

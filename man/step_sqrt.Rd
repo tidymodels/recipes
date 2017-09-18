@@ -2,34 +2,42 @@
 % Please edit documentation in R/sqrt.R
 \name{step_sqrt}
 \alias{step_sqrt}
+\alias{tidy.step_sqrt}
 \title{Square Root Transformation}
 \usage{
 step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL)
+
+\method{tidy}{step_sqrt}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-transformed. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables will be transformed. See \code{\link{selections}} for
+more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will be (eventually)
-populated by the \code{terms} argument.}
+\item{columns}{A character string of variable names that will
+be (eventually) populated by the \code{terms} argument.}
+
+\item{x}{A \code{step_sqrt} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be affected.
 }
 \description{
-\code{step_sqrt} creates a \emph{specification} of a recipe step that will
-  square root transform the data.
+\code{step_sqrt} creates a \emph{specification} of a recipe
+ step that will square root transform the data.
 }
 \examples{
 set.seed(313)
@@ -45,6 +53,9 @@ sqrt_obj <- prep(sqrt_trans, training = examples)
 
 transformed_te <- bake(sqrt_obj, examples)
 plot(examples$V1, transformed_te$V1)
+
+tidy(sqrt_trans, number = 1)
+tidy(sqrt_obj, number = 1)
 }
 \seealso{
 \code{\link{step_logit}} \code{\link{step_invlogit}}

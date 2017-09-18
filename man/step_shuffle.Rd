@@ -2,35 +2,44 @@
 % Please edit documentation in R/shuffle.R
 \name{step_shuffle}
 \alias{step_shuffle}
+\alias{tidy.step_shuffle}
 \title{Shuffle Variables}
 \usage{
 step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL)
+
+\method{tidy}{step_shuffle}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will
-permuted. See \code{\link{selections}} for  more details.}
+\item{...}{One or more selector functions to choose which
+variables will permuted. See \code{\link{selections}} for more
+details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string that contains the names of columns that
-should be shuffled. These values are not determined until
-\code{\link{prep.recipe}} is called.}
+\item{columns}{A character string that contains the names of
+columns that should be shuffled. These values are not determined
+until \code{\link{prep.recipe}} is called.}
+
+\item{x}{A \code{step_shuffle} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be affected.
 }
 \description{
-\code{step_shuffle} creates a \emph{specification} of a recipe step that will
-  randomly change the order of rows for selected variables.
+\code{step_shuffle} creates a \emph{specification} of a recipe
+ step that will randomly change the order of rows for selected
+ variables.
 }
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
@@ -43,6 +52,9 @@ rand_set <- prep(rec, training = integers)
 
 set.seed(5377)
 bake(rand_set, integers)
+
+tidy(rec, number = 1)
+tidy(rand_set, number = 1)
 }
 \concept{
 preprocessing randomization permutation

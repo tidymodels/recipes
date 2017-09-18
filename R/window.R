@@ -1,43 +1,53 @@
 #' Moving Window Functions
 #'
-#' \code{step_window} creates a \emph{specification} of a recipe step that will
-#'   create new columns that are the results of functions that compute
-#'   statistics across moving windows.
+#'   \code{step_window} creates a \emph{specification} of a recipe
+#'  step that will create new columns that are the results of
+#'  functions that compute statistics across moving windows.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned? If \code{names} is left to be \code{NULL}, the rolling
-#'   statistics replace the original columns and the roles are left unchanged.
-#'   If \code{names} is set, those new columns will have a role of \code{NULL}
-#'   unless this argument has a value.
+#'  for more details.  For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned? If \code{names} is left to be
+#'  \code{NULL}, the rolling statistics replace the original columns
+#'  and the roles are left unchanged. If \code{names} is set, those
+#'  new columns will have a role of \code{NULL} unless this argument
+#'  has a value.
 #' @param size An odd integer \code{>= 3} for the window size.
-#' @param na.rm A logical for whether missing values should be removed from the
-#'   calculations within each window.
-#' @param statistic A character string for the type of statistic that should
-#'   be calculated for each moving window. Possible values are: \code{'max'},
-#'   \code{'mean'}, \code{'median'}, \code{'min'}, \code{'prod'}, \code{'sd'},
-#'   \code{'sum'}, \code{'var'}
-#' @param columns A character string that contains the names of columns that
-#'   should be processed. These values are not determined until
-#'   \code{\link{prep.recipe}} is called.
-#' @param names An optional character string that is the same length of the
-#'   number of terms selected by \code{terms}. If you are not sure what columns
-#'   will be selected, use the \code{summary} function (see the example below).
-#'   These will be the names of the new columns created by the step. 
+#' @param na.rm A logical for whether missing values should be
+#'  removed from the calculations within each window.
+#' @param statistic A character string for the type of statistic
+#'  that should be calculated for each moving window. Possible
+#'  values are: \code{'max'}, \code{'mean'}, \code{'median'},
+#'  \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
+#'  \code{'var'}
+#' @param columns A character string that contains the names of
+#'  columns that should be processed. These values are not
+#'  determined until \code{\link{prep.recipe}} is called.
+#' @param names An optional character string that is the same
+#'  length of the number of terms selected by \code{terms}. If you
+#'  are not sure what columns will be selected, use the
+#'  \code{summary} function (see the example below). These will be
+#'  the names of the new columns created by the step.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{statistic} (the
+#'  summary function name), and \code{size}.
 #' @keywords datagen
 #' @concept preprocessing moving_windows
 #' @export
-#' @details The calculations use a somewhat atypical method for handling the
-#'   beginning and end parts of the rolling statistics. The process starts
-#'   with the center justified window calculations and the beginning and
-#'   ending parts of the rolling values are determined using the first and
-#'   last rolling values, respectively. For example if a column \code{x} with
-#'   12 values is smoothed with a 5-point moving median, the first three
-#'   smoothed values are estimated by \code{median(x[1:5])} and the fourth
-#'   uses \code{median(x[2:6])}.
+#' @details The calculations use a somewhat atypical method for
+#'  handling the beginning and end parts of the rolling statistics.
+#'  The process starts with the center justified window calculations
+#'  and the beginning and ending parts of the rolling values are
+#'  determined using the first and last rolling values,
+#'  respectively. For example if a column \code{x} with 12 values is
+#'  smoothed with a 5-point moving median, the first three smoothed
+#'  values are estimated by \code{median(x[1:5])} and the fourth
+#'  uses \code{median(x[2:6])}.
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -73,6 +83,9 @@
 #'   geom_line(data = smoothed_dat, aes(y = mean_3pt_1), col = "red") +
 #'   theme_bw()
 #'
+#' tidy(rec, number = 1)
+#' tidy(rec, number = 2)
+#'
 #' # If you want to replace the selected variables with the rolling statistic
 #' # don't set `names`
 #' sim_dat$original <- sim_dat$y1
@@ -80,9 +93,10 @@
 #'   step_window(starts_with("y"))
 #' rec <- prep(rec, training = sim_dat)
 #' smoothed_dat <- bake(rec, sim_dat, everything())
-#' ggplot(smoothed_dat, aes(x = original, y = y1)) + 
-#'   geom_point() + 
+#' ggplot(smoothed_dat, aes(x = original, y = y1)) +
+#'   geom_point() +
 #'   theme_bw()
+
 
 step_window <-
   function(recipe,
@@ -98,17 +112,17 @@ step_window <-
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
            call. = FALSE)
-    
+
     ## ensure size is odd, integer, and not too small
     if (is.na(size) | is.null(size))
       stop("`size` needs a value.", call. = FALSE)
-    
+
     if (!is.integer(size)) {
       tmp <- size
       size <- as.integer(size)
       if (!isTRUE(all.equal(tmp, size)))
         warning("`size` was not an integer (", tmp, ") and was ",
-                "converted to ", size, ".", sep = "", 
+                "converted to ", size, ".", sep = "",
                 call. = FALSE)
     }
     if (size %% 2 == 0)
@@ -158,17 +172,17 @@ step_window_new <-
 #' @export
 prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("The selected variables should be numeric")
-  
+
   if(!is.null(x$names)) {
     if(length(x$names) != length(col_names))
       stop("There were ", length(col_names), " term(s) selected but ",
            length(x$names), " values for the new features ",
            "were passed to `names`.", call. = FALSE)
   }
-  
+
   step_window_new(
     terms = x$terms,
     role = x$role,
@@ -192,11 +206,11 @@ prep.step_window <- function(x, training, info = NULL, ...) {
 roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
 
   m <- length(x)
-  
+
   gap <- floor(window / 2)
   if(m - window <= 2)
     stop("The window is too large.", call. = FALSE)
-  
+
   ## stats for centered window
   roll_cl <- quote(
     roll_mean(
@@ -205,14 +219,14 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
       normalize = TRUE, na.rm = na.rm
     )
   )
-  
+
   roll_cl[[1]] <- as.name(paste0("roll_", stat))
   x2 <- eval(roll_cl)
-  
+
   ## Fill in the left-hand points. Add enough data so that the
   ## missing values at the start can be estimated and filled in
   x2[1:gap] <- x2[gap + 1]
-  
+
   ## Right-hand points
   x2[(m - gap + 1):m] <- x2[m - gap]
   x2
@@ -253,3 +267,12 @@ print.step_window <-
       cat("\n")
     invisible(x)
   }
+
+#' @rdname step_window
+#' @param x A \code{step_window} object.
+tidy.step_window <- function(x, ...) {
+  out <- simple_terms(x, ...)
+  out$statistic <- x$statistic
+  out$size <- x$size
+  out
+}

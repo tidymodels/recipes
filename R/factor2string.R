@@ -6,13 +6,18 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will converted to strings See
-#'  \code{\link{selections}} for more details.
+#'  variables will converted to strings See \code{\link{selections}}
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variables that will be
 #'  converted. This is \code{NULL} until computed by
 #'  \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected).
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
@@ -48,6 +53,7 @@
 #' # diet is a
 #' class(string_test$diet)
 #'
+#' tidy(rec, number = 1)
 step_factor2string <-
   function(recipe,
            ...,
@@ -118,3 +124,10 @@ print.step_factor2string <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @rdname step_factor2string
+#' @param x A \code{step_factor2string} object.
+tidy.step_factor2string <- function(x, ...) {
+  simple_terms(x, ...)
+}

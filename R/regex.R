@@ -5,24 +5,31 @@
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... A single selector functions to choose which variable will be
-#'   searched for the pattern. The selector should resolve into a single
-#'   variable. See \code{\link{selections}} for more details.
-#' @param role For a variable created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new dummy
-#'   variable column created by the original variable will be used as a
-#'   predictors in a model.
-#' @param pattern A character string containing a regular expression (or
-#'   character string for \code{fixed = TRUE}) to be matched in the given
-#'   character vector. Coerced by \code{as.character} to a character string
-#'   if possible.
-#' @param options A list of options to \code{\link{grepl}} that should not
-#'   include \code{x} or \code{pattern}.
-#' @param result A single character value for the name of the new variable. It
-#'   should be a valid column name.
-#' @param input A single character value for the name of the variable being
-#'   searched. This is \code{NULL} until computed by
-#'   \code{\link{prep.recipe}}.
+#' @param ... A single selector functions to choose which variable
+#'  will be searched for the pattern. The selector should resolve
+#'  into a single variable. See \code{\link{selections}} for more
+#'  details. For the \code{tidy} method, these are not currently
+#'  used.
+#' @param role For a variable created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new dummy variable column created by the original
+#'  variable will be used as a predictors in a model.
+#' @param pattern A character string containing a regular
+#'  expression (or character string for \code{fixed = TRUE}) to be
+#'  matched in the given character vector. Coerced by
+#'  \code{as.character} to a character string if possible.
+#' @param options A list of options to \code{\link{grepl}} that
+#'  should not include \code{x} or \code{pattern}.
+#' @param result A single character value for the name of the new
+#'  variable. It should be a valid column name.
+#' @param input A single character value for the name of the
+#'  variable being searched. This is \code{NULL} until computed by
+#'  \code{\link{prep.recipe}}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{result} (the
+#'  new column name).
 #' @keywords datagen
 #' @concept preprocessing dummy_variables regular_expressions
 #' @export
@@ -38,6 +45,8 @@
 #'
 #' with_dummies <- bake(rec2, newdata = covers)
 #' with_dummies
+#' tidy(rec, number = 1)
+#' tidy(rec2, number = 1)
 step_regex <- function(recipe,
                        ...,
                        role = "predictor",
@@ -55,11 +64,11 @@ step_regex <- function(recipe,
     stop("Valid options are: ",
          paste0(valid_args, collapse = ", "),
          call. = FALSE)
-  
+
   terms <- check_ellipses(...)
   if (length(terms) > 1)
     stop("For this step, only a single selector can be used.", call. = FALSE)
-  
+
   add_step(
     recipe,
     step_regex_new(
@@ -100,7 +109,7 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     stop("The selector should only select a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))
     stop("The regular expression input should be character or factor")
-  
+
   step_regex_new(
     terms = x$terms,
     role = x$role,
@@ -127,7 +136,7 @@ bake.step_regex <- function(object, newdata, ...) {
   )
   if (length(object$options) > 0)
     regex <- mod_call_args(regex, args = object$options)
-  
+
   newdata[, object$result] <- ifelse(eval(regex), 1, 0)
   newdata
 }
@@ -144,3 +153,20 @@ print.step_regex <-
       cat("\n")
     invisible(x)
   }
+
+
+#' @rdname step_regex
+#' @param x A \code{step_regex} object.
+tidy.step_regex <- function(x, ...) {
+  term_names <- sel2char(x$terms)
+  p <- length(term_names)
+  if (is_trained(x)) {
+    res <- tibble(terms = term_names,
+                  result = rep(x$result, p))
+  } else {
+    res <- tibble(terms = term_names,
+                  result = rep(na_chr, p))
+  }
+  res
+}
+

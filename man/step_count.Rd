@@ -2,11 +2,14 @@
 % Please edit documentation in R/count.R
 \name{step_count}
 \alias{step_count}
+\alias{tidy.step_count}
 \title{Create Counts of Patterns using Regular Expressions}
 \usage{
 step_count(recipe, ..., role = "predictor", trained = FALSE,
   pattern = ".", normalize = FALSE, options = list(),
   result = make.names(pattern), input = NULL)
+
+\method{tidy}{step_count}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -15,7 +18,8 @@ sequence of operations for this recipe.}
 \item{...}{A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
 into a single variable. See \code{\link{selections}} for more
-details.}
+details. For the \code{tidy} method, these are not
+currently used.}
 
 \item{role}{For a variable created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -42,12 +46,15 @@ variable. It should be a valid column name.}
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
 \code{\link{prep.recipe}}.}
+
+\item{x}{A \code{step_count} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected) and \code{result} (the
+ new column name).
 }
 \description{
 \code{step_count} creates a \emph{specification} of a recipe
@@ -66,6 +73,9 @@ rec2
 
 count_values <- bake(rec2, newdata = covers)
 count_values
+
+tidy(rec, number = 1)
+tidy(rec2, number = 1)
 }
 \concept{
 preprocessing dummy_variables regular_expressions

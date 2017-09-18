@@ -2,18 +2,22 @@
 % Please edit documentation in R/factor2string.R
 \name{step_factor2string}
 \alias{step_factor2string}
+\alias{tidy.step_factor2string}
 \title{Convert Factors to Strings}
 \usage{
 step_factor2string(recipe, ..., role = NA, trained = FALSE,
   columns = FALSE)
+
+\method{tidy}{step_factor2string}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will converted to strings See
-\code{\link{selections}} for more details.}
+variables will converted to strings See \code{\link{selections}}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -24,12 +28,14 @@ preprocessing have been estimated.}
 \item{columns}{A character string of variables that will be
 converted. This is \code{NULL} until computed by
 \code{\link{prep.recipe}}.}
+
+\item{x}{A \code{step_factor2string} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ columns that will be affected).
 }
 \description{
 \code{step_factor2string} will convert one or more factor
@@ -68,6 +74,7 @@ string_test <- rec \%>\%
 # diet is a
 class(string_test$diet)
 
+tidy(rec, number = 1)
 }
 \seealso{
 \code{\link{step_string2factor}} \code{\link{step_dummy}}

@@ -2,19 +2,27 @@
 % Please edit documentation in R/other.R
 \name{step_other}
 \alias{step_other}
-\title{Collapse Some Categorical Levels}
+\alias{tidy.step_other}
+\title{\code{step_other} creates a \emph{specification} of a recipe
+ step that will potentially pool infrequently occurring values
+ into an "other" category.}
 \usage{
 step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
   other = "other", objects = NULL)
+
+\method{tidy}{step_other}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables that
-will potentially be reduced. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables that will potentially be reduced. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -23,18 +31,23 @@ preprocessing have been estimated.}
 
 \item{other}{A single character value for the "other" category.}
 
-\item{objects}{A list of objects that contain the information to pool
-infrequent levels that is determined by \code{\link{prep.recipe}}.}
+\item{objects}{A list of objects that contain the information
+to pool infrequent levels that is determined by
+\code{\link{prep.recipe}}.}
+
+\item{x}{A \code{step_other} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ columns that will be affected) and \code{retained} (the factor
+ levels that were not pulled into "other")
 }
 \description{
-\code{step_other} creates a \emph{specification} of a recipe step that will
-   potentially pool infrequently occurring values into an "other" category.
+\code{step_other} creates a \emph{specification} of a recipe
+ step that will potentially pool infrequently occurring values
+ into an "other" category.
 }
 \details{
 The overall proportion of the categories are computed. The "other"
@@ -71,6 +84,8 @@ rec <- prep(rec, training = okc_tr)
 
 collapsed <- bake(rec, okc_te)
 table(okc_te$diet, collapsed$diet, useNA = "always")
+
+tidy(rec, number = 1)
 }
 \concept{
 preprocessing factors

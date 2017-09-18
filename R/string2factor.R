@@ -7,7 +7,9 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will converted to factors. See
-#'  \code{\link{selections}} for more details.
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param levels An options specification of the levels to be used
@@ -15,6 +17,10 @@
 #'  values present when \code{bake} is called will be used.
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{ordered}.
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
@@ -39,7 +45,7 @@
 #' # note that `diet` is a factor
 #' juice(make_factor) %>% head
 #' okc %>% head
-
+#' tidy(make_factor, number = 1)
 
 step_string2factor <-
   function(recipe,
@@ -153,3 +159,20 @@ print.step_string2factor <-
     printer(names(x$ordered), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @rdname step_string2factor
+#' @param x A \code{step_string2factor} object.
+tidy.step_string2factor <- function(x, ...) {
+  term_names <- sel2char(x$terms)
+  p <- length(term_names)
+  if (is_trained(x)) {
+    res <- tibble(terms = term_names,
+                  ordered = rep(x$ordered, p))
+  } else {
+    res <- tibble(terms = term_names,
+                  ordered = rep(x$ordered, p))
+  }
+  res
+}
+

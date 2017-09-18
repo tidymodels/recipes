@@ -1,31 +1,39 @@
 #' Orthogonal Polynomial Basis Functions
 #'
-#' \code{step_poly} creates a \emph{specification} of a recipe step that will
-#'   create new columns that are basis expansions of variables using orthogonal
-#'   polynomials.
+#' \code{step_poly} creates a \emph{specification} of a recipe
+#'  step that will create new columns that are basis expansions of
+#'  variables using orthogonal polynomials.
+
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new columns
-#'   created from the original variables will be used as predictors in a model.
-#' @param objects A list of \code{\link[stats]{poly}} objects created once the
-#'   step has been trained.
-#' @param options A list of options for  \code{\link[stats]{poly}} which should
-#'   not include \code{x} or \code{simple}. Note that the option
-#'   \code{raw = TRUE} will produce the regular polynomial values (not
-#'   orthogonalized).
+#'  for more details.  For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new columns created from the original variables will be
+#'  used as predictors in a model.
+#' @param objects A list of \code{\link[stats]{poly}} objects
+#'  created once the step has been trained.
+#' @param options A list of options for \code{\link[stats]{poly}}
+#'  which should not include \code{x} or \code{simple}. Note that
+#'  the option \code{raw = TRUE} will produce the regular polynomial
+#'  values (not orthogonalized).
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected) and \code{degree}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
-#' @details \code{step_poly} can new features from a single variable that
-#'   enable fitting routines to model this variable in a nonlinear manner. The
-#'   extent of the possible nonlinearity is determined by the \code{degree}
-#'   argument of  \code{\link[stats]{poly}}. The original variables are
-#'   removed from the data and new columns are added. The naming convention
-#'   for the new variables is \code{varname_poly_1} and so on.
+#' @details \code{step_poly} can new features from a single
+#'  variable that enable fitting routines to model this variable in
+#'  a nonlinear manner. The extent of the possible nonlinearity is
+#'  determined by the \code{degree} argument of
+#'  \code{\link[stats]{poly}}. The original variables are removed
+#'  from the data and new columns are added. The naming convention
+#'  for the new variables is \code{varname_poly_1} and so on.
 #' @examples
 #' data(biomass)
 #'
@@ -41,6 +49,8 @@
 #'
 #' expanded <- bake(quadratic, biomass_te)
 #' expanded
+#'
+#' tidy(quadratic, number = 1)
 #' @seealso \code{\link{step_ns}} \code{\link{recipe}}
 #'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
 
@@ -84,7 +94,7 @@ poly_wrapper <- function(x, args) {
   args$x <- x
   args$simple <- FALSE
   poly_obj <- do.call("poly", args)
-  
+
   ## don't need to save the original data so keep 1 row
   out <- matrix(NA, ncol = ncol(poly_obj), nrow = 1)
   class(out) <- c("poly", "basis", "matrix")
@@ -97,11 +107,11 @@ poly_wrapper <- function(x, args) {
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   obj <- lapply(training[, col_names], poly_wrapper, x$options)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
-  
+
   step_poly_new(
     terms = x$terms,
     role = x$role,
@@ -145,3 +155,17 @@ print.step_poly <-
     printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_poly
+#' @param x A \code{step_poly} object.
+tidy.step_poly <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = names(x$objects),
+                  degree = x$options$degree)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  degree = x$options$degree)
+  }
+  res
+}

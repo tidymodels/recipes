@@ -1,16 +1,22 @@
 #' Logarithmic Transformation
 #'
-#' \code{step_log} creates a \emph{specification} of a recipe step that will
-#'   log transform data.
+#' \code{step_log} creates a \emph{specification} of a recipe step
+#'  that will log transform data.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
+#'  for more details.  For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
 #' @param base A numeric value for the base.
-#' @param columns A character string of variable names that will be (eventually)
-#'   populated by the \code{terms} argument.
+#' @param columns A character string of variable names that will
+#'  be (eventually) populated by the \code{terms} argument.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected) and \code{base}.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
@@ -28,6 +34,9 @@
 #'
 #' transformed_te <- bake(log_obj, examples)
 #' plot(examples$V1, transformed_te$V1)
+#'
+#' tidy(log_trans, number = 1)
+#' tidy(log_obj, number = 1)
 #' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
 #'   \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}
 #'   \code{\link{recipe}} \code{\link{prep.recipe}}
@@ -95,3 +104,11 @@ print.step_log <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_log
+#' @param x A \code{step_log} object.
+tidy.step_log <- function(x, ...) {
+  out <- simple_terms(x, ...)
+  out$base <- x$base
+  out
+}

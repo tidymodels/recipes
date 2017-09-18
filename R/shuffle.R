@@ -1,16 +1,24 @@
 #' Shuffle Variables
 #'
-#' \code{step_shuffle} creates a \emph{specification} of a recipe step that will
-#'   randomly change the order of rows for selected variables.
+#' \code{step_shuffle} creates a \emph{specification} of a recipe
+#'  step that will randomly change the order of rows for selected
+#'  variables.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will
-#'    permuted. See \code{\link{selections}} for  more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param columns A character string that contains the names of columns that
-#'   should be shuffled. These values are not determined until
-#'   \code{\link{prep.recipe}} is called.
+#' @param ... One or more selector functions to choose which
+#'  variables will permuted. See \code{\link{selections}} for more
+#'  details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param columns A character string that contains the names of
+#'  columns that should be shuffled. These values are not determined
+#'  until \code{\link{prep.recipe}} is called.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing randomization permutation
 #' @export
@@ -25,6 +33,9 @@
 #'
 #' set.seed(5377)
 #' bake(rand_set, integers)
+#'
+#' tidy(rec, number = 1)
+#' tidy(rand_set, number = 1)
 
 step_shuffle <- function(recipe,
                          ...,
@@ -71,7 +82,7 @@ bake.step_shuffle <- function(object, newdata, ...) {
             call. = FALSE)
     return(newdata)
   }
-  
+
   if (length(object$columns) > 0)
     for (i in seq_along(object$columns))
       newdata[, object$columns[i]] <-
@@ -85,3 +96,9 @@ print.step_shuffle <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_shuffle
+#' @param x A \code{step_shuffle} object.
+tidy.step_shuffle <- function(x, ...) {
+  simple_terms(x, ...)
+}

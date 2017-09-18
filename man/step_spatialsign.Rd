@@ -2,43 +2,53 @@
 % Please edit documentation in R/spatialsign.R
 \name{step_spatialsign}
 \alias{step_spatialsign}
+\alias{tidy.step_spatialsign}
 \title{Spatial Sign Preprocessing}
 \usage{
 step_spatialsign(recipe, ..., role = "predictor", trained = FALSE,
   columns = NULL)
+
+\method{tidy}{step_spatialsign}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-used for the normalization. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables will be used for the normalization. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will be (eventually)
-populated by the \code{terms} argument.}
+\item{columns}{A character string of variable names that will
+be (eventually) populated by the \code{terms} argument.}
+
+\item{x}{A \code{step_spatialsign} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which
+ is the columns that will be affected.
 }
 \description{
-\code{step_spatialsign} is a \emph{specification} of a recipe step that
-  will convert numeric data into a projection on to a unit sphere.
+\code{step_spatialsign} is a \emph{specification} of a recipe
+ step that will convert numeric data into a projection on to a
+ unit sphere.
 }
 \details{
-The spatial sign transformation projects the variables onto a unit
-  sphere and is related to global contrast normalization. The spatial sign
-  of a vector \code{w} is \code{w/norm(w)}.
+The spatial sign transformation projects the variables
+ onto a unit sphere and is related to global contrast
+ normalization. The spatial sign of a vector \code{w} is
+ \code{w/norm(w)}.
 
-The variables should be centered and scaled prior to the computations.
+The variables should be centered and scaled prior to the
+ computations.
 }
 \examples{
 data(biomass)
@@ -61,12 +71,15 @@ transformed_te <- bake(ss_obj, biomass_te)
 plot(biomass_te$carbon, biomass_te$hydrogen)
 
 plot(transformed_te$carbon, transformed_te$hydrogen)
+
+tidy(ss_trans, number = 3)
+tidy(ss_obj, number = 3)
 }
 \references{
-Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial
-  sign preprocessing: a simple way to impart moderate robustness to
-  multivariate estimators. \emph{Journal of Chemical Information and
-  Modeling}, 46(3), 1402-1409.
+Serneels, S., De Nolf, E., and Van Espen, P.
+ (2006). Spatial sign preprocessing: a simple way to impart
+ moderate robustness to multivariate estimators. \emph{Journal of
+ Chemical Information and Modeling}, 46(3), 1402-1409.
 }
 \concept{
 preprocessing projection_methods

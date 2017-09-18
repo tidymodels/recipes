@@ -2,10 +2,13 @@
 % Please edit documentation in R/window.R
 \name{step_window}
 \alias{step_window}
+\alias{tidy.step_window}
 \title{Moving Window Functions}
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
   na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL)
+
+\method{tidy}{step_window}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,50 +16,64 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details.  For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned? If \code{names} is left to be \code{NULL}, the rolling
-statistics replace the original columns and the roles are left unchanged.
-If \code{names} is set, those new columns will have a role of \code{NULL}
-unless this argument has a value.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned? If \code{names} is left to be
+\code{NULL}, the rolling statistics replace the original columns
+and the roles are left unchanged. If \code{names} is set, those
+new columns will have a role of \code{NULL} unless this argument
+has a value.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
 \item{size}{An odd integer \code{>= 3} for the window size.}
 
-\item{na.rm}{A logical for whether missing values should be removed from the
-calculations within each window.}
+\item{na.rm}{A logical for whether missing values should be
+removed from the calculations within each window.}
 
-\item{statistic}{A character string for the type of statistic that should
-be calculated for each moving window. Possible values are: \code{'max'},
-\code{'mean'}, \code{'median'}, \code{'min'}, \code{'prod'}, \code{'sd'},
-\code{'sum'}, \code{'var'}}
+\item{statistic}{A character string for the type of statistic
+that should be calculated for each moving window. Possible
+values are: \code{'max'}, \code{'mean'}, \code{'median'},
+\code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
+\code{'var'}}
 
-\item{columns}{A character string that contains the names of columns that
-should be processed. These values are not determined until
-\code{\link{prep.recipe}} is called.}
+\item{columns}{A character string that contains the names of
+columns that should be processed. These values are not
+determined until \code{\link{prep.recipe}} is called.}
 
-\item{names}{An optional character string that is the same length of the
-number of terms selected by \code{terms}. If you are not sure what columns
-will be selected, use the \code{summary} function (see the example below).
-These will be the names of the new columns created by the step.}
+\item{names}{An optional character string that is the same
+length of the number of terms selected by \code{terms}. If you
+are not sure what columns will be selected, use the
+\code{summary} function (see the example below). These will be
+the names of the new columns created by the step.}
+
+\item{x}{A \code{step_window} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} (the
+ selectors or variables selected) and \code{statistic} (the
+ summary function name), and \code{size}.
 }
 \description{
-\code{step_window} creates a \emph{specification} of a recipe step that will
-  create new columns that are the results of functions that compute
-  statistics across moving windows.
+\code{step_window} creates a \emph{specification} of a recipe
+ step that will create new columns that are the results of
+ functions that compute statistics across moving windows.
 }
 \details{
-The calculations use a somewhat atypical method for handling the
-  beginning and end parts of the rolling statistics. The process starts
-  with the center justified window calculations and the beginning and
-  ending parts of the rolling values are determined using the first and
-  last rolling values, respectively. For example if a column \code{x} with
-  12 values is smoothed with a 5-point moving median, the first three
-  smoothed values are estimated by \code{median(x[1:5])} and the fourth
-  uses \code{median(x[2:6])}.
+The calculations use a somewhat atypical method for
+ handling the beginning and end parts of the rolling statistics.
+ The process starts with the center justified window calculations
+ and the beginning and ending parts of the rolling values are
+ determined using the first and last rolling values,
+ respectively. For example if a column \code{x} with 12 values is
+ smoothed with a 5-point moving median, the first three smoothed
+ values are estimated by \code{median(x[1:5])} and the fourth
+ uses \code{median(x[2:6])}.
 }
 \examples{
 library(recipes)
@@ -93,6 +110,9 @@ ggplot(data = sim_dat, aes(x = x1, y = y1)) +
   geom_line(data = smoothed_dat, aes(y = mean_3pt_1), col = "red") +
   theme_bw()
 
+tidy(rec, number = 1)
+tidy(rec, number = 2)
+
 # If you want to replace the selected variables with the rolling statistic
 # don't set `names`
 sim_dat$original <- sim_dat$y1
@@ -100,8 +120,8 @@ rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) \%>\%
   step_window(starts_with("y"))
 rec <- prep(rec, training = sim_dat)
 smoothed_dat <- bake(rec, sim_dat, everything())
-ggplot(smoothed_dat, aes(x = original, y = y1)) + 
-  geom_point() + 
+ggplot(smoothed_dat, aes(x = original, y = y1)) +
+  geom_point() +
   theme_bw()
 }
 \concept{

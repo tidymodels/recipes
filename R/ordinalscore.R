@@ -1,51 +1,70 @@
 #' Convert Ordinal Factors to Numeric Scores
 #'
-#' \code{step_ordinalscore} creates a \emph{specification} of a recipe step that
-#'   will convert ordinal factor variables into numeric scores.
+#' \code{step_ordinalscore} creates a \emph{specification} of a
+#'  recipe step that will convert ordinal factor variables into
+#'  numeric scores.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role Not used by this step since no new variables are created.
-#' @param columns A character string of variables that will be converted. This is \code{NULL}
-#'   until computed by \code{\link{prep.recipe}}.
-#' @param convert A function that takes an ordinal factor vector as an input and outputs a single numeric variable.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param columns A character string of variables that will be
+#'  converted. This is \code{NULL} until computed by
+#'  \code{\link{prep.recipe}}.
+#' @param convert A function that takes an ordinal factor vector
+#'  as an input and outputs a single numeric variable.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  columns that will be affected).
 #' @keywords datagen
 #' @concept preprocessing ordinal_data
 #' @export
-#' @details Dummy variables from ordered factors with \code{C} levels will create polynomial basis functions with \code{C-1} terms. As an alternative, this step can be used to translate the ordered levels into a single numeric vector of values that represent (subjective) scores. By default, the translation uses a linear scale (1, 2, 3, ... \code{C}) but custom score functions can also be used (see the example below). 
+#' @details Dummy variables from ordered factors with \code{C}
+#'  levels will create polynomial basis functions with \code{C-1}
+#'  terms. As an alternative, this step can be used to translate the
+#'  ordered levels into a single numeric vector of values that
+#'  represent (subjective) scores. By default, the translation uses
+#'  a linear scale (1, 2, 3, ... \code{C}) but custom score
+#'  functions can also be used (see the example below).
 #' @examples
 #' fail_lvls <- c("meh", "annoying", "really_bad")
-#' 
-#' ord_data <- 
+#'
+#' ord_data <-
 #'   data.frame(item = c("paperclip", "twitter", "airbag"),
 #'              fail_severity = factor(fail_lvls,
 #'                                     levels = fail_lvls,
 #'                                     ordered = TRUE))
-#' 
+#'
 #' model.matrix(~fail_severity, data = ord_data)
-#' 
+#'
 #' linear_values <- recipe(~ item + fail_severity, data = ord_data) %>%
 #'   step_dummy(item) %>%
 #'   step_ordinalscore(fail_severity)
-#' 
+#'
 #' linear_values <- prep(linear_values, training = ord_data, retain = TRUE)
-#' 
+#'
 #' juice(linear_values, everything())
-#' 
+#'
 #' custom <- function(x) {
 #'   new_values <- c(1, 3, 7)
 #'   new_values[as.numeric(x)]
 #' }
-#' 
+#'
 #' nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) %>%
 #'   step_dummy(item) %>%
 #'   step_ordinalscore(fail_severity, convert = custom)
-#' 
+#'
+#' tidy(nonlin_scores, number = 2)
+#'
 #' nonlin_scores <- prep(nonlin_scores, training = ord_data, retain = TRUE)
-#' 
+#'
 #' juice(nonlin_scores, everything())
+#'
+#' tidy(nonlin_scores, number = 2)
 
 step_ordinalscore <-
   function(recipe,
@@ -115,3 +134,10 @@ print.step_ordinalscore <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @rdname step_ordinalscore
+#' @param x A \code{step_ordinalscore} object.
+tidy.step_ordinalscore <- function(x, ...) {
+  simple_terms(x, ...)
+}
