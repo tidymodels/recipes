@@ -2,67 +2,80 @@
 % Please edit documentation in R/isomap.R
 \name{step_isomap}
 \alias{step_isomap}
+\alias{tidy.step_isomap}
 \title{Isomap Embedding}
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   options = list(knn = 50, .mute = c("message", "output")), res = NULL,
   prefix = "Isomap")
+
+\method{tidy}{step_isomap}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-used to compute the dimensions. See \code{\link{selections}} for more
-details.}
+\item{...}{One or more selector functions to choose which
+variables will be used to compute the dimensions. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new
-dimension columns created by the original variables will be used as
-predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new dimension columns created by the original variables
+will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of isomap dimensions to retain as new predictors. If
-\code{num} is greater than the number of columns or the number of
-possible dimensions, a smaller value will be used.}
+\item{num}{The number of isomap dimensions to retain as new
+predictors. If \code{num} is greater than the number of columns
+or the number of possible dimensions, a smaller value will be
+used.}
 
-\item{options}{A list of options to \code{\link[dimRed]{Isomap}}.}
+\item{options}{A list of options to
+\code{\link[dimRed]{Isomap}}.}
 
-\item{res}{The \code{\link[dimRed]{Isomap}} object is stored here once this
-preprocessing step has be trained by \code{\link{prep.recipe}}.}
+\item{res}{The \code{\link[dimRed]{Isomap}} object is stored
+here once this preprocessing step has be trained by
+\code{\link{prep.recipe}}.}
 
-\item{prefix}{A character string that will be the prefix to the resulting
-new variables. See notes below}
+\item{prefix}{A character string that will be the prefix to the
+resulting new variables. See notes below.}
+
+\item{x}{A \code{step_isomap} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected).
 }
 \description{
-\code{step_isomap} creates a \emph{specification} of a recipe step that will
-  convert numeric data into one or more new dimensions.
+\code{step_isomap} creates a \emph{specification} of a recipe
+ step that will convert numeric data into one or more new
+ dimensions.
 }
 \details{
-Isomap is a form of multidimensional scaling (MDS). MDS methods
-  try to find a reduced set of dimensions such that the geometric distances
-  between the original data points are preserved. This version of MDS uses
-  nearest neighbors in the data as a method for increasing the fidelity of
-  the new dimensions to the original data values.
+Isomap is a form of multidimensional scaling (MDS).
+ MDS methods try to find a reduced set of dimensions such that
+ the geometric distances between the original data points are
+ preserved. This version of MDS uses nearest neighbors in the
+ data as a method for increasing the fidelity of the new
+ dimensions to the original data values.
 
-It is advisable to center and scale the variables prior to running Isomap
-  (\code{step_center} and \code{step_scale} can be used for this purpose).
+It is advisable to center and scale the variables prior to
+ running Isomap (\code{step_center} and \code{step_scale} can be
+ used for this purpose).
 
-The argument \code{num} controls the number of components that will be
-  retained (the original variables that are used to derive the components
-  are removed from the data). The new components will have names that begin
-  with \code{prefix} and a sequence of numbers. The variable names are
-  padded with zeros. For example, if \code{num < 10}, their names will be
-  \code{Isomap1} - \code{Isomap9}. If \code{num = 101}, the names would be
-  \code{Isomap001} - \code{Isomap101}.
+The argument \code{num} controls the number of components that
+ will be retained (the original variables that are used to derive
+ the components are removed from the data). The new components
+ will have names that begin with \code{prefix} and a sequence of
+ numbers. The variable names are padded with zeros. For example,
+ if \code{num < 10}, their names will be \code{Isomap1} -
+ \code{Isomap9}. If \code{num = 101}, the names would be
+ \code{Isomap001} - \code{Isomap101}.
 }
 \examples{
 data(biomass)
@@ -88,11 +101,15 @@ im_te <- bake(im_estimates, biomass_te)
 rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
 plot(im_te$Isomap1, im_te$Isomap2,
      xlim = rng, ylim = rng)
+
+tidy(im_trans, number = 4)
+tidy(im_estimates, number = 4)
 }
 \references{
-De Silva, V., and Tenenbaum, J. B. (2003). Global versus local
-  methods in nonlinear dimensionality reduction. \emph{Advances in Neural
-  Information Processing Systems}. 721-728.
+De Silva, V., and Tenenbaum, J. B. (2003). Global
+ versus local methods in nonlinear dimensionality reduction.
+ \emph{Advances in Neural Information Processing Systems}.
+ 721-728.
 
 \pkg{dimRed}, a framework for dimensionality reduction,
   \url{https://github.com/gdkrmr}

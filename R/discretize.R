@@ -1,7 +1,8 @@
 #' Discretize Numeric Variables
 #'
-#' \code{discretize} converts a numeric vector into a factor with bins having
-#'   approximately the same number of data points (based on a training set).
+#' \code{discretize} converts a numeric vector into a factor with
+#'  bins having approximately the same number of data points (based
+#'  on a training set).
 #'
 #' @export
 #' @param x A numeric vector
@@ -13,45 +14,55 @@ discretize.default <- function(x, ...)
   stop("Only numeric `x` is accepted")
 
 #' @rdname discretize
-#' @param cuts An integer defining how many cuts to make of the data.
-#' @param labels A character vector defining the factor levels that will be in
-#' the new factor (from smallest to largest). This should have length
-#'  \code{cuts+1} and should not include a level for missing (see
-#'  \code{keep_na} below).
-#' @param prefix A single parameter value to be used as a prefix for the factor
-#'   levels (e.g. \code{bin1}, \code{bin2}, ...). If the string is not a valid
-#'   R name, it is coerced to one.
-#' @param keep_na A logical for whether a factor level should be created to
-#'   identify missing values in \code{x}.
-#' @param infs A logical indicating whether the smallest and largest cut point
-#'   should be infinite.
-#' @param min_unique An integer defining a sample size line of dignity for the
-#'   binning. If (the number of unique values)\code{/(cuts+1)} is less than
-#'   \code{min_unique}, no discretization takes place.
+#' @param cuts An integer defining how many cuts to make of the
+#'  data.
+#' @param labels A character vector defining the factor levels
+#'  that will be in the new factor (from smallest to largest). This
+#'  should have length \code{cuts+1} and should not include a level
+#'  for missing (see \code{keep_na} below).
+#' @param prefix A single parameter value to be used as a prefix
+#'  for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
+#'  the string is not a valid R name, it is coerced to one.
+#' @param keep_na A logical for whether a factor level should be
+#'  created to identify missing values in \code{x}.
+#' @param infs A logical indicating whether the smallest and
+#'  largest cut point should be infinite.
+#' @param min_unique An integer defining a sample size line of
+#'  dignity for the binning. If (the number of unique
+#'  values)\code{/(cuts+1)} is less than \code{min_unique}, no
+#'  discretization takes place.
 #' @param ... For \code{discretize}: options to pass to
-#'   \code{\link[stats]{quantile}} that should not include \code{x} or
-#'   \code{probs}. For \code{step_discretize}, the dots specify one or more
-#'   selector functions to choose which variables are affected by the step. See
-#'   \code{\link{selections}} for more details.
+#'  \code{\link[stats]{quantile}} that should not include \code{x}
+#'  or \code{probs}. For \code{step_discretize}, the dots specify
+#'  one or more selector functions to choose which variables are
+#'  affected by the step. See \code{\link{selections}} for more
+#'  details. For the \code{tidy} method, these are not currently
+#'  used.
 #'
-#' @return \code{discretize} returns an object of class \code{discretize}.
-#'   \code{predict.discretize} returns a factor vector.
+#' @return \code{discretize} returns an object of class
+#'  \code{discretize} and \code{predict.discretize} returns a factor
+#'  vector. \code{step_discretize} returns an updated version of
+#'  \code{recipe} with the new step added to the sequence of
+#'  existing steps (if any). For the \code{tidy} method, a tibble
+#'  with columns \code{terms} (the selectors or variables selected)
+#'  and \code{value} (the breaks).
 #' @keywords datagen
 #' @concept preprocessing discretization factors
 #' @export
-#' @details \code{discretize} estimates the cut points from \code{x} using
-#'   percentiles. For example, if \code{cuts = 3}, the function estimates the
-#'  quartiles of \code{x} and uses these as the cut points. If \code{cuts = 2},
-#'  the bins are defined as being above or below the median of \code{x}.
+#' @details \code{discretize} estimates the cut points from
+#'  \code{x} using percentiles. For example, if \code{cuts = 3}, the
+#'  function estimates the quartiles of \code{x} and uses these as
+#'  the cut points. If \code{cuts = 2}, the bins are defined as
+#'  being above or below the median of \code{x}.
 #'
-#' The \code{predict} method can then be used to turn numeric vectors into
-#'  factor vectors.
+#' The \code{predict} method can then be used to turn numeric
+#'  vectors into factor vectors.
 #'
-#' If \code{keep_na = TRUE}, a suffix of "_missing" is used as a factor level
-#'  (see the examples below).
+#' If \code{keep_na = TRUE}, a suffix of "_missing" is used as a
+#'  factor level (see the examples below).
 #'
-#'If \code{infs = FALSE} and a new value is greater than the largest value of
-#'  \code{x}, a missing value will result.
+#' If \code{infs = FALSE} and a new value is greater than the
+#'  largest value of \code{x}, a missing value will result.
 #'@examples
 #'data(biomass)
 #'
@@ -199,16 +210,18 @@ print.discretize <-
     }
   }
 
-
 #' @rdname discretize
 #' @inheritParams step_center
-#' @param role Not used by this step since no new variables are created.
-#' @param objects The \code{\link{discretize}} objects are stored here once
-#'   the recipe has be trained by \code{\link{prep.recipe}}.
-#' @param options A list of options to \code{\link{discretize}}. A defaults is
-#'   set for the argument \code{x}. Note that the using the options
-#'   \code{prefix} and \code{labels} when more than one variable is being
-#'   transformed might be problematic as all variables inherit those values.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param objects The \code{\link{discretize}} objects are stored
+#'  here once the recipe has be trained by
+#'  \code{\link{prep.recipe}}.
+#' @param options A list of options to \code{\link{discretize}}. A
+#'  defaults is set for the argument \code{x}. Note that the using
+#'  the options \code{prefix} and \code{labels} when more than one
+#'  variable is being transformed might be problematic as all
+#'  variables inherit those values.
 #' @export
 
 step_discretize <- function(recipe,
@@ -288,3 +301,23 @@ print.step_discretize <-
     printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+
+#' @importFrom rlang na_dbl
+#' @rdname step_discretize
+#' @param x A \code{step_discretize} object
+tidy.step_discretize <- function(x, ...) {
+  if (is_trained(x)) {
+    brks <- lapply(x$objects,
+                   function(x) x$breaks)
+    num_brks <- vapply(brks, length, c(1L))
+    brk_vars <- rep(names(num_brks), num_brks)
+
+    res <- tibble(terms = brk_vars, value = unlist(brks))
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names, value = na_dbl)
+  }
+  res
+}
+

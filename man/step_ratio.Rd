@@ -3,6 +3,7 @@
 \name{step_ratio}
 \alias{step_ratio}
 \alias{denom_vars}
+\alias{tidy.step_ratio}
 \title{Ratio Variable Creation}
 \usage{
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
@@ -10,45 +11,54 @@ step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   make.names(paste(numer, denom, sep = "_o_")), columns = NULL)
 
 denom_vars(...)
+
+\method{tidy}{step_ratio}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will
-be used in the \emph{numerator} of the ratio. When used with
-\code{denom_vars}, the dots indicates which variables are used in the
-\emph{denominator}. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables will be used in the \emph{numerator} of the ratio.
+When used with \code{denom_vars}, the dots indicates which
+variables are used in the \emph{denominator}. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{For terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the newly created
-ratios created by the original variables will be used as
-predictors in a model.}
+\item{role}{For terms created by this step, what analysis role
+should they be assigned?. By default, the function assumes that
+the newly created ratios created by the original variables will
+be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{denom}{A call to \code{denom_vars} to specify which variables are
-used in the denominator that can include specific variable names
-separated by commas or different selectors (see
-\code{\link{selections}}).  If a column is included in both lists to be
-numerator and denominator, it will be removed from the listing.}
+\item{denom}{A call to \code{denom_vars} to specify which
+variables are used in the denominator that can include specific
+variable names separated by commas or different selectors (see
+\code{\link{selections}}). If a column is included in both lists
+to be numerator and denominator, it will be removed from the
+listing.}
 
-\item{naming}{A function that defines the naming convention for new ratio
-columns.}
+\item{naming}{A function that defines the naming convention for
+new ratio columns.}
 
-\item{columns}{The column names used in the ratios. This argument is
-not populated until \code{\link{prep.recipe}} is executed.}
+\item{columns}{The column names used in the ratios. This
+argument is not populated until \code{\link{prep.recipe}} is
+executed.}
+
+\item{x}{A \code{step_ratio} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected) and \code{denom}.
 }
 \description{
-\code{step_ratio} creates a a \emph{specification} of a recipe step that
-  will create one or more ratios out of numeric variables.
+\code{step_ratio} creates a a \emph{specification} of a recipe
+ step that will create one or more ratios out of numeric
+ variables.
 }
 \examples{
 library(recipes)
@@ -58,16 +68,15 @@ biomass$total <- apply(biomass[, 3:7], 1, sum)
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + 
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
                     sulfur + total,
               data = biomass_tr)
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
   step_ratio(all_predictors(), denom = denom_vars(total)) \%>\%
-  # get rid of the original predictors 
-  step_rm(all_predictors(), -matches("_o_"))
-  
+  # get rid of the original predictors
+  step_rm(all_predictors(), -ends_with("total"))
 
 ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 

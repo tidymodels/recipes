@@ -1,4 +1,4 @@
-#' Apply (smoothed) rectified linear transformation
+#' Apply (Smoothed) Rectified Linear Transformation
 #'
 #' \code{step_relu} creates a \emph{specification} of a recipe step that
 #'   will apply the rectified linear or softplus transformations to numeric

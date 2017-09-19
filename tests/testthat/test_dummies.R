@@ -29,6 +29,12 @@ test_that('dummy variables with factor inputs', {
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
   expect_equal(dummy_pred, exp_res)
+
+  dum_tibble <-
+    tibble(terms = c("diet", "location"))
+
+  expect_equal(tidy(dummy, 1), dum_tibble)
+  expect_equal(tidy(dummy_trained, 1), dum_tibble)
 })
 
 test_that('dummy variables with string inputs', {

@@ -1,32 +1,37 @@
 #' Holiday Feature Generator
 #'
-#' \code{step_holiday} creates a a \emph{specification} of a recipe step that
-#'   will convert date data into one or more binary indicator variables for
-#'   common holidays.
+#' \code{step_holiday} creates a a \emph{specification} of a
+#'  recipe step that will convert date data into one or more binary
+#'  indicator variables for common holidays.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'   used to create the new variables. The selected variables should have
-#'   class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
-#'   more details.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new variable
-#'   columns created by the original variables will be used as predictors in
-#'   a model.
-#' @param holidays A character string that includes at least one holdiay
-#'   supported by the \code{timeDate} package. See
-#'   \code{\link[timeDate]{listHolidays}} for a complete list.
-
-#' @param columns A character string of variables that will be used as
-#'   inputs. This field is a placeholder and will be populated once
-#'   \code{\link{prep.recipe}} is used.
+#' @param ... One or more selector functions to choose which
+#'  variables will be used to create the new variables. The selected
+#'  variables should have class \code{Date} or \code{POSIXct}. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new variable columns created by the original variables
+#'  will be used as predictors in a model.
+#' @param holidays A character string that includes at least one
+#'  holiday supported by the \code{timeDate} package. See
+#'  \code{\link[timeDate]{listHolidays}} for a complete list.
+#' @param columns A character string of variables that will be
+#'  used as inputs. This field is a placeholder and will be
+#'  populated once \code{\link{prep.recipe}} is used.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which is
+#'  the columns that will be affected and \code{holiday}.
 #' @keywords datagen
-#' @concept preprocessing model_specification variable_encodings dates
+#' @concept preprocessing model_specification variable_encodings
+#'  dates
 #' @export
-#' @details Unlike other steps, \code{step_holiday} does \emph{not} remove the
-#'   original date variables. \code{\link{step_rm}} can be used for
-#'   this purpose.
+#' @details Unlike other steps, \code{step_holiday} does
+#'  \emph{not} remove the original date variables.
+#'  \code{\link{step_rm}} can be used for this purpose.
 #' @examples
 #' library(lubridate)
 #'
@@ -88,12 +93,12 @@ step_holiday_new <-
 #' @export
 prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  
+
   holiday_data <- info[info$variable %in% col_names, ]
   if (any(holiday_data$type != "date"))
     stop("All variables for `step_holiday` should be either `Date` ",
          "or `POSIXct` classes.", call. = FALSE)
-  
+
   step_holiday_new(
     terms = x$terms,
     role = x$role,
@@ -132,21 +137,21 @@ bake.step_holiday <- function(object, newdata, ...) {
     matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
   colnames(holiday_values) <- rep("", sum(new_cols))
   holiday_values <- as_tibble(holiday_values)
-  
+
   strt <- 1
   for (i in seq_along(object$columns)) {
     cols <- (strt):(strt + new_cols[i] - 1)
-    
+
     tmp <- get_holiday_features(dt = getElement(newdata, object$columns[i]),
                                 hdays = object$holidays)
-    
+
     holiday_values[, cols] <- tmp
-    
+
     names(holiday_values)[cols] <-
       paste(object$columns[i],
             names(tmp),
             sep = "_")
-    
+
     strt <- max(cols) + 1
   }
   newdata <- cbind(newdata, as_tibble(holiday_values))
@@ -161,3 +166,13 @@ print.step_holiday <-
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_holiday
+#' @param x A \code{step_holiday} object.
+tidy.step_holiday <- function(x, ...) {
+  res <- simple_terms(x, ...)
+  res <- expand.grid(terms = res$terms,
+                     holiday = x$holidays,
+                     stringsAsFactors = FALSE)
+  as_tibble(res)
+}

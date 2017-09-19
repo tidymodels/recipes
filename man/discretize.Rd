@@ -24,31 +24,35 @@ step_discretize(recipe, ..., role = NA, trained = FALSE, objects = NULL,
 \item{x}{A numeric vector}
 
 \item{...}{For \code{discretize}: options to pass to
-\code{\link[stats]{quantile}} that should not include \code{x} or
-\code{probs}. For \code{step_discretize}, the dots specify one or more
-selector functions to choose which variables are affected by the step. See
-\code{\link{selections}} for more details.}
+\code{\link[stats]{quantile}} that should not include \code{x}
+or \code{probs}. For \code{step_discretize}, the dots specify
+one or more selector functions to choose which variables are
+affected by the step. See \code{\link{selections}} for more
+details. For the \code{tidy} method, these are not currently
+used.}
 
-\item{cuts}{An integer defining how many cuts to make of the data.}
+\item{cuts}{An integer defining how many cuts to make of the
+data.}
 
-\item{labels}{A character vector defining the factor levels that will be in
-the new factor (from smallest to largest). This should have length
- \code{cuts+1} and should not include a level for missing (see
- \code{keep_na} below).}
+\item{labels}{A character vector defining the factor levels
+that will be in the new factor (from smallest to largest). This
+should have length \code{cuts+1} and should not include a level
+for missing (see \code{keep_na} below).}
 
-\item{prefix}{A single parameter value to be used as a prefix for the factor
-levels (e.g. \code{bin1}, \code{bin2}, ...). If the string is not a valid
-R name, it is coerced to one.}
+\item{prefix}{A single parameter value to be used as a prefix
+for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
+the string is not a valid R name, it is coerced to one.}
 
-\item{keep_na}{A logical for whether a factor level should be created to
-identify missing values in \code{x}.}
+\item{keep_na}{A logical for whether a factor level should be
+created to identify missing values in \code{x}.}
 
-\item{infs}{A logical indicating whether the smallest and largest cut point
-should be infinite.}
+\item{infs}{A logical indicating whether the smallest and
+largest cut point should be infinite.}
 
-\item{min_unique}{An integer defining a sample size line of dignity for the
-binning. If (the number of unique values)\code{/(cuts+1)} is less than
-\code{min_unique}, no discretization takes place.}
+\item{min_unique}{An integer defining a sample size line of
+dignity for the binning. If (the number of unique
+values)\code{/(cuts+1)} is less than \code{min_unique}, no
+discretization takes place.}
 
 \item{object}{An object of class \code{discretize}.}
 
@@ -57,41 +61,51 @@ binning. If (the number of unique values)\code{/(cuts+1)} is less than
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{objects}{The \code{\link{discretize}} objects are stored here once
-the recipe has be trained by \code{\link{prep.recipe}}.}
+\item{objects}{The \code{\link{discretize}} objects are stored
+here once the recipe has be trained by
+\code{\link{prep.recipe}}.}
 
-\item{options}{A list of options to \code{\link{discretize}}. A defaults is
-set for the argument \code{x}. Note that the using the options
-\code{prefix} and \code{labels} when more than one variable is being
-transformed might be problematic as all variables inherit those values.}
+\item{options}{A list of options to \code{\link{discretize}}. A
+defaults is set for the argument \code{x}. Note that the using
+the options \code{prefix} and \code{labels} when more than one
+variable is being transformed might be problematic as all
+variables inherit those values.}
 }
 \value{
-\code{discretize} returns an object of class \code{discretize}.
-  \code{predict.discretize} returns a factor vector.
+\code{discretize} returns an object of class
+ \code{discretize} and \code{predict.discretize} returns a factor
+ vector. \code{step_discretize} returns an updated version of
+ \code{recipe} with the new step added to the sequence of
+ existing steps (if any). For the \code{tidy} method, a tibble
+ with columns \code{terms} (the selectors or variables selected)
+ and \code{value} (the breaks).
 }
 \description{
-\code{discretize} converts a numeric vector into a factor with bins having
-  approximately the same number of data points (based on a training set).
+\code{discretize} converts a numeric vector into a factor with
+ bins having approximately the same number of data points (based
+ on a training set).
 }
 \details{
-\code{discretize} estimates the cut points from \code{x} using
-  percentiles. For example, if \code{cuts = 3}, the function estimates the
- quartiles of \code{x} and uses these as the cut points. If \code{cuts = 2},
- the bins are defined as being above or below the median of \code{x}.
+\code{discretize} estimates the cut points from
+ \code{x} using percentiles. For example, if \code{cuts = 3}, the
+ function estimates the quartiles of \code{x} and uses these as
+ the cut points. If \code{cuts = 2}, the bins are defined as
+ being above or below the median of \code{x}.
 
-The \code{predict} method can then be used to turn numeric vectors into
- factor vectors.
+The \code{predict} method can then be used to turn numeric
+ vectors into factor vectors.
 
-If \code{keep_na = TRUE}, a suffix of "_missing" is used as a factor level
- (see the examples below).
+If \code{keep_na = TRUE}, a suffix of "_missing" is used as a
+ factor level (see the examples below).
 
-If \code{infs = FALSE} and a new value is greater than the largest value of
- \code{x}, a missing value will result.
+If \code{infs = FALSE} and a new value is greater than the
+ largest value of \code{x}, a missing value will result.
 }
 \examples{
 data(biomass)

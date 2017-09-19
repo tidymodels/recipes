@@ -1,29 +1,36 @@
 #' Nature Spline Basis Functions
 #'
-#' \code{step_ns} creates a \emph{specification} of a recipe step that will
-#'   create new columns that are basis expansions of variables using natural
-#'   splines.
+#' \code{step_ns} creates a \emph{specification} of a recipe step
+#'  that will create new columns that are basis expansions of
+#'  variables using natural splines.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new columns
-#'   created from the original variables will be used as predictors in a model.
-#' @param objects A list of \code{\link[splines]{ns}} objects created once the
-#'   step has been trained.
-#' @param options A list of options for \code{\link[splines]{ns}} which should
-#'   not include \code{x}.
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new columns created from the original variables will be
+#'  used as predictors in a model.
+#' @param objects A list of \code{\link[splines]{ns}} objects
+#'  created once the step has been trained.
+#' @param options A list of options for \code{\link[splines]{ns}}
+#'  which should not include \code{x}.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which is
+#'  the columns that will be affected and \code{holiday}.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
-#' @details \code{step_ns} can new features from a single variable that enable
-#'   fitting routines to model this variable in a nonlinear manner. The extent
-#'   of the possible nonlinearity is determined by the \code{df} or \code{knot}
-#'   arguments of \code{\link[splines]{ns}}. The original variables are
-#'   removed from the data and new columns are added. The naming convention
-#'   for the new variables is \code{varname_ns_1} and so on.
+#' @details \code{step_ns} can new features from a single variable
+#'  that enable fitting routines to model this variable in a
+#'  nonlinear manner. The extent of the possible nonlinearity is
+#'  determined by the \code{df} or \code{knot} arguments of
+#'  \code{\link[splines]{ns}}. The original variables are removed
+#'  from the data and new columns are added. The naming convention
+#'  for the new variables is \code{varname_ns_1} and so on.
 #' @examples
 #' data(biomass)
 #'
@@ -141,3 +148,13 @@ print.step_ns <-
     printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_ns
+#' @param x A \code{step_ns} object.
+tidy.step_ns <- function(x, ...) {
+  res <- simple_terms(x, ...)
+  res <- expand.grid(terms = res$terms,
+                     degree = x$degree,
+                     stringsAsFactors = FALSE)
+  as_tibble(res)
+}

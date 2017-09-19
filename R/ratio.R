@@ -1,51 +1,59 @@
 #' Ratio Variable Creation
 #'
-#' \code{step_ratio} creates a a \emph{specification} of a recipe step that
-#'   will create one or more ratios out of numeric variables.
+#' \code{step_ratio} creates a a \emph{specification} of a recipe
+#'  step that will create one or more ratios out of numeric
+#'  variables.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will
-#'   be used in the \emph{numerator} of the ratio. When used with
-#'   \code{denom_vars}, the dots indicates which variables are used in the
-#'   \emph{denominator}. See \code{\link{selections}} for more details.
-#' @param role For terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the newly created
-#'   ratios created by the original variables will be used as
-#'   predictors in a model.
-#' @param denom A call to \code{denom_vars} to specify which variables are
-#'   used in the denominator that can include specific variable names
-#'   separated by commas or different selectors (see
-#'   \code{\link{selections}}).  If a column is included in both lists to be
-#'   numerator and denominator, it will be removed from the listing.
-#' @param naming A function that defines the naming convention for new ratio
-#'   columns.
-#' @param columns The column names used in the ratios. This argument is
-#'   not populated until \code{\link{prep.recipe}} is executed.
+#' @param ... One or more selector functions to choose which
+#'  variables will be used in the \emph{numerator} of the ratio.
+#'  When used with \code{denom_vars}, the dots indicates which
+#'  variables are used in the \emph{denominator}. See
+#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  method, these are not currently used.
+#' @param role For terms created by this step, what analysis role
+#'  should they be assigned?. By default, the function assumes that
+#'  the newly created ratios created by the original variables will
+#'  be used as predictors in a model.
+#' @param denom A call to \code{denom_vars} to specify which
+#'  variables are used in the denominator that can include specific
+#'  variable names separated by commas or different selectors (see
+#'  \code{\link{selections}}). If a column is included in both lists
+#'  to be numerator and denominator, it will be removed from the
+#'  listing.
+#' @param naming A function that defines the naming convention for
+#'  new ratio columns.
+#' @param columns The column names used in the ratios. This
+#'  argument is not populated until \code{\link{prep.recipe}} is
+#'  executed.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected) and \code{denom}.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
-#' @examples 
+#' @examples
 #' library(recipes)
 #' data(biomass)
-#' 
+#'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + 
+#'
+#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 #'                     sulfur + total,
 #'               data = biomass_tr)
-#' 
+#'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
 #'   step_ratio(all_predictors(), denom = denom_vars(total)) %>%
-#'   # get rid of the original predictors 
-#'   step_rm(all_predictors(), -matches("_o_"))
-#'   
-#' 
+#'   # get rid of the original predictors
+#'   step_rm(all_predictors(), -ends_with("total"))
+#'
 #' ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
-#' 
+#'
 #' ratio_data <- bake(ratio_recipe, biomass_te)
 #' ratio_data
 
@@ -102,14 +110,14 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     stringsAsFactors = FALSE
   )
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
-  
+
   if (nrow(col_names) == 0)
     stop("No variables were selected for making ratios", call. = FALSE)
   if (any(info$type[info$variable %in% col_names$top] != "numeric"))
     stop("The ratio variables should be numeric")
   if (any(info$type[info$variable %in% col_names$bottom] != "numeric"))
     stop("The ratio variables should be numeric")
-  
+
   step_ratio_new(
     terms = x$terms,
     role = x$role,
@@ -129,7 +137,7 @@ bake.step_ratio <- function(object, newdata, ...) {
       object$naming(x[1], x[2]))
   if (!is_tibble(res))
     res <- as_tibble(res)
-  
+
   newdata <- cbind(newdata, res)
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
@@ -154,3 +162,20 @@ print.step_ratio <-
 #' @export
 #' @rdname step_ratio
 denom_vars <- function(...) quos(...)
+
+#' @rdname step_ratio
+#' @param x A \code{step_ratio} object
+tidy.step_ratio <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- x$columns
+    colnames(res) <- c("terms", "denom")
+    res <- as_tibble(res)
+  } else {
+    res <- expand.grid(terms = sel2char(x$terms),
+                       denom = sel2char(x$denom),
+                       stringsAsFactors = FALSE)
+    res <- as_tibble(res)
+  }
+  res
+}
+

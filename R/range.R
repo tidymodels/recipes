@@ -1,26 +1,34 @@
 #' Scaling Numeric Data to a Specific Range
 #'
-#' \code{step_range} creates a \emph{specification} of a recipe step that will
-#'   normalize numeric data to have a standard deviation of one.
+#' \code{step_range} creates a \emph{specification} of a recipe
+#'  step that will normalize numeric data to be within a pre-defined
+#'  range of values.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'   scaled. See \code{\link{selections}} for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param min A single numeric value for the smallest value in the range
-#' @param max A single numeric value for the largest value in the range
-#' @param ranges A character vector of variables that will be normalized. Note
-#'   that this is ignored until the values are determined by
-#'   \code{\link{prep.recipe}}. Setting this value will be ineffective.
+#' @param ... One or more selector functions to choose which
+#'  variables will be scaled. See \code{\link{selections}} for more
+#'  details. For the \code{tidy} method, these are not currently
+#'  used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param min A single numeric value for the smallest value in the
+#'  range
+#' @param max A single numeric value for the largest value in the
+#'  range
+#' @param ranges A character vector of variables that will be
+#'  normalized. Note that this is ignored until the values are
+#'  determined by \code{\link{prep.recipe}}. Setting this value will
+#'  be ineffective.
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  selectors or variables selected), \code{min}, and \code{max}.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
-#' @details Scaling data means that the standard deviation of a variable is
-#'   divided out of the data. \code{step_range} estimates the variable standard
-#'   deviations from the data used in the \code{training} argument of
-#'   \code{prep.recipe}. \code{bake.recipe} then applies the scaling to new
-#'   data sets using these standard deviations.
+#' @details When a new data point is outside of the ranges seen in
+#'  the training set, the new values are truncated at \code{min} or
+#'  \code{max}.
 #' @examples
 #' data(biomass)
 #'
@@ -39,6 +47,9 @@
 #'
 #' biomass_te[1:10, names(transformed_te)]
 #' transformed_te
+#'
+#' tidy(ranged_trans, number = 1)
+#' tidy(ranged_obj, number = 1)
 
 step_range <-
   function(recipe,
@@ -104,10 +115,10 @@ bake.step_range <- function(object, newdata, ...) {
   tmp <- tmp * (object$max - object$min)
   tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
   tmp <- tmp + object$min
-  
+
   tmp[tmp < object$min] <- object$min
   tmp[tmp > object$max] <- object$max
-  
+
   if (is.matrix(tmp) && ncol(tmp) == 1)
     tmp <- tmp[, 1]
   newdata[, colnames(object$ranges)] <- tmp
@@ -120,3 +131,19 @@ print.step_range <-
     printer(names(x$ranges), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @rdname step_range
+#' @param x A \code{step_range} object.
+tidy.step_range <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = colnames(x$ranges),
+                  min = x$ranges["mins",],
+                  max = x$ranges["maxs",])
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names,
+                  min = na_dbl,
+                  max = na_dbl)
+  }
+  res
+}

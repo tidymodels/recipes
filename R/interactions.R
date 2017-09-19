@@ -1,39 +1,52 @@
 #' Create Interaction Variables
 #'
-#' \code{step_interact} creates a \emph{specification} of a recipe step that
-#'   will create new columns that are interaction terms between two or more
-#'   variables.
+#' \code{step_interact} creates a \emph{specification} of a recipe
+#'  step that will create new columns that are interaction terms
+#'  between two or more variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. 
-#' @param terms A traditional R formula that contains interaction terms.
-#' @param role For model terms created by this step, what analysis role should
-#'   they be assigned?. By default, the function assumes that the new columns
-#'   created from the original variables will be used as predictors in a model.
-#' @param objects A list of \code{terms} objects for each individual interation.
-#' @param sep A character value used to delinate variables in an interaction
-#'   (e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).
+#'  for more details. For the \code{tidy} method, these are not
+#'  currently used.
+#' @param terms A traditional R formula that contains interaction
+#'  terms.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new columns created from the original variables will be
+#'  used as predictors in a model.
+#' @param objects A list of \code{terms} objects for each
+#'  individual interaction.
+#' @param sep A character value used to delineate variables in an
+#'  interaction (e.g. \code{var1_x_var2} instead of the more
+#'  traditional \code{var1:var2}).
+#' @return An updated version of \code{recipe} with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  \code{tidy} method, a tibble with columns \code{terms} which is
+#'  the interaction effects.
 #' @keywords datagen
 #' @concept preprocessing model_specification
 #' @export
-#' @details \code{step_interact} can create interactions between variables. It
-#'   is primarily intended for \bold{numeric data}; categorical variables
-#'   should probably be converted to dummy variables using
-#'   \code{\link{step_dummy}} prior to being used for interactions.
+#' @details \code{step_interact} can create interactions between
+#'  variables. It is primarily intended for \bold{numeric data};
+#'  categorical variables should probably be converted to dummy
+#'  variables using \code{\link{step_dummy}} prior to being used for
+#'  interactions.
 #'
-#' Unlike other step functions, the \code{terms} argument should be a
-#'   traditional R model formula but should contain no inline functions (e.g.
-#'   \code{log}). For example, for predictors \code{A}, \code{B}, and \code{C},
-#'   a formula such as \code{~A:B:C} can be used to make a three way
-#'   interaction between the variables. If the formula contains terms other
-#'   than interactions (e.g. \code{(A+B+C)^3}) only the interaction terms are
-#'   retained for the design matrix.
+#'   Unlike other step functions, the \code{terms} argument should
+#'  be a traditional R model formula but should contain no inline
+#'  functions (e.g. \code{log}). For example, for predictors
+#'  \code{A}, \code{B}, and \code{C}, a formula such as
+#'  \code{~A:B:C} can be used to make a three way interaction
+#'  between the variables. If the formula contains terms other than
+#'  interactions (e.g. \code{(A+B+C)^3}) only the interaction terms
+#'  are retained for the design matrix.
 #'
-#' The separator between the variables defaults to "\code{_x_}" so that the
-#'   three way interaction shown previously would generate a column named
-#'   \code{A_x_B_x_C}. This can be changed using the \code{sep} argument.
+#'   The separator between the variables defaults to "\code{_x_}" so
+#'  that the three way interaction shown previously would generate a
+#'  column named \code{A_x_B_x_C}. This can be changed using the
+#'  \code{sep} argument.
+
 #' @examples
 #' data(biomass)
 #'
@@ -57,6 +70,9 @@
 #'
 #' names(dat_1)
 #' names(dat_2)
+#'
+#' tidy(int_mod_2, number = 1)
+#' tidy(int_mod_2, number = 2)
 
 step_interact <-
   function(recipe,
@@ -101,7 +117,7 @@ step_interact_new <-
 prep.step_interact <- function(x, training, info = NULL, ...) {
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
-  
+
   ## Check to see if any variables are non-numeric and issue a warning
   ## if that is the case
   vars <-
@@ -113,15 +129,15 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       "avoided;  This can lead to differences in dummy variable values that ",
       "are produced by `step_dummy`."
     )
-  
+
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
-  
+
   ## Generate a standard R `terms` object from these short formulas and
   ## save to make future interactions
   int_terms <- make_small_terms(int_forms, training)
-  
+
   step_interact_new(
     terms = x$terms,
     role = x$role,
@@ -136,16 +152,16 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 bake.step_interact <- function(object, newdata, ...) {
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
-  
+
   old_opt <- options()$na.action
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
-  
+
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
   options(na.action = old_opt)
   on.exit(expr = NULL)
-  
+
   res <-
     lapply(res, function(x)
       x[, grepl(":", colnames(x)), drop = FALSE])
@@ -218,3 +234,13 @@ print.step_interact <-
       cat("\n")
     invisible(x)
   }
+
+int_name <- function(x)
+   get_term_names(x, all.vars(x))
+
+#' @importFrom rlang na_dbl
+#' @rdname step_interact
+#' @param x A \code{step_interact} object
+tidy.step_interact <- function(x, ...) {
+  tibble(terms = vapply(x$objects, int_name, character(1)))
+}

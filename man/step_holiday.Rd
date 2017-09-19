@@ -2,51 +2,57 @@
 % Please edit documentation in R/holiday.R
 \name{step_holiday}
 \alias{step_holiday}
+\alias{tidy.step_holiday}
 \title{Holiday Feature Generator}
 \usage{
 step_holiday(recipe, ..., role = "predictor", trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL)
+
+\method{tidy}{step_holiday}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-used to create the new variables. The selected variables should have
-class \code{Date} or \code{POSIXct}. See \code{\link{selections}} for
-more details.}
+\item{...}{One or more selector functions to choose which
+variables will be used to create the new variables. The selected
+variables should have class \code{Date} or \code{POSIXct}. See
+\code{\link{selections}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new variable
-columns created by the original variables will be used as predictors in
-a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new variable columns created by the original variables
+will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{holidays}{A character string that includes at least one holdiay
-supported by the \code{timeDate} package. See
+\item{holidays}{A character string that includes at least one
+holiday supported by the \code{timeDate} package. See
 \code{\link[timeDate]{listHolidays}} for a complete list.}
 
-\item{columns}{A character string of variables that will be used as
-inputs. This field is a placeholder and will be populated once
-\code{\link{prep.recipe}} is used.}
+\item{columns}{A character string of variables that will be
+used as inputs. This field is a placeholder and will be
+populated once \code{\link{prep.recipe}} is used.}
+
+\item{x}{A \code{step_holiday} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ \code{tidy} method, a tibble with columns \code{terms} which is
+ the columns that will be affected and \code{holiday}.
 }
 \description{
-\code{step_holiday} creates a a \emph{specification} of a recipe step that
-  will convert date data into one or more binary indicator variables for
-  common holidays.
+\code{step_holiday} creates a a \emph{specification} of a
+ recipe step that will convert date data into one or more binary
+ indicator variables for common holidays.
 }
 \details{
-Unlike other steps, \code{step_holiday} does \emph{not} remove the
-  original date variables. \code{\link{step_rm}} can be used for
-  this purpose.
+Unlike other steps, \code{step_holiday} does
+ \emph{not} remove the original date variables.
+ \code{\link{step_rm}} can be used for this purpose.
 }
 \examples{
 library(lubridate)
@@ -65,6 +71,7 @@ holiday_values
   \code{\link{bake.recipe}} \code{\link[timeDate]{listHolidays}}
 }
 \concept{
-preprocessing model_specification variable_encodings dates
+preprocessing model_specification variable_encodings
+ dates
 }
 \keyword{datagen}

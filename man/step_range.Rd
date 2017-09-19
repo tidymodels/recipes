@@ -2,47 +2,57 @@
 % Please edit documentation in R/range.R
 \name{step_range}
 \alias{step_range}
+\alias{tidy.step_range}
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
 step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
   ranges = NULL)
+
+\method{tidy}{step_range}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-scaled. See \code{\link{selections}} for more details.}
+\item{...}{One or more selector functions to choose which
+variables will be scaled. See \code{\link{selections}} for more
+details. For the \code{tidy} method, these are not currently
+used.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{min}{A single numeric value for the smallest value in the range}
+\item{min}{A single numeric value for the smallest value in the
+range}
 
-\item{max}{A single numeric value for the largest value in the range}
+\item{max}{A single numeric value for the largest value in the
+range}
 
-\item{ranges}{A character vector of variables that will be normalized. Note
-that this is ignored until the values are determined by
-\code{\link{prep.recipe}}. Setting this value will be ineffective.}
+\item{ranges}{A character vector of variables that will be
+normalized. Note that this is ignored until the values are
+determined by \code{\link{prep.recipe}}. Setting this value will
+be ineffective.}
+
+\item{x}{A \code{step_range} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
  added to the sequence of existing steps (if any). For the
  \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+ selectors or variables selected), \code{min}, and \code{max}.
 }
 \description{
-\code{step_range} creates a \emph{specification} of a recipe step that will
-  normalize numeric data to have a standard deviation of one.
+\code{step_range} creates a \emph{specification} of a recipe
+ step that will normalize numeric data to be within a pre-defined
+ range of values.
 }
 \details{
-Scaling data means that the standard deviation of a variable is
-  divided out of the data. \code{step_range} estimates the variable standard
-  deviations from the data used in the \code{training} argument of
-  \code{prep.recipe}. \code{bake.recipe} then applies the scaling to new
-  data sets using these standard deviations.
+When a new data point is outside of the ranges seen in
+ the training set, the new values are truncated at \code{min} or
+ \code{max}.
 }
 \examples{
 data(biomass)
@@ -62,6 +72,9 @@ transformed_te <- bake(ranged_obj, biomass_te)
 
 biomass_te[1:10, names(transformed_te)]
 transformed_te
+
+tidy(ranged_trans, number = 1)
+tidy(ranged_obj, number = 1)
 }
 \concept{
 preprocessing normalization_methods

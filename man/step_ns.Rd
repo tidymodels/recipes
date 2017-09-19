@@ -2,10 +2,13 @@
 % Please edit documentation in R/ns.R
 \name{step_ns}
 \alias{step_ns}
+\alias{tidy.step_ns}
 \title{Nature Spline Basis Functions}
 \usage{
 step_ns(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
   options = list(df = 2))
+
+\method{tidy}{step_ns}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -13,33 +16,44 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link{selections}}
-for more details.}
+for more details. For the \code{tidy} method, these are not
+currently used.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new columns
-created from the original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new columns created from the original variables will be
+used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{objects}{A list of \code{\link[splines]{ns}} objects created once the
-step has been trained.}
+\item{objects}{A list of \code{\link[splines]{ns}} objects
+created once the step has been trained.}
 
-\item{options}{A list of options for \code{\link[splines]{ns}} which should
-not include \code{x}.}
+\item{options}{A list of options for \code{\link[splines]{ns}}
+which should not include \code{x}.}
+
+\item{x}{A \code{step_ns} object.}
+}
+\value{
+An updated version of \code{recipe} with the new step
+ added to the sequence of existing steps (if any). For the
+ \code{tidy} method, a tibble with columns \code{terms} which is
+ the columns that will be affected and \code{holiday}.
 }
 \description{
-\code{step_ns} creates a \emph{specification} of a recipe step that will
-  create new columns that are basis expansions of variables using natural
-  splines.
+\code{step_ns} creates a \emph{specification} of a recipe step
+ that will create new columns that are basis expansions of
+ variables using natural splines.
 }
 \details{
-\code{step_ns} can new features from a single variable that enable
-  fitting routines to model this variable in a nonlinear manner. The extent
-  of the possible nonlinearity is determined by the \code{df} or \code{knot}
-  arguments of \code{\link[splines]{ns}}. The original variables are
-  removed from the data and new columns are added. The naming convention
-  for the new variables is \code{varname_ns_1} and so on.
+\code{step_ns} can new features from a single variable
+ that enable fitting routines to model this variable in a
+ nonlinear manner. The extent of the possible nonlinearity is
+ determined by the \code{df} or \code{knot} arguments of
+ \code{\link[splines]{ns}}. The original variables are removed
+ from the data and new columns are added. The naming convention
+ for the new variables is \code{varname_ns_1} and so on.
 }
 \examples{
 data(biomass)

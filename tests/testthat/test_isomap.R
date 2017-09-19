@@ -31,6 +31,12 @@ test_that('correct Isomap values', {
   im_pred <- bake(im_trained, newdata = dat2)
 
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
+
+  im_tibble <-
+    tibble(terms = c("x1", "x2", "x3"))
+
+  expect_equal(tidy(im_rec, 1), im_tibble)
+  expect_equal(tidy(im_trained, 1), im_tibble)
 })
 
 
