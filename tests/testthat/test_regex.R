@@ -13,7 +13,7 @@ test_that('default options', {
     step_regex(description, result = "all ones")
   rec1 <- prep(rec1, training = covers)
   res1 <- bake(rec1, newdata = covers)
-  expect_equal(res1$X.rock.stony., 
+  expect_equal(res1$X.rock.stony.,
                as.numeric(grepl("(rock|stony)", covers$description)))
   expect_equal(res1$`all ones`, rep(1, nrow(covers)))
 })
@@ -21,9 +21,9 @@ test_that('default options', {
 
 test_that('nondefault options', {
   rec2 <- rec %>%
-    step_regex(description, pattern = "(rock|stony)", 
+    step_regex(description, pattern = "(rock|stony)",
                result = "rocks",
-               options = list(fixed = TRUE)) 
+               options = list(fixed = TRUE))
   rec2 <- prep(rec2, training = covers)
   res2 <- bake(rec2, newdata = covers)
   expect_equal(res2$rocks, rep(0, nrow(covers)))
@@ -43,5 +43,5 @@ test_that('printing', {
   rec1 <- rec %>%
     step_regex(description, pattern = "(rock|stony)")
   expect_output(print(rec1))
-  expect_output(prep(rec1, training = covers))
+  expect_output(prep(rec1, training = covers, verbose = TRUE))
 })

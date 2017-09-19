@@ -31,11 +31,11 @@ test_that('NA values from out of range', {
 })
 
 
-test_that('printing', {
+test_that('printing and tidys', {
   rec <- recipe(~., data = ex_tr) %>%
     step_discretize(x1)
   expect_output(print(rec))
-  expect_output(prep(rec, training = ex_tr))
+  expect_output(prep(rec, training = ex_tr, verbose = TRUE))
 
   tidy_exp_un <- tibble(
     terms = "x1",

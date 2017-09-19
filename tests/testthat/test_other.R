@@ -147,6 +147,6 @@ test_that('factor inputs', {
 test_that('printing', {
   rec <- rec %>% step_other(diet, location)
   expect_output(print(rec))
-  expect_output(prep(rec, training = okc_tr))
+  expect_output(prep(rec, training = okc_tr, verbose = TRUE))
 })
 

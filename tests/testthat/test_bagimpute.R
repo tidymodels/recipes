@@ -61,7 +61,7 @@ test_that('printing', {
     step_bagimpute(carbon, impute_with = imp_vars(hydrogen), seed_val = 12)
 
   expect_output(print(imputed))
-  expect_output(prep(imputed, training = biomass))
+  expect_output(prep(imputed, training = biomass, verbose = TRUE))
 })
 
 

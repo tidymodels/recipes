@@ -29,5 +29,5 @@ test_that('printing', {
   rec <- recipe(~., data = ex_dat) %>%
     step_invlogit(x1)
   expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat))
+  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
 })

@@ -80,6 +80,6 @@ test_that('printing', {
     step_center(carbon) %>%
     step_scale(hydrogen)
   expect_output(print(standardized))
-  expect_output(prep(standardized, training = biomass))
+  expect_output(prep(standardized, training = biomass, verbose = TRUE))
 })
 

@@ -1,9 +1,9 @@
 library(testthat)
 library(recipes)
 
-dummies <- cbind(model.matrix( ~ block - 1, npk), 
-                 model.matrix( ~ N - 1, npk), 
-                 model.matrix( ~ P - 1, npk), 
+dummies <- cbind(model.matrix( ~ block - 1, npk),
+                 model.matrix( ~ N - 1, npk),
+                 model.matrix( ~ P - 1, npk),
                  model.matrix( ~ K - 1, npk),
                  yield = npk$yield)
 
@@ -22,14 +22,14 @@ biomass$new_2 <- with(biomass,
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
-biomass_rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + 
+biomass_rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
                         sulfur + new_1 + new_2,
                       data = biomass_tr)
 
 ###################################################################
 
 test_that('example 1', {
-  dum_filtered <- dum_rec %>% 
+  dum_filtered <- dum_rec %>%
     step_lincomb(all_predictors())
   dum_filtered <- prep(dum_filtered, training = dummies, verbose = FALSE)
   removed <- c("N1", "P1", "K1")
@@ -39,7 +39,7 @@ test_that('example 1', {
 test_that('example 2', {
   lincomb_filter <- biomass_rec %>%
     step_lincomb(all_predictors())
-  
+
   filtering_trained <- prep(lincomb_filter, training = biomass_tr)
   test_res <- bake(filtering_trained, newdata = biomass_te)
 
@@ -50,18 +50,18 @@ test_that('no exclusions', {
   biomass_rec_2 <- recipe(HHV ~ carbon + hydrogen, data = biomass_tr)
   lincomb_filter_2 <- biomass_rec_2 %>%
     step_lincomb(all_predictors())
-  
+
   filtering_trained_2 <- prep(lincomb_filter_2, training = biomass_tr)
   test_res_2 <- bake(filtering_trained_2, newdata = biomass_te)
-  
+
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
 })
 
 
 test_that('printing', {
-  dum_filtered <- dum_rec %>% 
+  dum_filtered <- dum_rec %>%
     step_lincomb(all_predictors())
   expect_output(print(dum_filtered))
-  expect_output(prep(dum_filtered, training = dummies))
+  expect_output(prep(dum_filtered, training = dummies, verbose = TRUE))
 })

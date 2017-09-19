@@ -38,7 +38,7 @@ test_that('printing', {
     step_factor2string(y, z) %>%
     prep(ex_dat, stringsAsFactors = FALSE, retain = TRUE)
   expect_output(print(ex_3))
-  expect_output(prep(ex_3, training = ex_dat))
+  expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
 })
 
 

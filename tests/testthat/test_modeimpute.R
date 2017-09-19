@@ -54,5 +54,5 @@ test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_modeimpute(Status, Home, Marital)
   expect_output(print(impute_rec))
-  expect_output(prep(impute_rec, training = credit_tr))
+  expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
 })

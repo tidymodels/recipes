@@ -43,6 +43,6 @@ test_that('printing', {
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6)
   expect_output(print(kpca_rec))
-  expect_output(prep(kpca_rec, training = tr_dat))
+  expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
 

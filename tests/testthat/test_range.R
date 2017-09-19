@@ -112,6 +112,6 @@ test_that('printing', {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12)
   expect_output(print(standardized))
-  expect_output(prep(standardized, training = biomass_tr))
+  expect_output(prep(standardized, training = biomass_tr, verbose = TRUE))
 })
 

@@ -4,7 +4,7 @@ library(recipes)
 data(covers)
 rec <- recipe(~ description, covers) %>%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
-  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") 
+  step_regex(description, pattern = "(rock|stony)", result = "more_rocks")
 
 test_that('default options', {
   rec1 <- rec %>% step_bin2factor(rocks)
@@ -33,6 +33,6 @@ test_that('bad options', {
 test_that('printing', {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
   expect_output(print(rec2))
-  expect_output(prep(rec2, training = covers))
+  expect_output(prep(rec2, training = covers, verbose = TRUE))
 })
 

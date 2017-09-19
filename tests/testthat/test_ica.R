@@ -108,5 +108,5 @@ test_that('printing', {
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num = 2)
   expect_output(print(ica_extract))
-  expect_output(prep(ica_extract, training = biomass_tr))
+  expect_output(prep(ica_extract, training = biomass_tr, verbose = TRUE))
 })

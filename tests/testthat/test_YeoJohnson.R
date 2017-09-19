@@ -75,6 +75,6 @@ test_that('printing', {
   rec <- recipe(~., data = ex_dat) %>%
     step_YeoJohnson(x1, x2, x3, x4)
   expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat))
+  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
 })
 

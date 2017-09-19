@@ -90,6 +90,6 @@ test_that('printing', {
   rec <- recipe(~ ., data = df) %>%
     step_relu(val1)
   expect_output(print(rec))
-  expect_output(prep(rec, training = df))
+  expect_output(prep(rec, training = df, verbose = TRUE))
 })
 

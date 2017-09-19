@@ -16,8 +16,8 @@ test_that('default options', {
   rec1 <- rec %>%
     step_count(description, pattern = "(rock|stony)") %>%
     step_count(description, pattern = "", result = "every thing") %>%
-    step_count(description, pattern = "(rock|stony)", 
-               result = "pct", normalize = TRUE) 
+    step_count(description, pattern = "(rock|stony)",
+               result = "pct", normalize = TRUE)
   rec1 <- prep(rec1, training = covers)
   res1 <- bake(rec1, newdata = covers)
   expect_equal(res1$X.rock.stony., counts)
@@ -28,9 +28,9 @@ test_that('default options', {
 
 test_that('nondefault options', {
   rec2 <- rec %>%
-    step_count(description, pattern = "(rock|stony)", 
+    step_count(description, pattern = "(rock|stony)",
                result = "rocks",
-               options = list(fixed = TRUE)) 
+               options = list(fixed = TRUE))
   rec2 <- prep(rec2, training = covers)
   res2 <- bake(rec2, newdata = covers)
   expect_equal(res2$rocks, rep(0, nrow(covers)))
@@ -50,5 +50,5 @@ test_that('printing', {
   rec5 <- rec %>%
     step_count(description, pattern = "(rock|stony)")
   expect_output(print(rec5))
-  expect_output(prep(rec5, training = covers))
+  expect_output(prep(rec5, training = covers, verbose = TRUE))
 })

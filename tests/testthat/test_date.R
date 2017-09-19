@@ -16,10 +16,10 @@ feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "mont
 test_that('default option', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
-  
-  date_rec <- prep(date_rec, training = examples)   
+
+  date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, newdata = examples)
-  
+
   date_exp <- tibble(
     Dan = examples$Dan,
     Stefan = examples$Stefan,
@@ -41,10 +41,10 @@ test_that('default option', {
     Stefan_month = month(examples$Stefan, label = TRUE, abbr = TRUE)
   )
   date_exp$Dan_dow <- factor(as.character(date_exp$Dan_dow), levels = levels(date_exp$Dan_dow))
-  date_exp$Dan_month <- factor(as.character(date_exp$Dan_month), levels = levels(date_exp$Dan_month))  
+  date_exp$Dan_month <- factor(as.character(date_exp$Dan_month), levels = levels(date_exp$Dan_month))
   date_exp$Stefan_dow <- factor(as.character(date_exp$Stefan_dow), levels = levels(date_exp$Stefan_dow))
   date_exp$Stefan_month <- factor(as.character(date_exp$Stefan_month), levels = levels(date_exp$Stefan_month))
-  
+
   expect_equal(date_res, date_exp)
 })
 
@@ -52,10 +52,10 @@ test_that('default option', {
 test_that('nondefault options', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
-  
-  date_rec <- prep(date_rec, training = examples)   
+
+  date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, newdata = examples)
-  
+
   date_exp <- tibble(
     Dan = examples$Dan,
     Stefan = examples$Stefan,
@@ -72,10 +72,10 @@ test_that('nondefault options', {
 test_that('ordinal values', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
-  
-  date_rec <- prep(date_rec, training = examples)   
+
+  date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, newdata = examples)
-  
+
   date_exp <- tibble(
     Dan = examples$Dan,
     Stefan = examples$Stefan,
@@ -84,7 +84,7 @@ test_that('ordinal values', {
     Stefan_dow = wday(examples$Stefan, label = TRUE),
     Stefan_month = month(examples$Stefan, label = TRUE)
   )
-  
+
   expect_equal(date_res, date_exp)
 })
 
@@ -93,5 +93,5 @@ test_that('printing', {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   expect_output(print(date_rec))
-  expect_output(prep(date_rec, training = examples))
+  expect_output(prep(date_rec, training = examples, verbose = TRUE))
 })

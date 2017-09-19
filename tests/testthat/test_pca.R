@@ -90,6 +90,6 @@ test_that('printing', {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
   expect_output(print(pca_extract))
-  expect_output(prep(pca_extract, training = biomass_tr))
+  expect_output(prep(pca_extract, training = biomass_tr, verbose = TRUE))
 })
 

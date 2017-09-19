@@ -52,6 +52,6 @@ test_that('printing', {
   holiday_rec <- recipe(~ day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
   expect_output(print(holiday_rec))
-  expect_output(prep(holiday_rec, training = test_data))
+  expect_output(prep(holiday_rec, training = test_data, verbose = TRUE))
 })
 

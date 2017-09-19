@@ -34,5 +34,5 @@ test_that('printing', {
   rec <- recipe(y ~ ., data = dat) %>%
     step_zv(x1, x2, x3, x4)
   expect_output(print(rec))
-  expect_output(prep(rec, training = dat))
+  expect_output(prep(rec, training = dat, verbose = TRUE))
 })

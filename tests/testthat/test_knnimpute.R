@@ -77,6 +77,6 @@ test_that('printing', {
   discr_rec <- rec %>%
     step_discretize(nitrogen, options = list(keep_na = FALSE))
   expect_output(print(discr_rec))
-  expect_output(prep(discr_rec, training = biomass_tr))
+  expect_output(prep(discr_rec, training = biomass_tr, verbose = TRUE))
 })
 

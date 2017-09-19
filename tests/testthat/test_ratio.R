@@ -131,7 +131,7 @@ test_that('printing', {
   rec3 <- rec %>%
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
   expect_output(print(rec3))
-  expect_output(prep(rec3, training = ex_dat))
+  expect_output(prep(rec3, training = ex_dat, verbose = TRUE))
 })
 
 

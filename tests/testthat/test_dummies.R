@@ -73,6 +73,6 @@ test_that('printing', {
   rec <- recipe(age ~ ., data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location)
   expect_output(print(dummy))
-  expect_output(prep(dummy, training = okc_fac))
+  expect_output(prep(dummy, training = okc_fac, verbose = TRUE))
 })
 
