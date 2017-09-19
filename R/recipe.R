@@ -149,7 +149,7 @@ recipe.data.frame <-
            ...,
            vars = NULL,
            roles = NULL) {
-    
+
     if (!is.null(formula)) {
       if (!is.null(vars))
         stop("This `vars` specification will be ignored when a formula is ",
@@ -157,14 +157,14 @@ recipe.data.frame <-
       if (!is.null(roles))
         stop("This `roles` specification will be ignored when a formula is ",
              "used", call. = FALSE)
-      
+
       obj <- recipe.formula(formula, x, ...)
       return(obj)
     }
-    
+
     if (is.null(vars))
       vars <- colnames(x)
-    
+
     if (!is_tibble(x))
       x <- as_tibble(x)
     if (is.null(vars))
@@ -173,11 +173,11 @@ recipe.data.frame <-
       stop("`vars` should have unique members", call. = FALSE)
     if (any(!(vars %in% colnames(x))))
       stop("1+ elements of `vars` are not in `x`", call. = FALSE)
-    
+
     x <- x[, vars]
-    
+
     var_info <- tibble(variable = vars)
-    
+
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars))
@@ -186,11 +186,11 @@ recipe.data.frame <-
       var_info$role <- roles
     } else
       var_info$role <- NA
-    
+
     ## Add types
     var_info <- full_join(get_types(x), var_info, by = "variable")
     var_info$source <- "original"
-    
+
     ## Return final object of class `recipe`
     out <- list(
       var_info = var_info,
@@ -231,28 +231,28 @@ form2args <- function(formula, data, ...) {
     formula <- as.formula(formula)
   ## check for in-line formulas
   check_elements(formula, allowed = NULL)
-  
+
   if (!is_tibble(data))
     data <- as_tibble(data)
-  
+
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
   predictors <- get_rhs_vars(formula, data)
-  
+
   ## get `vars` from lhs and rhs of formula
-  
+
   vars <- c(predictors, outcomes)
-  
+
   ## subset data columns
   data <- data[, vars]
-  
+
   ## derive roles
   roles <- rep("predictor", length(predictors))
   if (length(outcomes) > 0)
     roles <- c(roles, rep("outcome", length(outcomes)))
-  
+
   ## pass to recipe.default with vars and roles
-  
+
   list(x = data, vars = vars, roles = roles)
 }
 
@@ -271,7 +271,7 @@ prep   <- function(x, ...)
 #' Train a Data Recipe
 #'
 #' For a recipe with at least one preprocessing step, estimate the required
-#'   parameters from a training set that can be later applied to other data 
+#'   parameters from a training set that can be later applied to other data
 #'   sets.
 #' @param training A data frame or tibble that will be used to estimate
 #'   parameters for preprocessing.
@@ -314,7 +314,7 @@ prep.recipe <-
   function(x,
            training = NULL,
            fresh = FALSE,
-           verbose = TRUE,
+           verbose = FALSE,
            retain = FALSE,
            stringsAsFactors = TRUE,
            ...) {
@@ -336,16 +336,16 @@ prep.recipe <-
       training <- strings2factors(training, lvls)
     } else
       lvls <- NULL
-    
+
     for (i in seq(along = x$steps)) {
       note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
           cat(note, "training", "\n")
-        
+
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-        
+
         x$steps[[i]] <-
           prep(x$steps[[i]],
                   training = training,
@@ -353,30 +353,30 @@ prep.recipe <-
         training <- bake(x$steps[[i]], newdata = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
-        
+
         ## Update the roles and the term source
         ## These next two steps needs to be smarter to find diffs
         if (!is.na(x$steps[[i]]$role))
           x$term_info$role[is.na(x$term_info$role)] <-
           x$steps[[i]]$role
-        
+
         x$term_info$source[is.na(x$term_info$source)] <- "derived"
       } else {
         if (verbose)
           cat(note, "[pre-trained]\n")
       }
     }
-    
+
     ## The steps may have changed the data so reassess the levels
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
     } else lvls <- NULL
-    
+
     if (retain)
       x$template <- training
-    
+
     x$tr_info <- tr_data
     x$levels <- lvls
     x$retained <- retain
@@ -422,11 +422,11 @@ bake <- function(object, ...)
 
 bake.recipe <- function(object, newdata = object$template, ...) {
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
-  
+
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(all_predictors())
-  
+
   ## determine return variables
   keepers <- terms_select(terms = terms, info = object$term_info)
 
@@ -434,9 +434,9 @@ bake.recipe <- function(object, newdata = object$template, ...) {
     newdata <- bake(object$steps[[i]], newdata = newdata)
     if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
   }
-  
+
   newdata <- newdata[, names(newdata) %in% keepers]
-  
+
   ## the Levels are not null when no nominal data are present or
   ## if stringsAsFactors = FALSE in `prep`
   if (!is.null(object$levels)) {
@@ -449,7 +449,7 @@ bake.recipe <- function(object, newdata = object$template, ...) {
     if (length(var_levels) > 0)
       newdata <- strings2factors(newdata, var_levels)
   }
-  
+
   newdata
 }
 
@@ -535,36 +535,36 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' Extract Finalized Training Set
 #'
 #' As steps are estimated by \code{prep}, these operations are
-#'  applied to the training set. Rather than running \code{bake} 
+#'  applied to the training set. Rather than running \code{bake}
 #'  to duplicate this processing, this function will return
-#'  variables from the processed training set. 
-#' @param object A \code{recipe} object that has been prepared 
-#'   with the option \code{retain = TRUE}. 
+#'  variables from the processed training set.
+#' @param object A \code{recipe} object that has been prepared
+#'   with the option \code{retain = TRUE}.
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See \code{\link{selections}} for more details.
 #'   If no selectors are given, the default is to use
 #'   \code{\link{all_predictors}}.
 #' @return A tibble.
-#' @details When preparing a recipe, if the training data set is retained using \code{retain = TRUE}, there is no need to \code{bake} the recipe to get the preprocessed training set. 
+#' @details When preparing a recipe, if the training data set is retained using \code{retain = TRUE}, there is no need to \code{bake} the recipe to get the preprocessed training set.
 #' @examples
 #' data(biomass)
-#' 
+#'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' 
+#'
 #' sp_signed <- rec %>%
 #'   step_center(all_predictors()) %>%
 #'   step_scale(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
-#' 
+#'
 #' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
-#' 
+#'
 #' tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
 #' og_values <- juice(sp_signed_trained, all_predictors())
-#' 
+#'
 #' all.equal(tr_values, og_values)
 #' @export
 #' @seealso \code{\link{recipe}} \code{\link{prep.recipe}} \code{\link{bake.recipe}}
@@ -574,15 +574,15 @@ juice <- function(object, ...) {
          call. = FALSE)
   tr_steps <- vapply(object$steps, function(x) x$trained, c(logic = TRUE))
   if(!all(tr_steps))
-    stop("At least one step has not be prepared; cannot extract.", 
+    stop("At least one step has not be prepared; cannot extract.",
          call. = FALSE)
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(all_predictors())
   keepers <- terms_select(terms = terms, info = object$term_info)
-  
+
   newdata <- object$template[, names(object$template) %in% keepers]
-  
+
   ## Since most models require factors, do the conversion from character
   if (!is.null(object$levels)) {
     var_levels <- object$levels

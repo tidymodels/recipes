@@ -8,7 +8,7 @@
 \usage{
 prep(x, ...)
 
-\method{prep}{recipe}(x, training = NULL, fresh = FALSE, verbose = TRUE,
+\method{prep}{recipe}(x, training = NULL, fresh = FALSE, verbose = FALSE,
   retain = FALSE, stringsAsFactors = TRUE, ...)
 }
 \arguments{
@@ -44,7 +44,7 @@ A recipe whose step objects have been updated with the required
 }
 \description{
 For a recipe with at least one preprocessing step, estimate the required
-  parameters from a training set that can be later applied to other data 
+  parameters from a training set that can be later applied to other data
   sets.
 }
 \details{

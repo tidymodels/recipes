@@ -8,6 +8,7 @@
 * [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs. 
 * A step to remove simple zero-variance variables was added (`step_zv`).
 * A series of `tidy` methods were added for recipes and many (but not all) steps. 
+* The `verbose` option for `prep` is now defaulted to `FALSE`
 
 # recipes 0.1.0
 

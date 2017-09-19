@@ -7,7 +7,7 @@
 juice(object, ...)
 }
 \arguments{
-\item{object}{A \code{recipe} object that has been prepared 
+\item{object}{A \code{recipe} object that has been prepared
 with the option \code{retain = TRUE}.}
 
 \item{...}{One or more selector functions to choose which variables will be
@@ -20,7 +20,7 @@ A tibble.
 }
 \description{
 As steps are estimated by \code{prep}, these operations are
- applied to the training set. Rather than running \code{bake} 
+ applied to the training set. Rather than running \code{bake}
  to duplicate this processing, this function will return
  variables from the processed training set.
 }
