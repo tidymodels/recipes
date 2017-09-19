@@ -2,7 +2,7 @@
 % Please edit documentation in R/relu.R
 \name{step_relu}
 \alias{step_relu}
-\title{Apply (smoothed) rectified linear transformation}
+\title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
   reverse = FALSE, smooth = FALSE, prefix = "right_relu_")
