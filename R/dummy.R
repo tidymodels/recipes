@@ -204,10 +204,19 @@ bake.step_dummy <- function(object, newdata, ...) {
 }
 
 print.step_dummy <-
-  function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variables from ")
-    printer(x$levels, x$terms, x$trained, width = width)
-    invisible(x)
+  function(x, width = max(20, options()$width - 20), ...) {
+    if (x$trained) {
+      cat("Dummy variables from ")
+      cat(format_ch_vec(names(x$levels), width = width))
+    } else {
+      cat("Dummy variables from ", sep = "")
+      cat(format_selectors(x$terms, wdth = width))
+    }
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)    
   }
 
 #' @rdname step_dummy
