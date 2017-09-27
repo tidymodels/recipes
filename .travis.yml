@@ -1,18 +1,15 @@
-# .travis.yml
-#
-# https://docs.travis-ci.com/user/languages/r/
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
+language: R
 sudo: false
 cache: packages
-warnings_are_errors: false
-r:
-  - release
 
-r_packages: 
-  - covr
-  - RANN
- 
+r:
+- 3.1
+- 3.2
+- oldrel
+- release
+- devel
 
 after_success:
-- Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov()'

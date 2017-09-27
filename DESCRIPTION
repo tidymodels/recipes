@@ -13,8 +13,8 @@ Description: An extensible framework to create and preprocess
     as inputs into statistical or machine learning models. 
 URL: https://github.com/topepo/recipes
 BugReports: https://github.com/topepo/recipes/issues
-Depends:
-    R (>= 3.2.3),
+Depends: 
+    R (>= 3.1),
     dplyr,
     broom
 Imports:
@@ -31,7 +31,7 @@ Imports:
     RcppRoll,
     tidyselect (>= 0.1.1),
     magrittr
-Suggests:
+Suggests: 
     testthat,
     rpart,
     kernlab,
@@ -41,7 +41,8 @@ Suggests:
     knitr,
     caret,
     ggplot2,
-    rmarkdown
+    rmarkdown,
+    covr
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
