@@ -14,7 +14,7 @@ step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will be transformed. See \code{\link{selections}} for
+variables will be transformed. See \code{\link[=selections]{selections()}} for
 more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -31,13 +31,13 @@ be (eventually) populated by the \code{terms} argument.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be affected.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be affected.
 }
 \description{
 \code{step_sqrt} creates a \emph{specification} of a recipe
- step that will square root transform the data.
+step that will square root transform the data.
 }
 \examples{
 set.seed(313)
@@ -58,9 +58,9 @@ tidy(sqrt_trans, number = 1)
 tidy(sqrt_obj, number = 1)
 }
 \seealso{
-\code{\link{step_logit}} \code{\link{step_invlogit}}
-  \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_logit]{step_logit()}} \code{\link[=step_invlogit]{step_invlogit()}}
+\code{\link[=step_log]{step_log()}}  \code{\link[=step_hyperbolic]{step_hyperbolic()}} \code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing transformation_methods

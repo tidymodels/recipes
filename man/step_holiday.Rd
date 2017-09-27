@@ -17,7 +17,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 variables will be used to create the new variables. The selected
 variables should have class \code{Date} or \code{POSIXct}. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
@@ -30,29 +30,29 @@ preprocessing have been estimated.}
 
 \item{holidays}{A character string that includes at least one
 holiday supported by the \code{timeDate} package. See
-\code{\link[timeDate]{listHolidays}} for a complete list.}
+\code{\link[timeDate:listHolidays]{timeDate::listHolidays()}} for a complete list.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once \code{\link{prep.recipe}} is used.}
+populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
 
 \item{x}{A \code{step_holiday} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which is
- the columns that will be affected and \code{holiday}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which is
+the columns that will be affected and \code{holiday}.
 }
 \description{
 \code{step_holiday} creates a a \emph{specification} of a
- recipe step that will convert date data into one or more binary
- indicator variables for common holidays.
+recipe step that will convert date data into one or more binary
+indicator variables for common holidays.
 }
 \details{
 Unlike other steps, \code{step_holiday} does
- \emph{not} remove the original date variables.
- \code{\link{step_rm}} can be used for this purpose.
+\emph{not} remove the original date variables.
+\code{\link[=step_rm]{step_rm()}} can be used for this purpose.
 }
 \examples{
 library(lubridate)
@@ -66,12 +66,12 @@ holiday_values <- bake(holiday_rec, newdata = examples)
 holiday_values
 }
 \seealso{
-\code{\link{step_date}} \code{\link{step_rm}}
-  \code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}} \code{\link[timeDate]{listHolidays}}
+\code{\link[=step_date]{step_date()}} \code{\link[=step_rm]{step_rm()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
 }
 \concept{
 preprocessing model_specification variable_encodings
- dates
+dates
 }
 \keyword{datagen}

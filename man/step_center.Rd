@@ -15,7 +15,7 @@ step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -26,7 +26,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link{prep.recipe}}.}
+\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{na.rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
@@ -35,20 +35,20 @@ values should be removed during computations.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the means).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the means).
 }
 \description{
 \code{step_center} creates a \emph{specification} of a recipe
- step that will normalize numeric data to have a mean of zero.
+step that will normalize numeric data to have a mean of zero.
 }
 \details{
 Centering data means that the average of a variable is
- subtracted from the data. \code{step_center} estimates the
- variable means from the data used in the \code{training}
- argument of \code{prep.recipe}. \code{bake.recipe} then applies
- the centering to new data sets using these means.
+subtracted from the data. \code{step_center} estimates the
+variable means from the data used in the \code{training}
+argument of \code{prep.recipe}. \code{bake.recipe} then applies
+the centering to new data sets using these means.
 }
 \examples{
 data(biomass)
@@ -73,8 +73,8 @@ tidy(center_trans, number = 1)
 tidy(center_obj, number = 1)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing normalization_methods

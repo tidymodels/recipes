@@ -12,7 +12,7 @@ step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more details.}
+affected by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -33,21 +33,21 @@ transformations.}
 }
 \value{
 An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_relu} creates a \emph{specification} of a recipe step that
-  will apply the rectified linear or softplus transformations to numeric
-  data. The transformed data is added as new columns to the data matrix.
+will apply the rectified linear or softplus transformations to numeric
+data. The transformed data is added as new columns to the data matrix.
 }
 \details{
 The rectified linear transformation is calculated as
-  \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-  If \code{reverse} is true, then the transformation is reflected about the
-  y-axis, like so: \deqn{max(0, c - x)} Setting the \code{smooth} option
-  to true will instead calculate a smooth approximation to ReLu
-  according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
-  also be applied to this transformation.
+\deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
+If \code{reverse} is true, then the transformation is reflected about the
+y-axis, like so: \deqn{max(0, c - x)} Setting the \code{smooth} option
+to true will instead calculate a smooth approximation to ReLu
+according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
+also be applied to this transformation.
 }
 \section{Connection to MARS}{
 
@@ -80,6 +80,6 @@ transformed_te
 
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }

@@ -15,7 +15,7 @@ step_YeoJohnson(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -26,7 +26,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This
-is \code{NULL} until computed by \code{\link{prep.recipe}}.}
+is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
@@ -41,33 +41,33 @@ values should be removed during computations.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the
- lambda estimate).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the
+lambda estimate).
 }
 \description{
 \code{step_YeoJohnson} creates a \emph{specification} of a
- recipe step that will transform data using a simple Yeo-Johnson
- transformation.
+recipe step that will transform data using a simple Yeo-Johnson
+transformation.
 }
 \details{
 The Yeo-Johnson transformation is very similar to the
- Box-Cox but does not require the input variables to be strictly
- positive. In the package, the partial log-likelihood function is
- directly optimized within a reasonable set of transformation
- values (which can be changed by the user).
+Box-Cox but does not require the input variables to be strictly
+positive. In the package, the partial log-likelihood function is
+directly optimized within a reasonable set of transformation
+values (which can be changed by the user).
 
 This transformation is typically done on the outcome variable
- using the residuals for a statistical model (such as ordinary
- least squares). Here, a simple null model (intercept only) is
- used to apply the transformation to the \emph{predictor}
- variables individually. This can have the effect of making the
- variable distributions more symmetric.
+using the residuals for a statistical model (such as ordinary
+least squares). Here, a simple null model (intercept only) is
+used to apply the transformation to the \emph{predictor}
+variables individually. This can have the effect of making the
+variable distributions more symmetric.
 
 If the transformation parameters are estimated to be very
- closed to the bounds, or if the optimization fails, a value of
- \code{NA} is used and no transformation is applied.
+closed to the bounds, or if the optimization fails, a value of
+\code{NA} is used and no transformation is applied.
 }
 \examples{
 
@@ -93,11 +93,11 @@ tidy(yj_estimates, number = 1)
 }
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power
-  transformations to improve normality or symmetry. \emph{Biometrika}.
+transformations to improve normality or symmetry. \emph{Biometrika}.
 }
 \seealso{
-\code{\link{step_BoxCox}} \code{\link{recipe}}
-  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_BoxCox]{step_BoxCox()}} \code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing transformation_methods

@@ -14,7 +14,7 @@ step_modeimpute(recipe, ..., role = NA, trained = FALSE, modes = NULL)
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -25,28 +25,28 @@ created.}
 preprocessing have been estimated.}
 
 \item{modes}{A named character vector of modes. This is
-\code{NULL} until computed by \code{\link{prep.recipe}}.}
+\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_modeimpute} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{model} (the mode
- value).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{model} (the mode
+value).
 }
 \description{
 \code{step_modeimpute} creates a \emph{specification} of a
- recipe step that will substitute missing values of nominal
- variables by the training set mode of those variables.
+recipe step that will substitute missing values of nominal
+variables by the training set mode of those variables.
 }
 \details{
 \code{step_modeimpute} estimates the variable modes
- from the data used in the \code{training} argument of
- \code{prep.recipe}. \code{bake.recipe} then applies the new
- values to new data sets using these values. If the training set
- data has more than one mode, one is selected at random.
+from the data used in the \code{training} argument of
+\code{prep.recipe}. \code{bake.recipe} then applies the new
+values to new data sets using these values. If the training set
+data has more than one mode, one is selected at random.
 }
 \examples{
 data("credit_data")

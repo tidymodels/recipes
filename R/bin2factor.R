@@ -1,23 +1,23 @@
 #' Create a Factors from A Dummy Variable
 #'
-#' \code{step_bin2factor} creates a \emph{specification} of a
+#' `step_bin2factor` creates a *specification* of a
 #'  recipe step that will create a two-level factor from a single
 #'  dummy variable.
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... Selector functions that choose which variables will
-#'  be converted. See \code{\link{selections}} for more details. For
-#'  the \code{tidy} method, these are not currently used.
+#'  be converted. See [selections()] for more details. For
+#'  the `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param levels A length 2 character string that indicate the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
 #' @param columns A vector with the selected variable names. This
-#'  is \code{NULL} until computed by \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  is `NULL` until computed by [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected).
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
@@ -119,7 +119,7 @@ print.step_bin2factor <-
 
 
 #' @rdname step_bin2factor
-#' @param x A \code{step_bin2factor} object.
+#' @param x A `step_bin2factor` object.
 tidy.step_bin2factor <- function(x, ...) {
   simple_terms(x, ...)
 }

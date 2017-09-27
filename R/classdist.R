@@ -1,14 +1,14 @@
 #' Distances to Class Centroids
 #'
-#' \code{step_classdist} creates a a \emph{specification} of a
+#' `step_classdist` creates a a *specification* of a
 #'  recipe step that will convert numeric data into Mahalanobis
 #'  distance measurements to the data centroid. This is done for
 #'  each value of a categorical class variable.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
@@ -23,25 +23,25 @@
 #' @param log A logical: should the distances be transformed by
 #'  the natural log function?
 #' @param objects Statistics are stored here once this step has
-#'  been trained by \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  been trained by [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected), \code{value} (the centroid of
-#'  the class), and \code{class}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected), `value` (the centroid of
+#'  the class), and `class`.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
-#' @details \code{step_classdist} will create a
+#' @details `step_classdist` will create a
 #'
 #' The function will create a new column for every unique value of
-#'  the \code{class} variable. The resulting variables will not
+#'  the `class` variable. The resulting variables will not
 #'  replace the original values and have the prefix
-#'  \code{classdist_}.
+#'  `classdist_`.
 #'
 #' Note that, by default, the default covariance function requires
 #'  that each class should have at least as many rows as variables
-#'  listed in the \code{terms} argument. If \code{pool = TRUE},
+#'  listed in the `terms` argument. If `pool = TRUE`,
 #'  there must be at least as many data points are variables
 #'  overall.
 #' @examples
@@ -213,7 +213,7 @@ get_centroid <- function(x) {
 }
 
 #' @rdname step_classdist
-#' @param x A \code{step_classdist} object.
+#' @param x A `step_classdist` object.
 #' @importFrom dplyr bind_rows
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {

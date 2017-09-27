@@ -1,11 +1,11 @@
 #' Manually Add Roles
 #'
-#' \code{add_role} can add a role definition to an existing variable in the
+#' `add_role` can add a role definition to an existing variable in the
 #'   recipe.
 #'
-#' @param recipe An existing \code{\link{recipe}}.
+#' @param recipe An existing [recipe()].
 #' @param ... One or more selector functions to choose which variables are
-#'   being assigned a role. See \code{\link{selections}} for more details.
+#'   being assigned a role. See [selections()] for more details.
 #' @param new_role A character string for a single role.
 #' @return An updated recipe object.
 #' @details If a variable is selected that currently has a role, the role is

@@ -1,21 +1,21 @@
 #' Tidy the Result of a Recipe
 #'
-#' \code{tidy} will return a data frame that contains information
-#'  regarding a recipe or step within the recipe (when a \code{tidy}
+#' `tidy` will return a data frame that contains information
+#'  regarding a recipe or step within the recipe (when a `tidy`
 #'  method for the step exists).
 #'
-#' @param x A \code{recipe} object (trained or otherwise).
-#' @param number An integer or \code{NA}. If missing, the return
+#' @param x A `recipe` object (trained or otherwise).
+#' @param number An integer or `NA`. If missing, the return
 #'  value is a list of the steps in the recipe. If a number is
-#'  given, a \code{tidy} method is executed for that step in the
+#'  given, a `tidy` method is executed for that step in the
 #'  recipe (if it exists).
 #' @param ... Not currently used.
 #' @return A tibble with columns that would vary depending on what
-#'  \code{tidy} method is executed. When \code{x} is \code{NA}, a
-#'  tibble with columns \code{number} (the step iteration),
-#'  \code{type} (the step type, e.g. "nzv", "center"), and a logical
-#'  column called \code{trained} for whether the step has been
-#'  estimated using \code{prep}.
+#'  `tidy` method is executed. When `x` is `NA`, a
+#'  tibble with columns `number` (the step iteration),
+#'  `type` (the step type, e.g. "nzv", "center"), and a logical
+#'  column called `trained` for whether the step has been
+#'  estimated using `prep`.
 #' @export
 #' @examples
 #' data(okc)

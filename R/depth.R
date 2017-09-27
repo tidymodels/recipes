@@ -1,15 +1,15 @@
 #' Data Depths
 #'
-#' \code{step_depth} creates a a \emph{specification} of a recipe
+#' `step_depth` creates a a *specification* of a recipe
 #'  step that will convert numeric data into measurement of
-#'  \emph{data depth}. This is done for each value of a categorical
+#'  *data depth*. This is done for each value of a categorical
 #'  class variable.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will be used to create the new features. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
@@ -21,20 +21,20 @@
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
 #' @param options A list of options to pass to the underlying
-#'  depth functions. See \code{\link[ddalpha]{depth.halfspace}},
-#'  \code{\link[ddalpha]{depth.Mahalanobis}},
-#'  \code{\link[ddalpha]{depth.potential}},
-#'  \code{\link[ddalpha]{depth.projection}},
-#'  \code{\link[ddalpha]{depth.simplicial}},
-#'  \code{\link[ddalpha]{depth.simplicialVolume}},
-#'  \code{\link[ddalpha]{depth.spatial}},
-#'  \code{\link[ddalpha]{depth.zonoid}}.
+#'  depth functions. See [ddalpha::depth.halfspace()],
+#'  [ddalpha::depth.Mahalanobis()],
+#'  [ddalpha::depth.potential()],
+#'  [ddalpha::depth.projection()],
+#'  [ddalpha::depth.simplicial()],
+#'  [ddalpha::depth.simplicialVolume()],
+#'  [ddalpha::depth.spatial()],
+#'  [ddalpha::depth.zonoid()].
 #' @param data The training data are stored here once after
-#'  \code{\link{prep.recipe}} is executed.
-#' @return An updated version of \code{recipe} with the new step
+#'  [prep.recipe()] is executed.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{class}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `class`.
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
@@ -43,22 +43,22 @@
 #'  number of methods for calculating death but a simple example is
 #'  the inverse of the distance of a data point to the centroid of
 #'  the distribution. Generally, small values indicate that a data
-#'  point not close to the centroid. \code{step_depth} can compute a
+#'  point not close to the centroid. `step_depth` can compute a
 #'  class-specific depth for a new data point based on the proximity
 #'  of the new value to the training set distribution.
 #'
 #'   Note that the entire training set is saved to compute future
 #'  depth values. The saved data have been trained (i.e. prepared)
 #'  and baked (i.e. processed) up to the point before the location
-#'  that \code{step_depth} occupies in the recipe. Also, the data
+#'  that `step_depth` occupies in the recipe. Also, the data
 #'  requirements for the different step methods may vary. For
-#'  example, using \code{metric = "Mahalanobis"} requires that each
+#'  example, using `metric = "Mahalanobis"` requires that each
 #'  class should have at least as many rows as variables listed in
-#'  the \code{terms} argument.
+#'  the `terms` argument.
 #'
 #'   The function will create a new column for every unique value of
-#'  the \code{class} variable. The resulting variables will not
-#'  replace the original values and have the prefix \code{depth_}.
+#'  the `class` variable. The resulting variables will not
+#'  replace the original values and have the prefix `depth_`.
 #'
 #' @examples
 #'
@@ -187,7 +187,7 @@ print.step_depth <-
 
 
 #' @rdname step_depth
-#' @param x A \code{step_depth} object.
+#' @param x A `step_depth` object.
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$data[[1]]),

@@ -8,20 +8,20 @@ terms_select(terms, info)
 }
 \arguments{
 \item{terms}{A list of formulas whose right-hand side contains quoted
-expressions. See \code{\link[rlang]{quos}} for examples.}
+expressions. See \code{\link[rlang:quos]{rlang::quos()}} for examples.}
 
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
-function \code{\link{summary.recipe}} can be used to get this information
+function \code{\link[=summary.recipe]{summary.recipe()}} can be used to get this information
 from a recipe.}
 }
 \value{
 A character string of column names or an error of there are no
-  selectors or if no variables are selected.
+selectors or if no variables are selected.
 }
 \description{
 This function bakees the step function selectors and might be useful
-  when creating custom steps.
+when creating custom steps.
 }
 \examples{
 library(rlang)
@@ -31,8 +31,8 @@ info <- summary(rec)
 terms_select(info = info, quos(all_predictors()))
 }
 \seealso{
-\code{\link{recipe}} \code{\link{summary.recipe}}
-  \code{\link{prep.recipe}}
+\code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}}
 }
 \concept{
 preprocessing

@@ -1,23 +1,23 @@
 #' Linear Combination Filter
 #'
-#' \code{step_lincomb} creates a \emph{specification} of a recipe
+#' `step_lincomb` creates a *specification* of a recipe
 #'  step that will potentially remove numeric variables that have
 #'  linear combinations between them.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param max_steps A value.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until \code{\link{prep.recipe}} is called.
-#' @return An updated version of \code{recipe} with the new step
+#'  until [prep.recipe()] is called.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -27,7 +27,7 @@
 #' @details This step finds exact linear combinations between two
 #'  or more variables and recommends which column(s) should be
 #'  removed to resolve the issue. This algorithm may need to be
-#'  applied multiple times (as defined by \code{max_steps}).
+#'  applied multiple times (as defined by `max_steps`).
 #' @examples
 #' data(biomass)
 #'
@@ -51,9 +51,9 @@
 #'
 #' tidy(lincomb_filter, number = 1)
 #' tidy(lincomb_filter_trained, number = 1)
-#' @seealso \code{\link{step_nzv}}\code{\link{step_corr}}
-#'   \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [step_nzv()][step_corr()]
+#'   [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 
 step_lincomb <-
   function(recipe,
@@ -206,5 +206,5 @@ iter_lc_rm <- function(x,
 
 
 #' @rdname step_lincomb
-#' @param x A \code{step_lincomb} object.
+#' @param x A `step_lincomb` object.
 tidy.step_lincomb <- tidy_filter

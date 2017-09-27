@@ -1,36 +1,36 @@
 #' Nature Spline Basis Functions
 #'
-#' \code{step_ns} creates a \emph{specification} of a recipe step
+#' `step_ns` creates a *specification* of a recipe step
 #'  that will create new columns that are basis expansions of
 #'  variables using natural splines.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
-#' @param objects A list of \code{\link[splines]{ns}} objects
+#' @param objects A list of [splines::ns()] objects
 #'  created once the step has been trained.
-#' @param options A list of options for \code{\link[splines]{ns}}
-#'  which should not include \code{x}.
-#' @return An updated version of \code{recipe} with the new step
+#' @param options A list of options for [splines::ns()]
+#'  which should not include `x`.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which is
-#'  the columns that will be affected and \code{holiday}.
+#'  `tidy` method, a tibble with columns `terms` which is
+#'  the columns that will be affected and `holiday`.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
-#' @details \code{step_ns} can new features from a single variable
+#' @details `step_ns` can new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the \code{df} or \code{knot} arguments of
-#'  \code{\link[splines]{ns}}. The original variables are removed
+#'  determined by the `df` or `knot` arguments of
+#'  [splines::ns()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
-#'  for the new variables is \code{varname_ns_1} and so on.
+#'  for the new variables is `varname_ns_1` and so on.
 #' @examples
 #' data(biomass)
 #'
@@ -46,8 +46,8 @@
 #'
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
-#' @seealso \code{\link{step_poly}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_poly()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 step_ns <-
   function(recipe,
@@ -150,7 +150,7 @@ print.step_ns <-
   }
 
 #' @rdname step_ns
-#' @param x A \code{step_ns} object.
+#' @param x A `step_ns` object.
 tidy.step_ns <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,

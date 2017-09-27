@@ -15,7 +15,7 @@ step_meanimpute(recipe, ..., role = NA, trained = FALSE, means = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -26,7 +26,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link{prep.recipe}}.}
+\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{trim}{The fraction (0 to 0.5) of observations to be
 trimmed from each end of the variables before the mean is
@@ -37,21 +37,21 @@ nearest endpoint.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{model} (the mean
- value).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{model} (the mean
+value).
 }
 \description{
 \code{step_meanimpute} creates a \emph{specification} of a
- recipe step that will substitute missing values of numeric
- variables by the training set mean of those variables.
+recipe step that will substitute missing values of numeric
+variables by the training set mean of those variables.
 }
 \details{
 \code{step_meanimpute} estimates the variable means
- from the data used in the \code{training} argument of
- \code{prep.recipe}. \code{bake.recipe} then applies the new
- values to new data sets using these averages.
+from the data used in the \code{training} argument of
+\code{prep.recipe}. \code{bake.recipe} then applies the new
+values to new data sets using these averages.
 }
 \examples{
 data("credit_data")

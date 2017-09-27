@@ -19,7 +19,7 @@ sequence of operations for this recipe.}
 For \code{step_knnimpute}, this indicates the variables to be
 imputed. When used with \code{imp_vars}, the dots indicates
 which variables are used to predict the missing data in each
-variable. See \code{\link{selections}} for more details. For the
+variable. See \code{\link[=selections]{selections()}} for more details. For the
 \code{tidy} method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -33,7 +33,7 @@ preprocessing have been estimated.}
 \item{impute_with}{A call to \code{imp_vars} to specify which
 variables are used to impute the variables that can include
 specific variable names separated by commas or different
-selectors (see \code{\link{selections}}). If a column is
+selectors (see \code{\link[=selections]{selections()}}). If a column is
 included in both lists to be imputed and to be an imputation
 predictor, it will be removed from the latter and not used to
 impute itself.}
@@ -41,42 +41,42 @@ impute itself.}
 \item{ref_data}{A tibble of data that will reflect the data
 preprocessing done up to the point of this imputation step. This
 is \code{NULL} until the step is trained by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{columns}{The column names that will be imputed and used
 for imputation. This is \code{NULL} until the step is trained by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_knnimpute} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables for imputation), \code{predictors}
- (those variables used to impute), and \code{K}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables for imputation), \code{predictors}
+(those variables used to impute), and \code{K}.
 }
 \description{
 \code{step_knnimpute} creates a \emph{specification} of a
- recipe step that will impute missing data using nearest
- neighbors.
+recipe step that will impute missing data using nearest
+neighbors.
 }
 \details{
 The step uses the training set to impute any other
- data sets. The only distance function available is Gower's
- distance which can be used for mixtures of nominal and numeric
- data.
+data sets. The only distance function available is Gower's
+distance which can be used for mixtures of nominal and numeric
+data.
 
-  Once the nearest neighbors are determined, the mode is used to
- predictor nominal variables and the mean is used for numeric
- data.
+Once the nearest neighbors are determined, the mode is used to
+predictor nominal variables and the mean is used for numeric
+data.
 
-  Note that if a variable that is to be imputed is also in
- \code{impute_with}, this variable will be ignored.
+Note that if a variable that is to be imputed is also in
+\code{impute_with}, this variable will be ignored.
 
-  It is possible that missing values will still occur after
- imputation if a large majority (or all) of the imputing
- variables are also missing.
+It is possible that missing values will still occur after
+imputation if a large majority (or all) of the imputing
+variables are also missing.
 }
 \examples{
 library(recipes)
@@ -116,7 +116,7 @@ tidy(ratio_recipe2, number = 1)
 }
 \references{
 Gower, C. (1971) "A general coefficient of
- similarity and some of its properties," Biometrics, 857-871.
+similarity and some of its properties," Biometrics, 857-871.
 }
 \concept{
 preprocessing imputation

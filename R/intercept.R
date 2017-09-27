@@ -1,11 +1,11 @@
 #' Add intercept (or constant) column
 #'
-#' \code{step_intercept} creates a \emph{specification} of a recipe step that
+#' `step_intercept` creates a *specification* of a recipe step that
 #'   will add an intercept or constant term in the first column of a data
-#'   matrix. \code{step_intercept} has defaults to \emph{predictor} role so
+#'   matrix. `step_intercept` has defaults to *predictor* role so
 #'   that it is by default called in the bake step. Be careful to avoid
 #'   unintentional transformations when calling steps with
-#'   \code{all_predictors}.
+#'   `all_predictors`.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
@@ -17,7 +17,7 @@
 #' @param name Character name for new added column
 #' @param value A numeric constant to fill the intercept column. Defaults to 1.
 #'
-#' @return An updated version of \code{recipe} with the
+#' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
 #'
@@ -37,8 +37,8 @@
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
 #'
-#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept", value = 1) {
   if (length(list(...)) > 0)

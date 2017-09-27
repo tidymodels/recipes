@@ -17,7 +17,7 @@ sequence of operations for this recipe.}
 
 \item{...}{A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
-into a single variable. See \code{\link{selections}} for more
+into a single variable. See \code{\link[=selections]{selections()}} for more
 details. For the \code{tidy} method, these are not currently
 used.}
 
@@ -34,7 +34,7 @@ expression (or character string for \code{fixed = TRUE}) to be
 matched in the given character vector. Coerced by
 \code{as.character} to a character string if possible.}
 
-\item{options}{A list of options to \code{\link{grepl}} that
+\item{options}{A list of options to \code{\link[=grepl]{grepl()}} that
 should not include \code{x} or \code{pattern}.}
 
 \item{result}{A single character value for the name of the new
@@ -42,20 +42,20 @@ variable. It should be a valid column name.}
 
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_regex} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{result} (the
- new column name).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{result} (the
+new column name).
 }
 \description{
 \code{step_regex} creates a \emph{specification} of a recipe step that will
-  create a new dummy variable based on a regular expression.
+create a new dummy variable based on a regular expression.
 }
 \examples{
 data(covers)

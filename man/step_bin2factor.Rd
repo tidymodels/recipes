@@ -15,7 +15,7 @@ step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
 sequence of operations for this recipe.}
 
 \item{...}{Selector functions that choose which variables will
-be converted. See \code{\link{selections}} for more details. For
+be converted. See \code{\link[=selections]{selections()}} for more details. For
 the \code{tidy} method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -29,29 +29,29 @@ factor levels for the 1's (in the first position) and the zeros
 (second)}
 
 \item{columns}{A vector with the selected variable names. This
-is \code{NULL} until computed by \code{\link{prep.recipe}}.}
+is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_bin2factor} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- columns that will be affected).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+columns that will be affected).
 }
 \description{
 \code{step_bin2factor} creates a \emph{specification} of a
- recipe step that will create a two-level factor from a single
- dummy variable.
+recipe step that will create a two-level factor from a single
+dummy variable.
 }
 \details{
 This operation may be useful for situations where a
- binary piece of information may need to be represented as
- categorical instead of numeric. For example, naive Bayes models
- would do better to have factor predictors so that the binomial
- distribution is modeled in stead of a Gaussian probability
- density of numeric binary data. Note that the numeric data is
- only verified to be numeric (and does not count levels).
+binary piece of information may need to be represented as
+categorical instead of numeric. For example, naive Bayes models
+would do better to have factor predictors so that the binomial
+distribution is modeled in stead of a Gaussian probability
+density of numeric binary data. Note that the numeric data is
+only verified to be numeric (and does not count levels).
 }
 \examples{
 data(covers)

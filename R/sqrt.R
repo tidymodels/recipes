@@ -1,22 +1,22 @@
 #' Square Root Transformation
 #'
-#' \code{step_sqrt} creates a \emph{specification} of a recipe
+#' `step_sqrt` creates a *specification* of a recipe
 #'  step that will square root transform the data.
 
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will be transformed. See \code{\link{selections}} for
-#'  more details. For the \code{tidy} method, these are not
+#'  variables will be transformed. See [selections()] for
+#'  more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the \code{terms} argument.
-#' @return An updated version of \code{recipe} with the new step
+#'  be (eventually) populated by the `terms` argument.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
@@ -38,9 +38,9 @@
 #'
 #' tidy(sqrt_trans, number = 1)
 #' tidy(sqrt_obj, number = 1)
-#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
-#'   \code{\link{step_log}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_logit()] [step_invlogit()]
+#'   [step_log()]  [step_hyperbolic()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, columns = NULL) {
   add_step(
@@ -93,7 +93,7 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
 }
 
 #' @rdname step_sqrt
-#' @param x A \code{step_sqrt} object.
+#' @param x A `step_sqrt` object.
 tidy.step_sqrt <- function(x, ...) {
   simple_terms(x, ...)
 }

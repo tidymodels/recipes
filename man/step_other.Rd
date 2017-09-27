@@ -16,7 +16,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will potentially be reduced. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -31,38 +31,38 @@ preprocessing have been estimated.}
 
 \item{objects}{A list of objects that contain the information
 to pool infrequent levels that is determined by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_other} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- columns that will be affected) and \code{retained} (the factor
- levels that were not pulled into "other")
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+columns that will be affected) and \code{retained} (the factor
+levels that were not pulled into "other")
 }
 \description{
 \code{step_other} creates a \emph{specification} of a recipe
- step that will potentially pool infrequently occurring values
- into an "other" category.
+step that will potentially pool infrequently occurring values
+into an "other" category.
 }
 \details{
 The overall proportion of the categories are computed. The "other"
-  category is used in place of any categorical levels whose individual
-  proportion in the training set is less than \code{threshold}.
+category is used in place of any categorical levels whose individual
+proportion in the training set is less than \code{threshold}.
 
 If no pooling is done the data are unmodified (although character data may
-  be changed to factors based on the value of \code{stringsAsFactors} in
-  \code{\link{prep.recipe}}). Otherwise, a factor is always returned with
-  different factor levels.
+be changed to factors based on the value of \code{stringsAsFactors} in
+\code{\link[=prep.recipe]{prep.recipe()}}). Otherwise, a factor is always returned with
+different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
-  except for the most frequent are collapsed to the \code{other} level.
+except for the most frequent are collapsed to the \code{other} level.
 
 If the retained categories include the value of \code{other}, an error is
-  thrown. If \code{other} is in the list of discarded levels, no error
-  occurs.
+thrown. If \code{other} is in the list of discarded levels, no error
+occurs.
 }
 \examples{
 data(okc)

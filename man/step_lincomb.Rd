@@ -15,7 +15,7 @@ step_lincomb(recipe, ..., role = NA, trained = FALSE, max_steps = 5,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -29,26 +29,26 @@ preprocessing have been estimated.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link{prep.recipe}} is called.}
+until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
 
 \item{x}{A \code{step_lincomb} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be removed.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be removed.
 }
 \description{
 \code{step_lincomb} creates a \emph{specification} of a recipe
- step that will potentially remove numeric variables that have
- linear combinations between them.
+step that will potentially remove numeric variables that have
+linear combinations between them.
 }
 \details{
 This step finds exact linear combinations between two
- or more variables and recommends which column(s) should be
- removed to resolve the issue. This algorithm may need to be
- applied multiple times (as defined by \code{max_steps}).
+or more variables and recommends which column(s) should be
+removed to resolve the issue. This algorithm may need to be
+applied multiple times (as defined by \code{max_steps}).
 }
 \examples{
 data(biomass)
@@ -75,9 +75,9 @@ tidy(lincomb_filter, number = 1)
 tidy(lincomb_filter_trained, number = 1)
 }
 \seealso{
-\code{\link{step_nzv}}\code{\link{step_corr}}
-  \code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\link[=step_corr]{step_nzv()}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing

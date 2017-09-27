@@ -1,33 +1,33 @@
 #' Impute Numeric Data Using the Mean
 #'
-#'   \code{step_meanimpute} creates a \emph{specification} of a
+#'   `step_meanimpute` creates a *specification* of a
 #'  recipe step that will substitute missing values of numeric
 #'  variables by the training set mean of those variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param means A named numeric vector of means. This is
-#'  \code{NULL} until computed by \code{\link{prep.recipe}}.
+#'  `NULL` until computed by [prep.recipe()].
 #' @param trim The fraction (0 to 0.5) of observations to be
 #'  trimmed from each end of the variables before the mean is
 #'  computed. Values of trim outside that range are taken as the
 #'  nearest endpoint.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{model} (the mean
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `model` (the mean
 #'  value).
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
-#' @details \code{step_meanimpute} estimates the variable means
-#'  from the data used in the \code{training} argument of
-#'  \code{prep.recipe}. \code{bake.recipe} then applies the new
+#' @details `step_meanimpute` estimates the variable means
+#'  from the data used in the `training` argument of
+#'  `prep.recipe`. `bake.recipe` then applies the new
 #'  values to new data sets using these averages.
 #' @examples
 #' data("credit_data")
@@ -129,7 +129,7 @@ print.step_meanimpute <-
   }
 
 #' @rdname step_meanimpute
-#' @param x A \code{step_meanimpute} object.
+#' @param x A `step_meanimpute` object.
 tidy.step_meanimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),

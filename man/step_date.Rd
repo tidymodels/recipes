@@ -18,7 +18,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 variables that will be used to create the new variables. The
 selected variables should have class \code{Date} or
-\code{POSIXct}. See \code{\link{selections}} for more details.
+\code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.
 For the \code{tidy} method, these are not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
@@ -39,8 +39,7 @@ of the following values: \code{month}, \code{dow} (day of week),
 or \code{dow}. \code{FALSE} will display the day of the week as
 an ordered factor of character strings, such as "Sunday".
 \code{TRUE} will display an abbreviated version of the label,
-such as "Sun". \code{abbr} is disregarded if \code{label =
-FALSE}.}
+such as "Sun". \code{abbr} is disregarded if \code{label = FALSE}.}
 
 \item{label}{A logical. Only available for features
 \code{month} or \code{dow}. \code{TRUE} will display the day of
@@ -53,26 +52,26 @@ available for features \code{month} or \code{dow}.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once \code{\link{prep.recipe}} is used.}
+populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
 
 \item{x}{A \code{step_date} object.}
 }
 \value{
 For \code{step_date}, an updated version of recipe with
- the new step added to the sequence of existing steps (if any).
- For the \code{tidy} method, a tibble with columns \code{terms}
- (the selectors or variables selected), \code{value} (the feature
- names), and \code{ordinal} (a logical).
+the new step added to the sequence of existing steps (if any).
+For the \code{tidy} method, a tibble with columns \code{terms}
+(the selectors or variables selected), \code{value} (the feature
+names), and \code{ordinal} (a logical).
 }
 \description{
 \code{step_date} creates a a \emph{specification} of a recipe
- step that will convert date data into one or more factor or
- numeric variables.
+step that will convert date data into one or more factor or
+numeric variables.
 }
 \details{
 Unlike other steps, \code{step_date} does \emph{not}
- remove the original date variables. \code{\link{step_rm}} can be
- used for this purpose.
+remove the original date variables. \code{\link[=step_rm]{step_rm()}} can be
+used for this purpose.
 }
 \examples{
 library(lubridate)
@@ -93,9 +92,9 @@ tidy(date_rec, number = 1)
 
 }
 \seealso{
-\code{\link{step_holiday}} \code{\link{step_rm}}
-  \code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\code{\link[=step_holiday]{step_holiday()}} \code{\link[=step_rm]{step_rm()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing model_specification variable_encodings dates

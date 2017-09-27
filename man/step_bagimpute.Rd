@@ -22,7 +22,7 @@ sequence of operations for this recipe.}
 For \code{step_bagimpute}, this indicates the variables to be
 imputed. When used with \code{imp_vars}, the dots indicates
 which variables are used to predict the missing data in each
-variable. See \code{\link{selections}} for more details. For the
+variable. See \code{\link[=selections]{selections()}} for more details. For the
 \code{tidy} method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -31,20 +31,20 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{models}{The \code{\link[ipred]{ipredbagg}} objects are
+\item{models}{The \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}} objects are
 stored here once this bagged trees have be trained by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{options}{A list of options to
-\code{\link[ipred]{ipredbagg}}. Defaults are set for the
+\code{\link[ipred:ipredbagg]{ipred::ipredbagg()}}. Defaults are set for the
 arguments \code{nbagg} and \code{keepX} but others can be passed
-in. \bold{Note} that the arguments \code{X} and \code{y} should
+in. \strong{Note} that the arguments \code{X} and \code{y} should
 not be passed here.}
 
 \item{impute_with}{A call to \code{imp_vars} to specify which
 variables are used to impute the variables that can include
 specific variable names seperated by commas or different
-selectors (see \code{\link{selections}}). If a column is
+selectors (see \code{\link[=selections]{selections()}}). If a column is
 included in both lists to be imputed and to be an imputation
 predictor, it will be removed from the latter and not used to
 impute itself.}
@@ -56,32 +56,32 @@ The same seed is used across all imputation models.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{model} (the bagged
- tree object).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{model} (the bagged
+tree object).
 }
 \description{
 \code{step_bagimpute} creates a \emph{specification} of a
- recipe step that will create bagged tree models to impute
- missing data.
+recipe step that will create bagged tree models to impute
+missing data.
 }
 \details{
 For each variables requiring imputation, a bagged tree
- is created where the outcome is the variable of interest and the
- predictors are any other variables listed in the
- \code{impute_with} formula. One advantage to the bagged tree is
- that is can accept predictors that have missing values
- themselves. This imputation method can be used when the variable
- of interest (and predictors) are numeric or categorical. Imputed
- categorical variables will remain categorical.
+is created where the outcome is the variable of interest and the
+predictors are any other variables listed in the
+\code{impute_with} formula. One advantage to the bagged tree is
+that is can accept predictors that have missing values
+themselves. This imputation method can be used when the variable
+of interest (and predictors) are numeric or categorical. Imputed
+categorical variables will remain categorical.
 
 Note that if a variable that is to be imputed is also in
- \code{impute_with}, this variable will be ignored.
+\code{impute_with}, this variable will be ignored.
 
 It is possible that missing values will still occur after
- imputation if a large majority (or all) of the imputing
- variables are also missing.
+imputation if a large majority (or all) of the imputing
+variables are also missing.
 }
 \examples{
 data("credit_data")
@@ -113,7 +113,7 @@ tidy(imp_models, number = 1)
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied
- Predictive Modeling}. Springer Verlag.
+Predictive Modeling}. Springer Verlag.
 }
 \concept{
 preprocessing imputation

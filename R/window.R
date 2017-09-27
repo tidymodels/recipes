@@ -1,41 +1,41 @@
 #' Moving Window Functions
 #'
-#'   \code{step_window} creates a \emph{specification} of a recipe
+#'   `step_window` creates a *specification* of a recipe
 #'  step that will create new columns that are the results of
 #'  functions that compute statistics across moving windows.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details.  For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details.  For the `tidy` method, these are not
 #'  currently used.
 #' @param role For model terms created by this step, what analysis
-#'  role should they be assigned? If \code{names} is left to be
-#'  \code{NULL}, the rolling statistics replace the original columns
-#'  and the roles are left unchanged. If \code{names} is set, those
-#'  new columns will have a role of \code{NULL} unless this argument
+#'  role should they be assigned? If `names` is left to be
+#'  `NULL`, the rolling statistics replace the original columns
+#'  and the roles are left unchanged. If `names` is set, those
+#'  new columns will have a role of `NULL` unless this argument
 #'  has a value.
-#' @param size An odd integer \code{>= 3} for the window size.
+#' @param size An odd integer `>= 3` for the window size.
 #' @param na.rm A logical for whether missing values should be
 #'  removed from the calculations within each window.
 #' @param statistic A character string for the type of statistic
 #'  that should be calculated for each moving window. Possible
-#'  values are: \code{'max'}, \code{'mean'}, \code{'median'},
-#'  \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
-#'  \code{'var'}
+#'  values are: `'max'`, `'mean'`, `'median'`,
+#'  `'min'`, `'prod'`, `'sd'`, `'sum'`,
+#'  `'var'`
 #' @param columns A character string that contains the names of
 #'  columns that should be processed. These values are not
-#'  determined until \code{\link{prep.recipe}} is called.
+#'  determined until [prep.recipe()] is called.
 #' @param names An optional character string that is the same
-#'  length of the number of terms selected by \code{terms}. If you
+#'  length of the number of terms selected by `terms`. If you
 #'  are not sure what columns will be selected, use the
-#'  \code{summary} function (see the example below). These will be
+#'  `summary` function (see the example below). These will be
 #'  the names of the new columns created by the step.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{statistic} (the
-#'  summary function name), and \code{size}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `statistic` (the
+#'  summary function name), and `size`.
 #' @keywords datagen
 #' @concept preprocessing moving_windows
 #' @export
@@ -44,10 +44,10 @@
 #'  The process starts with the center justified window calculations
 #'  and the beginning and ending parts of the rolling values are
 #'  determined using the first and last rolling values,
-#'  respectively. For example if a column \code{x} with 12 values is
+#'  respectively. For example if a column `x` with 12 values is
 #'  smoothed with a 5-point moving median, the first three smoothed
-#'  values are estimated by \code{median(x[1:5])} and the fourth
-#'  uses \code{median(x[2:6])}.
+#'  values are estimated by `median(x[1:5])` and the fourth
+#'  uses `median(x[2:6])`.
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -269,7 +269,7 @@ print.step_window <-
   }
 
 #' @rdname step_window
-#' @param x A \code{step_window} object.
+#' @param x A `step_window` object.
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$statistic <- x$statistic

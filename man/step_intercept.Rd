@@ -25,15 +25,15 @@ have been estimated. Again included for consistency.}
 }
 \value{
 An updated version of \code{recipe} with the
-  new step added to the sequence of existing steps (if any).
+new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_intercept} creates a \emph{specification} of a recipe step that
-  will add an intercept or constant term in the first column of a data
-  matrix. \code{step_intercept} has defaults to \emph{predictor} role so
-  that it is by default called in the bake step. Be careful to avoid
-  unintentional transformations when calling steps with
-  \code{all_predictors}.
+will add an intercept or constant term in the first column of a data
+matrix. \code{step_intercept} has defaults to \emph{predictor} role so
+that it is by default called in the bake step. Be careful to avoid
+unintentional transformations when calling steps with
+\code{all_predictors}.
 }
 \examples{
 data(biomass)
@@ -53,6 +53,6 @@ with_intercept
 
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }

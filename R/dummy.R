@@ -1,6 +1,6 @@
 #' Dummy Variables Creation
 #'
-#'   \code{step_dummy} creates a a \emph{specification} of a recipe
+#'   `step_dummy` creates a a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
@@ -9,8 +9,8 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to create the dummy variables. See
-#'  \code{\link{selections}} for more details. The selected
-#'  variables must be factors. For the \code{tidy} method, these are
+#'  [selections()] for more details. The selected
+#'  variables must be factors. For the `tidy` method, these are
 #'  not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
@@ -18,23 +18,23 @@
 #'  variables will be used as predictors in a model.
 #' @param contrast A specification for which type of contrast
 #'  should be used to make a set of full rank dummy variables. See
-#'  \code{\link[stats]{contrasts}} for more details. \bold{not
-#'  currently working}
+#'  [stats::contrasts()] for more details. **not
+#'  currently working**
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
 #'  create dummy variables for each variable contained in
-#'  \code{terms}. This is \code{NULL} until the step is trained by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  `terms`. This is `NULL` until the step is trained by
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @keywords datagen
 #' @concept preprocessing dummy_variables model_specification
 #'  dummy_variables variable_encodings
 #' @export
-#' @details \code{step_dummy} will create a set of binary dummy
+#' @details `step_dummy` will create a set of binary dummy
 #'  variables from a factor variable. For example, if a factor
 #'  column in the data set has levels of "red", "green", "blue", the
 #'  dummy variable bake will create two additional columns of 0/1
@@ -45,14 +45,14 @@
 #'  first level of the factor being converted.
 #'
 #' The function allows for non-standard naming of the resulting
-#'  variables. For a factor named \code{x}, with levels \code{"a"}
-#'  and \code{"b"}, the default naming convention would be to create
-#'  a new variable called \code{x_b}. Note that if the factor levels
+#'  variables. For a factor named `x`, with levels `"a"`
+#'  and `"b"`, the default naming convention would be to create
+#'  a new variable called `x_b`. Note that if the factor levels
 #'  are not valid variable names (e.g. "some text with spaces"), it
-#'  will be changed by \code{\link[base]{make.names}} to be valid
+#'  will be changed by [base::make.names()] to be valid
 #'  (see the example below). The naming format can be changed using
-#'  the \code{naming} argument.
-#' @seealso \code{\link{step_factor2string}} \code{\link{step_string2factor}}
+#'  the `naming` argument.
+#' @seealso [step_factor2string()] [step_string2factor()]
 #' @examples
 #' data(okc)
 #' okc <- okc[complete.cases(okc),]
@@ -220,7 +220,7 @@ print.step_dummy <-
   }
 
 #' @rdname step_dummy
-#' @param x A \code{step_dummy} object.
+#' @param x A `step_dummy` object.
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$levels))

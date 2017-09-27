@@ -1,13 +1,13 @@
 #' Create Interaction Variables
 #'
-#' \code{step_interact} creates a \emph{specification} of a recipe
+#' `step_interact` creates a *specification* of a recipe
 #'  step that will create new columns that are interaction terms
 #'  between two or more variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param terms A traditional R formula that contains interaction
 #'  terms.
@@ -15,37 +15,37 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
-#' @param objects A list of \code{terms} objects for each
+#' @param objects A list of `terms` objects for each
 #'  individual interaction.
 #' @param sep A character value used to delineate variables in an
-#'  interaction (e.g. \code{var1_x_var2} instead of the more
-#'  traditional \code{var1:var2}).
-#' @return An updated version of \code{recipe} with the new step
+#'  interaction (e.g. `var1_x_var2` instead of the more
+#'  traditional `var1:var2`).
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which is
+#'  `tidy` method, a tibble with columns `terms` which is
 #'  the interaction effects.
 #' @keywords datagen
 #' @concept preprocessing model_specification
 #' @export
-#' @details \code{step_interact} can create interactions between
-#'  variables. It is primarily intended for \bold{numeric data};
+#' @details `step_interact` can create interactions between
+#'  variables. It is primarily intended for **numeric data**;
 #'  categorical variables should probably be converted to dummy
-#'  variables using \code{\link{step_dummy}} prior to being used for
+#'  variables using [step_dummy()] prior to being used for
 #'  interactions.
 #'
-#'   Unlike other step functions, the \code{terms} argument should
+#'   Unlike other step functions, the `terms` argument should
 #'  be a traditional R model formula but should contain no inline
-#'  functions (e.g. \code{log}). For example, for predictors
-#'  \code{A}, \code{B}, and \code{C}, a formula such as
-#'  \code{~A:B:C} can be used to make a three way interaction
+#'  functions (e.g. `log`). For example, for predictors
+#'  `A`, `B`, and `C`, a formula such as
+#'  `~A:B:C` can be used to make a three way interaction
 #'  between the variables. If the formula contains terms other than
-#'  interactions (e.g. \code{(A+B+C)^3}) only the interaction terms
+#'  interactions (e.g. `(A+B+C)^3`) only the interaction terms
 #'  are retained for the design matrix.
 #'
-#'   The separator between the variables defaults to "\code{_x_}" so
+#'   The separator between the variables defaults to "`_x_`" so
 #'  that the three way interaction shown previously would generate a
-#'  column named \code{A_x_B_x_C}. This can be changed using the
-#'  \code{sep} argument.
+#'  column named `A_x_B_x_C`. This can be changed using the
+#'  `sep` argument.
 
 #' @examples
 #' data(biomass)
@@ -240,7 +240,7 @@ int_name <- function(x)
 
 #' @importFrom rlang na_dbl
 #' @rdname step_interact
-#' @param x A \code{step_interact} object
+#' @param x A `step_interact` object
 tidy.step_interact <- function(x, ...) {
   tibble(terms = vapply(x$objects, int_name, character(1)))
 }

@@ -12,7 +12,7 @@
 #'
 #' @source Ghugare, S. B., Tiwary, S., Elangovan, V., and Tambe, S. S. (2013). 
 #' Prediction of Higher Heating Value of Solid Biomass Fuels Using Artificial 
-#' Intelligence Formalisms. \emph{BioEnergy Research}, 1-12.
+#' Intelligence Formalisms. *BioEnergy Research*, 1-12.
 #'
 #' @keywords datasets
 #' @examples 
@@ -31,9 +31,9 @@ NULL
 #' @return \item{okc}{a data frame} 
 #'
 #' @source Kim, A. Y., and A. Escobedo-Land. 2015. "OkCupid Data for 
-#'   Introductory Statistics and Data Science Courses." \emph{Journal of 
+#'   Introductory Statistics and Data Science Courses." *Journal of 
 #'   Statistics Education: An International Journal on the Teaching and 
-#'   Learning of Statistics}.
+#'   Learning of Statistics*.
 #'
 #' @keywords datasets
 #' @examples 
@@ -53,8 +53,8 @@ NULL
 #' @docType data
 #' @return \item{credit_data}{a data frame} 
 #'
-#' @source \url{https://github.com/gastonstat/CreditScoring}, 
-#' \url{http://bit.ly/2kkBFrk}
+#' @source https://github.com/gastonstat/CreditScoring, 
+#' http://bit.ly/2kkBFrk
 #'
 #' @keywords datasets
 #' @examples 
@@ -76,7 +76,7 @@ NULL
 #' @docType data
 #' @return \item{covers}{a data frame} 
 #'
-#' @source \url{https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.info}
+#' @source https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.info
 #'
 #' @keywords datasets
 #' @examples 

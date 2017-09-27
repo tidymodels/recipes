@@ -17,7 +17,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used to compute the dimensions. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
@@ -34,11 +34,11 @@ or the number of possible dimensions, a smaller value will be
 used.}
 
 \item{options}{A list of options to
-\code{\link[dimRed]{Isomap}}.}
+\code{\link[dimRed:Isomap]{dimRed::Isomap()}}.}
 
-\item{res}{The \code{\link[dimRed]{Isomap}} object is stored
+\item{res}{The \code{\link[dimRed:Isomap]{dimRed::Isomap()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -47,35 +47,35 @@ resulting new variables. See notes below.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected).
 }
 \description{
 \code{step_isomap} creates a \emph{specification} of a recipe
- step that will convert numeric data into one or more new
- dimensions.
+step that will convert numeric data into one or more new
+dimensions.
 }
 \details{
 Isomap is a form of multidimensional scaling (MDS).
- MDS methods try to find a reduced set of dimensions such that
- the geometric distances between the original data points are
- preserved. This version of MDS uses nearest neighbors in the
- data as a method for increasing the fidelity of the new
- dimensions to the original data values.
+MDS methods try to find a reduced set of dimensions such that
+the geometric distances between the original data points are
+preserved. This version of MDS uses nearest neighbors in the
+data as a method for increasing the fidelity of the new
+dimensions to the original data values.
 
 It is advisable to center and scale the variables prior to
- running Isomap (\code{step_center} and \code{step_scale} can be
- used for this purpose).
+running Isomap (\code{step_center} and \code{step_scale} can be
+used for this purpose).
 
 The argument \code{num} controls the number of components that
- will be retained (the original variables that are used to derive
- the components are removed from the data). The new components
- will have names that begin with \code{prefix} and a sequence of
- numbers. The variable names are padded with zeros. For example,
- if \code{num < 10}, their names will be \code{Isomap1} -
- \code{Isomap9}. If \code{num = 101}, the names would be
- \code{Isomap001} - \code{Isomap101}.
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with \code{prefix} and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if \code{num < 10}, their names will be \code{Isomap1} -
+\code{Isomap9}. If \code{num = 101}, the names would be
+\code{Isomap001} - \code{Isomap101}.
 }
 \examples{
 data(biomass)
@@ -107,17 +107,17 @@ tidy(im_estimates, number = 4)
 }
 \references{
 De Silva, V., and Tenenbaum, J. B. (2003). Global
- versus local methods in nonlinear dimensionality reduction.
- \emph{Advances in Neural Information Processing Systems}.
- 721-728.
+versus local methods in nonlinear dimensionality reduction.
+\emph{Advances in Neural Information Processing Systems}.
+721-728.
 
 \pkg{dimRed}, a framework for dimensionality reduction,
-  \url{https://github.com/gdkrmr}
+https://github.com/gdkrmr
 }
 \seealso{
-\code{\link{step_pca}} \code{\link{step_kpca}}
-  \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prep.recipe}}
-  \code{\link{bake.recipe}}
+\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
+\code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing isomap projection_methods

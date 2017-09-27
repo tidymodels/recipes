@@ -1,34 +1,34 @@
 #' Create Dummy Variables using Regular Expressions
 #'
-#' \code{step_regex} creates a \emph{specification} of a recipe step that will
+#' `step_regex` creates a *specification* of a recipe step that will
 #'   create a new dummy variable based on a regular expression.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... A single selector functions to choose which variable
 #'  will be searched for the pattern. The selector should resolve
-#'  into a single variable. See \code{\link{selections}} for more
-#'  details. For the \code{tidy} method, these are not currently
+#'  into a single variable. See [selections()] for more
+#'  details. For the `tidy` method, these are not currently
 #'  used.
 #' @param role For a variable created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dummy variable column created by the original
 #'  variable will be used as a predictors in a model.
 #' @param pattern A character string containing a regular
-#'  expression (or character string for \code{fixed = TRUE}) to be
+#'  expression (or character string for `fixed = TRUE`) to be
 #'  matched in the given character vector. Coerced by
-#'  \code{as.character} to a character string if possible.
-#' @param options A list of options to \code{\link{grepl}} that
-#'  should not include \code{x} or \code{pattern}.
+#'  `as.character` to a character string if possible.
+#' @param options A list of options to [grepl()] that
+#'  should not include `x` or `pattern`.
 #' @param result A single character value for the name of the new
 #'  variable. It should be a valid column name.
 #' @param input A single character value for the name of the
-#'  variable being searched. This is \code{NULL} until computed by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  variable being searched. This is `NULL` until computed by
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{result} (the
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `result` (the
 #'  new column name).
 #' @keywords datagen
 #' @concept preprocessing dummy_variables regular_expressions
@@ -156,7 +156,7 @@ print.step_regex <-
 
 
 #' @rdname step_regex
-#' @param x A \code{step_regex} object.
+#' @param x A `step_regex` object.
 tidy.step_regex <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)

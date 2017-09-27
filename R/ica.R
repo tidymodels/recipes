@@ -1,6 +1,6 @@
 #' ICA Signal Extraction
 #'
-#' \code{step_ica} creates a \emph{specification} of a recipe step
+#' `step_ica` creates a *specification* of a recipe step
 #'  that will convert numeric data into one or more independent
 #'  components.
 #'
@@ -8,30 +8,30 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to compute the components. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new independent component columns created by the
 #'  original variables will be used as predictors in a model.
 #' @param num The number of ICA components to retain as new
-#'  predictors. If \code{num} is greater than the number of columns
+#'  predictors. If `num` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param options A list of options to
-#'  \code{\link[fastICA]{fastICA}}. No defaults are set here.
-#'  \bold{Note} that the arguments \code{X} and \code{n.comp} should
+#'  [fastICA::fastICA()]. No defaults are set here.
+#'  **Note** that the arguments `X` and `n.comp` should
 #'  not be passed here.
-#' @param res The \code{\link[fastICA]{fastICA}} object is stored
+#' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  \code{\link{prep.recipe}}.
+#'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected), \code{value} (the loading),
-#'  and \code{component}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected), `value` (the loading),
+#'  and `component`.
 #' @keywords datagen
 #' @concept preprocessing ica projection_methods
 #' @export
@@ -49,18 +49,18 @@
 #' This package produces components using the "FastICA"
 #'  methodology (see reference below).
 #'
-#' The argument \code{num} controls the number of components that
+#' The argument `num` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
-#'  will have names that begin with \code{prefix} and a sequence of
+#'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if \code{num < 10}, their names will be \code{IC1} - \code{IC9}.
-#'  If \code{num = 101}, the names would be \code{IC001} -
-#'  \code{IC101}.
+#'  if `num < 10`, their names will be `IC1` - `IC9`.
+#'  If `num = 101`, the names would be `IC001` -
+#'  `IC101`.
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
-#'  component analysis: algorithms and applications. \emph{Neural
-#'  Networks}, 13(4-5), 411-430.
+#'  component analysis: algorithms and applications. *Neural
+#'  Networks*, 13(4-5), 411-430.
 #'
 #' @examples
 #' # from fastICA::fastICA
@@ -85,9 +85,9 @@
 #'
 #' tidy(ica_trans, number = 3)
 #' tidy(ica_estimates, number = 3)
-#' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
-#'   \code{\link{step_isomap}} \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [step_pca()] [step_kpca()]
+#'   [step_isomap()] [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 step_ica <-
   function(recipe,
            ...,
@@ -183,7 +183,7 @@ print.step_ica <-
 #' @importFrom utils stack
 #' @importFrom dimRed getRotationMatrix
 #' @rdname step_ica
-#' @param x A \code{step_ica} object.
+#' @param x A `step_ica` object.
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
     rot <- dimRed::getRotationMatrix(x$res)

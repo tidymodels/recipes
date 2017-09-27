@@ -4,8 +4,8 @@
 #' @aliases selections
 #' @aliases selection
 #' @title Methods for Select Variables in Step Functions
-#' @description When selecting variables or model terms in \code{step}
-#'   functions, \code{dplyr}-like tools are used. The \emph{selector}
+#' @description When selecting variables or model terms in `step`
+#'   functions, `dplyr`-like tools are used. The *selector*
 #'   functions can choose variables based on their name, current role, data
 #'   type, or any combination of these. The selectors are passed as any other
 #'   argument to the step. If the variables are explicitly stated in the step
@@ -18,27 +18,27 @@
 #'
 #' The first four arguments indicate which variables should be used in the
 #'   PCA while the last argument is a specific argument to
-#'   \code{\link{step_pca}}.
+#'   [step_pca()].
 #'
 #' Note that:
 #'
 #'   \enumerate{
 #'     \item The selector arguments should not contain functions beyond those
 #'       supported (see below).
-#'     \item These arguments are not evaluated until the \code{prep} function
+#'     \item These arguments are not evaluated until the `prep` function
 #'       for the step is executed.
-#'     \item The \code{dplyr}-like syntax allows for negative sings to exclude
-#'       variables (e.g. \code{-Murder}) and the set of selectors will
+#'     \item The `dplyr`-like syntax allows for negative sings to exclude
+#'       variables (e.g. `-Murder`) and the set of selectors will
 #'       processed in order.
-#'     \item A leading exclusion in these arguments (e.g. \code{-Murder}) has
+#'     \item A leading exclusion in these arguments (e.g. `-Murder`) has
 #'       the effect of adding all variables to the list except the excluded
 #'       variable(s).
 #'   }
 #'
-#' Also, select helpers from the \code{dplyr} package can also be used:
-#'   \code{\link[dplyr]{starts_with}}, \code{\link[dplyr]{ends_with}},
-#'   \code{\link[dplyr]{contains}}, \code{\link[dplyr]{matches}},
-#'   \code{\link[dplyr]{num_range}}, and \code{\link[dplyr]{everything}}.
+#' Also, select helpers from the `dplyr` package can also be used:
+#'   [dplyr::starts_with()], [dplyr::ends_with()],
+#'   [dplyr::contains()], [dplyr::matches()],
+#'   [dplyr::num_range()], and [dplyr::everything()].
 #'   For example:
 #'
 #' \preformatted{
@@ -46,24 +46,24 @@
 #'     step_center(starts_with("Sepal"), -contains("Width"))
 #' }
 #'
-#' would only select \code{Sepal.Length}
+#' would only select `Sepal.Length`
 #'
-#' \bold{Inline} functions that specify computations, such as \code{log(x)},
+#' **Inline** functions that specify computations, such as `log(x)`,
 #'   should not be used in selectors and will produce an error. A list of
 #'   allowed selector functions is below.
 #'
 #' Columns of the design matrix that may not exist when the step is coded can
-#'   also be selected. For example, when using \code{step_pca}, the number of
+#'   also be selected. For example, when using `step_pca`, the number of
 #'   columns created by feature extraction may not be known when subsequent
-#'   steps are defined. In this case, using \code{matches("^PC")} will select
-#'   all of the columns whose names start with "PC" \emph{once those columns
-#'   are created}.
+#'   steps are defined. In this case, using `matches("^PC")` will select
+#'   all of the columns whose names start with "PC" *once those columns
+#'   are created*.
 #'
 #' There are sets of functions that can be used to select variables based on
-#'   their role or type: \code{\link{has_role}} and \code{\link{has_type}}.
+#'   their role or type: [has_role()] and [has_type()].
 #'   For convenience, there are also functions that are more specific:
-#'   \code{\link{all_numeric}}, \code{\link{all_nominal}},
-#'   \code{\link{all_predictors}}, and \code{\link{all_outcomes}}. These can
+#'   [all_numeric()], [all_nominal()],
+#'   [all_predictors()], and [all_outcomes()]. These can
 #'   be used in conjunction with the previous functions described for
 #'   selecting variables using their names:
 #'
@@ -80,21 +80,21 @@
 #'   using role-specific selectors.
 #'
 #' All steps use these techniques to define variables for steps
-#'   \emph{except one}: \code{\link{step_interact}} requires traditional model
+#'   *except one*: [step_interact()] requires traditional model
 #'   formula representations of the interactions and takes a single formula
 #'   as the argument to select the variables.
 #'
 #' The complete list of allowable functions in steps:
 #'
 #'   \itemize{
-#'     \item \bold{By name}: \code{\link[dplyr]{starts_with}},
-#'       \code{\link[dplyr]{ends_with}}, \code{\link[dplyr]{contains}},
-#'       \code{\link[dplyr]{matches}}, \code{\link[dplyr]{num_range}}, and
-#'       \code{\link[dplyr]{everything}}
-#'     \item \bold{By role}: \code{\link{has_role}},
-#'       \code{\link{all_predictors}}, and \code{\link{all_outcomes}}
-#'     \item \bold{By type}: \code{\link{has_type}}, \code{\link{all_numeric}},
-#'       and \code{\link{all_nominal}}
+#'     \item **By name**: [dplyr::starts_with()],
+#'       [dplyr::ends_with()], [dplyr::contains()],
+#'       [dplyr::matches()], [dplyr::num_range()], and
+#'       [dplyr::everything()]
+#'     \item **By role**: [has_role()],
+#'       [all_predictors()], and [all_outcomes()]
+#'     \item **By type**: [has_type()], [all_numeric()],
+#'       and [all_nominal()]
 #'   }
 NULL
 
@@ -201,18 +201,18 @@ has_selector <- function(x, allowed = selectors) {
 #' This function bakees the step function selectors and might be useful
 #'   when creating custom steps.
 #'
-#' @param info A tibble with columns \code{variable}, \code{type}, \code{role},
-#'   and \code{source} that represent the current state of the data. The
-#'   function \code{\link{summary.recipe}} can be used to get this information
+#' @param info A tibble with columns `variable`, `type`, `role`,
+#'   and `source` that represent the current state of the data. The
+#'   function [summary.recipe()] can be used to get this information
 #'   from a recipe.
 #' @param terms A list of formulas whose right-hand side contains quoted
-#'   expressions. See \code{\link[rlang]{quos}} for examples.
+#'   expressions. See [rlang::quos()] for examples.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there are no
 #'   selectors or if no variables are selected.
-#' @seealso \code{\link{recipe}} \code{\link{summary.recipe}}
-#'   \code{\link{prep.recipe}}
+#' @seealso [recipe()] [summary.recipe()]
+#'   [prep.recipe()]
 #' @importFrom purrr map_lgl map_if map_chr map
 #' @importFrom rlang names2
 #' @export
@@ -251,11 +251,11 @@ abort_selection <- exiting(function(cnd) {
 
 #' Role Selection
 #'
-#' \code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used
+#' `has_role`, `all_predictors`, and `all_outcomes` can be used
 #'   to select variables in a formula that have certain roles. Similarly,
-#'   \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to
-#'   select columns based on their data type. See \code{\link{selections}} for
-#'   more details. \code{current_info} is an internal function that is
+#'   `has_type`, `all_numeric`, and `all_nominal` are used to
+#'   select columns based on their data type. See [selections()] for
+#'   more details. `current_info` is an internal function that is
 #'   unlikely to help users while the others have limited utility outside of
 #'   step function arguments.
 #'
@@ -264,8 +264,8 @@ abort_selection <- exiting(function(cnd) {
 #' @param roles A character string of roles for the current set of terms.
 #' @param types A character string of roles for the current set of data types
 #' @return Selector functions return an integer vector while
-#'   \code{current_info} returns an environment with vectors \code{vars},
-#'   \code{roles}, and \code{types}.
+#'   `current_info` returns an environment with vectors `vars`,
+#'   `roles`, and `types`.
 #' @keywords datagen
 #' @examples
 #' data(biomass)

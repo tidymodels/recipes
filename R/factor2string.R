@@ -1,31 +1,31 @@
 #' Convert Factors to Strings
 #'
-#' \code{step_factor2string} will convert one or more factor
+#' `step_factor2string` will convert one or more factor
 #'  vectors to strings.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will converted to strings See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables will converted to strings See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variables that will be
-#'  converted. This is \code{NULL} until computed by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  converted. This is `NULL` until computed by
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected).
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
-#' @details \code{prep} has an option \code{stringsAsFactors} that
-#'  defaults to \code{TRUE}. If this step is used with the default
+#' @details `prep` has an option `stringsAsFactors` that
+#'  defaults to `TRUE`. If this step is used with the default
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
-#' @seealso \code{\link{step_string2factor}} \code{\link{step_dummy}}
+#' @seealso [step_string2factor()] [step_dummy()]
 #' @examples
 #' data(okc)
 #'
@@ -127,7 +127,7 @@ print.step_factor2string <-
 
 
 #' @rdname step_factor2string
-#' @param x A \code{step_factor2string} object.
+#' @param x A `step_factor2string` object.
 tidy.step_factor2string <- function(x, ...) {
   simple_terms(x, ...)
 }

@@ -1,13 +1,13 @@
 #' Apply (Smoothed) Rectified Linear Transformation
 #'
-#' \code{step_relu} creates a \emph{specification} of a recipe step that
+#' `step_relu` creates a *specification* of a recipe step that
 #'   will apply the rectified linear or softplus transformations to numeric
 #'   data. The transformed data is added as new columns to the data matrix.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
-#'   affected by the step. See \code{\link{selections}} for more details.
+#'   affected by the step. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
@@ -20,16 +20,16 @@
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
 #'
-#' @return An updated version of \code{recipe} with the
+#' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
 #'
 #' @details The rectified linear transformation is calculated as
 #'   \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-#'   If \code{reverse} is true, then the transformation is reflected about the
-#'   y-axis, like so: \deqn{max(0, c - x)} Setting the \code{smooth} option
+#'   If `reverse` is true, then the transformation is reflected about the
+#'   y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
 #'   to true will instead calculate a smooth approximation to ReLu
-#'   according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
+#'   according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
 #'   also be applied to this transformation.
 #'
 #' @section Connection to MARS:
@@ -59,8 +59,8 @@
 #'
 #' transformed_te
 #'
-#' @seealso \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 step_relu <-
   function(recipe,
            ...,

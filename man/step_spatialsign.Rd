@@ -16,7 +16,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used for the normalization. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
@@ -32,23 +32,23 @@ be (eventually) populated by the \code{terms} argument.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be affected.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be affected.
 }
 \description{
 \code{step_spatialsign} is a \emph{specification} of a recipe
- step that will convert numeric data into a projection on to a
- unit sphere.
+step that will convert numeric data into a projection on to a
+unit sphere.
 }
 \details{
 The spatial sign transformation projects the variables
- onto a unit sphere and is related to global contrast
- normalization. The spatial sign of a vector \code{w} is
- \code{w/norm(w)}.
+onto a unit sphere and is related to global contrast
+normalization. The spatial sign of a vector \code{w} is
+\code{w/norm(w)}.
 
 The variables should be centered and scaled prior to the
- computations.
+computations.
 }
 \examples{
 data(biomass)
@@ -77,9 +77,9 @@ tidy(ss_obj, number = 3)
 }
 \references{
 Serneels, S., De Nolf, E., and Van Espen, P.
- (2006). Spatial sign preprocessing: a simple way to impart
- moderate robustness to multivariate estimators. \emph{Journal of
- Chemical Information and Modeling}, 46(3), 1402-1409.
+(2006). Spatial sign preprocessing: a simple way to impart
+moderate robustness to multivariate estimators. \emph{Journal of
+Chemical Information and Modeling}, 46(3), 1402-1409.
 }
 \concept{
 preprocessing projection_methods

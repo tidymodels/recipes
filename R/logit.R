@@ -1,27 +1,27 @@
 #' Logit Transformation
 #'
-#' \code{step_logit} creates a \emph{specification} of a recipe
+#' `step_logit` creates a *specification* of a recipe
 #'  step that will logit transform the data.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the \code{terms} argument.
-#' @return An updated version of \code{recipe} with the new step
+#'  be (eventually) populated by the `terms` argument.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
 #' @details The logit transformation takes values between
 #'  zero and one and translates them to be on the real line using
-#'  the function \code{f(p) = log(p/(1-p))}.
+#'  the function `f(p) = log(p/(1-p))`.
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(runif(40), ncol = 2)
@@ -39,9 +39,9 @@
 #'
 #' tidy(logit_trans, number = 1)
 #' tidy(logit_obj, number = 1)
-#' @seealso \code{\link{step_invlogit}} \code{\link{step_log}}
-#' \code{\link{step_sqrt}}  \code{\link{step_hyperbolic}} \code{\link{recipe}}
-#' \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_invlogit()] [step_log()]
+#' [step_sqrt()]  [step_hyperbolic()] [recipe()]
+#' [prep.recipe()] [bake.recipe()]
 
 step_logit <-
   function(recipe,
@@ -102,7 +102,7 @@ print.step_logit <-
   }
 
 #' @rdname step_logit
-#' @param x A \code{step_logit} object.
+#' @param x A `step_logit` object.
 tidy.step_logit <- function(x, ...) {
   simple_terms(x, ...)
 }

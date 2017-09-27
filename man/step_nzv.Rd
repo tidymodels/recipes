@@ -16,7 +16,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will evaluated by the filtering. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -30,45 +30,45 @@ below).}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link{prep.recipe}} is called.}
+until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
 
 \item{x}{A \code{step_nzv} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be removed.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be removed.
 }
 \description{
 \code{step_nzv} creates a \emph{specification} of a recipe step
- that will potentially remove variables that are highly sparse
- and unbalanced.
+that will potentially remove variables that are highly sparse
+and unbalanced.
 }
 \details{
 This step diagnoses predictors that have one unique
- value (i.e. are zero variance predictors) or predictors that are
- have both of the following characteristics:
+value (i.e. are zero variance predictors) or predictors that are
+have both of the following characteristics:
 \enumerate{
-  \item they have very few unique values relative to the number
-   of samples and
-  \item the ratio of the frequency of the most common value to
-   the frequency of the second most common value is large.
+\item they have very few unique values relative to the number
+of samples and
+\item the ratio of the frequency of the most common value to
+the frequency of the second most common value is large.
 }
 
 For example, an example of near zero variance predictor is one
- that, for 1000 samples, has two distinct values and 999 of them
- are a single value.
+that, for 1000 samples, has two distinct values and 999 of them
+are a single value.
 
 To be flagged, first the frequency of the most prevalent value
- over the second most frequent value (called the "frequency
- ratio") must be above \code{freq_cut}. Secondly, the "percent of
- unique values," the number of unique values divided by the total
- number of samples (times 100), must also be below
- \code{unique_cut}.
+over the second most frequent value (called the "frequency
+ratio") must be above \code{freq_cut}. Secondly, the "percent of
+unique values," the number of unique values divided by the total
+number of samples (times 100), must also be below
+\code{unique_cut}.
 
 In the above example, the frequency ratio is 999 and the unique
- value percentage is 0.0001.
+value percentage is 0.0001.
 }
 \examples{
 data(biomass)
@@ -94,8 +94,8 @@ tidy(nzv_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-\code{\link{step_corr}} \code{\link{recipe}}
-  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_corr]{step_corr()}} \code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing variable_filters

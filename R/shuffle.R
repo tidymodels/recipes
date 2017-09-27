@@ -1,23 +1,23 @@
 #' Shuffle Variables
 #'
-#' \code{step_shuffle} creates a \emph{specification} of a recipe
+#' `step_shuffle` creates a *specification* of a recipe
 #'  step that will randomly change the order of rows for selected
 #'  variables.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will permuted. See \code{\link{selections}} for more
-#'  details. For the \code{tidy} method, these are not
+#'  variables will permuted. See [selections()] for more
+#'  details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string that contains the names of
 #'  columns that should be shuffled. These values are not determined
-#'  until \code{\link{prep.recipe}} is called.
-#' @return An updated version of \code{recipe} with the new step
+#'  until [prep.recipe()] is called.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing randomization permutation
@@ -98,7 +98,7 @@ print.step_shuffle <-
   }
 
 #' @rdname step_shuffle
-#' @param x A \code{step_shuffle} object.
+#' @param x A `step_shuffle` object.
 tidy.step_shuffle <- function(x, ...) {
   simple_terms(x, ...)
 }

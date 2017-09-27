@@ -1,26 +1,26 @@
 #' Box-Cox Transformation for Non-Negative Data
 #'
-#' \code{step_BoxCox} creates a \emph{specification} of a recipe
+#' `step_BoxCox` creates a *specification* of a recipe
 #'  step that will transform data using a simple Box-Cox
 #'  transformation.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param lambdas A numeric vector of transformation values. This
-#'  is \code{NULL} until computed by \code{\link{prep.recipe}}.
+#'  is `NULL` until computed by [prep.recipe()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param nunique An integer where data that have less possible
 #'  values will not be evaluate for a transformation.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{value} (the
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `value` (the
 #'  lambda estimate).
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
@@ -35,16 +35,16 @@
 #'   This transformation is typically done on the outcome variable
 #'  using the residuals for a statistical model (such as ordinary
 #'  least squares). Here, a simple null model (intercept only) is
-#'  used to apply the transformation to the \emph{predictor}
+#'  used to apply the transformation to the *predictor*
 #'  variables individually. This can have the effect of making the
 #'  variable distributions more symmetric.
 #'
 #' If the transformation parameters are estimated to be very
 #'  closed to the bounds, or if the optimization fails, a value of
-#'  \code{NA} is used and no transformation is applied.
+#'  `NA` is used and no transformation is applied.
 #'
 #' @references Sakia, R. M. (1992). The Box-Cox transformation technique:
-#'   A review. \emph{The Statistician}, 169-178..
+#'   A review. *The Statistician*, 169-178..
 #' @examples
 #'
 #' rec <- recipe(~ ., data = as.data.frame(state.x77))
@@ -61,8 +61,8 @@
 #' tidy(bc_trans, number = 1)
 #' tidy(bc_estimates, number = 1)
 #'
-#' @seealso \code{\link{step_YeoJohnson}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_YeoJohnson()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 step_BoxCox <-
   function(recipe,
            ...,
@@ -197,7 +197,7 @@ estimate_bc <- function(dat,
 
 
 #' @rdname step_BoxCox
-#' @param x A \code{step_BoxCox} object.
+#' @param x A `step_BoxCox` object.
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),

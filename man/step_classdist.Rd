@@ -16,7 +16,7 @@ step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -42,36 +42,36 @@ by pooling the data for all of the classes?}
 the natural log function?}
 
 \item{objects}{Statistics are stored here once this step has
-been trained by \code{\link{prep.recipe}}.}
+been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_classdist} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected), \code{value} (the centroid of
- the class), and \code{class}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected), \code{value} (the centroid of
+the class), and \code{class}.
 }
 \description{
 \code{step_classdist} creates a a \emph{specification} of a
- recipe step that will convert numeric data into Mahalanobis
- distance measurements to the data centroid. This is done for
- each value of a categorical class variable.
+recipe step that will convert numeric data into Mahalanobis
+distance measurements to the data centroid. This is done for
+each value of a categorical class variable.
 }
 \details{
 \code{step_classdist} will create a
 
 The function will create a new column for every unique value of
- the \code{class} variable. The resulting variables will not
- replace the original values and have the prefix
- \code{classdist_}.
+the \code{class} variable. The resulting variables will not
+replace the original values and have the prefix
+\code{classdist_}.
 
 Note that, by default, the default covariance function requires
- that each class should have at least as many rows as variables
- listed in the \code{terms} argument. If \code{pool = TRUE},
- there must be at least as many data points are variables
- overall.
+that each class should have at least as many rows as variables
+listed in the \code{terms} argument. If \code{pool = TRUE},
+there must be at least as many data points are variables
+overall.
 }
 \examples{
 

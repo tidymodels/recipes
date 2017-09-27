@@ -14,7 +14,7 @@ step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will permuted. See \code{\link{selections}} for more
+variables will permuted. See \code{\link[=selections]{selections()}} for more
 details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -26,20 +26,20 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string that contains the names of
 columns that should be shuffled. These values are not determined
-until \code{\link{prep.recipe}} is called.}
+until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
 
 \item{x}{A \code{step_shuffle} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be affected.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be affected.
 }
 \description{
 \code{step_shuffle} creates a \emph{specification} of a recipe
- step that will randomly change the order of rows for selected
- variables.
+step that will randomly change the order of rows for selected
+variables.
 }
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)

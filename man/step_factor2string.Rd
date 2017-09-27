@@ -15,7 +15,7 @@ step_factor2string(recipe, ..., role = NA, trained = FALSE,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will converted to strings See \code{\link{selections}}
+variables will converted to strings See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -27,25 +27,25 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string of variables that will be
 converted. This is \code{NULL} until computed by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{x}{A \code{step_factor2string} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- columns that will be affected).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+columns that will be affected).
 }
 \description{
 \code{step_factor2string} will convert one or more factor
- vectors to strings.
+vectors to strings.
 }
 \details{
 \code{prep} has an option \code{stringsAsFactors} that
- defaults to \code{TRUE}. If this step is used with the default
- option, the string(s() produced by this step will be converted
- to factors after all of the steps have been prepped.
+defaults to \code{TRUE}. If this step is used with the default
+option, the string(s() produced by this step will be converted
+to factors after all of the steps have been prepped.
 }
 \examples{
 data(okc)
@@ -77,7 +77,7 @@ class(string_test$diet)
 tidy(rec, number = 1)
 }
 \seealso{
-\code{\link{step_string2factor}} \code{\link{step_dummy}}
+\code{\link[=step_string2factor]{step_string2factor()}} \code{\link[=step_dummy]{step_dummy()}}
 }
 \concept{
 preprocessing variable_encodings factors

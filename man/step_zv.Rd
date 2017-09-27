@@ -15,7 +15,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will evaluated by the filtering. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -26,19 +26,19 @@ preprocessing have been estimated.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link{prep.recipe}} is called.}
+until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
 
 \item{x}{A \code{step_zv} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be removed.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be removed.
 }
 \description{
 \code{step_zv} creates a \emph{specification} of a recipe step
- that will remove variables that contain only a single value.
+that will remove variables that contain only a single value.
 }
 \examples{
 data(biomass)
@@ -64,9 +64,9 @@ tidy(zv_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-\code{\link{step_nzv}} \code{\link{step_corr}}
-  \code{\link{recipe}}
-  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_nzv]{step_nzv()}} \code{\link[=step_corr]{step_corr()}}
+\code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing variable_filters

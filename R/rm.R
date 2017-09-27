@@ -1,21 +1,21 @@
 #' General Variable Filter
 #'
-#' \code{step_rm} creates a \emph{specification} of a recipe step
+#' `step_rm` creates a *specification* of a recipe step
 #'  that will remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables that will evaluated by the filtering bake. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until \code{\link{prep.recipe}} is called.
-#' @return An updated version of \code{recipe} with the new step
+#'  until [prep.recipe()] is called.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -105,5 +105,5 @@ print.step_rm <-
 
 
 #' @rdname step_rm
-#' @param x A \code{step_rm} object.
+#' @param x A `step_rm` object.
 tidy.step_rm <- tidy_filter

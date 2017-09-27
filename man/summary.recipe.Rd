@@ -17,15 +17,15 @@ used).}
 }
 \value{
 A tibble with columns \code{variable}, \code{type}, \code{role},
-  and \code{source}.
+and \code{source}.
 }
 \description{
 This function prints the current set of variables/features and some of their
-  characteristics.
+characteristics.
 }
 \details{
 Note that, until the recipe has been trained, the currrent and
-  original variables are the same.
+original variables are the same.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)
@@ -36,5 +36,5 @@ rec <- prep(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link{recipe}} \code{\link{prep.recipe}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 }

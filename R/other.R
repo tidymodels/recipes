@@ -1,6 +1,6 @@
 #' Collapse Some Categorical Levels
 #'
-#' \code{step_other} creates a \emph{specification} of a recipe
+#' `step_other` creates a *specification* of a recipe
 #'  step that will potentially pool infrequently occurring values
 #'  into an "other" category.
 #'
@@ -8,7 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will potentially be reduced. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
@@ -16,29 +16,29 @@
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  columns that will be affected) and \code{retained} (the factor
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  columns that will be affected) and `retained` (the factor
 #'  levels that were not pulled into "other")
 #' @keywords datagen
 #' @concept preprocessing factors
 #' @export
 #' @details The overall proportion of the categories are computed. The "other"
 #'   category is used in place of any categorical levels whose individual
-#'   proportion in the training set is less than \code{threshold}.
+#'   proportion in the training set is less than `threshold`.
 #'
 #' If no pooling is done the data are unmodified (although character data may
-#'   be changed to factors based on the value of \code{stringsAsFactors} in
-#'   \code{\link{prep.recipe}}). Otherwise, a factor is always returned with
+#'   be changed to factors based on the value of `stringsAsFactors` in
+#'   [prep.recipe()]). Otherwise, a factor is always returned with
 #'   different factor levels.
 #'
-#' If \code{threshold} is less than the largest category proportion, all levels
-#'   except for the most frequent are collapsed to the \code{other} level.
+#' If `threshold` is less than the largest category proportion, all levels
+#'   except for the most frequent are collapsed to the `other` level.
 #'
-#' If the retained categories include the value of \code{other}, an error is
-#'   thrown. If \code{other} is in the list of discarded levels, no error
+#' If the retained categories include the value of `other`, an error is
+#'   thrown. If `other` is in the list of discarded levels, no error
 #'   occurs.
 #' @examples
 #' data(okc)
@@ -182,7 +182,7 @@ keep_levels <- function(x, prop = .1, other = "other") {
 
 
 #' @rdname step_other
-#' @param x A \code{step_other} object.
+#' @param x A `step_other` object.
 #' @importFrom purrr map
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {

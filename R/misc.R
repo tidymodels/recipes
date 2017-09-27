@@ -90,13 +90,13 @@ get_rhs_terms <- function(x) x
 
 #' Add a New Step to Current Recipe
 #'
-#' \code{add_step} adds a step to the last location in the recipe.
+#' `add_step` adds a step to the last location in the recipe.
 #'
-#' @param rec A \code{\link{recipe}}.
+#' @param rec A [recipe()].
 #' @param object A step object.
 #' @keywords datagen
 #' @concept preprocessing
-#' @return A updated \code{\link{recipe}} with the new step in the last slot.
+#' @return A updated [recipe()] with the new step in the last slot.
 #' @export
 add_step <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object
@@ -118,11 +118,11 @@ var_by_role <-
 ## Overall wrapper to make new step_X objects
 #' A General Step Wrapper
 #'
-#' \code{step} sets the class of the step.
+#' `step` sets the class of the step.
 #'
 #' @param subclass A character string for the resulting class. For example,
-#'   if \code{subclass = "blah"} the step object that is returned has class
-#'   \code{step_blah}.
+#'   if `subclass = "blah"` the step object that is returned has class
+#'   `step_blah`.
 #' @param ... All arguments to the step that should be returned.
 #' @keywords datagen
 #' @concept preprocessing
@@ -191,13 +191,13 @@ mod_call_args <- function(cl, args, removals = NULL) {
 
 #' Sequences of Names with Padded Zeros
 #'
-#' This function creates a series of \code{num} names with a common prefix.
+#' This function creates a series of `num` names with a common prefix.
 #'   The names are numbered with leading zeros (e.g.
-#'   \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
+#'   `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
 #'
 #' @param num A single integer for how many elements are created.
 #' @param prefix A character string that will start each name. .
-#' @return A character string of length \code{num}.
+#' @return A character string of length `num`.
 #' @keywords datagen
 #' @concept string_functions naming_functions
 #' @export

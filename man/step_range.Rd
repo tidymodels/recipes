@@ -15,7 +15,7 @@ step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will be scaled. See \code{\link{selections}} for more
+variables will be scaled. See \code{\link[=selections]{selections()}} for more
 details. For the \code{tidy} method, these are not currently
 used.}
 
@@ -33,26 +33,26 @@ range}
 
 \item{ranges}{A character vector of variables that will be
 normalized. Note that this is ignored until the values are
-determined by \code{\link{prep.recipe}}. Setting this value will
+determined by \code{\link[=prep.recipe]{prep.recipe()}}. Setting this value will
 be ineffective.}
 
 \item{x}{A \code{step_range} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected), \code{min}, and \code{max}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected), \code{min}, and \code{max}.
 }
 \description{
 \code{step_range} creates a \emph{specification} of a recipe
- step that will normalize numeric data to be within a pre-defined
- range of values.
+step that will normalize numeric data to be within a pre-defined
+range of values.
 }
 \details{
 When a new data point is outside of the ranges seen in
- the training set, the new values are truncated at \code{min} or
- \code{max}.
+the training set, the new values are truncated at \code{min} or
+\code{max}.
 }
 \examples{
 data(biomass)

@@ -15,7 +15,7 @@ step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -26,7 +26,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations This
-is \code{NULL} until computed by \code{\link{prep.recipe}}.}
+is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{na.rm}{A logical value indicating whether \code{NA}
 values should be removed when computing the standard deviation.}
@@ -35,23 +35,23 @@ values should be removed when computing the standard deviation.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{value} (the
- standard deviations).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the
+standard deviations).
 }
 \description{
 \code{step_scale} creates a \emph{specification} of a recipe
- step that will normalize numeric data to have a standard
- deviation of one.
+step that will normalize numeric data to have a standard
+deviation of one.
 }
 \details{
 Scaling data means that the standard deviation of a
- variable is divided out of the data. \code{step_scale} estimates
- the variable standard deviations from the data used in the
- \code{training} argument of \code{prep.recipe}.
- \code{bake.recipe} then applies the scaling to new data sets
- using these standard deviations.
+variable is divided out of the data. \code{step_scale} estimates
+the variable standard deviations from the data used in the
+\code{training} argument of \code{prep.recipe}.
+\code{bake.recipe} then applies the scaling to new data sets
+using these standard deviations.
 }
 \examples{
 data(biomass)

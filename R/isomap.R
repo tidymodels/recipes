@@ -1,6 +1,6 @@
 #' Isomap Embedding
 #'
-#' \code{step_isomap} creates a \emph{specification} of a recipe
+#' `step_isomap` creates a *specification* of a recipe
 #'  step that will convert numeric data into one or more new
 #'  dimensions.
 #'
@@ -8,26 +8,26 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to compute the dimensions. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dimension columns created by the original variables
 #'  will be used as predictors in a model.
 #' @param num The number of isomap dimensions to retain as new
-#'  predictors. If \code{num} is greater than the number of columns
+#'  predictors. If `num` is greater than the number of columns
 #'  or the number of possible dimensions, a smaller value will be
 #'  used.
 #' @param options A list of options to
-#'  \code{\link[dimRed]{Isomap}}.
-#' @param res The \code{\link[dimRed]{Isomap}} object is stored
+#'  [dimRed::Isomap()].
+#' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  \code{\link{prep.recipe}}.
+#'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
+#'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @keywords datagen
 #' @concept preprocessing isomap projection_methods
@@ -40,24 +40,24 @@
 #'  dimensions to the original data values.
 #'
 #' It is advisable to center and scale the variables prior to
-#'  running Isomap (\code{step_center} and \code{step_scale} can be
+#'  running Isomap (`step_center` and `step_scale` can be
 #'  used for this purpose).
 #'
-#' The argument \code{num} controls the number of components that
+#' The argument `num` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
-#'  will have names that begin with \code{prefix} and a sequence of
+#'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if \code{num < 10}, their names will be \code{Isomap1} -
-#'  \code{Isomap9}. If \code{num = 101}, the names would be
-#'  \code{Isomap001} - \code{Isomap101}.
+#'  if `num < 10`, their names will be `Isomap1` -
+#'  `Isomap9`. If `num = 101`, the names would be
+#'  `Isomap001` - `Isomap101`.
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
-#'  \emph{Advances in Neural Information Processing Systems}.
+#'  *Advances in Neural Information Processing Systems*.
 #'  721-728.
 #'
 #' \pkg{dimRed}, a framework for dimensionality reduction,
-#'   \url{https://github.com/gdkrmr}
+#'   https://github.com/gdkrmr
 #'
 #' @examples
 #' data(biomass)
@@ -86,9 +86,9 @@
 #'
 #' tidy(im_trans, number = 4)
 #' tidy(im_estimates, number = 4)
-#' @seealso \code{\link{step_pca}} \code{\link{step_kpca}}
-#'   \code{\link{step_ica}} \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [step_pca()] [step_kpca()]
+#'   [step_ica()] [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 
 step_isomap <-
   function(recipe,
@@ -188,7 +188,7 @@ print.step_isomap <-
 
 
 #' @rdname step_isomap
-#' @param x A \code{step_isomap} object
+#' @param x A `step_isomap` object
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$res@org.data))

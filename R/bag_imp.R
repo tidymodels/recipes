@@ -1,40 +1,40 @@
 #' Imputation via Bagged Trees
 #'
-#'   \code{step_bagimpute} creates a \emph{specification} of a
+#'   `step_bagimpute` creates a *specification* of a
 #'  recipe step that will create bagged tree models to impute
 #'  missing data.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables.
-#'  For \code{step_bagimpute}, this indicates the variables to be
-#'  imputed. When used with \code{imp_vars}, the dots indicates
+#'  For `step_bagimpute`, this indicates the variables to be
+#'  imputed. When used with `imp_vars`, the dots indicates
 #'  which variables are used to predict the missing data in each
-#'  variable. See \code{\link{selections}} for more details. For the
-#'  \code{tidy} method, these are not currently used.
+#'  variable. See [selections()] for more details. For the
+#'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param impute_with A call to \code{imp_vars} to specify which
+#' @param impute_with A call to `imp_vars` to specify which
 #'  variables are used to impute the variables that can include
 #'  specific variable names seperated by commas or different
-#'  selectors (see \code{\link{selections}}). If a column is
+#'  selectors (see [selections()]). If a column is
 #'  included in both lists to be imputed and to be an imputation
 #'  predictor, it will be removed from the latter and not used to
 #'  impute itself.
 #' @param options A list of options to
-#'  \code{\link[ipred]{ipredbagg}}. Defaults are set for the
-#'  arguments \code{nbagg} and \code{keepX} but others can be passed
-#'  in. \bold{Note} that the arguments \code{X} and \code{y} should
+#'  [ipred::ipredbagg()]. Defaults are set for the
+#'  arguments `nbagg` and `keepX` but others can be passed
+#'  in. **Note** that the arguments `X` and `y` should
 #'  not be passed here.
 #' @param seed_val A integer used to create reproducible models.
 #'  The same seed is used across all imputation models.
-#' @param models The \code{\link[ipred]{ipredbagg}} objects are
+#' @param models The [ipred::ipredbagg()] objects are
 #'  stored here once this bagged trees have be trained by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{model} (the bagged
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `model` (the bagged
 #'  tree object).
 #' @keywords datagen
 #' @concept preprocessing imputation
@@ -42,20 +42,20 @@
 #' @details For each variables requiring imputation, a bagged tree
 #'  is created where the outcome is the variable of interest and the
 #'  predictors are any other variables listed in the
-#'  \code{impute_with} formula. One advantage to the bagged tree is
+#'  `impute_with` formula. One advantage to the bagged tree is
 #'  that is can accept predictors that have missing values
 #'  themselves. This imputation method can be used when the variable
 #'  of interest (and predictors) are numeric or categorical. Imputed
 #'  categorical variables will remain categorical.
 #'
 #' Note that if a variable that is to be imputed is also in
-#'  \code{impute_with}, this variable will be ignored.
+#'  `impute_with`, this variable will be ignored.
 #'
 #' It is possible that missing values will still occur after
 #'  imputation if a large majority (or all) of the imputing
 #'  variables are also missing.
-#' @references Kuhn, M. and Johnson, K. (2013). \emph{Applied
-#'  Predictive Modeling}. Springer Verlag.
+#' @references Kuhn, M. and Johnson, K. (2013). *Applied
+#'  Predictive Modeling*. Springer Verlag.
 #' @examples
 #' data("credit_data")
 #'
@@ -220,7 +220,7 @@ print.step_bagimpute <-
 imp_vars <- function(...) quos(...)
 
 #' @rdname step_bagimpute
-#' @param x A \code{step_bagimpute} object.
+#' @param x A `step_bagimpute` object.
 tidy.step_bagimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),

@@ -1,39 +1,39 @@
 #' Orthogonal Polynomial Basis Functions
 #'
-#' \code{step_poly} creates a \emph{specification} of a recipe
+#' `step_poly` creates a *specification* of a recipe
 #'  step that will create new columns that are basis expansions of
 #'  variables using orthogonal polynomials.
 
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details.  For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details.  For the `tidy` method, these are not
 #'  currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
-#' @param objects A list of \code{\link[stats]{poly}} objects
+#' @param objects A list of [stats::poly()] objects
 #'  created once the step has been trained.
-#' @param options A list of options for \code{\link[stats]{poly}}
-#'  which should not include \code{x} or \code{simple}. Note that
-#'  the option \code{raw = TRUE} will produce the regular polynomial
+#' @param options A list of options for [stats::poly()]
+#'  which should not include `x` or `simple`. Note that
+#'  the option `raw = TRUE` will produce the regular polynomial
 #'  values (not orthogonalized).
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  columns that will be affected) and \code{degree}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  columns that will be affected) and `degree`.
 #' @keywords datagen
 #' @concept preprocessing basis_expansion
 #' @export
-#' @details \code{step_poly} can new features from a single
+#' @details `step_poly` can new features from a single
 #'  variable that enable fitting routines to model this variable in
 #'  a nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the \code{degree} argument of
-#'  \code{\link[stats]{poly}}. The original variables are removed
+#'  determined by the `degree` argument of
+#'  [stats::poly()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
-#'  for the new variables is \code{varname_poly_1} and so on.
+#'  for the new variables is `varname_poly_1` and so on.
 #' @examples
 #' data(biomass)
 #'
@@ -51,8 +51,8 @@
 #' expanded
 #'
 #' tidy(quadratic, number = 1)
-#' @seealso \code{\link{step_ns}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_ns()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 
 step_poly <-
@@ -157,7 +157,7 @@ print.step_poly <-
   }
 
 #' @rdname step_poly
-#' @param x A \code{step_poly} object.
+#' @param x A `step_poly` object.
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),

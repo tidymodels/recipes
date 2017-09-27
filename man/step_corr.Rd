@@ -15,7 +15,7 @@ step_corr(recipe, ..., role = NA, trained = FALSE, threshold = 0.9,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -31,32 +31,32 @@ number of columns so that all the resulting absolute
 correlations are less than this value.}
 
 \item{use}{A character string for the \code{use} argument to
-the \code{\link[stats]{cor}} function.}
+the \code{\link[stats:cor]{stats::cor()}} function.}
 
 \item{method}{A character string for the \code{method} argument
-to the \code{\link[stats]{cor}} function.}
+to the \code{\link[stats:cor]{stats::cor()}} function.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link{prep.recipe}} is called.}
+until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
 
 \item{x}{A \code{step_corr} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} which
- is the columns that will be removed.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} which
+is the columns that will be removed.
 }
 \description{
 \code{step_corr} creates a \emph{specification} of a recipe
- step that will potentially remove variables that have large
- absolute correlations with other variables.
+step that will potentially remove variables that have large
+absolute correlations with other variables.
 }
 \details{
 This step attempts to remove variables to keep the
- largest absolute correlation between the variables less than
- \code{threshold}.
+largest absolute correlation between the variables less than
+\code{threshold}.
 }
 \examples{
 data(biomass)
@@ -84,14 +84,14 @@ tidy(corr_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-\code{\link{step_nzv}} \code{\link{recipe}}
-  \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_nzv]{step_nzv()}} \code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \author{
 Original R code for filtering algorithm by Dong Li,
- modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
- original in \code{caret} package). Max Kuhn for the \code{step}
- function.
+modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
+original in \code{caret} package). Max Kuhn for the \code{step}
+function.
 }
 \concept{
 preprocessing variable_filters

@@ -22,7 +22,7 @@ sequence of operations for this recipe.}
 variables will be used in the \emph{numerator} of the ratio.
 When used with \code{denom_vars}, the dots indicates which
 variables are used in the \emph{denominator}. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{For terms created by this step, what analysis role
@@ -36,7 +36,7 @@ preprocessing have been estimated.}
 \item{denom}{A call to \code{denom_vars} to specify which
 variables are used in the denominator that can include specific
 variable names separated by commas or different selectors (see
-\code{\link{selections}}). If a column is included in both lists
+\code{\link[=selections]{selections()}}). If a column is included in both lists
 to be numerator and denominator, it will be removed from the
 listing.}
 
@@ -44,21 +44,21 @@ listing.}
 new ratio columns.}
 
 \item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link{prep.recipe}} is
+argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
 executed.}
 
 \item{x}{A \code{step_ratio} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{denom}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{denom}.
 }
 \description{
 \code{step_ratio} creates a a \emph{specification} of a recipe
- step that will create one or more ratios out of numeric
- variables.
+step that will create one or more ratios out of numeric
+variables.
 }
 \examples{
 library(recipes)

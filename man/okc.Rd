@@ -5,10 +5,10 @@
 \alias{okc}
 \title{OkCupid Data}
 \source{
-Kim, A. Y., and A. Escobedo-Land. 2015. "OkCupid Data for 
-  Introductory Statistics and Data Science Courses." \emph{Journal of 
-  Statistics Education: An International Journal on the Teaching and 
-  Learning of Statistics}.
+Kim, A. Y., and A. Escobedo-Land. 2015. "OkCupid Data for
+Introductory Statistics and Data Science Courses." \emph{Journal of
+Statistics Education: An International Journal on the Teaching and
+Learning of Statistics}.
 }
 \value{
 \item{okc}{a data frame}

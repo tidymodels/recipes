@@ -1,6 +1,6 @@
 #' Holiday Feature Generator
 #'
-#' \code{step_holiday} creates a a \emph{specification} of a
+#' `step_holiday` creates a a *specification* of a
 #'  recipe step that will convert date data into one or more binary
 #'  indicator variables for common holidays.
 #'
@@ -8,30 +8,30 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to create the new variables. The selected
-#'  variables should have class \code{Date} or \code{POSIXct}. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  variables should have class `Date` or `POSIXct`. See
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new variable columns created by the original variables
 #'  will be used as predictors in a model.
 #' @param holidays A character string that includes at least one
-#'  holiday supported by the \code{timeDate} package. See
-#'  \code{\link[timeDate]{listHolidays}} for a complete list.
+#'  holiday supported by the `timeDate` package. See
+#'  [timeDate::listHolidays()] for a complete list.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
-#'  populated once \code{\link{prep.recipe}} is used.
-#' @return An updated version of \code{recipe} with the new step
+#'  populated once [prep.recipe()] is used.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which is
-#'  the columns that will be affected and \code{holiday}.
+#'  `tidy` method, a tibble with columns `terms` which is
+#'  the columns that will be affected and `holiday`.
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings
 #'  dates
 #' @export
-#' @details Unlike other steps, \code{step_holiday} does
-#'  \emph{not} remove the original date variables.
-#'  \code{\link{step_rm}} can be used for this purpose.
+#' @details Unlike other steps, `step_holiday` does
+#'  *not* remove the original date variables.
+#'  [step_rm()] can be used for this purpose.
 #' @examples
 #' library(lubridate)
 #'
@@ -42,9 +42,9 @@
 #' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, newdata = examples)
 #' holiday_values
-#' @seealso \code{\link{step_date}} \code{\link{step_rm}}
-#'   \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}} \code{\link[timeDate]{listHolidays}}
+#' @seealso [step_date()] [step_rm()]
+#'   [recipe()] [prep.recipe()]
+#'   [bake.recipe()] [timeDate::listHolidays()]
 #' @import timeDate
 step_holiday <-
   function(
@@ -168,7 +168,7 @@ print.step_holiday <-
   }
 
 #' @rdname step_holiday
-#' @param x A \code{step_holiday} object.
+#' @param x A `step_holiday` object.
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,

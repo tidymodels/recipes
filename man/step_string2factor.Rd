@@ -16,7 +16,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will converted to factors. See
-\code{\link{selections}} for more details. For the \code{tidy}
+\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -36,20 +36,20 @@ ordered?}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- selectors or variables selected) and \code{ordered}.
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{ordered}.
 }
 \description{
 \code{step_string2factor} will convert one or more character
- vectors to factors (ordered or unordered).
+vectors to factors (ordered or unordered).
 }
 \details{
 If \code{levels} is given, \code{step_string2factor} will
- convert all factors to have the same levels. Also, note that
- \code{prep} has an option \code{stringsAsFactors} that defaults
- to \code{TRUE}. This should be changed so that raw character
- data will be applied to \code{step_string2factor}.
+convert all factors to have the same levels. Also, note that
+\code{prep} has an option \code{stringsAsFactors} that defaults
+to \code{TRUE}. This should be changed so that raw character
+data will be applied to \code{step_string2factor}.
 }
 \examples{
 data(okc)
@@ -69,7 +69,7 @@ okc \%>\% head
 tidy(make_factor, number = 1)
 }
 \seealso{
-\code{\link{step_factor2string}} \code{\link{step_dummy}}
+\code{\link[=step_factor2string]{step_factor2string()}} \code{\link[=step_dummy]{step_dummy()}}
 }
 \concept{
 preprocessing variable_encodings factors

@@ -18,16 +18,16 @@ recipe (if it exists).}
 }
 \value{
 A tibble with columns that would vary depending on what
- \code{tidy} method is executed. When \code{x} is \code{NA}, a
- tibble with columns \code{number} (the step iteration),
- \code{type} (the step type, e.g. "nzv", "center"), and a logical
- column called \code{trained} for whether the step has been
- estimated using \code{prep}.
+\code{tidy} method is executed. When \code{x} is \code{NA}, a
+tibble with columns \code{number} (the step iteration),
+\code{type} (the step type, e.g. "nzv", "center"), and a logical
+column called \code{trained} for whether the step has been
+estimated using \code{prep}.
 }
 \description{
 \code{tidy} will return a data frame that contains information
- regarding a recipe or step within the recipe (when a \code{tidy}
- method for the step exists).
+regarding a recipe or step within the recipe (when a \code{tidy}
+method for the step exists).
 }
 \examples{
 data(okc)

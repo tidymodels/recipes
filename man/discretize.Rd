@@ -24,10 +24,10 @@ step_discretize(recipe, ..., role = NA, trained = FALSE, objects = NULL,
 \item{x}{A numeric vector}
 
 \item{...}{For \code{discretize}: options to pass to
-\code{\link[stats]{quantile}} that should not include \code{x}
+\code{\link[stats:quantile]{stats::quantile()}} that should not include \code{x}
 or \code{probs}. For \code{step_discretize}, the dots specify
 one or more selector functions to choose which variables are
-affected by the step. See \code{\link{selections}} for more
+affected by the step. See \code{\link[=selections]{selections()}} for more
 details. For the \code{tidy} method, these are not currently
 used.}
 
@@ -67,11 +67,11 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{objects}{The \code{\link{discretize}} objects are stored
+\item{objects}{The \code{\link[=discretize]{discretize()}} objects are stored
 here once the recipe has be trained by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{options}{A list of options to \code{\link{discretize}}. A
+\item{options}{A list of options to \code{\link[=discretize]{discretize()}}. A
 defaults is set for the argument \code{x}. Note that the using
 the options \code{prefix} and \code{labels} when more than one
 variable is being transformed might be problematic as all
@@ -79,33 +79,33 @@ variables inherit those values.}
 }
 \value{
 \code{discretize} returns an object of class
- \code{discretize} and \code{predict.discretize} returns a factor
- vector. \code{step_discretize} returns an updated version of
- \code{recipe} with the new step added to the sequence of
- existing steps (if any). For the \code{tidy} method, a tibble
- with columns \code{terms} (the selectors or variables selected)
- and \code{value} (the breaks).
+\code{discretize} and \code{predict.discretize} returns a factor
+vector. \code{step_discretize} returns an updated version of
+\code{recipe} with the new step added to the sequence of
+existing steps (if any). For the \code{tidy} method, a tibble
+with columns \code{terms} (the selectors or variables selected)
+and \code{value} (the breaks).
 }
 \description{
 \code{discretize} converts a numeric vector into a factor with
- bins having approximately the same number of data points (based
- on a training set).
+bins having approximately the same number of data points (based
+on a training set).
 }
 \details{
 \code{discretize} estimates the cut points from
- \code{x} using percentiles. For example, if \code{cuts = 3}, the
- function estimates the quartiles of \code{x} and uses these as
- the cut points. If \code{cuts = 2}, the bins are defined as
- being above or below the median of \code{x}.
+\code{x} using percentiles. For example, if \code{cuts = 3}, the
+function estimates the quartiles of \code{x} and uses these as
+the cut points. If \code{cuts = 2}, the bins are defined as
+being above or below the median of \code{x}.
 
 The \code{predict} method can then be used to turn numeric
- vectors into factor vectors.
+vectors into factor vectors.
 
 If \code{keep_na = TRUE}, a suffix of "_missing" is used as a
- factor level (see the examples below).
+factor level (see the examples below).
 
 If \code{infs = FALSE} and a new value is greater than the
- largest value of \code{x}, a missing value will result.
+largest value of \code{x}, a missing value will result.
 }
 \examples{
 data(biomass)

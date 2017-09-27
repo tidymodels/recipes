@@ -1,39 +1,39 @@
 #' Imputation via K-Nearest Neighbors
 #'
-#'   \code{step_knnimpute} creates a \emph{specification} of a
+#'   `step_knnimpute` creates a *specification* of a
 #'  recipe step that will impute missing data using nearest
 #'  neighbors.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables.
-#'  For \code{step_knnimpute}, this indicates the variables to be
-#'  imputed. When used with \code{imp_vars}, the dots indicates
+#'  For `step_knnimpute`, this indicates the variables to be
+#'  imputed. When used with `imp_vars`, the dots indicates
 #'  which variables are used to predict the missing data in each
-#'  variable. See \code{\link{selections}} for more details. For the
-#'  \code{tidy} method, these are not currently used.
+#'  variable. See [selections()] for more details. For the
+#'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param impute_with A call to \code{imp_vars} to specify which
+#' @param impute_with A call to `imp_vars` to specify which
 #'  variables are used to impute the variables that can include
 #'  specific variable names separated by commas or different
-#'  selectors (see \code{\link{selections}}). If a column is
+#'  selectors (see [selections()]). If a column is
 #'  included in both lists to be imputed and to be an imputation
 #'  predictor, it will be removed from the latter and not used to
 #'  impute itself.
 #' @param K The number of neighbors.
 #' @param ref_data A tibble of data that will reflect the data
 #'  preprocessing done up to the point of this imputation step. This
-#'  is \code{NULL} until the step is trained by
-#'  \code{\link{prep.recipe}}.
+#'  is `NULL` until the step is trained by
+#'  [prep.recipe()].
 #' @param columns The column names that will be imputed and used
-#'  for imputation. This is \code{NULL} until the step is trained by
-#'  \code{\link{prep.recipe}}.
-#' @return An updated version of \code{recipe} with the new step
+#'  for imputation. This is `NULL` until the step is trained by
+#'  [prep.recipe()].
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables for imputation), \code{predictors}
-#'  (those variables used to impute), and \code{K}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables for imputation), `predictors`
+#'  (those variables used to impute), and `K`.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -47,7 +47,7 @@
 #'  data.
 #'
 #'   Note that if a variable that is to be imputed is also in
-#'  \code{impute_with}, this variable will be ignored.
+#'  `impute_with`, this variable will be ignored.
 #'
 #'   It is possible that missing values will still occur after
 #'  imputation if a large majority (or all) of the imputing
@@ -209,7 +209,7 @@ print.step_knnimpute <-
 
 #' @importFrom purrr map_df
 #' @rdname step_knnimpute
-#' @param x A \code{step_knnimpute} object.
+#' @param x A `step_knnimpute` object.
 tidy.step_knnimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- purrr::map_df(x$columns,

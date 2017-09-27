@@ -1,22 +1,22 @@
 #' Logarithmic Transformation
 #'
-#' \code{step_log} creates a \emph{specification} of a recipe step
+#' `step_log` creates a *specification* of a recipe step
 #'  that will log transform data.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details.  For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details.  For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param base A numeric value for the base.
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the \code{terms} argument.
-#' @return An updated version of \code{recipe} with the new step
+#'  be (eventually) populated by the `terms` argument.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  columns that will be affected) and \code{base}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  columns that will be affected) and `base`.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
@@ -37,10 +37,10 @@
 #'
 #' tidy(log_trans, number = 1)
 #' tidy(log_obj, number = 1)
-#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
-#'   \code{\link{step_hyperbolic}}  \code{\link{step_sqrt}}
-#'   \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [step_logit()] [step_invlogit()]
+#'   [step_hyperbolic()]  [step_sqrt()]
+#'   [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 
 step_log <-
   function(recipe,
@@ -106,7 +106,7 @@ print.step_log <-
   }
 
 #' @rdname step_log
-#' @param x A \code{step_log} object.
+#' @param x A `step_log` object.
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$base <- x$base

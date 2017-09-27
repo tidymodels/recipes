@@ -1,35 +1,35 @@
 #' Convert Strings to Factors
 #'
-#' \code{step_string2factor} will convert one or more character
+#' `step_string2factor` will convert one or more character
 #'  vectors to factors (ordered or unordered).
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will converted to factors. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param levels An options specification of the levels to be used
-#'  for the new factor. If left \code{NULL}, the sorted unique
-#'  values present when \code{bake} is called will be used.
+#'  for the new factor. If left `NULL`, the sorted unique
+#'  values present when `bake` is called will be used.
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{ordered}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `ordered`.
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
-#' @details If \code{levels} is given, \code{step_string2factor} will
+#' @details If `levels` is given, `step_string2factor` will
 #'  convert all factors to have the same levels. Also, note that
-#'  \code{prep} has an option \code{stringsAsFactors} that defaults
-#'  to \code{TRUE}. This should be changed so that raw character
-#'  data will be applied to \code{step_string2factor}.
-#' @seealso \code{\link{step_factor2string}} \code{\link{step_dummy}}
+#'  `prep` has an option `stringsAsFactors` that defaults
+#'  to `TRUE`. This should be changed so that raw character
+#'  data will be applied to `step_string2factor`.
+#' @seealso [step_factor2string()] [step_dummy()]
 #' @examples
 #' data(okc)
 #'
@@ -162,7 +162,7 @@ print.step_string2factor <-
 
 
 #' @rdname step_string2factor
-#' @param x A \code{step_string2factor} object.
+#' @param x A `step_string2factor` object.
 tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)

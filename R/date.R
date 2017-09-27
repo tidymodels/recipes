@@ -1,6 +1,6 @@
 #' Date Feature Generator
 #'
-#' \code{step_date} creates a a \emph{specification} of a recipe
+#' `step_date` creates a a *specification* of a recipe
 #'  step that will convert date data into one or more factor or
 #'  numeric variables.
 #'
@@ -8,44 +8,44 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will be used to create the new variables. The
-#'  selected variables should have class \code{Date} or
-#'  \code{POSIXct}. See \code{\link{selections}} for more details.
-#'  For the \code{tidy} method, these are not currently used.
+#'  selected variables should have class `Date` or
+#'  `POSIXct`. See [selections()] for more details.
+#'  For the `tidy` method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new variable columns created by the original variables
 #'  will be used as predictors in a model.
 #' @param features A character string that includes at least one
-#'  of the following values: \code{month}, \code{dow} (day of week),
-#'  \code{doy} (day of year), \code{week}, \code{month},
-#'  \code{decimal} (decimal date, e.g. 2002.197), \code{quarter},
-#'  \code{semester}, \code{year}.
+#'  of the following values: `month`, `dow` (day of week),
+#'  `doy` (day of year), `week`, `month`,
+#'  `decimal` (decimal date, e.g. 2002.197), `quarter`,
+#'  `semester`, `year`.
 #' @param label A logical. Only available for features
-#'  \code{month} or \code{dow}. \code{TRUE} will display the day of
+#'  `month` or `dow`. `TRUE` will display the day of
 #'  the week as an ordered factor of character strings, such as
-#'  "Sunday." \code{FALSE} will display the day of the week as a
+#'  "Sunday." `FALSE` will display the day of the week as a
 #'  number.
-#' @param abbr A logical. Only available for features \code{month}
-#'  or \code{dow}. \code{FALSE} will display the day of the week as
+#' @param abbr A logical. Only available for features `month`
+#'  or `dow`. `FALSE` will display the day of the week as
 #'  an ordered factor of character strings, such as "Sunday".
-#'  \code{TRUE} will display an abbreviated version of the label,
-#'  such as "Sun". \code{abbr} is disregarded if \code{label =
-#'  FALSE}.
+#'  `TRUE` will display an abbreviated version of the label,
+#'  such as "Sun". `abbr` is disregarded if `label =
+#'  FALSE`.
 #' @param ordinal A logical: should factors be ordered? Only
-#'  available for features \code{month} or \code{dow}.
+#'  available for features `month` or `dow`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
-#'  populated once \code{\link{prep.recipe}} is used.
-#' @return For \code{step_date}, an updated version of recipe with
+#'  populated once [prep.recipe()] is used.
+#' @return For `step_date`, an updated version of recipe with
 #'  the new step added to the sequence of existing steps (if any).
-#'  For the \code{tidy} method, a tibble with columns \code{terms}
-#'  (the selectors or variables selected), \code{value} (the feature
-#'  names), and \code{ordinal} (a logical).
+#'  For the `tidy` method, a tibble with columns `terms`
+#'  (the selectors or variables selected), `value` (the feature
+#'  names), and `ordinal` (a logical).
 #' @keywords datagen
 #' @concept preprocessing model_specification variable_encodings dates
 #' @export
-#' @details Unlike other steps, \code{step_date} does \emph{not}
-#'  remove the original date variables. \code{\link{step_rm}} can be
+#' @details Unlike other steps, `step_date` does *not*
+#'  remove the original date variables. [step_rm()] can be
 #'  used for this purpose.
 #' @examples
 #' library(lubridate)
@@ -64,9 +64,9 @@
 #'
 #' tidy(date_rec, number = 1)
 #'
-#' @seealso \code{\link{step_holiday}} \code{\link{step_rm}}
-#'   \code{\link{recipe}} \code{\link{prep.recipe}}
-#'   \code{\link{bake.recipe}}
+#' @seealso [step_holiday()] [step_rm()]
+#'   [recipe()] [prep.recipe()]
+#'   [bake.recipe()]
 step_date <-
   function(recipe,
            ...,
@@ -245,7 +245,7 @@ print.step_date <-
   }
 
 #' @rdname step_date
-#' @param x A \code{step_date} object.
+#' @param x A `step_date` object.
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- expand.grid(

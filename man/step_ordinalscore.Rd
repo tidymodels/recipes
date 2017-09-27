@@ -15,7 +15,7 @@ step_ordinalscore(recipe, ..., role = NA, trained = FALSE, columns = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -27,7 +27,7 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string of variables that will be
 converted. This is \code{NULL} until computed by
-\code{\link{prep.recipe}}.}
+\code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{convert}{A function that takes an ordinal factor vector
 as an input and outputs a single numeric variable.}
@@ -36,23 +36,23 @@ as an input and outputs a single numeric variable.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- columns that will be affected).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+columns that will be affected).
 }
 \description{
 \code{step_ordinalscore} creates a \emph{specification} of a
- recipe step that will convert ordinal factor variables into
- numeric scores.
+recipe step that will convert ordinal factor variables into
+numeric scores.
 }
 \details{
 Dummy variables from ordered factors with \code{C}
- levels will create polynomial basis functions with \code{C-1}
- terms. As an alternative, this step can be used to translate the
- ordered levels into a single numeric vector of values that
- represent (subjective) scores. By default, the translation uses
- a linear scale (1, 2, 3, ... \code{C}) but custom score
- functions can also be used (see the example below).
+levels will create polynomial basis functions with \code{C-1}
+terms. As an alternative, this step can be used to translate the
+ordered levels into a single numeric vector of values that
+represent (subjective) scores. By default, the translation uses
+a linear scale (1, 2, 3, ... \code{C}) but custom score
+functions can also be used (see the example below).
 }
 \examples{
 fail_lvls <- c("meh", "annoying", "really_bad")

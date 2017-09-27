@@ -1,13 +1,13 @@
 #' Hyperbolic Transformations
 #'
-#' \code{step_hyperbolic} creates a \emph{specification} of a
+#' `step_hyperbolic` creates a *specification* of a
 #'  recipe step that will transform data using a hyperbolic
 #'  function.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details.  For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details.  For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
@@ -15,11 +15,11 @@
 #'  are "sin", "cos", or "tan".
 #' @param inverse A logical: should the inverse function be used?
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the \code{terms} argument.
-#' @return An updated version of \code{recipe} with the new step
+#'  be (eventually) populated by the `terms` argument.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  columns that will be affected), \code{inverse}, and \code{func}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  columns that will be affected), `inverse`, and `func`.
 #' @keywords datagen
 #' @concept preprocessing transformation_methods
 #' @export
@@ -41,9 +41,9 @@
 #'
 #' tidy(cos_trans, number = 1)
 #' tidy(cos_obj, number = 1)
-#' @seealso \code{\link{step_logit}} \code{\link{step_invlogit}}
-#'   \code{\link{step_log}}  \code{\link{step_sqrt}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_logit()] [step_invlogit()]
+#'   [step_log()]  [step_sqrt()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 step_hyperbolic <-
   function(recipe,
@@ -124,7 +124,7 @@ print.step_hyperbolic <-
   }
 
 #' @rdname step_hyperbolic
-#' @param x A \code{step_hyperbolic} object.
+#' @param x A `step_hyperbolic` object.
 tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$inverse <- x$inverse

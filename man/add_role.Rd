@@ -7,10 +7,10 @@
 add_role(recipe, ..., new_role = "predictor")
 }
 \arguments{
-\item{recipe}{An existing \code{\link{recipe}}.}
+\item{recipe}{An existing \code{\link[=recipe]{recipe()}}.}
 
 \item{...}{One or more selector functions to choose which variables are
-being assigned a role. See \code{\link{selections}} for more details.}
+being assigned a role. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{new_role}{A character string for a single role.}
 }
@@ -19,11 +19,11 @@ An updated recipe object.
 }
 \description{
 \code{add_role} can add a role definition to an existing variable in the
-  recipe.
+recipe.
 }
 \details{
 If a variable is selected that currently has a role, the role is
-  changed and a warning is issued.
+changed and a warning is issued.
 }
 \examples{
 

@@ -1,22 +1,22 @@
 #' Zero Variance Filter
 #'
-#' \code{step_zv} creates a \emph{specification} of a recipe step
+#' `step_zv` creates a *specification* of a recipe step
 #'  that will remove variables that contain only a single value.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will evaluated by the filtering. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until \code{\link{prep.recipe}} is called.
-#' @return An updated version of \code{recipe} with the new step
+#'  until [prep.recipe()] is called.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be removed.
 #' @keywords datagen
 #' @concept preprocessing variable_filters
@@ -44,9 +44,9 @@
 #'
 #' tidy(zv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-#' @seealso \code{\link{step_nzv}} \code{\link{step_corr}}
-#'   \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_nzv()] [step_corr()]
+#'   [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 step_zv <-
   function(recipe,
@@ -123,5 +123,5 @@ print.step_zv <-
 
 
 #' @rdname step_zv
-#' @param x A \code{step_zv} object.
+#' @param x A `step_zv` object.
 tidy.step_zv <- tidy_filter

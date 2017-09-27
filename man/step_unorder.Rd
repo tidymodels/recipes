@@ -14,7 +14,7 @@ step_unorder(recipe, ..., role = NA, trained = FALSE, columns = NULL)
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link{selections}}
+variables are affected by the step. See \code{\link[=selections]{selections()}}
 for more details. For the \code{tidy} method, these are not
 currently used.}
 
@@ -31,13 +31,13 @@ be (eventually) populated by the \code{terms} argument.}
 }
 \value{
 An updated version of \code{recipe} with the new step
- added to the sequence of existing steps (if any). For the
- \code{tidy} method, a tibble with columns \code{terms} (the
- columns that will be affected).
+added to the sequence of existing steps (if any). For the
+\code{tidy} method, a tibble with columns \code{terms} (the
+columns that will be affected).
 }
 \description{
 \code{step_unorder} creates a \emph{specification} of a recipe
- step that will transform the data.
+step that will transform the data.
 }
 \details{
 The factors level order is preserved during the transformation.
@@ -63,8 +63,8 @@ tidy(factor_trans, number = 1)
 tidy(factor_obj, number = 1)
 }
 \seealso{
-\code{\link{step_ordinalscore}} \code{\link{recipe}}
-\code{\link{prep.recipe}} \code{\link{bake.recipe}}
+\code{\link[=step_ordinalscore]{step_ordinalscore()}} \code{\link[=recipe]{recipe()}}
+\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{
 preprocessing ordinal_data

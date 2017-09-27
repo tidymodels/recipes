@@ -1,36 +1,36 @@
 #' Ratio Variable Creation
 #'
-#' \code{step_ratio} creates a a \emph{specification} of a recipe
+#' `step_ratio` creates a a *specification* of a recipe
 #'  step that will create one or more ratios out of numeric
 #'  variables.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will be used in the \emph{numerator} of the ratio.
-#'  When used with \code{denom_vars}, the dots indicates which
-#'  variables are used in the \emph{denominator}. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  variables will be used in the *numerator* of the ratio.
+#'  When used with `denom_vars`, the dots indicates which
+#'  variables are used in the *denominator*. See
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For terms created by this step, what analysis role
 #'  should they be assigned?. By default, the function assumes that
 #'  the newly created ratios created by the original variables will
 #'  be used as predictors in a model.
-#' @param denom A call to \code{denom_vars} to specify which
+#' @param denom A call to `denom_vars` to specify which
 #'  variables are used in the denominator that can include specific
 #'  variable names separated by commas or different selectors (see
-#'  \code{\link{selections}}). If a column is included in both lists
+#'  [selections()]). If a column is included in both lists
 #'  to be numerator and denominator, it will be removed from the
 #'  listing.
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
 #' @param columns The column names used in the ratios. This
-#'  argument is not populated until \code{\link{prep.recipe}} is
+#'  argument is not populated until [prep.recipe()] is
 #'  executed.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected) and \code{denom}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `denom`.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -164,7 +164,7 @@ print.step_ratio <-
 denom_vars <- function(...) quos(...)
 
 #' @rdname step_ratio
-#' @param x A \code{step_ratio} object
+#' @param x A `step_ratio` object
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
     res <- x$columns

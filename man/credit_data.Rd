@@ -5,14 +5,14 @@
 \alias{credit_data}
 \title{Credit Data}
 \source{
-\url{https://github.com/gastonstat/CreditScoring}, 
-\url{http://bit.ly/2kkBFrk}
+https://github.com/gastonstat/CreditScoring,
+http://bit.ly/2kkBFrk
 }
 \value{
 \item{credit_data}{a data frame}
 }
 \description{
-These data are from the website of Dr. Lluís A. Belanche Muñoz by way of a 
+These data are from the website of Dr. Lluís A. Belanche Muñoz by way of a
 github repository of Dr. Gaston Sanchez. One data point is a missing outcome
 was removed from the original data.
 }

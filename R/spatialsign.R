@@ -1,6 +1,6 @@
 #' Spatial Sign Preprocessing
 #'
-#' \code{step_spatialsign} is a \emph{specification} of a recipe
+#' `step_spatialsign` is a *specification* of a recipe
 #'  step that will convert numeric data into a projection on to a
 #'  unit sphere.
 #'
@@ -8,31 +8,31 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used for the normalization. See
-#'  \code{\link{selections}} for more details. For the \code{tidy}
+#'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the \code{terms} argument.
-#' @return An updated version of \code{recipe} with the new step
+#'  be (eventually) populated by the `terms` argument.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
 #' @concept preprocessing projection_methods
 #' @export
 #' @details The spatial sign transformation projects the variables
 #'  onto a unit sphere and is related to global contrast
-#'  normalization. The spatial sign of a vector \code{w} is
-#'  \code{w/norm(w)}.
+#'  normalization. The spatial sign of a vector `w` is
+#'  `w/norm(w)`.
 #'
 #' The variables should be centered and scaled prior to the
 #'  computations.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
-#'  moderate robustness to multivariate estimators. \emph{Journal of
-#'  Chemical Information and Modeling}, 46(3), 1402-1409.
+#'  moderate robustness to multivariate estimators. *Journal of
+#'  Chemical Information and Modeling*, 46(3), 1402-1409.
 
 #' @examples
 #' data(biomass)
@@ -117,7 +117,7 @@ print.step_spatialsign <-
   }
 
 #' @rdname step_spatialsign
-#' @param x A \code{step_spatialsign} object.
+#' @param x A `step_spatialsign` object.
 tidy.step_spatialsign <- function(x, ...) {
   simple_terms(x, ...)
 }

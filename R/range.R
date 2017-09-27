@@ -1,13 +1,13 @@
 #' Scaling Numeric Data to a Specific Range
 #'
-#' \code{step_range} creates a \emph{specification} of a recipe
+#' `step_range` creates a *specification* of a recipe
 #'  step that will normalize numeric data to be within a pre-defined
 #'  range of values.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables will be scaled. See \code{\link{selections}} for more
-#'  details. For the \code{tidy} method, these are not currently
+#'  variables will be scaled. See [selections()] for more
+#'  details. For the `tidy` method, these are not currently
 #'  used.
 #' @param role Not used by this step since no new variables are
 #'  created.
@@ -17,18 +17,18 @@
 #'  range
 #' @param ranges A character vector of variables that will be
 #'  normalized. Note that this is ignored until the values are
-#'  determined by \code{\link{prep.recipe}}. Setting this value will
+#'  determined by [prep.recipe()]. Setting this value will
 #'  be ineffective.
-#' @return An updated version of \code{recipe} with the new step
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} (the
-#'  selectors or variables selected), \code{min}, and \code{max}.
+#'  `tidy` method, a tibble with columns `terms` (the
+#'  selectors or variables selected), `min`, and `max`.
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
 #' @export
 #' @details When a new data point is outside of the ranges seen in
-#'  the training set, the new values are truncated at \code{min} or
-#'  \code{max}.
+#'  the training set, the new values are truncated at `min` or
+#'  `max`.
 #' @examples
 #' data(biomass)
 #'
@@ -133,7 +133,7 @@ print.step_range <-
   }
 
 #' @rdname step_range
-#' @param x A \code{step_range} object.
+#' @param x A `step_range` object.
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$ranges),

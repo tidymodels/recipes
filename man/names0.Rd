@@ -16,8 +16,8 @@ A character string of length \code{num}.
 }
 \description{
 This function creates a series of \code{num} names with a common prefix.
-  The names are numbered with leading zeros (e.g.
-  \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
+The names are numbered with leading zeros (e.g.
+\code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
 }
 \concept{
 string_functions naming_functions

@@ -1,13 +1,13 @@
 #' High Correlation Filter
 #'
-#' \code{step_corr} creates a \emph{specification} of a recipe
+#' `step_corr` creates a *specification* of a recipe
 #'  step that will potentially remove variables that have large
 #'  absolute correlations with other variables.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See \code{\link{selections}}
-#'  for more details. For the \code{tidy} method, these are not
+#'  variables are affected by the step. See [selections()]
+#'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
@@ -15,28 +15,28 @@
 #'  correlation values. The step will try to remove the minimum
 #'  number of columns so that all the resulting absolute
 #'  correlations are less than this value.
-#' @param use A character string for the \code{use} argument to
-#'  the \code{\link[stats]{cor}} function.
-#' @param method A character string for the \code{method} argument
-#'  to the \code{\link[stats]{cor}} function.
+#' @param use A character string for the `use` argument to
+#'  the [stats::cor()] function.
+#' @param method A character string for the `method` argument
+#'  to the [stats::cor()] function.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until \code{\link{prep.recipe}} is called.
-#' @return An updated version of \code{recipe} with the new step
+#'  until [prep.recipe()] is called.
+#' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
-#'  \code{tidy} method, a tibble with columns \code{terms} which
+#'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be removed.
 #' @keywords datagen
 #' @author Original R code for filtering algorithm by Dong Li,
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
-#'  original in \code{caret} package). Max Kuhn for the \code{step}
+#'  original in `caret` package). Max Kuhn for the `step`
 #'  function.
 #' @concept preprocessing variable_filters
 #' @export
 #'
 #' @details This step attempts to remove variables to keep the
 #'  largest absolute correlation between the variables less than
-#'  \code{threshold}.
+#'  `threshold`.
 #' @examples
 #' data(biomass)
 #'
@@ -61,8 +61,8 @@
 #'
 #' tidy(corr_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-#' @seealso \code{\link{step_nzv}} \code{\link{recipe}}
-#'   \code{\link{prep.recipe}} \code{\link{bake.recipe}}
+#' @seealso [step_nzv()] [recipe()]
+#'   [prep.recipe()] [bake.recipe()]
 
 step_corr <- function(recipe,
                       ...,
@@ -197,5 +197,5 @@ tidy_filter <- function(x, ...) {
 }
 
 #' @rdname step_corr
-#' @param x A \code{step_corr} object.
+#' @param x A `step_corr` object.
 tidy.step_corr <- tidy_filter
