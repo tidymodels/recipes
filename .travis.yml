@@ -11,5 +11,9 @@ r:
 - release
 - devel
 
+matrix:
+  allow_failures:
+    - r: 3.1
+
 after_success:
   - Rscript -e 'covr::codecov()'
