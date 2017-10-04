@@ -544,7 +544,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
-#'   [all_predictors()].
+#'   [dplyr::everything()].
 #' @return A tibble.
 #' @details When preparing a recipe, if the training data set is retained using `retain = TRUE`, there is no need to `bake` the recipe to get the preprocessed training set.
 #' @examples
@@ -579,7 +579,7 @@ juice <- function(object, ...) {
          call. = FALSE)
   terms <- quos(...)
   if (is_empty(terms))
-    terms <- quos(all_predictors())
+    terms <- quos(everything())
   keepers <- terms_select(terms = terms, info = object$term_info)
 
   newdata <- object$template[, names(object$template) %in% keepers]

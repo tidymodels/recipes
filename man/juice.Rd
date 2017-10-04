@@ -13,7 +13,7 @@ with the option \code{retain = TRUE}.}
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details.
 If no selectors are given, the default is to use
-\code{\link[=all_predictors]{all_predictors()}}.}
+\code{\link[dplyr:everything]{dplyr::everything()}}.}
 }
 \value{
 A tibble.
