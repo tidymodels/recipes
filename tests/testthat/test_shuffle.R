@@ -17,7 +17,7 @@ test_that('numeric data', {
 
   rec1 <- prep(rec1, training = dat, verbose = FALSE)
   set.seed(7046)
-  dat1 <- bake(rec1, dat)
+  dat1 <- bake(rec1, dat, all_predictors())
   exp1 <- c(FALSE, FALSE, TRUE, TRUE)
   obs1 <- rep(NA, 4)
   for (i in 1:ncol(dat1))
@@ -32,7 +32,7 @@ test_that('nominal data', {
 
   rec2 <- prep(rec2, training = dat, verbose = FALSE)
   set.seed(804)
-  dat2 <- bake(rec2, dat)
+  dat2 <- bake(rec2, dat, all_predictors())
   exp2 <- c(TRUE, TRUE, FALSE, TRUE)
   obs2 <- rep(NA, 4)
   for (i in 1:ncol(dat2))
@@ -47,7 +47,7 @@ test_that('all data', {
 
   rec3 <- prep(rec3, training = dat, verbose = FALSE)
   set.seed(2516)
-  dat3 <- bake(rec3, dat)
+  dat3 <- bake(rec3, dat, all_predictors())
   exp3 <- c(FALSE, FALSE, FALSE, TRUE)
   obs3 <- rep(NA, 4)
   for (i in 1:ncol(dat3))

@@ -1,14 +1,15 @@
 # recipes 0.1.1
 
+* The default selectors for `bake` was changed from `all_predictors()` to `everything()`. 
+* The `verbose` option for `prep` is now defaulted to `FALSE`
+* [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs.
+* `step_YeoJohnson` gained a `na.rm` option.
+* [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors.
 * `step_unorder` converts ordered factors to unordered factors. 
 * `step_count` counts the number of instances that a pattern exists in a string. 
-* [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors .
-* `step_YeoJohnson` gained a `na.rm` option.
 * `step_string2factor` and `step_factor2string` can be used to move between encodings. 
-* [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs. 
 * A step to remove simple zero-variance variables was added (`step_zv`).
 * A series of `tidy` methods were added for recipes and many (but not all) steps. 
-* The `verbose` option for `prep` is now defaulted to `FALSE`
 
 # recipes 0.1.0
 

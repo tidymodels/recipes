@@ -97,11 +97,13 @@ Now that the statistics have been estimated, the preprocessing can be applied to
 train_data <- bake(trained_rec, newdata = seg_train)
 test_data  <- bake(trained_rec, newdata = seg_test)
 ```
-`bake` returns a tibble: 
+`bake` returns a tibble that, by default, includes all of the variables: 
 ```{r tibbles}
 class(test_data)
 test_data
 ```
+Selectors can also be used. For example, if only the predictors are needed, you can use `bake(object, newdata, all_predictors())`. 
+
 
 
 ## Adding Steps
@@ -119,7 +121,7 @@ trained_rec <- prep(trained_rec, training = seg_train)
 `bake` can be reapplied to get the principal components in addition to the other variables:
 
 ```{r pca_bake}
-test_data  <- bake(trained_rec, newdata = seg_test)
+test_data  <- bake(trained_rec, newdata = seg_test, all_predictors())
 names(test_data)
 ```
 

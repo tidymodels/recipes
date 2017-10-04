@@ -403,7 +403,7 @@ bake <- function(object, ...)
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
-#'   [all_predictors()].
+#'   [everything()].
 #' @return A tibble that may have different columns than the original columns
 #'   in `newdata`.
 #' @details [bake()] takes a trained recipe and applies the
@@ -418,6 +418,7 @@ bake <- function(object, ...)
 #' @rdname bake
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter
+#' @importFrom tidyselect everything
 #' @export
 
 bake.recipe <- function(object, newdata = object$template, ...) {
@@ -425,7 +426,7 @@ bake.recipe <- function(object, newdata = object$template, ...) {
 
   terms <- quos(...)
   if (is_empty(terms))
-    terms <- quos(all_predictors())
+    terms <- quos(everything())
 
   ## determine return variables
   keepers <- terms_select(terms = terms, info = object$term_info)

@@ -15,7 +15,7 @@ test_that('dummy variables with factor inputs', {
   rec <- recipe(age ~ ., data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location)
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
-  dummy_pred <- bake(dummy_trained, newdata = okc_fac)
+  dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL

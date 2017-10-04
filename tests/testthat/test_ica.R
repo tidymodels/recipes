@@ -72,7 +72,7 @@ test_that('correct ICA values', {
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  ica_pred <- bake(ica_extract_trained, newdata = biomass_te)
+  ica_pred <- bake(ica_extract_trained, newdata = biomass_te, all_predictors())
   ica_pred <- as.matrix(ica_pred)
 
   rownames(ica_pred) <- NULL

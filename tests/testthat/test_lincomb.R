@@ -41,7 +41,7 @@ test_that('example 2', {
     step_lincomb(all_predictors())
 
   filtering_trained <- prep(lincomb_filter, training = biomass_tr)
-  test_res <- bake(filtering_trained, newdata = biomass_te)
+  test_res <- bake(filtering_trained, newdata = biomass_te, all_predictors())
 
   expect_true(all(!(paste0("new_", 1:2) %in% colnames(test_res))))
 })
@@ -52,7 +52,7 @@ test_that('no exclusions', {
     step_lincomb(all_predictors())
 
   filtering_trained_2 <- prep(lincomb_filter_2, training = biomass_tr)
-  test_res_2 <- bake(filtering_trained_2, newdata = biomass_te)
+  test_res_2 <- bake(filtering_trained_2, newdata = biomass_te, all_predictors())
 
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))

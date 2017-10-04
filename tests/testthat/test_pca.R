@@ -17,7 +17,7 @@ test_that('correct PCA values', {
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
-  pca_pred <- bake(pca_extract_trained, newdata = biomass_te)
+  pca_pred <- bake(pca_extract_trained, newdata = biomass_te, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
   pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
@@ -72,7 +72,7 @@ test_that('Reduced rotation size', {
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
-  pca_pred <- bake(pca_extract_trained, newdata = biomass_te)
+  pca_pred <- bake(pca_extract_trained, newdata = biomass_te, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
   pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)

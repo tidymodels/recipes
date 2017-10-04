@@ -17,7 +17,7 @@ one preprocessing step.}
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details.
 If no selectors are given, the default is to use
-\code{\link[=all_predictors]{all_predictors()}}.}
+\code{\link[=everything]{everything()}}.}
 
 \item{newdata}{A data frame or tibble for whom the preprocessing will be
 applied.}
