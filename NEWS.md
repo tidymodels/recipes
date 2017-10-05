@@ -5,6 +5,7 @@
 * [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs.
 * `step_YeoJohnson` gained a `na.rm` option.
 * [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors.
+* `step_bs` adds B-spline basis functions. 
 * `step_unorder` converts ordered factors to unordered factors. 
 * `step_count` counts the number of instances that a pattern exists in a string. 
 * `step_string2factor` and `step_factor2string` can be used to move between encodings. 
