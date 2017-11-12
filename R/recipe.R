@@ -219,8 +219,10 @@ recipe.formula <- function(formula, data, ...) {
 
 #' @rdname recipe
 #' @export
-recipe.matrix <- function(x, ...)
+recipe.matrix <- function(x, ...) {
+  x <- as.data.frame(x)
   recipe.data.frame(x, ...)
+}
 
 
 #' @importFrom stats as.formula
