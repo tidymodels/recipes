@@ -30,7 +30,8 @@ Imports:
     gower,
     RcppRoll,
     tidyselect (>= 0.1.1),
-    magrittr
+    magrittr,
+    Matrix
 Suggests: 
     testthat,
     rpart,

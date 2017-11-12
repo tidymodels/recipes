@@ -404,24 +404,35 @@ bake <- function(object, ...)
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
 #'   [everything()].
-#' @return A tibble that may have different columns than the original columns
-#'   in `newdata`.
+#' @param composition Either "tibble" or "dgCMatrix" for the
+#'  format of the processed data set. Note that all computations
+#'  during the baking process are done in a non-sparse format. Also,
+#'  note that this argument should be called **after** any selectors
+#'  and the selectors should only resolve to numeric columns
+#'  (otherwise an error is thrown).
+#' @return A tibble or sparse matrix that may have different
+#'  columns than the original columns in `newdata`.
 #' @details [bake()] takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
 #'
-#' If the original data used to train the data are to be processed, time can be
-#'   saved by using the `retain = TRUE` option of [prep()] to
-#'   avoid duplicating the same operations.
-#'
-#' A tibble is always returned but can be easily converted to a data frame or
-#'   matrix as needed.
+#' If the original data used to train the data are to be
+#'  processed, time can be saved by using the `retain = TRUE` option
+#'  of [prep()] to avoid duplicating the same operations. With this
+#'  option set, [juice()] can be used instead of `bake` with
+#'  `newdata` equal to the training set.
+#' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter
 #' @importFrom tidyselect everything
 #' @export
+bake.recipe <- function(object, newdata, ..., composition = "tibble") {
 
-bake.recipe <- function(object, newdata = object$template, ...) {
+  if (!any(composition == formats))
+    stop("`composition` should be one of: ",
+         paste0("'", formats, "'", collapse = ","),
+         call. = FALSE)
+  
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
 
   terms <- quos(...)
@@ -451,6 +462,9 @@ bake.recipe <- function(object, newdata = object$template, ...) {
       newdata <- strings2factors(newdata, var_levels)
   }
 
+  if(composition == "dgCMatrix")
+    newdata <- convert_dgCMatrix(newdata)
+  
   newdata
 }
 
@@ -539,14 +553,12 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  applied to the training set. Rather than running `bake`
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set.
+#' @inheritParams bake.recipe 
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
-#' @param ... One or more selector functions to choose which variables will be
-#'   returned by the function. See [selections()] for more details.
-#'   If no selectors are given, the default is to use
-#'   [dplyr::everything()].
-#' @return A tibble.
-#' @details When preparing a recipe, if the training data set is retained using `retain = TRUE`, there is no need to `bake` the recipe to get the preprocessed training set.
+#' @details When preparing a recipe, if the training data set is
+#'  retained using `retain = TRUE`, there is no need to `bake` the
+#'  recipe to get the preprocessed training set.
 #' @examples
 #' data(biomass)
 #'
@@ -569,7 +581,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' all.equal(tr_values, og_values)
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-juice <- function(object, ...) {
+juice <- function(object, ..., composition = "tibble") {
   if(!isTRUE(object$retained))
     stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
          call. = FALSE)
@@ -577,6 +589,12 @@ juice <- function(object, ...) {
   if(!all(tr_steps))
     stop("At least one step has not be prepared; cannot extract.",
          call. = FALSE)
+  
+  if (!any(composition == formats))
+    stop("`composition` should be one of: ",
+         paste0("'", formats, "'", collapse = ","),
+         call. = FALSE)
+  
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(everything())
@@ -595,8 +613,13 @@ juice <- function(object, ...) {
     if (length(var_levels) > 0)
       newdata <- strings2factors(newdata, var_levels)
   }
+  
+  if(composition == "dgCMatrix")
+    newdata <- convert_dgCMatrix(newdata)
+  
   newdata
 }
 
+formats <- c("tibble", "dgCMatrix")
 
 

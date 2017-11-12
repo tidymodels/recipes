@@ -12,6 +12,7 @@
 * `step_lowerimpute` is for numeric data where the values cannot be measured below a specific value. For these cases, random uniform values are used for the truncated values.  
 * A step to remove simple zero-variance variables was added (`step_zv`).
 * A series of `tidy` methods were added for recipes and many (but not all) steps. 
+* In `bake.recipe`, the argument `newdata` is now without a default. 
 
 # recipes 0.1.0
 

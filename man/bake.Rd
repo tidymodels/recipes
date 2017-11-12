@@ -8,7 +8,7 @@
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, newdata = object$template, ...)
+\method{bake}{recipe}(object, newdata, ..., composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
@@ -21,10 +21,17 @@ If no selectors are given, the default is to use
 
 \item{newdata}{A data frame or tibble for whom the preprocessing will be
 applied.}
+
+\item{composition}{Either "tibble" or "dgCMatrix" for the
+format of the processed data set. Note that all computations
+during the baking process are done in a non-sparse format. Also,
+note that this argument should be called \strong{after} any selectors
+and the selectors should only resolve to numeric columns
+(otherwise an error is thrown).}
 }
 \value{
-A tibble that may have different columns than the original columns
-in \code{newdata}.
+A tibble or sparse matrix that may have different
+columns than the original columns in \code{newdata}.
 }
 \description{
 For a recipe with at least one preprocessing step that has been trained by
@@ -34,12 +41,14 @@ For a recipe with at least one preprocessing step that has been trained by
 \code{\link[=bake]{bake()}} takes a trained recipe and applies the
 operations to a data set to create a design matrix.
 
-If the original data used to train the data are to be processed, time can be
-saved by using the \code{retain = TRUE} option of \code{\link[=prep]{prep()}} to
-avoid duplicating the same operations.
-
-A tibble is always returned but can be easily converted to a data frame or
-matrix as needed.
+If the original data used to train the data are to be
+processed, time can be saved by using the \code{retain = TRUE} option
+of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
+option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
+\code{newdata} equal to the training set.
+}
+\seealso{
+\code{\link[=recipe]{recipe()}}, \code{\link[=juice]{juice()}}, \code{\link[=prep]{prep()}}
 }
 \author{
 Max Kuhn

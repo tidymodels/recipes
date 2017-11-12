@@ -4,7 +4,7 @@
 \alias{juice}
 \title{Extract Finalized Training Set}
 \usage{
-juice(object, ...)
+juice(object, ..., composition = "tibble")
 }
 \arguments{
 \item{object}{A \code{recipe} object that has been prepared
@@ -13,10 +13,14 @@ with the option \code{retain = TRUE}.}
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details.
 If no selectors are given, the default is to use
-\code{\link[dplyr:everything]{dplyr::everything()}}.}
-}
-\value{
-A tibble.
+\code{\link[=everything]{everything()}}.}
+
+\item{composition}{Either "tibble" or "dgCMatrix" for the
+format of the processed data set. Note that all computations
+during the baking process are done in a non-sparse format. Also,
+note that this argument should be called \strong{after} any selectors
+and the selectors should only resolve to numeric columns
+(otherwise an error is thrown).}
 }
 \description{
 As steps are estimated by \code{prep}, these operations are
@@ -25,7 +29,9 @@ to duplicate this processing, this function will return
 variables from the processed training set.
 }
 \details{
-When preparing a recipe, if the training data set is retained using \code{retain = TRUE}, there is no need to \code{bake} the recipe to get the preprocessed training set.
+When preparing a recipe, if the training data set is
+retained using \code{retain = TRUE}, there is no need to \code{bake} the
+recipe to get the preprocessed training set.
 }
 \examples{
 data(biomass)
