@@ -308,9 +308,12 @@ printer <- function(tr_obj = NULL,
                     trained = FALSE,
                     width = max(20, options()$width - 30)) {
   if (trained) {
-    cat(format_ch_vec(tr_obj, width = width))
+    txt <- format_ch_vec(tr_obj, width = width)
   } else
-    cat(format_selectors(untr_obj, wdth = width))
+    txt <- format_selectors(untr_obj, wdth = width)
+  if (nchar(txt) == 0)
+    txt <- "<none>"
+  cat(txt)
   if (trained)
     cat(" [trained]\n")
   else
