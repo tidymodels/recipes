@@ -1,6 +1,6 @@
 #' Dummy Variables Creation
 #'
-#'   `step_dummy` creates a a *specification* of a recipe
+#' `step_dummy` creates a a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
@@ -35,24 +35,32 @@
 #'  dummy_variables variable_encodings
 #' @export
 #' @details `step_dummy` will create a set of binary dummy
-#'  variables from a factor variable. For example, if a factor
-#'  column in the data set has levels of "red", "green", "blue", the
-#'  dummy variable bake will create two additional columns of 0/1
-#'  data for two of those three values (and remove the original
-#'  column).
+#'  variables from a factor variable. For example, if an unordered
+#'  factor column in the data set has levels of "red", "green",
+#'  "blue", the dummy variable bake will create two additional
+#'  columns of 0/1 data for two of those three values (and remove
+#'  the original column). For ordered factors, polynomial contrasts
+#'  are used to encode the numeric values.
 #'
-#' By default, the missing dummy variable will correspond to the
-#'  first level of the factor being converted.
+#' By default, the missing dummy variable (i.e. the reference 
+#'  cell) will correspond to the first level of the unordered 
+#'  factor being converted.
 #'
 #' The function allows for non-standard naming of the resulting
-#'  variables. For a factor named `x`, with levels `"a"`
-#'  and `"b"`, the default naming convention would be to create
-#'  a new variable called `x_b`. Note that if the factor levels
-#'  are not valid variable names (e.g. "some text with spaces"), it
-#'  will be changed by [base::make.names()] to be valid
-#'  (see the example below). The naming format can be changed using
-#'  the `naming` argument.
-#' @seealso [step_factor2string()] [step_string2factor()]
+#'  variables. For an unordered factor named `x`, with levels `"a"`
+#'  and `"b"`, the default naming convention would be to create a
+#'  new variable called `x_b`. Note that if the factor levels are
+#'  not valid variable names (e.g. "some text with spaces"), it will
+#'  be changed by [base::make.names()] to be valid (see the example
+#'  below). The naming format can be changed using the `naming`
+#'  argument and the function [dummy_names()] is the default. This
+#'  function will also change the names of ordinal dummy variables.
+#'  Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
+#'  dummy variables are given simple integer suffixes such as
+#'  "`_1`", "`_2`", etc.
+#' @seealso [step_factor2string()], [step_string2factor()],
+#'  [dummy_names()], [step_regex()], [step_count()], 
+#'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #' @examples
 #' data(okc)
 #' okc <- okc[complete.cases(okc),]
@@ -76,21 +84,20 @@ step_dummy <-
            role = "predictor",
            trained = FALSE,
            contrast = options("contrasts"),
-           naming = function(var, lvl)
-             paste(var, make.names(lvl), sep = "_"),
+           naming = dummy_names,
            levels = NULL) {
-  add_step(
-    recipe,
-    step_dummy_new(
-      terms = check_ellipses(...),
-      role = role,
-      trained = trained,
-      contrast = contrast,
-      naming = naming,
-      levels = levels
+    add_step(
+      recipe,
+      step_dummy_new(
+        terms = check_ellipses(...),
+        role = role,
+        trained = trained,
+        contrast = contrast,
+        naming = naming,
+        levels = levels
+      )
     )
-  )
-}
+  }
 
 step_dummy_new <-
   function(terms = NULL,
@@ -99,17 +106,17 @@ step_dummy_new <-
            contrast = contrast,
            naming = naming,
            levels = levels
-    ) {
-  step(
-    subclass = "dummy",
-    terms = terms,
-    role = role,
-    trained = trained,
-    contrast = contrast,
-    naming = naming,
-    levels = levels
-  )
-}
+  ) {
+    step(
+      subclass = "dummy",
+      terms = terms,
+      role = role,
+      trained = trained,
+      contrast = contrast,
+      naming = naming,
+      levels = levels
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export
@@ -123,8 +130,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
       call. = FALSE
     )
-
-
+  
+  
   ## I hate doing this but currently we are going to have
   ## to save the terms object form the original (= training)
   ## data
@@ -136,7 +143,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
                          data = training,
                          xlev = x$levels[[i]])
     levels[[i]] <- attr(terms, "terms")
-
+    
     ## About factor levels here: once dummy variables are made,
     ## the `stringsAsFactors` info saved in the recipe (under
     ## recipe$levels will remove the original record of the
@@ -146,7 +153,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     attr(levels[[i]], "values") <-
       levels(getElement(training, col_names[i]))
   }
-
+  
   step_dummy_new(
     terms = x$terms,
     role = x$role,
@@ -161,40 +168,40 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 bake.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)
-
+  
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
   old_opt <- options()$na.action
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
-
+  
   for (i in seq_along(object$levels)) {
     # Make sure that the incoming data has levels consistent with
     # the original (see the note above)
     orig_var <- names(object$levels)[i]
     fac_type <- attr(object$levels[[i]], "dataClasses")
-
+    
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-
+    
     newdata[, orig_var] <-
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
-
+    
     indicators <-
       model.matrix(
         object = object$levels[[i]],
         data = newdata
       )
-
+    
     options(na.action = old_opt)
     on.exit(expr = NULL)
-
+    
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
-    colnames(indicators) <- object$naming(col_names[i], used_lvl)
+    colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     newdata <- cbind(newdata, as_tibble(indicators))
     newdata[, col_names[i]] <- NULL
   }

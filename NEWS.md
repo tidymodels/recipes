@@ -3,7 +3,8 @@
 * The default selectors for `bake` was changed from `all_predictors()` to `everything()`. 
 * The `verbose` option for `prep` is now defaulted to `FALSE`
 * [A bug in `step_dummy`](https://github.com/topepo/recipes/issues/83) was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, `step_dummy` now requires factor inputs.
-* `step_YeoJohnson` gained a `na.rm` option.
+* `step_dummy` also has a new default naming function that works better for factors. However, there is an extra argument (`ordinal`) now to the functions that can be passed to `step_dummy`.  
+* `step_YeoJohnson` gained an `na.rm` option.
 * [`dplyr::one_of`](https://github.com/topepo/recipes/issues/85) was added to the list of selectors.
 * `step_bs` adds B-spline basis functions. 
 * `step_unorder` converts ordered factors to unordered factors. 

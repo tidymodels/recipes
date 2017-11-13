@@ -2,22 +2,53 @@
 % Please edit documentation in R/misc.R
 \name{names0}
 \alias{names0}
-\title{Sequences of Names with Padded Zeros}
+\alias{dummy_names}
+\title{Naming Tools}
 \usage{
 names0(num, prefix = "x")
+
+dummy_names(var, lvl, ordinal = FALSE)
 }
 \arguments{
 \item{num}{A single integer for how many elements are created.}
 
-\item{prefix}{A character string that will start each name. .}
+\item{prefix}{A character string that will start each name.}
+
+\item{var}{A single string for the original factor name.}
+
+\item{lvl}{A character vectors of the factor levels (in order).
+When used with \code{\link[=step_dummy]{step_dummy()}}, \code{lvl} would be the suffixes
+that result \emph{after} \code{model.matrix} is called (see the
+example below).}
+
+\item{ordinal}{A logical; was the original factor ordered?}
 }
 \value{
-A character string of length \code{num}.
+\code{names0} returns a character string of length \code{num} and
+\code{dummy_names} generates a character vector the same length as
+\code{lvl},
 }
 \description{
-This function creates a series of \code{num} names with a common prefix.
+\code{names0} creates a series of \code{num} names with a common prefix.
 The names are numbered with leading zeros (e.g.
 \code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
+\code{dummy_names} can be used for renaming unordered and ordered
+dummy variables (in \code{\link[=step_dummy]{step_dummy()}}).
+}
+\examples{
+names0(9, "x")
+names0(10, "x")
+
+example <- data.frame(y = ordered(letters[1:5]),
+                      z = factor(LETTERS[1:5]))
+
+dummy_names("z", levels(example$z)[-1])
+
+after_mm <- colnames(model.matrix(~y, data = example))[-1]
+after_mm
+levels(example$y)
+
+dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
 }
 \concept{
 string_functions naming_functions

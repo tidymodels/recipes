@@ -6,8 +6,7 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  contrast = options("contrasts"), naming = function(var, lvl) paste(var,
-  make.names(lvl), sep = "_"), levels = NULL)
+  contrast = options("contrasts"), naming = dummy_names, levels = NULL)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -58,23 +57,29 @@ the original data.
 }
 \details{
 \code{step_dummy} will create a set of binary dummy
-variables from a factor variable. For example, if a factor
-column in the data set has levels of "red", "green", "blue", the
-dummy variable bake will create two additional columns of 0/1
-data for two of those three values (and remove the original
-column).
+variables from a factor variable. For example, if an unordered
+factor column in the data set has levels of "red", "green",
+"blue", the dummy variable bake will create two additional
+columns of 0/1 data for two of those three values (and remove
+the original column). For ordered factors, polynomial contrasts
+are used to encode the numeric values.
 
-By default, the missing dummy variable will correspond to the
-first level of the factor being converted.
+By default, the missing dummy variable (i.e. the reference
+cell) will correspond to the first level of the unordered
+factor being converted.
 
 The function allows for non-standard naming of the resulting
-variables. For a factor named \code{x}, with levels \code{"a"}
-and \code{"b"}, the default naming convention would be to create
-a new variable called \code{x_b}. Note that if the factor levels
-are not valid variable names (e.g. "some text with spaces"), it
-will be changed by \code{\link[base:make.names]{base::make.names()}} to be valid
-(see the example below). The naming format can be changed using
-the \code{naming} argument.
+variables. For an unordered factor named \code{x}, with levels \code{"a"}
+and \code{"b"}, the default naming convention would be to create a
+new variable called \code{x_b}. Note that if the factor levels are
+not valid variable names (e.g. "some text with spaces"), it will
+be changed by \code{\link[base:make.names]{base::make.names()}} to be valid (see the example
+below). The naming format can be changed using the \code{naming}
+argument and the function \code{\link[=dummy_names]{dummy_names()}} is the default. This
+function will also change the names of ordinal dummy variables.
+Instead of values such as "\code{.L}", "\code{.Q}", or "\code{^4}", ordinal
+dummy variables are given simple integer suffixes such as
+"\code{_1}", "\code{_2}", etc.
 }
 \examples{
 data(okc)
@@ -93,7 +98,9 @@ grep("^diet", names(dummy_data), value = TRUE)
 tidy(dummies, number = 1)
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}} \code{\link[=step_string2factor]{step_string2factor()}}
+\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
+\code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
+\code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 }
 \concept{
 preprocessing dummy_variables model_specification

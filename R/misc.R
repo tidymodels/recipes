@@ -189,19 +189,42 @@ mod_call_args <- function(cl, args, removals = NULL) {
     cl
 }
 
-#' Sequences of Names with Padded Zeros
+#' Naming Tools
 #'
-#' This function creates a series of `num` names with a common prefix.
-#'   The names are numbered with leading zeros (e.g.
-#'   `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
+#' `names0` creates a series of `num` names with a common prefix.
+#'  The names are numbered with leading zeros (e.g.
+#'  `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
+#'  `dummy_names` can be used for renaming unordered and ordered
+#'  dummy variables (in [step_dummy()]).
 #'
 #' @param num A single integer for how many elements are created.
-#' @param prefix A character string that will start each name. .
-#' @return A character string of length `num`.
+#' @param prefix A character string that will start each name. 
+#' @param var A single string for the original factor name.
+#' @param lvl A character vectors of the factor levels (in order).
+#'  When used with [step_dummy()], `lvl` would be the suffixes
+#'  that result _after_ `model.matrix` is called (see the
+#'  example below). 
+#' @param ordinal A logical; was the original factor ordered?
+#' @return `names0` returns a character string of length `num` and
+#'  `dummy_names` generates a character vector the same length as
+#'  `lvl`, 
 #' @keywords datagen
 #' @concept string_functions naming_functions
+#' @examples 
+#' names0(9, "x")
+#' names0(10, "x")
+#' 
+#' example <- data.frame(y = ordered(letters[1:5]),
+#'                       z = factor(LETTERS[1:5]))
+#' 
+#' dummy_names("z", levels(example$z)[-1])
+#' 
+#' after_mm <- colnames(model.matrix(~y, data = example))[-1]
+#' after_mm
+#' levels(example$y)
+#' 
+#' dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
 #' @export
-
 
 names0 <- function(num, prefix = "x") {
   if (num < 1)
@@ -211,6 +234,17 @@ names0 <- function(num, prefix = "x") {
   paste0(prefix, ind)
 }
 
+#' @export
+#' @rdname names0
+dummy_names <- function(var, lvl, ordinal = FALSE) {
+  if(!ordinal) 
+    nms <- paste(var, make.names(lvl), sep = "_") 
+  else 
+    # assuming they are in order:
+    nms <- paste0(var, names0(length(lvl), "_")) 
+  
+  nms
+}
 
 
 ## As suggested by HW, brought in from the `pryr` package

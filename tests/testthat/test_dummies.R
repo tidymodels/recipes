@@ -67,7 +67,11 @@ test_that('tests for issue #91', {
 
 })
 
-
+test_that('naming function', {
+  expect_equal(dummy_names("x", letters[1:3]), c("x_a", "x_b", "x_c"))
+  expect_equal(dummy_names("x", letters[1:3], ordinal = TRUE), 
+               c("x_1", "x_2", "x_3")) 
+})
 
 test_that('printing', {
   rec <- recipe(age ~ ., data = okc_fac)
