@@ -367,3 +367,13 @@ printer <- function(tr_obj = NULL,
 prepare   <- function(x, ...) 
   stop("As of version 0.0.1.9006, used `prep` ",
        "instead of `prepare`", call. = FALSE)
+
+
+fully_trained <- function(x) {
+  if (is.null(x$steps))
+    return(TRUE)
+  is_tr <- vapply(x$steps, function(x) isTRUE(x$trained), logical(1))
+  all(is_tr)
+}
+
+
