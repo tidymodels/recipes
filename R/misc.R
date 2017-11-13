@@ -64,17 +64,23 @@ get_lhs_vars <- function(formula, data) {
     formula <- as.formula(formula)
   ## Want to make sure that multiple outcomes can be expressed as
   ## additions with no cbind business and that `.` works too (maybe)
-  formula <- as.formula(paste("~", deparse(f_lhs(formula))))
-  get_rhs_vars(formula, data)
+  new_formula <- as.formula(paste("~", deparse(f_lhs(formula))))
+  get_rhs_vars(new_formula, data)
 }
 
+#' @importFrom rlang f_rhs
 #' @importFrom stats model.frame
-get_rhs_vars <- function(formula, data) {
+get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
+  if(no_lhs) 
+    formula <- as.formula(paste("~", deparse(f_rhs(formula))))
+
   ## This will need a lot of work to account for cases with `.`
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
   ## or should it? what about Y ~ log(x)?
+  ## Answer: when called from `form2args`, the function
+  ## `check_elements` stops when in-line functions are used. 
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))

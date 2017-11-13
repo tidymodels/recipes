@@ -43,3 +43,22 @@ test_that("Using prepare", {
                paste0("As of version 0.0.1.9006, used `prep` ",
                       "instead of `prepare`"))
 })
+
+test_that("Multiple variables on lhs of formula", {
+  # from issue #96
+  expect_silent(multi_1 <- recipe(Petal.Width + Species ~ ., data = iris))
+  expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "outcome"],
+               names(iris)[4:5])
+  expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "predictor"],
+               names(iris)[1:3]) 
+  
+  iris$Species <- as.character(iris$Species)
+  expect_silent(multi_2 <- recipe(Petal.Width + Species ~ ., data = iris))
+  expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "outcome"],
+               names(iris)[4:5])
+  expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "predictor"],
+               names(iris)[1:3]) 
+    
+})
+
+

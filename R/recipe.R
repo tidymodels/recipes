@@ -239,10 +239,12 @@ form2args <- function(formula, data, ...) {
 
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
-  predictors <- get_rhs_vars(formula, data)
+  predictors <- get_rhs_vars(formula, data, no_lhs = TRUE)
+  
+  ## if . was used on the rhs, subtract out the outcomes
+  predictors <- predictors[!(predictors %in% outcomes)]
 
   ## get `vars` from lhs and rhs of formula
-
   vars <- c(predictors, outcomes)
 
   ## subset data columns
