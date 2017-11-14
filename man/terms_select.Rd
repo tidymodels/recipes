@@ -7,8 +7,8 @@
 terms_select(terms, info)
 }
 \arguments{
-\item{terms}{A list of formulas whose right-hand side contains quoted
-expressions. See \code{\link[rlang:quos]{rlang::quos()}} for examples.}
+\item{terms}{A list of formulas whose right-hand side contains
+quoted expressions. See \code{\link[rlang:quos]{rlang::quos()}} for examples.}
 
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
@@ -16,12 +16,12 @@ function \code{\link[=summary.recipe]{summary.recipe()}} can be used to get this
 from a recipe.}
 }
 \value{
-A character string of column names or an error of there are no
-selectors or if no variables are selected.
+A character string of column names or an error of there
+are no selectors or if no variables are selected.
 }
 \description{
-This function bakees the step function selectors and might be useful
-when creating custom steps.
+This function bakes the step function selectors and might be
+useful when creating custom steps.
 }
 \examples{
 library(rlang)

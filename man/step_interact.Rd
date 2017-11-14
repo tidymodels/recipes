@@ -15,7 +15,7 @@ step_interact(recipe, terms, role = "predictor", trained = FALSE,
 sequence of operations for this recipe.}
 
 \item{terms}{A traditional R formula that contains interaction
-terms.}
+terms. This can include \code{.} and selectors.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -70,6 +70,18 @@ The separator between the variables defaults to "\code{_x_}" so
 that the three way interaction shown previously would generate a
 column named \code{A_x_B_x_C}. This can be changed using the
 \code{sep} argument.
+
+When dummy variables are created and are used in interactions,
+selectors can help specify the interactions succinctly. For
+example, suppose a factor column \code{X} gets converted to dummy
+variables \code{x_2}, \code{x_3}, ..., \code{x_6} using \code{\link[=step_dummy]{step_dummy()}}. If
+you wanted an interaction with numeric column \code{z}, you could
+create a set of specific interaction effects (e.g.
+\code{x_2:z + x_3:z} and so on) or you could use
+\code{starts_with("z_"):z}. When \code{\link[=prep]{prep()}} evaluates this step,
+\code{starts_with("z_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x6)}
+so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x6):z} and
+all two-way interactions are created.
 }
 \examples{
 data(biomass)
@@ -83,8 +95,8 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 int_mod_1 <- rec \%>\%
   step_interact(terms = ~ carbon:hydrogen)
 
-int_mod_2 <- int_mod_1 \%>\%
-  step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)
+int_mod_2 <- rec \%>\%
+  step_interact(terms = ~ (matches("gen$") + sulfur)^2)
 
 int_mod_1 <- prep(int_mod_1, training = biomass_tr)
 int_mod_2 <- prep(int_mod_2, training = biomass_tr)
@@ -95,8 +107,8 @@ dat_2 <- bake(int_mod_2, biomass_te)
 names(dat_1)
 names(dat_2)
 
+tidy(int_mod_1, number = 1)
 tidy(int_mod_2, number = 1)
-tidy(int_mod_2, number = 2)
 }
 \concept{
 preprocessing model_specification

@@ -1,57 +1,155 @@
 library(testthat)
 library(recipes)
-data("biomass")
 
-tr_biomass <- subset(biomass, dataset == "Training")[, -(1:2)]
-te_biomass <- subset(biomass, dataset == "Testing")[, -(1:2)]
+dat_tr <- data.frame(
+  x1 = 1:10,
+  x2 = (1:10) + 1,
+  x3 = (1:10) + 2,
+  x4 = (1:10) + 3,
+  x5 = (1:10) + 4,
+  y = -(101:110),
+  z = factor(rep_len(letters[1:3], 10))
+)
+dat_te <- data.frame(
+  x1 = 21:30,
+  x2 = (21:30) + 1,
+  x3 = (21:30) + 2,
+  x4 = (21:30) + 3,
+  x5 = (21:30) + 3,
+  y = -(201:210),
+  z = factor(rep_len(letters[3:1], 10))
+)
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = tr_biomass)
+rec <- recipe(y ~ .,  data = dat_tr)
 
 test_that('non-factor variables with dot', {
-  int_rec <- rec %>% step_interact(~(.-HHV)^3, sep=":")
-  int_rec_trained <- prep(int_rec, training = tr_biomass, verbose = FALSE)
-
-  te_new <- bake(int_rec_trained, newdata = te_biomass, all_predictors())
+  int_rec <- rec %>% step_interact( ~ (. - y- z) ^ 3 , sep = ":")
+  int_rec_trained <-
+    prep(int_rec, training = dat_tr, verbose = FALSE)
+  
+  te_new <-
+    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
-
-  og_terms <- terms(~(.-HHV)^3, data = te_biomass)
-  te_og <- model.matrix(og_terms, data = te_biomass)[, -1]
+  
+  og_terms <- terms( ~ (. - y - z) ^ 3, data = dat_te)
+  te_og <- model.matrix(og_terms, data = dat_te)[,-1]
   te_og <- te_og[, sort(colnames(te_og))]
-
+  
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
-
+  
   expect_equal(te_og, te_new)
 })
 
 
 test_that('non-factor variables with specific variables', {
-  int_rec <- rec %>% step_interact(~carbon:hydrogen + oxygen:nitrogen:sulfur, sep = ":")
-  int_rec_trained <- prep(int_rec, training = tr_biomass, verbose = FALSE)
-
-  te_new <- bake(int_rec_trained, newdata = te_biomass, all_predictors())
+  int_rec <- rec %>% step_interact( ~ x1:x2 + x3:x4:x5, sep = ":")
+  int_rec_trained <-
+    prep(int_rec, training = dat_tr, verbose = FALSE)
+  
+  te_new <-
+    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
-
-  og_terms <- terms(~carbon + hydrogen + oxygen + nitrogen + sulfur +
-                      carbon:hydrogen + oxygen:nitrogen:sulfur, data = te_biomass)
-  te_og <- model.matrix(og_terms, data = te_biomass)[, -1]
+  
+  og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
+                       x1:x2 + x3:x4:x5, data = dat_te)
+  te_og <- model.matrix(og_terms, data = dat_te)[,-1]
   te_og <- te_og[, sort(colnames(te_og))]
-
+  
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
-
+  
   expect_equal(te_og, te_new)
 })
 
 
-test_that('printing', {
-  int_rec <- rec %>% step_interact(~carbon:hydrogen)
-  expect_output(print(int_rec))
-  expect_output(prep(int_rec, training = tr_biomass, verbose = TRUE))
+test_that('using selectors', {
+  int_rec <- rec %>% 
+    step_dummy(z) %>%
+    step_interact( ~ starts_with("z"):x1)
+  int_rec_trained <-
+    prep(int_rec, training = dat_tr, verbose = FALSE)
+  
+  te_new <-
+    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
+  te_new <- te_new[, sort(names(te_new))]
+  te_new <- as.matrix(te_new)
+  te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5", 
+                       "z_b", "z_c", "z_b_x_x1", "z_c_x_x1")]
+  
+  og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
+                       x1*z, data = dat_te)
+  te_og <- model.matrix(og_terms, data = dat_te)[,-1]
+  colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
+  
+  rownames(te_new) <- NULL
+  rownames(te_og) <- NULL
+  
+  expect_equivalent(te_og, te_new)
 })
+
+
+test_that('printing', {
+  int_rec <- rec %>% step_interact(~x1:x2)
+  expect_output(print(int_rec))
+  expect_output(prep(int_rec, training = dat_tr, verbose = TRUE))
+})
+
+# more missing data tests
+
+
+test_that('finding selectors in formulas', {
+  expect_equal(
+    recipes:::find_selectors(
+      ~ (a + b + starts_with("huh?")):has_role("something")
+    ),
+    list(quote(starts_with("huh?")), quote(has_role("something")))
+  )
+  expect_equal(
+    recipes:::find_selectors(
+      ~ (matches("wat?"))^2
+    ),
+    list(quote(matches("wat?")))
+  )  
+  expect_equal(
+    recipes:::find_selectors(
+      ~ a
+    ),
+    NULL
+  )    
+})
+
+test_that('replacing selectors in formulas', {
+  expect_equal(
+    recipes:::replace_selectors(
+      ~ (a + b + starts_with("huh?")):has_role("something"),
+      quote(starts_with("huh?")),
+      quote((x1+x2+x3))
+    ),
+    ~(a + b + (x1 + x2 + x3)):has_role("something")
+  )
+  expect_equal(
+    recipes:::replace_selectors(
+      ~ (matches("wat?"))^2,
+      quote(matches("wat?")),
+      quote(a)
+    ),
+    ~ (a) ^ 2
+  )  
+  expect_equal(
+    recipes:::replace_selectors(
+      ~ a + all_predictors(),
+      quote(all_predictors()),
+      quote(a)
+    ),
+    ~ a + a
+  )    
+})
+
 
 
 # currently failing; try to figure out why

@@ -5,40 +5,44 @@
 #' @aliases selection
 #' @title Methods for Select Variables in Step Functions
 #' @description When selecting variables or model terms in `step`
-#'   functions, `dplyr`-like tools are used. The *selector*
-#'   functions can choose variables based on their name, current role, data
-#'   type, or any combination of these. The selectors are passed as any other
-#'   argument to the step. If the variables are explicitly stated in the step
-#'   function, this might be similar to:
+#'  functions, `dplyr`-like tools are used. The *selector* functions
+#'  can choose variables based on their name, current role, data
+#'  type, or any combination of these. The selectors are passed as
+#'  any other argument to the step. If the variables are explicitly
+#'  stated in the step function, this might be similar to:
 #'
 #' \preformatted{
 #'   recipe( ~ ., data = USArrests) \%>\%
 #'     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 #' }
 #'
-#' The first four arguments indicate which variables should be used in the
-#'   PCA while the last argument is a specific argument to
-#'   [step_pca()].
+#'   The first four arguments indicate which variables should be
+#'  used in the PCA while the last argument is a specific argument
+#'  to [step_pca()].
 #'
 #' Note that:
 #'
 #'   \enumerate{
-#'     \item The selector arguments should not contain functions beyond those
-#'       supported (see below).
-#'     \item These arguments are not evaluated until the `prep` function
-#'       for the step is executed.
-#'     \item The `dplyr`-like syntax allows for negative sings to exclude
-#'       variables (e.g. `-Murder`) and the set of selectors will
-#'       processed in order.
-#'     \item A leading exclusion in these arguments (e.g. `-Murder`) has
-#'       the effect of adding all variables to the list except the excluded
-#'       variable(s).
+#'   \item The selector arguments should not contain functions
+#'    beyond those supported (see below).
+#'   \item These arguments are not evaluated until the `prep`
+#'    function for the step is executed.
+
+#'   \item The `dplyr`-like syntax allows for negative sings to
+#'    exclude variables (e.g. `-Murder`) and the set of selectors will
+#'    processed in order.
+
+#'   \item A leading exclusion in these arguments (e.g. `-Murder`)
+#'   has the effect of adding all variables to the list except the
+#'   excluded variable(s).
+
 #'   }
 #'
-#' Also, select helpers from the `dplyr` package can also be used:
-#'   [dplyr::starts_with()], [dplyr::ends_with()],
-#'   [dplyr::contains()], [dplyr::matches()],
-#'   [dplyr::num_range()], and [dplyr::everything()].
+#' Also, select helpers from the `tidyselect` package can also be used:
+#'   [tidyselect::starts_with()], [tidyselect::ends_with()],
+#'   [tidyselect::contains()], [tidyselect::matches()],
+#'   [tidyselect::num_range()], [tidyselect::everything()], and
+#'   [tidyselect::one_of()].
 #'   For example:
 #'
 #' \preformatted{
@@ -48,24 +52,25 @@
 #'
 #' would only select `Sepal.Length`
 #'
-#' **Inline** functions that specify computations, such as `log(x)`,
-#'   should not be used in selectors and will produce an error. A list of
-#'   allowed selector functions is below.
+#' **Inline** functions that specify computations, such as
+#'  `log(x)`, should not be used in selectors and will produce an
+#'  error. A list of allowed selector functions is below.
 #'
-#' Columns of the design matrix that may not exist when the step is coded can
-#'   also be selected. For example, when using `step_pca`, the number of
-#'   columns created by feature extraction may not be known when subsequent
-#'   steps are defined. In this case, using `matches("^PC")` will select
-#'   all of the columns whose names start with "PC" *once those columns
-#'   are created*.
+#' Columns of the design matrix that may not exist when the step
+#'  is coded can also be selected. For example, when using
+#'  `step_pca`, the number of columns created by feature extraction
+#'  may not be known when subsequent steps are defined. In this
+#'  case, using `matches("^PC")` will select all of the columns
+#'  whose names start with "PC" *once those columns are created*.
 #'
-#' There are sets of functions that can be used to select variables based on
-#'   their role or type: [has_role()] and [has_type()].
-#'   For convenience, there are also functions that are more specific:
-#'   [all_numeric()], [all_nominal()],
-#'   [all_predictors()], and [all_outcomes()]. These can
-#'   be used in conjunction with the previous functions described for
-#'   selecting variables using their names:
+#' There are sets of functions that can be used to select
+#'  variables based on their role or type: [has_role()] and
+#'  [has_type()]. For convenience, there are also functions that are
+#'  more specific: [all_numeric()], [all_nominal()],
+#'  [all_predictors()], and [all_outcomes()]. These can be used in
+#'  conjunction with the previous functions described for selecting
+#'  variables using their names:
+
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -73,24 +78,26 @@
 #'     step_center(all_numeric(), -all_outcomes())
 #' }
 #'
-#' This results in all the numeric predictors: carbon, hydrogen, oxygen,
-#'   nitrogen, and sulfur.
+#'   This results in all the numeric predictors: carbon, hydrogen,
+#'  oxygen, nitrogen, and sulfur.
 #'
-#' If a role for a variable has not been defined, it will never be selected
-#'   using role-specific selectors.
+#'   If a role for a variable has not been defined, it will never be
+#'  selected using role-specific selectors.
 #'
-#' All steps use these techniques to define variables for steps
-#'   *except one*: [step_interact()] requires traditional model
-#'   formula representations of the interactions and takes a single formula
-#'   as the argument to select the variables.
+#' Selectors can be used in [step_interact()] in similar ways but
+#'  must be embedded in a model formula (as opposed to a sequence
+#'  of selectors). For example, the interaction specification
+#'  could be `~ starts_with("Species"):Sepal.Width`. This can be
+#'  useful if `Species` was converted to dummy variables
+#'  previously using [step_dummy()].
 #'
 #' The complete list of allowable functions in steps:
 #'
 #'   \itemize{
-#'     \item **By name**: [dplyr::starts_with()],
-#'       [dplyr::ends_with()], [dplyr::contains()],
-#'       [dplyr::matches()], [dplyr::num_range()], and
-#'       [dplyr::everything()]
+#'     \item **By name**: [tidyselect::starts_with()],
+#'       [tidyselect::ends_with()], [tidyselect::contains()],
+#'       [tidyselect::matches()], [tidyselect::num_range()], and
+#'       [tidyselect::everything()]
 #'     \item **By role**: [has_role()],
 #'       [all_predictors()], and [all_outcomes()]
 #'     \item **By type**: [has_type()], [all_numeric()],
@@ -106,13 +113,12 @@ name_selectors <- c("starts_with",
                     "matches",
                     "num_range",
                     "everything",
-                    "one_of",
-                    "_F")
+                    "one_of")
 
 role_selectors <-
-  c("has_role", "all_predictors", "all_outcomes", "_F")
+  c("has_role", "all_predictors", "all_outcomes")
 
-type_selectors <- c("has_type", "all_numeric", "all_nominal", "_F")
+type_selectors <- c("has_type", "all_numeric", "all_nominal")
 
 selectors <-
   unique(c(name_selectors, role_selectors, type_selectors))
@@ -198,19 +204,19 @@ has_selector <- function(x, allowed = selectors) {
 
 #' Select Terms in a Step Function.
 #'
-#' This function bakees the step function selectors and might be useful
-#'   when creating custom steps.
+#' This function bakes the step function selectors and might be
+#'  useful when creating custom steps.
 #'
 #' @param info A tibble with columns `variable`, `type`, `role`,
-#'   and `source` that represent the current state of the data. The
-#'   function [summary.recipe()] can be used to get this information
-#'   from a recipe.
-#' @param terms A list of formulas whose right-hand side contains quoted
-#'   expressions. See [rlang::quos()] for examples.
+#'  and `source` that represent the current state of the data. The
+#'  function [summary.recipe()] can be used to get this information
+#'  from a recipe.
+#' @param terms A list of formulas whose right-hand side contains
+#'  quoted expressions. See [rlang::quos()] for examples.
 #' @keywords datagen
 #' @concept preprocessing
-#' @return A character string of column names or an error of there are no
-#'   selectors or if no variables are selected.
+#' @return A character string of column names or an error of there
+#'  are no selectors or if no variables are selected.
 #' @seealso [recipe()] [summary.recipe()]
 #'   [prep.recipe()]
 #' @importFrom purrr map_lgl map_if map_chr map
@@ -226,22 +232,22 @@ terms_select <- function(terms, info) {
   vars <- info$variable
   roles <- info$role
   types <- info$type
-
+  
   if (is_empty(terms)) {
     stop("At least one selector should be used", call. = FALSE)
   }
-
+  
   ## check arguments against whitelist
   lapply(terms, check_elements)
-
+  
   # Set current_info so available to helpers
   old_info <- set_current_info(info)
   on.exit(set_current_info(old_info), add = TRUE)
-
+  
   sel <- with_handlers(tidyselect::vars_select(vars, !!! terms),
-    tidyselect_empty = abort_selection
+                       tidyselect_empty = abort_selection
   )
-
+  
   unname(sel)
 }
 
@@ -251,18 +257,20 @@ abort_selection <- exiting(function(cnd) {
 
 #' Role Selection
 #'
-#' `has_role`, `all_predictors`, and `all_outcomes` can be used
-#'   to select variables in a formula that have certain roles. Similarly,
-#'   `has_type`, `all_numeric`, and `all_nominal` are used to
-#'   select columns based on their data type. See [selections()] for
-#'   more details. `current_info` is an internal function that is
-#'   unlikely to help users while the others have limited utility outside of
-#'   step function arguments.
+#' `has_role`, `all_predictors`, and `all_outcomes` can be used to
+#'  select variables in a formula that have certain roles.
+#'  Similarly, `has_type`, `all_numeric`, and `all_nominal` are used
+#'  to select columns based on their data type. See [selections()]
+#'  for more details. `current_info` is an internal function that is
+#'  unlikely to help users while the others have limited utility
+#'  outside of step function arguments.
 #'
-#' @param match A single character string for the query. Exact matching is
-#'   used (i.e. regular expressions won't work).
-#' @param roles A character string of roles for the current set of terms.
-#' @param types A character string of roles for the current set of data types
+#' @param match A single character string for the query. Exact
+#'  matching is used (i.e. regular expressions won't work).
+#' @param roles A character string of roles for the current set of
+#'  terms.
+#' @param types A character string of roles for the current set of
+#'  data types.
 #' @return Selector functions return an integer vector while
 #'   `current_info` returns an environment with vectors `vars`,
 #'   `roles`, and `types`.

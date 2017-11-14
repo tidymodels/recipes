@@ -10,7 +10,7 @@
 #'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param terms A traditional R formula that contains interaction
-#'  terms.
+#'  terms. This can include `.` and selectors. 
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
@@ -33,7 +33,7 @@
 #'  variables using [step_dummy()] prior to being used for
 #'  interactions.
 #'
-#'   Unlike other step functions, the `terms` argument should
+#' Unlike other step functions, the `terms` argument should
 #'  be a traditional R model formula but should contain no inline
 #'  functions (e.g. `log`). For example, for predictors
 #'  `A`, `B`, and `C`, a formula such as
@@ -42,10 +42,22 @@
 #'  interactions (e.g. `(A+B+C)^3`) only the interaction terms
 #'  are retained for the design matrix.
 #'
-#'   The separator between the variables defaults to "`_x_`" so
+#' The separator between the variables defaults to "`_x_`" so
 #'  that the three way interaction shown previously would generate a
 #'  column named `A_x_B_x_C`. This can be changed using the
 #'  `sep` argument.
+#'  
+#' When dummy variables are created and are used in interactions,
+#'  selectors can help specify the interactions succinctly. For
+#'  example, suppose a factor column `X` gets converted to dummy
+#'  variables `x_2`, `x_3`, ..., `x_6` using [step_dummy()]. If
+#'  you wanted an interaction with numeric column `z`, you could
+#'  create a set of specific interaction effects (e.g. 
+#'  `x_2:z + x_3:z` and so on) or you could use 
+#'  `starts_with("z_"):z`. When [prep()] evaluates this step,
+#'  `starts_with("z_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x6)`
+#'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x6):z` and
+#'  all two-way interactions are created. 
 
 #' @examples
 #' data(biomass)
@@ -59,8 +71,8 @@
 #' int_mod_1 <- rec %>%
 #'   step_interact(terms = ~ carbon:hydrogen)
 #'
-#' int_mod_2 <- int_mod_1 %>%
-#'   step_interact(terms = ~ (oxygen + nitrogen + sulfur)^3)
+#' int_mod_2 <- rec %>%
+#'   step_interact(terms = ~ (matches("gen$") + sulfur)^2)
 #'
 #' int_mod_1 <- prep(int_mod_1, training = biomass_tr)
 #' int_mod_2 <- prep(int_mod_2, training = biomass_tr)
@@ -71,8 +83,8 @@
 #' names(dat_1)
 #' names(dat_2)
 #'
+#' tidy(int_mod_1, number = 1)
 #' tidy(int_mod_2, number = 1)
-#' tidy(int_mod_2, number = 2)
 
 step_interact <-
   function(recipe,
@@ -115,9 +127,31 @@ step_interact_new <-
 ## one large set of collected terms.
 #' @export
 prep.step_interact <- function(x, training, info = NULL, ...) {
+  # Identify any selectors that are involved in the interaction
+  # formula
+  
+  form_sel <- find_selectors(x$terms)
+  
+  ## Resolve the selectors to a expression containing an additive
+  ## function of the variables
+  
+  if(!is.null(form_sel)) {
+    form_res <- map(form_sel, terms_select, info = info)
+    form_res <- map(form_res, vec_2_expr)
+    ## Subsitute the column names into the original interaction
+    ## formula. 
+    for(i in seq(along = form_res)) {
+      x$terms <- replace_selectors(
+        x$terms,
+        form_sel[[i]],
+        form_res[[i]]
+      )
+    }
+  }
+  
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
-
+  
   ## Check to see if any variables are non-numeric and issue a warning
   ## if that is the case
   vars <-
@@ -129,15 +163,15 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       "avoided;  This can lead to differences in dummy variable values that ",
       "are produced by `step_dummy`."
     )
-
+  
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
-
+  
   ## Generate a standard R `terms` object from these short formulas and
   ## save to make future interactions
   int_terms <- make_small_terms(int_forms, training)
-
+  
   step_interact_new(
     terms = x$terms,
     role = x$role,
@@ -152,16 +186,16 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 bake.step_interact <- function(object, newdata, ...) {
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
-
+  
   old_opt <- options()$na.action
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
-
+  
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
   options(na.action = old_opt)
   on.exit(expr = NULL)
-
+  
   res <-
     lapply(res, function(x)
       x[, grepl(":", colnames(x)), drop = FALSE])
@@ -203,8 +237,11 @@ make_new_formula <- function(x) {
 ## term expansion (without `.`s). This returns the factor
 ## names and would not expand dummy variables.
 get_term_names <- function(form, vnames) {
+  if(!is_formula(form))
+    form <- as.formula(form)
+  
   ## We are going to cheat and make a small fake data set to
-  ## effcicently get the full formula exapnsion from
+  ## efficiently get the full formula expansion from
   ## model.matrix (devoid of factor levels) and then
   ## pick off the interactions
   dat <- matrix(1, nrow = 5, ncol = length(vnames))
@@ -236,11 +273,48 @@ print.step_interact <-
   }
 
 int_name <- function(x)
-   get_term_names(x, all.vars(x))
+  get_term_names(x, all.vars(x))
 
 #' @importFrom rlang na_dbl
 #' @rdname step_interact
 #' @param x A `step_interact` object
 tidy.step_interact <- function(x, ...) {
   tibble(terms = vapply(x$objects, int_name, character(1)))
+}
+
+map_call <- function(x, f, ...) as.call(lapply(x, f, ...))
+
+# In a formula, find the selectors (if any) and return the call(s)
+find_selectors <- function (f) {
+  if (is.function(f)) {
+    find_selectors(body(f))
+  }
+  else if (is.call(f)) {
+    fname <- as.character(f[[1]])
+    res <- if (fname %in% selectors) f else NULL
+    c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
+  }
+}
+
+replace_selectors <- function(x, elem, value) {
+  if (is.atomic(x) || is.name(x)) {
+    return(x)
+  }  else if (is.call(x)) {
+    if (identical(x, elem)) {
+      x <- value
+      return(x)
+    } else
+      map_call(x, replace_selectors, elem, value)
+  } else if (is.pairlist(x)) {
+    map_call(x, replace_selectors, elem, value)
+  } else {
+    # User supplied incorrect input
+    stop("Don't know how to handle type ", typeof(x),
+         call. = FALSE)
+  }
+}
+
+#' @importFrom rlang parse_expr
+vec_2_expr <- function(x) {
+  parse_expr(paste0("(", paste0(x, collapse = "+"), ")"))
 }

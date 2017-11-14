@@ -25,12 +25,14 @@ all_nominal(types = current_info()$types)
 current_info()
 }
 \arguments{
-\item{match}{A single character string for the query. Exact matching is
-used (i.e. regular expressions won't work).}
+\item{match}{A single character string for the query. Exact
+matching is used (i.e. regular expressions won't work).}
 
-\item{roles}{A character string of roles for the current set of terms.}
+\item{roles}{A character string of roles for the current set of
+terms.}
 
-\item{types}{A character string of roles for the current set of data types}
+\item{types}{A character string of roles for the current set of
+data types.}
 }
 \value{
 Selector functions return an integer vector while
@@ -38,13 +40,13 @@ Selector functions return an integer vector while
 \code{roles}, and \code{types}.
 }
 \description{
-\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used
-to select variables in a formula that have certain roles. Similarly,
-\code{has_type}, \code{all_numeric}, and \code{all_nominal} are used to
-select columns based on their data type. See \code{\link[=selections]{selections()}} for
-more details. \code{current_info} is an internal function that is
-unlikely to help users while the others have limited utility outside of
-step function arguments.
+\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to
+select variables in a formula that have certain roles.
+Similarly, \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used
+to select columns based on their data type. See \code{\link[=selections]{selections()}}
+for more details. \code{current_info} is an internal function that is
+unlikely to help users while the others have limited utility
+outside of step function arguments.
 }
 \examples{
 data(biomass)
