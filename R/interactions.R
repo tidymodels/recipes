@@ -283,6 +283,8 @@ tidy.step_interact <- function(x, ...) {
 }
 
 map_call <- function(x, f, ...) as.call(lapply(x, f, ...))
+map_pairlist <- function(x, f, ...) as.call(lapply(x, f, ...))
+
 
 # In a formula, find the selectors (if any) and return the call(s)
 find_selectors <- function (f) {
@@ -298,15 +300,15 @@ find_selectors <- function (f) {
 
 replace_selectors <- function(x, elem, value) {
   if (is.atomic(x) || is.name(x)) {
-    return(x)
+    x
   }  else if (is.call(x)) {
     if (identical(x, elem)) {
-      x <- value
-      return(x)
-    } else
+      value
+    } else {
       map_call(x, replace_selectors, elem, value)
+    }
   } else if (is.pairlist(x)) {
-    map_call(x, replace_selectors, elem, value)
+    map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
     stop("Don't know how to handle type ", typeof(x),
@@ -314,7 +316,12 @@ replace_selectors <- function(x, elem, value) {
   }
 }
 
-#' @importFrom rlang parse_expr
+plus_call <- function(x, y) call("+", x, y)
+
+#' @importFrom rlang syms !!
+#' @importFrom purrr reduce
 vec_2_expr <- function(x) {
-  parse_expr(paste0("(", paste0(x, collapse = "+"), ")"))
+  x <- rlang::syms(x)
+  res <- purrr::reduce(x, plus_call)
+  expr((!!res))
 }
