@@ -111,6 +111,12 @@ test_that('finding selectors in formulas', {
   )
   expect_equal(
     recipes:::find_selectors(
+      ~ all_predictors() + something
+    ),
+    list(quote(all_predictors()))
+  )    
+  expect_equal(
+    recipes:::find_selectors(
       ~ (matches("wat?"))^2
     ),
     list(quote(matches("wat?")))
@@ -119,7 +125,7 @@ test_that('finding selectors in formulas', {
     recipes:::find_selectors(
       ~ a
     ),
-    NULL
+    list()
   )    
 })
 

@@ -135,7 +135,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
   ## Resolve the selectors to a expression containing an additive
   ## function of the variables
   
-  if(!is.null(form_sel)) {
+  if(length(form_sel) > 0) {
     form_res <- map(form_sel, terms_select, info = info)
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
@@ -283,18 +283,26 @@ tidy.step_interact <- function(x, ...) {
 }
 
 map_call <- function(x, f, ...) as.call(lapply(x, f, ...))
-map_pairlist <- function(x, f, ...) as.call(lapply(x, f, ...))
+map_pairlist <- function(x, f, ...) as.pairlist(lapply(x, f, ...))
 
 
 # In a formula, find the selectors (if any) and return the call(s)
 find_selectors <- function (f) {
   if (is.function(f)) {
     find_selectors(body(f))
-  }
+  } 
   else if (is.call(f)) {
     fname <- as.character(f[[1]])
-    res <- if (fname %in% selectors) f else NULL
+    res <- if (fname %in% selectors) f else list()
     c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
+  } 
+  else if (is.name(f) || is.atomic(f)) {
+    list()
+  }  
+  else {
+    # User supplied incorrect input
+    stop("Don't know how to handle type ", typeof(f),
+         call. = FALSE)
   }
 }
 
