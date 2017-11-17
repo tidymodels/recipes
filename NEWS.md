@@ -15,6 +15,7 @@
 * A step to remove simple zero-variance variables was added (`step_zv`).
 * A series of `tidy` methods were added for recipes and many (but not all) steps. 
 * In `bake.recipe`, the argument `newdata` is now without a default. 
+* `bake` and `juice` can now save the _final_ processed data set in [sparse format](https://github.com/topepo/recipes/issues/49). Note that, as the steps are processed, a non-sparse data frame is used to store the results. 
 * A formula method was added for recipes to get a formula with the outcome(s) and predictors based on the trained recipe. 
 
 # recipes 0.1.0
