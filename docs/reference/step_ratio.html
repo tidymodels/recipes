@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,67 +105,81 @@
     </div>
 
     
-    <p><code>step_ratio</code> creates a a <em>specification</em> of a recipe step that
-  will create one or more ratios out of numeric variables.</p>
+    <p><code>step_ratio</code> creates a a <em>specification</em> of a recipe
+step that will create one or more ratios out of numeric
+variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_ratio</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>numer</span>, <span class='no'>denom</span>)
   <span class='fu'>make.names</span>(<span class='fu'>paste</span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>denom_vars</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>denom_vars</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for step_ratio</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will
-be used in the <em>numerator</em> of the ratio. When used with
-<code>denom_vars</code>, the dots indicates which variables are used in the
-<em>denominator</em>. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables will be used in the <em>numerator</em> of the ratio.
+When used with <code>denom_vars</code>, the dots indicates which
+variables are used in the <em>denominator</em>. See
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the newly created
-ratios created by the original variables will be used as
-predictors in a model.</p></td>
+      <td><p>For terms created by this step, what analysis role
+should they be assigned?. By default, the function assumes that
+the newly created ratios created by the original variables will
+be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>denom</th>
-      <td><p>A call to <code>denom_vars</code> to specify which variables are
-used in the denominator that can include specific variable names
-separated by commas or different selectors (see
-<code><a href='selections.html'>selections</a></code>).  If a column is included in both lists to be
-numerator and denominator, it will be removed from the listing.</p></td>
+      <td><p>A call to <code>denom_vars</code> to specify which
+variables are used in the denominator that can include specific
+variable names separated by commas or different selectors (see
+<code><a href='selections.html'>selections()</a></code>). If a column is included in both lists
+to be numerator and denominator, it will be removed from the
+listing.</p></td>
     </tr>
     <tr>
       <th>naming</th>
-      <td><p>A function that defines the naming convention for new ratio
-columns.</p></td>
+      <td><p>A function that defines the naming convention for
+new ratio columns.</p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>The column names used in the ratios. This argument is
-not populated until <code><a href='prep.html'>prep.recipe</a></code> is executed.</p></td>
+      <td><p>The column names used in the ratios. This
+argument is not populated until <code>prep.recipe()</code> is
+executed.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_ratio</code> object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>denom</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,27 +197,27 @@ not populated until <code><a href='prep.html'>prep.recipe</a></code> is executed
 <span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='co'># all predictors over total</span>
   <span class='fu'>step_ratio</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(<span class='no'>total</span>)) <span class='kw'>%&gt;%</span>
-  <span class='co'># get rid of the original predictors </span>
-  <span class='fu'><a href='step_rm.html'>step_rm</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), -<span class='fu'>matches</span>(<span class='st'>"_o_"</span>))
+  <span class='co'># get rid of the original predictors</span>
+  <span class='fu'><a href='step_rm.html'>step_rm</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), -<span class='fu'>ends_with</span>(<span class='st'>"total"</span>))
 
+<span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 ratio training 
-#&gt; step 2 rm training </div><div class='input'>
 <span class='no'>ratio_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe</span>, <span class='no'>biomass_te</span>)
-<span class='no'>ratio_data</span></div><div class='output co'>#&gt; # A tibble: 80 x 5
-#&gt;    carbon_o_total hydrogen_o_total oxygen_o_total nitrogen_o_total
-#&gt;             &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;
-#&gt;  1      0.4647082       0.05684780      0.4732304      0.003007820
-#&gt;  2      0.4325000       0.05500000      0.4806000      0.028500000
-#&gt;  3      0.4270000       0.05500000      0.4910000      0.024000000
-#&gt;  4      0.5038002       0.06623236      0.4049946      0.019543974
-#&gt;  5      0.4972973       0.06445691      0.4362060      0.002039776
-#&gt;  6      0.4794372       0.05952381      0.4512987      0.007575758
-#&gt;  7      0.3894000       0.05230000      0.5413000      0.011900000
-#&gt;  8      0.5152368       0.05703096      0.4136581      0.011626484
-#&gt;  9      0.4186980       0.06309148      0.4459421      0.002007456
-#&gt; 10      0.4561864       0.06186413      0.3887430      0.075976370
-#&gt; # ... with 70 more rows, and 1 more variables: sulfur_o_total &lt;dbl&gt;</div></pre>
+<span class='no'>ratio_data</span></div><div class='output co'>#&gt; # A tibble: 80 x 7
+#&gt;       HHV  total carbon_o_total hydrogen_o_total oxygen_o_total
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+#&gt;  1 18.275  99.74      0.4647082       0.05684780      0.4732304
+#&gt;  2 17.560 100.00      0.4325000       0.05500000      0.4806000
+#&gt;  3 17.173 100.00      0.4270000       0.05500000      0.4910000
+#&gt;  4 18.851  92.10      0.5038002       0.06623236      0.4049946
+#&gt;  5 20.547  98.05      0.4972973       0.06445691      0.4362060
+#&gt;  6 18.467  92.40      0.4794372       0.05952381      0.4512987
+#&gt;  7 15.095 100.00      0.3894000       0.05230000      0.5413000
+#&gt;  8 16.240  81.71      0.5152368       0.05703096      0.4136581
+#&gt;  9 11.147  69.74      0.4186980       0.06309148      0.4459421
+#&gt; 10 10.750  60.94      0.4561864       0.06186413      0.3887430
+#&gt; # ... with 70 more rows, and 2 more variables: nitrogen_o_total &lt;dbl&gt;,
+#&gt; #   sulfur_o_total &lt;dbl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

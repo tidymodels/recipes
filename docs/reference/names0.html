@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sequences of Names with Padded Zeros — names0 • recipes</title>
+<title>Naming Tools — names0 • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -88,16 +101,20 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sequences of Names with Padded Zeros</h1>
+    <h1>Naming Tools</h1>
     </div>
 
     
-    <p>This function creates a series of <code>num</code> names with a common prefix.
-  The names are numbered with leading zeros (e.g.
-  <code>prefix01</code>-<code>prefix10</code> instead of <code>prefix1</code>-<code>prefix10</code>).</p>
+    <p><code>names0</code> creates a series of <code>num</code> names with a common prefix.
+The names are numbered with leading zeros (e.g.
+<code>prefix01</code>-<code>prefix10</code> instead of <code>prefix1</code>-<code>prefix10</code>).
+<code>dummy_names</code> can be used for renaming unordered and ordered
+dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p>
     
 
-    <pre class="usage"><span class='fu'>names0</span>(<span class='no'>num</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"x"</span>)</pre>
+    <pre class="usage"><span class='fu'>names0</span>(<span class='no'>num</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"x"</span>)
+
+<span class='fu'>dummy_names</span>(<span class='no'>var</span>, <span class='no'>lvl</span>, <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,15 +125,41 @@
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will start each name. .</p></td>
+      <td><p>A character string that will start each name.</p></td>
+    </tr>
+    <tr>
+      <th>var</th>
+      <td><p>A single string for the original factor name.</p></td>
+    </tr>
+    <tr>
+      <th>lvl</th>
+      <td><p>A character vectors of the factor levels (in order).
+When used with <code><a href='step_dummy.html'>step_dummy()</a></code>, <code>lvl</code> would be the suffixes
+that result <em>after</em> <code>model.matrix</code> is called (see the
+example below).</p></td>
+    </tr>
+    <tr>
+      <th>ordinal</th>
+      <td><p>A logical; was the original factor ordered?</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string of length <code>num</code>.</p>
+    <p><code>names0</code> returns a character string of length <code>num</code> and
+<code>dummy_names</code> generates a character vector the same length as
+<code>lvl</code>,</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>names0</span>(<span class='fl'>9</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt; [1] "x1" "x2" "x3" "x4" "x5" "x6" "x7" "x8" "x9"</div><div class='input'><span class='fu'>names0</span>(<span class='fl'>10</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;  [1] "x01" "x02" "x03" "x04" "x05" "x06" "x07" "x08" "x09" "x10"</div><div class='input'>
+<span class='no'>example</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>ordered</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]),
+                      <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]))
+
+<span class='fu'>dummy_names</span>(<span class='st'>"z"</span>, <span class='fu'>levels</span>(<span class='no'>example</span>$<span class='no'>z</span>)[-<span class='fl'>1</span>])</div><div class='output co'>#&gt; [1] "z_B" "z_C" "z_D" "z_E"</div><div class='input'>
+<span class='no'>after_mm</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='fu'>model.matrix</span>(~<span class='no'>y</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example</span>))[-<span class='fl'>1</span>]
+<span class='no'>after_mm</span></div><div class='output co'>#&gt; [1] "y.L" "y.Q" "y.C" "y^4"</div><div class='input'><span class='fu'>levels</span>(<span class='no'>example</span>$<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] "a" "b" "c" "d" "e"</div><div class='input'>
+<span class='fu'>dummy_names</span>(<span class='st'>"y"</span>, <span class='fu'>substring</span>(<span class='no'>after_mm</span>, <span class='fl'>2</span>), <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "y_1" "y_2" "y_3" "y_4"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -124,7 +167,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

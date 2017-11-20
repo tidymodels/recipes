@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,54 +105,75 @@
     </div>
 
     
-    <p><code>step_ordinalscore</code> creates a <em>specification</em> of a recipe step that
-  will convert ordinal factor variables into numeric scores.</p>
+    <p><code>step_ordinalscore</code> creates a <em>specification</em> of a
+recipe step that will convert ordinal factor variables into
+numeric scores.</p>
     
 
     <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>)</pre>
+  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>)
+
+<span class='co'># S3 method for step_ordinalscore</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>A character string of variables that will be converted. This is <code>NULL</code>
-until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>A character string of variables that will be
+converted. This is <code>NULL</code> until computed by
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>convert</th>
-      <td><p>A function that takes an ordinal factor vector as an input and outputs a single numeric variable.</p></td>
+      <td><p>A function that takes an ordinal factor vector
+as an input and outputs a single numeric variable.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_ordinalscore</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+columns that will be affected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Dummy variables from ordered factors with <code>C</code> levels will create polynomial basis functions with <code>C-1</code> terms. As an alternative, this step can be used to translate the ordered levels into a single numeric vector of values that represent (subjective) scores. By default, the translation uses a linear scale (1, 2, 3, ... <code>C</code>) but custom score functions can also be used (see the example below).</p>
+    <p>Dummy variables from ordered factors with <code>C</code>
+levels will create polynomial basis functions with <code>C-1</code>
+terms. As an alternative, this step can be used to translate the
+ordered levels into a single numeric vector of values that
+represent (subjective) scores. By default, the translation uses
+a linear scale (1, 2, 3, ... <code>C</code>) but custom score
+functions can also be used (see the example below).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -165,8 +199,8 @@ until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>)
 
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
-#&gt; step 2 ordinalscore training </div><div class='input'>
+<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
@@ -182,14 +216,22 @@ until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
 
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; step 1 dummy training 
-#&gt; step 2 ordinalscore training </div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
+#&gt;           terms
+#&gt;           &lt;chr&gt;
+#&gt; 1 fail_severity</div><div class='input'>
+<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
 #&gt; 1             1              1            0
 #&gt; 2             3              0            1
-#&gt; 3             7              0            0</div></pre>
+#&gt; 3             7              0            0</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
+#&gt;           terms
+#&gt;           &lt;chr&gt;
+#&gt; 1 fail_severity</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

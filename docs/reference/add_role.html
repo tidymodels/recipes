@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,7 +106,7 @@
 
     
     <p><code>add_role</code> can add a role definition to an existing variable in the
-  recipe.</p>
+recipe.</p>
     
 
     <pre class="usage"><span class='fu'>add_role</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>)</pre>
@@ -103,12 +116,12 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>An existing <code><a href='recipe.html'>recipe</a></code>.</p></td>
+      <td><p>An existing <code><a href='recipe.html'>recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables are
-being assigned a role. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+being assigned a role. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>new_role</th>
@@ -123,7 +136,7 @@ being assigned a role. See <code><a href='selections.html'>selections</a></code>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If a variable is selected that currently has a role, the role is
-  changed and a warning is issued.</p>
+changed and a warning is issued.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

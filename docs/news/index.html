@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,6 +106,52 @@
     </div>
 
     <div class="contents">
+    <div id="recipes-0-1-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#recipes-0-1-1" class="anchor"></a>recipes 0.1.1</h1>
+<ul>
+<li>The default selectors for <code>bake</code> was changed from <code><a href="../reference/has_role.html">all_predictors()</a></code> to <code>everything()</code>.</li>
+<li>The <code>verbose</code> option for <code>prep</code> is now defaulted to <code>FALSE</code>
+</li>
+<li>
+<a href="https://github.com/topepo/recipes/issues/83">A bug in <code>step_dummy</code></a> was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, <code>step_dummy</code> now requires factor inputs.</li>
+<li>
+<code>step_dummy</code> also has a new default naming function that works better for factors. However, there is an extra argument (<code>ordinal</code>) now to the functions that can be passed to <code>step_dummy</code>.<br>
+</li>
+<li>
+<code>step_interact</code> now allows for selectors (e.g. <code><a href="../reference/has_role.html">all_predictors()</a></code> or <code>starts_with("prefix")</code> to be used in the interaction formula.</li>
+<li>
+<code>step_YeoJohnson</code> gained an <code>na.rm</code> option.</li>
+<li>
+<a href="https://github.com/topepo/recipes/issues/85"><code><a href="http://dplyr.tidyverse.org/reference/select_helpers.html">dplyr::one_of</a></code></a> was added to the list of selectors.</li>
+<li>
+<code>step_bs</code> adds B-spline basis functions.</li>
+<li>
+<code>step_unorder</code> converts ordered factors to unordered factors.</li>
+<li>
+<code>step_count</code> counts the number of instances that a pattern exists in a string.</li>
+<li>
+<code>step_string2factor</code> and <code>step_factor2string</code> can be used to move between encodings.</li>
+<li>
+<code>step_lowerimpute</code> is for numeric data where the values cannot be measured below a specific value. For these cases, random uniform values are used for the truncated values.<br>
+</li>
+<li>A step to remove simple zero-variance variables was added (<code>step_zv</code>).</li>
+<li>A series of <code>tidy</code> methods were added for recipes and many (but not all) steps.</li>
+<li>In <code>bake.recipe</code>, the argument <code>newdata</code> is now without a default.</li>
+<li>
+<code>bake</code> and <code>juice</code> can now save the <em>final</em> processed data set in <a href="https://github.com/topepo/recipes/issues/49">sparse format</a>. Note that, as the steps are processed, a non-sparse data frame is used to store the results.</li>
+<li>A formula method was added for recipes to get a formula with the outcome(s) and predictors based on the trained recipe.</li>
+</ul>
+</div>
+    <div id="recipes-0-1-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#recipes-0-1-0" class="anchor"></a>recipes 0.1.0</h1>
+<p>First CRAN release.</p>
+<ul>
+<li>Changed <code>prepare</code> to <code>prep</code> per <a href="https://github.com/topepo/recipes/issues/59">issue #59</a>
+</li>
+</ul>
+</div>
     <div id="recipes-0-0-1-9003" class="section level1">
 <h1 class="hasAnchor">
 <a href="#recipes-0-0-1-9003" class="anchor"></a>recipes 0.0.1.9003</h1>
@@ -124,7 +183,7 @@
 <ul>
 <li>The class system for <code>recipe</code> objects was changed so that <a href="https://github.com/topepo/recipes/issues/46">pipes can be used to create the recipe with a formula</a>.</li>
 <li>
-<a href="https://topepo.github.io/recipes/reference/process.html"><code>process.recipe</code></a> lost the <code>role</code> argument in factor of a general set of <a href="https://topepo.github.io/recipes/articles/Selecting_Variables.html">selectors</a>. If no selector is used, all the predictors are returned.</li>
+<code>process.recipe</code> lost the <code>role</code> argument in factor of a general set of <a href="https://topepo.github.io/recipes/articles/Selecting_Variables.html">selectors</a>. If no selector is used, all the predictors are returned.</li>
 <li>Two steps for simple imputation using the mean or mode were added.</li>
 </ul>
 </div>
@@ -135,6 +194,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#recipes-0-1-1">0.1.1</a></li>
+        <li><a href="#recipes-0-1-0">0.1.0</a></li>
         <li><a href="#recipes-0-0-1-9003">0.0.1.9003</a></li>
         <li><a href="#recipes-0-0-1-9002">0.0.1.9002</a></li>
         <li><a href="#recipes-0-0-1-9001">0.0.1.9001</a></li>

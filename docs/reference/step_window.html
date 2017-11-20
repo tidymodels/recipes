@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,39 +105,45 @@
     </div>
 
     
-    <p><code>step_window</code> creates a <em>specification</em> of a recipe step that will
-  create new columns that are the results of functions that compute
-  statistics across moving windows.</p>
+    <p><code>step_window</code> creates a <em>specification</em> of a recipe
+step that will create new columns that are the results of
+functions that compute statistics across moving windows.</p>
     
 
     <pre class="usage"><span class='fu'>step_window</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for step_window</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details.  For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
-they be assigned? If <code>names</code> is left to be <code>NULL</code>, the rolling
-statistics replace the original columns and the roles are left unchanged.
-If <code>names</code> is set, those new columns will have a role of <code>NULL</code>
-unless this argument has a value.</p></td>
+      <td><p>For model terms created by this step, what analysis
+role should they be assigned? If <code>names</code> is left to be
+<code>NULL</code>, the rolling statistics replace the original columns
+and the roles are left unchanged. If <code>names</code> is set, those
+new columns will have a role of <code>NULL</code> unless this argument
+has a value.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>size</th>
@@ -132,46 +151,56 @@ have been estimated.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>A logical for whether missing values should be removed from the
-calculations within each window.</p></td>
+      <td><p>A logical for whether missing values should be
+removed from the calculations within each window.</p></td>
     </tr>
     <tr>
       <th>statistic</th>
-      <td><p>A character string for the type of statistic that should
-be calculated for each moving window. Possible values are: <code>'max'</code>,
-<code>'mean'</code>, <code>'median'</code>, <code>'min'</code>, <code>'prod'</code>, <code>'sd'</code>,
-<code>'sum'</code>, <code>'var'</code></p></td>
+      <td><p>A character string for the type of statistic
+that should be calculated for each moving window. Possible
+values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
+<code>'min'</code>, <code>'prod'</code>, <code>'sd'</code>, <code>'sum'</code>,
+<code>'var'</code></p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>A character string that contains the names of columns that
-should be processed. These values are not determined until
-<code><a href='prep.html'>prep.recipe</a></code> is called.</p></td>
+      <td><p>A character string that contains the names of
+columns that should be processed. These values are not
+determined until <code>prep.recipe()</code> is called.</p></td>
     </tr>
     <tr>
       <th>names</th>
-      <td><p>An optional character string that is the same length of the
-number of terms selected by <code>terms</code>. If you are not sure what columns
-will be selected, use the <code>summary</code> function (see the example below).
-These will be the names of the new columns created by the step.</p></td>
+      <td><p>An optional character string that is the same
+length of the number of terms selected by <code>terms</code>. If you
+are not sure what columns will be selected, use the
+<code>summary</code> function (see the example below). These will be
+the names of the new columns created by the step.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_window</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>statistic</code> (the
+summary function name), and <code>size</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The calculations use a somewhat atypical method for handling the
-  beginning and end parts of the rolling statistics. The process starts
-  with the center justified window calculations and the beginning and
-  ending parts of the rolling values are determined using the first and
-  last rolling values, respectively. For example if a column <code>x</code> with
-  12 values is smoothed with a 5-point moving median, the first three
-  smoothed values are estimated by <code>median(x[1:5])</code> and the fourth
-  uses <code>median(x[2:6])</code>.</p>
+    <p>The calculations use a somewhat atypical method for
+handling the beginning and end parts of the rolling statistics.
+The process starts with the center justified window calculations
+and the beginning and ending parts of the rolling values are
+determined using the first and last rolling values,
+respectively. For example if a column <code>x</code> with 12 values is
+smoothed with a 5-point moving median, the first three smoothed
+values are estimated by <code>median(x[1:5])</code> and the fourth
+uses <code>median(x[2:6])</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -189,33 +218,43 @@ These will be the names of the new columns created by the step.</p></td>
 <span class='no'>sim_dat</span>$<span class='no'>x3</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='no'>n</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>y1</span> + <span class='no'>y2</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='fu'>step_window</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>starts_with</a></span>(<span class='st'>"y"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
               <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"med_7pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
               <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>),
+  <span class='fu'>step_window</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>starts_with</a></span>(<span class='st'>"y"</span>),
               <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
               <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training 
-#&gt; step 2 window training </div><div class='input'>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
+
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
-<span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'>quos</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
-<span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
+<span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>quos</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>starts_with</a></span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
+<span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>everything</a></span>())
 
-<span class='fu'>ggplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_line</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
-  <span class='fu'>geom_line</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'>theme_bw</span>()</div><img src='step_window-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>() +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-25.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   terms statistic  size
+#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+#&gt; 1    y1    median     7
+#&gt; 2    y2    median     7</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   terms statistic  size
+#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+#&gt; 1    y1      mean     3
+#&gt; 2    y2      mean     3</div><div class='input'>
 <span class='co'># If you want to replace the selected variables with the rolling statistic</span>
 <span class='co'># don't set `names`</span>
 <span class='no'>sim_dat</span>$<span class='no'>original</span> <span class='kw'>&lt;-</span> <span class='no'>sim_dat</span>$<span class='no'>y1</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>y1</span> + <span class='no'>y2</span> + <span class='no'>original</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'>starts_with</span>(<span class='st'>"y"</span>))
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; step 1 window training </div><div class='input'><span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'>everything</span>())
-<span class='fu'>ggplot</span>(<span class='no'>smoothed_dat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>theme_bw</span>()</div><img src='step_window-10.png' alt='' width='540' height='400' /></pre>
+  <span class='fu'>step_window</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>starts_with</a></span>(<span class='st'>"y"</span>))
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
+<span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>everything</a></span>())
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>() +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-26.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

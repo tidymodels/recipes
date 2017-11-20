@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,64 +105,76 @@
     </div>
 
     
-    <p><code>step_center</code> creates a <em>specification</em> of a recipe step that 
-  will normalize numeric data to have a mean of zero.</p>
+    <p><code>step_center</code> creates a <em>specification</em> of a recipe
+step that will normalize numeric data to have a mean of zero.</p>
     
 
     <pre class="usage"><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for step_center</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>means</th>
-      <td><p>A named numeric vector of means. This is <code>NULL</code> until 
-computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>A named numeric vector of means. This is
+<code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>A logical value indicating whether <code>NA</code> values should be 
-removed when averaging.</p></td>
+      <td><p>A logical value indicating whether <code>NA</code>
+values should be removed during computations.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_center</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> (the means).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Centering data means that the average of a variable is subtracted 
-  from the data. <code>step_center</code> estimates the variable means from the 
-  data used in the <code>training</code> argument of <code>prep.recipe</code>. 
-  <code>bake.recipe</code> then applies the centering to new data sets using 
-  these means.</p>
+    <p>Centering data means that the average of a variable is
+subtracted from the data. <code>step_center</code> estimates the
+variable means from the data used in the <code>training</code>
+argument of <code>prep.recipe</code>. <code>bake.recipe</code> then applies
+the centering to new data sets using these means.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prep.html'>prep.recipe</a></code> 
-  <code><a href='bake.html'>bake.recipe</a></code></p>
+    <p><code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -164,33 +189,45 @@ removed when averaging.</p></td>
 <span class='no'>center_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_center</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), -<span class='no'>hydrogen</span>)
 
-<span class='no'>center_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>center_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 center training </div><div class='input'>
+<span class='no'>center_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>center_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>center_obj</span>, <span class='no'>biomass_te</span>)
 
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur
-#&gt; 15  46.35     5.67  47.20     0.30   0.22
-#&gt; 20  43.25     5.50  48.06     2.85   0.34
-#&gt; 26  42.70     5.50  49.10     2.40   0.30
-#&gt; 31  46.40     6.10  37.30     1.80   0.50
-#&gt; 36  48.76     6.32  42.77     0.20   0.00
-#&gt; 41  44.30     5.50  41.70     0.70   0.20
-#&gt; 46  38.94     5.23  54.13     1.19   0.51
-#&gt; 51  42.10     4.66  33.80     0.95   0.20
-#&gt; 55  29.20     4.40  31.10     0.14   4.90
-#&gt; 65  27.80     3.77  23.69     4.63   1.05</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 5
-#&gt;         carbon hydrogen     oxygen   nitrogen sulfur
-#&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1  -2.0041447     5.67   8.675329 -0.7745921   0.22
-#&gt;  2  -5.1041447     5.50   9.535329  1.7754079   0.34
-#&gt;  3  -5.6541447     5.50  10.575329  1.3254079   0.30
-#&gt;  4  -1.9541447     6.10  -1.224671  0.7254079   0.50
-#&gt;  5   0.4058553     6.32   4.245329 -0.8745921   0.00
-#&gt;  6  -4.0541447     5.50   3.175329 -0.3745921   0.20
-#&gt;  7  -9.4141447     5.23  15.605329  0.1154079   0.51
-#&gt;  8  -6.2541447     4.66  -4.724671 -0.1245921   0.20
-#&gt;  9 -19.1541447     4.40  -7.424671 -0.9345921   4.90
-#&gt; 10 -20.5541447     3.77 -14.834671  3.5554079   1.05
-#&gt; # ... with 70 more rows</div></pre>
+<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+#&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
+#&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
+#&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
+#&gt; 31  46.40     6.10  37.30     1.80   0.50 18.851
+#&gt; 36  48.76     6.32  42.77     0.20   0.00 20.547
+#&gt; 41  44.30     5.50  41.70     0.70   0.20 18.467
+#&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
+#&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
+#&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
+#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
+#&gt;         carbon hydrogen     oxygen   nitrogen sulfur    HHV
+#&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1  -2.0041447     5.67   8.675329 -0.7745921   0.22 18.275
+#&gt;  2  -5.1041447     5.50   9.535329  1.7754079   0.34 17.560
+#&gt;  3  -5.6541447     5.50  10.575329  1.3254079   0.30 17.173
+#&gt;  4  -1.9541447     6.10  -1.224671  0.7254079   0.50 18.851
+#&gt;  5   0.4058553     6.32   4.245329 -0.8745921   0.00 20.547
+#&gt;  6  -4.0541447     5.50   3.175329 -0.3745921   0.20 18.467
+#&gt;  7  -9.4141447     5.23  15.605329  0.1154079   0.51 15.095
+#&gt;  8  -6.2541447     4.66  -4.724671 -0.1245921   0.20 16.240
+#&gt;  9 -19.1541447     4.40  -7.424671 -0.9345921   4.90 11.147
+#&gt; 10 -20.5541447     3.77 -14.834671  3.5554079   1.05 10.750
+#&gt; # ... with 70 more rows</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;                 terms value
+#&gt;                 &lt;chr&gt; &lt;dbl&gt;
+#&gt; 1              carbon    NA
+#&gt; 2 "contains(\"gen\")"    NA
+#&gt; 3           -hydrogen    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;      terms     value
+#&gt;      &lt;chr&gt;     &lt;dbl&gt;
+#&gt; 1   carbon 48.354145
+#&gt; 2   oxygen 38.524671
+#&gt; 3 nitrogen  1.074592</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

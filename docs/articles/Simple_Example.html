@@ -9,7 +9,8 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -31,14 +32,26 @@
 <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -123,11 +136,11 @@ rec_obj
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec_obj &lt;-<span class="st"> </span><span class="kw">step_name</span>(rec_obj, arguments)    ## or
 rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">step_name</span>(arguments)</code></pre></div>
 <p><code>step_center</code> and the other functions will always return updated recipes.</p>
-<p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"><code>dplyr</code></a>-like selector functions can be used:</p>
+<p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a>-like selector functions can be used:</p>
 <ul>
 <li>use basic variable names (e.g. <code>x1, x2</code>),</li>
 <li>
-<a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"><code>dplyr</code></a> functions for selecting variables: <code>contains</code>, <code>ends_with</code>, <code>everything</code>, <code>matches</code>, <code>num_range</code>, and <code>starts_with</code>,</li>
+<a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> functions for selecting variables: <code>contains</code>, <code>ends_with</code>, <code>everything</code>, <code>matches</code>, <code>num_range</code>, and <code>starts_with</code>,</li>
 <li>functions that subset on the role of the variables that have been specified so far: <code>all_outcomes</code>, <code>all_predictors</code>, <code>has_role</code>, or</li>
 <li>similar functions for the type of data: <code>all_nominal</code>, <code>all_numeric</code>, and <code>has_type</code>.</li>
 </ul>
@@ -151,29 +164,27 @@ standardized
 <span class="co">#&gt; Scaling for all_predictors()</span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(standardized, <span class="dt">training =</span> seg_train)
-<span class="co">#&gt; step 1 center training </span>
-<span class="co">#&gt; step 2 scale training</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(standardized, <span class="dt">training =</span> seg_train)</code></pre></div>
 <p>Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_train)
 test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)</code></pre></div>
-<p><code>bake</code> returns a tibble:</p>
+<p><code>bake</code> returns a tibble that, by default, includes all of the variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(test_data)
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
 test_data
-<span class="co">#&gt; # A tibble: 1,010 x 58</span>
-<span class="co">#&gt;    AngleCh1 AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3 AvgIntenCh4</span>
-<span class="co">#&gt;       &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1   1.0656  -0.647      -0.684      -1.177      -0.926     -0.9238</span>
-<span class="co">#&gt;  2  -1.8040  -0.185      -0.632      -0.479      -0.809     -0.6666</span>
-<span class="co">#&gt;  3  -1.0300  -0.707       1.207       3.035       0.348      1.3864</span>
-<span class="co">#&gt;  4   1.6935  -0.684       0.806       2.664       0.296      0.8934</span>
-<span class="co">#&gt;  5   1.8129  -0.342      -0.668      -1.172      -0.843     -0.9282</span>
-<span class="co">#&gt;  6  -1.4759   0.784      -0.682      -0.628      -0.881     -0.5939</span>
-<span class="co">#&gt;  7   1.2702   0.272      -0.672      -0.625      -0.809     -0.5156</span>
-<span class="co">#&gt;  8  -1.5837   0.457       0.283       1.320      -0.613     -0.0891</span>
-<span class="co">#&gt;  9  -0.7957  -0.412      -0.669      -1.168      -0.845     -0.9258</span>
-<span class="co">#&gt; 10   0.0363  -0.638      -0.535       0.182      -0.555     -0.0253</span>
+<span class="co">#&gt; # A tibble: 1,010 x 59</span>
+<span class="co">#&gt;     Class AngleCh1 AreaCh1 AvgIntenCh1 AvgIntenCh2 AvgIntenCh3 AvgIntenCh4</span>
+<span class="co">#&gt;    &lt;fctr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1     PS   1.0656  -0.647      -0.684      -1.177      -0.926     -0.9238</span>
+<span class="co">#&gt;  2     PS  -1.8040  -0.185      -0.632      -0.479      -0.809     -0.6666</span>
+<span class="co">#&gt;  3     WS  -1.0300  -0.707       1.207       3.035       0.348      1.3864</span>
+<span class="co">#&gt;  4     WS   1.6935  -0.684       0.806       2.664       0.296      0.8934</span>
+<span class="co">#&gt;  5     PS   1.8129  -0.342      -0.668      -1.172      -0.843     -0.9282</span>
+<span class="co">#&gt;  6     WS  -1.4759   0.784      -0.682      -0.628      -0.881     -0.5939</span>
+<span class="co">#&gt;  7     WS   1.2702   0.272      -0.672      -0.625      -0.809     -0.5156</span>
+<span class="co">#&gt;  8     WS  -1.5837   0.457       0.283       1.320      -0.613     -0.0891</span>
+<span class="co">#&gt;  9     PS  -0.7957  -0.412      -0.669      -1.168      -0.845     -0.9258</span>
+<span class="co">#&gt; 10     PS   0.0363  -0.638      -0.535       0.182      -0.555     -0.0253</span>
 <span class="co">#&gt; # ... with 1,000 more rows, and 52 more variables:</span>
 <span class="co">#&gt; #   ConvexHullAreaRatioCh1 &lt;dbl&gt;, ConvexHullPerimRatioCh1 &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   DiffIntenDensityCh1 &lt;dbl&gt;, DiffIntenDensityCh3 &lt;dbl&gt;,</span>
@@ -195,6 +206,7 @@ test_data
 <span class="co">#&gt; #   TotalIntenCh2 &lt;dbl&gt;, TotalIntenCh3 &lt;dbl&gt;, TotalIntenCh4 &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   VarIntenCh1 &lt;dbl&gt;, VarIntenCh3 &lt;dbl&gt;, VarIntenCh4 &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   WidthCh1 &lt;dbl&gt;, XCentroid &lt;dbl&gt;, YCentroid &lt;dbl&gt;</span></code></pre></div>
+<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code><a href="../reference/bake.html">bake(object, newdata, all_predictors())</a></code>.</p>
 </div>
 <div id="adding-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -219,12 +231,9 @@ trained_rec
 <span class="co">#&gt; Scaling for AngleCh1, AreaCh1, ... [trained]</span>
 <span class="co">#&gt; PCA extraction with ends_with("Ch1"), contains("area")</span></code></pre></div>
 <p>Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using <code>prep</code> again:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(trained_rec, <span class="dt">training =</span> seg_train)
-<span class="co">#&gt; step 1 center [pre-trained]</span>
-<span class="co">#&gt; step 2 scale [pre-trained]</span>
-<span class="co">#&gt; step 3 pca training</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(trained_rec, <span class="dt">training =</span> seg_train)</code></pre></div>
 <p><code>bake</code> can be reapplied to get the principal components in addition to the other variables:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> seg_test, <span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>())
 <span class="kw">names</span>(test_data)
 <span class="co">#&gt;  [1] "AvgIntenCh2"          "AvgIntenCh3"          "AvgIntenCh4"         </span>
 <span class="co">#&gt;  [4] "DiffIntenDensityCh3"  "DiffIntenDensityCh4"  "EntropyIntenCh3"     </span>
@@ -242,27 +251,30 @@ trained_rec
 <p>There are a number of different steps included in the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">steps &lt;-<span class="st"> </span><span class="kw">apropos</span>(<span class="st">"^step_"</span>)
 steps[<span class="op">!</span><span class="kw">grepl</span>(<span class="st">"new$"</span>, steps)]
-<span class="co">#&gt;  [1] "step_bagimpute"    "step_bin2factor"   "step_BoxCox"      </span>
-<span class="co">#&gt;  [4] "step_center"       "step_classdist"    "step_corr"        </span>
-<span class="co">#&gt;  [7] "step_date"         "step_depth"        "step_discretize"  </span>
-<span class="co">#&gt; [10] "step_dummy"        "step_holiday"      "step_hyperbolic"  </span>
-<span class="co">#&gt; [13] "step_ica"          "step_interact"     "step_intercept"   </span>
-<span class="co">#&gt; [16] "step_invlogit"     "step_isomap"       "step_knnimpute"   </span>
-<span class="co">#&gt; [19] "step_kpca"         "step_lincomb"      "step_log"         </span>
-<span class="co">#&gt; [22] "step_logit"        "step_meanimpute"   "step_modeimpute"  </span>
-<span class="co">#&gt; [25] "step_ns"           "step_nzv"          "step_ordinalscore"</span>
-<span class="co">#&gt; [28] "step_other"        "step_pca"          "step_poly"        </span>
-<span class="co">#&gt; [31] "step_range"        "step_ratio"        "step_regex"       </span>
-<span class="co">#&gt; [34] "step_rm"           "step_scale"        "step_shuffle"     </span>
-<span class="co">#&gt; [37] "step_spatialsign"  "step_sqrt"         "step_window"      </span>
-<span class="co">#&gt; [40] "step_YeoJohnson"</span></code></pre></div>
+<span class="co">#&gt;  [1] "step_bagimpute"     "step_bin2factor"    "step_BoxCox"       </span>
+<span class="co">#&gt;  [4] "step_bs"            "step_center"        "step_classdist"    </span>
+<span class="co">#&gt;  [7] "step_corr"          "step_count"         "step_date"         </span>
+<span class="co">#&gt; [10] "step_depth"         "step_discretize"    "step_dummy"        </span>
+<span class="co">#&gt; [13] "step_factor2string" "step_holiday"       "step_hyperbolic"   </span>
+<span class="co">#&gt; [16] "step_ica"           "step_interact"      "step_intercept"    </span>
+<span class="co">#&gt; [19] "step_invlogit"      "step_isomap"        "step_knnimpute"    </span>
+<span class="co">#&gt; [22] "step_kpca"          "step_lincomb"       "step_log"          </span>
+<span class="co">#&gt; [25] "step_logit"         "step_lowerimpute"   "step_meanimpute"   </span>
+<span class="co">#&gt; [28] "step_modeimpute"    "step_ns"            "step_nzv"          </span>
+<span class="co">#&gt; [31] "step_ordinalscore"  "step_other"         "step_pca"          </span>
+<span class="co">#&gt; [34] "step_poly"          "step_range"         "step_ratio"        </span>
+<span class="co">#&gt; [37] "step_regex"         "step_relu"          "step_rm"           </span>
+<span class="co">#&gt; [40] "step_scale"         "step_shuffle"       "step_spatialsign"  </span>
+<span class="co">#&gt; [43] "step_sqrt"          "step_string2factor" "step_unorder"      </span>
+<span class="co">#&gt; [46] "step_window"        "step_YeoJohnson"    "step_zv"</span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#an-example">An Example</a></li>
       <li><a href="#an-initial-recipe">An Initial Recipe</a></li>

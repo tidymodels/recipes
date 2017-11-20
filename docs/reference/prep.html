@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,14 +106,14 @@
 
     
     <p>For a recipe with at least one preprocessing step, estimate the required
-  parameters from a training set that can be later applied to other data 
-  sets.</p>
+parameters from a training set that can be later applied to other data
+sets.</p>
     
 
     <pre class="usage"><span class='fu'>prep</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -135,8 +148,8 @@ are executed.</p></td>
       <th>retain</th>
       <td><p>A logical: should the <em>preprocessingcessed</em> training set be saved
 into the <code>template</code> slot of the recipe after training? This is a good
-  idea if you want to add more steps later but want to avoid re-training
-  the existing steps.</p></td>
+idea if you want to add more steps later but want to avoid re-training
+the existing steps.</p></td>
     </tr>
     <tr>
       <th>stringsAsFactors</th>
@@ -149,23 +162,23 @@ factors? This affects the preprocessingcessed training set (when
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A recipe whose step objects have been updated with the required
-  quantities (e.g. parameter estimates, model objects, etc). Also, the
-  <code>term_info</code> object is likely to be modified as the steps are
-  executed.</p>
+quantities (e.g. parameter estimates, model objects, etc). Also, the
+<code>term_info</code> object is likely to be modified as the steps are
+executed.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Given a data set, this function estimates the required quantities
-  and statistics required by any steps.
-    <code>prep</code> returns an updated recipe with the estimates.</p>
+and statistics required by any steps.
+    <code>prep()</code> returns an updated recipe with the estimates.</p>
 <p>Note that missing data handling is handled in the steps; there is no global
-  <code>na.rm</code> option at the recipe-level or in  <code>prep</code>.</p>
-<p>Also, if a recipe has been trained using <code>prep</code> and then steps
-  are added, <code>prep</code> will only update the new steps. If
-  <code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
+<code>na.rm</code> option at the recipe-level or in  <code>prep()</code>.</p>
+<p>Also, if a recipe has been trained using <code>prep()</code> and then steps
+are added, <code>prep()</code> will only update the new steps. If
+<code>fresh = TRUE</code>, all of the steps will be (re)estimated.</p>
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
-  if the first step is to center the data and the second is to scale the
-  data, the step for scaling is given the centered data.</p>
+if the first step is to center the data and the second is to scale the
+data, the step for scaling is given the centered data.</p>
     
 
   </div>

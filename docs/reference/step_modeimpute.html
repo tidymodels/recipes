@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,54 +105,67 @@
     </div>
 
     
-    <p><code>step_modeimpute</code> creates a <em>specification</em> of a recipe step that
-  will substitute missing values of nominal variables by the training set
-  mode of those variables.</p>
+    <p><code>step_modeimpute</code> creates a <em>specification</em> of a
+recipe step that will substitute missing values of nominal
+variables by the training set mode of those variables.</p>
     
 
-    <pre class="usage"><span class='fu'>step_modeimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>step_modeimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for step_modeimpute</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>modes</th>
-      <td><p>A named character vector of modes. This is <code>NULL</code> until
-computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>A named character vector of modes. This is
+<code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_modeimpute</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>model</code> (the mode
+value).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_modeimpute</code> estimates the variable modes from the data
-  used in the <code>training</code> argument of <code>prep.recipe</code>.
-  <code>bake.recipe</code> then applies the new values to new data sets using
-  these values. If the training set data has more than one mode, one is
-  selected at random.</p>
+    <p><code>step_modeimpute</code> estimates the variable modes
+from the data used in the <code>training</code> argument of
+<code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
+values to new data sets using these values. If the training set
+data has more than one mode, one is selected at random.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -164,7 +190,8 @@ computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_modeimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 modeimpute training </div><div class='input'>
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
 <span class='fu'>table</span>(<span class='no'>credit_te</span>$<span class='no'>Home</span>, <span class='no'>imputed_te</span>$<span class='no'>Home</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
@@ -175,7 +202,18 @@ computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
 #&gt;   parents      0     0     0     441    0    0    0
 #&gt;   priv         0     0     0       0  134    0    0
 #&gt;   rent         0     0     0       0    0  556    0
-#&gt;   &lt;NA&gt;         0     0     2       0    0    0    0</div></pre>
+#&gt;   &lt;NA&gt;         0     0     2       0    0    0    0</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;     terms model
+#&gt;     &lt;chr&gt; &lt;chr&gt;
+#&gt; 1  Status  &lt;NA&gt;
+#&gt; 2    Home  &lt;NA&gt;
+#&gt; 3 Marital  &lt;NA&gt;</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;     terms   model
+#&gt;     &lt;chr&gt;   &lt;chr&gt;
+#&gt; 1  Status    good
+#&gt; 2    Home   owner
+#&gt; 3 Marital married</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

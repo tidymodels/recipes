@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,82 +105,98 @@
     </div>
 
     
-    <p><code>step_BoxCox</code> creates a <em>specification</em> of a recipe step that will
-   transform data using a simple Box-Cox transformation.</p>
+    <p><code>step_BoxCox</code> creates a <em>specification</em> of a recipe
+step that will transform data using a simple Box-Cox
+transformation.</p>
     
 
     <pre class="usage"><span class='fu'>step_BoxCox</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
+  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+<span class='co'># S3 method for step_BoxCox</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>lambdas</th>
-      <td><p>A numeric vector of transformation values. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>A numeric vector of transformation values. This
+is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>limits</th>
-      <td><p>A length 2 numeric vector defining the range to compute the
-transformation parameter lambda.</p></td>
+      <td><p>A length 2 numeric vector defining the range to
+compute the transformation parameter lambda.</p></td>
     </tr>
     <tr>
       <th>nunique</th>
-      <td><p>An integer where data that have less possible values will
-not be evaluate for a transformation.</p></td>
+      <td><p>An integer where data that have less possible
+values will not be evaluate for a transformation.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_BoxCox</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> (the
+lambda estimate).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Box-Cox transformation, which requires a strictly positive
-  variable, can be used to rescale a variable to be more similar to a
- normal distribution. In this package, the partial log-likelihood function
- is directly optimized within a reasonable set of transformation values
- (which can be changed by the user).</p>
-<p>This transformation is typically done on the outcome variable using the
-  residuals for a statistical model (such as ordinary least squares).
-  Here, a simple null model (intercept only) is used to apply the
-  transformation to the <em>predictor</em> variables individually. This can
-  have the effect of making the variable distributions more symmetric.</p>
-<p>If the transformation parameters are estimated to be very closed to the
-  bounds, or if the optimization fails, a value of <code>NA</code> is used and
-  no transformation is applied.</p>
+    <p>The Box-Cox transformation, which requires a strictly
+positive variable, can be used to rescale a variable to be more
+similar to a normal distribution. In this package, the partial
+log-likelihood function is directly optimized within a
+reasonable set of transformation values (which can be changed by
+the user).</p>
+<p>This transformation is typically done on the outcome variable
+using the residuals for a statistical model (such as ordinary
+least squares). Here, a simple null model (intercept only) is
+used to apply the transformation to the <em>predictor</em>
+variables individually. This can have the effect of making the
+variable distributions more symmetric.</p>
+<p>If the transformation parameters are estimated to be very
+closed to the bounds, or if the optimization fails, a value of
+<code>NA</code> is used and no transformation is applied.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Sakia, R. M. (1992). The Box-Cox transformation technique:
-  A review. <em>The Statistician</em>, 169-178..</p>
+A review. <em>The Statistician</em>, 169-178..</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_YeoJohnson.html'>step_YeoJohnson</a></code> <code><a href='recipe.html'>recipe</a></code>
-  <code><a href='prep.html'>prep.recipe</a></code> <code><a href='bake.html'>bake.recipe</a></code></p>
+    <p><code><a href='step_YeoJohnson.html'>step_YeoJohnson()</a></code> <code><a href='recipe.html'>recipe()</a></code>
+<code>prep.recipe()</code> <code>bake.recipe()</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -176,10 +205,25 @@ not be evaluate for a transformation.</p></td>
 
 <span class='no'>bc_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_BoxCox</span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
 
-<span class='no'>bc_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))</div><div class='output co'>#&gt; step 1 BoxCox training </div><div class='input'>
+<span class='no'>bc_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
+
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
 
-<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><img src='step_BoxCox-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><img src='step_BoxCox-6.png' alt='' width='540' height='400' /></pre>
+<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-25.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-26.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;           terms value
+#&gt;           &lt;chr&gt; &lt;dbl&gt;
+#&gt; 1 all_numeric()    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
+#&gt;        terms         value
+#&gt;        &lt;chr&gt;         &lt;dbl&gt;
+#&gt; 1 Population  0.0009656455
+#&gt; 2     Income  0.5238405220
+#&gt; 3 Illiteracy -0.3787578444
+#&gt; 4   Life Exp  4.5896809050
+#&gt; 5     Murder  0.6055498287
+#&gt; 6    HS Grad  1.9161606392
+#&gt; 7       Area  0.2499165414</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

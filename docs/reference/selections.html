@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,82 +106,83 @@
 
     
     <p>When selecting variables or model terms in <code>step</code>
-  functions, <code>dplyr</code>-like tools are used. The <em>selector</em>
-  functions can choose variables based on their name, current role, data
-  type, or any combination of these. The selectors are passed as any other
-  argument to the step. If the variables are explicitly stated in the step
-  function, this might be similar to:</p><pre>
+functions, <code>dplyr</code>-like tools are used. The <em>selector</em> functions
+can choose variables based on their name, current role, data
+type, or any combination of these. The selectors are passed as
+any other argument to the step. If the variables are explicitly
+stated in the step function, this might be similar to:</p><pre>
   recipe( ~ ., data = USArrests) %&gt;%
     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 </pre>
 
-    <p>The first four arguments indicate which variables should be used in the
-  PCA while the last argument is a specific argument to
-  <code><a href='step_pca.html'>step_pca</a></code>.</p>
-<p>Note that:</p>
-<p></p><ol>
-<li><p>The selector arguments should not contain functions beyond those
-      supported (see below).</p></li>
-<li><p>These arguments are not evaluated until the <code>prep</code> function
-      for the step is executed.</p></li>
-<li><p>The <code>dplyr</code>-like syntax allows for negative sings to exclude
-      variables (e.g. <code>-Murder</code>) and the set of selectors will
-      processed in order.</p></li>
-<li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>) has
-      the effect of adding all variables to the list except the excluded
-      variable(s).</p></li>
+    <p>The first four arguments indicate which variables should be
+used in the PCA while the last argument is a specific argument
+to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
+<p>Note that:</p><ol>
+<li><p>The selector arguments should not contain functions
+beyond those supported (see below).</p></li>
+<li><p>These arguments are not evaluated until the <code>prep</code>
+function for the step is executed.</p></li>
+<li><p>The <code>dplyr</code>-like syntax allows for negative sings to
+exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
+processed in order.</p></li>
+<li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)
+has the effect of adding all variables to the list except the
+excluded variable(s).</p></li>
 </ol>
 
-    <p>Also, select helpers from the <code>dplyr</code> package can also be used:
-  <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>starts_with</a></code>, <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>ends_with</a></code>,
-  <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>contains</a></code>, <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>matches</a></code>,
-  <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>num_range</a></code>, and <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>everything</a></code>.
-  For example:</p><pre>
+    <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code>, and
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::one_of()</a></code>.
+For example:</p><pre>
   recipe(Species ~ ., data = iris) %&gt;%
     step_center(starts_with("Sepal"), -contains("Width"))
 </pre>
 
     <p>would only select <code>Sepal.Length</code>
 
-    <b>Inline</b> functions that specify computations, such as <code>log(x)</code>,
-  should not be used in selectors and will produce an error. A list of
-  allowed selector functions is below.</p>
-<p>Columns of the design matrix that may not exist when the step is coded can
-  also be selected. For example, when using <code>step_pca</code>, the number of
-  columns created by feature extraction may not be known when subsequent
-  steps are defined. In this case, using <code>matches("^PC")</code> will select
-  all of the columns whose names start with "PC" <em>once those columns
-  are created</em>.</p>
-<p>There are sets of functions that can be used to select variables based on
-  their role or type: <code><a href='has_role.html'>has_role</a></code> and <code><a href='has_role.html'>has_type</a></code>.
-  For convenience, there are also functions that are more specific:
-  <code><a href='has_role.html'>all_numeric</a></code>, <code><a href='has_role.html'>all_nominal</a></code>,
-  <code><a href='has_role.html'>all_predictors</a></code>, and <code><a href='has_role.html'>all_outcomes</a></code>. These can
-  be used in conjunction with the previous functions described for
-  selecting variables using their names:</p><pre>
+    <strong>Inline</strong> functions that specify computations, such as
+<code>log(x)</code>, should not be used in selectors and will produce an
+error. A list of allowed selector functions is below.</p>
+<p>Columns of the design matrix that may not exist when the step
+is coded can also be selected. For example, when using
+<code>step_pca</code>, the number of columns created by feature extraction
+may not be known when subsequent steps are defined. In this
+case, using <code>matches("^PC")</code> will select all of the columns
+whose names start with "PC" <em>once those columns are created</em>.</p>
+<p>There are sets of functions that can be used to select
+variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
+<code><a href='has_role.html'>has_type()</a></code>. For convenience, there are also functions that are
+more specific: <code><a href='has_role.html'>all_numeric()</a></code>, <code><a href='has_role.html'>all_nominal()</a></code>,
+<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code>. These can be used in
+conjunction with the previous functions described for selecting
+variables using their names:</p><pre>
   data(biomass)
   recipe(HHV ~ ., data = biomass) %&gt;%
     step_center(all_numeric(), -all_outcomes())
 </pre>
 
-    <p>This results in all the numeric predictors: carbon, hydrogen, oxygen,
-  nitrogen, and sulfur.</p>
-<p>If a role for a variable has not been defined, it will never be selected
-  using role-specific selectors.</p>
-<p>All steps use these techniques to define variables for steps
-  <em>except one</em>: <code><a href='step_interact.html'>step_interact</a></code> requires traditional model
-  formula representations of the interactions and takes a single formula
-  as the argument to select the variables.</p>
-<p>The complete list of allowable functions in steps:</p>
-<p></p><ul>
-<li><p><b>By name</b>: <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>starts_with</a></code>,
-      <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>ends_with</a></code>, <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>contains</a></code>,
-      <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>matches</a></code>, <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>num_range</a></code>, and
-      <code><a href='http://www.rdocumentation.org/packages/dplyr/topics/select_helpers'>everything</a></code></p></li>
-<li><p><b>By role</b>: <code><a href='has_role.html'>has_role</a></code>,
-      <code><a href='has_role.html'>all_predictors</a></code>, and <code><a href='has_role.html'>all_outcomes</a></code></p></li>
-<li><p><b>By type</b>: <code><a href='has_role.html'>has_type</a></code>, <code><a href='has_role.html'>all_numeric</a></code>,
-      and <code><a href='has_role.html'>all_nominal</a></code></p></li>
+    <p>This results in all the numeric predictors: carbon, hydrogen,
+oxygen, nitrogen, and sulfur.</p>
+<p>If a role for a variable has not been defined, it will never be
+selected using role-specific selectors.</p>
+<p>Selectors can be used in <code><a href='step_interact.html'>step_interact()</a></code> in similar ways but
+must be embedded in a model formula (as opposed to a sequence
+of selectors). For example, the interaction specification
+could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be
+useful if <code>Species</code> was converted to dummy variables
+previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
+<p>The complete list of allowable functions in steps:</p><ul>
+<li><p><strong>By name</strong>: <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, and
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code></p></li>
+<li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
+<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
+<li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,
+and <code><a href='has_role.html'>all_nominal()</a></code></p></li>
 </ul>
     
 

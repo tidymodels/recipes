@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,60 +105,74 @@
     </div>
 
     
-    <p><code>step_meanimpute</code> creates a <em>specification</em> of a recipe step that
-  will substitute missing values of numeric variables by the training set
-  mean of those variables.</p>
+    <p><code>step_meanimpute</code> creates a <em>specification</em> of a
+recipe step that will substitute missing values of numeric
+variables by the training set mean of those variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_meanimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+
+<span class='co'># S3 method for step_meanimpute</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are 
-affected by the step. See <code><a href='selections.html'>selections</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
+currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>means</th>
-      <td><p>A named numeric vector of means. This is <code>NULL</code> until
-computed by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>A named numeric vector of means. This is
+<code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>trim</th>
-      <td><p>The fraction (0 to 0.5) of observations to be trimmed from each
-end of the variables before the mean is computed. Values of trim outside
-that range are taken as the nearest endpoint.</p></td>
+      <td><p>The fraction (0 to 0.5) of observations to be
+trimmed from each end of the variables before the mean is
+computed. Values of trim outside that range are taken as the
+nearest endpoint.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_meanimpute</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>model</code> (the mean
+value).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_meanimpute</code> estimates the variable means from the data
-  used in the <code>training</code> argument of <code>prep.recipe</code>.
-  <code>bake.recipe</code> then applies the new values to new data sets using
-  these averages.</p>
+    <p><code>step_meanimpute</code> estimates the variable means
+from the data used in the <code>training</code> argument of
+<code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
+values to new data sets using these averages.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,7 +197,8 @@ that range are taken as the nearest endpoint.</p></td>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_meanimpute</span>(<span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)</div><div class='output co'>#&gt; step 1 meanimpute training </div><div class='input'>
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
 <span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
@@ -183,11 +211,22 @@ that range are taken as the nearest endpoint.</p></td>
 #&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
 #&gt;   Status Seniority   Home  Time   Age Marital Records    Job Expenses   Income
 #&gt;   &lt;fctr&gt;     &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;dbl&gt;
-#&gt; 1    bad         0     NA    48    37  single      no     NA       35 138.9908
+#&gt; 1    bad         0   &lt;NA&gt;    48    37  single      no   &lt;NA&gt;       35 138.9908
 #&gt; 2    bad         1   priv    48    36  single     yes  fixed       35 173.0000
 #&gt; 3    bad        24   priv    60    46 married      no  fixed       60 165.0000
 #&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
-#&gt; #   Price &lt;int&gt;</div></pre>
+#&gt; #   Price &lt;int&gt;</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;    terms model
+#&gt;    &lt;chr&gt; &lt;dbl&gt;
+#&gt; 1 Income    NA
+#&gt; 2 Assets    NA
+#&gt; 3   Debt    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;    terms     model
+#&gt;    &lt;chr&gt;     &lt;dbl&gt;
+#&gt; 1 Income  138.9908
+#&gt; 2 Assets 5430.2295
+#&gt; 3   Debt  320.2810</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

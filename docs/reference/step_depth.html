@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,91 +105,107 @@
     </div>
 
     
-    <p><code>step_depth</code> creates a a <em>specification</em> of a recipe step that
-  will convert numeric data into measurement of <em>data depth</em>. This is
-  done for each value of a categorical class variable.</p>
+    <p><code>step_depth</code> creates a a <em>specification</em> of a recipe
+step that will convert numeric data into measurement of
+<em>data depth</em>. This is done for each value of a categorical
+class variable.</p>
     
 
     <pre class="usage"><span class='fu'>step_depth</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S3 method for step_depth</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables that
-will be used to create the new features. See <code><a href='selections.html'>selections</a></code> for
-more details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables that will be used to create the new features. See
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>class</th>
-      <td><p>A single character string that specifies a single categorical
-variable to be used as the class.</p></td>
+      <td><p>A single character string that specifies a single
+categorical variable to be used as the class.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that resulting depth
-estimates will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that resulting depth estimates will be used as predictors in a
+model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>metric</th>
-      <td><p>A character string specifying the depth metric. Possible
-values are "potential", "halfspace", "Mahalanobis", "simplicialVolume",
-"spatial", and "zonoid".</p></td>
+      <td><p>A character string specifying the depth metric.
+Possible values are "potential", "halfspace", "Mahalanobis",
+"simplicialVolume", "spatial", and "zonoid".</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to pass to the underlying depth functions.
-See <code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.halfspace'>depth.halfspace</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.Mahalanobis'>depth.Mahalanobis</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.potential'>depth.potential</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.projection'>depth.projection</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicial'>depth.simplicial</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicialVolume'>depth.simplicialVolume</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.spatial'>depth.spatial</a></code>, <code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.zonoid'>depth.zonoid</a></code>.</p></td>
+      <td><p>A list of options to pass to the underlying
+depth functions. See <code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.halfspace'>ddalpha::depth.halfspace()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.Mahalanobis'>ddalpha::depth.Mahalanobis()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.potential'>ddalpha::depth.potential()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.projection'>ddalpha::depth.projection()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicial'>ddalpha::depth.simplicial()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicialVolume'>ddalpha::depth.simplicialVolume()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.spatial'>ddalpha::depth.spatial()</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.zonoid'>ddalpha::depth.zonoid()</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
       <td><p>The training data are stored here once after
-<code><a href='prep.html'>prep.recipe</a></code> is executed.</p></td>
+<code>prep.recipe()</code> is executed.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_depth</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>class</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Data depth metrics attempt to measure how close data a data point
-  is to the center of its distribution.  There are a number of methods for
-  calculating death but a simple example is the inverse of the distance of
-  a data point to the centroid of the distribution. Generally, small values
-  indicate that a data point not close to the centroid. <code>step_depth</code>
-  can compute a class-specific depth for a new data point based on the
-  proximity of the new value to the training set distribution.</p>
-<p>Note that the entire training set is saved to compute future depth values.
-The saved data have been trained (i.e. prepared) and baked (i.e. processed) up to the point before the
-location that <code>step_depth</code> occupies in the recipe. Also, the data
-requirements for the different step methods may vary. For example, using
-<code>metric = "Mahalanobis"</code> requires that each class should have at least
-as many rows as variables listed in the <code>terms</code> argument.</p>
-<p>The function will create a new column for every unique value of the
-<code>class</code> variable. The resulting variables will not replace the
-original values and have the prefix <code>depth_</code>.</p>
+    <p>Data depth metrics attempt to measure how close data a
+data point is to the center of its distribution. There are a
+number of methods for calculating death but a simple example is
+the inverse of the distance of a data point to the centroid of
+the distribution. Generally, small values indicate that a data
+point not close to the centroid. <code>step_depth</code> can compute a
+class-specific depth for a new data point based on the proximity
+of the new value to the training set distribution.</p>
+<p>Note that the entire training set is saved to compute future
+depth values. The saved data have been trained (i.e. prepared)
+and baked (i.e. processed) up to the point before the location
+that <code>step_depth</code> occupies in the recipe. Also, the data
+requirements for the different step methods may vary. For
+example, using <code>metric = "Mahalanobis"</code> requires that each
+class should have at least as many rows as variables listed in
+the <code>terms</code> argument.</p>
+<p>The function will create a new column for every unique value of
+the <code>class</code> variable. The resulting variables will not
+replace the original values and have the prefix <code>depth_</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -185,23 +214,34 @@ original values and have the prefix <code>depth_</code>.</p>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_depth</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
-<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; step 1 depth training </div><div class='input'>
+<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+
 <span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>dists_to_species</span></div><div class='output co'>#&gt; # A tibble: 150 x 7
-#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width depth_setosa
-#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-#&gt;  1          5.1         3.5          1.4         0.2         0.20
-#&gt;  2          4.9         3.0          1.4         0.2         0.04
-#&gt;  3          4.7         3.2          1.3         0.2         0.10
-#&gt;  4          4.6         3.1          1.5         0.2         0.08
-#&gt;  5          5.0         3.6          1.4         0.2         0.14
-#&gt;  6          5.4         3.9          1.7         0.4         0.04
-#&gt;  7          4.6         3.4          1.4         0.3         0.02
-#&gt;  8          5.0         3.4          1.5         0.2         0.28
-#&gt;  9          4.4         2.9          1.4         0.2         0.02
-#&gt; 10          4.9         3.1          1.5         0.1         0.02
+<span class='no'>dists_to_species</span></div><div class='output co'>#&gt; # A tibble: 150 x 8
+#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species depth_setosa
+#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;        &lt;dbl&gt;
+#&gt;  1          5.1         3.5          1.4         0.2  setosa         0.22
+#&gt;  2          4.9         3.0          1.4         0.2  setosa         0.04
+#&gt;  3          4.7         3.2          1.3         0.2  setosa         0.10
+#&gt;  4          4.6         3.1          1.5         0.2  setosa         0.08
+#&gt;  5          5.0         3.6          1.4         0.2  setosa         0.14
+#&gt;  6          5.4         3.9          1.7         0.4  setosa         0.04
+#&gt;  7          4.6         3.4          1.4         0.3  setosa         0.02
+#&gt;  8          5.0         3.4          1.5         0.2  setosa         0.28
+#&gt;  9          4.4         2.9          1.4         0.2  setosa         0.02
+#&gt; 10          4.9         3.1          1.5         0.1  setosa         0.02
 #&gt; # ... with 140 more rows, and 2 more variables: depth_versicolor &lt;dbl&gt;,
-#&gt; #   depth_virginica &lt;dbl&gt;</div></pre>
+#&gt; #   depth_virginica &lt;dbl&gt;</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;              terms class
+#&gt;              &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 all_predictors()  &lt;NA&gt;</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 2
+#&gt;          terms   class
+#&gt;          &lt;chr&gt;   &lt;chr&gt;
+#&gt; 1 Sepal.Length Species
+#&gt; 2  Sepal.Width Species
+#&gt; 3 Petal.Length Species
+#&gt; 4  Petal.Width Species</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

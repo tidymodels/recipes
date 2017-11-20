@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,11 +106,11 @@
 
     
     <p><code>step_intercept</code> creates a <em>specification</em> of a recipe step that
-  will add an intercept or constant term in the first column of a data
-  matrix. <code>step_intercept</code> has defaults to <em>predictor</em> role so
-  that it is by default called in the bake step. Be careful to avoid
-  unintentional transformations when calling steps with
-  <code>all_predictors</code>.</p>
+will add an intercept or constant term in the first column of a data
+matrix. <code>step_intercept</code> has defaults to <em>predictor</em> role so
+that it is by default called in the bake step. Be careful to avoid
+unintentional transformations when calling steps with
+<code>all_predictors</code>.</p>
     
 
     <pre class="usage"><span class='fu'>step_intercept</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -138,12 +151,12 @@ have been estimated. Again included for consistency.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+new step added to the sequence of existing steps (if any).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe</a></code> <code><a href='prep.html'>prep.recipe</a></code>
-  <code><a href='bake.html'>bake.recipe</a></code></p>
+    <p><code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -157,21 +170,22 @@ have been estimated. Again included for consistency.</p></td>
 <span class='no'>rec_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>[, -(<span class='fl'>1</span>:<span class='fl'>2</span>)]) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_intercept</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 intercept training </div><div class='input'>
+<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+
 <span class='no'>with_intercept</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_obj</span>, <span class='no'>biomass_te</span>)
-<span class='no'>with_intercept</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
-#&gt;    intercept carbon hydrogen oxygen nitrogen sulfur
-#&gt;        &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1         2  46.35     5.67  47.20     0.30   0.22
-#&gt;  2         2  43.25     5.50  48.06     2.85   0.34
-#&gt;  3         2  42.70     5.50  49.10     2.40   0.30
-#&gt;  4         2  46.40     6.10  37.30     1.80   0.50
-#&gt;  5         2  48.76     6.32  42.77     0.20   0.00
-#&gt;  6         2  44.30     5.50  41.70     0.70   0.20
-#&gt;  7         2  38.94     5.23  54.13     1.19   0.51
-#&gt;  8         2  42.10     4.66  33.80     0.95   0.20
-#&gt;  9         2  29.20     4.40  31.10     0.14   4.90
-#&gt; 10         2  27.80     3.77  23.69     4.63   1.05
+<span class='no'>with_intercept</span></div><div class='output co'>#&gt; # A tibble: 80 x 7
+#&gt;    intercept carbon hydrogen oxygen nitrogen sulfur    HHV
+#&gt;        &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1         2  46.35     5.67  47.20     0.30   0.22 18.275
+#&gt;  2         2  43.25     5.50  48.06     2.85   0.34 17.560
+#&gt;  3         2  42.70     5.50  49.10     2.40   0.30 17.173
+#&gt;  4         2  46.40     6.10  37.30     1.80   0.50 18.851
+#&gt;  5         2  48.76     6.32  42.77     0.20   0.00 20.547
+#&gt;  6         2  44.30     5.50  41.70     0.70   0.20 18.467
+#&gt;  7         2  38.94     5.23  54.13     1.19   0.51 15.095
+#&gt;  8         2  42.10     4.66  33.80     0.95   0.20 16.240
+#&gt;  9         2  29.20     4.40  31.10     0.14   4.90 11.147
+#&gt; 10         2  27.80     3.77  23.69     4.63   1.05 10.750
 #&gt; # ... with 70 more rows</div><div class='input'>
 </div></pre>
   </div>

@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -90,7 +103,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.1.0</small>
+        <small>version&nbsp;0.1.0.9000</small>
       </h1>
     </div>
 
@@ -118,9 +131,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="formula.recipe.html">formula</a></code> </p>
+          </td>
+          <td><p>Create a Formula from a Prepared Recipe</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="has_role.html">has_role</a></code> <code><a href="has_role.html">all_predictors</a></code> <code><a href="has_role.html">all_outcomes</a></code> <code><a href="has_role.html">has_type</a></code> <code><a href="has_role.html">all_numeric</a></code> <code><a href="has_role.html">all_nominal</a></code> <code><a href="has_role.html">current_info</a></code> </p>
           </td>
           <td><p>Role Selection</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="juice.html">juice</a></code> </p>
+          </td>
+          <td><p>Extract Finalized Training Set</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -157,6 +182,18 @@
             <p><code><a href="summary.recipe.html">summary</a></code> </p>
           </td>
           <td><p>Summarize a Recipe</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="tidy.recipe.html">tidy</a></code> </p>
+          </td>
+          <td><p>Tidy the Result of a Recipe</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="add_role.html">add_role</a></code> </p>
+          </td>
+          <td><p>Manually Add Roles</p></td>
         </tr>
       </tbody><tbody>
         <tr>
@@ -206,79 +243,97 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_bagimpute.html">step_bagimpute</a></code> <code><a href="step_bagimpute.html">imp_vars</a></code> </p>
+            <p><code><a href="step_bagimpute.html">step_bagimpute</a></code> <code><a href="step_bagimpute.html">imp_vars</a></code> <code><a href="step_bagimpute.html">tidy</a></code> </p>
           </td>
           <td><p>Imputation via Bagged Trees</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_bin2factor.html">step_bin2factor</a></code> </p>
+            <p><code><a href="step_bin2factor.html">step_bin2factor</a></code> <code><a href="step_bin2factor.html">tidy</a></code> </p>
           </td>
           <td><p>Create a Factors from A Dummy Variable</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_BoxCox.html">step_BoxCox</a></code> </p>
+            <p><code><a href="step_BoxCox.html">step_BoxCox</a></code> <code><a href="step_BoxCox.html">tidy</a></code> </p>
           </td>
           <td><p>Box-Cox Transformation for Non-Negative Data</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_center.html">step_center</a></code> </p>
+            <p><code><a href="step_bs.html">step_bs</a></code> <code><a href="step_bs.html">tidy</a></code> </p>
+          </td>
+          <td><p>B-Spline Basis Functions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_center.html">step_center</a></code> <code><a href="step_center.html">tidy</a></code> </p>
           </td>
           <td><p>Centering Numeric Data</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_classdist.html">step_classdist</a></code> </p>
+            <p><code><a href="step_classdist.html">step_classdist</a></code> <code><a href="step_classdist.html">tidy</a></code> </p>
           </td>
           <td><p>Distances to Class Centroids</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_corr.html">step_corr</a></code> </p>
+            <p><code><a href="step_corr.html">step_corr</a></code> <code><a href="step_corr.html">tidy</a></code> </p>
           </td>
           <td><p>High Correlation Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_date.html">step_date</a></code> </p>
+            <p><code><a href="step_count.html">step_count</a></code> <code><a href="step_count.html">tidy</a></code> </p>
+          </td>
+          <td><p>Create Counts of Patterns using Regular Expressions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_date.html">step_date</a></code> <code><a href="step_date.html">tidy</a></code> </p>
           </td>
           <td><p>Date Feature Generator</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_depth.html">step_depth</a></code> </p>
+            <p><code><a href="step_depth.html">step_depth</a></code> <code><a href="step_depth.html">tidy</a></code> </p>
           </td>
           <td><p>Data Depths</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_dummy.html">step_dummy</a></code> </p>
+            <p><code><a href="step_dummy.html">step_dummy</a></code> <code><a href="step_dummy.html">tidy</a></code> </p>
           </td>
           <td><p>Dummy Variables Creation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_holiday.html">step_holiday</a></code> </p>
+            <p><code><a href="step_factor2string.html">step_factor2string</a></code> <code><a href="step_factor2string.html">tidy</a></code> </p>
+          </td>
+          <td><p>Convert Factors to Strings</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_holiday.html">step_holiday</a></code> <code><a href="step_holiday.html">tidy</a></code> </p>
           </td>
           <td><p>Holiday Feature Generator</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_hyperbolic.html">step_hyperbolic</a></code> </p>
+            <p><code><a href="step_hyperbolic.html">step_hyperbolic</a></code> <code><a href="step_hyperbolic.html">tidy</a></code> </p>
           </td>
           <td><p>Hyperbolic Transformations</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_ica.html">step_ica</a></code> </p>
+            <p><code><a href="step_ica.html">step_ica</a></code> <code><a href="step_ica.html">tidy</a></code> </p>
           </td>
           <td><p>ICA Signal Extraction</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_interact.html">step_interact</a></code> </p>
+            <p><code><a href="step_interact.html">step_interact</a></code> <code><a href="step_interact.html">tidy</a></code> </p>
           </td>
           <td><p>Create Interaction Variables</p></td>
         </tr><tr>
@@ -290,153 +345,183 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_invlogit.html">step_invlogit</a></code> </p>
+            <p><code><a href="step_invlogit.html">step_invlogit</a></code> <code><a href="step_invlogit.html">tidy</a></code> </p>
           </td>
           <td><p>Inverse Logit Transformation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_isomap.html">step_isomap</a></code> </p>
+            <p><code><a href="step_isomap.html">step_isomap</a></code> <code><a href="step_isomap.html">tidy</a></code> </p>
           </td>
           <td><p>Isomap Embedding</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_knnimpute.html">step_knnimpute</a></code> </p>
+            <p><code><a href="step_knnimpute.html">step_knnimpute</a></code> <code><a href="step_knnimpute.html">tidy</a></code> </p>
           </td>
           <td><p>Imputation via K-Nearest Neighbors</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_kpca.html">step_kpca</a></code> </p>
+            <p><code><a href="step_kpca.html">step_kpca</a></code> <code><a href="step_kpca.html">tidy</a></code> </p>
           </td>
           <td><p>Kernel PCA Signal Extraction</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_lincomb.html">step_lincomb</a></code> </p>
+            <p><code><a href="step_lincomb.html">step_lincomb</a></code> <code><a href="step_lincomb.html">tidy</a></code> </p>
           </td>
           <td><p>Linear Combination Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_log.html">step_log</a></code> </p>
+            <p><code><a href="step_log.html">step_log</a></code> <code><a href="step_log.html">tidy</a></code> </p>
           </td>
           <td><p>Logarithmic Transformation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_logit.html">step_logit</a></code> </p>
+            <p><code><a href="step_logit.html">step_logit</a></code> <code><a href="step_logit.html">tidy</a></code> </p>
           </td>
           <td><p>Logit Transformation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_meanimpute.html">step_meanimpute</a></code> </p>
+            <p><code><a href="step_lowerimpute.html">step_lowerimpute</a></code> <code><a href="step_lowerimpute.html">tidy</a></code> </p>
+          </td>
+          <td><p>Impute Numeric Data Below the Threshold of Measurement</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_meanimpute.html">step_meanimpute</a></code> <code><a href="step_meanimpute.html">tidy</a></code> </p>
           </td>
           <td><p>Impute Numeric Data Using the Mean</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_modeimpute.html">step_modeimpute</a></code> </p>
+            <p><code><a href="step_modeimpute.html">step_modeimpute</a></code> <code><a href="step_modeimpute.html">tidy</a></code> </p>
           </td>
           <td><p>Impute Nominal Data Using the Most Common Value</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_ns.html">step_ns</a></code> </p>
+            <p><code><a href="step_ns.html">step_ns</a></code> <code><a href="step_ns.html">tidy</a></code> </p>
           </td>
           <td><p>Nature Spline Basis Functions</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_nzv.html">step_nzv</a></code> </p>
+            <p><code><a href="step_nzv.html">step_nzv</a></code> <code><a href="step_nzv.html">tidy</a></code> </p>
           </td>
           <td><p>Near-Zero Variance Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_ordinalscore.html">step_ordinalscore</a></code> </p>
+            <p><code><a href="step_ordinalscore.html">step_ordinalscore</a></code> <code><a href="step_ordinalscore.html">tidy</a></code> </p>
           </td>
           <td><p>Convert Ordinal Factors to Numeric Scores</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_other.html">step_other</a></code> </p>
+            <p><code><a href="step_other.html">step_other</a></code> <code><a href="step_other.html">tidy</a></code> </p>
           </td>
           <td><p>Collapse Some Categorical Levels</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_pca.html">step_pca</a></code> </p>
+            <p><code><a href="step_pca.html">step_pca</a></code> <code><a href="step_pca.html">tidy</a></code> </p>
           </td>
           <td><p>PCA Signal Extraction</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_poly.html">step_poly</a></code> </p>
+            <p><code><a href="step_poly.html">step_poly</a></code> <code><a href="step_poly.html">tidy</a></code> </p>
           </td>
           <td><p>Orthogonal Polynomial Basis Functions</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_range.html">step_range</a></code> </p>
+            <p><code><a href="step_range.html">step_range</a></code> <code><a href="step_range.html">tidy</a></code> </p>
           </td>
           <td><p>Scaling Numeric Data to a Specific Range</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_ratio.html">step_ratio</a></code> <code><a href="step_ratio.html">denom_vars</a></code> </p>
+            <p><code><a href="step_ratio.html">step_ratio</a></code> <code><a href="step_ratio.html">denom_vars</a></code> <code><a href="step_ratio.html">tidy</a></code> </p>
           </td>
           <td><p>Ratio Variable Creation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_regex.html">step_regex</a></code> </p>
+            <p><code><a href="step_regex.html">step_regex</a></code> <code><a href="step_regex.html">tidy</a></code> </p>
           </td>
           <td><p>Create Dummy Variables using Regular Expressions</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_rm.html">step_rm</a></code> </p>
+            <p><code><a href="step_relu.html">step_relu</a></code> </p>
+          </td>
+          <td><p>Apply (Smoothed) Rectified Linear Transformation</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_rm.html">step_rm</a></code> <code><a href="step_rm.html">tidy</a></code> </p>
           </td>
           <td><p>General Variable Filter</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_scale.html">step_scale</a></code> </p>
+            <p><code><a href="step_scale.html">step_scale</a></code> <code><a href="step_scale.html">tidy</a></code> </p>
           </td>
           <td><p>Scaling Numeric Data</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_shuffle.html">step_shuffle</a></code> </p>
+            <p><code><a href="step_shuffle.html">step_shuffle</a></code> <code><a href="step_shuffle.html">tidy</a></code> </p>
           </td>
           <td><p>Shuffle Variables</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_spatialsign.html">step_spatialsign</a></code> </p>
+            <p><code><a href="step_spatialsign.html">step_spatialsign</a></code> <code><a href="step_spatialsign.html">tidy</a></code> </p>
           </td>
           <td><p>Spatial Sign Preprocessing</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_sqrt.html">step_sqrt</a></code> </p>
+            <p><code><a href="step_sqrt.html">step_sqrt</a></code> <code><a href="step_sqrt.html">tidy</a></code> </p>
           </td>
           <td><p>Square Root Transformation</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_window.html">step_window</a></code> </p>
+            <p><code><a href="step_string2factor.html">step_string2factor</a></code> <code><a href="step_string2factor.html">tidy</a></code> </p>
+          </td>
+          <td><p>Convert Strings to Factors</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_unorder.html">step_unorder</a></code> <code><a href="step_unorder.html">tidy</a></code> </p>
+          </td>
+          <td><p>Convert Ordered Factors to Unordered Factors</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_window.html">step_window</a></code> <code><a href="step_window.html">tidy</a></code> </p>
           </td>
           <td><p>Moving Window Functions</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="step_YeoJohnson.html">step_YeoJohnson</a></code> </p>
+            <p><code><a href="step_YeoJohnson.html">step_YeoJohnson</a></code> <code><a href="step_YeoJohnson.html">tidy</a></code> </p>
           </td>
           <td><p>Yeo-Johnson Transformation</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_zv.html">step_zv</a></code> <code><a href="step_zv.html">tidy</a></code> </p>
+          </td>
+          <td><p>Zero Variance Filter</p></td>
         </tr>
       </tbody>
       </table>

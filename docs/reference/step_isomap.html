@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,14 +54,26 @@
         <li>
   <a href="../articles/Simple_Example.html">Simple Example</a>
 </li>
-<li>
-  <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
-</li>
-<li>
-  <a href="../articles/Custom_Steps.html">Custom Steps</a>
-</li>
-<li>
-  <a href="../articles/Ordering.html">The Order of Steps</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
+    </li>
+    <li>
+      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Ordering.html">The Order of Steps</a>
+    </li>
+    <li>
+      <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,97 +105,115 @@
     </div>
 
     
-    <p><code>step_isomap</code> creates a <em>specification</em> of a recipe step that will
-  convert numeric data into one or more new dimensions.</p>
+    <p><code>step_isomap</code> creates a <em>specification</em> of a recipe
+step that will convert numeric data into one or more new
+dimensions.</p>
     
 
     <pre class="usage"><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>.mute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"message"</span>, <span class='st'>"output"</span>)), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Isomap"</span>)</pre>
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Isomap"</span>)
+
+<span class='co'># S3 method for step_isomap</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of 
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be
-used to compute the dimensions. See <code><a href='selections.html'>selections</a></code> for more
-details.</p></td>
+      <td><p>One or more selector functions to choose which
+variables will be used to compute the dimensions. See
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new
-dimension columns created by the original variables will be used as
-predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new dimension columns created by the original variables
+will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing 
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>num</th>
-      <td><p>The number of isomap dimensions to retain as new predictors. If
-<code>num</code> is greater than the number of columns or the number of
-possible dimensions, a smaller value will be used.</p></td>
+      <td><p>The number of isomap dimensions to retain as new
+predictors. If <code>num</code> is greater than the number of columns
+or the number of possible dimensions, a smaller value will be
+used.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>Isomap</a></code>.</p></td>
+      <td><p>A list of options to
+<code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>dimRed::Isomap()</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>Isomap</a></code> object is stored here once this
-preprocessing step has be trained by <code><a href='prep.html'>prep.recipe</a></code>.</p></td>
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>dimRed::Isomap()</a></code> object is stored
+here once this preprocessing step has be trained by
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the resulting
-new variables. See notes below</p></td>
+      <td><p>A character string that will be the prefix to the
+resulting new variables. See notes below.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>step_isomap</code> object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the
-  new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Isomap is a form of multidimensional scaling (MDS). MDS methods
-  try to find a reduced set of dimensions such that the geometric distances
-  between the original data points are preserved. This version of MDS uses
-  nearest neighbors in the data as a method for increasing the fidelity of
-  the new dimensions to the original data values.</p>
-<p>It is advisable to center and scale the variables prior to running Isomap
-  (<code>step_center</code> and <code>step_scale</code> can be used for this purpose).</p>
-<p>The argument <code>num</code> controls the number of components that will be
-  retained (the original variables that are used to derive the components
-  are removed from the data). The new components will have names that begin
-  with <code>prefix</code> and a sequence of numbers. The variable names are
-  padded with zeros. For example, if <code>num &lt; 10</code>, their names will be
-  <code>Isomap1</code> - <code>Isomap9</code>. If <code>num = 101</code>, the names would be
-  <code>Isomap001</code> - <code>Isomap101</code>.</p>
+    <p>Isomap is a form of multidimensional scaling (MDS).
+MDS methods try to find a reduced set of dimensions such that
+the geometric distances between the original data points are
+preserved. This version of MDS uses nearest neighbors in the
+data as a method for increasing the fidelity of the new
+dimensions to the original data values.</p>
+<p>It is advisable to center and scale the variables prior to
+running Isomap (<code>step_center</code> and <code>step_scale</code> can be
+used for this purpose).</p>
+<p>The argument <code>num</code> controls the number of components that
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with <code>prefix</code> and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if <code>num &lt; 10</code>, their names will be <code>Isomap1</code> -
+<code>Isomap9</code>. If <code>num = 101</code>, the names would be
+<code>Isomap001</code> - <code>Isomap101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>De Silva, V., and Tenenbaum, J. B. (2003). Global versus local
-  methods in nonlinear dimensionality reduction. <em>Advances in Neural
-  Information Processing Systems</em>. 721-728.
+    <p>De Silva, V., and Tenenbaum, J. B. (2003). Global
+versus local methods in nonlinear dimensionality reduction.
+<em>Advances in Neural Information Processing Systems</em>.
+721-728.
     <span class="pkg">dimRed</span>, a framework for dimensionality reduction,
-  <a href = 'https://github.com/gdkrmr'>https://github.com/gdkrmr</a></p>
+https://github.com/gdkrmr</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_pca.html'>step_pca</a></code> <code><a href='step_kpca.html'>step_kpca</a></code>
-  <code><a href='step_ica.html'>step_ica</a></code> <code><a href='recipe.html'>recipe</a></code> <code><a href='prep.html'>prep.recipe</a></code>
-  <code><a href='bake.html'>bake.recipe</a></code></p>
+    <p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
+<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -202,14 +233,22 @@ new variables. See notes below</p></td>
               <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>100</span>),
               <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; step 1 YeoJohnson training 
-#&gt; step 2 center training 
-#&gt; step 3 scale training 
-#&gt; step 4 isomap training </div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:53: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:53: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:53: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:54: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:54: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:54: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:54: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:54: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-07-26 13:02:55: DONE</span></div><div class='input'>
+<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:12: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:12: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:12: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:12: cmdscale</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:13: post processing</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:13: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:13: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:13: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: DONE</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: embedding</span></div><div class='output co'>#&gt; <span class='message'>2017-11-20 09:12:14: DONE</span></div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
 <span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><img src='step_isomap-20.png' alt='' width='540' height='400' /></pre>
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_isomap-13.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>im_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
+#&gt;              terms
+#&gt;              &lt;chr&gt;
+#&gt; 1 all_predictors()</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>im_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 1
+#&gt;      terms
+#&gt;      &lt;chr&gt;
+#&gt; 1   carbon
+#&gt; 2 hydrogen
+#&gt; 3   oxygen
+#&gt; 4 nitrogen
+#&gt; 5   sulfur</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
