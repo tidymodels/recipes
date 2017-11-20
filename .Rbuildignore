@@ -1,8 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-README.Rmd
-README.html
+^README.*
 ^docs$
 ^_pkgdown\.yml$
 contributors.md
