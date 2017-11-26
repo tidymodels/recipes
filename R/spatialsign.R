@@ -12,6 +12,8 @@
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?
+#' @param na.rm A logical: should missing data be removed from the
+#'  norm computation?
 #' @param columns A character string of variable names that will
 #'  be (eventually) populated by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
@@ -63,12 +65,14 @@ step_spatialsign <-
   function(recipe,
            ...,
            role = "predictor",
+           na.rm = TRUE,
            trained = FALSE,
            columns = NULL) {
     add_step(recipe,
              step_spatialsign_new(
                terms = check_ellipses(...),
                role = role,
+               na.rm = na.rm,
                trained = trained,
                columns = columns
              ))
@@ -77,12 +81,14 @@ step_spatialsign <-
 step_spatialsign_new <-
   function(terms = NULL,
            role = "predictor",
+           na.rm = TRUE,
            trained = FALSE,
            columns = NULL) {
     step(
       subclass = "spatialsign",
       terms = terms,
       role = role,
+      na.rm = na.rm,
       trained = trained,
       columns = columns
     )
@@ -94,6 +100,7 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,
+    na.rm = x$na.rm,
     trained = TRUE,
     columns = col_names
   )
@@ -102,10 +109,10 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_spatialsign <- function(object, newdata, ...) {
   col_names <- object$columns
-  ss <- function(x)
-    x / sqrt(sum(x ^ 2))
+  ss <- function(x, na.rm)
+    x / sqrt(sum(x ^ 2, na.rm = na.rm))
   newdata[, col_names] <-
-    t(apply(as.matrix(newdata[, col_names]), 1, ss))
+    t(apply(as.matrix(newdata[, col_names]), 1, ss, na.rm = object$na.rm))
   as_tibble(newdata)
 }
 

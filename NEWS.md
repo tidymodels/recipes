@@ -1,3 +1,7 @@
+# recipes 0.1.X
+
+* `step_spatialsign` now has the option of removing missing data prior to computing the norm.
+
 # recipes 0.1.1
 
 * The default selectors for `bake` was changed from `all_predictors()` to `everything()`. 
