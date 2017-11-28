@@ -1,6 +1,13 @@
-# recipes 0.1.X
+# recipes 0.1.1.9000
+
+New Steps:
+
+ * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
+
+Changes:
 
 * `step_spatialsign` now has the option of removing missing data prior to computing the norm.
+
 
 # recipes 0.1.1
 
