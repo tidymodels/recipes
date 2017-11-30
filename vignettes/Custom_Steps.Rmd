@@ -52,7 +52,7 @@ ggplot(biomass_tr, aes(x = carbon)) +
   geom_vline(xintercept = biomass_te$carbon[1], lty = 2)
 ```
 
-Based on the training set, `r round(mean(biomass_tr$carbon <= biomass_te$carbon[1])*100, 1)`% of the data are less than a value of `r biomass_te$carbon[1]`. There are some applications where it might be advantageous to represent the predictor values are percentiles rather than their original values. 
+Based on the training set, `r round(mean(biomass_tr$carbon <= biomass_te$carbon[1])*100, 1)`% of the data are less than a value of `r biomass_te$carbon[1]`. There are some applications where it might be advantageous to represent the predictor values as percentiles rather than their original values. 
 
 Our new step will do this computation for any numeric variables of interest. We will call this `step_percentile`. The code below is designed for illustration and not speed or best practices. I've left out a lot of error trapping that we would want in a real implementation.  
 
