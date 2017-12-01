@@ -42,5 +42,7 @@ rec <- rec \%>\%
 rec
 
 }
-\concept{preprocessing model_specification}
+\concept{
+preprocessing model_specification
+}
 \keyword{datagen}

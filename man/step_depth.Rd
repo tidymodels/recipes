@@ -98,5 +98,7 @@ dists_to_species
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
 }
-\concept{preprocessing dimension_reduction}
+\concept{
+preprocessing dimension_reduction
+}
 \keyword{datagen}

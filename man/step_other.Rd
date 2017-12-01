@@ -85,5 +85,7 @@ table(okc_te$diet, collapsed$diet, useNA = "always")
 
 tidy(rec, number = 1)
 }
-\concept{preprocessing factors}
+\concept{
+preprocessing factors
+}
 \keyword{datagen}

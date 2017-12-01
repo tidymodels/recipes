@@ -17,5 +17,7 @@ A updated \code{\link[=recipe]{recipe()}} with the new step in the last slot.
 \description{
 \code{add_step} adds a step to the last location in the recipe.
 }
-\concept{preprocessing}
+\concept{
+preprocessing
+}
 \keyword{datagen}

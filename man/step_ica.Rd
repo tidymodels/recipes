@@ -78,7 +78,7 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num &lt; 10}, their names will be \code{IC1} - \code{IC9}.
+if \code{num < 10}, their names will be \code{IC1} - \code{IC9}.
 If \code{num = 101}, the names would be \code{IC001} -
 \code{IC101}.
 }
@@ -116,5 +116,7 @@ Networks}, 13(4-5), 411-430.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing ica projection_methods}
+\concept{
+preprocessing ica projection_methods
+}
 \keyword{datagen}

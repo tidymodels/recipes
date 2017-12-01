@@ -102,6 +102,8 @@ tidy(dummies, number = 1)
 \code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 }
-\concept{preprocessing dummy_variables model_specification
-dummy_variables variable_encodings}
+\concept{
+preprocessing dummy_variables model_specification
+dummy_variables variable_encodings
+}
 \keyword{datagen}

@@ -76,5 +76,7 @@ transformed_te
 tidy(ranged_trans, number = 1)
 tidy(ranged_obj, number = 1)
 }
-\concept{preprocessing normalization_methods}
+\concept{
+preprocessing normalization_methods
+}
 \keyword{datagen}

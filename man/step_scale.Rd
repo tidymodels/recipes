@@ -75,5 +75,7 @@ tidy(scaled_trans, number = 1)
 tidy(scaled_obj, number = 1)
 
 }
-\concept{preprocessing normalization_methods}
+\concept{
+preprocessing normalization_methods
+}
 \keyword{datagen}
