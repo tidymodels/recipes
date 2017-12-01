@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.1.1.9000
+Version: 0.1.1.9001
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
@@ -31,7 +31,8 @@ Imports:
     RcppRoll,
     tidyselect (>= 0.1.1),
     magrittr,
-    Matrix
+    Matrix,
+    openssl
 Suggests: 
     testthat,
     rpart,
@@ -48,5 +49,5 @@ License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
