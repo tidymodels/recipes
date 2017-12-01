@@ -3,6 +3,7 @@
 New Steps:
 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
+ * `step_string2hashbucket` can be used to convert character data to integers representing hash buckets.
 
 Changes:
 
