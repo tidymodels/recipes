@@ -99,7 +99,5 @@ transformations to improve normality or symmetry. \emph{Biometrika}.
 \code{\link[=step_BoxCox]{step_BoxCox()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

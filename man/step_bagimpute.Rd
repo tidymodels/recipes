@@ -115,7 +115,5 @@ tidy(imp_models, number = 1)
 Kuhn, M. and Johnson, K. (2013). \emph{Applied
 Predictive Modeling}. Springer Verlag.
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

@@ -29,7 +29,7 @@ has a value.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{size}{An odd integer \code{>= 3} for the window size.}
+\item{size}{An odd integer \code{&gt;= 3} for the window size.}
 
 \item{na.rm}{A logical for whether missing values should be
 removed from the calculations within each window.}
@@ -124,7 +124,5 @@ ggplot(smoothed_dat, aes(x = original, y = y1)) +
   geom_point() +
   theme_bw()
 }
-\concept{
-preprocessing moving_windows
-}
+\concept{preprocessing moving_windows}
 \keyword{datagen}

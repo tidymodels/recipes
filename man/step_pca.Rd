@@ -84,7 +84,7 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{PC1} - \code{PC9}.
+if \code{num &lt; 10}, their names will be \code{PC1} - \code{PC9}.
 If \code{num = 101}, the names would be \code{PC001} -
 \code{PC101}.
 
@@ -124,7 +124,5 @@ Analysis}. Springer.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pca projection_methods
-}
+\concept{preprocessing pca projection_methods}
 \keyword{datagen}

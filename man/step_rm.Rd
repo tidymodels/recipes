@@ -60,7 +60,5 @@ filtered_te
 
 tidy(smaller_set, number = 1)
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

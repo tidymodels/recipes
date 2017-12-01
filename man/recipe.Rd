@@ -4,9 +4,7 @@
 \alias{recipe}
 \alias{recipe.default}
 \alias{recipe.formula}
-\alias{recipe.default}
 \alias{recipe.data.frame}
-\alias{recipe.formula}
 \alias{recipe.matrix}
 \title{Create a Recipe for Preprocessing Data}
 \usage{
@@ -159,7 +157,5 @@ rec
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

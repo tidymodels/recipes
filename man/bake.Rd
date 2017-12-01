@@ -3,7 +3,6 @@
 \name{bake}
 \alias{bake}
 \alias{bake.recipe}
-\alias{bake.recipe}
 \title{Apply a Trained Data Recipe}
 \usage{
 bake(object, ...)
@@ -53,7 +52,5 @@ option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} wit
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

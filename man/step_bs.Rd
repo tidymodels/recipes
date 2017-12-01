@@ -75,7 +75,5 @@ expanded
 \code{\link[=step_poly]{step_poly()}} \code{\link[=recipe]{recipe()}} \code{\link[=step_ns]{step_ns()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing basis_expansion
-}
+\concept{preprocessing basis_expansion}
 \keyword{datagen}

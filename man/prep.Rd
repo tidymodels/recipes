@@ -3,7 +3,6 @@
 \name{prep}
 \alias{prep}
 \alias{prep.recipe}
-\alias{prep.recipe}
 \title{Train a Data Recipe}
 \usage{
 prep(x, ...)
@@ -67,7 +66,5 @@ data, the step for scaling is given the centered data.
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

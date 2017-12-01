@@ -19,7 +19,5 @@ A updated step with the new class.
 \description{
 \code{step} sets the class of the step.
 }
-\concept{
-preprocessing
-}
+\concept{preprocessing}
 \keyword{datagen}

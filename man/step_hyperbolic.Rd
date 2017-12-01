@@ -70,7 +70,5 @@ tidy(cos_obj, number = 1)
 \code{\link[=step_log]{step_log()}}  \code{\link[=step_sqrt]{step_sqrt()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

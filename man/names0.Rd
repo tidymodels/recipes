@@ -50,7 +50,5 @@ levels(example$y)
 
 dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
 }
-\concept{
-string_functions naming_functions
-}
+\concept{string_functions naming_functions}
 \keyword{datagen}

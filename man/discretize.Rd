@@ -132,7 +132,5 @@ rec <- prep(rec, biomass_tr)
 binned_te <- bake(rec, biomass_te)
 table(binned_te$carbon)
 }
-\concept{
-preprocessing discretization factors
-}
+\concept{preprocessing discretization factors}
 \keyword{datagen}
