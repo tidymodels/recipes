@@ -48,17 +48,14 @@ check_noNA <-
   function(recipe,
            ...,
            role = NA,
-           trained = FALSE,
-           means = NULL,
-           na.rm = TRUE,
-           columns = NULL) {
+           trained = FALSE) {
     add_step(
       recipe,
       check_noNA_new(
         terms   = check_ellipses(...),
         role    = role,
         trained = trained,
-        columns = columns
+        columns = NULL
       )
     )
   }
@@ -91,9 +88,7 @@ bake.check_noNA <- function(object, newdata, ...) {
   if (any(nr_na > 0)) {
     with_na     <- names(nr_na[nr_na > 0])
     with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
-    stop(paste0("The following columns contain missing values: ",
-                with_na_str,
-                "."),
+    stop("The following columns contain missing values: ", with_na_str, ".",
          call. = FALSE)
   }
   newdata
