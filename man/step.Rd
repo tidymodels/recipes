@@ -4,7 +4,7 @@
 \alias{step}
 \title{A General Step Wrapper}
 \usage{
-step(subclass, ...)
+step(subclass, ..., prefix = "step_")
 }
 \arguments{
 \item{subclass}{A character string for the resulting class. For example,
@@ -12,6 +12,8 @@ if \code{subclass = "blah"} the step object that is returned has class
 \code{step_blah}.}
 
 \item{...}{All arguments to the step that should be returned.}
+
+\item{prefix}{Prefix to the subclass created.}
 }
 \value{
 A updated step with the new class.
