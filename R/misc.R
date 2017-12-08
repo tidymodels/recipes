@@ -17,7 +17,7 @@ get_types <- function(x) {
       Date = "date",
       POSIXct = "date"
     )
-  
+
   classes <- lapply(x, class)
   res <- lapply(classes,
                 function(x, types) {
@@ -73,14 +73,14 @@ get_lhs_vars <- function(formula, data) {
 get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
-  if(no_lhs) 
+  if(no_lhs)
     formula <- as.formula(paste("~", deparse(f_rhs(formula))))
 
   ## This will need a lot of work to account for cases with `.`
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
-  ## `check_elements` stops when in-line functions are used. 
+  ## `check_elements` stops when in-line functions are used.
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
@@ -130,13 +130,14 @@ var_by_role <-
 #'   if `subclass = "blah"` the step object that is returned has class
 #'   `step_blah`.
 #' @param ... All arguments to the step that should be returned.
+#' @param prefix Prefix to the subclass created.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A updated step with the new class.
 #' @export
-step <- function(subclass, ...) {
+step <- function(subclass, ..., prefix = "step_") {
   structure(list(...),
-            class = c(paste0("step_", subclass), "step"))
+            class = c(paste0(prefix, subclass), "step"))
 }
 
 ## then 9 is to keep space for "[trained]"
@@ -204,31 +205,31 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  dummy variables (in [step_dummy()]).
 #'
 #' @param num A single integer for how many elements are created.
-#' @param prefix A character string that will start each name. 
+#' @param prefix A character string that will start each name.
 #' @param var A single string for the original factor name.
 #' @param lvl A character vectors of the factor levels (in order).
 #'  When used with [step_dummy()], `lvl` would be the suffixes
 #'  that result _after_ `model.matrix` is called (see the
-#'  example below). 
+#'  example below).
 #' @param ordinal A logical; was the original factor ordered?
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
-#'  `lvl`, 
+#'  `lvl`,
 #' @keywords datagen
 #' @concept string_functions naming_functions
-#' @examples 
+#' @examples
 #' names0(9, "x")
 #' names0(10, "x")
-#' 
+#'
 #' example <- data.frame(y = ordered(letters[1:5]),
 #'                       z = factor(LETTERS[1:5]))
-#' 
+#'
 #' dummy_names("z", levels(example$z)[-1])
-#' 
+#'
 #' after_mm <- colnames(model.matrix(~y, data = example))[-1]
 #' after_mm
 #' levels(example$y)
-#' 
+#'
 #' dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
 #' @export
 
@@ -243,12 +244,12 @@ names0 <- function(num, prefix = "x") {
 #' @export
 #' @rdname names0
 dummy_names <- function(var, lvl, ordinal = FALSE) {
-  if(!ordinal) 
-    nms <- paste(var, make.names(lvl), sep = "_") 
-  else 
+  if(!ordinal)
+    nms <- paste(var, make.names(lvl), sep = "_")
+  else
     # assuming they are in order:
-    nms <- paste0(var, names0(length(lvl), "_")) 
-  
+    nms <- paste0(var, names0(length(lvl), "_"))
+
   nms
 }
 
@@ -288,8 +289,8 @@ strings2factors <- function(x, info) {
   info <- info[check_lvls]
   for (i in seq_along(info)) {
     lcol <- names(info)[i]
-    x[, lcol] <- factor(as.character(getElement(x, lcol)), 
-                        levels = info[[i]]$values, 
+    x[, lcol] <- factor(as.character(getElement(x, lcol)),
+                        levels = info[[i]]$values,
                         ordered = info[[i]]$ordered)
   }
   x
@@ -343,8 +344,8 @@ check_ellipses <- function(...) {
 #' @export
 magrittr::`%>%`
 
-printer <- function(tr_obj = NULL, 
-                    untr_obj = NULL, 
+printer <- function(tr_obj = NULL,
+                    untr_obj = NULL,
                     trained = FALSE,
                     width = max(20, options()$width - 30)) {
   if (trained) {
@@ -364,7 +365,7 @@ printer <- function(tr_obj = NULL,
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-prepare   <- function(x, ...) 
+prepare   <- function(x, ...)
   stop("As of version 0.0.1.9006, used `prep` ",
        "instead of `prepare`", call. = FALSE)
 
