@@ -34,7 +34,7 @@ selectors or variables selected).
 }
 \description{
 \code{check_missing} creates a a \emph{specification} of a recipe
-operation that will check if variables do not contain missing values.
+operation that will check if variables contain missing values.
 }
 \details{
 This check will break the \code{bake} function if any of the checked
@@ -61,7 +61,6 @@ recipe(credit_data)  \%>\%
 
 # If newdata contain missing values, the check will stop bake()
 
-\dontrun{
 train_data <- credit_data \%>\% dplyr::filter(Income > 150)
 test_data  <- credit_data \%>\% dplyr::filter(Income <= 150 | is.na(Income))
 
@@ -70,6 +69,7 @@ rp <- recipe(train_data) \%>\%
   prep()
   
 bake(rp, train_data)
+\dontrun{
 bake(rp, test_data)
 }
 }

@@ -23,11 +23,7 @@ The `recipes` package contains a number of different operations:
 
 ```{r step_list}
 library(recipes)
-steps <- apropos("^step_")
-steps[!grepl("new$", steps)]
-
-checks <- apropos("^check_")
-checks[!grepl("new$", checks)]
+grep("(^step_)|(^check_)", ls("package:recipes"), value = TRUE)
 ```
 
 You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for [centering](https://github.com/topepo/recipes/blob/master/R/center.R) or [PCA](https://github.com/topepo/recipes/blob/master/R/pca.R) to start. 

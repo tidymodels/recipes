@@ -1,7 +1,7 @@
 #' Check for Missing Values
 #'
 #' `check_missing` creates a a *specification* of a recipe
-#'  operation that will check if variables do not contain missing values.
+#'  operation that will check if variables contain missing values.
 #'
 #' @param recipe A recipe object. The check will be added to the
 #'  sequence of operations for this recipe.
@@ -41,7 +41,6 @@
 #'
 #' # If newdata contain missing values, the check will stop bake()
 #' 
-#' \dontrun{
 #' train_data <- credit_data %>% dplyr::filter(Income > 150)
 #' test_data  <- credit_data %>% dplyr::filter(Income <= 150 | is.na(Income))
 #' 
@@ -50,6 +49,7 @@
 #'   prep()
 #'   
 #' bake(rp, train_data)
+#' \dontrun{
 #' bake(rp, test_data)
 #' }
 check_missing <-
