@@ -1,20 +1,20 @@
-#' Check no NA Values
+#' Check for Missing Values
 #'
 #' `check_missing` creates a a *specification* of a recipe
-#'  step that will check if variables do not contain missing values.
+#'  operation that will check if variables do not contain missing values.
 #'
-#' @param recipe A recipe object. The step will be added to the
+#' @param recipe A recipe object. The check will be added to the
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which
-#'  variables are checked in the step. See [selections()]
+#'  variables are checked in the check See [selections()]
 #'  for more details. For the `tidy` method, these are not
 #'  currently used.
-#' @param role Not used by this step since no new variables are
+#' @param role Not used by this check since no new variables are
 #'  created.
 #' @param trained A logical for whether the selectors in `...` 
 #' have been resolved by [prep()].
 #' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any). For the
+#'  added to the sequence of existing operations (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @export
@@ -31,8 +31,8 @@
 #'   prep() %>%
 #'   bake(credit_data)
 #'
-#' # If your training set doesn't pass, prep() will stop with
-#' # an error
+#' # If your training set doesn't pass, prep() will stop with an error
+#' 
 #' \dontrun{
 #' recipe(credit_data)  %>%
 #'   check_missing(Income) %>%
@@ -40,13 +40,18 @@
 #' }
 #'
 #' # If newdata contain missing values, the check will stop bake()
+#' 
+#' \dontrun{
 #' train_data <- credit_data %>% dplyr::filter(Income > 150)
 #' test_data  <- credit_data %>% dplyr::filter(Income <= 150 | is.na(Income))
+#' 
 #' rp <- recipe(train_data) %>%
 #'   check_missing(Income) %>%
 #'   prep()
+#'   
 #' bake(rp, train_data)
 #' bake(rp, test_data)
+#' }
 check_missing <-
   function(recipe,
            ...,
