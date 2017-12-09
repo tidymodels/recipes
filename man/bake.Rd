@@ -12,7 +12,7 @@ bake(object, ...)
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
-one preprocessing step.}
+one preprocessing operation.}
 
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details.
@@ -34,7 +34,7 @@ A tibble or sparse matrix that may have different
 columns than the original columns in \code{newdata}.
 }
 \description{
-For a recipe with at least one preprocessing step that has been trained by
+For a recipe with at least one preprocessing operations that has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
 }
 \details{
