@@ -6,21 +6,21 @@
 #'   if `subclass = "blah"` the step object that is returned has class
 #'   `step_blah` or `step_blah` depending on the context. 
 #' @param ... All arguments to the operator that should be returned.
-#' @param prefix Prefix to the subclass created.
+#' @param .prefix Prefix to the subclass created.
 #' @keywords internal
 #' @concept preprocessing
 #' @return A updated step or check with the new class.
 #' @export
-step <- function(subclass, ..., prefix = "step_") {
+step <- function(subclass, ..., .prefix = "step_") {
   structure(list(...),
-            class = c(paste0(prefix, subclass), "step"))
+            class = c(paste0(.prefix, subclass), "step"))
 }
 
 #' @rdname step
 #' @export
-check <- function(subclass, ..., prefix = "check_") {
+check <- function(subclass, ..., .prefix = "check_") {
   structure(list(...),
-            class = c(paste0(prefix, subclass), "check"))
+            class = c(paste0(.prefix, subclass), "check"))
 }
 
 #' Add a New Operation to the Current Recipe

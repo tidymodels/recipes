@@ -5,9 +5,9 @@
 \alias{check}
 \title{\code{step} sets the class of the \code{step`` and}check` is for checks.}
 \usage{
-step(subclass, ..., prefix = "step_")
+step(subclass, ..., .prefix = "step_")
 
-check(subclass, ..., prefix = "check_")
+check(subclass, ..., .prefix = "check_")
 }
 \arguments{
 \item{subclass}{A character string for the resulting class. For example,
@@ -16,7 +16,7 @@ if \code{subclass = "blah"} the step object that is returned has class
 
 \item{...}{All arguments to the operator that should be returned.}
 
-\item{prefix}{Prefix to the subclass created.}
+\item{.prefix}{Prefix to the subclass created.}
 }
 \value{
 A updated step or check with the new class.
