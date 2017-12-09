@@ -19,15 +19,20 @@ knitr::opts_chunk$set(
 options(digits = 3)
 ```
 
-`recipes` contains a number of different steps included in the package:
+The `recipes` package contains a number of different operations:
 
 ```{r step_list}
 library(recipes)
 steps <- apropos("^step_")
 steps[!grepl("new$", steps)]
+
+checks <- apropos("^check_")
+checks[!grepl("new$", checks)]
 ```
 
-You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for [centering](https://github.com/topepo/recipes/blob/master/R/center.R) or [PCA](https://github.com/topepo/recipes/blob/master/R/pca.R) to start. 
+You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for [centering](https://github.com/topepo/recipes/blob/master/R/center.R) or [PCA](https://github.com/topepo/recipes/blob/master/R/pca.R) to start. 
+
+For checks, the process is very similar. Notes on this are given at the end of this document. 
 
 
 # A new step definition
@@ -149,7 +154,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   ## You can add error trapping for non-numeric data here and so on.
   ## We'll use the names later so
   if(x$options$names == FALSE)
-    stop("`names` should be set to TRUE")
+    stop("`names` should be set to TRUE", call. = FALSE)
   
   if(!x$approx) {
     x$ref_dist <- training[, col_names]
@@ -245,3 +250,17 @@ ggplot(plot_data,
   geom_point(alpha = .4, cex = 2) + 
   theme(legend.position = "top")
 ```
+
+# Custom check operations
+
+The process here is exactly the same as steps; the internal functions have a similar naming convention: 
+
+ * `add_check` instead of `add_step`
+ * `check` instead of `step`, and so on. 
+ 
+It is strongly recommended that:
+ 
+ 1. The operations start with `check_` (i.e. `check_range` and `check_range_new`)
+ 1. The check uses `stop(..., call. = FALSE)` when the conditions are not met
+ 1. The original data are returned (unaltered) by the check when the conditions are satisfied. 
+
