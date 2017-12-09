@@ -24,6 +24,9 @@ created.}
 \item{trained}{A logical for whether the selectors in \code{...}
 have been resolved by \code{\link[=prep]{prep()}}.}
 
+\item{columns}{A character string of variable names that will
+be populated (eventually) by the terms argument.}
+
 \item{x}{A \code{check_missing} object.}
 }
 \value{

@@ -13,6 +13,8 @@
 #'  created.
 #' @param trained A logical for whether the selectors in `...` 
 #' have been resolved by [prep()].
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the terms argument.
 #' @return An updated version of `recipe` with the new check
 #'  added to the sequence of existing operations (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
