@@ -3,8 +3,9 @@
 New Steps:
 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
-
-Changes:
+ * `step_novel` adds a new factor level to nominal variables that will be used when new data contain a level that did not exist when the recipe was prepared. 
+ 
+Other Changes:
 
 * `step_spatialsign` now has the option of removing missing data prior to computing the norm.
 

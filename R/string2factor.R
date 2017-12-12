@@ -29,7 +29,8 @@
 #'  `prep` has an option `stringsAsFactors` that defaults
 #'  to `TRUE`. This should be changed so that raw character
 #'  data will be applied to `step_string2factor`.
-#' @seealso [step_factor2string()] [step_dummy()]
+#' @seealso [step_factor2string()] [step_dummy()] [step_other()]
+#'  [step_novel()]
 #' @examples
 #' data(okc)
 #'
