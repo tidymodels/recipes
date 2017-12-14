@@ -4,6 +4,7 @@ New Steps:
 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
  * `step_novel` adds a new factor level to nominal variables that will be used when new data contain a level that did not exist when the recipe was prepared. 
+ * `step_profile` can be used to generate design matrix grids for prediction profile plots of additive models where one variable is varied over a grid and all of the others are fixed at a single value. 
  
 Other Changes:
 
