@@ -28,7 +28,7 @@
 #'  be the index of the sorted unique values. This is applied to all
 #'  qualitative variables captured by the selectors.
 #' @param grid A named list with elements `pctl` (a logical) and
-#'  `len` (an integer). If `pctl = TRUE`, them `len` denotes how
+#'  `len` (an integer). If `pctl = TRUE`, then `len` denotes how
 #'  many percentiles to use to create the profiling grid. This
 #'  creates a grid between 0 and 1 and the profile is determined by
 #'  the percentiles of the data. For example, if `pctl = TRUE` and
@@ -69,6 +69,8 @@
 #' # other functional relationships between predictors
 #' 
 #' lin_mod <- lm(mpg ~ poly(disp, 2) + cyl + hp, data = mtcars)
+#' 
+#' # Show the difference in the two grid creation methods
 #' 
 #' disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) %>%
 #'   step_profile(-disp, profile = vars(disp)) %>%
@@ -202,7 +204,9 @@ bake.step_profile <- function(object, newdata, ...) {
   n <- length(object$profile[[1]])
   newdata <- newdata[rep(1, n), ]
   keepers <- c(names(object$columns), names(object$profile))
-  newdata <- dplyr::select(newdata,!!keepers)
+  # Keep the predictors in the same order
+  keepers <- names(newdata)[names(newdata) %in% keepers]
+  newdata <- dplyr::select(newdata,! !keepers)
   
   for (i in names(object$columns)) {
     newdata[[i]] <- rep(object$columns[[i]], n)
