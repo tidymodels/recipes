@@ -6,7 +6,7 @@
 \title{Collapse Some Categorical Levels}
 \usage{
 step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
-  other = "other", objects = NULL)
+  other = "other", objects = NULL, skip = FALSE)
 
 \method{tidy}{step_other}(x, ...)
 }
@@ -32,6 +32,13 @@ preprocessing have been estimated.}
 \item{objects}{A list of objects that contain the information
 to pool infrequent levels that is determined by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent steps.}
 
 \item{x}{A \code{step_other} object.}
 }

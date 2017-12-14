@@ -7,11 +7,15 @@
 #'   unintentional transformations when calling steps with
 #'   `all_predictors`.
 #'
+#' @inheritParams step_center
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... Argument ignored; included for consistency with other step
 #'   specification functions.
-#' @param role Defaults to "predictor"
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new columns created from the original variables will be
+#'  used as predictors in a model.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
 #' @param name Character name for new added column
@@ -37,33 +41,40 @@
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
 #'
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
+#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 step_intercept <- function(recipe, ..., role = "predictor",
-                           trained = FALSE, name = "intercept", value = 1) {
+                           trained = FALSE, name = "intercept", 
+                           value = 1,
+                           skip = FALSE) {
   if (length(list(...)) > 0)
     warning("Selectors are not used for this step.", call. = FALSE)
   if (!is.numeric(value))
     stop("Intercept value must be numeric.", call. = FALSE)
   if (!is.character(name) | length(name) != 1)
-    stop("Intercept/constant column name must be a character value.", call. = FALSE)
+    stop("Intercept/constant column name must be a character value.", 
+         call. = FALSE)
   add_step(
     recipe,
     step_intercept_new(
       role = role,
       trained = trained,
       name = name,
-      value = value))
+      value = value,
+      skip = skip
+    )
+  )
 }
 
 step_intercept_new <- function(role = "predictor", trained = FALSE,
-                               name = "intercept", value = 1) {
+                               name = "intercept", value = 1,
+                               skip = FALSE) {
   step(
     subclass = "intercept",
     role = role,
     trained = trained,
     name = name,
-    value = value
+    value = value,
+    skip = skip
   )
 }
 

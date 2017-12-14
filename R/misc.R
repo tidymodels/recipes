@@ -358,6 +358,7 @@ printer <- function(tr_obj = NULL,
     cat(" [trained]\n")
   else
     cat("\n")
+  invisible(NULL)
 }
 
 
@@ -376,4 +377,10 @@ fully_trained <- function(x) {
   all(is_tr)
 }
 
+is_skipable <- function(x) {
+  if(all("skip" != names(x)))
+    return(FALSE)
+  else
+    return(x$skip)
+}
 

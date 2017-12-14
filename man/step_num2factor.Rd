@@ -6,7 +6,7 @@
 \title{Convert Numbers to Factors}
 \usage{
 step_num2factor(recipe, ..., role = NA, transform = function(x) x,
-  trained = FALSE, levels = NULL, ordered = FALSE)
+  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE)
 
 \method{tidy}{step_num2factor}(x, ...)
 }
@@ -35,6 +35,13 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 
 \item{ordered}{A single logical value; should the factor(s) be
 ordered?}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent steps.}
 
 \item{x}{A \code{step_num2factor} object.}
 }

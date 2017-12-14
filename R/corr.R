@@ -71,7 +71,8 @@ step_corr <- function(recipe,
                       threshold = 0.9,
                       use = "pairwise.complete.obs",
                       method = "pearson",
-                      removals = NULL) {
+                      removals = NULL,
+                      skip = FALSE) {
   add_step(
     recipe,
     step_corr_new(
@@ -81,7 +82,8 @@ step_corr <- function(recipe,
       threshold = threshold,
       use = use,
       method = method,
-      removals = removals
+      removals = removals,
+      skip = skip
     )
   )
 }
@@ -94,7 +96,8 @@ step_corr_new <-
     threshold = NULL,
     use = NULL,
     method = NULL,
-    removals = NULL
+    removals = NULL,
+    skip = FALSE
   ) {
     step(
       subclass = "corr",
@@ -104,7 +107,8 @@ step_corr_new <-
       threshold = threshold,
       use = use,
       method = method,
-      removals = removals
+      removals = removals,
+      skip = skip
     )
   }
 
@@ -125,7 +129,8 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     use = x$use,
     method = x$method,
-    removals = filter
+    removals = filter,
+    skip = x$skip
   )
 }
 

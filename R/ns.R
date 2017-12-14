@@ -55,7 +55,8 @@ step_ns <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(df = 2)) {
+           options = list(df = 2),
+           skip = FALSE) {
     add_step(
       recipe,
       step_ns_new(
@@ -63,7 +64,8 @@ step_ns <-
         trained = trained,
         role = role,
         objects = objects,
-        options = options
+        options = options,
+        skip = skip
       )
     )
   }
@@ -73,14 +75,16 @@ step_ns_new <-
            role = NA,
            trained = FALSE,
            objects = NULL,
-           options = NULL) {
+           options = NULL,
+           skip = FALSE) {
     step(
       subclass = "ns",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
-      options = options
+      options = options,
+      skip = skip
     )
   }
 
@@ -110,7 +114,8 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
-    options = x$options
+    options = x$options,
+    skip = x$skip
   )
 }
 

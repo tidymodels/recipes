@@ -5,7 +5,8 @@
 \alias{tidy.step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL)
+step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_sqrt}(x, ...)
 }
@@ -26,6 +27,13 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string of variable names that will
 be (eventually) populated by the \code{terms} argument.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent steps.}
 
 \item{x}{A \code{step_sqrt} object.}
 }

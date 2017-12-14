@@ -6,7 +6,7 @@
 \title{Data Depths}
 \usage{
 step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
-  metric = "halfspace", options = list(), data = NULL)
+  metric = "halfspace", options = list(), data = NULL, skip = FALSE)
 
 \method{tidy}{step_depth}(x, ...)
 }
@@ -46,6 +46,13 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 
 \item{data}{The training data are stored here once after
 \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent steps.}
 
 \item{x}{A \code{step_depth} object.}
 }

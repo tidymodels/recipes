@@ -447,8 +447,11 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   keepers <- terms_select(terms = terms, info = object$term_info)
 
   for (i in seq(along = object$steps)) {
-    newdata <- bake(object$steps[[i]], newdata = newdata)
-    if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
+    if (!is_skipable(object$steps[[i]])) {
+      newdata <- bake(object$steps[[i]], newdata = newdata)
+      if (!is_tibble(newdata))
+        newdata <- as_tibble(newdata)
+    }
   }
 
   newdata <- newdata[, names(newdata) %in% keepers]

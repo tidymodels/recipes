@@ -5,7 +5,8 @@
 \alias{tidy.step_modeimpute}
 \title{Impute Nominal Data Using the Most Common Value}
 \usage{
-step_modeimpute(recipe, ..., role = NA, trained = FALSE, modes = NULL)
+step_modeimpute(recipe, ..., role = NA, trained = FALSE, modes = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_modeimpute}(x, ...)
 }
@@ -26,6 +27,13 @@ preprocessing have been estimated.}
 
 \item{modes}{A named character vector of modes. This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent steps.}
 
 \item{x}{A \code{step_modeimpute} object.}
 }

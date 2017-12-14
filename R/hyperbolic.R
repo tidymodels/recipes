@@ -52,10 +52,12 @@ step_hyperbolic <-
            trained = FALSE,
            func = "sin",
            inverse = TRUE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
-      stop("`func` should be either `sin``, `cos`, or `tan`", call. = FALSE)
+      stop("`func` should be either `sin``, `cos`, or `tan`", 
+           call. = FALSE)
     add_step(
       recipe,
       step_hyperbolic_new(
@@ -64,7 +66,8 @@ step_hyperbolic <-
         trained = trained,
         func = func,
         inverse = inverse,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -75,7 +78,8 @@ step_hyperbolic_new <-
            trained = FALSE,
            func = NULL,
            inverse = NULL,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "hyperbolic",
       terms = terms,
@@ -83,7 +87,8 @@ step_hyperbolic_new <-
       trained = trained,
       func = func,
       inverse = inverse,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -96,7 +101,8 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     func = x$func,
     inverse = x$inverse,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 
