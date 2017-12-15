@@ -94,20 +94,7 @@ get_rhs_terms <- function(x) x
 
 ## ancillary step functions
 
-#' Add a New Step to Current Recipe
-#'
-#' `add_step` adds a step to the last location in the recipe.
-#'
-#' @param rec A [recipe()].
-#' @param object A step object.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A updated [recipe()] with the new step in the last slot.
-#' @export
-add_step <- function(rec, object) {
-  rec$steps[[length(rec$steps) + 1]] <- object
-  rec
-}
+
 
 
 var_by_role <-
@@ -121,24 +108,6 @@ var_by_role <-
     res
   }
 
-## Overall wrapper to make new step_X objects
-#' A General Step Wrapper
-#'
-#' `step` sets the class of the step.
-#'
-#' @param subclass A character string for the resulting class. For example,
-#'   if `subclass = "blah"` the step object that is returned has class
-#'   `step_blah`.
-#' @param ... All arguments to the step that should be returned.
-#' @param prefix Prefix to the subclass created.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A updated step with the new class.
-#' @export
-step <- function(subclass, ..., prefix = "step_") {
-  structure(list(...),
-            class = c(paste0(prefix, subclass), "step"))
-}
 
 ## then 9 is to keep space for "[trained]"
 format_ch_vec <-

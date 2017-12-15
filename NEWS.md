@@ -1,10 +1,14 @@
 # recipes 0.1.1.9000
 
-New Steps:
+Edwin Thoen suggested [adding validation checks](https://github.com/topepo/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/topepo/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
 
+
+New Operations:
+
+ * `check_missing` will validate that none of the specified variables contain missing data. 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
 
-Changes:
+Other Changes:
 
 * `step_spatialsign` now has the option of removing missing data prior to computing the norm.
 
