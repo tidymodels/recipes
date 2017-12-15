@@ -149,7 +149,7 @@ recipe.data.frame <-
            ...,
            vars = NULL,
            roles = NULL) {
-
+    
     if (!is.null(formula)) {
       if (!is.null(vars))
         stop("This `vars` specification will be ignored when a formula is ",
@@ -157,14 +157,14 @@ recipe.data.frame <-
       if (!is.null(roles))
         stop("This `roles` specification will be ignored when a formula is ",
              "used", call. = FALSE)
-
+      
       obj <- recipe.formula(formula, x, ...)
       return(obj)
     }
-
+    
     if (is.null(vars))
       vars <- colnames(x)
-
+    
     if (!is_tibble(x))
       x <- as_tibble(x)
     if (is.null(vars))
@@ -173,11 +173,11 @@ recipe.data.frame <-
       stop("`vars` should have unique members", call. = FALSE)
     if (any(!(vars %in% colnames(x))))
       stop("1+ elements of `vars` are not in `x`", call. = FALSE)
-
+    
     x <- x[, vars]
-
+    
     var_info <- tibble(variable = vars)
-
+    
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars))
@@ -186,11 +186,11 @@ recipe.data.frame <-
       var_info$role <- roles
     } else
       var_info$role <- NA
-
+    
     ## Add types
     var_info <- full_join(get_types(x), var_info, by = "variable")
     var_info$source <- "original"
-
+    
     ## Return final object of class `recipe`
     out <- list(
       var_info = var_info,
@@ -233,30 +233,30 @@ form2args <- function(formula, data, ...) {
     formula <- as.formula(formula)
   ## check for in-line formulas
   check_elements(formula, allowed = NULL)
-
+  
   if (!is_tibble(data))
     data <- as_tibble(data)
-
+  
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
   predictors <- get_rhs_vars(formula, data, no_lhs = TRUE)
   
   ## if . was used on the rhs, subtract out the outcomes
   predictors <- predictors[!(predictors %in% outcomes)]
-
+  
   ## get `vars` from lhs and rhs of formula
   vars <- c(predictors, outcomes)
-
+  
   ## subset data columns
   data <- data[, vars]
-
+  
   ## derive roles
   roles <- rep("predictor", length(predictors))
   if (length(outcomes) > 0)
     roles <- c(roles, rep("outcome", length(outcomes)))
-
+  
   ## pass to recipe.default with vars and roles
-
+  
   list(x = data, vars = vars, roles = roles)
 }
 
@@ -284,12 +284,13 @@ prep   <- function(x, ...)
 #'   `training`.
 #' @param verbose A logical that controls wether progress is reported as steps
 #'   are executed.
-#' @param retain A logical: should the *preprocessingcessed* training set be saved
+#' @param retain A logical: should the *preprocessed* training set be saved
 #'   into the `template` slot of the recipe after training? This is a good
 #'     idea if you want to add more steps later but want to avoid re-training
-#'     the existing steps.
+#'     the existing steps. Also, it is advisable to use `retain = TRUE`
+#'     if any steps use the option `skip = FALSE`. 
 #' @param stringsAsFactors A logical: should character columns be converted to
-#'   factors? This affects the preprocessingcessed training set (when
+#'   factors? This affects the preprocessed training set (when
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
@@ -313,6 +314,7 @@ prep   <- function(x, ...)
 #'
 #' @rdname prep
 #' @importFrom tibble as_tibble is_tibble tibble
+#' @importFrom purrr map_lgl
 #' @export
 prep.recipe <-
   function(x,
@@ -340,47 +342,56 @@ prep.recipe <-
       training <- strings2factors(training, lvls)
     } else
       lvls <- NULL
-
+    
+    # The only way to get the results for skipped steps is to 
+    # use `retain = TRUE` so issue a warning if this is not the case
+    skippers <- map_lgl(x$steps, is_skipable)
+    if (any(skippers) & !retain)
+      warning("Since some operations have `skip = FALSE`, using ",
+              "`retain = TRUE` will allow those steps results to ",
+              "be accessible.") 
+      
+    
     for (i in seq(along = x$steps)) {
       note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
           cat(note, "training", "\n")
-
+        
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-
+        
         x$steps[[i]] <-
           prep(x$steps[[i]],
-                  training = training,
-                  info = x$term_info)
+               training = training,
+               info = x$term_info)
         training <- bake(x$steps[[i]], newdata = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
-
+        
         ## Update the roles and the term source
         ## These next two steps needs to be smarter to find diffs
         if (!is.na(x$steps[[i]]$role))
           x$term_info$role[is.na(x$term_info$role)] <-
           x$steps[[i]]$role
-
+        
         x$term_info$source[is.na(x$term_info$source)] <- "derived"
       } else {
         if (verbose)
           cat(note, "[pre-trained]\n")
       }
     }
-
+    
     ## The steps may have changed the data so reassess the levels
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
     } else lvls <- NULL
-
+    
     if (retain)
       x$template <- training
-
+    
     x$tr_info <- tr_data
     x$levels <- lvls
     x$retained <- retain
@@ -424,6 +435,10 @@ bake <- function(object, ...)
 #'  of [prep()] to avoid duplicating the same operations. With this
 #'  option set, [juice()] can be used instead of `bake` with
 #'  `newdata` equal to the training set.
+#'  
+#' Also, any steps with `skip = TRUE` will not be applied to the
+#'   data when `bake` is invoked. [juice()] will always have all 
+#'   of the steps applied.  
 #' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
 #' @importFrom tibble as_tibble
@@ -431,21 +446,21 @@ bake <- function(object, ...)
 #' @importFrom tidyselect everything
 #' @export
 bake.recipe <- function(object, newdata, ..., composition = "tibble") {
-
+  
   if (!any(composition == formats))
     stop("`composition` should be one of: ",
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
   
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
-
+  
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(everything())
-
+  
   ## determine return variables
   keepers <- terms_select(terms = terms, info = object$term_info)
-
+  
   for (i in seq(along = object$steps)) {
     if (!is_skipable(object$steps[[i]])) {
       newdata <- bake(object$steps[[i]], newdata = newdata)
@@ -453,9 +468,9 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
         newdata <- as_tibble(newdata)
     }
   }
-
+  
   newdata <- newdata[, names(newdata) %in% keepers]
-
+  
   ## the Levels are not null when no nominal data are present or
   ## if stringsAsFactors = FALSE in `prep`
   if (!is.null(object$levels)) {
@@ -468,7 +483,7 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
     if (length(var_levels) > 0)
       newdata <- strings2factors(newdata, var_levels)
   }
-
+  
   if(composition == "dgCMatrix")
     newdata <- convert_dgCMatrix(newdata)
   
@@ -535,7 +550,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
 #'   and `source`.
-#' @details Note that, until the recipe has been trained, the currrent and
+#' @details Note that, until the recipe has been trained, the current and
 #'   original variables are the same.
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
@@ -565,7 +580,12 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'   with the option `retain = TRUE`.
 #' @details When preparing a recipe, if the training data set is
 #'  retained using `retain = TRUE`, there is no need to `bake` the
-#'  recipe to get the preprocessed training set.
+#'  recipe to get the preprocessed training set. 
+#'  
+#'  `juice` will return the results of a recipes where _all steps_
+#'  have been applied to the data, irrespective of the value of
+#'  the step's `skip` argument. 
+#'
 #' @examples
 #' data(biomass)
 #'
@@ -606,9 +626,9 @@ juice <- function(object, ..., composition = "tibble") {
   if (is_empty(terms))
     terms <- quos(everything())
   keepers <- terms_select(terms = terms, info = object$term_info)
-
+  
   newdata <- object$template[, names(object$template) %in% keepers]
-
+  
   ## Since most models require factors, do the conversion from character
   if (!is.null(object$levels)) {
     var_levels <- object$levels

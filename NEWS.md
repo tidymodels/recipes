@@ -1,5 +1,10 @@
 # recipes 0.1.1.9000
 
+Package Changes:
+
+ * Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://topepo.github.io/recipes/docs/devel/articles/Skipping.html) for more information. 
+
+
 New Steps:
 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 

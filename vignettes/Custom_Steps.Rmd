@@ -23,8 +23,7 @@ options(digits = 3)
 
 ```{r step_list}
 library(recipes)
-steps <- apropos("^step_")
-steps[!grepl("new$", steps)]
+ls("package:recipes", pattern = "^step_")
 ```
 
 You might want to make your own and this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for [centering](https://github.com/topepo/recipes/blob/master/R/center.R) or [PCA](https://github.com/topepo/recipes/blob/master/R/pca.R) to start. 
@@ -58,14 +57,19 @@ Our new step will do this computation for any numeric variables of interest. We 
 
 # Create the initial function. 
 
-The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. The `...` signfies the variable selectors that can be used.
+The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. The `...` signifies the variable selectors that can be used.
 
 ```{r initial_def}
-step_percentile <- function(recipe, ..., role = NA, 
-                            trained = FALSE, ref_dist = NULL,
-                            approx = FALSE, 
-                            options = list(probs = (0:100)/100, names = TRUE)) {
-## bake but do not evaluate the variable selectors with
+step_percentile <- function(
+  recipe, ..., 
+  role = NA, 
+  trained = FALSE, 
+  ref_dist = NULL,
+  approx = FALSE, 
+  options = list(probs = (0:100)/100, names = TRUE),
+  skip = FALSE
+  ) {
+## The variable selectors are not immediately evaluated by using
 ## the `quos` function in `rlang`
   terms <- rlang::quos(...) 
   if(length(terms) == 0)
@@ -78,19 +82,21 @@ step_percentile <- function(recipe, ..., role = NA,
       role = role, 
       ref_dist = ref_dist,
       approx = approx,
-      options = options))
+      options = options,
+      skip = skip))
 }
 ```
 
 You should always keep the first four arguments (`recipe` though `trained`) the same as listed above. Some notes:
 
  * the `role` argument is used when you either 1) create new variables and want their role to be pre-set or 2) replace the existing variables with new values. The latter is what we will be doing and using `role = NA` will leave the existing role intact. 
- * `trained` is set by the package when the estimation step has been run. You should default your function definition's argument to `FALSE`.  
+ * `trained` is set by the package when the estimation step has been run. You should default your function definition's argument to `FALSE`. 
+ * `skip` is a logical. Whenever a recipe is prepped, each step is trained and then baked. However, there are some steps that should not be applied when a call to `bake` is used. For example, if a step is applied to the variables with roles of "outcomes", these data would not be available for new samples. 
 
 I've added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the `ref_dist` object. 
 However, this might be problematic if the data set is large. `approx` would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If `approx = TRUE`, the argument `ref_dist` will contain the grid for each variable. 
 
-We will use the `stats::quantile` to compute the grid. However, we might also want to have control over the granularity of this grid, so the `options` argument will be used to define how that calculations is done. We could just use the ellipses (aka `...`) so that any options passed to `step_percentile` that are not one of its arguments will then be passed to `stats::quantile`. We recommend making a seperate list object with the options and use these inside the function. 
+We will use the `stats::quantile` to compute the grid. However, we might also want to have control over the granularity of this grid, so the `options` argument will be used to define how that calculations is done. We could just use the ellipses (aka `...`) so that any options passed to `step_percentile` that are not one of its arguments will then be passed to `stats::quantile`. We recommend making a separate list object with the options and use these inside the function. 
 
 
 # Initialization of new objects
@@ -98,8 +104,15 @@ We will use the `stats::quantile` to compute the grid. However, we might also wa
 Next, you can utilize the internal function `step` that sets the class of new objects. Using `subclass = "percentile"` will set the class of new objects to `"step_percentile". 
 
 ```{r initialize}
-step_percentile_new <- function(terms = NULL, role = NA, trained = FALSE, 
-                                ref_dist = NULL, approx = NULL, options = NULL) {
+step_percentile_new <- function(
+  terms = NULL, 
+  role = NA, 
+  trained = FALSE, 
+  ref_dist = NULL, 
+  approx = NULL, 
+  options = NULL,
+  skip = FALSE
+) {
   step(
     subclass = "percentile", 
     terms = terms,
@@ -107,7 +120,8 @@ step_percentile_new <- function(terms = NULL, role = NA, trained = FALSE,
     trained = trained,
     ref_dist = ref_dist,
     approx = approx,
-    options = options
+    options = options,
+    skip = skip
   )
 }
 ```
@@ -174,7 +188,7 @@ Remember that the `prep` function does not _apply_ the step to the data; it only
 function(object, newdata, ...)
 ```
 
-where `object` is the updated step function that has been through the corresponding `prep` code and `newdata` is a tibble of data to be preprocessingcessed. 
+where `object` is the updated step function that has been through the corresponding `prep` code and `newdata` is a tibble of data to be processed. 
 
 Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output. 
 

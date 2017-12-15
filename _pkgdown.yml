@@ -28,7 +28,9 @@ navbar:
       - text: "The Order of Steps"
         href: articles/Ordering.html  
       - text: "Dummy Variables and Interactions"
-        href: articles/Dummies.html          
+        href: articles/Dummies.html        
+      - text: "On Skipping Steps"
+        href: articles/Skipping.html              
   - text: Reference
     href: reference/index.html
   - text: News

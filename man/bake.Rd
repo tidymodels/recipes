@@ -46,6 +46,10 @@ processed, time can be saved by using the \code{retain = TRUE} option
 of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
 option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
 \code{newdata} equal to the training set.
+
+Also, any steps with \code{skip = TRUE} will not be applied to the
+data when \code{bake} is invoked. \code{\link[=juice]{juice()}} will always have all
+of the steps applied.
 }
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=juice]{juice()}}, \code{\link[=prep]{prep()}}
