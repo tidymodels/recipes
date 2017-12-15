@@ -377,6 +377,8 @@ fully_trained <- function(x) {
   all(is_tr)
 }
 
+
+# to be used in a recipe
 is_skipable <- function(x) {
   if(all("skip" != names(x)))
     return(FALSE)
@@ -384,3 +386,10 @@ is_skipable <- function(x) {
     return(x$skip)
 }
 
+# to be used within a step
+skip_me <- function(x) {
+  if(!exists("skip"))
+    return(FALSE)
+  else
+    return(x$skip)
+}
