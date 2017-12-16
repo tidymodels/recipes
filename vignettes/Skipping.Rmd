@@ -19,7 +19,7 @@ options(digits = 3)
 library(recipes)
 ```
 
-When steps are created in a recipe, they can be applied to data (i.e. bakeed) at two distinct times:
+When steps are created in a recipe, they can be applied to data (i.e. baked) at two distinct times:
 
 1. During the process of preparing the recipe, each step is estimated via `prep` and then applied to the training set using `bake` before proceeding to the next step. 
 1. After the recipe has been prepared, `bake` can be used with any data set to apply the preprocessing to those data. 
