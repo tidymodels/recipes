@@ -51,6 +51,7 @@ Skipping is a necessary feature but can be dangerous if used carelessly.
 As an example, skipping an operation whose variables are used later might be an issue:
 
 ```{r car-pca}
+library(recipes)
 car_recipe <- recipe(mpg ~ ., data = mtcars) %>%
   step_log(disp, skip = TRUE) %>%
   step_center(all_predictors()) %>%
