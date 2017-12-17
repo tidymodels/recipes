@@ -25,7 +25,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{columns}{A character string of variable names that will
-be (eventually) populated by the \code{terms} argument.}
+be populated (eventually) by the \code{terms} argument.}
 
 \item{x}{A \code{step_logit} object.}
 }

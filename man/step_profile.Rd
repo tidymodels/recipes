@@ -37,7 +37,7 @@ be the index of the sorted unique values. This is applied to all
 qualitative variables captured by the selectors.}
 
 \item{grid}{A named list with elements \code{pctl} (a logical) and
-\code{len} (an integer). If \code{pctl = TRUE}, them \code{len} denotes how
+\code{len} (an integer). If \code{pctl = TRUE}, then \code{len} denotes how
 many percentiles to use to create the profiling grid. This
 creates a grid between 0 and 1 and the profile is determined by
 the percentiles of the data. For example, if \code{pctl = TRUE} and
@@ -96,6 +96,8 @@ recipe(~ diet + height + date, data = okc) \%>\%
 # other functional relationships between predictors
 
 lin_mod <- lm(mpg ~ poly(disp, 2) + cyl + hp, data = mtcars)
+
+# Show the difference in the two grid creation methods
 
 disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(-disp, profile = vars(disp)) \%>\%
