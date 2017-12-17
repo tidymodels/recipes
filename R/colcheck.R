@@ -23,7 +23,7 @@ check_cols <-
            ...,
            role = NA,
            trained = FALSE) {
-    add_step(
+    add_check(
       recipe,
       check_cols_new(
         terms   = check_ellipses(...),
@@ -39,16 +39,17 @@ check_cols_new <-
            role  = NA,
            trained = FALSE,
            columns = NULL) {
-    step(subclass = "cols",
-         prefix   = "check_",
-         terms    = terms,
-         role     = role,
-         trained  = trained,
-         columns  = columns)
+    check(subclass = "cols",
+          prefix   = "check_",
+          terms    = terms,
+          role     = role,
+          trained  = trained,
+          columns  = columns)
   }
 
 prep.check_cols <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  print(col_names)
   check_cols_new(terms = x$terms,
                  role  = x$role,
                  trained = TRUE,
@@ -56,14 +57,32 @@ prep.check_cols <- function(x, training, info = NULL, ...) {
 }
 
 bake.check_cols <- function(object, newdata, ...) {
-  # original_cols <- object$columns
-  # new_cols      <- names(newdata)
-  # missing <- setdiff(original_cols, new_cols)
-  # if (length(missing) > 0) {
-  #   mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-  #   stop("The following cols are missing from newdata: ", mis_cols, ".")
-  # }
-  "jos"
+  original_cols <- object$columns
+  new_cols      <- names(newdata)
+  missing <- setdiff(original_cols, new_cols)
+  if (length(missing) > 0) {
+    mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
+    stop("The following cols are missing from newdata: ", mis_cols, ".",
+         call. = FALSE)
+  }
+  newdata
 }
 
-recipe(mtcars) %>% check_cols(everything()) %>% prep(mtcars) %>% bake(mtcars)
+print.check_cols <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    cat("Check if the following columns are present ", sep = "")
+    printer(x$columns, x$terms, x$trained, width = width)
+    invisible(x)
+  }
+
+#' @rdname check_missing
+#' @param x A `check_missing` object.
+tidy.check_cols <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = x$columns)
+  } else {
+    res <- tibble(terms = sel2char(x$terms))
+  }
+  res
+}
+
