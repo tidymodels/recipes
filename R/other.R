@@ -40,6 +40,9 @@
 #' If the retained categories include the value of `other`, an error is
 #'   thrown. If `other` is in the list of discarded levels, no error
 #'   occurs.
+#' @seealso [step_factor2string()], [step_string2factor()],
+#'  [dummy_names()], [step_regex()], [step_count()], 
+#'  [step_ordinalscore()], [step_unorder()], [step_novel()]
 #' @examples
 #' data(okc)
 #'

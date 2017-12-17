@@ -61,6 +61,7 @@
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()], 
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
+#'  [step_novel()]
 #' @examples
 #' data(okc)
 #' okc <- okc[complete.cases(okc),]
