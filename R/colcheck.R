@@ -49,7 +49,6 @@ check_cols_new <-
 
 prep.check_cols <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  print(col_names)
   check_cols_new(terms = x$terms,
                  role  = x$role,
                  trained = TRUE,
