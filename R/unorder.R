@@ -11,7 +11,7 @@
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variable names that will
-#'  be (eventually) populated by the `terms` argument.
+#'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the

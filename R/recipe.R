@@ -38,8 +38,8 @@ recipe.default <- function(x, ...)
 #'   \item{term_info}{A tibble that contains the current set of terms in the
 #'   data set. This initially defaults to the same data contained in
 #'   `var_info`.}
-#'   \item{steps}{A list of `step` objects that define the sequence of
-#'   preprocessing steps that will be applied to data. The default value is
+#'   \item{steps}{A list of `step`  or `check` objects that define the sequence of
+#'   preprocessing operations that will be applied to data. The default value is
 #'   `NULL`}
 #'   \item{template}{A tibble of the data. This is initialized to be the same
 #'   as the data given in the `data` argument but can be different after
@@ -60,14 +60,19 @@ recipe.default <- function(x, ...)
 #'   which variables in a data set should be used and then sequentially
 #'   defining their roles (see the last example).
 #'
-#' Steps to the recipe can be added sequentially. Steps can include common
-#'   operations like logging a variable, creating dummy variables or
-#'   interactions and so on. More computationally complex actions such as
-#'   dimension reduction or imputation can also be specified.
+#' There are two different types of operations that can be
+#'  sequentially added to a recipe. **Steps**  can include common
+#'  operations like logging a variable, creating dummy variables or
+#'  interactions and so on. More computationally complex actions
+#'  such as dimension reduction or imputation can also be specified.
+#'  **Checks** are operations that conduct specific tests of the
+#'  data. When the test is satisfied, the data are returned without
+#'  issue or modification. Otherwise, any error is thrown.
 #'
 #' Once a recipe has been defined, the [prep()] function can be
-#'   used to estimate quants required in the steps from a data set (a.k.a. the
-#'   training data). [prep()] returns another recipe.
+#'  used to estimate quantities required for the operations using a
+#'  data set (a.k.a. the training data). [prep()] returns another
+#'  recipe.
 #'
 #' To apply the recipe to a data set, the [bake()] function is
 #'   used in the same manner as `predict` would be for models. This
@@ -274,15 +279,15 @@ prep   <- function(x, ...)
 
 #' Train a Data Recipe
 #'
-#' For a recipe with at least one preprocessing step, estimate the required
+#' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
 #'   sets.
 #' @param training A data frame or tibble that will be used to estimate
 #'   parameters for preprocessing.
-#' @param fresh A logical indicating whether already trained steps should be
+#' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
-#' @param verbose A logical that controls wether progress is reported as steps
+#' @param verbose A logical that controls wether progress is reported as operations
 #'   are executed.
 #' @param retain A logical: should the *preprocessed* training set be saved
 #'   into the `template` slot of the recipe after training? This is a good
@@ -294,19 +299,19 @@ prep   <- function(x, ...)
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
-#'   `term_info` object is likely to be modified as the steps are
+#'   `term_info` object is likely to be modified as the operations are
 #'   executed.
 #' @details Given a data set, this function estimates the required quantities
-#'   and statistics required by any steps.
+#'   and statistics required by any operations.
 #'
 #' [prep()] returns an updated recipe with the estimates.
 #'
 #' Note that missing data handling is handled in the steps; there is no global
-#'   `na.rm` option at the recipe-level or in  [prep()].
+#'   `na.rm` option at the recipe-level or in [prep()].
 #'
 #' Also, if a recipe has been trained using [prep()] and then steps
-#'   are added, [prep()] will only update the new steps. If
-#'   `fresh = TRUE`, all of the steps will be (re)estimated.
+#'   are added, [prep()] will only update the new operations. If
+#'   `fresh = TRUE`, all of the operations will be (re)estimated.
 #'
 #' As the steps are executed, the `training` set is updated. For example,
 #'   if the first step is to center the data and the second is to scale the
@@ -353,11 +358,11 @@ prep.recipe <-
       
     
     for (i in seq(along = x$steps)) {
-      note <- paste("step", i, gsub("^step_", "", class(x$steps[[i]])[1]))
+      note <- 
+        paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
-          cat(note, "training", "\n")
-        
+          cat(note, "[training]", "\n")
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
         
@@ -409,10 +414,10 @@ bake <- function(object, ...)
 
 #' Apply a Trained Data Recipe
 #'
-#' For a recipe with at least one preprocessing step that has been trained by
+#' For a recipe with at least one preprocessing operations that has been trained by
 #'   [prep.recipe()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
-#'   one preprocessing step.
+#'   one preprocessing operation.
 #' @param newdata A data frame or tibble for whom the preprocessing will be
 #'   applied.
 #' @param ... One or more selector functions to choose which variables will be
@@ -470,8 +475,7 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   }
   
   newdata <- newdata[, names(newdata) %in% keepers]
-  
-  ## the Levels are not null when no nominal data are present or
+  ## The levels are not null when no nominal data are present or
   ## if stringsAsFactors = FALSE in `prep`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
@@ -531,7 +535,7 @@ print.recipe <- function(x, form_width = 30, ...) {
           "\n")
   }
   if (!is.null(x$steps)) {
-    cat("\nSteps:\n\n")
+    cat("\nOperations:\n\n")
     for (i in seq_along(x$steps))
       print(x$steps[[i]], form_width = form_width)
   }

@@ -14,6 +14,7 @@ reference:
   - title: Step Functions
     contents:
     - matches("step_")
+    - matches("check_")
 
 navbar:
   left:
