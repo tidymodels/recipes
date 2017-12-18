@@ -30,3 +30,21 @@ test_that('simple skip', {
   
   expect_warning(prep(rec_1, training = iris, retain = FALSE))
 })
+
+
+test_that('check existing steps for `skip` arg', {
+  step_check <- ls("package:recipes", pattern = "(^step_)|(^check_)")
+  has_skip_arg <- function(x) {
+    x_code <- getFromNamespace(x, "recipes")
+    x_args <- names(formals(x_code))
+    "skip" %in% x_args
+  }
+  has_skip <- vapply(step_check, has_skip_arg, logical(1))
+  if(any(!has_skip))
+    print(names(has_skip)[!has_skip])
+  
+  for(i in names(has_skip))
+    expect_true(has_skip[i])
+})
+
+
