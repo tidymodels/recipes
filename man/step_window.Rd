@@ -52,11 +52,11 @@ are not sure what columns will be selected, use the
 the names of the new columns created by the step.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While are steps are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some steps may not be able to be
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent steps.}
+the computations for subsequent operations}
 
 \item{x}{A \code{step_window} object.}
 }

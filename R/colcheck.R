@@ -4,20 +4,7 @@
 #'  step that will check if all the columns of the training frame are
 #'  present in the new data.
 #'
-#' @param recipe A recipe object. The step will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are checked in the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param trained A logical to indicate if the column names to check
-#'  against are gathered.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#' @inheritParams check_missing
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed

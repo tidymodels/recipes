@@ -15,6 +15,12 @@
 #' have been resolved by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the terms argument.
+#' @param skip A logical. Should the check be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations. 
 #' @return An updated version of `recipe` with the new check
 #'  added to the sequence of existing operations (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the

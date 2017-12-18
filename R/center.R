@@ -18,11 +18,11 @@
 #' @param na.rm A logical value indicating whether `NA`
 #'  values should be removed during computations.
 #' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While are steps are baked
-#'  when [prep.recipe()] is run, some steps may not be able to be
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent steps. 
+#'  the computations for subsequent operations 
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
