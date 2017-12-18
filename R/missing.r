@@ -59,14 +59,16 @@ check_missing <-
            ...,
            role = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     add_check(
       recipe,
       check_missing_new(
         terms   = check_ellipses(...),
         role    = role,
         trained = trained,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -75,13 +77,15 @@ check_missing_new <-
   function(terms = NULL,
            role  = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     check(subclass = "missing",
           prefix   = "check_",
           terms    = terms,
           role     = role,
           trained  = trained,
-          columns  = columns)
+          columns  = columns,
+          skip = skip)
   }
 
 prep.check_missing <- function(x, training, info = NULL, ...) {
@@ -89,7 +93,8 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
   check_missing_new(terms = x$terms,
                     role  = x$role,
                     trained = TRUE,
-                    columns = col_names)
+                    columns = col_names,
+                    skip = x$skip)
 }
 
 bake.check_missing <- function(object, newdata, ...) {
