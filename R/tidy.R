@@ -1,20 +1,20 @@
 #' Tidy the Result of a Recipe
 #'
 #' `tidy` will return a data frame that contains information
-#'  regarding a recipe or step within the recipe (when a `tidy`
-#'  method for the step exists).
+#'  regarding a recipe or operation within the recipe (when a `tidy`
+#'  method for the operation exists).
 #'
 #' @param x A `recipe` object (trained or otherwise).
 #' @param number An integer or `NA`. If missing, the return
-#'  value is a list of the steps in the recipe. If a number is
-#'  given, a `tidy` method is executed for that step in the
+#'  value is a list of the operation in the recipe. If a number is
+#'  given, a `tidy` method is executed for that operation in the
 #'  recipe (if it exists).
 #' @param ... Not currently used.
 #' @return A tibble with columns that would vary depending on what
 #'  `tidy` method is executed. When `x` is `NA`, a
-#'  tibble with columns `number` (the step iteration),
-#'  `type` (the step type, e.g. "nzv", "center"), and a logical
-#'  column called `trained` for whether the step has been
+#'  tibble with columns `number` (the operation iteration),
+#'  `type` (the operation type, e.g. "nzv", "center"), and a logical
+#'  column called `trained` for whether the operation has been
 #'  estimated using `prep`.
 #' @export
 #' @examples
@@ -24,7 +24,8 @@
 #'   step_other(all_nominal(), threshold = 0.05) %>%
 #'   step_date(date, features = "dow") %>%
 #'   step_center(all_numeric()) %>%
-#'   step_dummy(all_nominal())
+#'   step_dummy(all_nominal()) %>%
+#'   check_cols(starts_with("date"), age, height)
 #'
 #' tidy(okc_rec)
 #'
@@ -41,13 +42,14 @@ tidy.recipe <- function(x, number = NA, ...) {
   num_steps <- length(x$steps)
   if (num_steps == 0)
     stop("No steps in recipe.", call. = FALSE)
+  pattern <- "(^step_)|(^check_)"
   if (is.na(number)) {
     classes <- lapply(x$steps, class)
     classes <- vapply(classes,
                       function(x)
-                        grep("^step_", x, value = TRUE)[1],
+                        grep(pattern, x, value = TRUE)[1],
                       character(1))
-    step_types <- gsub("^step_", "", classes)
+    step_types <- gsub(pattern, "", classes)
     is_trained <- vapply(x$steps,
                          function(x) x$trained,
                          logical(1))
