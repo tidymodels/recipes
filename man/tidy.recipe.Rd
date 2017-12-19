@@ -20,9 +20,10 @@ recipe (if it exists).}
 A tibble with columns that would vary depending on what
 \code{tidy} method is executed. When \code{x} is \code{NA}, a
 tibble with columns \code{number} (the operation iteration),
-\code{type} (the operation type, e.g. "nzv", "center"), and a logical
+\code{operation} (either "step" or "check"),
+\code{type} (the method, e.g. "nzv", "center"), a logical
 column called \code{trained} for whether the operation has been
-estimated using \code{prep}.
+estimated using \code{prep}, and a logical for \code{skip}.
 }
 \description{
 \code{tidy} will return a data frame that contains information
