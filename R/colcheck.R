@@ -69,15 +69,15 @@ bake.check_cols <- function(object, newdata, ...) {
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    stop("The following cols are missing from newdata: ", mis_cols, ".",
-         call. = FALSE)
+    stop("The following cols are missing from newdata: ", 
+         mis_cols, ".", call. = FALSE)
   }
   newdata
 }
 
 print.check_cols <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Check if the following columns are present ", sep = "")
+    cat("Check if the following columns are present: ", sep = "")
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
