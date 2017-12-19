@@ -36,7 +36,10 @@ or NaN values.
 }
 \examples{
 
-TODO
+recipe(Ozone ~ ., data = airquality) \%>\%
+  step_naomit(Solar.R) \%>\%
+  prep(airquality, verbose = FALSE, retain = TRUE) \%>\%
+  juice()
 
 }
 \seealso{
