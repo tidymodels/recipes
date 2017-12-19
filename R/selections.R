@@ -137,7 +137,7 @@ f_elements <- function(x) {
   kept <- vector(mode = "list", length = length(tmp))
   for (j in seq_along(tmp))
     kept[[j]] <- as.name(tmp[j])
-  
+
   term_signs <- rep("", length(clls) - 1)
   for (i in seq_along(term_signs)) {
     ## Check to see if the elements are in the `factors`
@@ -232,22 +232,22 @@ terms_select <- function(terms, info) {
   vars <- info$variable
   roles <- info$role
   types <- info$type
-  
+
   if (is_empty(terms)) {
     stop("At least one selector should be used", call. = FALSE)
   }
-  
+
   ## check arguments against whitelist
   lapply(terms, check_elements)
-  
+
   # Set current_info so available to helpers
   old_info <- set_current_info(info)
   on.exit(set_current_info(old_info), add = TRUE)
-  
+
   sel <- with_handlers(tidyselect::vars_select(vars, !!! terms),
                        tidyselect_empty = abort_selection
   )
-  
+
   unname(sel)
 }
 
@@ -314,7 +314,7 @@ all_outcomes <- function(roles = current_info()$roles)
 has_type <-
   function(match = "numeric",
            types = current_info()$types)
-    which(types %in% match)
+    which(types %in% tolower(match))
 
 #' @export
 #' @rdname has_role
@@ -340,7 +340,7 @@ set_current_info <- function(x) {
   cur_info_env$vars <- x$variable
   cur_info_env$roles <- x$role
   cur_info_env$types <- x$type
-  
+
   invisible(old)
 }
 

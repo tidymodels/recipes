@@ -8,7 +8,7 @@
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
 #'   affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
+#' @param role Defaults to "predictor".
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
 #' @param shift A numeric value dictating a translation to apply to the data.
@@ -19,10 +19,12 @@
 #' @param prefix A prefix for generated column names, default to "right_relu_"
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
-#'
+#' @param columns A character string of variable names that will
+#'   be (eventually) populated by the `terms` argument.
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
+#' @rdname step_relu
 #'
 #' @details The rectified linear transformation is calculated as
 #'   \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
@@ -34,7 +36,7 @@
 #'
 #' @section Connection to MARS:
 #'
-#' The rectified linear transformation is used in the Multivariate Adaptive
+#' The rectified linear transformation is used in Multivariate Adaptive
 #' Regression Splines as a basis function to fit piecewise linear functions to
 #' data in a strategy similar to that employeed in tree based models. The
 #' transformation is a popular choice as an activation function in many
@@ -69,7 +71,8 @@ step_relu <-
            shift = 0,
            reverse = FALSE,
            smooth = FALSE,
-           prefix = "right_relu_") {
+           prefix = "right_relu_",
+           columns = NULL) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
@@ -87,7 +90,8 @@ step_relu <-
         shift = shift,
         reverse = reverse,
         smooth = smooth,
-        prefix = prefix
+        prefix = prefix,
+        columns = columns
       )
     )
   }
@@ -99,7 +103,8 @@ step_relu_new <-
            shift = 0,
            reverse = FALSE,
            smooth = FALSE,
-           prefix = "right_relu_") {
+           prefix = "right_relu_",
+           columns = NULL) {
     step(
       subclass = "relu",
       terms = terms,
@@ -108,28 +113,40 @@ step_relu_new <-
       shift = shift,
       reverse = reverse,
       smooth = smooth,
-      prefix = prefix
+      prefix = prefix,
+      columns = columns
     )
   }
 
+#' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
+  x$columns <- terms_select(x$terms, info = info)
   x$trained <- TRUE
   x
 }
 
 #' @importFrom dplyr select_vars tbl_vars
 #' @importFrom rlang lang sym
+#' @export
 bake.step_relu <- function(object, newdata, ...) {
-  col_names <- select_vars(tbl_vars(newdata), !!!object$terms)
-
   make_relu_call <- function(col) {
     lang("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
-
-  names(col_names) <- paste0(object$prefix, col_names)
-  exprs <- purrr::map(col_names, make_relu_call)
-
+  exprs <- purrr::map(object$columns, make_relu_call)
+  names(exprs) <- paste0(object$prefix, object$columns)
   dplyr::mutate(newdata, !!!exprs)
+}
+
+
+print.step_relu <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    cat("Adding relu transform for ", sep = "")
+    cat(format_selectors(x$terms, wdth = width))
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
 }
 
 
@@ -148,5 +165,14 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   } else {
     out <- pmax(shifted, rep(0, length(shifted)))
   }
+  out
+}
+
+#' @rdname step_relu
+#' @param x A `step_relu` object.
+tidy.step_relu <- function(x, ...) {
+  out <- simple_terms(x, ...)
+  out$shift <- x$shift
+  out$reverse <- x$reverse
   out
 }

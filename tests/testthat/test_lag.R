@@ -1,0 +1,107 @@
+library(dplyr)
+library(testthat)
+library(recipes)
+
+context("step_lag")
+
+n <- 10
+start <- as.Date('1999/01/01')
+end <- as.Date('2000/01/01')
+
+test_that("default lag works on a single feature",  {
+
+  set.seed(27)
+  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
+
+  baked <- recipe(~ ., data = df) %>%
+    step_lag(t, lag = 2) %>%
+    prep(df) %>%
+    bake(df)
+
+  expected <- df %>%
+    arrange(desc(t)) %>%
+    mutate(lag_2_t = dplyr::lag(t, 2))
+
+  expect_equal(baked, expected)
+
+  baked <- recipe(~ ., data = df) %>%
+    step_lag(t, lag = 2, default = start) %>%
+    prep(df) %>%
+    bake(df)
+
+  expected <- df %>%
+    arrange(desc(t)) %>%
+    mutate(lag_2_t = dplyr::lag(t, 2, default = start))
+
+  expect_equal(baked, expected)
+
+  expect_error({
+    prepped_rec <- recipe(~ ., data = df) %>%
+      step_lag(x) %>%
+      prep(df)
+  })
+
+  expect_error({
+    prepped_rec <- recipe(~ ., data = df) %>%
+      step_lag(x, lag = 0.5) %>%
+      prep(df)
+  })
+
+  expect_error({
+    prepped_rec <- recipe(~ ., data = df) %>%
+      step_lag(x, default = "cat") %>%
+      prep(df)
+  })
+})
+
+test_that("works with has_type('date') selector",  {
+
+  set.seed(28)
+  df <- tibble(x = rnorm(n),
+               t = sample(seq(start, end, by = "day"), n))
+
+  baked <- recipe(~ ., data = df) %>%
+    step_lag(has_type("Date"), lag = 2) %>%
+    prep(df) %>%
+    bake(df)
+
+  expected <- df %>%
+    arrange(desc(t)) %>%
+    mutate(lag_2_t = dplyr::lag(t, 2))
+
+  expect_equal(baked, expected)
+})
+
+test_that("specification of multiple lags in a vector",  {
+
+  set.seed(29)
+  df <- tibble(t = sample(seq(start, end, by = "day"), n),
+               tt = sample(seq(start, end, by = "day"), n))
+
+  baked <- recipe(~ ., data = df) %>%
+    step_lag(t, tt, lag = c(1, 2)) %>%
+    prep(df) %>%
+    bake(df)
+
+  expected <- df %>%
+    arrange(desc(t)) %>%
+    mutate(lag_1_t = dplyr::lag(t, 1),
+           lag_2_t = dplyr::lag(t, 2)) %>%
+    arrange(desc(tt)) %>%
+    mutate(lag_1_tt = dplyr::lag(tt, 1),
+           lag_2_tt = dplyr::lag(tt, 2))
+
+  expect_equal(baked, expected)
+})
+
+test_that('something prints', {
+  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
+
+  rec <- recipe(~ ., data = df) %>%
+    step_lag(t)
+
+  expect_output(print(rec))
+  expect_output(prep(rec, training = df, verbose = TRUE))
+})
+
+rm(n, start, end)

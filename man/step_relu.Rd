@@ -2,10 +2,14 @@
 % Please edit documentation in R/relu.R
 \name{step_relu}
 \alias{step_relu}
+\alias{tidy.step_relu}
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE, prefix = "right_relu_")
+  reverse = FALSE, smooth = FALSE, prefix = "right_relu_",
+  columns = NULL)
+
+\method{tidy}{step_relu}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -14,7 +18,7 @@ operations for this recipe.}
 \item{...}{One or more selector functions to choose which variables are
 affected by the step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Defaults to "predictor".}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated.}
@@ -30,6 +34,11 @@ appromixation to the rectified linear transformation, should be used.}
 \item{prefix}{A prefix for generated column names, default to "right_relu_"
 when right hinge transformation and "left_relu_" for reversed/left hinge
 transformations.}
+
+\item{columns}{A character string of variable names that will
+be (eventually) populated by the \code{terms} argument.}
+
+\item{x}{A \code{step_relu} object.}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -52,7 +61,7 @@ also be applied to this transformation.
 \section{Connection to MARS}{
 
 
-The rectified linear transformation is used in the Multivariate Adaptive
+The rectified linear transformation is used in Multivariate Adaptive
 Regression Splines as a basis function to fit piecewise linear functions to
 data in a strategy similar to that employeed in tree based models. The
 transformation is a popular choice as an activation function in many
