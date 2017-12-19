@@ -20,17 +20,17 @@ used).}
 \item{training}{A data frame or tibble that will be used to estimate
 parameters for preprocessing.}
 
-\item{fresh}{A logical indicating whether already trained steps should be
+\item{fresh}{A logical indicating whether already trained operation should be
 re-trained. If \code{TRUE}, you should pass in a data set to the argument
 \code{training}.}
 
-\item{verbose}{A logical that controls wether progress is reported as steps
+\item{verbose}{A logical that controls wether progress is reported as operations
 are executed.}
 
 \item{retain}{A logical: should the \emph{preprocessingcessed} training set be saved
 into the \code{template} slot of the recipe after training? This is a good
-idea if you want to add more steps later but want to avoid re-training
-the existing steps.}
+idea if you want to add more operations later but want to avoid re-training
+the existing ones.}
 
 \item{stringsAsFactors}{A logical: should character columns be converted to
 factors? This affects the preprocessingcessed training set (when
@@ -39,26 +39,26 @@ factors? This affects the preprocessingcessed training set (when
 \value{
 A recipe whose step objects have been updated with the required
 quantities (e.g. parameter estimates, model objects, etc). Also, the
-\code{term_info} object is likely to be modified as the steps are
+\code{term_info} object is likely to be modified as the operations are
 executed.
 }
 \description{
-For a recipe with at least one preprocessing step, estimate the required
+For a recipe with at least one preprocessing operation, estimate the required
 parameters from a training set that can be later applied to other data
 sets.
 }
 \details{
 Given a data set, this function estimates the required quantities
-and statistics required by any steps.
+and statistics required by any operations.
 
 \code{\link[=prep]{prep()}} returns an updated recipe with the estimates.
 
 Note that missing data handling is handled in the steps; there is no global
-\code{na.rm} option at the recipe-level or in  \code{\link[=prep]{prep()}}.
+\code{na.rm} option at the recipe-level or in \code{\link[=prep]{prep()}}.
 
 Also, if a recipe has been trained using \code{\link[=prep]{prep()}} and then steps
-are added, \code{\link[=prep]{prep()}} will only update the new steps. If
-\code{fresh = TRUE}, all of the steps will be (re)estimated.
+are added, \code{\link[=prep]{prep()}} will only update the new operations. If
+\code{fresh = TRUE}, all of the operations will be (re)estimated.
 
 As the steps are executed, the \code{training} set is updated. For example,
 if the first step is to center the data and the second is to scale the

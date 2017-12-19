@@ -130,7 +130,26 @@ Note that the PCA components have replaced the original variables that were from
 
 There are a number of different steps included in the package:
 
-```{r step_list}
-steps <- apropos("^step_")
-steps[!grepl("new$", steps)]
+```{r step_list, echo = FALSE}
+grep("^step_", ls("package:recipes"), value = TRUE)
 ```
+
+## Checks
+
+Another type of operation that can be added to a recipes is a _check_. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown. 
+
+For example, `check_missing` will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:
+
+```{r check, eval = FALSE}
+trained_rec <- trained_rec %>%
+  check_missing(contains("Inten"))
+```
+
+Currently, `recipes` includes:
+
+```{r check_list, echo = FALSE}
+grep("^check_", ls("package:recipes"), value = TRUE)
+```
+
+
+

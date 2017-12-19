@@ -49,8 +49,8 @@ set columns}
 \item{term_info}{A tibble that contains the current set of terms in the
 data set. This initially defaults to the same data contained in
 \code{var_info}.}
-\item{steps}{A list of \code{step} objects that define the sequence of
-preprocessing steps that will be applied to data. The default value is
+\item{steps}{A list of \code{step}  or \code{check} objects that define the sequence of
+preprocessing operations that will be applied to data. The default value is
 \code{NULL}}
 \item{template}{A tibble of the data. This is initialized to be the same
 as the data given in the \code{data} argument but can be different after
@@ -76,14 +76,19 @@ Alternatively, a \code{recipe} object can be created by first specifying
 which variables in a data set should be used and then sequentially
 defining their roles (see the last example).
 
-Steps to the recipe can be added sequentially. Steps can include common
+There are two different types of operations that can be
+sequentially added to a recipe. \strong{Steps}  can include common
 operations like logging a variable, creating dummy variables or
-interactions and so on. More computationally complex actions such as
-dimension reduction or imputation can also be specified.
+interactions and so on. More computationally complex actions
+such as dimension reduction or imputation can also be specified.
+\strong{Checks} are operations that conduct specific tests of the
+data. When the test is satisfied, the data are returned without
+issue or modification. Otherwise, any error is thrown.
 
 Once a recipe has been defined, the \code{\link[=prep]{prep()}} function can be
-used to estimate quants required in the steps from a data set (a.k.a. the
-training data). \code{\link[=prep]{prep()}} returns another recipe.
+used to estimate quantities required for the operations using a
+data set (a.k.a. the training data). \code{\link[=prep]{prep()}} returns another
+recipe.
 
 To apply the recipe to a data set, the \code{\link[=bake]{bake()}} function is
 used in the same manner as \code{predict} would be for models. This
