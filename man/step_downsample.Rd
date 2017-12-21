@@ -77,6 +77,11 @@ frequency as the minority level, all data will be retained.
 
 All columns in the data are sampled and returned by \code{\link[=juice]{juice()}}
 and \code{\link[=bake]{bake()}}.
+
+Keep in mind that the location of down-sampling in the step
+may have effects. For example, if centering and scaling,
+it is not clear whether those operations should be conducted
+\emph{before} or \emph{after} rows are removed.
 }
 \examples{
 data(okc)
