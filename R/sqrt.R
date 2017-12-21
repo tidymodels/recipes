@@ -42,26 +42,32 @@
 #'   [step_log()]  [step_hyperbolic()] [recipe()]
 #'   [prep.recipe()] [bake.recipe()]
 
-step_sqrt <- function(recipe, ..., role = NA, trained = FALSE, columns = NULL) {
+step_sqrt <- function(recipe, ..., role = NA, 
+                      trained = FALSE, columns = NULL,
+                      skip = FALSE) {
   add_step(
     recipe,
     step_sqrt_new(
       terms = check_ellipses(...),
       role = role,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   )
 }
 
 step_sqrt_new <-
-  function(terms = NULL, role = NA, trained = FALSE, columns = NULL) {
+  function(terms = NULL, role = NA, trained = FALSE, 
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "sqrt",
       terms = terms,
       role = role,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -73,7 +79,8 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

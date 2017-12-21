@@ -8,7 +8,8 @@
 \usage{
 step_bagimpute(recipe, ..., role = NA, trained = FALSE, models = NULL,
   options = list(nbagg = 25, keepX = FALSE),
-  impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4, 1))
+  impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4, 1),
+  skip = FALSE)
 
 imp_vars(...)
 
@@ -51,6 +52,13 @@ impute itself.}
 
 \item{seed_val}{A integer used to create reproducible models.
 The same seed is used across all imputation models.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_bagimpute} object.}
 }

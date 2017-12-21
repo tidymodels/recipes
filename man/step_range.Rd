@@ -6,7 +6,7 @@
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
 step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
-  ranges = NULL)
+  ranges = NULL, skip = FALSE)
 
 \method{tidy}{step_range}(x, ...)
 }
@@ -35,6 +35,13 @@ range}
 normalized. Note that this is ignored until the values are
 determined by \code{\link[=prep.recipe]{prep.recipe()}}. Setting this value will
 be ineffective.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_range} object.}
 }

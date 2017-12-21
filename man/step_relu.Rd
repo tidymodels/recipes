@@ -5,7 +5,7 @@
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE, prefix = "right_relu_")
+  reverse = FALSE, smooth = FALSE, prefix = "right_relu_", skip = FALSE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -30,6 +30,13 @@ appromixation to the rectified linear transformation, should be used.}
 \item{prefix}{A prefix for generated column names, default to "right_relu_"
 when right hinge transformation and "left_relu_" for reversed/left hinge
 transformations.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the

@@ -86,7 +86,8 @@ step_dummy <-
            trained = FALSE,
            contrast = options("contrasts"),
            naming = dummy_names,
-           levels = NULL) {
+           levels = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_dummy_new(
@@ -95,7 +96,8 @@ step_dummy <-
         trained = trained,
         contrast = contrast,
         naming = naming,
-        levels = levels
+        levels = levels,
+        skip = skip
       )
     )
   }
@@ -106,7 +108,8 @@ step_dummy_new <-
            trained = FALSE,
            contrast = contrast,
            naming = naming,
-           levels = levels
+           levels = levels,
+           skip = FALSE
   ) {
     step(
       subclass = "dummy",
@@ -115,7 +118,8 @@ step_dummy_new <-
       trained = trained,
       contrast = contrast,
       naming = naming,
-      levels = levels
+      levels = levels,
+      skip = skip
     )
   }
 
@@ -161,7 +165,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     contrast = x$contrast,
     naming = x$naming,
-    levels = levels
+    levels = levels,
+    skip = x$skip
   )
 }
 

@@ -96,7 +96,8 @@ step_ica <-
            num  = 5,
            options = list(),
            res = NULL,
-           prefix = "IC") {
+           prefix = "IC",
+           skip = FALSE) {
     add_step(
       recipe,
       step_ica_new(
@@ -106,7 +107,8 @@ step_ica <-
         num = num,
         options = options,
         res = res,
-        prefix = prefix
+        prefix = prefix,
+        skip = skip
       )
     )
   }
@@ -118,7 +120,8 @@ step_ica_new <-
            num  = NULL,
            options = NULL,
            res = NULL,
-           prefix = "IC") {
+           prefix = "IC",
+           skip = FALSE) {
     step(
       subclass = "ica",
       terms = terms,
@@ -127,7 +130,8 @@ step_ica_new <-
       num = num,
       options = options,
       res = res,
-      prefix = prefix
+      prefix = prefix,
+      skip = skip
     )
   }
 
@@ -150,7 +154,8 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     num = x$num,
     options = x$options,
     res = indc,
-    prefix = x$prefix
+    prefix = x$prefix,
+    skip = x$skip
   )
 }
 

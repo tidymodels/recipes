@@ -6,7 +6,8 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  contrast = options("contrasts"), naming = dummy_names, levels = NULL)
+  contrast = options("contrasts"), naming = dummy_names, levels = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -40,6 +41,13 @@ new dummy columns. See Details below.}
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_dummy} object.}
 }

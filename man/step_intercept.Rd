@@ -5,7 +5,7 @@
 \title{Add intercept (or constant) column}
 \usage{
 step_intercept(recipe, ..., role = "predictor", trained = FALSE,
-  name = "intercept", value = 1)
+  name = "intercept", value = 1, skip = FALSE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -14,7 +14,10 @@ operations for this recipe.}
 \item{...}{Argument ignored; included for consistency with other step
 specification functions.}
 
-\item{role}{Defaults to "predictor"}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new columns created from the original variables will be
+used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
@@ -22,6 +25,13 @@ have been estimated. Again included for consistency.}
 \item{name}{Character name for new added column}
 
 \item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -53,6 +63,5 @@ with_intercept
 
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }

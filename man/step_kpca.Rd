@@ -7,7 +7,7 @@
 \usage{
 step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
-  prefix = "kPC")
+  prefix = "kPC", skip = FALSE)
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -45,6 +45,13 @@ should not be passed here (or at all).}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_kpca} object}
 }

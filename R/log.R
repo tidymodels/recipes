@@ -48,7 +48,8 @@ step_log <-
            role = NA,
            trained = FALSE,
            base = exp(1),
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_log_new(
@@ -56,7 +57,8 @@ step_log <-
         role = role,
         trained = trained,
         base = base,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -66,14 +68,16 @@ step_log_new <-
            role = NA,
            trained = FALSE,
            base = NULL,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "log",
       terms = terms,
       role = role,
       trained = trained,
       base = base,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -85,7 +89,8 @@ prep.step_log <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     base = x$base,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

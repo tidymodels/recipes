@@ -48,13 +48,15 @@ step_logit <-
            ...,
            role = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     add_step(recipe,
              step_logit_new(
                terms = check_ellipses(...),
                role = role,
                trained = trained,
-               columns = columns
+               columns = columns,
+               skip = skip
              ))
   }
 
@@ -62,13 +64,15 @@ step_logit_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "logit",
       terms = terms,
       role = role,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -79,7 +83,8 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

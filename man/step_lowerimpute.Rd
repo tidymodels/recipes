@@ -6,7 +6,7 @@
 \title{Impute Numeric Data Below the Threshold of Measurement}
 \usage{
 step_lowerimpute(recipe, ..., role = NA, trained = FALSE,
-  threshold = NULL)
+  threshold = NULL, skip = FALSE)
 
 \method{tidy}{step_lowerimpute}(x, ...)
 }
@@ -27,6 +27,13 @@ preprocessing have been estimated.}
 
 \item{threshold}{A named numeric vector of lower bounds This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_lowerimpute} object.}
 }

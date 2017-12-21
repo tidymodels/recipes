@@ -6,7 +6,7 @@
 \title{Create Interaction Variables}
 \usage{
 step_interact(recipe, terms, role = "predictor", trained = FALSE,
-  objects = NULL, sep = "_x_")
+  objects = NULL, sep = "_x_", skip = FALSE)
 
 \method{tidy}{step_interact}(x, ...)
 }
@@ -31,6 +31,13 @@ individual interaction.}
 \item{sep}{A character value used to delineate variables in an
 interaction (e.g. \code{var1_x_var2} instead of the more
 traditional \code{var1:var2}).}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_interact} object}
 

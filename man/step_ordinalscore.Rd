@@ -6,7 +6,7 @@
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
 step_ordinalscore(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  convert = as.numeric)
+  convert = as.numeric, skip = FALSE)
 
 \method{tidy}{step_ordinalscore}(x, ...)
 }
@@ -31,6 +31,13 @@ converted. This is \code{NULL} until computed by
 
 \item{convert}{A function that takes an ordinal factor vector
 as an input and outputs a single numeric variable.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_ordinalscore} object.}
 }

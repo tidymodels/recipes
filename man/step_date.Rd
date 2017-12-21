@@ -7,7 +7,7 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, columns = NULL)
+  ordinal = FALSE, columns = NULL, skip = FALSE)
 
 \method{tidy}{step_date}(x, ...)
 }
@@ -53,6 +53,13 @@ available for features \code{month} or \code{dow}.}
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
 populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_date} object.}
 }

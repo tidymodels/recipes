@@ -6,7 +6,8 @@
 \title{Moving Window Functions}
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
-  na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL)
+  na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_window}(x, ...)
 }
@@ -49,6 +50,13 @@ length of the number of terms selected by \code{terms}. If you
 are not sure what columns will be selected, use the
 \code{summary} function (see the example below). These will be
 the names of the new columns created by the step.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_window} object.}
 }

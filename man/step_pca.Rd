@@ -6,7 +6,8 @@
 \title{PCA Signal Extraction}
 \usage{
 step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  threshold = NA, options = list(), res = NULL, prefix = "PC")
+  threshold = NA, options = list(), res = NULL, prefix = "PC",
+  skip = FALSE)
 
 \method{tidy}{step_pca}(x, ...)
 }
@@ -49,6 +50,13 @@ stored here once this preprocessing step has be trained by
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_pca} object.}
 }

@@ -6,7 +6,7 @@
 \title{Convert Factors to Strings}
 \usage{
 step_factor2string(recipe, ..., role = NA, trained = FALSE,
-  columns = FALSE)
+  columns = FALSE, skip = FALSE)
 
 \method{tidy}{step_factor2string}(x, ...)
 }
@@ -28,6 +28,13 @@ preprocessing have been estimated.}
 \item{columns}{A character string of variables that will be
 converted. This is \code{NULL} until computed by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_factor2string} object.}
 }

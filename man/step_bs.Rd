@@ -6,7 +6,7 @@
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
-  options = list(df = NULL, degree = 3))
+  options = list(df = NULL, degree = 3), skip = FALSE)
 
 \method{tidy}{step_bs}(x, ...)
 }
@@ -32,6 +32,13 @@ created once the step has been trained.}
 
 \item{options}{A list of options for \code{\link[splines:bs]{splines::bs()}}
 which should not include \code{x}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_bs} object.}
 }

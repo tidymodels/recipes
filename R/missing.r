@@ -15,6 +15,12 @@
 #' have been resolved by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the terms argument.
+#' @param skip A logical. Should the check be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations. 
 #' @return An updated version of `recipe` with the new check
 #'  added to the sequence of existing operations (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -59,14 +65,16 @@ check_missing <-
            ...,
            role = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     add_check(
       recipe,
       check_missing_new(
         terms   = check_ellipses(...),
         role    = role,
         trained = trained,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -75,13 +83,15 @@ check_missing_new <-
   function(terms = NULL,
            role  = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     check(subclass = "missing",
           prefix   = "check_",
           terms    = terms,
           role     = role,
           trained  = trained,
-          columns  = columns)
+          columns  = columns,
+          skip = skip)
   }
 
 prep.check_missing <- function(x, training, info = NULL, ...) {
@@ -89,7 +99,8 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
   check_missing_new(terms = x$terms,
                     role  = x$role,
                     trained = TRUE,
-                    columns = col_names)
+                    columns = col_names,
+                    skip = x$skip)
 }
 
 bake.check_missing <- function(object, newdata, ...) {

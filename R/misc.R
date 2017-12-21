@@ -328,6 +328,7 @@ printer <- function(tr_obj = NULL,
     cat(" [trained]\n")
   else
     cat("\n")
+  invisible(NULL)
 }
 
 
@@ -347,3 +348,18 @@ fully_trained <- function(x) {
 }
 
 
+# to be used in a recipe
+is_skipable <- function(x) {
+  if(all("skip" != names(x)))
+    return(FALSE)
+  else
+    return(x$skip)
+}
+
+# to be used within a step
+skip_me <- function(x) {
+  if(!exists("skip"))
+    return(FALSE)
+  else
+    return(x$skip)
+}

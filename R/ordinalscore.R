@@ -72,7 +72,8 @@ step_ordinalscore <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           convert = as.numeric) {
+           convert = as.numeric,
+           skip = FALSE) {
     add_step(
       recipe,
       step_ordinalscore_new(
@@ -80,7 +81,8 @@ step_ordinalscore <-
         role = role,
         trained = trained,
         columns = columns,
-        convert = convert
+        convert = convert,
+        skip = skip
       )
     )
   }
@@ -90,14 +92,16 @@ step_ordinalscore_new <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           convert = NULL) {
+           convert = NULL,
+           skip = FALSE) {
     step(
       subclass = "ordinalscore",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      convert = convert
+      convert = convert,
+      skip = skip
     )
   }
 
@@ -116,7 +120,8 @@ prep.step_ordinalscore <-
       role = x$role,
       trained = TRUE,
       columns = col_names,
-      convert = x$convert
+      convert = x$convert,
+      skip = x$skip
     )
   }
 

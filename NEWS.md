@@ -1,6 +1,10 @@
 # recipes 0.1.1.9000
 
-Edwin Thoen suggested [adding validation checks](https://github.com/topepo/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/topepo/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
+General Changes:
+
+* Edwin Thoen suggested [adding validation checks](https://github.com/topepo/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/topepo/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
+
+* Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://topepo.github.io/recipes/docs/devel/articles/Skipping.html) for more information. 
 
 
 New Operations:
@@ -9,6 +13,7 @@ New Operations:
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
  * `step_novel` adds a new factor level to nominal variables that will be used when new data contain a level that did not exist when the recipe was prepared. 
  * `step_profile` can be used to generate design matrix grids for prediction profile plots of additive models where one variable is varied over a grid and all of the others are fixed at a single value. 
+ * `step_downsample` and `step_upsample` can be used to change the number of rows in the data based on the frequency distributions of a factor variable in the training set. By default, this operation is only applied to the training set; `bake` ignores this operation. 
 
 Other Changes:
 

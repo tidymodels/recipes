@@ -66,7 +66,8 @@ step_num2factor <-
            transform = function(x) x,
            trained = FALSE,
            levels = NULL,
-           ordered = FALSE) {
+           ordered = FALSE,
+           skip = FALSE) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
 
@@ -78,7 +79,8 @@ step_num2factor <-
         transform = transform,
         trained = trained,
         levels = levels,
-        ordered = ordered
+        ordered = ordered,
+        skip = skip
       )
     )
   }
@@ -89,7 +91,8 @@ step_num2factor_new <-
            transform = NULL,
            trained = FALSE,
            levels = NULL,
-           ordered = NULL
+           ordered = NULL,
+           skip = FALSE
   ) {
     step(
       subclass = "num2factor",
@@ -98,7 +101,8 @@ step_num2factor_new <-
       transform = transform,
       trained = trained,
       levels = levels,
-      ordered = ordered
+      ordered = ordered,
+      skip = skip
     )
   }
 
@@ -128,7 +132,8 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
     transform = x$transform,
     trained = TRUE,
     levels = res,
-    ordered = ord
+    ordered = ord,
+    skip = x$skip
   )
 }
 

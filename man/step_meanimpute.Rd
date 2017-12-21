@@ -6,7 +6,7 @@
 \title{Impute Numeric Data Using the Mean}
 \usage{
 step_meanimpute(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  trim = 0)
+  trim = 0, skip = FALSE)
 
 \method{tidy}{step_meanimpute}(x, ...)
 }
@@ -32,6 +32,13 @@ preprocessing have been estimated.}
 trimmed from each end of the variables before the mean is
 computed. Values of trim outside that range are taken as the
 nearest endpoint.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_meanimpute} object.}
 }

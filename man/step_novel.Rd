@@ -6,7 +6,7 @@
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
 step_novel(recipe, ..., role = NA, trained = FALSE, new_level = "new",
-  objects = NULL)
+  objects = NULL, skip = FALSE)
 
 \method{tidy}{step_novel}(x, ...)
 }
@@ -30,6 +30,13 @@ to new factor levels.}
 
 \item{objects}{A list of objects that contain the information
 on factor levels that will be determined by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_novel} object.}
 }

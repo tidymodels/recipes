@@ -6,7 +6,7 @@
 \title{Nature Spline Basis Functions}
 \usage{
 step_ns(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
-  options = list(df = 2))
+  options = list(df = 2), skip = FALSE)
 
 \method{tidy}{step_ns}(x, ...)
 }
@@ -32,6 +32,13 @@ created once the step has been trained.}
 
 \item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}}
 which should not include \code{x}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_ns} object.}
 }

@@ -8,7 +8,8 @@
 \usage{
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   denom = denom_vars(), naming = function(numer, denom)
-  make.names(paste(numer, denom, sep = "_o_")), columns = NULL)
+  make.names(paste(numer, denom, sep = "_o_")), columns = NULL,
+  skip = FALSE)
 
 denom_vars(...)
 
@@ -46,6 +47,13 @@ new ratio columns.}
 \item{columns}{The column names used in the ratios. This
 argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
 executed.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_ratio} object}
 }

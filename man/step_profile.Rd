@@ -7,7 +7,7 @@
 \usage{
 step_profile(recipe, ..., profile = NULL, pct = 0.5, index = 1,
   grid = list(pctl = TRUE, len = 100), columns = NULL, role = NA,
-  trained = FALSE)
+  trained = FALSE, skip = FALSE)
 
 \method{tidy}{step_profile}(x, ...)
 }
@@ -58,6 +58,13 @@ created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_profile} object.}
 }
