@@ -1,0 +1,204 @@
+---
+title: "Subsampling for Class Imbalances"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Subsampling for Class Imbalances}
+output:
+  knitr:::html_vignette:
+    toc: yes
+---
+
+```{r ex_setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+  )
+options(digits = 3)
+library(recipes)
+library(caret)
+library(rsample)
+library(purrr)
+library(MASS)
+library(tidyposterior)
+library(dplyr)
+library(yardstick)
+
+thm <- theme_bw() + 
+  theme(
+    panel.background = element_rect(fill = "transparent", colour = NA), 
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  )
+theme_set(thm)
+
+options(digits = 3)
+```
+
+
+Subsampling can be a helpful approach to dealing will classification data where one or more classes occur very infrequently. Often, most models will overfit to the majority class and produce very good statistics for the class containing the frequently occurring classes while the minority classes have poor performance. 
+
+Consider a two-class problem where the first class has a very low rate of occurrence. The [`caret`](https://topepo.github.io/caret/) package has a function that can simulate such data:
+
+```{r simulate}
+library(caret)
+
+set.seed(244)
+imbal_data <- twoClassSim(1000, intercept = 10)
+table(imbal_data$Class)
+```
+
+If "Class1" is the event of interest, it is very likely that a classification model would be able to achieve very good _specificity_ since almost all of the data are the second class. _Sensitivity_ will often be poor since the models will optimize accuracy (or other loss functions) by predicting everything to be the majority class. 
+
+When there are two classes, the results is that the default probability cutoff of 50% is inappropriate; a different cutoff that is more extreme might be able to achieve good performance. 
+
+One way to alleviate this issue is to _subsample_ the data. There are a number of ways to do this but the most simple one is to _sample down_ the majority class data until it occurs with the same frequency as the minority class. While counterintuitive, throwing out a large percentage of the data can be effective at producing a results. In some cases, this means that the overall performance of the model is better (e.g. improved area under the ROC curve). However, subsampling almost always produces models that are _better calibrated_, meaning that the distributions of the class probabilities are model well behaved. As a result, the default 50% cutoff is much model likely to produce better sensitivity and specificity values than they would otherwise. 
+
+To demonstrate this, `step_downsample` will be used in a recipe for the simulated data. In terms of workflow:
+
+ * It is extremely important that subsampling occurs _inside of resampling_. Otherwise, the resampling process can produce [poor estimates of model performance](https://topepo.github.io/caret/subsampling-for-class-imbalances.html#resampling). 
+ * The subsampling process should only be applied to the analysis set. The assessment set should reflect the event rates seen "in the wild" and, for this reason, the `skip` argument to `step_downsample` is defaulted to `TRUE`. 
+
+Here is a simple recipe: 
+
+```{r rec}
+library(recipes)
+imbal_rec <- recipe(Class ~ ., data = imbal_data) %>%
+  step_downsample(Class)
+```
+
+Basic cross-validation is used to resample the model:
+
+```{r cv}
+library(rsample)
+set.seed(5732)
+cv_folds <- vfold_cv(imbal_data, strata = "Class", repeats = 5)
+```
+
+An additional column is added to the data that contains the trained recipes for each resample:
+
+```{r prep}
+library(purrr)
+cv_folds <- cv_folds %>%
+  mutate(recipes = 
+           map(cv_folds$splits, prepper, recipe = imbal_rec, retain = TRUE))
+cv_folds$recipes[[1]]
+```
+
+The model that will be used to demonstrate subsampling is [quadratic discriminant analysis](https://en.wikipedia.org/wiki/Quadratic_classifier#Quadratic_discriminant_analysis) via the `MASS` package. A function will be used to train the model and to produce class probabilities as well as hard class predictions using the default 50% cutoff. When a recipe is passed to the function, down-sampling will be applied. If no recipe is given, the data are used to fit the model as-is:
+
+```{r func}
+library(MASS)
+library(dplyr)
+
+assess_res <- function(split, rec = NULL, ...) {
+  if (!is.null(rec))
+    mod_data <- juice(rec)
+  else
+    mod_data <- analysis(split)
+  
+  mod_fit <- qda(Class ~ ., data = mod_data)
+  
+  if (!is.null(rec))
+    eval_data <- bake(rec, assessment(split))
+  else
+    eval_data <- assessment(split)
+  
+  eval_data <- eval_data 
+  predictions <- predict(mod_fit, eval_data)
+  eval_data %>%
+    mutate(
+      pred = predictions$class,
+      prob = predictions$posterior[,1]
+    ) %>%
+    dplyr::select(Class, pred, prob)
+}
+```
+
+For example: 
+
+```{r ex}
+# No subsampling
+assess_res(cv_folds$splits[[1]]) %>% head
+
+# With downsampling:
+assess_res(cv_folds$splits[[1]], cv_folds$recipes[[1]]) %>% head
+```
+
+To measure model effectiveness, two metrics are used:
+
+ * The area under the [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is an overall assessment of performance across _all_ cutoffs. Values near one indicate very good results while values near 0.05 would imply that the model is very poor. 
+ * The _J_ index (a.k.a. [Youden's _J_](https://en.wikipedia.org/wiki/Youden%27s_J_statistic) statistic) is `sensitivity + specificity - 1`. Values near one are once again best. 
+
+If a model is poorly calibrated, the ROC curve value might not sure diminished performance. However, the _J_ index would be lower for models with pathological distributions for the class probabilities. The `yardstick` package will be used to compute these metrics. 
+
+Now, we train the models and generate the predictions. These are stored in list columns where each list element is a data frame of the predictions on the assessment data:
+
+```{r fits}
+cv_folds <- cv_folds %>%
+  mutate(
+    sampled_pred = map2(cv_folds$splits, cv_folds$recipes, assess_res),
+    normal_pred = map(cv_folds$splits, assess_res)
+  )
+cv_folds
+```
+
+
+Now, the performance metrics are computed: 
+
+```{r perf}
+library(yardstick)
+cv_folds <- cv_folds %>%
+  mutate(
+    sampled_roc = map_dbl(cv_folds$sampled_pred, roc_auc, truth = "Class", estimate = "prob"),
+    normal_roc =  map_dbl(cv_folds$normal_pred,  roc_auc, truth = "Class", estimate = "prob"),  
+    sampled_J =   map_dbl(cv_folds$sampled_pred, j_index, truth = "Class", estimate = "pred"),
+    normal_J =    map_dbl(cv_folds$normal_pred,  j_index, truth = "Class", estimate = "pred")       
+  )
+```
+
+What do the ROC values look like? A [Bland-Altman plot](https://en.wikipedia.org/wiki/Bland%E2%80%93Altman_plot) can be used to show the differences in the results over the range of results:
+
+```{r bland-altman-roc}
+library(ggplot2)
+
+ggplot(cv_folds, 
+       aes(x = (sampled_roc + normal_roc)/2, 
+           y = sampled_roc - normal_roc)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0, col = "green")
+```
+
+There doesn't appear that subsampling had much of an effect on this metric. The average difference is `r signif(mean(cv_folds$sampled_roc - cv_folds$normal_roc), 3)$, which is fairly small. 
+
+For the _J_ statistic, the results show a different story: 
+
+```{r bland-altman-j}
+ggplot(cv_folds, 
+       aes(x = (sampled_J + normal_J)/2, 
+           y = sampled_J - normal_J)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0, col = "green")
+```
+
+Almost all of the differences area greater than zero. We can use `tidyposterior` to do a more formal analysis:
+
+```{r tpost, warning = FALSE, message=FALSE}
+library(tidyposterior)
+
+# Remove all columns except the resample info and the J indices,
+# then fit the Bayesian model
+j_mod <- cv_folds %>% 
+  dplyr::select(-recipes, -matches("pred$"), -matches("roc$")) %>% 
+  perf_mod(seed = 62378, iter = 5000)
+```
+
+A simple plot of the posterior distributions of the _J_ indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:
+
+```{r post-plot}
+ggplot(tidy(j_mod, seed = 234))
+```
+
+
+
+
