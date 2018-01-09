@@ -22,7 +22,7 @@ If no selectors are given, the default is to use
 \item{newdata}{A data frame or tibble for whom the preprocessing will be
 applied.}
 
-\item{composition}{Either "tibble" or "dgCMatrix" for the
+\item{composition}{Either "tibble", "matrix", or "dgCMatrix" for the
 format of the processed data set. Note that all computations
 during the baking process are done in a non-sparse format. Also,
 note that this argument should be called \strong{after} any selectors
@@ -30,7 +30,7 @@ and the selectors should only resolve to numeric columns
 (otherwise an error is thrown).}
 }
 \value{
-A tibble or sparse matrix that may have different
+A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in \code{newdata}.
 }
 \description{

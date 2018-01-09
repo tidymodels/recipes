@@ -15,7 +15,7 @@ returned by the function. See \code{\link[=selections]{selections()}} for more d
 If no selectors are given, the default is to use
 \code{\link[=everything]{everything()}}.}
 
-\item{composition}{Either "tibble" or "dgCMatrix" for the
+\item{composition}{Either "tibble", "matrix", or "dgCMatrix" for the
 format of the processed data set. Note that all computations
 during the baking process are done in a non-sparse format. Also,
 note that this argument should be called \strong{after} any selectors

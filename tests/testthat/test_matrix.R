@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(Matrix)
 
 ###################################################################
 
@@ -29,34 +28,34 @@ test_that('correct types', {
     bake(rec,
          newdata = okc_te,
          all_numeric(),
-         composition = "dgCMatrix")
+         composition = "matrix")
   bake_sparse_1d <-
     bake(rec,
          newdata = okc_te,
          age,
-         composition = "dgCMatrix")
+         composition = "matrix")
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
-    juice(rec, all_numeric(), composition = "dgCMatrix")
+    juice(rec, all_numeric(), composition = "matrix")
   juice_sparse_1d <-
-    juice(rec, age, composition = "dgCMatrix")
-
+    juice(rec, age, composition = "matrix")
+  
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
-
-  expect_equal(as.vector(class(bake_sparse)), "dgCMatrix")
-  expect_equal(as.vector(class(juice_sparse)), "dgCMatrix")
-
-  expect_equal(as.vector(class(bake_sparse_1d)), "dgCMatrix")
-  expect_equal(as.vector(class(juice_sparse_1d)), "dgCMatrix")
-
-  expect_equal(recipes:::convert_matrix(bake_default),
+  
+  expect_equal(as.vector(class(bake_sparse)), "matrix")
+  expect_equal(as.vector(class(juice_sparse)), "matrix")
+  
+  expect_equal(as.vector(class(bake_sparse_1d)), "matrix")
+  expect_equal(as.vector(class(juice_sparse_1d)), "matrix")
+  
+  expect_equal(recipes:::convert_matrix(bake_default, sparse = FALSE),
                bake_sparse)
-  expect_equal(recipes:::convert_matrix(juice_default),
+  expect_equal(recipes:::convert_matrix(juice_default, sparse = FALSE),
                juice_sparse)
 })
 
 test_that('bad args', {
-  expect_error(bake(rec, newdata = okc_te, composition = "dgCMatrix"))
-  expect_error(juice(rec, composition = "dgCMatrix"))
+  expect_error(bake(rec, newdata = okc_te, composition = "matrix"))
+  expect_error(juice(rec, composition = "matrix"))
 })
