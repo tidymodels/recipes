@@ -1,6 +1,13 @@
 library(testthat)
 library(recipes)
 
+# Note: some tests convert to data frame prior to testing
+# https://github.com/tidyverse/dplyr/issues/2751
+
+eps <- if (capabilities("long.double"))
+  sqrt(.Machine$double.eps) else
+  0.1
+
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
@@ -33,8 +40,11 @@ test_that("defaults", {
     value = unname(means),
     class = rep(names(split_up), each = 4)
   )
-  expect_equal(tidy_exp_tr, tidy(trained, number = 1))
-
+  expect_equal(
+    as.data.frame(tidy_exp_tr),
+    as.data.frame(tidy(trained, number = 1)),
+    tolerance = eps
+  )
 })
 
 test_that("alt args", {

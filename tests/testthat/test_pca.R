@@ -8,6 +8,9 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
+# Note: some tests convert to data frame prior to testing
+# https://github.com/tidyverse/dplyr/issues/2751
+
 test_that('correct PCA values', {
   pca_extract <- rec %>%
     step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
@@ -46,8 +49,10 @@ test_that('correct PCA values', {
     value = pca_obj$values,
     component = as.character(pca_obj$ind)
   )
-  expect_equal(tidy_exp_tr, tidy(pca_extract_trained, number = 3))
-
+  expect_equal(
+    as.data.frame(tidy_exp_tr),
+    as.data.frame(tidy(pca_extract_trained, number = 3))
+  )
 })
 
 test_that('correct PCA values with threshold', {
