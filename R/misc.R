@@ -49,11 +49,6 @@ is_one_of <- function(x, what) {
   any(res)
 }
 
-## general error trapping functions
-
-check_all_outcomes_same_type <- function(x)
-  x
-
 ## get variables from formulas
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
@@ -80,7 +75,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
-  ## `check_elements` stops when in-line functions are used.
+  ## `element_check` stops when in-line functions are used.
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))

@@ -237,7 +237,7 @@ form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
   ## check for in-line formulas
-  check_elements(formula, allowed = NULL)
+  element_check(formula, allowed = NULL)
 
   if (!is_tibble(data))
     data <- as_tibble(data)

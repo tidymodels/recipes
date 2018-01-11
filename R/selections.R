@@ -171,7 +171,7 @@ add_arg <- function(cl) {
 
 ## This flags formulas that are not allowed. When called from `recipe.formula`
 ## `allowed` is NULL.
-check_elements <- function(x, allowed = selectors) {
+element_check <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
   if (!is.null(allowed)) {
@@ -238,7 +238,7 @@ terms_select <- function(terms, info) {
   }
   
   ## check arguments against whitelist
-  lapply(terms, check_elements)
+  lapply(terms, element_check)
   
   # Set current_info so available to helpers
   old_info <- set_current_info(info)
