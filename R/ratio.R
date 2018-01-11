@@ -73,7 +73,7 @@ step_ratio <-
     add_step(
       recipe,
       step_ratio_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         denom = denom,

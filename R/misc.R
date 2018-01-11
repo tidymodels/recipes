@@ -300,7 +300,7 @@ merge_term_info <- function(.new, .old) {
 }
 
 #' @importFrom rlang quos is_empty
-check_ellipses <- function(...) {
+ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms))
     stop("Please supply at least one variable specification.",

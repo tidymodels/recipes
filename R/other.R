@@ -80,7 +80,7 @@ step_other <-
     add_step(
       recipe,
       step_other_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         threshold = threshold,

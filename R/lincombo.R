@@ -66,7 +66,7 @@ step_lincomb <-
     add_step(
       recipe,
       step_lincomb_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         max_steps = max_steps,

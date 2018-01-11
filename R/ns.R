@@ -60,7 +60,7 @@ step_ns <-
     add_step(
       recipe,
       step_ns_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         objects = objects,

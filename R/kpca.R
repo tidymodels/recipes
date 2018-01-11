@@ -115,7 +115,7 @@ step_kpca <-
   add_step(
     recipe,
     step_kpca_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       num = num,

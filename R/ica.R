@@ -101,7 +101,7 @@ step_ica <-
     add_step(
       recipe,
       step_ica_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         num = num,

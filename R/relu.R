@@ -83,7 +83,7 @@ step_relu <-
     add_step(
       recipe,
       step_relu_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         shift = shift,

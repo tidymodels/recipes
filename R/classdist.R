@@ -79,7 +79,7 @@ step_classdist <- function(recipe,
   add_step(
     recipe,
     step_classdist_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       class = class,
       role = role,
       trained = trained,

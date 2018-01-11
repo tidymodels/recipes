@@ -64,7 +64,7 @@ step_string2factor <-
     add_step(
       recipe,
       step_string2factor_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         levels = levels,

@@ -30,7 +30,7 @@ check_cols <-
     add_check(
       recipe,
       check_cols_new(
-        terms   = check_ellipses(...),
+        terms   = ellipse_check(...),
         role    = role,
         trained = trained,
         columns = NULL,

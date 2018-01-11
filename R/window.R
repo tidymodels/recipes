@@ -134,7 +134,7 @@ step_window <-
     add_step(
       recipe,
       step_window_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         size = size,

@@ -64,7 +64,7 @@ step_holiday <-
   add_step(
     recipe,
     step_holiday_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       holidays = holidays,

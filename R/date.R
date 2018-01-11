@@ -94,7 +94,7 @@ step_date <-
   add_step(
     recipe,
     step_date_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       features = features,

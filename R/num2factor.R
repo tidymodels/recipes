@@ -74,7 +74,7 @@ step_num2factor <-
     add_step(
       recipe,
       step_num2factor_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         transform = transform,
         trained = trained,

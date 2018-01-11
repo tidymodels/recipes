@@ -63,7 +63,7 @@ step_range <-
     add_step(
       recipe,
       step_range_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         min = min,

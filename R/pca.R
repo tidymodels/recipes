@@ -113,7 +113,7 @@ step_pca <- function(recipe,
   add_step(
     recipe,
     step_pca_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       num = num,

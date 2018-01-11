@@ -48,7 +48,7 @@ step_sqrt <- function(recipe, ..., role = NA,
   add_step(
     recipe,
     step_sqrt_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       columns = columns,

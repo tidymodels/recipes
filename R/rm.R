@@ -47,7 +47,7 @@ step_rm <- function(recipe,
                     skip = FALSE) {
   add_step(recipe,
            step_rm_new(
-             terms = check_ellipses(...),
+             terms = ellipse_check(...),
              role = role,
              trained = trained,
              removals = removals,

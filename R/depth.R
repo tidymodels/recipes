@@ -89,7 +89,7 @@ step_depth <-
     add_step(
       recipe,
       step_depth_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         class = class,
         role = role,
         trained = trained,

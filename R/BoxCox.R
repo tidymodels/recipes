@@ -75,7 +75,7 @@ step_BoxCox <-
     add_step(
       recipe,
       step_BoxCox_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         lambdas = lambdas,

@@ -70,7 +70,7 @@ check_missing <-
     add_check(
       recipe,
       check_missing_new(
-        terms   = check_ellipses(...),
+        terms   = ellipse_check(...),
         role    = role,
         trained = trained,
         columns = columns,

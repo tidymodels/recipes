@@ -60,7 +60,7 @@ step_bs <-
     add_step(
       recipe,
       step_bs_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         objects = objects,

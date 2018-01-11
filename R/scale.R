@@ -61,7 +61,7 @@ step_scale <-
     add_step(
       recipe,
       step_scale_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         sds = sds,

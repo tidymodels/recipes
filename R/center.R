@@ -71,7 +71,7 @@ step_center <-
     add_step(
       recipe,
       step_center_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         means = means,

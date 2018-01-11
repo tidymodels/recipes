@@ -58,7 +58,7 @@ step_bin2factor <-
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         levels = levels,

@@ -45,7 +45,7 @@ step_shuffle <- function(recipe,
                          skip = FALSE) {
   add_step(recipe,
            step_shuffle_new(
-             terms = check_ellipses(...),
+             terms = ellipse_check(...),
              role = role,
              trained = trained,
              columns = columns,

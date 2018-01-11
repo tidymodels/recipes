@@ -128,7 +128,7 @@ step_profile <- function(recipe,
   
   add_step(recipe,
            step_profile_new(
-             terms = check_ellipses(...),
+             terms = ellipse_check(...),
              profile = profile,
              pct = pct,
              index = index,

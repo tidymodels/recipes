@@ -71,7 +71,7 @@ step_spatialsign <-
            skip = FALSE) {
     add_step(recipe,
              step_spatialsign_new(
-               terms = check_ellipses(...),
+               terms = ellipse_check(...),
                role = role,
                na.rm = na.rm,
                trained = trained,

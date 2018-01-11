@@ -68,7 +68,7 @@ step_lowerimpute <-
     add_step(
       recipe,
       step_lowerimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         threshold = threshold,

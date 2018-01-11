@@ -61,7 +61,7 @@ step_hyperbolic <-
     add_step(
       recipe,
       step_hyperbolic_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         func = func,

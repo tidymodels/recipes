@@ -71,7 +71,7 @@ step_count <- function(recipe,
          paste0(valid_args, collapse = ", "),
          call. = FALSE)
 
-  terms <- check_ellipses(...)
+  terms <- ellipse_check(...)
   if (length(terms) > 1)
     stop("For this step, only a single selector can be used.", call. = FALSE)
 

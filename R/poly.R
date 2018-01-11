@@ -66,7 +66,7 @@ step_poly <-
     add_step(
       recipe,
       step_poly_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         objects = objects,

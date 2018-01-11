@@ -72,7 +72,7 @@ step_downsample <-
            column = NULL, target = NA, skip = TRUE) {
     add_step(recipe,
              step_downsample_new(
-               terms = check_ellipses(...),
+               terms = ellipse_check(...),
                ratio = ratio,
                role = role,
                trained = trained,
