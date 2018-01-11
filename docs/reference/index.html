@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -103,7 +109,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.1.0.9000</small>
+        <small>version&nbsp;0.1.2</small>
       </h1>
     </div>
 
@@ -237,12 +243,6 @@
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="discretize.html">discretize</a></code> <code><a href="discretize.html">predict</a></code> <code><a href="discretize.html">step_discretize</a></code> </p>
-          </td>
-          <td><p>Discretize Numeric Variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="step_bagimpute.html">step_bagimpute</a></code> <code><a href="step_bagimpute.html">imp_vars</a></code> <code><a href="step_bagimpute.html">tidy</a></code> </p>
           </td>
           <td><p>Imputation via Bagged Trees</p></td>
@@ -300,6 +300,18 @@
             <p><code><a href="step_depth.html">step_depth</a></code> <code><a href="step_depth.html">tidy</a></code> </p>
           </td>
           <td><p>Data Depths</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_discretize.html">step_discretize</a></code> <code><a href="step_discretize.html">tidy</a></code> </p>
+          </td>
+          <td><p>Discretize Numeric Variables</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_downsample.html">step_downsample</a></code> <code><a href="step_downsample.html">tidy</a></code> </p>
+          </td>
+          <td><p>Down-Sample a Data Set Based on a Factor Variable</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -405,9 +417,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="step_novel.html">step_novel</a></code> <code><a href="step_novel.html">tidy</a></code> </p>
+          </td>
+          <td><p>Simple Value Assignments for Novel Factor Levels</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="step_ns.html">step_ns</a></code> <code><a href="step_ns.html">tidy</a></code> </p>
           </td>
           <td><p>Nature Spline Basis Functions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_num2factor.html">step_num2factor</a></code> <code><a href="step_num2factor.html">tidy</a></code> </p>
+          </td>
+          <td><p>Convert Numbers to Factors</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -438,6 +462,12 @@
             <p><code><a href="step_poly.html">step_poly</a></code> <code><a href="step_poly.html">tidy</a></code> </p>
           </td>
           <td><p>Orthogonal Polynomial Basis Functions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="step_profile.html">step_profile</a></code> <code><a href="step_profile.html">tidy</a></code> </p>
+          </td>
+          <td><p>Create a Profiling Version of a Data Set</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -507,6 +537,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="step_upsample.html">step_upsample</a></code> <code><a href="step_upsample.html">tidy</a></code> </p>
+          </td>
+          <td><p>Up-Sample a Data Set Based on a Factor Variable</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="step_window.html">step_window</a></code> <code><a href="step_window.html">tidy</a></code> </p>
           </td>
           <td><p>Moving Window Functions</p></td>
@@ -522,6 +558,18 @@
             <p><code><a href="step_zv.html">step_zv</a></code> <code><a href="step_zv.html">tidy</a></code> </p>
           </td>
           <td><p>Zero Variance Filter</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="check_cols.html">check_cols</a></code> <code><a href="check_cols.html">tidy</a></code> </p>
+          </td>
+          <td><p>Check if all Columns are Present</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="check_missing.html">check_missing</a></code> <code><a href="check_missing.html">tidy</a></code> </p>
+          </td>
+          <td><p>Check for Missing Values</p></td>
         </tr>
       </tbody>
       </table>
@@ -544,7 +592,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

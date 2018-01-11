@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -138,7 +144,7 @@ and <code>source</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that, until the recipe has been trained, the currrent and
+    <p>Note that, until the recipe has been trained, the current and
 original variables are the same.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -149,25 +155,25 @@ original variables are the same.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
 <span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
-#&gt;   variable    type      role   source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
-#&gt; 1   Murder numeric predictor original
-#&gt; 2  Assault numeric predictor original
+#&gt;   variable type    role      source  
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
+#&gt; 1 Murder   numeric predictor original
+#&gt; 2 Assault  numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
-#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet trained</span></div><div class='output co'>#&gt; # A tibble: 4 x 4
-#&gt;   variable    type      role   source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;
-#&gt; 1   Murder numeric predictor original
-#&gt; 2  Assault numeric predictor original
+#&gt;   variable type    role      source  
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
+#&gt; 1 Murder   numeric predictor original
+#&gt; 2 Assault  numeric predictor original
 #&gt; 3 UrbanPop numeric predictor original
-#&gt; 4     Rape numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
+#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
 <span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
-#&gt;   variable    type      role  source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-#&gt; 1      PC1 numeric predictor derived
-#&gt; 2      PC2 numeric predictor derived
-#&gt; 3      PC3 numeric predictor derived</div></pre>
+#&gt;   variable type    role      source 
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  
+#&gt; 1 PC1      numeric predictor derived
+#&gt; 2 PC2      numeric predictor derived
+#&gt; 3 PC3      numeric predictor derived</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -192,7 +198,7 @@ original variables are the same.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

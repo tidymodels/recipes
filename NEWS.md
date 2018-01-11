@@ -1,13 +1,13 @@
-# recipes 0.1.1.9000
+# `recipes` 0.1.2
 
-General Changes:
+## General Changes:
 
 * Edwin Thoen suggested [adding validation checks](https://github.com/topepo/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/topepo/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
 
 * Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://topepo.github.io/recipes/docs/devel/articles/Skipping.html) for more information. 
 
 
-New Operations:
+## New Operations:
 
  * `check_missing` will validate that none of the specified variables contain missing data. 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
@@ -15,12 +15,12 @@ New Operations:
  * `step_profile` can be used to generate design matrix grids for prediction profile plots of additive models where one variable is varied over a grid and all of the others are fixed at a single value. 
  * `step_downsample` and `step_upsample` can be used to change the number of rows in the data based on the frequency distributions of a factor variable in the training set. By default, this operation is only applied to the training set; `bake` ignores this operation. 
 
-Other Changes:
+## Other Changes:
 
 * `step_spatialsign` now has the option of removing missing data prior to computing the norm.
 
 
-# recipes 0.1.1
+# `recipes` 0.1.1
 
 * The default selectors for `bake` was changed from `all_predictors()` to `everything()`. 
 * The `verbose` option for `prep` is now defaulted to `FALSE`
@@ -40,18 +40,18 @@ Other Changes:
 * `bake` and `juice` can now save the _final_ processed data set in [sparse format](https://github.com/topepo/recipes/issues/49). Note that, as the steps are processed, a non-sparse data frame is used to store the results. 
 * A formula method was added for recipes to get a formula with the outcome(s) and predictors based on the trained recipe. 
 
-# recipes 0.1.0
+# `recipes` 0.1.0
 
 First CRAN release. 
 
 * Changed `prepare` to `prep` per [issue #59](https://github.com/topepo/recipes/issues/59)
 
-# recipes 0.0.1.9003
+# `recipes` 0.0.1.9003
 
  * Two of the main functions [changed names](https://github.com/topepo/recipes/issues/57). `learn` has become `prepare` and `process` has become `bake`
 
 
-# recipes 0.0.1.9002
+# `recipes` 0.0.1.9002
 
 New steps:
 
@@ -64,7 +64,7 @@ Other changes:
 * `step_dummy` and `step_interact` do a better job of respecting missing values in the data set. 
 
 
-# recipes 0.0.1.9001
+# `recipes` 0.0.1.9001
 
 * The class system for `recipe` objects was changed so that [pipes can be used to create the recipe with a formula](https://github.com/topepo/recipes/issues/46).
 * `process.recipe` lost the `role` argument in factor of a general set of [selectors](https://topepo.github.io/recipes/articles/Selecting_Variables.html). If no selector is used, all the predictors are returned. 

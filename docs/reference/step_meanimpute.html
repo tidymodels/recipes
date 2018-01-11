@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +117,7 @@ variables by the training set mean of those variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_meanimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_meanimpute</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -152,6 +158,15 @@ preprocessing have been estimated.</p></td>
 trimmed from each end of the variables before the mean is
 computed. Values of trim outside that range are taken as the
 nearest endpoint.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -209,24 +224,23 @@ values to new data sets using these averages.</p>
 #&gt; 30       NA   NA   1500  1850
 #&gt; 736    7700    0   1000  2008
 #&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
-#&gt;   Status Seniority   Home  Time   Age Marital Records    Job Expenses   Income
-#&gt;   &lt;fctr&gt;     &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;  &lt;fctr&gt;  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;dbl&gt;
-#&gt; 1    bad         0   &lt;NA&gt;    48    37  single      no   &lt;NA&gt;       35 138.9908
-#&gt; 2    bad         1   priv    48    36  single     yes  fixed       35 173.0000
-#&gt; 3    bad        24   priv    60    46 married      no  fixed       60 165.0000
-#&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
-#&gt; #   Price &lt;int&gt;</div><div class='input'>
+#&gt;   Stat… Seni… Home   Time   Age Mari… Reco… Job   Expe… Inco… Asse…  Debt Amou…
+#&gt;   &lt;fct&gt; &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+#&gt; 1 bad       0 &lt;NA&gt;     48    37 sing… no    &lt;NA&gt;     35   139  5430   320  1500
+#&gt; 2 bad       1 priv     48    36 sing… yes   fixed    35   173  7700     0  1000
+#&gt; 3 bad      24 priv     60    46 marr… no    fixed    60   165  3500  1300  1400
+#&gt; # ... with 1 more variable: Price &lt;int&gt;</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;    terms model
-#&gt;    &lt;chr&gt; &lt;dbl&gt;
+#&gt;   terms  model
+#&gt;   &lt;chr&gt;  &lt;dbl&gt;
 #&gt; 1 Income    NA
 #&gt; 2 Assets    NA
-#&gt; 3   Debt    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;    terms     model
-#&gt;    &lt;chr&gt;     &lt;dbl&gt;
-#&gt; 1 Income  138.9908
-#&gt; 2 Assets 5430.2295
-#&gt; 3   Debt  320.2810</div></pre>
+#&gt; 3 Debt      NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;   terms  model
+#&gt;   &lt;chr&gt;  &lt;dbl&gt;
+#&gt; 1 Income   139
+#&gt; 2 Assets  5430
+#&gt; 3 Debt     320</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -249,7 +263,7 @@ values to new data sets using these averages.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

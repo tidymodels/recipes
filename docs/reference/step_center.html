@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -110,7 +116,7 @@ step that will normalize numeric data to have a mean of zero.</p>
     
 
     <pre class="usage"><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_center</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -149,6 +155,15 @@ preprocessing have been estimated.</p></td>
       <th>na.rm</th>
       <td><p>A logical value indicating whether <code>NA</code>
 values should be removed during computations.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -204,30 +219,30 @@ the centering to new data sets using these means.</p>
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
 #&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
-#&gt;         carbon hydrogen     oxygen   nitrogen sulfur    HHV
-#&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1  -2.0041447     5.67   8.675329 -0.7745921   0.22 18.275
-#&gt;  2  -5.1041447     5.50   9.535329  1.7754079   0.34 17.560
-#&gt;  3  -5.6541447     5.50  10.575329  1.3254079   0.30 17.173
-#&gt;  4  -1.9541447     6.10  -1.224671  0.7254079   0.50 18.851
-#&gt;  5   0.4058553     6.32   4.245329 -0.8745921   0.00 20.547
-#&gt;  6  -4.0541447     5.50   3.175329 -0.3745921   0.20 18.467
-#&gt;  7  -9.4141447     5.23  15.605329  0.1154079   0.51 15.095
-#&gt;  8  -6.2541447     4.66  -4.724671 -0.1245921   0.20 16.240
-#&gt;  9 -19.1541447     4.40  -7.424671 -0.9345921   4.90 11.147
-#&gt; 10 -20.5541447     3.77 -14.834671  3.5554079   1.05 10.750
+#&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 - 2.00      5.67   8.68   -0.775  0.220  18.3
+#&gt;  2 - 5.10      5.50   9.54    1.78   0.340  17.6
+#&gt;  3 - 5.65      5.50  10.6     1.33   0.300  17.2
+#&gt;  4 - 1.95      6.10 - 1.22    0.725  0.500  18.9
+#&gt;  5   0.406     6.32   4.25   -0.875  0      20.5
+#&gt;  6 - 4.05      5.50   3.18   -0.375  0.200  18.5
+#&gt;  7 - 9.41      5.23  15.6     0.115  0.510  15.1
+#&gt;  8 - 6.25      4.66 - 4.72   -0.125  0.200  16.2
+#&gt;  9 -19.2       4.40 - 7.42   -0.935  4.90   11.1
+#&gt; 10 -20.6       3.77 -14.8     3.56   1.05   10.8
 #&gt; # ... with 70 more rows</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;                 terms value
-#&gt;                 &lt;chr&gt; &lt;dbl&gt;
-#&gt; 1              carbon    NA
+#&gt;   terms               value
+#&gt;   &lt;chr&gt;               &lt;dbl&gt;
+#&gt; 1 carbon                 NA
 #&gt; 2 "contains(\"gen\")"    NA
-#&gt; 3           -hydrogen    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;      terms     value
-#&gt;      &lt;chr&gt;     &lt;dbl&gt;
-#&gt; 1   carbon 48.354145
-#&gt; 2   oxygen 38.524671
-#&gt; 3 nitrogen  1.074592</div></pre>
+#&gt; 3 -hydrogen              NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;   terms    value
+#&gt;   &lt;chr&gt;    &lt;dbl&gt;
+#&gt; 1 carbon   48.4 
+#&gt; 2 oxygen   38.5 
+#&gt; 3 nitrogen  1.07</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -252,7 +267,7 @@ the centering to new data sets using these means.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

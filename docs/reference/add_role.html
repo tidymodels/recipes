@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -150,16 +156,16 @@ changed and a warning is issued.</p>
 #&gt; Inputs:
 #&gt; 
 #&gt;   8 variables (no declared roles)</div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 8 x 4
-#&gt;   variable    type  role   source
-#&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;
-#&gt; 1   sample nominal    NA original
-#&gt; 2  dataset nominal    NA original
-#&gt; 3   carbon numeric    NA original
-#&gt; 4 hydrogen numeric    NA original
-#&gt; 5   oxygen numeric    NA original
-#&gt; 6 nitrogen numeric    NA original
-#&gt; 7   sulfur numeric    NA original
-#&gt; 8      HHV numeric    NA original</div><div class='input'>
+#&gt;   variable type    role  source  
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;   
+#&gt; 1 sample   nominal NA    original
+#&gt; 2 dataset  nominal NA    original
+#&gt; 3 carbon   numeric NA    original
+#&gt; 4 hydrogen numeric NA    original
+#&gt; 5 oxygen   numeric NA    original
+#&gt; 6 nitrogen numeric NA    original
+#&gt; 7 sulfur   numeric NA    original
+#&gt; 8 HHV      numeric NA    original</div><div class='input'>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>add_role</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), <span class='no'>sulfur</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_role</span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
@@ -197,7 +203,7 @@ changed and a warning is issued.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

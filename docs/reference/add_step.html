@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a New Step to Current Recipe — add_step • recipes</title>
+<title>Add a New Operation to the Current Recipe — add_step • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -101,14 +107,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a New Step to Current Recipe</h1>
+    <h1>Add a New Operation to the Current Recipe</h1>
     </div>
 
     
-    <p><code>add_step</code> adds a step to the last location in the recipe.</p>
+    <p><code>add_step</code> adds a step to the last location in the recipe.
+<code>add_check</code> does the same for checks.</p>
     
 
-    <pre class="usage"><span class='fu'>add_step</span>(<span class='no'>rec</span>, <span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>add_step</span>(<span class='no'>rec</span>, <span class='no'>object</span>)
+
+<span class='fu'>add_check</span>(<span class='no'>rec</span>, <span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -119,13 +128,13 @@
     </tr>
     <tr>
       <th>object</th>
-      <td><p>A step object.</p></td>
+      <td><p>A step or check object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A updated <code><a href='recipe.html'>recipe()</a></code> with the new step in the last slot.</p>
+    <p>A updated <code><a href='recipe.html'>recipe()</a></code> with the new operation in the last slot.</p>
     
 
   </div>
@@ -146,7 +155,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

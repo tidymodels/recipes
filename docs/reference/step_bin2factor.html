@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +117,7 @@ dummy variable.</p>
     
 
     <pre class="usage"><span class='fu'>step_bin2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>,
-  <span class='st'>"no"</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='st'>"no"</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_bin2factor</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -150,6 +156,15 @@ factor levels for the 1's (in the first position) and the zeros
       <th>columns</th>
       <td><p>A vector with the selected variable names. This
 is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -220,7 +235,7 @@ only verified to be numeric (and does not count levels).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

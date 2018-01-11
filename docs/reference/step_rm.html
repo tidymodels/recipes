@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -109,7 +115,8 @@
 that will remove variables based on their name, type, or role.</p>
     
 
-    <pre class="usage"><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_rm</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -146,6 +153,15 @@ columns that should be removed. These values are not determined
 until <code>prep.recipe()</code> is called.</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_rm</code> object.</p></td>
     </tr>
@@ -176,24 +192,24 @@ is the columns that will be removed.</p>
 
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>smaller_set</span>, <span class='no'>biomass_te</span>)
 <span class='no'>filtered_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 3
-#&gt;    carbon sulfur    HHV
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1  46.35   0.22 18.275
-#&gt;  2  43.25   0.34 17.560
-#&gt;  3  42.70   0.30 17.173
-#&gt;  4  46.40   0.50 18.851
-#&gt;  5  48.76   0.00 20.547
-#&gt;  6  44.30   0.20 18.467
-#&gt;  7  38.94   0.51 15.095
-#&gt;  8  42.10   0.20 16.240
-#&gt;  9  29.20   4.90 11.147
-#&gt; 10  27.80   1.05 10.750
+#&gt;    carbon sulfur   HHV
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1   46.4  0.220  18.3
+#&gt;  2   43.2  0.340  17.6
+#&gt;  3   42.7  0.300  17.2
+#&gt;  4   46.4  0.500  18.9
+#&gt;  5   48.8  0      20.5
+#&gt;  6   44.3  0.200  18.5
+#&gt;  7   38.9  0.510  15.1
+#&gt;  8   42.1  0.200  16.2
+#&gt;  9   29.2  4.90   11.1
+#&gt; 10   27.8  1.05   10.8
 #&gt; # ... with 70 more rows</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>smaller_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 1
-#&gt;      terms
-#&gt;      &lt;chr&gt;
+#&gt;   terms   
+#&gt;   &lt;chr&gt;   
 #&gt; 1 hydrogen
-#&gt; 2   oxygen
+#&gt; 2 oxygen  
 #&gt; 3 nitrogen</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -215,7 +231,7 @@ is the columns that will be removed.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

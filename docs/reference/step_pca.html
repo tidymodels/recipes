@@ -73,6 +73,12 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +117,8 @@ components.</p>
     
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_pca</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -177,6 +184,15 @@ stored here once this preprocessing step has be trained by
 resulting new variables. See notes below</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_pca</code> object.</p></td>
     </tr>
@@ -239,48 +255,48 @@ Analysis</em>. Springer.</p>
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
 <span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-13.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.99</span>)
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_thresh</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; # A tibble: 50 x 4
-#&gt;            PC1         PC2         PC3          PC4
-#&gt;          &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-#&gt;  1 -0.97566045  1.12200121 -0.43980366  0.154696581
-#&gt;  2 -1.93053788  1.06242692  2.01950027 -0.434175454
-#&gt;  3 -1.74544285 -0.73845954  0.05423025 -0.826264240
-#&gt;  4  0.13999894  1.10854226  0.11342217 -0.180973554
-#&gt;  5 -2.49861285 -1.52742672  0.59254100 -0.338559240
-#&gt;  6 -1.49934074 -0.97762966  1.08400162  0.001450164
-#&gt;  7  1.34499236 -1.07798362 -0.63679250 -0.117278736
-#&gt;  8 -0.04722981 -0.32208890 -0.71141032 -0.873113315
-#&gt;  9 -2.98275967  0.03883425 -0.57103206 -0.095317042
-#&gt; 10 -1.62280742  1.26608838 -0.33901818  1.065974459
+#&gt;        PC1     PC2     PC3      PC4
+#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 -0.976   1.12   -0.440   0.155  
+#&gt;  2 -1.93    1.06    2.02   -0.434  
+#&gt;  3 -1.75   -0.738   0.0542 -0.826  
+#&gt;  4  0.140   1.11    0.113  -0.181  
+#&gt;  5 -2.50   -1.53    0.593  -0.339  
+#&gt;  6 -1.50   -0.978   1.08    0.00145
+#&gt;  7  1.34   -1.08   -0.637  -0.117  
+#&gt;  8 -0.0472 -0.322  -0.711  -0.873  
+#&gt;  9 -2.98    0.0388 -0.571  -0.0953 
+#&gt; 10 -1.62    1.27   -0.339   1.07   
 #&gt; # ... with 40 more rows</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;           terms value component
-#&gt;           &lt;chr&gt; &lt;dbl&gt;     &lt;chr&gt;
-#&gt; 1 all_numeric()    NA      &lt;NA&gt;</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 3
-#&gt;       terms       value component
-#&gt;       &lt;chr&gt;       &lt;dbl&gt;     &lt;chr&gt;
-#&gt;  1   Murder -0.53589947       PC1
-#&gt;  2  Assault -0.58318363       PC1
-#&gt;  3 UrbanPop -0.27819087       PC1
-#&gt;  4     Rape -0.54343209       PC1
-#&gt;  5   Murder  0.41818087       PC2
-#&gt;  6  Assault  0.18798560       PC2
-#&gt;  7 UrbanPop -0.87280619       PC2
-#&gt;  8     Rape -0.16731864       PC2
-#&gt;  9   Murder -0.34123273       PC3
-#&gt; 10  Assault -0.26814843       PC3
-#&gt; 11 UrbanPop -0.37801579       PC3
-#&gt; 12     Rape  0.81777791       PC3
-#&gt; 13   Murder  0.64922780       PC4
-#&gt; 14  Assault -0.74340748       PC4
-#&gt; 15 UrbanPop  0.13387773       PC4
-#&gt; 16     Rape  0.08902432       PC4</div></pre>
+#&gt;   terms         value component
+#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    
+#&gt; 1 all_numeric()    NA &lt;NA&gt;     </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 3
+#&gt;    terms      value component
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
+#&gt;  1 Murder   -0.536  PC1      
+#&gt;  2 Assault  -0.583  PC1      
+#&gt;  3 UrbanPop -0.278  PC1      
+#&gt;  4 Rape     -0.543  PC1      
+#&gt;  5 Murder    0.418  PC2      
+#&gt;  6 Assault   0.188  PC2      
+#&gt;  7 UrbanPop -0.873  PC2      
+#&gt;  8 Rape     -0.167  PC2      
+#&gt;  9 Murder   -0.341  PC3      
+#&gt; 10 Assault  -0.268  PC3      
+#&gt; 11 UrbanPop -0.378  PC3      
+#&gt; 12 Rape      0.818  PC3      
+#&gt; 13 Murder    0.649  PC4      
+#&gt; 14 Assault  -0.743  PC4      
+#&gt; 15 UrbanPop  0.134  PC4      
+#&gt; 16 Rape      0.0890 PC4      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -307,7 +323,7 @@ Analysis</em>. Springer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
