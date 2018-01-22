@@ -33,7 +33,9 @@ navbar:
       - text: "On Skipping Steps"
         href: articles/Skipping.html      
       - text: "Subsampling for Class Imbalances"
-        href: articles/articles/Subsampling.html                  
+        href: articles/articles/Subsampling.html      
+      - text: Multivariate Analysis using Partial Least Squares
+        href: articles/articles/Multivariate_PLS.html                           
   - text: Reference
     href: reference/index.html
   - text: News

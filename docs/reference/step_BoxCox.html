@@ -79,6 +79,9 @@
     <li>
       <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
     </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -224,7 +227,7 @@ A review. <em>The Statistician</em>, 169-178..</p>
 
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
 
-<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-9.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-10.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms         value
 #&gt;   &lt;chr&gt;         &lt;dbl&gt;

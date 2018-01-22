@@ -57,6 +57,9 @@
     <li>
       <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
     </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -106,7 +109,7 @@
 <p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
 </section><section id="how-to-skip-steps" class="level1"><h1>How To Skip Steps</h1>
-<p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>TRUE</code>. When using this options:</p>
+<p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>TRUE</code>. When using this option:</p>
 <ul>
 <li>No steps are skipped during <code>prep</code>
 </li>

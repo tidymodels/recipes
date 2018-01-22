@@ -79,6 +79,9 @@
     <li>
       <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
     </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -255,7 +258,7 @@ Analysis</em>. Springer.</p>
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
 <span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>

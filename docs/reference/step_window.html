@@ -79,6 +79,9 @@
     <li>
       <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
     </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -222,8 +225,8 @@ uses <code>median(x[2:6])</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>recipes</span>)
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='error'>Error in value[[3L]](cond): Package ‘rlang’ version 0.1.6 cannot be unloaded:</span>
-#&gt; <span class='error'> Error in unloadNamespace(package) : namespace ‘rlang’ is imported by ‘tibble’, ‘tidyr’, ‘purrr’, ‘testthat’, ‘pkgload’, ‘pillar’, ‘recipes’, ‘dplyr’, ‘pkgdown’, ‘tidyselect’ so cannot be unloaded</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>library</span>(<span class='no'>rlang</span>)
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>set.seed</span>(<span class='fl'>5522</span>)
 <span class='no'>sim_dat</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>x1</span> <span class='kw'>=</span> (<span class='fl'>20</span>:<span class='fl'>100</span>) / <span class='fl'>10</span>)
@@ -251,7 +254,7 @@ uses <code>median(x[2:6])</code>.</p>
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>() +
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-9.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
 #&gt;   terms statistic  size
 #&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
@@ -270,7 +273,7 @@ uses <code>median(x[2:6])</code>.</p>
 <span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>everything</a></span>())
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>() +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-10.png' alt='' width='700' height='432.632880098887' /></div></pre>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-6.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
