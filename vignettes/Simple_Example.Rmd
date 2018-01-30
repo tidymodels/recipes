@@ -26,33 +26,41 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 
 ## An Example
 
-The cell segmentation data will be used. It has 58 predictor columns, a factor variable `Class` (the outcome), and two extra labelling columns. Each of the predictors has a suffix for the optical channel (`"Ch1"`-`"Ch4"`). We will first separate the data into a training and test set then remove unimportant variables:
+The packages contains a data set that used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable `Status` (the outcome). We will first separate the data into a training and test set:
 
 ```{r data}
 library(recipes)
-library(caret)
-data(segmentationData)
+library(rsample)
 
-seg_train <- segmentationData %>% 
-  filter(Case == "Train") %>% 
-  select(-Case, -Cell)
-seg_test  <- segmentationData %>% 
-  filter(Case == "Test")  %>% 
-  select(-Case, -Cell)
+data("credit_data")
+
+set.seed(55)
+train_test_split <- initial_split(credit_data)
+
+credit_train <- training(train_test_split)
+credit_test <- testing(train_test_split)
 ```
+
+Note that there are some missing values in these data:
+
+```{r missing}
+vapply(credit_train, function(x) mean(!is.na(x)), numeric(1))
+```
+
+Rather than remove these, their values will be imputed. 
 
 The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set. 
 
 ## An Initial Recipe
 
-For a first recipe, let's plan on centering and scaling the predictors. First, we will create a recipe from the original data and then specify the processing steps. 
+For a first recipe, let's plan on . First, we will create a recipe from the original data and then specify the processing steps. 
 
 Recipes can be created manually by sequentially adding roles to variables in a data set. 
 
 If the analysis only required **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
 
 ```{r first_rec}
-rec_obj <- recipe(Class ~ ., data = seg_train)
+rec_obj <- recipe(Status ~ ., data = credit_train)
 rec_obj
 ```
 
@@ -63,11 +71,13 @@ The data contained in the `data` argument need not be the training set; this dat
 ## Preprocessing Steps
 
 From here, preprocessing steps can be added sequentially in one of two ways:
+
 ```{r step_code, eval = FALSE}
 rec_obj <- step_name(rec_obj, arguments)    ## or
 rec_obj <- rec_obj %>% step_name(arguments)
 ```
-`step_center` and the other functions will always return updated recipes. 
+
+`step_dummy` and the other functions will always return updated recipes. 
 
 One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but [`dplyr`](https://cran.r-project.org/package=dplyr)-like selector functions can be used: 
 
@@ -76,59 +86,67 @@ One other important facet of the code is the method for specifying which variabl
  * functions that subset on the role of the variables that have been specified so far: `all_outcomes`, `all_predictors`, `has_role`, or 
  * similar functions for the type of data: `all_nominal`, `all_numeric`, and `has_type`. 
 
-Note that the functions listed above are the only ones that can be used to selecto variables inside the steps. Also, minus signs can be used to deselect variables. 
+Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables. 
 
-For our data, we can add the two operations for all of the predictors:
+For our data, we can add an operation to impute the predictors. There are many ways to do this and `recipes` includes a few steps for this purpose:
+
+```{r imp-steps}
+grep("impute$", ls("package:recipes"), value = TRUE)
+```
+
+Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors then removes those that are numeric:
+
+```{r dummy}
+imputed <- rec_obj %>%
+  step_knnimpute(all_predictors()) 
+imputed
+```
+
+It is important to realize that the _specific_ variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
+
+Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy`. To do this, the step selects all predictors then removes those that are numeric:
+
+```{r imputing}
+ind_vars <- imputed %>%
+  step_dummy(all_predictors(), -all_numeric()) 
+ind_vars
+```
+
+At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:
+
 ```{r center_scale}
-standardized <- rec_obj %>%
-  step_center(all_predictors()) %>%
+standardized <- ind_vars %>%
+  step_center(all_predictors())  %>%
   step_scale(all_predictors()) 
 standardized
 ```
 
-It is important to realize that the _specific_ variables have not been declared yet (in this example). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-If this is the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
+If there are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
+
 ```{r trained}
-trained_rec <- prep(standardized, training = seg_train)
+trained_rec <- prep(standardized, training = credit_train)
+trained_rec
 ```
-Now that the statistics have been estimated, the preprocessing can be applied to the training and test set:
+
+Note that the real variables are listed (e.g. `Home` etc.) instead of the selectors (`all_predictors()`). 
+
+Now that the statistics have been estimated, the preprocessing can be _applied_ to the training and test set:
+
 ```{r apply}
-train_data <- bake(trained_rec, newdata = seg_train)
-test_data  <- bake(trained_rec, newdata = seg_test)
+train_data <- bake(trained_rec, newdata = credit_train)
+test_data  <- bake(trained_rec, newdata = credit_test)
 ```
 `bake` returns a tibble that, by default, includes all of the variables: 
 ```{r tibbles}
 class(test_data)
 test_data
+vapply(test_data, function(x) mean(!is.na(x)), numeric(1))
 ```
+
 Selectors can also be used. For example, if only the predictors are needed, you can use `bake(object, newdata, all_predictors())`. 
 
-
-
-## Adding Steps
-
-After exploring the data, more preprocessing might be required. Steps can be added to the trained recipe. Suppose that we need to create PCA components but only from the predictors from channel 1 and any predictors that are areas: 
-```{r pca}
-trained_rec <- trained_rec %>%
-  step_pca(ends_with("Ch1"), contains("area"), num = 5)
-trained_rec
-```
-Note that only the last step has been estimated; the first two were previously trained and these activities are not duplicated. We can add the PCA estimates using `prep` again:
-```{r pca_training}
-trained_rec <- prep(trained_rec, training = seg_train)
-```
-`bake` can be reapplied to get the principal components in addition to the other variables:
-
-```{r pca_bake}
-test_data  <- bake(trained_rec, newdata = seg_test, all_predictors())
-names(test_data)
-```
-
-Note that the PCA components have replaced the original variables that were from channel 1 or measured an area aspect of the cells. 
-
-
-There are a number of different steps included in the package:
+There are a number of other steps included in the package:
 
 ```{r step_list, echo = FALSE}
 grep("^step_", ls("package:recipes"), value = TRUE)
@@ -142,7 +160,7 @@ For example, `check_missing` will fail if any of the variables selected for vali
 
 ```{r check, eval = FALSE}
 trained_rec <- trained_rec %>%
-  check_missing(contains("Inten"))
+  check_missing(contains("Marital"))
 ```
 
 Currently, `recipes` includes:

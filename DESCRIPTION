@@ -40,7 +40,7 @@ Suggests:
     RANN,
     igraph,
     knitr,
-    caret,
+    rsample,
     ggplot2,
     rmarkdown,
     covr
