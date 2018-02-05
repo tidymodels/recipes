@@ -168,17 +168,29 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
     stop("`names` should be set to TRUE", call. = FALSE)
   
   if(!x$approx) {
-    x$ref_dist <- training[, col_names]
+    ref_dist <- training[, col_names]
   } else {
     pctl <- lapply(
       training[, col_names],  
       get_pctl, 
       args = x$options
     )
-    x$ref_dist <- pctl
+    ref_dist <- pctl
   }
-  ## Always return the updated step
-  x
+
+  ## It is a good idea to use the constructor function
+  ## to return the updated object. Note that `trained` is
+  ## set to TRUE
+  
+  step_percentile_new(
+    terms = x$terms, 
+    trained = TRUE,
+    role = x$role, 
+    ref_dist = ref_dist,
+    approx = x$approx,
+    options = x$options,
+    skip = x$skip
+  )
 }
 ```
 

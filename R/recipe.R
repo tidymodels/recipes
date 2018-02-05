@@ -451,6 +451,10 @@ bake <- function(object, ...)
 #' @importFrom tidyselect everything
 #' @export
 bake.recipe <- function(object, newdata, ..., composition = "tibble") {
+  if (!fully_trained(object))
+    stop("At least one step has not been training. Please ",
+         "run `prep`.",
+         call. = FALSE)
 
   if (!any(composition == formats))
     stop("`composition` should be one of: ",
@@ -616,12 +620,13 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
+  if (!fully_trained(object))
+    stop("At least one step has not been training. Please ",
+         "run `prep`.",
+         call. = FALSE)
+  
   if(!isTRUE(object$retained))
     stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
-         call. = FALSE)
-  tr_steps <- vapply(object$steps, function(x) x$trained, c(logic = TRUE))
-  if(!all(tr_steps))
-    stop("At least one step has not be prepared; cannot extract.",
          call. = FALSE)
 
   if (!any(composition == formats))
