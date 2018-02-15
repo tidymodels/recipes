@@ -235,7 +235,7 @@ bake.step_date <- function(object, newdata, ...) {
 
     strt <- max(cols) + 1
   }
-  newdata <- cbind(newdata, date_values)
+  newdata <- bind_cols(newdata, date_values)
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
   newdata
