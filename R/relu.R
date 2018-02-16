@@ -20,8 +20,6 @@
 #' @param prefix A prefix for generated column names, default to "right_relu_"
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
-#' @param columns A character string of variable names that will
-#'   be (eventually) populated by the `terms` argument.
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
@@ -73,7 +71,6 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           columns = NULL,
            skip = FALSE) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
@@ -93,7 +90,6 @@ step_relu <-
         reverse = reverse,
         smooth = smooth,
         prefix = prefix,
-        columns = columns,
         skip = skip
       )
     )
@@ -107,7 +103,6 @@ step_relu_new <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           columns = NULL,
            skip = FALSE) {
     step(
       subclass = "relu",
@@ -118,7 +113,6 @@ step_relu_new <-
       reverse = reverse,
       smooth = smooth,
       prefix = prefix,
-      columns = columns,
       skip = skip
     )
   }

@@ -314,7 +314,7 @@ all_outcomes <- function(roles = current_info()$roles)
 has_type <-
   function(match = "numeric",
            types = current_info()$types)
-    which(types %in% tolower(match))
+    which(types %in% match)
 
 #' @export
 #' @rdname has_role

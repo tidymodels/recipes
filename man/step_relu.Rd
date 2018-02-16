@@ -6,8 +6,7 @@
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE, prefix = "right_relu_",
-  columns = NULL, skip = FALSE)
+  reverse = FALSE, smooth = FALSE, prefix = "right_relu_", skip = FALSE)
 
 \method{tidy}{step_relu}(x, ...)
 }
@@ -34,9 +33,6 @@ appromixation to the rectified linear transformation, should be used.}
 \item{prefix}{A prefix for generated column names, default to "right_relu_"
 when right hinge transformation and "left_relu_" for reversed/left hinge
 transformations.}
-
-\item{columns}{A character string of variable names that will
-be (eventually) populated by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

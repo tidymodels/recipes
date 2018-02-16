@@ -40,10 +40,11 @@ new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_lag} creates a \emph{specification} of a recipe step that
-will sort the data into chronological order for each selected
-variable and then add a new column of lagged data. Lagged data will
-by default include NA values where the lag was induced. These can be
-removed with \code{\link[=step_naomit]{step_naomit()}}.
+will add a new column of lagged data. Lagged data will
+by default include NA values where the lag was induced.
+These can be removed with \code{\link[=step_naomit]{step_naomit()}}, or you may
+specify an alternative filler value with the \code{default}
+argument.
 }
 \examples{
 n <- 10

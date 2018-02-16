@@ -16,7 +16,7 @@
  * `step_profile` can be used to generate design matrix grids for prediction profile plots of additive models where one variable is varied over a grid and all of the others are fixed at a single value. 
  * `step_downsample` and `step_upsample` can be used to change the number of rows in the data based on the frequency distributions of a factor variable in the training set. By default, this operation is only applied to the training set; `bake` ignores this operation.
  * `step_naomit` drops rows when specified columns contain `NA`, similar to `tidyr::drop_na`.
- * `step_lag` adds for the creation of lagged predictor columns.
+ * `step_lag` allows for the creation of lagged predictor columns.
 
 ## Other Changes:
 
