@@ -54,7 +54,8 @@ step_string2factor <-
            role = NA,
            trained = FALSE,
            levels = NULL,
-           ordered = FALSE) {
+           ordered = FALSE,
+           skip = FALSE) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
     if((!is.null(levels) & !is.character(levels)) | is.list(levels))
@@ -63,11 +64,12 @@ step_string2factor <-
     add_step(
       recipe,
       step_string2factor_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         levels = levels,
-        ordered = ordered
+        ordered = ordered,
+        skip = skip
       )
     )
   }
@@ -77,7 +79,8 @@ step_string2factor_new <-
            role = NA,
            trained = FALSE,
            levels = NULL,
-           ordered = NULL
+           ordered = NULL,
+           skip = FALSE
   ) {
     step(
       subclass = "string2factor",
@@ -85,7 +88,8 @@ step_string2factor_new <-
       role = role,
       trained = trained,
       levels = levels,
-      ordered = ordered
+      ordered = ordered,
+      skip = skip
     )
   }
 
@@ -122,7 +126,8 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     levels = res,
-    ordered = ord
+    ordered = ord,
+    skip = x$skip
   )
 }
 

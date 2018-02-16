@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -113,7 +122,7 @@ each value of a categorical class variable.</p>
 
     <pre class="usage"><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>cov_func</span> <span class='kw'>=</span> <span class='no'>cov</span>, <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_classdist</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -174,6 +183,15 @@ the natural log function?</p></td>
 been trained by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_classdist</code> object.</p></td>
     </tr>
@@ -217,36 +235,36 @@ overall.</p>
 <span class='no'>dist_cols</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"classdist"</span>, <span class='fu'>names</span>(<span class='no'>dists_to_species</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>dists_to_species</span>[, <span class='fu'>c</span>(<span class='st'>"Species"</span>, <span class='no'>dist_cols</span>)]</div><div class='output co'>#&gt; # A tibble: 150 x 4
 #&gt;    Species classdist_setosa classdist_versicolor classdist_virginica
-#&gt;     &lt;fctr&gt;            &lt;dbl&gt;                &lt;dbl&gt;               &lt;dbl&gt;
-#&gt;  1  setosa       -0.8004790             4.743231            5.209136
-#&gt;  2  setosa        0.7328938             4.422633            5.036790
-#&gt;  3  setosa        0.2502412             4.553039            5.078257
-#&gt;  4  setosa        0.5342728             4.416172            4.946213
-#&gt;  5  setosa       -0.2722217             4.791492            5.215137
-#&gt;  6  setosa        1.3117452             4.791484            5.211114
-#&gt;  7  setosa        1.2308667             4.564384            5.037074
-#&gt;  8  setosa       -1.0687451             4.642609            5.120650
-#&gt;  9  setosa        1.0974371             4.303348            4.888585
-#&gt; 10  setosa        1.1631777             4.537918            5.054580
+#&gt;    &lt;fctr&gt;             &lt;dbl&gt;                &lt;dbl&gt;               &lt;dbl&gt;
+#&gt;  1 setosa            -0.800                 4.74                5.21
+#&gt;  2 setosa             0.733                 4.42                5.04
+#&gt;  3 setosa             0.250                 4.55                5.08
+#&gt;  4 setosa             0.534                 4.42                4.95
+#&gt;  5 setosa            -0.272                 4.79                5.22
+#&gt;  6 setosa             1.31                  4.79                5.21
+#&gt;  7 setosa             1.23                  4.56                5.04
+#&gt;  8 setosa            -1.07                  4.64                5.12
+#&gt;  9 setosa             1.10                  4.30                4.89
+#&gt; 10 setosa             1.16                  4.54                5.05
 #&gt; # ... with 140 more rows</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;              terms value class
-#&gt;              &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1 all_predictors()    NA  &lt;NA&gt;</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 3
-#&gt;           terms value      class
-#&gt;           &lt;chr&gt; &lt;dbl&gt;      &lt;chr&gt;
-#&gt;  1 Sepal.Length 5.006     setosa
-#&gt;  2  Sepal.Width 3.428     setosa
-#&gt;  3 Petal.Length 1.462     setosa
-#&gt;  4  Petal.Width 0.246     setosa
-#&gt;  5 Sepal.Length 5.936 versicolor
-#&gt;  6  Sepal.Width 2.770 versicolor
-#&gt;  7 Petal.Length 4.260 versicolor
-#&gt;  8  Petal.Width 1.326 versicolor
-#&gt;  9 Sepal.Length 6.588  virginica
-#&gt; 10  Sepal.Width 2.974  virginica
-#&gt; 11 Petal.Length 5.552  virginica
-#&gt; 12  Petal.Width 2.026  virginica</div></pre>
+#&gt;   terms            value class
+#&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;
+#&gt; 1 all_predictors()    NA &lt;NA&gt; </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 3
+#&gt;    terms        value class     
+#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;     
+#&gt;  1 Sepal.Length 5.01  setosa    
+#&gt;  2 Sepal.Width  3.43  setosa    
+#&gt;  3 Petal.Length 1.46  setosa    
+#&gt;  4 Petal.Width  0.246 setosa    
+#&gt;  5 Sepal.Length 5.94  versicolor
+#&gt;  6 Sepal.Width  2.77  versicolor
+#&gt;  7 Petal.Length 4.26  versicolor
+#&gt;  8 Petal.Width  1.33  versicolor
+#&gt;  9 Sepal.Length 6.59  virginica 
+#&gt; 10 Sepal.Width  2.97  virginica 
+#&gt; 11 Petal.Length 5.55  virginica 
+#&gt; 12 Petal.Width  2.03  virginica </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -269,7 +287,7 @@ overall.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

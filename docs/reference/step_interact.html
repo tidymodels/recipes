@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +120,7 @@ between two or more variables.</p>
     
 
     <pre class="usage"><span class='fu'>step_interact</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>)
+  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_interact</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -151,6 +160,15 @@ individual interaction.</p></td>
       <td><p>A character value used to delineate variables in an
 interaction (e.g. <code>var1_x_var2</code> instead of the more
 traditional <code>var1:var2</code>).</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -220,7 +238,7 @@ all two-way interactions are created.</p>
   <span class='fu'>step_interact</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ (<span class='fu'>matches</span>(<span class='st'>"gen$"</span>) + <span class='no'>sulfur</span>)^<span class='fl'>2</span>)
 
 <span class='no'>int_mod_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>int_mod_1</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>int_mod_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='error'>Error: `matches("gen$")` must evaluate to column positions or names, not a function</span></div><div class='input'>
+<span class='no'>int_mod_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `matches` is deprecated. Please use `expect_match` instead.</span></div><div class='output co'>#&gt; <span class='error'>Error: `matches("gen$")` must evaluate to column positions or names, not a function</span></div><div class='input'>
 <span class='no'>dat_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>int_mod_1</span>, <span class='no'>biomass_te</span>)
 <span class='no'>dat_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>int_mod_2</span>, <span class='no'>biomass_te</span>)
 
@@ -228,10 +246,10 @@ all two-way interactions are created.</p>
 #&gt; [4] "nitrogen"          "sulfur"            "HHV"              
 #&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'>names</span>(<span class='no'>dat_2</span>)</div><div class='output co'>#&gt; [1] "carbon"   "hydrogen" "oxygen"   "nitrogen" "sulfur"   "HHV"     </div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;             terms
-#&gt;             &lt;chr&gt;
+#&gt;   terms          
+#&gt;   &lt;chr&gt;          
 #&gt; 1 carbon:hydrogen</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 0 x 1
-#&gt; # ... with 1 variables: terms &lt;chr&gt;</div></pre>
+#&gt; # ... with 1 variable: terms &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -254,7 +272,7 @@ all two-way interactions are created.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

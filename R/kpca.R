@@ -110,17 +110,19 @@ step_kpca <-
            res = NULL,
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
-           prefix = "kPC") {
+           prefix = "kPC",
+           skip = FALSE) {
   add_step(
     recipe,
     step_kpca_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       num = num,
       res = res,
       options = options,
-      prefix = prefix
+      prefix = prefix,
+      skip = skip
     )
   )
 }
@@ -132,7 +134,8 @@ step_kpca_new <-
            num  = NULL,
            res = NULL,
            options = NULL,
-           prefix = "kPC") {
+           prefix = "kPC",
+           skip = FALSE) {
   step(
     subclass = "kpca",
     terms = terms,
@@ -141,7 +144,8 @@ step_kpca_new <-
     num = num,
     res = res,
     options = options,
-    prefix = prefix
+    prefix = prefix,
+    skip = skip
   )
 }
 
@@ -163,7 +167,8 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     num = x$num,
     options = x$options,
     res = kprc,
-    prefix = x$prefix
+    prefix = x$prefix,
+    skip = x$skip
   )
 }
 

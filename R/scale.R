@@ -56,15 +56,17 @@ step_scale <-
            role = NA,
            trained = FALSE,
            sds = NULL,
-           na.rm = TRUE) {
+           na.rm = TRUE,
+           skip = FALSE) {
     add_step(
       recipe,
       step_scale_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         sds = sds,
-        na.rm = na.rm
+        na.rm = na.rm,
+        skip = skip
       )
     )
   }
@@ -74,14 +76,16 @@ step_scale_new <-
            role = NA,
            trained = FALSE,
            sds = NULL,
-           na.rm = NULL) {
+           na.rm = NULL,
+           skip = FALSE) {
     step(
       subclass = "scale",
       terms = terms,
       role = role,
       trained = trained,
       sds = sds,
-      na.rm = na.rm
+      na.rm = na.rm,
+      skip = skip
     )
   }
 
@@ -96,7 +100,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     sds,
-    na.rm = x$na.rm
+    na.rm = x$na.rm,
+    skip = x$skip
   )
 }
 

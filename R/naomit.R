@@ -13,6 +13,12 @@
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
+#' @param skip A logical. Should the step be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations
 #'
 #' @rdname step_naomit
 #' @return An updated version of `recipe` with the
@@ -27,23 +33,26 @@
 #'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE) {
+step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE) {
   add_step(
     recipe,
     step_naomit_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
-      trained = trained
+      trained = trained,
+      skip = skip
     )
   )
 }
 
-step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE) {
+step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE,
+                            skip = FALSE) {
   step(
     subclass = "naomit",
     terms = terms,
     role = role,
-    trained = trained
+    trained = trained,
+    skip = skip
   )
 }
 

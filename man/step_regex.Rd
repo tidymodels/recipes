@@ -7,7 +7,7 @@
 \usage{
 step_regex(recipe, ..., role = "predictor", trained = FALSE,
   pattern = ".", options = list(), result = make.names(pattern),
-  input = NULL)
+  input = NULL, skip = FALSE)
 
 \method{tidy}{step_regex}(x, ...)
 }
@@ -43,6 +43,13 @@ variable. It should be a valid column name.}
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_regex} object.}
 }

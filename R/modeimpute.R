@@ -57,14 +57,16 @@ step_modeimpute <-
            ...,
            role = NA,
            trained = FALSE,
-           modes = NULL) {
+           modes = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_modeimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
-        modes = modes
+        modes = modes,
+        skip = skip
       )
     )
   }
@@ -73,13 +75,15 @@ step_modeimpute_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           modes = NULL) {
+           modes = NULL,
+           skip = FALSE) {
     step(
       subclass = "modeimpute",
       terms = terms,
       role = role,
       trained = trained,
-      modes = modes
+      modes = modes,
+      skip = skip
     )
   }
 
@@ -91,7 +95,8 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    modes
+    modes = modes,
+    skip = x$skip
   )
 }
 

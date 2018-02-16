@@ -43,26 +43,30 @@ step_rm <- function(recipe,
                     ...,
                     role = NA,
                     trained = FALSE,
-                    removals = NULL) {
+                    removals = NULL,
+                    skip = FALSE) {
   add_step(recipe,
            step_rm_new(
-             terms = check_ellipses(...),
+             terms = ellipse_check(...),
              role = role,
              trained = trained,
-             removals = removals
+             removals = removals,
+             skip = skip
            ))
 }
 
 step_rm_new <- function(terms = NULL,
                         role = NA,
                         trained = FALSE,
-                        removals = NULL) {
+                        removals = NULL,
+                        skip = FALSE) {
   step(
     subclass = "rm",
     terms = terms,
     role = role,
     trained = trained,
-    removals = removals
+    removals = removals,
+    skip = skip
   )
 }
 
@@ -73,7 +77,8 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    removals = col_names
+    removals = col_names,
+    skip = x$skip
   )
 }
 

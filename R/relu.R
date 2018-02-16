@@ -4,6 +4,7 @@
 #'   will apply the rectified linear or softplus transformations to numeric
 #'   data. The transformed data is added as new columns to the data matrix.
 #'
+#' @inheritParams step_center
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
@@ -72,7 +73,8 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
@@ -84,14 +86,15 @@ step_relu <-
     add_step(
       recipe,
       step_relu_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         shift = shift,
         reverse = reverse,
         smooth = smooth,
         prefix = prefix,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -104,7 +107,8 @@ step_relu_new <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "relu",
       terms = terms,
@@ -114,7 +118,8 @@ step_relu_new <-
       reverse = reverse,
       smooth = smooth,
       prefix = prefix,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 

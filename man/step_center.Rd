@@ -6,7 +6,7 @@
 \title{Centering Numeric Data}
 \usage{
 step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  na.rm = TRUE)
+  na.rm = TRUE, skip = FALSE)
 
 \method{tidy}{step_center}(x, ...)
 }
@@ -30,6 +30,13 @@ preprocessing have been estimated.}
 
 \item{na.rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_center} object.}
 }

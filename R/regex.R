@@ -54,7 +54,8 @@ step_regex <- function(recipe,
                        pattern = ".",
                        options = list(),
                        result = make.names(pattern),
-                       input = NULL) {
+                       input = NULL,
+                       skip = FALSE) {
   if (!is.character(pattern))
     stop("`pattern` should be a character string", call. = FALSE)
   if (length(pattern) != 1)
@@ -65,9 +66,10 @@ step_regex <- function(recipe,
          paste0(valid_args, collapse = ", "),
          call. = FALSE)
 
-  terms <- check_ellipses(...)
+  terms <- ellipse_check(...)
   if (length(terms) > 1)
-    stop("For this step, only a single selector can be used.", call. = FALSE)
+    stop("For this step, only a single selector can be used.", 
+         call. = FALSE)
 
   add_step(
     recipe,
@@ -78,7 +80,8 @@ step_regex <- function(recipe,
       pattern = pattern,
       options = options,
       result = result,
-      input = input
+      input = input,
+      skip = skip
     )
   )
 }
@@ -89,7 +92,8 @@ step_regex_new <- function(terms = NULL,
                            pattern = NULL,
                            options = NULL,
                            result = NULL,
-                           input = NULL) {
+                           input = NULL,
+                           skip = FALSE) {
   step(
     subclass = "regex",
     terms = terms,
@@ -98,7 +102,8 @@ step_regex_new <- function(terms = NULL,
     pattern = pattern,
     options = options,
     result = result,
-    input = input
+    input = input,
+    skip = skip
   )
 }
 
@@ -117,7 +122,8 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     pattern = x$pattern,
     options = x$options,
     input = col_name,
-    result = x$result
+    result = x$result,
+    skip = x$skip
   )
 }
 

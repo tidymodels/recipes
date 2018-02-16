@@ -7,7 +7,7 @@
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
   reverse = FALSE, smooth = FALSE, prefix = "right_relu_",
-  columns = NULL)
+  columns = NULL, skip = FALSE)
 
 \method{tidy}{step_relu}(x, ...)
 }
@@ -37,6 +37,13 @@ transformations.}
 
 \item{columns}{A character string of variable names that will
 be (eventually) populated by the \code{terms} argument.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_relu} object.}
 }

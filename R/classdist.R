@@ -72,13 +72,14 @@ step_classdist <- function(recipe,
                            cov_func = cov,
                            pool = FALSE,
                            log = TRUE,
-                           objects = NULL) {
+                           objects = NULL,
+                           skip = FALSE) {
   if (!is.character(class) || length(class) != 1)
     stop("`class` should be a single character value.")
   add_step(
     recipe,
     step_classdist_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       class = class,
       role = role,
       trained = trained,
@@ -86,7 +87,8 @@ step_classdist <- function(recipe,
       cov_func = cov_func,
       pool = pool,
       log = log,
-      objects = objects
+      objects = objects,
+      skip = skip
     )
   )
 }
@@ -100,7 +102,8 @@ step_classdist_new <-
            cov_func = NULL,
            pool = NULL,
            log = NULL,
-           objects = NULL) {
+           objects = NULL,
+           skip = FALSE) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -111,7 +114,8 @@ step_classdist_new <-
       cov_func = cov_func,
       pool = pool,
       log = log,
-      objects = objects
+      objects = objects,
+      skip = skip
     )
   }
 
@@ -153,7 +157,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     cov_func = x$cov_func,
     pool = x$pool,
     log = x$log,
-    objects = res
+    objects = res,
+    skip = x$skip
   )
 }
 

@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -106,8 +115,8 @@
 
     
     <p><code>tidy</code> will return a data frame that contains information
-regarding a recipe or step within the recipe (when a <code>tidy</code>
-method for the step exists).</p>
+regarding a recipe or operation within the recipe (when a <code>tidy</code>
+method for the operation exists).</p>
     
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
@@ -123,8 +132,8 @@ method for the step exists).</p>
     <tr>
       <th>number</th>
       <td><p>An integer or <code>NA</code>. If missing, the return
-value is a list of the steps in the recipe. If a number is
-given, a <code>tidy</code> method is executed for that step in the
+value is a list of the operation in the recipe. If a number is
+given, a <code>tidy</code> method is executed for that operation in the
 recipe (if it exists).</p></td>
     </tr>
     <tr>
@@ -137,10 +146,11 @@ recipe (if it exists).</p></td>
 
     <p>A tibble with columns that would vary depending on what
 <code>tidy</code> method is executed. When <code>x</code> is <code>NA</code>, a
-tibble with columns <code>number</code> (the step iteration),
-<code>type</code> (the step type, e.g. "nzv", "center"), and a logical
-column called <code>trained</code> for whether the step has been
-estimated using <code>prep</code>.</p>
+tibble with columns <code>number</code> (the operation iteration),
+<code>operation</code> (either "step" or "check"),
+<code>type</code> (the method, e.g. "nzv", "center"), a logical
+column called <code>trained</code> for whether the operation has been
+estimated using <code>prep</code>, and a logical for <code>skip</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -150,35 +160,38 @@ estimated using <code>prep</code>.</p>
   <span class='fu'><a href='step_other.html'>step_other</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_date.html'>step_date</a></span>(<span class='no'>date</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='st'>"dow"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>())
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='check_cols.html'>check_cols</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"date"</span>), <span class='no'>age</span>, <span class='no'>height</span>)
 
-<span class='fu'>tidy</span>(<span class='no'>okc_rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 3
-#&gt;   number   type trained
-#&gt;    &lt;int&gt;  &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1      1  other   FALSE
-#&gt; 2      2   date   FALSE
-#&gt; 3      3 center   FALSE
-#&gt; 4      4  dummy   FALSE</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>okc_rec</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 5
+#&gt;   number operation type   trained skip 
+#&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt;
+#&gt; 1      1 step      other  F       F    
+#&gt; 2      2 step      date   F       F    
+#&gt; 3      3 step      center F       F    
+#&gt; 4      4 step      dummy  F       F    
+#&gt; 5      5 check     cols   F       F    </div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;    terms  value ordinal
-#&gt;   &lt;fctr&gt; &lt;fctr&gt;   &lt;lgl&gt;
-#&gt; 1   date    dow   FALSE</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;           terms value
-#&gt;           &lt;chr&gt; &lt;dbl&gt;
+#&gt;   terms  value  ordinal
+#&gt;   &lt;fctr&gt; &lt;fctr&gt; &lt;lgl&gt;  
+#&gt; 1 date   dow    F      </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms         value
+#&gt;   &lt;chr&gt;         &lt;dbl&gt;
 #&gt; 1 all_numeric()    NA</div><div class='input'>
 <span class='no'>okc_rec_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 
-<span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 3
-#&gt;   number   type trained
-#&gt;    &lt;int&gt;  &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1      1  other    TRUE
-#&gt; 2      2   date    TRUE
-#&gt; 3      3 center    TRUE
-#&gt; 4      4  dummy    TRUE</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt;    terms    value
-#&gt;    &lt;chr&gt;    &lt;dbl&gt;
-#&gt; 1    age 32.34427
-#&gt; 2 height 68.29364</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 5
+#&gt;   number operation type   trained skip 
+#&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt;
+#&gt; 1      1 step      other  T       F    
+#&gt; 2      2 step      date   T       F    
+#&gt; 3      3 step      center T       F    
+#&gt; 4      4 step      dummy  T       F    
+#&gt; 5      5 check     cols   T       F    </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms  value
+#&gt;   &lt;chr&gt;  &lt;dbl&gt;
+#&gt; 1 age     32.3
+#&gt; 2 height  68.3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -199,7 +212,7 @@ estimated using <code>prep</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

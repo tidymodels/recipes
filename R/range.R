@@ -58,16 +58,18 @@ step_range <-
            trained = FALSE,
            min = 0,
            max = 1,
-           ranges = NULL) {
+           ranges = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_range_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         min = min,
         max = max,
-        ranges = ranges
+        ranges = ranges,
+        skip = skip
       )
     )
   }
@@ -78,7 +80,8 @@ step_range_new <-
            trained = FALSE,
            min = 0,
            max = 1,
-           ranges = NULL) {
+           ranges = NULL,
+           skip = FALSE) {
     step(
       subclass = "range",
       terms = terms,
@@ -86,7 +89,8 @@ step_range_new <-
       trained = trained,
       min = min,
       max = max,
-      ranges = ranges
+      ranges = ranges,
+      skip = skip
     )
   }
 
@@ -104,7 +108,8 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     min = x$min,
     max = x$max,
-    ranges = rbind(mins, maxs)
+    ranges = rbind(mins, maxs),
+    skip = x$skip
   )
 }
 

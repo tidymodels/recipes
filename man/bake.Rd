@@ -22,7 +22,7 @@ If no selectors are given, the default is to use
 \item{newdata}{A data frame or tibble for whom the preprocessing will be
 applied.}
 
-\item{composition}{Either "tibble" or "dgCMatrix" for the
+\item{composition}{Either "tibble", "matrix", or "dgCMatrix" for the
 format of the processed data set. Note that all computations
 during the baking process are done in a non-sparse format. Also,
 note that this argument should be called \strong{after} any selectors
@@ -30,7 +30,7 @@ and the selectors should only resolve to numeric columns
 (otherwise an error is thrown).}
 }
 \value{
-A tibble or sparse matrix that may have different
+A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in \code{newdata}.
 }
 \description{
@@ -46,6 +46,10 @@ processed, time can be saved by using the \code{retain = TRUE} option
 of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
 option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
 \code{newdata} equal to the training set.
+
+Also, any steps with \code{skip = TRUE} will not be applied to the
+data when \code{bake} is invoked. \code{\link[=juice]{juice()}} will always have all
+of the steps applied.
 }
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=juice]{juice()}}, \code{\link[=prep]{prep()}}

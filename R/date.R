@@ -76,7 +76,8 @@ step_date <-
            abbr = TRUE,
            label = TRUE,
            ordinal = FALSE,
-           columns = NULL
+           columns = NULL,
+           skip = FALSE
   ) {
   feat <-
     c("year",
@@ -93,14 +94,15 @@ step_date <-
   add_step(
     recipe,
     step_date_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       features = features,
       abbr = abbr,
       label = label,
       ordinal = ordinal,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   )
 }
@@ -114,7 +116,8 @@ step_date_new <-
     abbr = abbr,
     label = label,
     ordinal = ordinal,
-    columns = columns
+    columns = columns,
+    skip = FALSE
   ) {
   step(
     subclass = "date",
@@ -125,7 +128,8 @@ step_date_new <-
     abbr = abbr,
     label = label,
     ordinal = ordinal,
-    columns = columns
+    columns = columns,
+    skip = skip
   )
 }
 
@@ -147,7 +151,8 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     abbr = x$abbr,
     label = x$label,
     ordinal = x$ordinal,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

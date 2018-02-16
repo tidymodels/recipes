@@ -2,10 +2,10 @@
 % Please edit documentation in R/lag.R
 \name{step_lag}
 \alias{step_lag}
-\title{Lag a date valued predictor}
+\title{Create a lagged predictor}
 \usage{
 step_lag(recipe, ..., role = "predictor", trained = FALSE, lag = 1,
-  default = NA, prefix = "lag_")
+  prefix = "lag_", default = NA, skip = FALSE)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -22,10 +22,17 @@ have been estimated.}
 \item{lag}{A vector of integers. Each specified column will be lagged be
 each value in the vector.}
 
+\item{prefix}{A prefix for generated column names, default to "lag_".}
+
 \item{default}{Passed to \code{dplyr::lag}, determines what fills empty rows
 left by lagging (defaults to NA).}
 
-\item{prefix}{A prefix for generated column names, default to "lag_".}
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the
@@ -46,8 +53,8 @@ end <- as.Date('2000/01/01')
 df <- data.frame(x = runif(n), y = rnorm(n),
                  t = sample(seq(start, end, by = "day"), n))
 
-baked <- recipe(~ ., data = df) \%>\%
-  step_lag(has_type("Date"), lag = 2) \%>\%
+recipe(~ ., data = df) \%>\%
+  step_lag(t, lag = 2) \%>\%
   prep(df) \%>\%
   bake(df)
 

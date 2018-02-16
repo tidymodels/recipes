@@ -55,15 +55,17 @@ step_bs <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(df = NULL, degree = 3)) {
+           options = list(df = NULL, degree = 3),
+           skip = FALSE) {
     add_step(
       recipe,
       step_bs_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         objects = objects,
-        options = options
+        options = options,
+        skip = skip
       )
     )
   }
@@ -73,14 +75,16 @@ step_bs_new <-
            role = NA,
            trained = FALSE,
            objects = NULL,
-           options = NULL) {
+           options = NULL,
+           skip = FALSE) {
     step(
       subclass = "bs",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
-      options = options
+      options = options,
+      skip = skip
     )
   }
 
@@ -111,7 +115,8 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
-    options = x$options
+    options = x$options,
+    skip = x$skip
   )
 }
 

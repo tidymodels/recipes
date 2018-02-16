@@ -17,6 +17,12 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @param na.rm A logical value indicating whether `NA`
 #'  values should be removed during computations.
+#' @param skip A logical. Should the step be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations 
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -60,15 +66,17 @@ step_center <-
            role = NA,
            trained = FALSE,
            means = NULL,
-           na.rm = TRUE) {
+           na.rm = TRUE,
+           skip = FALSE) {
     add_step(
       recipe,
       step_center_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         means = means,
-        na.rm = na.rm
+        na.rm = na.rm,
+        skip = skip
       )
     )
   }
@@ -79,14 +87,16 @@ step_center_new <-
            role = NA,
            trained = FALSE,
            means = NULL,
-           na.rm = NULL) {
+           na.rm = NULL,
+           skip = FALSE) {
     step(
       subclass = "center",
       terms = terms,
       role = role,
       trained = trained,
       means = means,
-      na.rm = na.rm
+      na.rm = na.rm,
+      skip = skip
     )
   }
 
@@ -100,7 +110,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     means = means,
-    na.rm = x$na.rm
+    na.rm = x$na.rm,
+    skip = x$skip
   )
 }
 

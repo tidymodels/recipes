@@ -6,7 +6,7 @@
 \title{Create a Factors from A Dummy Variable}
 \usage{
 step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
-  "no"), columns = NULL)
+  "no"), columns = NULL, skip = FALSE)
 
 \method{tidy}{step_bin2factor}(x, ...)
 }
@@ -30,6 +30,13 @@ factor levels for the 1's (in the first position) and the zeros
 
 \item{columns}{A vector with the selected variable names. This
 is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_bin2factor} object.}
 }

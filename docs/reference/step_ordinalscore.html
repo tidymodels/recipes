@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +120,7 @@ numeric scores.</p>
     
 
     <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>)
+  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_ordinalscore</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -151,6 +160,15 @@ converted. This is <code>NULL</code> until computed by
       <th>convert</th>
       <td><p>A function that takes an ordinal factor vector
 as an input and outputs a single numeric variable.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -204,9 +222,9 @@ functions can also be used (see the example below).</p>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-#&gt; 1             1              1            0
-#&gt; 2             2              0            1
-#&gt; 3             3              0            0</div><div class='input'>
+#&gt; 1          1.00           1.00         0   
+#&gt; 2          2.00           0            1.00
+#&gt; 3          3.00           0            0   </div><div class='input'>
 <span class='no'>custom</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
   <span class='no'>new_values</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>7</span>)
   <span class='no'>new_values</span>[<span class='fu'>as.numeric</span>(<span class='no'>x</span>)]
@@ -217,20 +235,20 @@ functions can also be used (see the example below).</p>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
 
 <span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;           terms
-#&gt;           &lt;chr&gt;
+#&gt;   terms        
+#&gt;   &lt;chr&gt;        
 #&gt; 1 fail_severity</div><div class='input'>
 <span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-#&gt; 1             1              1            0
-#&gt; 2             3              0            1
-#&gt; 3             7              0            0</div><div class='input'>
+#&gt; 1          1.00           1.00         0   
+#&gt; 2          3.00           0            1.00
+#&gt; 3          7.00           0            0   </div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;           terms
-#&gt;           &lt;chr&gt;
+#&gt;   terms        
+#&gt;   &lt;chr&gt;        
 #&gt; 1 fail_severity</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -254,7 +272,7 @@ functions can also be used (see the example below).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

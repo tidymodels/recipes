@@ -70,17 +70,19 @@
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), nunique = 5,
-           na.rm = TRUE) {
+           na.rm = TRUE,
+           skip = FALSE) {
     add_step(
       recipe,
       step_YeoJohnson_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         lambdas = lambdas,
         limits = sort(limits)[1:2],
         nunique = nunique,
-        na.rm = na.rm
+        na.rm = na.rm,
+        skip = skip
       )
     )
   }
@@ -88,7 +90,8 @@ step_YeoJohnson <-
 step_YeoJohnson_new <-
   function(terms = NULL, role = NA, trained = FALSE,
            lambdas = NULL, limits = NULL, nunique = NULL,
-           na.rm = NULL) {
+           na.rm = NULL,
+           skip = FALSE) {
     step(
       subclass = "YeoJohnson",
       terms = terms,
@@ -97,7 +100,8 @@ step_YeoJohnson_new <-
       lambdas = lambdas,
       limits = limits,
       nunique = nunique,
-      na.rm = na.rm
+      na.rm = na.rm,
+      skip = skip
     )
   }
 
@@ -120,7 +124,8 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     lambdas = values,
     limits = x$limits,
     nunique = x$nunique,
-    na.rm = x$na.rm
+    na.rm = x$na.rm,
+    skip = x$skip
   )
 }
 

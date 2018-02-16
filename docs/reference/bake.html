@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -105,7 +114,7 @@
     </div>
 
     
-    <p>For a recipe with at least one preprocessing step that has been trained by
+    <p>For a recipe with at least one preprocessing operations that has been trained by
 <code>prep.recipe()</code>, apply the computations to new data.</p>
     
 
@@ -120,7 +129,7 @@
     <tr>
       <th>object</th>
       <td><p>A trained object such as a <code><a href='recipe.html'>recipe()</a></code> with at least
-one preprocessing step.</p></td>
+one preprocessing operation.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -136,7 +145,7 @@ applied.</p></td>
     </tr>
     <tr>
       <th>composition</th>
-      <td><p>Either "tibble" or "dgCMatrix" for the
+      <td><p>Either "tibble", "matrix", or "dgCMatrix" for the
 format of the processed data set. Note that all computations
 during the baking process are done in a non-sparse format. Also,
 note that this argument should be called <strong>after</strong> any selectors
@@ -147,7 +156,7 @@ and the selectors should only resolve to numeric columns
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble or sparse matrix that may have different
+    <p>A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in <code>newdata</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -159,6 +168,9 @@ processed, time can be saved by using the <code>retain = TRUE</code> option
 of <code><a href='prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
 option set, <code><a href='juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
 <code>newdata</code> equal to the training set.</p>
+<p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
+data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
+of the steps applied.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -191,7 +203,7 @@ Max Kuhn
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

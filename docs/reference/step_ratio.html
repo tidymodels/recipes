@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +121,8 @@ variables.</p>
 
     <pre class="usage"><span class='fu'>step_ratio</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>numer</span>, <span class='no'>denom</span>)
-  <span class='fu'>make.names</span>(<span class='fu'>paste</span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='fu'>make.names</span>(<span class='fu'>paste</span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>denom_vars</span>(<span class='no'>...</span>)
 
@@ -169,6 +179,15 @@ argument is not populated until <code>prep.recipe()</code> is
 executed.</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_ratio</code> object</p></td>
     </tr>
@@ -204,20 +223,19 @@ selectors or variables selected) and <code>denom</code>.</p>
 
 <span class='no'>ratio_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe</span>, <span class='no'>biomass_te</span>)
 <span class='no'>ratio_data</span></div><div class='output co'>#&gt; # A tibble: 80 x 7
-#&gt;       HHV  total carbon_o_total hydrogen_o_total oxygen_o_total
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
-#&gt;  1 18.275  99.74      0.4647082       0.05684780      0.4732304
-#&gt;  2 17.560 100.00      0.4325000       0.05500000      0.4806000
-#&gt;  3 17.173 100.00      0.4270000       0.05500000      0.4910000
-#&gt;  4 18.851  92.10      0.5038002       0.06623236      0.4049946
-#&gt;  5 20.547  98.05      0.4972973       0.06445691      0.4362060
-#&gt;  6 18.467  92.40      0.4794372       0.05952381      0.4512987
-#&gt;  7 15.095 100.00      0.3894000       0.05230000      0.5413000
-#&gt;  8 16.240  81.71      0.5152368       0.05703096      0.4136581
-#&gt;  9 11.147  69.74      0.4186980       0.06309148      0.4459421
-#&gt; 10 10.750  60.94      0.4561864       0.06186413      0.3887430
-#&gt; # ... with 70 more rows, and 2 more variables: nitrogen_o_total &lt;dbl&gt;,
-#&gt; #   sulfur_o_total &lt;dbl&gt;</div></pre>
+#&gt;      HHV total carbon_o_total hydrogen_o_total oxygen_o_total nitrogen… sulfur…
+#&gt;    &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1  18.3  99.7          0.465           0.0568          0.473   0.00301 0.00221
+#&gt;  2  17.6 100            0.432           0.0550          0.481   0.0285  0.00340
+#&gt;  3  17.2 100            0.427           0.0550          0.491   0.0240  0.00300
+#&gt;  4  18.9  92.1          0.504           0.0662          0.405   0.0195  0.00543
+#&gt;  5  20.5  98.0          0.497           0.0645          0.436   0.00204 0      
+#&gt;  6  18.5  92.4          0.479           0.0595          0.451   0.00758 0.00216
+#&gt;  7  15.1 100            0.389           0.0523          0.541   0.0119  0.00510
+#&gt;  8  16.2  81.7          0.515           0.0570          0.414   0.0116  0.00245
+#&gt;  9  11.1  69.7          0.419           0.0631          0.446   0.00201 0.0703 
+#&gt; 10  10.8  60.9          0.456           0.0619          0.389   0.0760  0.0172 
+#&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -238,7 +256,7 @@ selectors or variables selected) and <code>denom</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

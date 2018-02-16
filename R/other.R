@@ -71,7 +71,8 @@ step_other <-
            trained = FALSE,
            threshold = .05,
            other = "other",
-           objects = NULL) {
+           objects = NULL,
+           skip = FALSE) {
     if (threshold <= 0)
       stop("`threshold` should be greater than zero", call. = FALSE)
     if (threshold >= 1)
@@ -79,12 +80,13 @@ step_other <-
     add_step(
       recipe,
       step_other_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         threshold = threshold,
         other = other,
-        objects = objects
+        objects = objects,
+        skip = skip
       )
     )
   }
@@ -95,7 +97,8 @@ step_other_new <-
            trained = FALSE,
            threshold = NULL,
            other = NULL,
-           objects = NULL) {
+           objects = NULL,
+           skip = FALSE) {
     step(
       subclass = "other",
       terms = terms,
@@ -103,7 +106,8 @@ step_other_new <-
       trained = trained,
       threshold = threshold,
       other = other,
-      objects = objects
+      objects = objects,
+      skip = skip
     )
   }
 
@@ -121,7 +125,8 @@ prep.step_other <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     threshold = x$threshold,
     other = x$other,
-    objects = objects
+    objects = objects,
+    skip = x$skip
   )
 }
 

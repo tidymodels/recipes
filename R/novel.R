@@ -66,15 +66,17 @@ step_novel <-
            role = NA,
            trained = FALSE,
            new_level = "new",
-           objects = NULL) {
+           objects = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_novel_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         new_level = new_level,
-        objects = objects
+        objects = objects,
+        skip = skip
       )
     )
   }
@@ -84,14 +86,16 @@ step_novel_new <-
            role = NA,
            trained = FALSE,
            new_level = NULL,
-           objects = NULL) {
+           objects = NULL,
+           skip = FALSE) {
     step(
       subclass = "novel",
       terms = terms,
       role = role,
       trained = trained,
       new_level = new_level,
-      objects = objects
+      objects = objects,
+      skip = skip
     )
   }
 
@@ -141,7 +145,8 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     new_level = x$new_level,
-    objects = objects
+    objects = objects,
+    skip = x$skip
   )
 }
 

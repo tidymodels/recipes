@@ -51,17 +51,19 @@ step_bin2factor <-
            role = NA,
            trained = FALSE,
            levels = c("yes", "no"),
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         levels = levels,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -71,14 +73,16 @@ step_bin2factor_new <-
            role = NA,
            trained = FALSE,
            levels = NULL,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "bin2factor",
       terms = terms,
       role = role,
       trained = trained,
       levels = levels,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -94,7 +98,8 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     levels = x$levels,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

@@ -63,15 +63,17 @@ step_meanimpute <-
            role = NA,
            trained = FALSE,
            means = NULL,
-           trim = 0) {
+           trim = 0,
+           skip = FALSE) {
     add_step(
       recipe,
       step_meanimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         means = means,
-        trim = trim
+        trim = trim,
+        skip = skip
       )
     )
   }
@@ -81,14 +83,16 @@ step_meanimpute_new <-
            role = NA,
            trained = FALSE,
            means = NULL,
-           trim = NULL) {
+           trim = NULL,
+           skip = FALSE) {
     step(
       subclass = "meanimpute",
       terms = terms,
       role = role,
       trained = trained,
       means = means,
-      trim = trim
+      trim = trim,
+      skip = skip
     )
   }
 
@@ -108,7 +112,8 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     means,
-    trim = x$trim
+    trim = x$trim,
+    skip = x$skip
   )
 }
 

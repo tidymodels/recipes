@@ -92,7 +92,8 @@ step_interact <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           sep = "_x_") {
+           sep = "_x_",
+           skip = FALSE) {
     add_step(
       recipe,
       step_interact_new(
@@ -100,7 +101,8 @@ step_interact <-
         trained = trained,
         role = role,
         objects = objects,
-        sep = sep
+        sep = sep,
+        skip = skip
       )
     )
   }
@@ -111,14 +113,16 @@ step_interact_new <-
            role = NA,
            trained = FALSE,
            objects = NULL,
-           sep = NULL) {
+           sep = NULL,
+           skip = FALSE) {
     step(
       subclass = "interact",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
-      sep = sep
+      sep = sep,
+      skip = skip
     )
   }
 
@@ -177,7 +181,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = int_terms,
-    sep = x$sep
+    sep = x$sep,
+    skip = x$skip
   )
 }
 

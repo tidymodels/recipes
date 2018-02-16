@@ -6,7 +6,8 @@
 \title{Holiday Feature Generator}
 \usage{
 step_holiday(recipe, ..., role = "predictor", trained = FALSE,
-  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL)
+  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_holiday}(x, ...)
 }
@@ -35,6 +36,13 @@ holiday supported by the \code{timeDate} package. See
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
 populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_holiday} object.}
 }

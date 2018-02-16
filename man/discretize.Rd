@@ -5,7 +5,6 @@
 \alias{discretize.default}
 \alias{discretize.numeric}
 \alias{predict.discretize}
-\alias{step_discretize}
 \title{Discretize Numeric Variables}
 \usage{
 discretize(x, ...)
@@ -16,20 +15,13 @@ discretize(x, ...)
   keep_na = TRUE, infs = TRUE, min_unique = 10, ...)
 
 \method{predict}{discretize}(object, newdata, ...)
-
-step_discretize(recipe, ..., role = NA, trained = FALSE, objects = NULL,
-  options = list())
 }
 \arguments{
 \item{x}{A numeric vector}
 
-\item{...}{For \code{discretize}: options to pass to
+\item{...}{Options to pass to
 \code{\link[stats:quantile]{stats::quantile()}} that should not include \code{x}
-or \code{probs}. For \code{step_discretize}, the dots specify
-one or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently
-used.}
+or \code{probs}.}
 
 \item{cuts}{An integer defining how many cuts to make of the
 data.}
@@ -57,34 +49,11 @@ discretization takes place.}
 \item{object}{An object of class \code{discretize}.}
 
 \item{newdata}{A new numeric object to be binned.}
-
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
-
-\item{role}{Not used by this step since no new variables are
-created.}
-
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
-
-\item{objects}{The \code{\link[=discretize]{discretize()}} objects are stored
-here once the recipe has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{options}{A list of options to \code{\link[=discretize]{discretize()}}. A
-defaults is set for the argument \code{x}. Note that the using
-the options \code{prefix} and \code{labels} when more than one
-variable is being transformed might be problematic as all
-variables inherit those values.}
 }
 \value{
 \code{discretize} returns an object of class
 \code{discretize} and \code{predict.discretize} returns a factor
-vector. \code{step_discretize} returns an updated version of
-\code{recipe} with the new step added to the sequence of
-existing steps (if any). For the \code{tidy} method, a tibble
-with columns \code{terms} (the selectors or variables selected)
-and \code{value} (the breaks).
+vector.
 }
 \description{
 \code{discretize} converts a numeric vector into a factor with

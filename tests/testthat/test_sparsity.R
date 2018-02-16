@@ -40,19 +40,19 @@ test_that('correct types', {
     juice(rec, all_numeric(), composition = "dgCMatrix")
   juice_sparse_1d <-
     juice(rec, age, composition = "dgCMatrix")
-  
+
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
-  
+
   expect_equal(as.vector(class(bake_sparse)), "dgCMatrix")
   expect_equal(as.vector(class(juice_sparse)), "dgCMatrix")
-  
+
   expect_equal(as.vector(class(bake_sparse_1d)), "dgCMatrix")
   expect_equal(as.vector(class(juice_sparse_1d)), "dgCMatrix")
-  
-  expect_equal(recipes:::convert_dgCMatrix(bake_default),
+
+  expect_equal(recipes:::convert_matrix(bake_default),
                bake_sparse)
-  expect_equal(recipes:::convert_dgCMatrix(juice_default),
+  expect_equal(recipes:::convert_matrix(juice_default),
                juice_sparse)
 })
 

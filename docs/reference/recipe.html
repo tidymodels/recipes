@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -167,8 +176,8 @@ set columns</p></dd>
 <dt>term_info</dt><dd><p>A tibble that contains the current set of terms in the
 data set. This initially defaults to the same data contained in
 <code>var_info</code>.</p></dd>
-<dt>steps</dt><dd><p>A list of <code>step</code> objects that define the sequence of
-preprocessing steps that will be applied to data. The default value is
+<dt>steps</dt><dd><p>A list of <code>step</code>  or <code>check</code> objects that define the sequence of
+preprocessing operations that will be applied to data. The default value is
 <code>NULL</code></p></dd>
 <dt>template</dt><dd><p>A tibble of the data. This is initialized to be the same
 as the data given in the <code>data</code> argument but can be different after
@@ -188,13 +197,18 @@ functions such as <code>log(x3)</code>. An example is given below.</p>
 <p>Alternatively, a <code>recipe</code> object can be created by first specifying
 which variables in a data set should be used and then sequentially
 defining their roles (see the last example).</p>
-<p>Steps to the recipe can be added sequentially. Steps can include common
+<p>There are two different types of operations that can be
+sequentially added to a recipe. <strong>Steps</strong>  can include common
 operations like logging a variable, creating dummy variables or
-interactions and so on. More computationally complex actions such as
-dimension reduction or imputation can also be specified.</p>
+interactions and so on. More computationally complex actions
+such as dimension reduction or imputation can also be specified.
+<strong>Checks</strong> are operations that conduct specific tests of the
+data. When the test is satisfied, the data are returned without
+issue or modification. Otherwise, any error is thrown.</p>
 <p>Once a recipe has been defined, the <code><a href='prep.html'>prep()</a></code> function can be
-used to estimate quants required in the steps from a data set (a.k.a. the
-training data). <code><a href='prep.html'>prep()</a></code> returns another recipe.</p>
+used to estimate quantities required for the operations using a
+data set (a.k.a. the training data). <code><a href='prep.html'>prep()</a></code> returns another
+recipe.</p>
 <p>To apply the recipe to a data set, the <code><a href='bake.html'>bake()</a></code> function is
 used in the same manner as <code>predict</code> would be for models. This
 applies the steps to any data set.</p>
@@ -233,7 +247,7 @@ data set to save time and memory.</p>
 #&gt;    outcome          1
 #&gt;  predictor          5
 #&gt; 
-#&gt; Steps:
+#&gt; Operations:
 #&gt; 
 #&gt; Centering for all_predictors()
 #&gt; Scaling for all_predictors()
@@ -250,7 +264,7 @@ data set to save time and memory.</p>
 #&gt; 
 #&gt; Training data contained 456 data points and no missing data.
 #&gt; 
-#&gt; Steps:
+#&gt; Operations:
 #&gt; 
 #&gt; Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 #&gt; Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
@@ -323,7 +337,7 @@ Max Kuhn
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

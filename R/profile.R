@@ -110,7 +110,8 @@ step_profile <- function(recipe,
                          grid = list(pctl = TRUE, len = 100),
                          columns = NULL,
                          role = NA,
-                         trained = FALSE) {
+                         trained = FALSE,
+                         skip = FALSE) {
   
   if (pct < 0 | pct > 1)
     stop("`pct should be on [0, 1]`", call. = FALSE)
@@ -127,14 +128,15 @@ step_profile <- function(recipe,
   
   add_step(recipe,
            step_profile_new(
-             terms = check_ellipses(...),
+             terms = ellipse_check(...),
              profile = profile,
              pct = pct,
              index = index,
              grid = grid,
              columns = columns,
              role = role,
-             trained = trained
+             trained = trained,
+             skip = skip
            )
   )
 }
@@ -146,7 +148,8 @@ step_profile_new <- function(terms = NULL,
                              grid = NULL,
                              columns = NULL,
                              role = NA,
-                             trained = FALSE) {
+                             trained = FALSE,
+                             skip = FALSE) {
   step(
     subclass = "profile",
     terms = terms,
@@ -156,7 +159,8 @@ step_profile_new <- function(terms = NULL,
     grid = grid,
     columns = columns,
     role = role,
-    trained = trained
+    trained = trained,
+    skip = skip
   )
 }
 
@@ -190,7 +194,8 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     index = x$index,
     grid = x$grid,
     columns = fixed_vals,
-    trained = TRUE
+    trained = TRUE,
+    skip = x$skip
   )
 }
 

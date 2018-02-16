@@ -1,10 +1,11 @@
-#' Lag a date valued predictor
+#' Create a lagged predictor
 #'
 #' `step_lag` creates a *specification* of a recipe step that
-#'   will sort the data into chronological order for each selected
-#'   variable and then add a new column of lagged data. Lagged data will
-#'   by default include NA values where the lag was induced. These can be
-#'   removed with [step_naomit()].
+#'   will add a new column of lagged data. Lagged data will
+#'   by default include NA values where the lag was induced.
+#'   These can be removed with [step_naomit()], or you may
+#'   specify an alternative filler value with the `default`
+#'   argument.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
@@ -13,11 +14,17 @@
 #' @param role Defaults to "predictor"
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
-#' @param prefix A prefix for generated column names, default to "lag_".
 #' @param lag A vector of integers. Each specified column will be lagged be
 #'   each value in the vector.
+#' @param prefix A prefix for generated column names, default to "lag_".
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
+#' @param skip A logical. Should the step be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
@@ -31,8 +38,8 @@
 #' df <- data.frame(x = runif(n), y = rnorm(n),
 #'                  t = sample(seq(start, end, by = "day"), n))
 #'
-#' baked <- recipe(~ ., data = df) %>%
-#'   step_lag(has_type("Date"), lag = 2) %>%
+#' recipe(~ ., data = df) %>%
+#'   step_lag(t, lag = 2) %>%
 #'   prep(df) %>%
 #'   bake(df)
 #'
@@ -43,17 +50,19 @@ step_lag <-
            role = "predictor",
            trained = FALSE,
            lag = 1,
+           prefix = "lag_",
            default = NA,
-           prefix = "lag_") {
+           skip = FALSE) {
     add_step(
       recipe,
       step_lag_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         lag = lag,
         default = default,
-        prefix = prefix
+        prefix = prefix,
+        skip = skip
       )
     )
   }
@@ -64,7 +73,8 @@ step_lag_new <-
            trained = FALSE,
            lag = 1,
            default = NA,
-           prefix = "lag_") {
+           prefix = "lag_",
+           skip = FALSE) {
     step(
       subclass = "lag",
       terms = terms,
@@ -72,7 +82,8 @@ step_lag_new <-
       trained = trained,
       lag = lag,
       default = default,
-      prefix = prefix)
+      prefix = prefix,
+      skip = skip)
   }
 
 #' @export
@@ -82,32 +93,25 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
   x
 }
 
-#' @import dplyr
+#' @importFrom dplyr select arrange mutate desc
 #' @export
 bake.step_lag <- function(object, newdata, ...) {
-
-  if (!all(purrr::map_lgl(dplyr::select(newdata, object$columns), is.Date)))
-    stop("step_lag only works with Date data.", call. = FALSE)
-
-  if (!(is.na(object$default) || is.Date(object$default)))
-    stop("step_lag requires 'default' argument to be Date or NA valued.",
-         call. = FALSE)
 
   if (!all(object$lag == as.integer(object$lag)))
     stop("step_lag requires 'lag' argument to be integer valued.",
          call. = FALSE)
 
-  for (col in object$columns) {
-    # sort by the feature of interest so we can lag that column
-    col <- rlang::sym(col)
-    newdata <- arrange(newdata, desc(!!col))
-    for (lag_val in object$lag) {
-      new_col <- paste0(object$prefix, lag_val, "_", quo_name(col))
-      newdata <- mutate(newdata,
-                        !!new_col := dplyr::lag(!!col, lag_val, object$default))
-    }
+  make_call <- function(col, lag_val) {
+    lang("lag", x = sym(col), n = lag_val, default = object$default,
+         .ns = "dplyr")
   }
-  as_tibble(newdata)
+
+  grid <- expand.grid(col = object$columns, lag_val = object$lag,
+                      stringsAsFactors = FALSE)
+  calls <- purrr::map2(grid$col, grid$lag_val, make_call)
+  names(calls) <- paste0(object$prefix, grid$lag_val, "_", grid$col)
+
+  as_tibble(mutate(newdata, !!!calls))
 }
 
 print.step_lag <-

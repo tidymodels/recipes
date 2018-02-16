@@ -49,11 +49,6 @@ is_one_of <- function(x, what) {
   any(res)
 }
 
-## general error trapping functions
-
-check_all_outcomes_same_type <- function(x)
-  x
-
 ## get variables from formulas
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
@@ -80,7 +75,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
-  ## `check_elements` stops when in-line functions are used.
+  ## `element_check` stops when in-line functions are used.
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
@@ -300,7 +295,7 @@ merge_term_info <- function(.new, .old) {
 }
 
 #' @importFrom rlang quos is_empty
-check_ellipses <- function(...) {
+ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms))
     stop("Please supply at least one variable specification.",
@@ -328,6 +323,7 @@ printer <- function(tr_obj = NULL,
     cat(" [trained]\n")
   else
     cat("\n")
+  invisible(NULL)
 }
 
 
@@ -346,7 +342,6 @@ fully_trained <- function(x) {
   all(is_tr)
 }
 
-
 #' Detect if a particular step is used in a recipe
 #'
 #' @param recipe A recipe to check.
@@ -360,6 +355,7 @@ fully_trained <- function(x) {
 #'   step_intercept()
 #'
 #' detect_step(rec, "step_intercept")
+
 detect_step <- function(recipe, step_name) {
   steps <- getNamespaceExports("recipes")  # not sure if this is ideal
   steps <- steps[grepl("^step_", steps)]
@@ -372,4 +368,18 @@ detect_step <- function(recipe, step_name) {
   step_name %in% rec_steps
 }
 
+# to be used in a recipe
+is_skipable <- function(x) {
+  if(all("skip" != names(x)))
+    return(FALSE)
+  else
+    return(x$skip)
+}
 
+# to be used within a step
+skip_me <- function(x) {
+  if(!exists("skip"))
+    return(FALSE)
+  else
+    return(x$skip)
+}

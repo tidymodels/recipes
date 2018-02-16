@@ -61,15 +61,17 @@ step_poly <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(degree = 2)) {
+           options = list(degree = 2),
+           skip = FALSE) {
     add_step(
       recipe,
       step_poly_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         objects = objects,
-        options = options
+        options = options,
+        skip = skip
       )
     )
   }
@@ -78,14 +80,16 @@ step_poly_new <- function(terms = NULL,
                           role = NA,
                           trained = FALSE,
                           objects = NULL,
-                          options = NULL) {
+                          options = NULL,
+                          skip = FALSE) {
   step(
     subclass = "poly",
     terms = terms,
     role = role,
     trained = trained,
     objects = objects,
-    options = options
+    options = options,
+    skip = skip
   )
 }
 
@@ -117,7 +121,8 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
-    options = x$options
+    options = x$options,
+    skip = x$skip
   )
 }
 

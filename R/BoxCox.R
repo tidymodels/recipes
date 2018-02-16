@@ -70,16 +70,18 @@ step_BoxCox <-
            trained = FALSE,
            lambdas = NULL,
            limits = c(-5, 5),
-           nunique = 5) {
+           nunique = 5,
+           skip = FALSE) {
     add_step(
       recipe,
       step_BoxCox_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         lambdas = lambdas,
         limits = sort(limits)[1:2],
-        nunique = nunique
+        nunique = nunique,
+        skip = skip
       )
     )
   }
@@ -90,7 +92,8 @@ step_BoxCox_new <-
            trained = FALSE,
            lambdas = NULL,
            limits = NULL,
-           nunique = NULL) {
+           nunique = NULL,
+           skip = FALSE) {
     step(
       subclass = "BoxCox",
       terms = terms,
@@ -98,7 +101,8 @@ step_BoxCox_new <-
       trained = trained,
       lambdas = lambdas,
       limits = limits,
-      nunique = nunique
+      nunique = nunique,
+      skip = skip
     )
   }
 
@@ -119,7 +123,8 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     lambdas = values,
     limits = x$limits,
-    nunique = x$nunique
+    nunique = x$nunique,
+    skip = x$skip
   )
 }
 

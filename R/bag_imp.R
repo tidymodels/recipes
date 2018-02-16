@@ -92,19 +92,21 @@ step_bagimpute <-
            models = NULL,
            options = list(nbagg = 25, keepX = FALSE),
            impute_with = imp_vars(all_predictors()),
-           seed_val = sample.int(10 ^ 4, 1)) {
+           seed_val = sample.int(10 ^ 4, 1),
+           skip = FALSE) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
       recipe,
       step_bagimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         models = models,
         options = options,
         impute_with = impute_with,
-        seed_val = seed_val
+        seed_val = seed_val,
+        skip = skip
       )
     )
   }
@@ -116,7 +118,8 @@ step_bagimpute_new <-
            models = NULL,
            options = NULL,
            impute_with = NULL,
-           seed_val = NA) {
+           seed_val = NA,
+           skip = FALSE) {
     step(
       subclass = "bagimpute",
       terms = terms,
@@ -125,7 +128,8 @@ step_bagimpute_new <-
       models = models,
       options = options,
       impute_with = impute_with,
-      seed_val = seed_val
+      seed_val = seed_val,
+      skip = skip
     )
   }
 
@@ -173,8 +177,7 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
     opt = x$options,
     seed_val = x$seed_val
   )
-  names(x$models) <- vapply(var_lists, function(x)
-    x$y, c(""))
+  names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
   x$trained <- TRUE
   x
 }

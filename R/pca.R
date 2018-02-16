@@ -106,20 +106,22 @@ step_pca <- function(recipe,
                      threshold = NA,
                      options = list(),
                      res = NULL,
-                     prefix = "PC") {
+                     prefix = "PC",
+                     skip = FALSE) {
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
   add_step(
     recipe,
     step_pca_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       num = num,
       threshold = threshold,
       options = options,
       res = res,
-      prefix = prefix
+      prefix = prefix,
+      skip = skip
     )
   )
 }
@@ -131,7 +133,8 @@ step_pca_new <- function(terms = NULL,
                          threshold = NULL,
                          options = NULL,
                          res = NULL,
-                         prefix = "PC") {
+                         prefix = "PC",
+                         skip = FALSE) {
   step(
     subclass = "pca",
     terms = terms,
@@ -141,7 +144,8 @@ step_pca_new <- function(terms = NULL,
     threshold = threshold,
     options = options,
     res = res,
-    prefix = prefix
+    prefix = prefix,
+    skip = skip
   )
 }
 
@@ -183,7 +187,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     options = x$options,
     res = prc_obj,
-    prefix = x$prefix
+    prefix = x$prefix,
+    skip = x$skip
   )
 }
 

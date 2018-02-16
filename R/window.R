@@ -107,7 +107,8 @@ step_window <-
            na.rm = TRUE,
            statistic = "mean",
            columns = NULL,
-           names = NULL) {
+           names = NULL,
+           skip = FALSE) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
@@ -133,14 +134,15 @@ step_window <-
     add_step(
       recipe,
       step_window_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         size = size,
         na.rm = na.rm,
         statistic = statistic,
         columns = columns,
-        names = names
+        names = names,
+        skip = skip
       )
     )
   }
@@ -155,7 +157,8 @@ step_window_new <-
            na.rm = NULL,
            statistic = NULL,
            columns = NULL,
-           names = names) {
+           names = names,
+           skip = FALSE) {
     step(
       subclass = "window",
       terms = terms,
@@ -165,7 +168,8 @@ step_window_new <-
       na.rm = na.rm,
       statistic = statistic,
       columns = columns,
-      names = names
+      names = names,
+      skip = skip
     )
   }
 
@@ -191,7 +195,8 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     na.rm = x$na.rm,
     statistic = x$statistic,
     columns = col_names,
-    names = x$names
+    names = x$names,
+    skip = x$skip
   )
 }
 

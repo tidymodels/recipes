@@ -53,14 +53,16 @@ step_zv <-
            ...,
            role = NA,
            trained = FALSE,
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_zv_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
-        removals = removals
+        removals = removals,
+        skip = skip
       )
     )
   }
@@ -69,13 +71,15 @@ step_zv_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
-      removals = removals
+      removals = removals,
+      skip = skip
     )
   }
 
@@ -91,7 +95,8 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    removals = names(filter)[filter]
+    removals = names(filter)[filter],
+    skip = x$skip
   )
 }
 

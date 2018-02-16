@@ -24,7 +24,7 @@ This function prints the current set of variables/features and some of their
 characteristics.
 }
 \details{
-Note that, until the recipe has been trained, the currrent and
+Note that, until the recipe has been trained, the current and
 original variables are the same.
 }
 \examples{

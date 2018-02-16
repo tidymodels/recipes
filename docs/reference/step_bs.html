@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +120,7 @@ variables using B-splines.</p>
     
 
     <pre class="usage"><span class='fu'>step_bs</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>degree</span> <span class='kw'>=</span> <span class='fl'>3</span>))
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>degree</span> <span class='kw'>=</span> <span class='fl'>3</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_bs</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -152,6 +161,15 @@ created once the step has been trained.</p></td>
       <th>options</th>
       <td><p>A list of options for <code><a href='http://www.rdocumentation.org/packages/splines/topics/bs'>splines::bs()</a></code>
 which should not include <code>x</code>.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -197,20 +215,19 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
 <span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 x 10
-#&gt;    oxygen nitrogen sulfur    HHV carbon_bs_1 carbon_bs_2 carbon_bs_3
-#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-#&gt;  1  47.20     0.30   0.22 18.275   0.4370202  0.27289046 0.056800730
-#&gt;  2  48.06     2.85   0.34 17.560   0.4439032  0.23573868 0.041730365
-#&gt;  3  49.10     2.40   0.30 17.173   0.4443041  0.22908412 0.039372080
-#&gt;  4  37.30     1.80   0.50 18.851   0.4368480  0.27348163 0.057069587
-#&gt;  5  42.77     0.20   0.00 20.547   0.4266725  0.30092662 0.070746551
-#&gt;  6  41.70     0.70   0.20 18.467   0.4424330  0.24840838 0.046490449
-#&gt;  7  54.13     1.19   0.51 15.095   0.4397838  0.18372150 0.025583471
-#&gt;  8  33.80     0.95   0.20 16.240   0.4444440  0.22181852 0.036902634
-#&gt;  9  31.10     0.14   4.90 11.147   0.3593122  0.07711629 0.005516950
-#&gt; 10  23.69     4.63   1.05 10.750   0.3383513  0.06432478 0.004076313
-#&gt; # ... with 70 more rows, and 3 more variables: hydrogen_bs_1 &lt;dbl&gt;,
-#&gt; #   hydrogen_bs_2 &lt;dbl&gt;, hydrogen_bs_3 &lt;dbl&gt;</div></pre>
+#&gt;    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon… carbon_… hydr… hydr… hydro…
+#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1   47.2    0.300  0.220  18.3       0.437  0.273   0.0568  0.383 0.367 0.117 
+#&gt;  2   48.1    2.85   0.340  17.6       0.444  0.236   0.0417  0.393 0.355 0.107 
+#&gt;  3   49.1    2.40   0.300  17.2       0.444  0.229   0.0394  0.393 0.355 0.107 
+#&gt;  4   37.3    1.80   0.500  18.9       0.437  0.273   0.0571  0.354 0.394 0.146 
+#&gt;  5   42.8    0.200  0      20.5       0.427  0.301   0.0707  0.338 0.406 0.163 
+#&gt;  6   41.7    0.700  0.200  18.5       0.442  0.248   0.0465  0.393 0.355 0.107 
+#&gt;  7   54.1    1.19   0.510  15.1       0.440  0.184   0.0256  0.408 0.335 0.0920
+#&gt;  8   33.8    0.950  0.200  16.2       0.444  0.222   0.0369  0.431 0.290 0.0649
+#&gt;  9   31.1    0.140  4.90   11.1       0.359  0.0771  0.00552 0.438 0.268 0.0546
+#&gt; 10   23.7    4.63   1.05   10.8       0.338  0.0643  0.00408 0.444 0.214 0.0342
+#&gt; # ... with 70 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -235,7 +252,7 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

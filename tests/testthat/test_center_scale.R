@@ -1,6 +1,6 @@
 library(testthat)
 context("Testing center and scale")
-
+library(rlang)
 library(recipes)
 
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))
@@ -8,6 +8,9 @@ sds <- vapply(biomass[, 3:7], sd, c(sd = 0))
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
+
+# Note: some tests convert to data frame prior to testing
+# https://github.com/tidyverse/dplyr/issues/2751
 
 test_that('correct means and std devs', {
   standardized <- rec %>%
@@ -19,7 +22,7 @@ test_that('correct means and std devs', {
            value = rep(na_dbl, 5))
 
   expect_equal(tidy(standardized, 1), cent_tibble_un)
-  expect_equal(tidy(standardized, 2), cent_tibble_un)
+  expect_equal(as.data.frame(tidy(standardized, 2)), as.data.frame(cent_tibble_un))
 
   standardized_trained <- prep(standardized, training = biomass, verbose = FALSE)
 
@@ -31,7 +34,8 @@ test_that('correct means and std devs', {
            value = sds)
 
   expect_equal(tidy(standardized_trained, 1), cent_tibble_tr)
-  expect_equal(tidy(standardized_trained, 2), scal_tibble_tr)
+  expect_equal(as.data.frame(tidy(standardized_trained, 2)), as.data.frame(scal_tibble_tr))
+
 
   expect_equal(standardized_trained$steps[[1]]$means, means)
   expect_equal(standardized_trained$steps[[2]]$sds, sds)

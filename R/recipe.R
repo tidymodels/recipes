@@ -237,7 +237,7 @@ form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
   ## check for in-line formulas
-  check_elements(formula, allowed = NULL)
+  element_check(formula, allowed = NULL)
 
   if (!is_tibble(data))
     data <- as_tibble(data)
@@ -245,7 +245,7 @@ form2args <- function(formula, data, ...) {
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
   predictors <- get_rhs_vars(formula, data, no_lhs = TRUE)
-  
+
   ## if . was used on the rhs, subtract out the outcomes
   predictors <- predictors[!(predictors %in% outcomes)]
 
@@ -289,12 +289,13 @@ prep   <- function(x, ...)
 #'   `training`.
 #' @param verbose A logical that controls wether progress is reported as operations
 #'   are executed.
-#' @param retain A logical: should the *preprocessingcessed* training set be saved
+#' @param retain A logical: should the *preprocessed* training set be saved
 #'   into the `template` slot of the recipe after training? This is a good
-#'     idea if you want to add more operations later but want to avoid re-training
-#'     the existing ones.
+#'     idea if you want to add more steps later but want to avoid re-training
+#'     the existing steps. Also, it is advisable to use `retain = TRUE`
+#'     if any steps use the option `skip = FALSE`.
 #' @param stringsAsFactors A logical: should character columns be converted to
-#'   factors? This affects the preprocessingcessed training set (when
+#'   factors? This affects the preprocessed training set (when
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
@@ -318,6 +319,7 @@ prep   <- function(x, ...)
 #'
 #' @rdname prep
 #' @importFrom tibble as_tibble is_tibble tibble
+#' @importFrom purrr map_lgl
 #' @export
 prep.recipe <-
   function(x,
@@ -346,13 +348,21 @@ prep.recipe <-
     } else
       lvls <- NULL
 
+    # The only way to get the results for skipped steps is to
+    # use `retain = TRUE` so issue a warning if this is not the case
+    skippers <- map_lgl(x$steps, is_skipable)
+    if (any(skippers) & !retain)
+      warning("Since some operations have `skip = FALSE`, using ",
+              "`retain = TRUE` will allow those steps results to ",
+              "be accessible.")
+
+
     for (i in seq(along = x$steps)) {
-      note <- 
+      note <-
         paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
           cat(note, "[training]", "\n")
-
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
 
@@ -414,13 +424,13 @@ bake <- function(object, ...)
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
 #'   [everything()].
-#' @param composition Either "tibble" or "dgCMatrix" for the
+#' @param composition Either "tibble", "matrix", or "dgCMatrix" for the
 #'  format of the processed data set. Note that all computations
 #'  during the baking process are done in a non-sparse format. Also,
 #'  note that this argument should be called **after** any selectors
 #'  and the selectors should only resolve to numeric columns
 #'  (otherwise an error is thrown).
-#' @return A tibble or sparse matrix that may have different
+#' @return A tibble, matrix, or sparse matrix that may have different
 #'  columns than the original columns in `newdata`.
 #' @details [bake()] takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
@@ -430,6 +440,10 @@ bake <- function(object, ...)
 #'  of [prep()] to avoid duplicating the same operations. With this
 #'  option set, [juice()] can be used instead of `bake` with
 #'  `newdata` equal to the training set.
+#'
+#' Also, any steps with `skip = TRUE` will not be applied to the
+#'   data when `bake` is invoked. [juice()] will always have all
+#'   of the steps applied.
 #' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
 #' @importFrom tibble as_tibble
@@ -437,12 +451,16 @@ bake <- function(object, ...)
 #' @importFrom tidyselect everything
 #' @export
 bake.recipe <- function(object, newdata, ..., composition = "tibble") {
+  if (!fully_trained(object))
+    stop("At least one step has not been training. Please ",
+         "run `prep`.",
+         call. = FALSE)
 
   if (!any(composition == formats))
     stop("`composition` should be one of: ",
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
-  
+
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
 
   terms <- quos(...)
@@ -453,12 +471,14 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   keepers <- terms_select(terms = terms, info = object$term_info)
 
   for (i in seq(along = object$steps)) {
-    newdata <- bake(object$steps[[i]], newdata = newdata)
-    if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
+    if (!is_skipable(object$steps[[i]])) {
+      newdata <- bake(object$steps[[i]], newdata = newdata)
+      if (!is_tibble(newdata))
+        newdata <- as_tibble(newdata)
+    }
   }
 
   newdata <- newdata[, names(newdata) %in% keepers]
-
   ## The levels are not null when no nominal data are present or
   ## if stringsAsFactors = FALSE in `prep`
   if (!is.null(object$levels)) {
@@ -472,9 +492,12 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
       newdata <- strings2factors(newdata, var_levels)
   }
 
-  if(composition == "dgCMatrix")
-    newdata <- convert_dgCMatrix(newdata)
-  
+  if (composition == "dgCMatrix") {
+    newdata <- convert_matrix(newdata, sparse = TRUE)
+  } else if (composition == "matrix") {
+    newdata <- convert_matrix(newdata, sparse = FALSE)
+  }
+
   newdata
 }
 
@@ -538,7 +561,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
 #'   and `source`.
-#' @details Note that, until the recipe has been trained, the currrent and
+#' @details Note that, until the recipe has been trained, the current and
 #'   original variables are the same.
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
@@ -563,12 +586,17 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  applied to the training set. Rather than running `bake`
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set.
-#' @inheritParams bake.recipe 
+#' @inheritParams bake.recipe
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
 #' @details When preparing a recipe, if the training data set is
 #'  retained using `retain = TRUE`, there is no need to `bake` the
 #'  recipe to get the preprocessed training set.
+#'
+#'  `juice` will return the results of a recipes where _all steps_
+#'  have been applied to the data, irrespective of the value of
+#'  the step's `skip` argument.
+#'
 #' @examples
 #' data(biomass)
 #'
@@ -592,19 +620,20 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
+  if (!fully_trained(object))
+    stop("At least one step has not been training. Please ",
+         "run `prep`.",
+         call. = FALSE)
+  
   if(!isTRUE(object$retained))
     stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
          call. = FALSE)
-  tr_steps <- vapply(object$steps, function(x) x$trained, c(logic = TRUE))
-  if(!all(tr_steps))
-    stop("At least one step has not be prepared; cannot extract.",
-         call. = FALSE)
-  
+
   if (!any(composition == formats))
     stop("`composition` should be one of: ",
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
-  
+
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(everything())
@@ -623,13 +652,16 @@ juice <- function(object, ..., composition = "tibble") {
     if (length(var_levels) > 0)
       newdata <- strings2factors(newdata, var_levels)
   }
-  
-  if(composition == "dgCMatrix")
-    newdata <- convert_dgCMatrix(newdata)
-  
+
+  if (composition == "dgCMatrix") {
+    newdata <- convert_matrix(newdata, sparse = TRUE)
+  } else if (composition == "matrix") {
+    newdata <- convert_matrix(newdata, sparse = FALSE)
+  }
+
   newdata
 }
 
-formats <- c("tibble", "dgCMatrix")
+formats <- c("tibble", "dgCMatrix", "matrix")
 
 

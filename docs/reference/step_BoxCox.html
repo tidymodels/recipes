@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -111,7 +120,7 @@ transformation.</p>
     
 
     <pre class="usage"><span class='fu'>step_BoxCox</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_BoxCox</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -155,6 +164,15 @@ compute the transformation parameter lambda.</p></td>
       <th>nunique</th>
       <td><p>An integer where data that have less possible
 values will not be evaluate for a transformation.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -209,20 +227,20 @@ A review. <em>The Statistician</em>, 169-178..</p>
 
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
 
-<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-25.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-26.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;           terms value
-#&gt;           &lt;chr&gt; &lt;dbl&gt;
+#&gt;   terms         value
+#&gt;   &lt;chr&gt;         &lt;dbl&gt;
 #&gt; 1 all_numeric()    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;        terms         value
-#&gt;        &lt;chr&gt;         &lt;dbl&gt;
-#&gt; 1 Population  0.0009656455
-#&gt; 2     Income  0.5238405220
-#&gt; 3 Illiteracy -0.3787578444
-#&gt; 4   Life Exp  4.5896809050
-#&gt; 5     Murder  0.6055498287
-#&gt; 6    HS Grad  1.9161606392
-#&gt; 7       Area  0.2499165414</div><div class='input'>
+#&gt;   terms          value
+#&gt;   &lt;chr&gt;          &lt;dbl&gt;
+#&gt; 1 Population  0.000966
+#&gt; 2 Income      0.524   
+#&gt; 3 Illiteracy -0.379   
+#&gt; 4 Life Exp    4.59    
+#&gt; 5 Murder      0.606   
+#&gt; 6 HS Grad     1.92    
+#&gt; 7 Area        0.250   </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -250,7 +268,7 @@ A review. <em>The Statistician</em>, 169-178..</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

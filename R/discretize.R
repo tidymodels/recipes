@@ -31,21 +31,12 @@ discretize.default <- function(x, ...)
 #'  dignity for the binning. If (the number of unique
 #'  values)`/(cuts+1)` is less than `min_unique`, no
 #'  discretization takes place.
-#' @param ... For `discretize`: options to pass to
+#' @param ... Options to pass to
 #'  [stats::quantile()] that should not include `x`
-#'  or `probs`. For `step_discretize`, the dots specify
-#'  one or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more
-#'  details. For the `tidy` method, these are not currently
-#'  used.
-#'
+#'  or `probs`. 
 #' @return `discretize` returns an object of class
 #'  `discretize` and `predict.discretize` returns a factor
-#'  vector. `step_discretize` returns an updated version of
-#'  `recipe` with the new step added to the sequence of
-#'  existing steps (if any). For the `tidy` method, a tibble
-#'  with columns `terms` (the selectors or variables selected)
-#'  and `value` (the breaks).
+#'  vector. 
 #' @keywords datagen
 #' @concept preprocessing discretization factors
 #' @export
@@ -210,7 +201,13 @@ print.discretize <-
     }
   }
 
-#' @rdname discretize
+#' Discretize Numeric Variables
+#'
+#' `step_discretize` creates a a *specification* of a recipe
+#'  step that will convert numeric data into a factor with
+#'  bins having approximately the same number of data points (based
+#'  on a training set).
+#'  
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are
 #'  created.
@@ -222,6 +219,16 @@ print.discretize <-
 #'  the options `prefix` and `labels` when more than one
 #'  variable is being transformed might be problematic as all
 #'  variables inherit those values.
+#' @param ... For `step_discretize`, the dots specify
+#'  one or more selector functions to choose which variables are
+#'  affected by the step. See [selections()] for more
+#'  details. For the `tidy` method, these are not currently
+#'  used.
+#' @return `step_discretize` returns an updated version of
+#'  `recipe` with the new step added to the sequence of
+#'  existing steps (if any). For the `tidy` method, a tibble
+#'  with columns `terms` (the selectors or variables selected)
+#'  and `value` (the breaks).
 #' @export
 
 step_discretize <- function(recipe,
@@ -229,15 +236,17 @@ step_discretize <- function(recipe,
                             role = NA,
                             trained = FALSE,
                             objects = NULL,
-                            options = list()) {
+                            options = list(),
+                            skip = FALSE) {
   add_step(
     recipe,
     step_discretize_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       trained = trained,
       role = role,
       objects = objects,
-      options = options
+      options = options,
+      skip = skip
     )
   )
 }
@@ -247,14 +256,16 @@ step_discretize_new <-
            role = NA,
            trained = FALSE,
            objects = NULL,
-           options = NULL) {
+           options = NULL,
+           skip = FALSE) {
     step(
       subclass = "discretize",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
-      options = options
+      options = options,
+      skip = skip
     )
   }
 
@@ -281,7 +292,8 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
-    options = x$options
+    options = x$options,
+    skip = x$skip
   )
 }
 

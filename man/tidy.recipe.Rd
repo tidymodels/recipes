@@ -10,8 +10,8 @@
 \item{x}{A \code{recipe} object (trained or otherwise).}
 
 \item{number}{An integer or \code{NA}. If missing, the return
-value is a list of the steps in the recipe. If a number is
-given, a \code{tidy} method is executed for that step in the
+value is a list of the operation in the recipe. If a number is
+given, a \code{tidy} method is executed for that operation in the
 recipe (if it exists).}
 
 \item{...}{Not currently used.}
@@ -19,15 +19,16 @@ recipe (if it exists).}
 \value{
 A tibble with columns that would vary depending on what
 \code{tidy} method is executed. When \code{x} is \code{NA}, a
-tibble with columns \code{number} (the step iteration),
-\code{type} (the step type, e.g. "nzv", "center"), and a logical
-column called \code{trained} for whether the step has been
-estimated using \code{prep}.
+tibble with columns \code{number} (the operation iteration),
+\code{operation} (either "step" or "check"),
+\code{type} (the method, e.g. "nzv", "center"), a logical
+column called \code{trained} for whether the operation has been
+estimated using \code{prep}, and a logical for \code{skip}.
 }
 \description{
 \code{tidy} will return a data frame that contains information
-regarding a recipe or step within the recipe (when a \code{tidy}
-method for the step exists).
+regarding a recipe or operation within the recipe (when a \code{tidy}
+method for the operation exists).
 }
 \examples{
 data(okc)
@@ -36,7 +37,8 @@ okc_rec <- recipe(~ ., data = okc) \%>\%
   step_other(all_nominal(), threshold = 0.05) \%>\%
   step_date(date, features = "dow") \%>\%
   step_center(all_numeric()) \%>\%
-  step_dummy(all_nominal())
+  step_dummy(all_nominal()) \%>\%
+  check_cols(starts_with("date"), age, height)
 
 tidy(okc_rec)
 

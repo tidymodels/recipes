@@ -59,14 +59,16 @@ step_factor2string <-
            ...,
            role = NA,
            trained = FALSE,
-           columns = FALSE) {
+           columns = FALSE,
+           skip = FALSE) {
     add_step(
       recipe,
       step_factor2string_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -75,13 +77,15 @@ step_factor2string_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "factor2string",
       terms = terms,
       role = role,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -101,7 +105,8 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

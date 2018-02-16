@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -120,10 +129,7 @@ on a training set).</p>
   <span class='kw'>keep_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>infs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_unique</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for discretize</span>
-<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)
-
-<span class='fu'>step_discretize</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -134,13 +140,9 @@ on a training set).</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>For <code>discretize</code>: options to pass to
+      <td><p>Options to pass to
 <code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>stats::quantile()</a></code> that should not include <code>x</code>
-or <code>probs</code>. For <code>step_discretize</code>, the dots specify
-one or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more
-details. For the <code>tidy</code> method, these are not currently
-used.</p></td>
+or <code>probs</code>.</p></td>
     </tr>
     <tr>
       <th>cuts</th>
@@ -185,46 +187,13 @@ discretization takes place.</p></td>
       <th>newdata</th>
       <td><p>A new numeric object to be binned.</p></td>
     </tr>
-    <tr>
-      <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr>
-    <tr>
-      <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr>
-    <tr>
-      <th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr>
-    <tr>
-      <th>objects</th>
-      <td><p>The <code>discretize()</code> objects are stored
-here once the recipe has be trained by
-<code>prep.recipe()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>options</th>
-      <td><p>A list of options to <code>discretize()</code>. A
-defaults is set for the argument <code>x</code>. Note that the using
-the options <code>prefix</code> and <code>labels</code> when more than one
-variable is being transformed might be problematic as all
-variables inherit those values.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>discretize</code> returns an object of class
 <code>discretize</code> and <code>predict.discretize</code> returns a factor
-vector. <code>step_discretize</code> returns an updated version of
-<code>recipe</code> with the new step added to the sequence of
-existing steps (if any). For the <code>tidy</code> method, a tibble
-with columns <code>terms</code> (the selectors or variables selected)
-and <code>value</code> (the breaks).</p>
+vector.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -261,7 +230,7 @@ largest value of <code>x</code>, a missing value will result.</p>
 #&gt; Levels: bin_missing bin1 bin2 bin3 bin4</div><div class='input'>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_discretize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='step_discretize.html'>step_discretize</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_tr</span>)
 <span class='no'>binned_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>biomass_te</span>)
 <span class='fu'>table</span>(<span class='no'>binned_te</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt; 
@@ -289,7 +258,7 @@ largest value of <code>x</code>, a missing value will result.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

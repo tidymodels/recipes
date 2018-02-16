@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +121,7 @@ regular expression pattern in text.</p>
 
     <pre class="usage"><span class='fu'>step_count</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
-  <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'>make.names</span>(<span class='no'>pattern</span>), <span class='kw'>input</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'>make.names</span>(<span class='no'>pattern</span>), <span class='kw'>input</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_count</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -174,6 +183,15 @@ variable being searched. This is <code>NULL</code> until computed by
 <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_count</code> object.</p></td>
     </tr>
@@ -205,32 +223,32 @@ new column name).</p>
 #&gt; 
 #&gt; Training data contained 40 data points and no missing data.
 #&gt; 
-#&gt; Steps:
+#&gt; Operations:
 #&gt; 
 #&gt; Regular expression counts using `(rock|stony)` [trained]
 #&gt; Regular expression counts using `famil` [trained]</div><div class='input'>
 <span class='no'>count_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec2</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>covers</span>)
 <span class='no'>count_values</span></div><div class='output co'>#&gt; # A tibble: 40 x 3
-#&gt;                                                   description rocks      famil
-#&gt;                                                        &lt;fctr&gt; &lt;int&gt;      &lt;dbl&gt;
-#&gt;  1    1,cathedral family,rock outcrop complex,extremely stony     2 0.01818182
-#&gt;  2                 2,vanet,ratake families complex,very stony     1 0.02380952
-#&gt;  3                 3,haploborolis,rock outcrop complex,rubbly     1 0.00000000
-#&gt;  4                4,ratake family,rock outcrop complex,rubbly     1 0.02325581
-#&gt;  5         5,vanet family,rock outcrop complex complex,rubbly     1 0.02000000
-#&gt;  6        6,vanet,wetmore families,rock outcrop complex,stony     2 0.01960784
-#&gt;  7                                            7,gothic family     0 0.06666667
-#&gt;  8                       8,supervisor,limber families complex     0 0.02777778
-#&gt;  9                             9,troutville family,very stony     1 0.03333333
-#&gt; 10 10,bullwark,catamount families,rock outcrop complex,rubbly     1 0.01724138
+#&gt;    description                                                rocks  famil
+#&gt;    &lt;fctr&gt;                                                     &lt;int&gt;  &lt;dbl&gt;
+#&gt;  1 1,cathedral family,rock outcrop complex,extremely stony        2 0.0182
+#&gt;  2 2,vanet,ratake families complex,very stony                     1 0.0238
+#&gt;  3 3,haploborolis,rock outcrop complex,rubbly                     1 0     
+#&gt;  4 4,ratake family,rock outcrop complex,rubbly                    1 0.0233
+#&gt;  5 5,vanet family,rock outcrop complex complex,rubbly             1 0.0200
+#&gt;  6 6,vanet,wetmore families,rock outcrop complex,stony            2 0.0196
+#&gt;  7 7,gothic family                                                0 0.0667
+#&gt;  8 8,supervisor,limber families complex                           0 0.0278
+#&gt;  9 9,troutville family,very stony                                 1 0.0333
+#&gt; 10 10,bullwark,catamount families,rock outcrop complex,rubbly     1 0.0172
 #&gt; # ... with 30 more rows</div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;         terms result
-#&gt;         &lt;chr&gt;  &lt;chr&gt;
-#&gt; 1 description   &lt;NA&gt;</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;         terms result
-#&gt;         &lt;chr&gt;  &lt;chr&gt;
-#&gt; 1 description  rocks</div></pre>
+#&gt;   terms       result
+#&gt;   &lt;chr&gt;       &lt;chr&gt; 
+#&gt; 1 description &lt;NA&gt;  </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms       result
+#&gt;   &lt;chr&gt;       &lt;chr&gt; 
+#&gt; 1 description rocks </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -251,7 +269,7 @@ new column name).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

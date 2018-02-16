@@ -13,63 +13,36 @@ test_that("default lag works on a single feature",  {
   set.seed(27)
   df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
 
+  # lags numeric data
   baked <- recipe(~ ., data = df) %>%
     step_lag(t, lag = 2) %>%
     prep(df) %>%
     bake(df)
-
-  expected <- df %>%
-    arrange(desc(t)) %>%
-    mutate(lag_2_t = dplyr::lag(t, 2))
-
+  expected <- mutate(df, lag_2_t = dplyr::lag(t, 2))
   expect_equal(baked, expected)
 
+  # lags date data
+  baked <- recipe(~ ., data = df) %>%
+    step_lag(t, lag = 2) %>%
+    prep(df) %>%
+    bake(df)
+  expected <- mutate(df, lag_2_t = dplyr::lag(t, 2))
+  expect_equal(baked, expected)
+
+  # default argument works as expect
   baked <- recipe(~ ., data = df) %>%
     step_lag(t, lag = 2, default = start) %>%
     prep(df) %>%
     bake(df)
-
-  expected <- df %>%
-    arrange(desc(t)) %>%
-    mutate(lag_2_t = dplyr::lag(t, 2, default = start))
-
+  expected <- mutate(df, lag_2_t = dplyr::lag(t, 2, default = start))
   expect_equal(baked, expected)
 
-  expect_error({
-    prepped_rec <- recipe(~ ., data = df) %>%
-      step_lag(x) %>%
-      prep(df)
-  })
-
+  # errors out on non-integer lag
   expect_error({
     prepped_rec <- recipe(~ ., data = df) %>%
       step_lag(x, lag = 0.5) %>%
       prep(df)
   })
-
-  expect_error({
-    prepped_rec <- recipe(~ ., data = df) %>%
-      step_lag(x, default = "cat") %>%
-      prep(df)
-  })
-})
-
-test_that("works with has_type('date') selector",  {
-
-  set.seed(28)
-  df <- tibble(x = rnorm(n),
-               t = sample(seq(start, end, by = "day"), n))
-
-  baked <- recipe(~ ., data = df) %>%
-    step_lag(has_type("Date"), lag = 2) %>%
-    prep(df) %>%
-    bake(df)
-
-  expected <- df %>%
-    arrange(desc(t)) %>%
-    mutate(lag_2_t = dplyr::lag(t, 2))
-
-  expect_equal(baked, expected)
 })
 
 test_that("specification of multiple lags in a vector",  {
@@ -84,11 +57,9 @@ test_that("specification of multiple lags in a vector",  {
     bake(df)
 
   expected <- df %>%
-    arrange(desc(t)) %>%
     mutate(lag_1_t = dplyr::lag(t, 1),
-           lag_2_t = dplyr::lag(t, 2)) %>%
-    arrange(desc(tt)) %>%
-    mutate(lag_1_tt = dplyr::lag(tt, 1),
+           lag_2_t = dplyr::lag(t, 2),
+           lag_1_tt = dplyr::lag(tt, 1),
            lag_2_tt = dplyr::lag(tt, 2))
 
   expect_equal(baked, expected)

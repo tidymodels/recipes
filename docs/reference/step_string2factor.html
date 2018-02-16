@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -110,7 +119,7 @@ vectors to factors (ordered or unordered).</p>
     
 
     <pre class="usage"><span class='fu'>step_string2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_string2factor</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -152,6 +161,15 @@ values present when <code>bake</code> is called will be used.</p></td>
 ordered?</p></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>A logical. Should the step be skipped when the
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using <code>skip = TRUE</code> as it may affect
+the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_string2factor</code> object.</p></td>
     </tr>
@@ -174,7 +192,8 @@ data will be applied to <code>step_string2factor</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='step_factor2string.html'>step_factor2string()</a></code> <code><a href='step_dummy.html'>step_dummy()</a></code></p>
+    <p><code><a href='step_factor2string.html'>step_factor2string()</a></code> <code><a href='step_dummy.html'>step_dummy()</a></code> <code><a href='step_other.html'>step_other()</a></code>
+<code><a href='step_novel.html'>step_novel()</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -191,25 +210,25 @@ data will be applied to <code>step_string2factor</code>.</p>
 
 <span class='co'># note that `diet` is a factor</span>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 2
-#&gt;                diet                        location
-#&gt;              &lt;fctr&gt;                           &lt;chr&gt;
+#&gt;   diet              location                       
+#&gt;   &lt;fctr&gt;            &lt;chr&gt;                          
 #&gt; 1 strictly anything south san francisco, california
-#&gt; 2      mostly other             oakland, california
-#&gt; 3          anything       san francisco, california
-#&gt; 4        vegetarian            berkeley, california
-#&gt; 5              &lt;NA&gt;       san francisco, california
-#&gt; 6   mostly anything       san francisco, california</div><div class='input'><span class='no'>okc</span> <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 5
-#&gt;     age              diet height                        location       date
-#&gt;   &lt;int&gt;             &lt;chr&gt;  &lt;int&gt;                           &lt;chr&gt;     &lt;date&gt;
+#&gt; 2 mostly other      oakland, california            
+#&gt; 3 anything          san francisco, california      
+#&gt; 4 vegetarian        berkeley, california           
+#&gt; 5 &lt;NA&gt;              san francisco, california      
+#&gt; 6 mostly anything   san francisco, california      </div><div class='input'><span class='no'>okc</span> <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 5
+#&gt;     age diet              height location                        date      
+#&gt;   &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;                           &lt;date&gt;    
 #&gt; 1    22 strictly anything     75 south san francisco, california 2012-06-28
-#&gt; 2    35      mostly other     70             oakland, california 2012-06-29
-#&gt; 3    38          anything     68       san francisco, california 2012-06-27
-#&gt; 4    23        vegetarian     71            berkeley, california 2012-06-28
-#&gt; 5    29              &lt;NA&gt;     66       san francisco, california 2012-06-27
-#&gt; 6    29   mostly anything     67       san francisco, california 2012-06-29</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt; 2    35 mostly other          70 oakland, california             2012-06-29
+#&gt; 3    38 anything              68 san francisco, california       2012-06-27
+#&gt; 4    23 vegetarian            71 berkeley, california            2012-06-28
+#&gt; 5    29 &lt;NA&gt;                  66 san francisco, california       2012-06-27
+#&gt; 6    29 mostly anything       67 san francisco, california       2012-06-29</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms ordered
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1  diet   FALSE</div></pre>
+#&gt;   &lt;chr&gt; &lt;lgl&gt;  
+#&gt; 1 diet  F      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -234,7 +253,7 @@ data will be applied to <code>step_string2factor</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

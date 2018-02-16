@@ -47,24 +47,28 @@
 #'   [bake.recipe()]
 
 step_invlogit <-
-  function(recipe, ...,  role = NA, trained = FALSE, columns = NULL) {
+  function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
+           skip = FALSE) {
     add_step(recipe,
              step_invlogit_new(
-               terms = check_ellipses(...),
+               terms = ellipse_check(...),
                role = role,
                trained = trained,
-               columns = columns
+               columns = columns,
+               skip = skip
              ))
   }
 
 step_invlogit_new <-
-  function(terms = NULL, role = NA, trained = FALSE, columns = NULL) {
+  function(terms = NULL, role = NA, trained = FALSE, columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "invlogit",
       terms = terms,
       role = role,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -75,7 +79,8 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

@@ -65,19 +65,21 @@ step_ratio <-
            denom = denom_vars(),
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",
            "See ?selections.", call. = FALSE)
     add_step(
       recipe,
       step_ratio_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         denom = denom,
         naming = naming,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -88,7 +90,8 @@ step_ratio_new <-
            trained = FALSE,
            denom = NULL,
            naming = NULL,
-           columns = NULL
+           columns = NULL,
+           skip = FALSE
   ) {
     step(
       subclass = "ratio",
@@ -97,7 +100,8 @@ step_ratio_new <-
       trained = trained,
       denom = denom,
       naming = naming,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -124,7 +128,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     denom = x$denom,
     naming = x$naming,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

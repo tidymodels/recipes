@@ -6,7 +6,7 @@
 \title{Orthogonal Polynomial Basis Functions}
 \usage{
 step_poly(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(degree = 2))
+  objects = NULL, options = list(degree = 2), skip = FALSE)
 
 \method{tidy}{step_poly}(x, ...)
 }
@@ -34,6 +34,13 @@ created once the step has been trained.}
 which should not include \code{x} or \code{simple}. Note that
 the option \code{raw = TRUE} will produce the regular polynomial
 values (not orthogonalized).}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_poly} object.}
 }

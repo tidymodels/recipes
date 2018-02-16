@@ -6,7 +6,7 @@
 \title{Near-Zero Variance Filter}
 \usage{
 step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
-  = 95/5, unique_cut = 10), removals = NULL)
+  = 95/5, unique_cut = 10), removals = NULL, skip = FALSE)
 
 \method{tidy}{step_nzv}(x, ...)
 }
@@ -31,6 +31,13 @@ below).}
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
 until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_nzv} object.}
 }

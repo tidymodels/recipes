@@ -95,3 +95,19 @@ test_that("detect_step function works", {
   expect_false(detect_step(prepped_rec, "step_pca"))
   expect_false(detect_step(prepped_rec, "step_meanimpute"))
 })
+
+test_that("bake without pred", {
+  sp_signed <-  recipe(HHV ~ ., data = biomass) %>%
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    step_spatialsign(all_predictors())
+  expect_error(
+    bake(sp_signed, newdata = biomass_te),
+    "At least one step has not been training. Please run `prep`."
+  )
+  expect_error(
+    juice(sp_signed),
+    "At least one step has not been training. Please run `prep`."
+  )
+})
+

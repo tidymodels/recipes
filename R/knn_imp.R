@@ -1,6 +1,6 @@
 #' Imputation via K-Nearest Neighbors
 #'
-#'   `step_knnimpute` creates a *specification* of a
+#' `step_knnimpute` creates a *specification* of a
 #'  recipe step that will impute missing data using nearest
 #'  neighbors.
 #'
@@ -98,19 +98,21 @@ step_knnimpute <-
            K = 5,
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
       recipe,
       step_knnimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         K = K,
         impute_with = impute_with,
         ref_data = ref_data,
-        columns = columns
+        columns = columns,
+        skip = skip
       )
     )
   }
@@ -122,7 +124,8 @@ step_knnimpute_new <-
            K = NULL,
            impute_with = NULL,
            ref_data = NULL,
-           columns = NA) {
+           columns = NA,
+           skip = FALSE) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -131,7 +134,8 @@ step_knnimpute_new <-
       K = K,
       impute_with = impute_with,
       ref_data = ref_data,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 

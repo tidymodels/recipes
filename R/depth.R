@@ -82,19 +82,21 @@ step_depth <-
            trained = FALSE,
            metric =  "halfspace",
            options = list(),
-           data = NULL) {
+           data = NULL,
+           skip = FALSE) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
     add_step(
       recipe,
       step_depth_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         class = class,
         role = role,
         trained = trained,
         metric = metric,
         options = options,
-        data = data
+        data = data,
+        skip = skip
       )
     )
   }
@@ -106,7 +108,8 @@ step_depth_new <-
            trained = FALSE,
            metric = NULL,
            options = NULL,
-           data = NULL) {
+           data = NULL,
+           skip = FALSE) {
     step(
       subclass = "depth",
       terms = terms,
@@ -115,7 +118,8 @@ step_depth_new <-
       trained = trained,
       metric = metric,
       options = options,
-      data = data
+      data = data,
+      skip = skip
     )
   }
 
@@ -134,7 +138,8 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     metric = x$metric,
     options = x$options,
-    data = x_dat
+    data = x_dat,
+    skip = x$skip
   )
 }
 

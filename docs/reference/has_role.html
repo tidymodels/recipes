@@ -73,6 +73,15 @@
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
     </li>
+    <li>
+      <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -166,16 +175,16 @@ data types.</p></td>
   <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
 <span class='no'>recipe_info</span> <span class='kw'>&lt;-</span> <span class='fu'>summary</span>(<span class='no'>rec</span>)
 <span class='no'>recipe_info</span></div><div class='output co'>#&gt; # A tibble: 8 x 4
-#&gt;   variable    type                role   source
-#&gt;      &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;    &lt;chr&gt;
-#&gt; 1   sample nominal         id variable original
-#&gt; 2  dataset nominal splitting indicator original
-#&gt; 3   carbon numeric           predictor original
-#&gt; 4 hydrogen numeric           predictor original
-#&gt; 5   oxygen numeric           predictor original
-#&gt; 6 nitrogen numeric           predictor original
-#&gt; 7   sulfur numeric           predictor original
-#&gt; 8      HHV numeric             outcome original</div><div class='input'>
+#&gt;   variable type    role                source  
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;   
+#&gt; 1 sample   nominal id variable         original
+#&gt; 2 dataset  nominal splitting indicator original
+#&gt; 3 carbon   numeric predictor           original
+#&gt; 4 hydrogen numeric predictor           original
+#&gt; 5 oxygen   numeric predictor           original
+#&gt; 6 nitrogen numeric predictor           original
+#&gt; 7 sulfur   numeric predictor           original
+#&gt; 8 HHV      numeric outcome             original</div><div class='input'>
 <span class='fu'>has_role</span>(<span class='st'>"id variable"</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='no'>recipe_info</span>$<span class='no'>role</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>all_outcomes</span>(<span class='kw'>roles</span> <span class='kw'>=</span> <span class='no'>recipe_info</span>$<span class='no'>role</span>)</div><div class='output co'>#&gt; [1] 8</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -197,7 +206,7 @@ data types.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

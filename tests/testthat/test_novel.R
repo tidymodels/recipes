@@ -87,7 +87,8 @@ test_that('bad args', {
 
 test_that('missing values', {
   ex_2 <- rec %>%
-    step_novel(all_predictors()) 
+    step_novel(all_predictors()) %>%
+    prep(training  = tr_dat)
   ex_2_te <- bake(ex_2, newdata = te_miss)
   expect_equal(which(is.na(te_miss$y)), which(is.na(ex_2_te$y)))
   expect_equal(which(is.na(te_miss$z)), which(is.na(ex_2_te$z)))

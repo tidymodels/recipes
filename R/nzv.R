@@ -80,15 +80,17 @@ step_nzv <-
            role = NA,
            trained = FALSE,
            options = list(freq_cut = 95 / 5, unique_cut = 10),
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_nzv_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         options = options,
-        removals = removals
+        removals = removals,
+        skip = skip
       )
     )
   }
@@ -98,14 +100,16 @@ step_nzv_new <-
            role = NA,
            trained = FALSE,
            options = NULL,
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     step(
       subclass = "nzv",
       terms = terms,
       role = role,
       trained = trained,
       options = options,
-      removals = removals
+      removals = removals,
+      skip = skip
     )
   }
 
@@ -123,7 +127,8 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     options = x$options,
-    removals = filter
+    removals = filter,
+    skip = x$skip
   )
 }
 

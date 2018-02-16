@@ -53,20 +53,23 @@ step_holiday <-
     role = "predictor",
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-    columns = NULL
+    columns = NULL,
+    skip = FALSE
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
-    stop("Invalid `holidays` value. See timeDate::listHolidays", call. = FALSE)
+    stop("Invalid `holidays` value. See timeDate::listHolidays", 
+         call. = FALSE)
 
   add_step(
     recipe,
     step_holiday_new(
-      terms = check_ellipses(...),
+      terms = ellipse_check(...),
       role = role,
       trained = trained,
       holidays = holidays,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   )
 }
@@ -77,7 +80,8 @@ step_holiday_new <-
     role = "predictor",
     trained = FALSE,
     holidays = holidays,
-    columns = columns
+    columns = columns,
+    skip = FALSE
     ) {
   step(
     subclass = "holiday",
@@ -85,7 +89,8 @@ step_holiday_new <-
     role = role,
     trained = trained,
     holidays = holidays,
-    columns = columns
+    columns = columns,
+    skip = skip
   )
 }
 
@@ -104,7 +109,8 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     holidays = x$holidays,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

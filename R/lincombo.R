@@ -61,15 +61,17 @@ step_lincomb <-
            role = NA,
            trained = FALSE,
            max_steps = 5,
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_lincomb_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         max_steps = max_steps,
-        removals = removals
+        removals = removals,
+        skip = skip
       )
     )
   }
@@ -79,14 +81,16 @@ step_lincomb_new <-
            role = NA,
            trained = FALSE,
            max_steps = NULL,
-           removals = NULL) {
+           removals = NULL,
+           skip = FALSE) {
     step(
       subclass = "lincomb",
       terms = terms,
       role = role,
       trained = trained,
       max_steps = max_steps,
-      removals = removals
+      removals = removals,
+      skip = skip
     )
   }
 
@@ -104,7 +108,8 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     max_steps = x$max_steps,
-    removals = filter
+    removals = filter,
+    skip = x$skip
   )
 }
 

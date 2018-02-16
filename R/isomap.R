@@ -98,17 +98,19 @@ step_isomap <-
            num  = 5,
            options = list(knn = 50, .mute = c("message", "output")),
            res = NULL,
-           prefix = "Isomap") {
+           prefix = "Isomap",
+           skip = FALSE) {
     add_step(
       recipe,
       step_isomap_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         num = num,
         options = options,
         res = res,
-        prefix = prefix
+        prefix = prefix,
+        skip = skip
       )
     )
   }
@@ -120,7 +122,8 @@ step_isomap_new <-
            num  = NULL,
            options = NULL,
            res = NULL,
-           prefix = "isomap") {
+           prefix = "isomap",
+           skip = FALSE) {
     step(
       subclass = "isomap",
       terms = terms,
@@ -129,7 +132,8 @@ step_isomap_new <-
       num = num,
       options = options,
       res = res,
-      prefix = prefix
+      prefix = prefix,
+      skip = skip
     )
   }
 
@@ -157,7 +161,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     num = x$num,
     options = x$options,
     res = imap,
-    prefix = x$prefix
+    prefix = x$prefix,
+    skip = x$skip
   )
 }
 

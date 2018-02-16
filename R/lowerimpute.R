@@ -63,14 +63,16 @@ step_lowerimpute <-
            ...,
            role = NA,
            trained = FALSE,
-           threshold = NULL) {
+           threshold = NULL,
+           skip = FALSE) {
     add_step(
       recipe,
       step_lowerimpute_new(
-        terms = check_ellipses(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
-        threshold = threshold
+        threshold = threshold,
+        skip = skip
       )
     )
   }
@@ -79,13 +81,15 @@ step_lowerimpute_new <-
   function(terms = NULL,
            role = NA,
            trained = FALSE,
-           threshold = NULL) {
+           threshold = NULL,
+           skip = FALSE) {
     step(
       subclass = "lowerimpute",
       terms = terms,
       role = role,
       trained = trained,
-      threshold = threshold
+      threshold = threshold,
+      skip = skip
     )
   }
 
@@ -109,7 +113,8 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    threshold
+    threshold = threshold,
+    skip = x$skip
   )
 }
 

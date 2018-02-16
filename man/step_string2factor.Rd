@@ -6,7 +6,7 @@
 \title{Convert Strings to Factors}
 \usage{
 step_string2factor(recipe, ..., role = NA, trained = FALSE, levels = NULL,
-  ordered = FALSE)
+  ordered = FALSE, skip = FALSE)
 
 \method{tidy}{step_string2factor}(x, ...)
 }
@@ -31,6 +31,13 @@ values present when \code{bake} is called will be used.}
 
 \item{ordered}{A single logical value; should the factor(s) be
 ordered?}
+
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
+when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations}
 
 \item{x}{A \code{step_string2factor} object.}
 }

@@ -67,14 +67,16 @@ step_spatialsign <-
            role = "predictor",
            na.rm = TRUE,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     add_step(recipe,
              step_spatialsign_new(
-               terms = check_ellipses(...),
+               terms = ellipse_check(...),
                role = role,
                na.rm = na.rm,
                trained = trained,
-               columns = columns
+               columns = columns,
+               skip = skip
              ))
   }
 
@@ -83,14 +85,16 @@ step_spatialsign_new <-
            role = "predictor",
            na.rm = TRUE,
            trained = FALSE,
-           columns = NULL) {
+           columns = NULL,
+           skip = FALSE) {
     step(
       subclass = "spatialsign",
       terms = terms,
       role = role,
       na.rm = na.rm,
       trained = trained,
-      columns = columns
+      columns = columns,
+      skip = skip
     )
   }
 
@@ -102,7 +106,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
     role = x$role,
     na.rm = x$na.rm,
     trained = TRUE,
-    columns = col_names
+    columns = col_names,
+    skip = x$skip
   )
 }
 

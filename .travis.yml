@@ -15,5 +15,7 @@ matrix:
   allow_failures:
     - r: 3.1
 
+warnings_are_errors: false
+
 after_success:
   - Rscript -e 'covr::codecov()'
