@@ -1,6 +1,8 @@
 library(testthat)
 library(recipes)
 
+context("step_relu")
+
 df <- tibble(val1 = -10:10, val2 = factor(LETTERS[1:21]))
 
 test_that('default relu settings', {
@@ -12,7 +14,7 @@ test_that('default relu settings', {
   expected_baked <- df %>%
     dplyr::mutate(right_relu_val1 = pmax(rep(0, length(val1)), val1))
 
-  expect_equal(expected_baked, baked)
+  expect_equal(baked, expected_baked)
 })
 
 
@@ -25,7 +27,7 @@ test_that('shifted and reversed relu', {
   expected_baked <- df %>%
     dplyr::mutate(left_relu_val1 = pmax(rep(0, length(val1)), -(val1 - 5)))
 
-  expect_equal(expected_baked, baked)
+  expect_equal(baked, expected_baked)
 })
 
 
@@ -38,20 +40,30 @@ test_that('reversed softplus', {
   expected_baked <- df %>%
     dplyr::mutate(left_relu_val1 = log1p(exp(-val1)))
 
-  expect_equal(expected_baked, baked)
+  expect_equal(baked, expected_baked)
 })
 
 
 test_that('shifted and prefixed softplus', {
   baked <- recipe(~ ., data = df) %>%
-    step_relu(val1, shift = 5,  smooth = TRUE, prefix = "sp_") %>%
+    step_relu(val1, shift = 5, smooth = TRUE, prefix = "sp_") %>%
     prep(df, verbose = FALSE) %>%
     bake(df)
 
   expected_baked <- df %>%
     dplyr::mutate(sp_val1 = log1p(exp(val1 - 5)))
 
-  expect_equal(expected_baked, baked)
+  expect_equal(baked, expected_baked)
+})
+
+test_that('works with all_predictors() selector', {
+
+  expect_silent({
+    rec <- recipe(Species ~ ., data = iris) %>%
+    step_relu(all_predictors())
+  })
+
+  expect_silent(prepped_rec <- prep(rec, iris))
 })
 
 
@@ -85,11 +97,11 @@ test_that('input checking', {
   )
 })
 
-
-test_that('printing', {
+test_that('prints something', {
   rec <- recipe(~ ., data = df) %>%
     step_relu(val1)
   expect_output(print(rec))
   expect_output(prep(rec, training = df, verbose = TRUE))
 })
 
+rm(df)

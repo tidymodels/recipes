@@ -34,7 +34,8 @@
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #' rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
-#'   step_intercept(value = 2)
+#'   step_intercept(value = 2) %>%
+#'   step_scale(carbon)
 #'
 #' rec_obj <- prep(rec_trans, training = biomass_tr)
 #'
@@ -78,12 +79,20 @@ step_intercept_new <- function(role = "predictor", trained = FALSE,
   )
 }
 
+#' @export
 prep.step_intercept <- function(x, training, info = NULL, ...) {
   x$trained <- TRUE
   x
 }
 
 #' @importFrom tibble add_column
+#' @export
 bake.step_intercept <- function(object, newdata, ...) {
   tibble::add_column(newdata, !!object$name := object$value, .before = TRUE)
 }
+
+print.step_intercept <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    cat("Adding intercept\n")
+    invisible(x)
+  }

@@ -2,6 +2,8 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("step_intercept")
+
 ex_dat <- data.frame(cat = rep(c("A", "B"), each = 5), numer = 1:10)
 
 test_that('add appropriate column with default settings', {
@@ -53,6 +55,7 @@ test_that('deals with bad input', {
 })
 
 test_that('printing', {
+
   rec <- recipe(~ ., data = ex_dat) %>%
     step_intercept()
   expect_output(print(rec))

@@ -342,6 +342,26 @@ fully_trained <- function(x) {
   all(is_tr)
 }
 
+#' Detect if a particular step or check is used in a recipe
+#'
+#' @param recipe A recipe to check.
+#' @param name Character name of a step or check, omitted the prefix. That is,
+#'   to check if `step_intercept` is present, use `name = intercept`.
+#' @return Logical indicating if recipes contains given step.
+#' @export
+#'
+#' @examples
+#' rec <- recipe(Species ~ ., data = iris) %>%
+#'   step_intercept()
+#'
+#' detect_step(rec, "step_intercept")
+detect_step <- function(recipe, name) {
+  exports <- getNamespaceExports("recipes")
+  if (!any(grepl(paste0(".*", name, ".*"), exports)))
+    stop("Please provide the name of valid step or check (ex: `center`).",
+         call. = FALSE)
+  name %in% tidy(recipe)$type
+}
 
 # to be used in a recipe
 is_skipable <- function(x) {
