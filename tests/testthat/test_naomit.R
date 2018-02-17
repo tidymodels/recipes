@@ -30,17 +30,6 @@ test_that("step_naomit on subset of columns", {
   expect_equal(baked2, tidyr::drop_na(airquality, Solar.R))
 })
 
-test_that("detect_step detects step_naomit", {
-  # presumably at some point step_naomit will become something other than
-  # a step. this will probably make `step_naomit` undetectable by `detect_step`.
-  # this test is here to make sure that doesn't happen silently
-
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_naomit(all_predictors())
-
-  expect_true(detect_step(rec, "step_naomit"))
-})
-
 test_that("something prints", {
   rec <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(all_predictors())

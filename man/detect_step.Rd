@@ -2,20 +2,21 @@
 % Please edit documentation in R/misc.R
 \name{detect_step}
 \alias{detect_step}
-\title{Detect if a particular step is used in a recipe}
+\title{Detect if a particular step or check is used in a recipe}
 \usage{
-detect_step(recipe, step_name)
+detect_step(recipe, name)
 }
 \arguments{
 \item{recipe}{A recipe to check.}
 
-\item{step_name}{Character name of a step, such as \code{step_intercept}.}
+\item{name}{Character name of a step or check, omitted the prefix. That is,
+to check if \code{step_intercept} is present, use \code{name = intercept}.}
 }
 \value{
 Logical indicating if recipes contains given step.
 }
 \description{
-Detect if a particular step is used in a recipe
+Detect if a particular step or check is used in a recipe
 }
 \examples{
 rec <- recipe(Species ~ ., data = iris) \%>\%

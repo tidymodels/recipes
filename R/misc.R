@@ -342,11 +342,11 @@ fully_trained <- function(x) {
   all(is_tr)
 }
 
-#' Detect if a particular step is used in a recipe
+#' Detect if a particular step or check is used in a recipe
 #'
 #' @param recipe A recipe to check.
-#' @param step_name Character name of a step, such as `step_intercept`.
-#'
+#' @param name Character name of a step or check, omitted the prefix. That is,
+#'   to check if `step_intercept` is present, use `name = intercept`.
 #' @return Logical indicating if recipes contains given step.
 #' @export
 #'
@@ -355,17 +355,12 @@ fully_trained <- function(x) {
 #'   step_intercept()
 #'
 #' detect_step(rec, "step_intercept")
-
-detect_step <- function(recipe, step_name) {
-  steps <- getNamespaceExports("recipes")  # not sure if this is ideal
-  steps <- steps[grepl("^step_", steps)]
-  steps <- steps[!grepl("new$", steps)]
-
-  if (!(step_name %in% steps))
-    stop("Please provide the name of valid step (ex: step_center).", call. = FALSE)
-
-  rec_steps <- purrr::flatten(purrr::map(recipe$steps, class))
-  step_name %in% rec_steps
+detect_step <- function(recipe, name) {
+  exports <- getNamespaceExports("recipes")
+  if (!any(grepl(paste0(".*", name, ".*"), exports)))
+    stop("Please provide the name of valid step or check (ex: `center`).",
+         call. = FALSE)
+  name %in% tidy(recipe)$type
 }
 
 # to be used in a recipe

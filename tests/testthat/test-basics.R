@@ -76,24 +76,24 @@ test_that("detect_step function works", {
   expect_error(detect_step(prepped_rec, "not_a_step"))
 
   # detect untrained steps
-  expect_true(detect_step(rec, "step_center"))
-  expect_true(detect_step(rec, "step_scale"))
-  expect_true(detect_step(rec, "step_relu"))
-  expect_true(detect_step(rec, "step_intercept"))
+  expect_true(detect_step(rec, "center"))
+  expect_true(detect_step(rec, "scale"))
+  expect_true(detect_step(rec, "relu"))
+  expect_true(detect_step(rec, "intercept"))
 
   # detect trained steps
-  expect_true(detect_step(prepped_rec, "step_center"))
-  expect_true(detect_step(prepped_rec, "step_scale"))
-  expect_true(detect_step(prepped_rec, "step_relu"))
-  expect_true(detect_step(prepped_rec, "step_intercept"))
+  expect_true(detect_step(prepped_rec, "center"))
+  expect_true(detect_step(prepped_rec, "scale"))
+  expect_true(detect_step(prepped_rec, "relu"))
+  expect_true(detect_step(prepped_rec, "intercept"))
 
   # don't detect untrained steps not in use
-  expect_false(detect_step(rec, "step_pca"))
-  expect_false(detect_step(rec, "step_meanimpute"))
+  expect_false(detect_step(rec, "pca"))
+  expect_false(detect_step(rec, "meanimpute"))
 
   # don't detect trained steps not in use
-  expect_false(detect_step(prepped_rec, "step_pca"))
-  expect_false(detect_step(prepped_rec, "step_meanimpute"))
+  expect_false(detect_step(prepped_rec, "pca"))
+  expect_false(detect_step(prepped_rec, "meanimpute"))
 })
 
 test_that("bake without pred", {
