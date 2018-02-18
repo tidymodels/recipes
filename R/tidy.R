@@ -90,6 +90,17 @@ tidy.check <- function(x, ...) {
 is_trained <- function(x)
   x$trained
 
+
+#' Convert Selectors to Character
+#' 
+#' This internal function takes a list of selectors (e.g. `terms` 
+#'  in most steps) and returns a character vector version for
+#'  printing. 
+#' @param x A list of selectors
+#' @return A character vector
+#' @export
+#' @keywords internal  
+
 sel2char <- function(x) {
   term_names <- lapply(x, as.character)
   term_names <-

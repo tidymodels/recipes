@@ -8,6 +8,7 @@
 ## Other Changes:
 
  * `step_log` gained an `offset` argument. 
+ * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122). 
 
 # `recipes` 0.1.2
 
