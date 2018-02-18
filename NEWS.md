@@ -5,6 +5,10 @@
 * `step_lag` can lag variables in the data set (contributed by Alex Hayes).
 * `step_naomit` removes rows with missing data for specific columns (contributed by Alex Hayes). 
 
+## Other Changes:
+
+ * `step_log` gained an `offset` argument. 
+
 # `recipes` 0.1.2
 
 ## General Changes:

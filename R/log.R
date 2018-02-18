@@ -11,6 +11,8 @@
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param base A numeric value for the base.
+#' @param offset An optional value to add to the data prior to
+#'  logging (to avoid `log(0)`).
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
@@ -48,6 +50,7 @@ step_log <-
            role = NA,
            trained = FALSE,
            base = exp(1),
+           offset = 0,
            columns = NULL,
            skip = FALSE) {
     add_step(
@@ -57,6 +60,7 @@ step_log <-
         role = role,
         trained = trained,
         base = base,
+        offset = offset,
         columns = columns,
         skip = skip
       )
@@ -68,6 +72,7 @@ step_log_new <-
            role = NA,
            trained = FALSE,
            base = NULL,
+           offset = NULL,
            columns = NULL,
            skip = FALSE) {
     step(
@@ -76,6 +81,7 @@ step_log_new <-
       role = role,
       trained = trained,
       base = base,
+      offset = offset,
       columns = columns,
       skip = skip
     )
@@ -89,6 +95,7 @@ prep.step_log <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     base = x$base,
+    offset = x$offset,
     columns = col_names,
     skip = x$skip
   )
@@ -97,9 +104,12 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_log <- function(object, newdata, ...) {
   col_names <- object$columns
+  # for backward compat
+  if(all(names(object) != "offset"))
+    object$offset <- 0
   for (i in seq_along(col_names))
     newdata[, col_names[i]] <-
-      log(getElement(newdata, col_names[i]), base = object$base)
+      log(newdata[[ col_names[i] ]] + object$offset, base = object$base)
   as_tibble(newdata)
 }
 

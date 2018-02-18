@@ -6,7 +6,7 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  columns = NULL, skip = FALSE)
+  offset = 0, columns = NULL, skip = FALSE)
 
 \method{tidy}{step_log}(x, ...)
 }
@@ -26,6 +26,9 @@ created.}
 preprocessing have been estimated.}
 
 \item{base}{A numeric value for the base.}
+
+\item{offset}{An optional value to add to the data prior to
+logging (to avoid \code{log(0)}).}
 
 \item{columns}{A character string of variable names that will
 be populated (eventually) by the \code{terms} argument.}
