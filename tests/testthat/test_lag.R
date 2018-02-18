@@ -8,6 +8,8 @@ n <- 10
 start <- as.Date('1999/01/01')
 end <- as.Date('2000/01/01')
 
+set.seed(1)
+
 test_that("default lag works on a single feature",  {
 
   set.seed(27)

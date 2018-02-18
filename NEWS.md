@@ -1,3 +1,10 @@
+# `recipes` 0.1.3
+
+## New Operations:
+
+* `step_lag` can lag variables in the data set (contributed by Alex Hayes).
+* `step_naomit` removes rows with missing data for specific columns (contributed by Alex Hayes). 
+
 # `recipes` 0.1.2
 
 ## General Changes:
