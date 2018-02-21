@@ -199,7 +199,7 @@ bake.step_pca <- function(object, newdata, ...) {
   comps <- predict(object$res, newdata = newdata[, pca_vars])
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- cbind(newdata, as_tibble(comps))
+  newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
   as_tibble(newdata)

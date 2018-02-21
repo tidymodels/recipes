@@ -191,7 +191,7 @@ bake.step_classdist <- function(object, newdata, ...) {
     res <- lapply(res, log)
   res <- as_tibble(res)
   colnames(res) <- paste0("classdist_", colnames(res))
-  res <- cbind(newdata, res)
+  res <- bind_cols(newdata, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res

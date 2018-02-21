@@ -147,7 +147,7 @@ bake.step_poly <- function(object, newdata, ...) {
     strt <- max(cols) + 1
     newdata[, orig_var] <- NULL
   }
-  newdata <- cbind(newdata, as_tibble(poly_values))
+  newdata <- bind_cols(newdata, as_tibble(poly_values))
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
   newdata
