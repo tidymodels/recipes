@@ -9,6 +9,8 @@
 
  * `step_log` gained an `offset` argument. 
  * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122). 
+ * [Fixed bug](https://github.com/topepo/recipes/issues/125) that prevented several steps from working with 
+    **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
 
 # `recipes` 0.1.2
 
