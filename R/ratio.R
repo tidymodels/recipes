@@ -143,7 +143,7 @@ bake.step_ratio <- function(object, newdata, ...) {
   if (!is_tibble(res))
     res <- as_tibble(res)
 
-  newdata <- cbind(newdata, res)
+  newdata <- bind_cols(newdata, res)
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
   newdata

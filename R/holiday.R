@@ -58,7 +58,7 @@ step_holiday <-
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
-    stop("Invalid `holidays` value. See timeDate::listHolidays", 
+    stop("Invalid `holidays` value. See timeDate::listHolidays",
          call. = FALSE)
 
   add_step(
@@ -160,7 +160,7 @@ bake.step_holiday <- function(object, newdata, ...) {
 
     strt <- max(cols) + 1
   }
-  newdata <- cbind(newdata, as_tibble(holiday_values))
+  newdata <- bind_cols(newdata, as_tibble(holiday_values))
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
   newdata

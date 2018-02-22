@@ -10,7 +10,7 @@
 #'  for more details. For the `tidy` method, these are not
 #'  currently used.
 #' @param terms A traditional R formula that contains interaction
-#'  terms. This can include `.` and selectors. 
+#'  terms. This can include `.` and selectors.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
@@ -46,18 +46,18 @@
 #'  that the three way interaction shown previously would generate a
 #'  column named `A_x_B_x_C`. This can be changed using the
 #'  `sep` argument.
-#'  
+#'
 #' When dummy variables are created and are used in interactions,
 #'  selectors can help specify the interactions succinctly. For
 #'  example, suppose a factor column `X` gets converted to dummy
 #'  variables `x_2`, `x_3`, ..., `x_6` using [step_dummy()]. If
 #'  you wanted an interaction with numeric column `z`, you could
-#'  create a set of specific interaction effects (e.g. 
-#'  `x_2:z + x_3:z` and so on) or you could use 
+#'  create a set of specific interaction effects (e.g.
+#'  `x_2:z + x_3:z` and so on) or you could use
 #'  `starts_with("z_"):z`. When [prep()] evaluates this step,
 #'  `starts_with("z_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x6)`
 #'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x6):z` and
-#'  all two-way interactions are created. 
+#'  all two-way interactions are created.
 
 #' @examples
 #' data(biomass)
@@ -133,17 +133,17 @@ step_interact_new <-
 prep.step_interact <- function(x, training, info = NULL, ...) {
   # Identify any selectors that are involved in the interaction
   # formula
-  
+
   form_sel <- find_selectors(x$terms)
-  
+
   ## Resolve the selectors to a expression containing an additive
   ## function of the variables
-  
+
   if(length(form_sel) > 0) {
     form_res <- map(form_sel, terms_select, info = info)
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
-    ## formula. 
+    ## formula.
     for(i in seq(along = form_res)) {
       x$terms <- replace_selectors(
         x$terms,
@@ -152,10 +152,10 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       )
     }
   }
-  
+
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
-  
+
   ## Check to see if any variables are non-numeric and issue a warning
   ## if that is the case
   vars <-
@@ -167,15 +167,15 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       "avoided;  This can lead to differences in dummy variable values that ",
       "are produced by `step_dummy`."
     )
-  
+
   ## For each interaction, create a new formula that has main effects
   ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
   int_forms <- make_new_formula(int_terms)
-  
+
   ## Generate a standard R `terms` object from these short formulas and
   ## save to make future interactions
   int_terms <- make_small_terms(int_forms, training)
-  
+
   step_interact_new(
     terms = x$terms,
     role = x$role,
@@ -191,16 +191,16 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 bake.step_interact <- function(object, newdata, ...) {
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
-  
+
   old_opt <- options()$na.action
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
-  
+
   ## Create low level model matrices then remove the non-interaction terms.
   res <- lapply(object$object, model.matrix, data = newdata)
   options(na.action = old_opt)
   on.exit(expr = NULL)
-  
+
   res <-
     lapply(res, function(x)
       x[, grepl(":", colnames(x)), drop = FALSE])
@@ -214,7 +214,7 @@ bake.step_interact <- function(object, newdata, ...) {
   }
   colnames(out) <-
     gsub(":", object$sep, unlist(lapply(res, colnames)))
-  newdata <- cbind(newdata, as_tibble(out))
+  newdata <- bind_cols(newdata, as_tibble(out))
   if (!is_tibble(newdata))
     newdata <- as_tibble(newdata)
   newdata
@@ -244,7 +244,7 @@ make_new_formula <- function(x) {
 get_term_names <- function(form, vnames) {
   if(!is_formula(form))
     form <- as.formula(form)
-  
+
   ## We are going to cheat and make a small fake data set to
   ## efficiently get the full formula expansion from
   ## model.matrix (devoid of factor levels) and then
@@ -295,15 +295,15 @@ map_pairlist <- function(x, f, ...) as.pairlist(lapply(x, f, ...))
 find_selectors <- function (f) {
   if (is.function(f)) {
     find_selectors(body(f))
-  } 
+  }
   else if (is.call(f)) {
     fname <- as.character(f[[1]])
     res <- if (fname %in% selectors) f else list()
     c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
-  } 
+  }
   else if (is.name(f) || is.atomic(f)) {
     list()
-  }  
+  }
   else {
     # User supplied incorrect input
     stop("Don't know how to handle type ", typeof(f),

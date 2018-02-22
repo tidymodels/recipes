@@ -42,8 +42,8 @@
 #'  the original column). For ordered factors, polynomial contrasts
 #'  are used to encode the numeric values.
 #'
-#' By default, the missing dummy variable (i.e. the reference 
-#'  cell) will correspond to the first level of the unordered 
+#' By default, the missing dummy variable (i.e. the reference
+#'  cell) will correspond to the first level of the unordered
 #'  factor being converted.
 #'
 #' The function allows for non-standard naming of the resulting
@@ -59,7 +59,7 @@
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
 #' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()], 
+#'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #'  [step_novel()]
 #' @examples
@@ -124,6 +124,7 @@ step_dummy_new <-
   }
 
 #' @importFrom stats as.formula model.frame
+#' @importFrom dplyr bind_cols
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -135,8 +136,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
       call. = FALSE
     )
-  
-  
+
+
   ## I hate doing this but currently we are going to have
   ## to save the terms object form the original (= training)
   ## data
@@ -148,7 +149,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
                          data = training,
                          xlev = x$levels[[i]])
     levels[[i]] <- attr(terms, "terms")
-    
+
     ## About factor levels here: once dummy variables are made,
     ## the `stringsAsFactors` info saved in the recipe (under
     ## recipe$levels will remove the original record of the
@@ -158,7 +159,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     attr(levels[[i]], "values") <-
       levels(getElement(training, col_names[i]))
   }
-  
+
   step_dummy_new(
     terms = x$terms,
     role = x$role,
@@ -174,41 +175,41 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 bake.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)
-  
+
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
   old_opt <- options()$na.action
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
-  
+
   for (i in seq_along(object$levels)) {
     # Make sure that the incoming data has levels consistent with
     # the original (see the note above)
     orig_var <- names(object$levels)[i]
     fac_type <- attr(object$levels[[i]], "dataClasses")
-    
+
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-    
+
     newdata[, orig_var] <-
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
-    
+
     indicators <-
       model.matrix(
         object = object$levels[[i]],
         data = newdata
       )
-    
+
     options(na.action = old_opt)
     on.exit(expr = NULL)
-    
+
     indicators <- indicators[, -1, drop = FALSE]
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    newdata <- cbind(newdata, as_tibble(indicators))
+    newdata <- bind_cols(newdata, as_tibble(indicators))
     newdata[, col_names[i]] <- NULL
   }
   if (!is_tibble(newdata))
@@ -229,7 +230,7 @@ print.step_dummy <-
       cat(" [trained]\n")
     else
       cat("\n")
-    invisible(x)    
+    invisible(x)
   }
 
 #' @rdname step_dummy
