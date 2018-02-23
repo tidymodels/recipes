@@ -8,9 +8,12 @@
 ## Other Changes:
 
  * `step_log` gained an `offset` argument. 
- * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122). 
- * [Fixed bug](https://github.com/topepo/recipes/issues/125) that prevented several steps from working with 
-    **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
+ * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122).
+
+## Bug Fixes: 
+  
+ * [issue 125](https://github.com/topepo/recipes/issues/125) that prevented several steps from working with **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
+ *  [issue 127](https://github.com/topepo/recipes/issues/127) where options to `step_discretize` were not being passed to `discretize`.
 
 # `recipes` 0.1.2
 
@@ -70,13 +73,13 @@ First CRAN release.
 
 # `recipes` 0.0.1.9002
 
-New steps:
+## New steps:
 
   * `step_lincomb` removes variables involved in linear combinations to resolve them. 
   * A step for converting binary variables to factors (`step_bin2factor`)
   *  `step_regex` applies a regular expression to a character or factor vector to create dummy variables. 
 
-Other changes: 
+## Other changes: 
 
 * `step_dummy` and `step_interact` do a better job of respecting missing values in the data set. 
 

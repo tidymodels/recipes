@@ -5,6 +5,10 @@ library(recipes)
 ex_tr <- data.frame(x1 = 1:100,
                     x2 = rep(1:5, each = 20),
                     x3 = factor(rep(letters[1:2], each = 50)))
+ex_tr_mis <- ex_tr
+ex_tr_mis$x1[2] <- NA
+ex_tr_mis$x3[10] <- NA
+
 ex_te <- data.frame(x1 = c(1, 50, 101, NA))
 
 lvls_breaks_4 <- c('bin_missing', 'bin1', 'bin2', 'bin3', 'bin4')
@@ -30,6 +34,29 @@ test_that('NA values from out of range', {
   expect_equal(pred_3, exp_3)
 })
 
+
+test_that('NA values with step_discretize (issue #127)', {
+  iris_na <- iris
+  iris_na$sepal_na <- iris_na$Sepal.Length
+  iris_na$sepal_na[1:5] = NA
+
+  disc_values <-
+    discretize(
+      iris_na$sepal_na,
+      min.unique = 2,
+      cuts = 2,
+      keep_na = TRUE,
+      na.rm = TRUE
+    )
+
+  opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = TRUE)
+
+  rec <- recipe( ~ ., data = iris_na) %>%
+    step_discretize(sepal_na, options = opts) %>%
+    prep(training = iris_na)
+
+  expect_equal(rec$steps[[1]]$objects$sepal_na, disc_values)
+})
 
 test_that('printing and tidys', {
   rec <- recipe(~., data = ex_tr) %>%
