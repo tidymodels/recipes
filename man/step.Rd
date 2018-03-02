@@ -3,7 +3,7 @@
 \name{step}
 \alias{step}
 \alias{check}
-\title{\code{step} sets the class of the \code{step`` and}check` is for checks.}
+\title{\code{step} sets the class of the \code{step} and \code{check} is for checks.}
 \usage{
 step(subclass, ..., .prefix = "step_")
 
@@ -19,10 +19,10 @@ if \code{subclass = "blah"} the step object that is returned has class
 \item{.prefix}{Prefix to the subclass created.}
 }
 \value{
-A updated step or check with the new class.
+An updated step or check with the new class.
 }
 \description{
-\code{step} sets the class of the \code{step`` and}check` is for checks.
+\code{step} sets the class of the \code{step} and \code{check} is for checks.
 }
 \concept{
 preprocessing
