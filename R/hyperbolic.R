@@ -56,7 +56,7 @@ step_hyperbolic <-
            skip = FALSE) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
-      stop("`func` should be either `sin``, `cos`, or `tan`", 
+      stop("`func` should be either `sin``, `cos`, or `tan`",
            call. = FALSE)
     add_step(
       recipe,
@@ -95,6 +95,8 @@ step_hyperbolic_new <-
 #' @export
 prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   step_hyperbolic_new(
     terms = x$terms,
     role = x$role,

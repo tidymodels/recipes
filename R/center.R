@@ -22,7 +22,7 @@
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations 
+#'  the computations for subsequent operations
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -102,6 +102,7 @@ step_center_new <-
 
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
 
   means <-
     vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)

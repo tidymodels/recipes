@@ -153,6 +153,7 @@ step_kpca_new <-
 #' @export
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
 
   kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
   kprc <- kprc@fun(

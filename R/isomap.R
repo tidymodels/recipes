@@ -141,6 +141,7 @@ step_isomap_new <-
 #' @export
 prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
 
   x$num <- min(x$num, ncol(training))
   x$options$knn <- min(x$options$knn, nrow(training))

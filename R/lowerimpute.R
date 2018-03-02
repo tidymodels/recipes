@@ -30,30 +30,30 @@
 #' @examples
 #' library(recipes)
 #' data(biomass)
-#' 
+#'
 #' ## Truncate some values to emulate what a lower limit of
 #' ## the measurement system might look like
-#' 
+#'
 #' biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
 #' biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)
-#' 
+#'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
-#' 
+#'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
-#' 
+#'
 #' impute_rec <- rec %>%
 #'   step_lowerimpute(carbon, hydrogen)
-#' 
+#'
 #' tidy(impute_rec, number = 1)
-#' 
+#'
 #' impute_rec <- prep(impute_rec, training = biomass_tr)
-#' 
+#'
 #' tidy(impute_rec, number = 1)
-#' 
+#'
 #' transformed_te <- bake(impute_rec, biomass_te)
-#' 
+#'
 #' plot(transformed_te$carbon, biomass_te$carbon,
 #'      xlab = "pre-imputation", ylab = "imputed")
 
@@ -96,8 +96,8 @@ step_lowerimpute_new <-
 #' @export
 prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
-    stop("All variables for mean imputation should be numeric")
+  check_type(training[, col_names])
+
   threshold <-
     vapply(training[, col_names],
            min,

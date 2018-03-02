@@ -98,6 +98,8 @@ step_range_new <-
 #' @export
 prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   mins <-
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
   maxs <-

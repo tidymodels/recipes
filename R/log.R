@@ -90,6 +90,8 @@ step_log_new <-
 #' @export
 prep.step_log <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   step_log_new(
     terms = x$terms,
     role = x$role,

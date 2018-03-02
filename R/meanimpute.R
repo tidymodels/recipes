@@ -99,8 +99,8 @@ step_meanimpute_new <-
 #' @export
 prep.step_meanimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
-    stop("All variables for mean imputation should be numeric")
+  check_type(training[, col_names])
+
   means <-
     vapply(training[, col_names],
            mean,

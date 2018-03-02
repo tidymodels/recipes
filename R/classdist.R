@@ -133,6 +133,8 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
+  check_type(training[, x_names])
+
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
   if (x$pool) {

@@ -80,11 +80,11 @@ tidy(make_factor, number = 1)
 # When novel values are exposed
 with_transform <- rec \%>\%
   step_num2factor(Species, transform = function(x) paste0("val_", x))
-  
+
 with_transform <- prep(with_transform,
                        training = iris2[1:75,])
 new_values <- bake(with_transform, newdata = iris2, Species)
-table(new_values[["Species"]], iris2$Species, useNA = "ifany")                     
+table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 }
 \seealso{
 \code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},

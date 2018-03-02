@@ -2,7 +2,7 @@
 #'
 #' `step_num2factor` will convert one or more numeric
 #'  vectors to factors (ordered or unordered). This can be useful
-#'  when categories are encoded as integers. 
+#'  when categories are encoded as integers.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
@@ -32,8 +32,8 @@
 #'  [step_dummy()]
 #' @note If `bake` is used on a data set where a new value is
 #'  in the column being converted, `bake` will silently give values
-#'  of `NA` to these rows (see the example below). 
-#' 
+#'  of `NA` to these rows (see the example below).
+#'
 #' @examples
 #' iris2 <- iris
 #' iris2$Species <- as.numeric(iris2$Species)
@@ -49,15 +49,15 @@
 #' juice(make_factor) %>% head
 #' okc %>% head
 #' tidy(make_factor, number = 1)
-#' 
+#'
 #' # When novel values are exposed
 #' with_transform <- rec %>%
 #'   step_num2factor(Species, transform = function(x) paste0("val_", x))
-#'   
+#'
 #' with_transform <- prep(with_transform,
 #'                        training = iris2[1:75,])
 #' new_values <- bake(with_transform, newdata = iris2, Species)
-#' table(new_values[["Species"]], iris2$Species, useNA = "ifany")                     
+#' table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 
 step_num2factor <-
   function(recipe,
@@ -112,14 +112,7 @@ get_ord_lvls_num <- function(x, foo)
 #' @export
 prep.step_num2factor <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  num_check <-
-    vapply(training[, col_names], is.numeric, logical(1))
-  if (any(!num_check))
-    stop(
-      "The following variables are not numeric vectors: ",
-      paste0("`", names(num_check)[!num_check], "`", collapse = ", "),
-      call. = FALSE
-    )
+  check_type(training[, col_names])
 
   res <- lapply(training[, col_names], get_ord_lvls_num, foo = x$transform)
 
@@ -137,7 +130,7 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
-make_factor_num <- function (x, lvl, ord, foo) 
+make_factor_num <- function (x, lvl, ord, foo)
   factor(foo(x), levels = lvl, ordered = ord)
 
 #' @importFrom purrr map2_df map_df

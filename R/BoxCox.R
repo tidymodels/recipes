@@ -109,6 +109,8 @@ step_BoxCox_new <-
 #' @export
 prep.step_BoxCox <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   values <- vapply(
     training[, col_names],
     estimate_bc,

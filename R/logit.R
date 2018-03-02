@@ -79,6 +79,8 @@ step_logit_new <-
 #' @export
 prep.step_logit <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   step_logit_new(
     terms = x$terms,
     role = x$role,

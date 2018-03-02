@@ -101,6 +101,8 @@ step_spatialsign_new <-
 #' @export
 prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,

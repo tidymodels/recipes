@@ -139,6 +139,7 @@ step_ica_new <-
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
 
   x$num <- min(x$num, length(col_names))
 

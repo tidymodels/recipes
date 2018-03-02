@@ -310,17 +310,17 @@ magrittr::`%>%`
 
 
 #' Printing Workhorse Function
-#' 
-#' This internal function is used for printing steps. 
-#' 
+#'
+#' This internal function is used for printing steps.
+#'
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
 #'  of [step_log()]).
 #' @param untr_obj An oject of selectors prior to prepping the
 #'  recipe (e.g. `terms` in most steps).
-#' @param trained A logical for whether the step has been trained. 
-#' @param width An integer denoting where the output should be wrapped. 
-#' @return `NULL``, invisibly. 
+#' @param trained A logical for whether the step has been trained.
+#' @param width An integer denoting where the output should be wrapped.
+#' @return `NULL``, invisibly.
 #' @keywords internal
 #' @export
 printer <- function(tr_obj = NULL,
@@ -393,3 +393,23 @@ skip_me <- function(x) {
   else
     return(x$skip)
 }
+
+
+is_qual <- function(x)
+  is.factor(x) | is.character(x)
+
+check_type <- function(dat, quant = TRUE) {
+  if (quant) {
+    all_good <- vapply(dat, is.numeric, logical(1))
+    label <- "numeric"
+  } else {
+    all_good <- vapply(dat, is_qual, logical(1))
+    label <- "factor or character"
+  }
+  if (!all(all_good))
+    stop("All columns selected for the step",
+         " should be ", label, call. = FALSE)
+  invisible(all_good)
+}
+
+

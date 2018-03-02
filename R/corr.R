@@ -115,6 +115,8 @@ step_corr_new <-
 #' @export
 prep.step_corr <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   filter <- corr_filter(
     x = training[, col_names],
     cutoff = x$threshold,

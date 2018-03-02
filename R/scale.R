@@ -93,6 +93,8 @@ step_scale_new <-
 #' @export
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
+  check_type(training[, col_names])
+
   sds <-
     vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na.rm)
   step_scale_new(
