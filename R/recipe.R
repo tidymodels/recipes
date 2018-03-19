@@ -220,6 +220,7 @@ recipe.formula <- function(formula, data, ...) {
     vars = args$vars,
     roles = args$roles
   )
+  obj
 }
 
 #' @rdname recipe
@@ -624,7 +625,7 @@ juice <- function(object, ..., composition = "tibble") {
     stop("At least one step has not been training. Please ",
          "run `prep`.",
          call. = FALSE)
-  
+
   if(!isTRUE(object$retained))
     stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
          call. = FALSE)
