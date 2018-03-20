@@ -6,8 +6,7 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  contrast = options("contrasts"), naming = dummy_names, levels = NULL,
-  skip = FALSE)
+  contrast = NULL, naming = dummy_names, levels = NULL, skip = FALSE)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -31,8 +30,8 @@ preprocessing have been estimated.}
 
 \item{contrast}{A specification for which type of contrast
 should be used to make a set of full rank dummy variables. See
-\code{\link[stats:contrasts]{stats::contrasts()}} for more details. \strong{not
-currently working}}
+\code{\link[stats:contrasts]{stats::contrasts()}} and the \code{contrasts.arg} from \code{\link[stats:model.matrix]{stats::model.matrix()}}
+for more details.}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
