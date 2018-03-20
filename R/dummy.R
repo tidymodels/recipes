@@ -20,6 +20,8 @@
 #'  should be used to make a set of full rank dummy variables. See
 #'  [stats::contrasts()] for more details. **not
 #'  currently working**
+#' @param one_hot A logical. For k levels, should k dummy variables be created
+#'  rather than k-1?
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
