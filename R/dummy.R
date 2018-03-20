@@ -20,6 +20,8 @@
 #'  should be used to make a set of full rank dummy variables. See
 #'  [stats::contrasts()] for more details. **not
 #'  currently working**
+#' @param one_hot A logical. For k levels, should k dummy variables be created
+#'  rather than k-1?
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
@@ -85,6 +87,7 @@ step_dummy <-
            role = "predictor",
            trained = FALSE,
            contrast = options("contrasts"),
+           one_hot = FALSE,
            naming = dummy_names,
            levels = NULL,
            skip = FALSE) {
@@ -95,6 +98,7 @@ step_dummy <-
         role = role,
         trained = trained,
         contrast = contrast,
+        one_hot = one_hot,
         naming = naming,
         levels = levels,
         skip = skip
@@ -107,6 +111,7 @@ step_dummy_new <-
            role = "predictor",
            trained = FALSE,
            contrast = contrast,
+           one_hot = one_hot,
            naming = naming,
            levels = levels,
            skip = FALSE
@@ -117,6 +122,7 @@ step_dummy_new <-
       role = role,
       trained = trained,
       contrast = contrast,
+      one_hot = one_hot,
       naming = naming,
       levels = levels,
       skip = skip
@@ -144,7 +150,11 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   levels <- vector(mode = "list", length = length(col_names))
   names(levels) <- col_names
   for (i in seq_along(col_names)) {
-    form <- as.formula(paste0("~", col_names[i]))
+    form_chr <- paste0("~", col_names[i])
+    if(x$one_hot) {
+      form_chr <- paste0(form_chr, "-1")
+    }
+    form <- as.formula(form_chr)
     terms <- model.frame(form,
                          data = training,
                          xlev = x$levels[[i]])
@@ -165,6 +175,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     contrast = x$contrast,
+    one_hot = x$one_hot,
     naming = x$naming,
     levels = levels,
     skip = x$skip
@@ -205,7 +216,10 @@ bake.step_dummy <- function(object, newdata, ...) {
     options(na.action = old_opt)
     on.exit(expr = NULL)
 
-    indicators <- indicators[, -1, drop = FALSE]
+    if(!object$one_hot) {
+      indicators <- indicators[, -1, drop = FALSE]
+    }
+
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")

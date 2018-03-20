@@ -6,8 +6,8 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  contrast = options("contrasts"), naming = dummy_names, levels = NULL,
-  skip = FALSE)
+  contrast = options("contrasts"), one_hot = FALSE, naming = dummy_names,
+  levels = NULL, skip = FALSE)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -33,6 +33,9 @@ preprocessing have been estimated.}
 should be used to make a set of full rank dummy variables. See
 \code{\link[stats:contrasts]{stats::contrasts()}} for more details. \strong{not
 currently working}}
+
+\item{one_hot}{A logical. For k levels, should k dummy variables be created
+rather than k-1?}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
