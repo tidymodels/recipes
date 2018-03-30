@@ -15,7 +15,8 @@ Learning of Statistics}.
 }
 \description{
 These are a sample of columns of users of OkCupid dating website. The data
-are from Kim and Escobedo-Land (2015).
+are from Kim and Escobedo-Land (2015). Permission to use this data set was
+explicitly granted by OkCupid.
 }
 \examples{
 data(okc)
