@@ -350,6 +350,20 @@ prepare   <- function(x, ...)
        "instead of `prepare`", call. = FALSE)
 
 
+#' Check to see if a recipe is trained/prepared
+#'
+#' @param x A recipe
+#' @return A logical which is true if all of the recipe steps have been run
+#'  through `prep`. If no steps have been added to the recipe, `TRUE` is
+#'  returned.
+#' @export
+#' @examples
+#' rec <- recipe(Species ~ ., data = iris) %>%
+#'   step_center(all_numeric())
+#'
+#' rec %>% fully_trained
+#'
+#' rec %>% prep(training = iris) %>% fully_trained
 fully_trained <- function(x) {
   if (is.null(x$steps))
     return(TRUE)
