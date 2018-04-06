@@ -13,6 +13,8 @@
 #' @param levels A length 2 character string that indicate the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
+#' @param ref_first Logical. Should the first level, which replaces
+#' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
@@ -51,6 +53,7 @@ step_bin2factor <-
            role = NA,
            trained = FALSE,
            levels = c("yes", "no"),
+           ref_first = TRUE,
            columns = NULL,
            skip = FALSE) {
     if (length(levels) != 2 | !is.character(levels))
@@ -62,6 +65,7 @@ step_bin2factor <-
         role = role,
         trained = trained,
         levels = levels,
+        ref_first = ref_first,
         columns = columns,
         skip = skip
       )
@@ -73,6 +77,7 @@ step_bin2factor_new <-
            role = NA,
            trained = FALSE,
            levels = NULL,
+           ref_first = NULL,
            columns = NULL,
            skip = FALSE) {
     step(
@@ -81,6 +86,7 @@ step_bin2factor_new <-
       role = role,
       trained = trained,
       levels = levels,
+      ref_first = ref_first,
       columns = columns,
       skip = skip
     )
@@ -98,12 +104,14 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     levels = x$levels,
+    ref_first = x$ref_first,
     columns = col_names,
     skip = x$skip
   )
 }
 
 bake.step_bin2factor <- function(object, newdata, ...) {
+  levs <- if (object$ref_first) object$levels else rev(object$levels)
   for (i in seq_along(object$columns))
     newdata[, object$columns[i]] <-
       factor(ifelse(
@@ -111,7 +119,7 @@ bake.step_bin2factor <- function(object, newdata, ...) {
         object$levels[1],
         object$levels[2]
       ),
-      levels = object$levels)
+      levels = levs)
   newdata
 }
 
