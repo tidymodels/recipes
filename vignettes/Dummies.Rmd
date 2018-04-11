@@ -20,7 +20,7 @@ options(digits = 3)
 library(recipes)
 ```
 
-Recipes can be different from their base R counterparts such as `model.matrix`. This vignette describes the different methods for encoding categorical predictors with special attention to interaction terms.  
+Recipes can be different from their base R counterparts such as `model.matrix`. This vignette describes the different methods for encoding categorical predictors with special attention to interaction terms and contrasts.  
 
 ## Creating Dummy Variables
 
@@ -28,6 +28,10 @@ Let's start, of course, with `iris` data. This has four numeric columns and a si
 
 ```{r iris-base-rec}
 library(recipes)
+
+# make a copy for use below
+iris <- iris %>% mutate(original = Species)
+
 iris_rec <- recipe( ~ ., data = iris)
 summary(iris_rec)
 ```
@@ -43,11 +47,10 @@ ref_cell <- iris_rec %>%
 summary(ref_cell)
 
 # Get a row for each factor level
-rows <- c(1, 51, 101)
-juice(ref_cell, starts_with("Species"))[rows,]
+juice(ref_cell, original, starts_with("Species")) %>% distinct()
 ```
 
-Note that the original column (`Species`) is no longer there.
+Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
 
 There are different types of contrasts that can be used for different types of factors. The defaults are:
 
@@ -64,9 +67,9 @@ To get this encoding, the global option for the contrasts can be changed and sav
 
 ```{r iris-helmert}
 # change it:
-new_cont <- param
-new_cont["unordered"] <- "contr.helmert"
-options(contrasts = new_cont)
+go_helmert <- param
+go_helmert["unordered"] <- "contr.helmert"
+options(contrasts = go_helmert)
 
 # now make dummy variables with new parameterization
 helmert <- iris_rec %>% 
@@ -74,11 +77,13 @@ helmert <- iris_rec %>%
   prep(training = iris, retain = TRUE)
 summary(helmert)
 
-juice(helmert, starts_with("Species"))[rows,]
+juice(helmert, original, starts_with("Species")) %>% distinct()
 
 # Yuk; go back to the original method
 options(contrasts = param)
 ```
+
+Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn't make sense. 
 
 
 ## Interactions with Dummy Variables
@@ -99,7 +104,11 @@ One thing that `recipes` does differently than base R is to construct the design
 For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:
 
 ```{r mm-int}
-model.matrix(~ Species*Sepal.Length, data = iris)[rows,]
+model.matrix(~ Species*Sepal.Length, data = iris) %>% 
+  as.data.frame() %>% 
+  # show a few specific rows
+  slice(c(1, 51, 101)) %>% 
+  as.data.frame()
 ```
 
 With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variable? 
@@ -155,6 +164,52 @@ summary(iris_int)
 The columns `Species` isn't affected and a warning is issued. Basically, you only get half of what `model.matrix` does and that could really be problematic in subsequent steps. 
 
 
+## Getting All of the Indicator Variables
+
+As mentioned above, if there are _C_ levels of the factor, there will be _C_ - 1 dummy variables created. You might want to get all of them back. 
+
+Historically, _C_ - 1 are used so that a linear dependency is avoided in the design matrix; all _C_ dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can't be computed. This technical term for a the design matrix like this is "less than full rank". 
+
+There are models (e.g. `glmnet` and others) that can avoid this issue so you might want to get all of the columns. To do this, `step_dummy` has an option called `one_hot` that will make sure that all _C_ are produced:
+
+```{r one-hot}
+iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+```
+
+The option is named that way since this is that the computer scientists call ["one-hot encoding"](https://www.google.com/search?q=one-hot+encoding). 
+
+***Warning!*** (again)
+
+This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:
+
+```{r one-hot-two}
+hot_reference <- iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+
+hot_reference
+
+# from above
+options(contrasts = go_helmert)
+
+hot_helmert <- iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+
+hot_helmert
+```
+
+Since this contrast doesn't make sense using all _C_ columns, it reverts back to the default encoding. 
+
+
 ## Other Steps Related to Dummy Variables
 
 
@@ -165,6 +220,7 @@ There are a bunch of steps related to going in-between factors and dummy variabl
  * [`step_holiday`](https://topepo.github.io/recipes/reference/step_holiday.html) creates dummy variables from date fields to capture holidays. 
  * [`step_lincomb`](https://topepo.github.io/recipes/reference/step_lincomb.html) can be useful if you _over-specify_ interactions and need to remove linear dependencies. 
  * [`step_zv`](https://topepo.github.io/recipes/reference/step_zv.html) can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).
+ * [`step_bin2factor`](https://topepo.github.io/recipes/reference/step_bin2factor.html) takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models. 
  
 [`step_dummy`](https://topepo.github.io/recipes/reference/step_dummy.html) also works with _ordered factors_. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:
 
