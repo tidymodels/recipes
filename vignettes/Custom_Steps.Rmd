@@ -45,7 +45,7 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 
 To illustrate the transformation with the `carbon` variable, the training set distribution of that variables is shown below with a vertical line for the first value of the test set. 
 
-```{r carbon_dist}
+```{r carbon_dist, fig.width=6, fig.height=4.25,  out.width = '100%'}
 library(ggplot2)
 theme_set(theme_bw())
 ggplot(biomass_tr, aes(x = carbon)) + 
@@ -254,7 +254,7 @@ percentiles
 
 The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:
 
-```{r cdf_plot, echo = FALSE}
+```{r cdf_plot, echo = FALSE, fig.width=6, fig.height=4.25,  out.width = '100%'}
 grid_pct <- rec_obj$steps[[1]]$options$probs
 plot_data <- data.frame(
   carbon = c(

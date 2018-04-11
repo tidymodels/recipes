@@ -2,6 +2,10 @@ template:
   params:
     bootswatch: united
 
+figures:
+  fig.width: 8
+  fig.height: 5.75
+
 reference:
   - title: Basic Functions
     contents:

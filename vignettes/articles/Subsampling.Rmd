@@ -169,7 +169,7 @@ ggplot(cv_folds,
   geom_hline(yintercept = 0, col = "green")
 ```
 
-There doesn't appear that subsampling had much of an effect on this metric. The average difference is `r signif(mean(cv_folds$sampled_roc - cv_folds$normal_roc), 3)$, which is fairly small. 
+There doesn't appear that subsampling had much of an effect on this metric. The average difference is `r signif(mean(cv_folds$sampled_roc - cv_folds$normal_roc), 3)`, which is fairly small. 
 
 For the _J_ statistic, the results show a different story: 
 

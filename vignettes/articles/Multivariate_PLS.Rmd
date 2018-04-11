@@ -152,7 +152,7 @@ variance_data <- bind_rows(folds[["var"]]) %>%
 The plot below shows that, if the protein measurement is important, you might require 10 or so components to achieve a good representation of that outcome. Note that the predictor variance is captured extremely well using a single component. This is due to the high degree of correlation in those data. 
 
 
-```{r plot}
+```{r plot, fig.width=6, fig.height=4.25,  out.width = '100%'}
 ggplot(variance_data, aes(x = components, y = proportion, col = source)) + 
   geom_line() + 
   geom_point() + 
