@@ -8,15 +8,18 @@
 <title>On Skipping Steps • recipes</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="On Skipping Steps">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -25,8 +28,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -54,12 +61,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -86,17 +87,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>On Skipping Steps</h1>
             
-          </div>
+      
+      <small>Source: <a href="https://github.com/topepo/recipes/blob/master/vignettes/Skipping.Rmd"><code>vignettes/Skipping.Rmd</code></a></small>
+      <div class="hidden name"><code>Skipping.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>When steps are created in a recipe, they can be applied to data (i.e. baked) at two distinct times:</p>
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li>During the process of preparing the recipe, each step is estimated via <code>prep</code> and then applied to the training set using <code>bake</code> before proceeding to the next step.</li>
 <li>After the recipe has been prepared, <code>bake</code> can be used with any data set to apply the preprocessing to those data.</li>
 </ol>
@@ -105,10 +109,15 @@
 <li>There are outcomes in the recipe that won’t be available when a recipe is baked in the future. For predictive modeling, this is common when you receive <em>new</em> data to be predicted.</li>
 <li>When doing resampling or a training/test split, certain operations make sense for the data to be used for modeling but are problematic for new samples or the test set.</li>
 </ul>
-<section id="example-class-imbalance-sampling-and-skipping-steps" class="level1"><h1>Example: Class Imbalance Sampling and Skipping Steps</h1>
+<div id="example-class-imbalance-sampling-and-skipping-steps" class="section level1">
+<h1 class="hasAnchor">
+<a href="#example-class-imbalance-sampling-and-skipping-steps" class="anchor"></a>Example: Class Imbalance Sampling and Skipping Steps</h1>
 <p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
-</section><section id="how-to-skip-steps" class="level1"><h1>How To Skip Steps</h1>
+</div>
+<div id="how-to-skip-steps" class="section level1">
+<h1 class="hasAnchor">
+<a href="#how-to-skip-steps" class="anchor"></a>How To Skip Steps</h1>
 <p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>TRUE</code>. When using this option:</p>
 <ul>
 <li>No steps are skipped during <code>prep</code>
@@ -116,7 +125,10 @@
 <li>Steps with <code>skip = TRUE</code> are not applied to the data when <code>bake</code> is called</li>
 </ul>
 <p>Recall that there are two ways of getting the results for the training set with <code>recipes</code>. First, <code>bake</code> can be used as usual. Second, <code>juice</code> is a shortcut that will use the already processed data that is contained in the recipe when <code><a href="../reference/prep.html">prep(recipe, retain = TRUE)</a></code> is used. <code>juice</code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
-</section><section id="be-careful" class="level1"><h1>Be Careful!</h1>
+</div>
+<div id="be-careful" class="section level1">
+<h1 class="hasAnchor">
+<a href="#be-careful" class="anchor"></a>Be Careful!</h1>
 <p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
 <p>As an example, skipping an operation whose variables are used later might be an issue:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
@@ -140,14 +152,13 @@
 <a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;    disp    hp</span></a>
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 1   155 -36.7</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 2   155 -36.7</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; 3   103 -53.7</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 4   253 -36.7</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 5   355  28.3</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 6   220 -41.7</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 1  155. -36.7</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 2  155. -36.7</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; 3  103. -53.7</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 4  253. -36.7</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 5  355.  28.3</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 6  220. -41.7</span></a></code></pre></div>
 <p>This should emphasize that <code>juice</code> should be used to get the training set values whenever a step is skipped.</p>
-</section>
 </div>
   </div>
 
@@ -176,6 +187,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

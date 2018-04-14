@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,16 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Naming Tools — names0" />
+
+<meta property="og:description" content="`names0` creates a series of `num` names with a common prefix.
+ The names are numbered with leading zeros (e.g.
+ `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
+ `dummy_names` can be used for renaming unordered and ordered
+ dummy variables (in [step_dummy()])." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +44,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +94,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +112,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,25 +120,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Naming Tools</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/misc.R'><code>R/misc.R</code></a></small>
+    <div class="hidden name"><code>names0.Rd</code></div>
     </div>
 
     
-    <p><code>names0</code> creates a series of <code>num</code> names with a common prefix.
-The names are numbered with leading zeros (e.g.
-<code>prefix01</code>-<code>prefix10</code> instead of <code>prefix1</code>-<code>prefix10</code>).
-<code>dummy_names</code> can be used for renaming unordered and ordered
-dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p>
+    <p>`names0` creates a series of `num` names with a common prefix.
+ The names are numbered with leading zeros (e.g.
+ `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
+ `dummy_names` can be used for renaming unordered and ordered
+ dummy variables (in [step_dummy()]).</p>
     
 
     <pre class="usage"><span class='fu'>names0</span>(<span class='no'>num</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"x"</span>)
 
 <span class='fu'>dummy_names</span>(<span class='no'>var</span>, <span class='no'>lvl</span>, <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -143,8 +158,8 @@ dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p
     <tr>
       <th>lvl</th>
       <td><p>A character vectors of the factor levels (in order).
-When used with <code><a href='step_dummy.html'>step_dummy()</a></code>, <code>lvl</code> would be the suffixes
-that result <em>after</em> <code>model.matrix</code> is called (see the
+When used with [step_dummy()], `lvl` would be the suffixes
+that result _after_ `model.matrix` is called (see the
 example below).</p></td>
     </tr>
     <tr>
@@ -155,9 +170,9 @@ example below).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>names0</code> returns a character string of length <code>num</code> and
-<code>dummy_names</code> generates a character vector the same length as
-<code>lvl</code>,</p>
+    <p>`names0` returns a character string of length `num` and
+ `dummy_names` generates a character vector the same length as
+ `lvl`,</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -195,5 +210,8 @@ example below).</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

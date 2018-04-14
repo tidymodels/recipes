@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Select Terms in a Step Function. — terms_select" />
+
+<meta property="og:description" content="This function bakes the step function selectors and might be
+ useful when creating custom steps." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +41,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +91,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +109,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,32 +117,34 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Terms in a Step Function.</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/selections.R'><code>R/selections.R</code></a></small>
+    <div class="hidden name"><code>terms_select.Rd</code></div>
     </div>
 
     
     <p>This function bakes the step function selectors and might be
-useful when creating custom steps.</p>
+ useful when creating custom steps.</p>
     
 
     <pre class="usage"><span class='fu'>terms_select</span>(<span class='no'>terms</span>, <span class='no'>info</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>terms</th>
       <td><p>A list of formulas whose right-hand side contains
-quoted expressions. See <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>rlang::quos()</a></code> for examples.</p></td>
+quoted expressions. See [rlang::quos()] for examples.</p></td>
     </tr>
     <tr>
       <th>info</th>
-      <td><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
-and <code>source</code> that represent the current state of the data. The
-function <code><a href='summary.recipe.html'>summary.recipe()</a></code> can be used to get this information
+      <td><p>A tibble with columns `variable`, `type`, `role`,
+and `source` that represent the current state of the data. The
+function [summary.recipe()] can be used to get this information
 from a recipe.</p></td>
     </tr>
     </table>
@@ -140,12 +152,12 @@ from a recipe.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character string of column names or an error of there
-are no selectors or if no variables are selected.</p>
+ are no selectors or if no variables are selected.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe()</a></code> <code><a href='summary.recipe.html'>summary.recipe()</a></code>
-<code>prep.recipe()</code></p>
+    <div class='dont-index'><p>[recipe()] [summary.recipe()]
+  [prep.recipe()]</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -182,5 +194,8 @@ are no selectors or if no variables are selected.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

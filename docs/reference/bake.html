@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Apply a Trained Data Recipe — bake" />
+
+<meta property="og:description" content="For a recipe with at least one preprocessing operations that has been trained by
+  [prep.recipe()], apply the computations to new data." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +41,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +91,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +109,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,15 +117,17 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply a Trained Data Recipe</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
+    <div class="hidden name"><code>bake.Rd</code></div>
     </div>
 
     
     <p>For a recipe with at least one preprocessing operations that has been trained by
-<code>prep.recipe()</code>, apply the computations to new data.</p>
+  [prep.recipe()], apply the computations to new data.</p>
     
 
     <pre class="usage"><span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -123,20 +135,20 @@
 <span class='co'># S3 method for recipe</span>
 <span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>, <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>A trained object such as a <code><a href='recipe.html'>recipe()</a></code> with at least
+      <td><p>A trained object such as a [recipe()] with at least
 one preprocessing operation.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables will be
-returned by the function. See <code><a href='selections.html'>selections()</a></code> for more details.
+returned by the function. See [selections()] for more details.
 If no selectors are given, the default is to use
-<code>everything()</code>.</p></td>
+[everything()].</p></td>
     </tr>
     <tr>
       <th>newdata</th>
@@ -148,7 +160,7 @@ applied.</p></td>
       <td><p>Either "tibble", "matrix", or "dgCMatrix" for the
 format of the processed data set. Note that all computations
 during the baking process are done in a non-sparse format. Also,
-note that this argument should be called <strong>after</strong> any selectors
+note that this argument should be called **after** any selectors
 and the selectors should only resolve to numeric columns
 (otherwise an error is thrown).</p></td>
     </tr>
@@ -157,24 +169,24 @@ and the selectors should only resolve to numeric columns
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble, matrix, or sparse matrix that may have different
-columns than the original columns in <code>newdata</code>.</p>
+ columns than the original columns in `newdata`.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>bake()</code> takes a trained recipe and applies the
-operations to a data set to create a design matrix.</p>
+    <p>[bake()] takes a trained recipe and applies the
+  operations to a data set to create a design matrix.</p>
 <p>If the original data used to train the data are to be
-processed, time can be saved by using the <code>retain = TRUE</code> option
-of <code><a href='prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
-option set, <code><a href='juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
-<code>newdata</code> equal to the training set.</p>
-<p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
-data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
-of the steps applied.</p>
+ processed, time can be saved by using the `retain = TRUE` option
+ of [prep()] to avoid duplicating the same operations. With this
+ option set, [juice()] can be used instead of `bake` with
+ `newdata` equal to the training set.</p>
+<p>Also, any steps with `skip = TRUE` will not be applied to the
+  data when `bake` is invoked. [juice()] will always have all
+  of the steps applied.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='juice.html'>juice()</a></code>, <code><a href='prep.html'>prep()</a></code></p>
+    <div class='dont-index'><p>[recipe()], [juice()], [prep()]</p></div>
     
 
   </div>
@@ -209,5 +221,8 @@ Max Kuhn
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

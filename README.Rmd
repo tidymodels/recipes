@@ -1,5 +1,5 @@
 
-<img src="recipes_hex_thumb.png" align="center" />
+#  <img src="recipes_hex_thumb.png" align="center" height = "80px" align = "middle"/> 
 
 [![Build Status](https://travis-ci.org/topepo/recipes.svg?branch=master)](https://travis-ci.org/topepo/recipes)
 [![Coverage Status](https://img.shields.io/codecov/c/github/topepo/recipes/master.svg)](https://codecov.io/github/topepo/recipes?branch=master)

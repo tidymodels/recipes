@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,13 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Check for Missing Values — check_missing" />
+
+<meta property="og:description" content="`check_missing` creates a a *specification* of a recipe
+ operation that will check if variables contain missing values." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +41,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +91,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +109,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,15 +117,17 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Check for Missing Values</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/missing.r'><code>R/missing.r</code></a></small>
+    <div class="hidden name"><code>check_missing.Rd</code></div>
     </div>
 
     
-    <p><code>check_missing</code> creates a a <em>specification</em> of a recipe
-operation that will check if variables contain missing values.</p>
+    <p>`check_missing` creates a a *specification* of a recipe
+ operation that will check if variables contain missing values.</p>
     
 
     <pre class="usage"><span class='fu'>check_missing</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -124,7 +136,7 @@ operation that will check if variables contain missing values.</p>
 <span class='co'># S3 method for check_missing</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -135,8 +147,8 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are checked in the check See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
+variables are checked in the check See [selections()]
+for more details. For the `tidy` method, these are not
 currently used.</p></td>
     </tr>
     <tr>
@@ -146,8 +158,8 @@ created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
+      <td><p>A logical for whether the selectors in `...`
+have been resolved by [prep()].</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -157,30 +169,30 @@ be populated (eventually) by the terms argument.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the check be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by [bake.recipe()]? While all operations are baked
+when [prep.recipe()] is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using `skip = TRUE` as it may affect
 the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>check_missing</code> object.</p></td>
+      <td><p>A `check_missing` object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new check
-added to the sequence of existing operations (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected).</p>
+    <p>An updated version of `recipe` with the new check
+ added to the sequence of existing operations (if any). For the
+ `tidy` method, a tibble with columns `terms` (the
+ selectors or variables selected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This check will break the <code>bake</code> function if any of the checked
-columns does contain <code>NA</code> values. If the check passes, nothing is changed
-to the data.</p>
+    <p>This check will break the `bake` function if any of the checked
+ columns does contain `NA` values. If the check passes, nothing is changed
+ to the data.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -194,19 +206,20 @@ to the data.</p>
   <span class='fu'>check_missing</span>(<span class='no'>Age</span>, <span class='no'>Expenses</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>credit_data</span>)</div><div class='output co'>#&gt; # A tibble: 4,454 x 14
-#&gt;    Status Senio… Home    Time   Age Marit… Reco… Job    Expe… Inco… Asse…  Debt
-#&gt;    &lt;fctr&gt;  &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fct&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1 good        9 rent      60    30 marri… no    freel…    73   129     0     0
-#&gt;  2 good       17 rent      60    58 widow  no    fixed     48   131     0     0
-#&gt;  3 bad        10 owner     36    46 marri… yes   freel…    90   200  3000     0
-#&gt;  4 good        0 rent      60    24 single no    fixed     63   182  2500     0
-#&gt;  5 good        0 rent      36    26 single no    fixed     46   107     0     0
-#&gt;  6 good        1 owner     60    36 marri… no    fixed     75   214  3500     0
-#&gt;  7 good       29 owner     60    44 marri… no    fixed     75   125 10000     0
-#&gt;  8 good        9 paren…    12    27 single no    fixed     35    80     0     0
-#&gt;  9 good        0 owner     60    32 marri… no    freel…    90   107 15000     0
-#&gt; 10 bad         0 paren…    48    41 marri… no    parti…    90    80     0     0
-#&gt; # ... with 4,444 more rows, and 2 more variables: Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
+#&gt;    Status Seniority Home     Time   Age Marital Records Job     Expenses Income
+#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;      &lt;int&gt;  &lt;int&gt;
+#&gt;  1 good           9 rent       60    30 married no      freela…       73    129
+#&gt;  2 good          17 rent       60    58 widow   no      fixed         48    131
+#&gt;  3 bad           10 owner      36    46 married yes     freela…       90    200
+#&gt;  4 good           0 rent       60    24 single  no      fixed         63    182
+#&gt;  5 good           0 rent       36    26 single  no      fixed         46    107
+#&gt;  6 good           1 owner      60    36 married no      fixed         75    214
+#&gt;  7 good          29 owner      60    44 married no      fixed         75    125
+#&gt;  8 good           9 parents    12    27 single  no      fixed         35     80
+#&gt;  9 good           0 owner      60    32 married no      freela…       90    107
+#&gt; 10 bad            0 parents    48    41 married no      partime       90     80
+#&gt; # ... with 4,444 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,
+#&gt; #   Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 # If your training set doesn't pass, prep() will stop with an error
 
 </div><span class='co'># NOT RUN {</span>
@@ -224,19 +237,20 @@ to the data.</p>
   <span class='fu'><a href='prep.html'>prep</a></span>()
 
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rp</span>, <span class='no'>train_data</span>)</div><div class='output co'>#&gt; # A tibble: 1,338 x 14
-#&gt;    Status Senior… Home    Time   Age Mari… Reco… Job    Expe… Inco… Asse…  Debt
-#&gt;    &lt;fctr&gt;   &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1 bad         10 owner     36    46 marr… yes   freel…    90   200  3000     0
-#&gt;  2 good         0 rent      60    24 sing… no    fixed     63   182  2500     0
-#&gt;  3 good         1 owner     60    36 marr… no    fixed     75   214  3500     0
-#&gt;  4 good         8 owner     60    30 marr… no    fixed     75   199  5000  2500
-#&gt;  5 good        19 priv      36    37 marr… no    fixed     75   170  3500   260
-#&gt;  6 good        15 priv      24    52 sing… no    freel…    35   330 16500     0
-#&gt;  7 good        33 rent      24    68 marr… no    freel…    65   200  5000  2000
-#&gt;  8 good         5 owner     60    22 sing… no    fixed     45   324 10000     0
-#&gt;  9 good        19 owner     60    43 sing… no    fixed     75   180  4000     0
-#&gt; 10 good        15 owner     36    43 marr… no    fixed     75   251  4000     0
-#&gt; # ... with 1,328 more rows, and 2 more variables: Amount &lt;int&gt;, Price &lt;int&gt;</div><span class='co'># NOT RUN {</span>
+#&gt;    Status Seniority Home   Time   Age Marital Records Job       Expenses Income
+#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;
+#&gt;  1 bad           10 owner    36    46 married yes     freelance       90    200
+#&gt;  2 good           0 rent     60    24 single  no      fixed           63    182
+#&gt;  3 good           1 owner    60    36 married no      fixed           75    214
+#&gt;  4 good           8 owner    60    30 married no      fixed           75    199
+#&gt;  5 good          19 priv     36    37 married no      fixed           75    170
+#&gt;  6 good          15 priv     24    52 single  no      freelance       35    330
+#&gt;  7 good          33 rent     24    68 married no      freelance       65    200
+#&gt;  8 good           5 owner    60    22 single  no      fixed           45    324
+#&gt;  9 good          19 owner    60    43 single  no      fixed           75    180
+#&gt; 10 good          15 owner    36    43 married no      fixed           75    251
+#&gt; # ... with 1,328 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,
+#&gt; #   Amount &lt;int&gt;, Price &lt;int&gt;</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rp</span>, <span class='no'>test_data</span>)
 <span class='co'># }</span></pre>
   </div>
@@ -267,5 +281,8 @@ to the data.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

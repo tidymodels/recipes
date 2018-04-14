@@ -8,15 +8,18 @@
 <title>Creating Custom Step Functions • recipes</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Creating Custom Step Functions">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -25,8 +28,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -54,12 +61,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -86,15 +87,18 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Creating Custom Step Functions</h1>
             
-          </div>
+      
+      <small>Source: <a href="https://github.com/topepo/recipes/blob/master/vignettes/Custom_Steps.Rmd"><code>vignettes/Custom_Steps.Rmd</code></a></small>
+      <div class="hidden name"><code>Custom_Steps.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>The <code>recipes</code> package contains a number of different operations:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">ls</span>(<span class="st">"package:recipes"</span>, <span class="dt">pattern =</span> <span class="st">"^step_"</span>)</a>
@@ -118,7 +122,9 @@
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; [52] "step_YeoJohnson"    "step_zv"</span></a></code></pre></div>
 <p>You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/topepo/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/topepo/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <p>For checks, the process is very similar. Notes on this are given at the end of this document.</p>
-<section id="a-new-step-definition" class="level1"><h1>A new step definition</h1>
+<div id="a-new-step-definition" class="section level1">
+<h1 class="hasAnchor">
+<a href="#a-new-step-definition" class="anchor"></a>A new step definition</h1>
 <p>At an example, let’s create a step that replaces the value of a variable with its percentile from the training set. The date that I’ll use is from the <code>recipes</code> package:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">data</span>(biomass)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">str</span>(biomass)</a>
@@ -140,10 +146,13 @@
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(biomass_tr, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> carbon)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram">geom_histogram</a></span>(<span class="dt">binwidth =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">fill =</span> <span class="st">"blue"</span>, <span class="dt">alpha =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_vline</a></span>(<span class="dt">xintercept =</span> biomass_te<span class="op">$</span>carbon[<span class="dv">1</span>], <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Custom_Steps_files/figure-html/carbon_dist-1.png" width="672"></p>
+<p><img src="Custom_Steps_files/figure-html/carbon_dist-1.png" width="100%"></p>
 <p>Based on the training set, 42.1% of the data are less than a value of 46.35. There are some applications where it might be advantageous to represent the predictor values as percentiles rather than their original values.</p>
 <p>Our new step will do this computation for any numeric variables of interest. We will call this <code>step_percentile</code>. The code below is designed for illustration and not speed or best practices. I’ve left out a lot of error trapping that we would want in a real implementation.</p>
-</section><section id="create-the-initial-function." class="level1"><h1>Create the initial function.</h1>
+</div>
+<div id="create-the-initial-function-" class="section level1">
+<h1 class="hasAnchor">
+<a href="#create-the-initial-function-" class="anchor"></a>Create the initial function.</h1>
 <p>The user-exposed function <code>step_percentile</code> is just a simple wrapper around an internal function called <code>add_step</code>. This function takes the same arguments as your function and simply adds it to a new recipe. The <code>...</code> signifies the variable selectors that can be used.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">  recipe, ..., </a>
@@ -180,7 +189,10 @@
 </ul>
 <p>I’ve added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the <code>ref_dist</code> object. However, this might be problematic if the data set is large. <code>approx</code> would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If <code>approx = TRUE</code>, the argument <code>ref_dist</code> will contain the grid for each variable.</p>
 <p>We will use the <code><a href="http://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code> to compute the grid. However, we might also want to have control over the granularity of this grid, so the <code>options</code> argument will be used to define how that calculations is done. We could just use the ellipses (aka <code>...</code>) so that any options passed to <code>step_percentile</code> that are not one of its arguments will then be passed to <code><a href="http://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code>. We recommend making a separate list object with the options and use these inside the function.</p>
-</section><section id="initialization-of-new-objects" class="level1"><h1>Initialization of new objects</h1>
+</div>
+<div id="initialization-of-new-objects" class="section level1">
+<h1 class="hasAnchor">
+<a href="#initialization-of-new-objects" class="anchor"></a>Initialization of new objects</h1>
 <p>Next, you can utilize the internal function <code>step</code> that sets the class of new objects. Using <code>subclass = "percentile"</code> will set the class of new objects to `“step_percentile”.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">step_percentile_new &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">terms =</span> <span class="ot">NULL</span>, </a>
@@ -202,7 +214,10 @@
 <a class="sourceLine" id="cb5-18" data-line-number="18">    <span class="dt">skip =</span> skip</a>
 <a class="sourceLine" id="cb5-19" data-line-number="19">  )</a>
 <a class="sourceLine" id="cb5-20" data-line-number="20">}</a></code></pre></div>
-</section><section id="define-the-estimation-procedure" class="level1"><h1>Define the estimation procedure</h1>
+</div>
+<div id="define-the-estimation-procedure" class="section level1">
+<h1 class="hasAnchor">
+<a href="#define-the-estimation-procedure" class="anchor"></a>Define the estimation procedure</h1>
 <p>You will need to create a new <code>prep</code> method for your step’s class. To do this, three arguments that the method should have:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="cf">function</span>(x, training, <span class="dt">info =</span> <span class="ot">NULL</span>)</a></code></pre></div>
 <p>where</p>
@@ -233,19 +248,34 @@
 <a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="kw">stop</span>(<span class="st">"`names` should be set to TRUE"</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">  </a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="cf">if</span>(<span class="op">!</span>x<span class="op">$</span>approx) {</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">    x<span class="op">$</span>ref_dist &lt;-<span class="st"> </span>training[, col_names]</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">    ref_dist &lt;-<span class="st"> </span>training[, col_names]</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">  } <span class="cf">else</span> {</a>
 <a class="sourceLine" id="cb8-16" data-line-number="16">    pctl &lt;-<span class="st"> </span><span class="kw">lapply</span>(</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">      training[, col_names],  </a>
 <a class="sourceLine" id="cb8-18" data-line-number="18">      get_pctl, </a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">      <span class="dt">args =</span> x<span class="op">$</span>options</a>
 <a class="sourceLine" id="cb8-20" data-line-number="20">    )</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">    x<span class="op">$</span>ref_dist &lt;-<span class="st"> </span>pctl</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">    ref_dist &lt;-<span class="st"> </span>pctl</a>
 <a class="sourceLine" id="cb8-22" data-line-number="22">  }</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">  ## Always return the updated step</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">  x</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">}</a></code></pre></div>
-</section><section id="create-the-bake-method" class="level1"><h1>Create the <code>bake</code> method</h1>
+<a class="sourceLine" id="cb8-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">  ## It is a good idea to use the constructor function</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">  ## to return the updated object. Note that `trained` is</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">  ## set to TRUE</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">  </a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">  <span class="kw">step_percentile_new</span>(</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">    <span class="dt">terms =</span> x<span class="op">$</span>terms, </a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">    <span class="dt">trained =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">    <span class="dt">role =</span> x<span class="op">$</span>role, </a>
+<a class="sourceLine" id="cb8-32" data-line-number="32">    <span class="dt">ref_dist =</span> ref_dist,</a>
+<a class="sourceLine" id="cb8-33" data-line-number="33">    <span class="dt">approx =</span> x<span class="op">$</span>approx,</a>
+<a class="sourceLine" id="cb8-34" data-line-number="34">    <span class="dt">options =</span> x<span class="op">$</span>options,</a>
+<a class="sourceLine" id="cb8-35" data-line-number="35">    <span class="dt">skip =</span> x<span class="op">$</span>skip</a>
+<a class="sourceLine" id="cb8-36" data-line-number="36">  )</a>
+<a class="sourceLine" id="cb8-37" data-line-number="37">}</a></code></pre></div>
+</div>
+<div id="create-the-bake-method" class="section level1">
+<h1 class="hasAnchor">
+<a href="#create-the-bake-method" class="anchor"></a>Create the <code>bake</code> method</h1>
 <p>Remember that the <code>prep</code> function does not <em>apply</em> the step to the data; it only estimates any required values such as <code>ref_dist</code>. We will need to create a new method for our <code>step_percentile</code> class. The minimum arguments for this are</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="cf">function</span>(object, newdata, ...)</a></code></pre></div>
 <p>where <code>object</code> is the updated step function that has been through the corresponding <code>prep</code> code and <code>newdata</code> is a tibble of data to be processed.</p>
@@ -278,7 +308,10 @@
 <a class="sourceLine" id="cb10-26" data-line-number="26">  ## Always convert to tibbles on the way out</a>
 <a class="sourceLine" id="cb10-27" data-line-number="27">  <span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as_tibble</a></span>(newdata)</a>
 <a class="sourceLine" id="cb10-28" data-line-number="28">}</a></code></pre></div>
-</section><section id="running-the-example" class="level1"><h1>Running the example</h1>
+</div>
+<div id="running-the-example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#running-the-example" class="anchor"></a>Running the example</h1>
 <p>Let’s use the example data to make sure that it works:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> biomass_tr[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span></a>
@@ -303,8 +336,11 @@
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt; 10 0.0178   0.0821 0.0987    0.972 0.974   10.8</span></a>
 <a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt; # ... with 70 more rows</span></a></code></pre></div>
 <p>The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:</p>
-<p><img src="Custom_Steps_files/figure-html/cdf_plot-1.png" width="672"></p>
-</section><section id="custom-check-operations" class="level1"><h1>Custom check operations</h1>
+<p><img src="Custom_Steps_files/figure-html/cdf_plot-1.png" width="100%"></p>
+</div>
+<div id="custom-check-operations" class="section level1">
+<h1 class="hasAnchor">
+<a href="#custom-check-operations" class="anchor"></a>Custom check operations</h1>
 <p>The process here is exactly the same as steps; the internal functions have a similar naming convention:</p>
 <ul>
 <li>
@@ -314,11 +350,11 @@
 <code>check</code> instead of <code>step</code>, and so on.</li>
 </ul>
 <p>It is strongly recommended that:</p>
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li>The operations start with <code>check_</code> (i.e. <code>check_range</code> and <code>check_range_new</code>)</li>
 <li>The check uses <code>stop(..., call. = FALSE)</code> when the conditions are not met</li>
 <li>The original data are returned (unaltered) by the check when the conditions are satisfied.</li>
-</ol></section>
+</ol>
 </div>
   </div>
 
@@ -351,6 +387,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

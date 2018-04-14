@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Biomass Data — biomass" />
+
+<meta property="og:description" content="Ghugare et al (2014) contains a data set where different biomass fuels are
+characterized by the amount of certain molecules (carbon, hydrogen, oxygen, 
+nitrogen, and sulfur) and the corresponding higher heating value (HHV). 
+These data are from their Table S.2 of the Supplementary Materials" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +43,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +60,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +93,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +111,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,25 +119,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Biomass Data</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>biomass.Rd</code></div>
     </div>
 
     
     <p>Ghugare et al (2014) contains a data set where different biomass fuels are
-characterized by the amount of certain molecules (carbon, hydrogen, oxygen,
-nitrogen, and sulfur) and the corresponding higher heating value (HHV).
+characterized by the amount of certain molecules (carbon, hydrogen, oxygen, 
+nitrogen, and sulfur) and the corresponding higher heating value (HHV). 
 These data are from their Table S.2 of the Supplementary Materials</p>
     
 
         
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Ghugare, S. B., Tiwary, S., Elangovan, V., and Tambe, S. S. (2013).
-Prediction of Higher Heating Value of Solid Biomass Fuels Using Artificial
-Intelligence Formalisms. <em>BioEnergy Research</em>, 1-12.</p>
+    <p>Ghugare, S. B., Tiwary, S., Elangovan, V., and Tambe, S. S. (2013). 
+Prediction of Higher Heating Value of Solid Biomass Fuels Using Artificial 
+Intelligence Formalisms. *BioEnergy Research*, 1-12.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -173,5 +187,8 @@ Intelligence Formalisms. <em>BioEnergy Research</em>, 1-12.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

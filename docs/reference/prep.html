@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,14 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Train a Data Recipe — prep" />
+
+<meta property="og:description" content="For a recipe with at least one preprocessing operation, estimate the required
+  parameters from a training set that can be later applied to other data
+  sets." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +42,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">recipes</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">recipes</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,12 +92,6 @@
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
-    <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
-    </li>
-    <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -100,6 +110,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,16 +118,18 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Train a Data Recipe</h1>
+    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
+    <div class="hidden name"><code>prep.Rd</code></div>
     </div>
 
     
     <p>For a recipe with at least one preprocessing operation, estimate the required
-parameters from a training set that can be later applied to other data
-sets.</p>
+  parameters from a training set that can be later applied to other data
+  sets.</p>
     
 
     <pre class="usage"><span class='fu'>prep</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -125,7 +138,7 @@ sets.</p>
 <span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -145,8 +158,8 @@ parameters for preprocessing.</p></td>
     <tr>
       <th>fresh</th>
       <td><p>A logical indicating whether already trained operation should be
-re-trained. If <code>TRUE</code>, you should pass in a data set to the argument
-<code>training</code>.</p></td>
+re-trained. If `TRUE`, you should pass in a data set to the argument
+`training`.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -155,40 +168,40 @@ are executed.</p></td>
     </tr>
     <tr>
       <th>retain</th>
-      <td><p>A logical: should the <em>preprocessed</em> training set be saved
-into the <code>template</code> slot of the recipe after training? This is a good
-idea if you want to add more steps later but want to avoid re-training
-the existing steps. Also, it is advisable to use <code>retain = TRUE</code>
-if any steps use the option <code>skip = FALSE</code>.</p></td>
+      <td><p>A logical: should the *preprocessed* training set be saved
+into the `template` slot of the recipe after training? This is a good
+  idea if you want to add more steps later but want to avoid re-training
+  the existing steps. Also, it is advisable to use `retain = TRUE`
+  if any steps use the option `skip = FALSE`.</p></td>
     </tr>
     <tr>
       <th>stringsAsFactors</th>
       <td><p>A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
-<code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
+`retain = TRUE`) as well as the results of `bake.recipe`.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A recipe whose step objects have been updated with the required
-quantities (e.g. parameter estimates, model objects, etc). Also, the
-<code>term_info</code> object is likely to be modified as the operations are
-executed.</p>
+  quantities (e.g. parameter estimates, model objects, etc). Also, the
+  `term_info` object is likely to be modified as the operations are
+  executed.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Given a data set, this function estimates the required quantities
-and statistics required by any operations.
-    <code>prep()</code> returns an updated recipe with the estimates.</p>
+  and statistics required by any operations.</p>
+<p>[prep()] returns an updated recipe with the estimates.</p>
 <p>Note that missing data handling is handled in the steps; there is no global
-<code>na.rm</code> option at the recipe-level or in <code>prep()</code>.</p>
-<p>Also, if a recipe has been trained using <code>prep()</code> and then steps
-are added, <code>prep()</code> will only update the new operations. If
-<code>fresh = TRUE</code>, all of the operations will be (re)estimated.</p>
-<p>As the steps are executed, the <code>training</code> set is updated. For example,
-if the first step is to center the data and the second is to scale the
-data, the step for scaling is given the centered data.</p>
+  `na.rm` option at the recipe-level or in [prep()].</p>
+<p>Also, if a recipe has been trained using [prep()] and then steps
+  are added, [prep()] will only update the new operations. If
+  `fresh = TRUE`, all of the operations will be (re)estimated.</p>
+<p>As the steps are executed, the `training` set is updated. For example,
+  if the first step is to center the data and the second is to scale the
+  data, the step for scaling is given the centered data.</p>
     
 
   </div>
@@ -221,5 +234,8 @@ Max Kuhn
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
