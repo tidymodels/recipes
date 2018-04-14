@@ -18,8 +18,8 @@
 #'  variables will be used as predictors in a model.
 #' @param contrast A specification for which type of contrast
 #'  should be used to make a set of full rank dummy variables. See
-#'  [stats::contrasts()] for more details. **not
-#'  currently working**
+#'  [stats::contrasts()] and the `contrasts.arg` from [stats::model.matrix()]
+#'  for more details.
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
@@ -84,7 +84,7 @@ step_dummy <-
            ...,
            role = "predictor",
            trained = FALSE,
-           contrast = options("contrasts"),
+           contrast = NULL,
            naming = dummy_names,
            levels = NULL,
            skip = FALSE) {
@@ -187,6 +187,7 @@ bake.step_dummy <- function(object, newdata, ...) {
     # the original (see the note above)
     orig_var <- names(object$levels)[i]
     fac_type <- attr(object$levels[[i]], "dataClasses")
+    fac_name <- names(fac_type)
 
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
@@ -196,10 +197,16 @@ bake.step_dummy <- function(object, newdata, ...) {
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
 
+    contrasts <- object$contrast[[fac_name]]
+    if(!is.null(contrasts)) {
+      contrasts <- set_names(list(contrasts), fac_name)
+    }
+
     indicators <-
       model.matrix(
         object = object$levels[[i]],
-        data = newdata
+        data = newdata,
+        contrasts = contrasts
       )
 
     options(na.action = old_opt)
