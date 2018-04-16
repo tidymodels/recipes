@@ -78,6 +78,20 @@
 #' unique(okc$diet)
 #' grep("^diet", names(dummy_data), value = TRUE)
 #'
+#' # Obtain the full set of dummy variables using `one_hot` option
+#' rec %>%
+#'   step_dummy(diet, one_hot = TRUE) %>%
+#'   prep(training = okc, retain = TRUE) %>%
+#'   juice(starts_with("diet")) %>%
+#'   names() %>%
+#'   length()
+#'
+#' length(unique(okc$diet))
+#'
+#' # Without one_hot
+#' length(grep("^diet", names(dummy_data), value = TRUE))
+#'
+#'
 #' tidy(dummies, number = 1)
 
 
@@ -217,7 +231,7 @@ bake.step_dummy <- function(object, newdata, ...) {
     on.exit(expr = NULL)
 
     if(!object$one_hot) {
-      indicators <- indicators[, -1, drop = FALSE]
+      indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
     }
 
     ## use backticks for nonstandard factor levels here
