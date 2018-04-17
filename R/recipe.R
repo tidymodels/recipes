@@ -425,12 +425,12 @@ bake <- function(object, ...)
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
 #'   [everything()].
-#' @param composition Either "tibble", "matrix", or "dgCMatrix" for the
-#'  format of the processed data set. Note that all computations
-#'  during the baking process are done in a non-sparse format. Also,
-#'  note that this argument should be called **after** any selectors
-#'  and the selectors should only resolve to numeric columns
-#'  (otherwise an error is thrown).
+#' @param composition Either "tibble", "matrix", "data.frame", or
+#'  "dgCMatrix" for the format of the processed data set. Note that
+#'  all computations during the baking process are done in a
+#'  non-sparse format. Also, note that this argument should be
+#'  called **after** any selectors and the selectors should only
+#'  resolve to numeric columns (otherwise an error is thrown).
 #' @return A tibble, matrix, or sparse matrix that may have different
 #'  columns than the original columns in `newdata`.
 #' @details [bake()] takes a trained recipe and applies the
@@ -497,6 +497,8 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
     newdata <- convert_matrix(newdata, sparse = TRUE)
   } else if (composition == "matrix") {
     newdata <- convert_matrix(newdata, sparse = FALSE)
+  } else if (composition == "data.frame") {
+    newdata <- base::as.data.frame(newdata)
   }
 
   newdata
@@ -658,11 +660,13 @@ juice <- function(object, ..., composition = "tibble") {
     newdata <- convert_matrix(newdata, sparse = TRUE)
   } else if (composition == "matrix") {
     newdata <- convert_matrix(newdata, sparse = FALSE)
+  } else if (composition == "data.frame") {
+    newdata <- base::as.data.frame(newdata)
   }
 
   newdata
 }
 
-formats <- c("tibble", "dgCMatrix", "matrix")
+formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
 
 
