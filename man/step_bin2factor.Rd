@@ -6,7 +6,7 @@
 \title{Create a Factors from A Dummy Variable}
 \usage{
 step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
-  "no"), columns = NULL, skip = FALSE)
+  "no"), ref_first = TRUE, columns = NULL, skip = FALSE)
 
 \method{tidy}{step_bin2factor}(x, ...)
 }
@@ -27,6 +27,9 @@ preprocessing have been estimated.}
 \item{levels}{A length 2 character string that indicate the
 factor levels for the 1's (in the first position) and the zeros
 (second)}
+
+\item{ref_first}{Logical. Should the first level, which replaces
+1's, be the factor reference level?}
 
 \item{columns}{A vector with the selected variable names. This
 is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
