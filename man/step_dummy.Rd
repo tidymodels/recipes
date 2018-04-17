@@ -6,8 +6,7 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  contrast = options("contrasts"), one_hot = FALSE, naming = dummy_names,
-  levels = NULL, skip = FALSE)
+  one_hot = FALSE, naming = dummy_names, levels = NULL, skip = FALSE)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -29,13 +28,8 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{contrast}{A specification for which type of contrast
-should be used to make a set of full rank dummy variables. See
-\code{\link[stats:contrasts]{stats::contrasts()}} for more details. \strong{not
-currently working}}
-
-\item{one_hot}{A logical. For k levels, should k dummy variables be created
-rather than k-1?}
+\item{one_hot}{A logical. For C levels, should C dummy variables be created
+rather than C-1?}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
@@ -91,6 +85,12 @@ function will also change the names of ordinal dummy variables.
 Instead of values such as "\code{.L}", "\code{.Q}", or "\code{^4}", ordinal
 dummy variables are given simple integer suffixes such as
 "\code{_1}", "\code{_2}", etc.
+
+To change the type of contrast being used, change the global contrast option
+via \code{options}.
+
+The \href{https://topepo.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
+and interactions has more information.
 }
 \examples{
 data(okc)

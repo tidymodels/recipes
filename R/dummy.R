@@ -16,12 +16,8 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the binary dummy variable columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param contrast A specification for which type of contrast
-#'  should be used to make a set of full rank dummy variables. See
-#'  [stats::contrasts()] for more details. **not
-#'  currently working**
-#' @param one_hot A logical. For k levels, should k dummy variables be created
-#' rather than k-1?
+#' @param one_hot A logical. For C levels, should C dummy variables be created
+#' rather than C-1?
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
@@ -60,6 +56,13 @@
 #'  Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
+#'
+#' To change the type of contrast being used, change the global contrast option
+#'  via `options`.
+#'
+#' The [package vignette for dummy variables](https://topepo.github.io/recipes/articles/Dummies.html)
+#' and interactions has more information.
+#'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
@@ -100,7 +103,6 @@ step_dummy <-
            ...,
            role = "predictor",
            trained = FALSE,
-           contrast = options("contrasts"),
            one_hot = FALSE,
            naming = dummy_names,
            levels = NULL,
@@ -111,7 +113,6 @@ step_dummy <-
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        contrast = contrast,
         one_hot = one_hot,
         naming = naming,
         levels = levels,
@@ -124,7 +125,6 @@ step_dummy_new <-
   function(terms = NULL,
            role = "predictor",
            trained = FALSE,
-           contrast = contrast,
            one_hot = one_hot,
            naming = naming,
            levels = levels,
@@ -135,7 +135,6 @@ step_dummy_new <-
       terms = terms,
       role = role,
       trained = trained,
-      contrast = contrast,
       one_hot = one_hot,
       naming = naming,
       levels = levels,
@@ -188,7 +187,6 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    contrast = x$contrast,
     one_hot = x$one_hot,
     naming = x$naming,
     levels = levels,

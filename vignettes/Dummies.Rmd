@@ -50,7 +50,7 @@ summary(ref_cell)
 juice(ref_cell, original, starts_with("Species")) %>% distinct()
 ```
 
-Note that the column that was used to make the new columns (`Species`) is no longer there. 
+Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
 
 There are different types of contrasts that can be used for different types of factors. The defaults are:
 
@@ -162,6 +162,53 @@ summary(iris_int)
 ```
 
 The columns `Species` isn't affected and a warning is issued. Basically, you only get half of what `model.matrix` does and that could really be problematic in subsequent steps. 
+
+
+## Getting All of the Indicator Variables
+
+As mentioned above, if there are _C_ levels of the factor, there will be _C_ - 1 dummy variables created. You might want to get all of them back. 
+
+Historically, _C_ - 1 are used so that a linear dependency is avoided in the design matrix; all _C_ dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can't be computed. This technical term for a the design matrix like this is "less than full rank". 
+
+There are models (e.g. `glmnet` and others) that can avoid this issue so you might want to get all of the columns. To do this, `step_dummy` has an option called `one_hot` that will make sure that all _C_ are produced:
+
+```{r one-hot}
+iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+```
+
+The option is named that way since this is that the computer scientists call ["one-hot encoding"](https://www.google.com/search?q=one-hot+encoding). 
+
+***Warning!*** (again)
+
+This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:
+
+```{r one-hot-two}
+hot_reference <- iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+
+hot_reference
+
+# from above
+options(contrasts = go_helmert)
+
+hot_helmert <- iris_rec %>% 
+  step_dummy(Species, one_hot = TRUE) %>%
+  prep(training = iris, retain = TRUE) %>%
+  juice(original, starts_with("Species")) %>%
+  distinct()
+
+hot_helmert
+```
+
+Since this contrast doesn't make sense using all _C_ columns, it reverts back to the default encoding. 
+
 
 ## Other Steps Related to Dummy Variables
 

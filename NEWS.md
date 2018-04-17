@@ -10,6 +10,8 @@
 
  * `step_log` gained an `offset` argument. 
  * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122).
+ * `step_dummy` can compute the [entire set of dummy variables](https://github.com/topepo/recipes/issues/145) per factor predictor using the `one_hot = TRUE` option. Thanks to Davis Vaughan. 
+ * The `contrast` option for `step_dummy` was removed. The step uses the global option for contrasts. 
 
 ## Bug Fixes: 
   
