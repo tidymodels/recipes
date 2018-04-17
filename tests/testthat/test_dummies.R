@@ -45,6 +45,27 @@ test_that('dummy variables with string inputs', {
   )
 })
 
+test_that('create all dummy variables', {
+  rec <- recipe(age ~ ., data = okc_fac)
+  dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE)
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
+  dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())
+  dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
+  dummy_pred <- as.data.frame(dummy_pred)
+  rownames(dummy_pred) <- NULL
+
+  exp_res <- NULL
+  for(pred in c("diet", "height", "location")) {
+    tmp <- model.matrix(as.formula(paste("~", pred, "+ 0")), data = okc_fac)
+    colnames(tmp) <- gsub(paste0("^", pred), paste0(pred, "_"), colnames(tmp))
+    exp_res <- bind_cols(exp_res, as_tibble(tmp))
+  }
+  colnames(exp_res) <- make.names(colnames(exp_res))
+  exp_res <- as.data.frame(exp_res)
+  rownames(exp_res) <- NULL
+  expect_equivalent(dummy_pred, exp_res)
+})
+
 test_that('tests for issue #91', {
   rec <- recipe(~ diet, data = okc)
   factors <- rec %>% step_dummy(diet)
@@ -69,8 +90,8 @@ test_that('tests for issue #91', {
 
 test_that('naming function', {
   expect_equal(dummy_names("x", letters[1:3]), c("x_a", "x_b", "x_c"))
-  expect_equal(dummy_names("x", letters[1:3], ordinal = TRUE), 
-               c("x_1", "x_2", "x_3")) 
+  expect_equal(dummy_names("x", letters[1:3], ordinal = TRUE),
+               c("x_1", "x_2", "x_3"))
 })
 
 test_that('printing', {
