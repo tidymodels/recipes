@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Distances to Class Centroids — step_classdist" />
@@ -43,8 +46,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -123,16 +124,18 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Distances to Class Centroids</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/classdist.R'><code>R/classdist.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/classdist.R'><code>R/classdist.R</code></a></small>
     <div class="hidden name"><code>step_classdist.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_classdist` creates a a *specification* of a
  recipe step that will convert numeric data into Mahalanobis
  distance measurements to the data centroid. This is done for
  each value of a categorical class variable.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>cov_func</span> <span class='kw'>=</span> <span class='no'>cov</span>, <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,

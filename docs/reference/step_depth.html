@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Data Depths — step_depth" />
@@ -43,8 +46,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -123,16 +124,18 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Data Depths</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a></small>
     <div class="hidden name"><code>step_depth.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_depth` creates a a *specification* of a recipe
  step that will convert numeric data into measurement of
  *data depth*. This is done for each value of a categorical
  class variable.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_depth</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -252,13 +255,13 @@ the computations for subsequent operations</p></td>
 <span class='no'>dists_to_species</span></div><div class='output co'>#&gt; # A tibble: 150 x 8
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species depth_setosa
 #&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;
-#&gt;  1         5.10        3.50         1.40       0.200 setosa        0.200 
+#&gt;  1         5.10        3.50         1.40       0.200 setosa        0.180 
 #&gt;  2         4.90        3.00         1.40       0.200 setosa        0.0400
 #&gt;  3         4.70        3.20         1.30       0.200 setosa        0.100 
 #&gt;  4         4.60        3.10         1.50       0.200 setosa        0.0800
 #&gt;  5         5.00        3.60         1.40       0.200 setosa        0.140 
 #&gt;  6         5.40        3.90         1.70       0.400 setosa        0.0400
-#&gt;  7         4.60        3.40         1.40       0.300 setosa        0.0200
+#&gt;  7         4.60        3.40         1.40       0.300 setosa        0.0400
 #&gt;  8         5.00        3.40         1.50       0.200 setosa        0.260 
 #&gt;  9         4.40        2.90         1.40       0.200 setosa        0.0200
 #&gt; 10         4.90        3.10         1.50       0.100 setosa        0.0200

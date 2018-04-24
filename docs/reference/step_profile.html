@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Create a Profiling Version of a Data Set — step_profile" />
@@ -44,8 +47,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -124,10 +125,11 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Profiling Version of a Data Set</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/profile.R'><code>R/profile.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/profile.R'><code>R/profile.R</code></a></small>
     <div class="hidden name"><code>step_profile.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_profile` creates a *specification* of a recipe step that
  will fix the levels of all variables but one and will create a
@@ -135,6 +137,7 @@
  helpful when creating partial regression plots for additive
  models.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_profile</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pct</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,

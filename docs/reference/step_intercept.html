@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Add intercept (or constant) column — step_intercept" />
@@ -45,8 +48,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -125,10 +126,11 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add intercept (or constant) column</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/intercept.R'><code>R/intercept.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/intercept.R'><code>R/intercept.R</code></a></small>
     <div class="hidden name"><code>step_intercept.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_intercept` creates a *specification* of a recipe step that
   will add an intercept or constant term in the first column of a data
@@ -137,6 +139,7 @@
   unintentional transformations when calling steps with
   `all_predictors`.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_intercept</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"intercept"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>

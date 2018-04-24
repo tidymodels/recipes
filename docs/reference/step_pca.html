@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="PCA Signal Extraction — step_pca" />
@@ -42,8 +45,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -122,15 +123,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>PCA Signal Extraction</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/pca.R'><code>R/pca.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/pca.R'><code>R/pca.R</code></a></small>
     <div class="hidden name"><code>step_pca.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_pca` creates a *specification* of a recipe step
  that will convert numeric data into one or more principal
  components.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,

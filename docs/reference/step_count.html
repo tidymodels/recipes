@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Create Counts of Patterns using Regular Expressions — step_count" />
@@ -42,8 +45,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -122,15 +123,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create Counts of Patterns using Regular Expressions</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/count.R'><code>R/count.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/count.R'><code>R/count.R</code></a></small>
     <div class="hidden name"><code>step_count.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_count` creates a *specification* of a recipe
  step that will create a variable that counts instances of a
  regular expression pattern in text.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_count</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(),

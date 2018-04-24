@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Create a Formula from a Prepared Recipe — formula.recipe" />
@@ -42,8 +45,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -122,15 +123,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Formula from a Prepared Recipe</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/formula.R'><code>R/formula.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/formula.R'><code>R/formula.R</code></a></small>
     <div class="hidden name"><code>formula.recipe.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>In case a model formula is required, the formula method can
  be used on a recipe to show what predictors and outcome(s)
  could be used.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
 <span class='fu'>formula</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -156,12 +159,12 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>formula</span>(<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> + <span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))</div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f96ce523808&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x7ffb7ebacf10&gt;</div><div class='input'>
 <span class='no'>iris_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>formula</span>(<span class='no'>iris_rec</span>)</div><div class='output co'>#&gt; Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f96cd3e85c0&gt;</div></pre>
+#&gt; &lt;environment: 0x7ffb944f7750&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

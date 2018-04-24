@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Date Feature Generator — step_date" />
@@ -42,8 +45,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -122,15 +123,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Date Feature Generator</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/date.R'><code>R/date.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/date.R'><code>R/date.R</code></a></small>
     <div class="hidden name"><code>step_date.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_date` creates a a *specification* of a recipe
  step that will convert date data into one or more factor or
  numeric variables.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_date</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span>), <span class='kw'>abbr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -240,8 +243,10 @@ the computations for subsequent operations</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘lubridate’ was built under R version 3.4.4</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    date</span></div><div class='input'>
 <span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
                        <span class='kw'>Stefan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2006-01-13"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>

@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Dummy Variables Creation — step_dummy" />
@@ -43,8 +46,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -123,16 +124,18 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Dummy Variables Creation</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/dummy.R'><code>R/dummy.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/dummy.R'><code>R/dummy.R</code></a></small>
     <div class="hidden name"><code>step_dummy.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_dummy` creates a a *specification* of a recipe
  step that will convert nominal data (e.g. character or factors)
  into one or more numeric binary model terms for the levels of
  the original data.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='fu'>options</span>(<span class='st'>"contrasts"</span>), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,

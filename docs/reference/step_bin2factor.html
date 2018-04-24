@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Create a Factors from A Dummy Variable — step_bin2factor" />
@@ -42,8 +45,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -122,15 +123,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Factors from A Dummy Variable</h1>
-    <small>Source: <a href='https://github.com/topepo/recipes/blob/master/R/bin2factor.R'><code>R/bin2factor.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/topepo/recipes/blob/master/R/bin2factor.R'><code>R/bin2factor.R</code></a></small>
     <div class="hidden name"><code>step_bin2factor.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>`step_bin2factor` creates a *specification* of a
  recipe step that will create a two-level factor from a single
  dummy variable.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>step_bin2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>,
   <span class='st'>"no"</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
