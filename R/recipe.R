@@ -334,7 +334,6 @@ prep.recipe <-
         stop("A training set must be supplied to the `training` argument ",
              "when `fresh = TRUE`", call. = FALSE)
       training <- x$template
-      tr_data <- train_info(training)
     } else {
       training <- if (!is_tibble(training))
         as_tibble(training[, x$var_info$variable, drop = FALSE])
