@@ -335,6 +335,10 @@ prep.recipe <-
              "when `fresh = TRUE`", call. = FALSE)
       training <- x$template
     } else {
+      if (!all(x$var_info$variable %in% colnames(training))) {
+        stop("Not all variables in the recipe are present in the supplied ",
+             "training set", call. = FALSE)
+      }
       training <- if (!is_tibble(training))
         as_tibble(training[, x$var_info$variable, drop = FALSE])
       else
