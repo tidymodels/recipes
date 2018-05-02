@@ -172,8 +172,7 @@ recipe.data.frame <-
 
     if (!is_tibble(x))
       x <- as_tibble(x)
-    if (is.null(vars))
-      vars <- colnames(x)
+
     if (any(table(vars) > 1))
       stop("`vars` should have unique members", call. = FALSE)
     if (any(!(vars %in% colnames(x))))
