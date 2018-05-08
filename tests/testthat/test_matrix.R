@@ -39,16 +39,16 @@ test_that('correct types', {
     juice(rec, all_numeric(), composition = "matrix")
   juice_sparse_1d <-
     juice(rec, age, composition = "matrix")
-  
+
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
-  
+
   expect_equal(as.vector(class(bake_sparse)), "matrix")
   expect_equal(as.vector(class(juice_sparse)), "matrix")
-  
+
   expect_equal(as.vector(class(bake_sparse_1d)), "matrix")
   expect_equal(as.vector(class(juice_sparse_1d)), "matrix")
-  
+
   expect_equal(recipes:::convert_matrix(bake_default, sparse = FALSE),
                bake_sparse)
   expect_equal(recipes:::convert_matrix(juice_default, sparse = FALSE),
@@ -58,4 +58,16 @@ test_that('correct types', {
 test_that('bad args', {
   expect_error(bake(rec, newdata = okc_te, composition = "matrix"))
   expect_error(juice(rec, composition = "matrix"))
+})
+
+test_that('works with logical values', {
+  d1 <- tibble(foo = c(TRUE, FALSE))
+  d2 <- tibble(foo = c(FALSE, TRUE))
+  rec <- recipe(~ foo, d1) %>%
+    prep(d1, retain = TRUE)
+  expect_equal(as.vector(class(bake(rec, newdata = d2,
+                                    composition = "matrix"))),
+               "matrix")
+  expect_equal(as.vector(class(juice(rec, composition = "matrix"))),
+               "matrix")
 })
