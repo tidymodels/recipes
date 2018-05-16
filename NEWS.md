@@ -14,6 +14,7 @@
  * The `contrast` option for `step_dummy` was removed. The step uses the global option for contrasts. 
  * `step_bin2factor` now has an option to choose [how the values are translated to the levels](https://github.com/topepo/recipes/issues/142) (contributed by Michael Levy).
  * `bake` and `juice` can now export basic data frames. 
+ * The `okc` data were updated with two additional columns. 
 
 ## Bug Fixes: 
   
