@@ -3,16 +3,69 @@
 \name{yj_trans}
 \alias{yj_trans}
 \alias{estimate_yj}
+\alias{ellipse_check}
+\alias{printer}
 \alias{prepare}
+\alias{check_type}
+\alias{is_trained}
+\alias{sel2char}
 \title{Internal Functions}
 \usage{
 yj_trans(x, lambda, eps = 0.001)
 
 estimate_yj(dat, limits = c(-5, 5), nunique = 5, na.rm = TRUE)
 
+ellipse_check(...)
+
+printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE, width = max(20,
+  options()$width - 30))
+
 prepare(x, ...)
+
+check_type(dat, quant = TRUE)
+
+is_trained(x)
+
+sel2char(x)
+}
+\arguments{
+\item{x}{a step object.}
+
+\item{...}{Arguments pass in from a call to \code{step}}
+
+\item{tr_obj}{A character vector of names that have been
+resolved during preparing the recipe (e.g. the \code{columns} object
+of \code{\link[=step_log]{step_log()}}).}
+
+\item{untr_obj}{An oject of selectors prior to prepping the
+recipe (e.g. \code{terms} in most steps).}
+
+\item{trained}{A logical for whether the step has been trained.}
+
+\item{width}{An integer denoting where the output should be wrapped.}
+
+\item{x}{A list of selectors}
+}
+\value{
+If not empty, a list of quosures. If empty, an error is thrown.
+
+`NULL``, invisibly.
+
+A logical
+
+A character vector
 }
 \description{
 These are not to be used directly by the users.
+
+Check for Empty Ellipses
+
+This internal function is used for printing steps.
+
+Check to see if a step or check as been trained
+
+This internal function takes a list of selectors (e.g. \code{terms}
+in most steps) and returns a character vector version for
+printing.
 }
 \keyword{internal}

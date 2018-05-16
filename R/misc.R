@@ -294,7 +294,15 @@ merge_term_info <- function(.new, .old) {
   left_join(.new, .old, by = c("variable", "type"))
 }
 
+
+#' Check for Empty Ellipses
+#'
+#' @param ... Arguments pass in from a call to `step`
+#' @return If not empty, a list of quosures. If empty, an error is thrown.
 #' @importFrom rlang quos is_empty
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms))
@@ -323,6 +331,7 @@ magrittr::`%>%`
 #' @return `NULL``, invisibly.
 #' @keywords internal
 #' @export
+#' @rdname recipes-internal
 printer <- function(tr_obj = NULL,
                     untr_obj = NULL,
                     trained = FALSE,
@@ -412,6 +421,9 @@ skip_me <- function(x) {
 is_qual <- function(x)
   is.factor(x) | is.character(x)
 
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
 check_type <- function(dat, quant = TRUE) {
   if (quant) {
     all_good <- vapply(dat, is.numeric, logical(1))
@@ -426,4 +438,47 @@ check_type <- function(dat, quant = TRUE) {
   invisible(all_good)
 }
 
+
+
+## Support functions
+
+#' Check to see if a step or check as been trained
+#' @param x a step object.
+#' @return A logical
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
+is_trained <- function(x)
+  x$trained
+
+
+#' Convert Selectors to Character
+#'
+#' This internal function takes a list of selectors (e.g. `terms`
+#'  in most steps) and returns a character vector version for
+#'  printing.
+#' @param x A list of selectors
+#' @return A character vector
+#' @export
+#' @keywords internal
+#' @rdname recipes-internal
+sel2char <- function(x) {
+  term_names <- lapply(x, as.character)
+  term_names <-
+    vapply(term_names,
+           function(x) x[-1],
+           character(1))
+  term_names
+}
+
+
+simple_terms <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- tibble(terms = x$columns)
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(terms = term_names)
+  }
+  res
+}
 

@@ -13,10 +13,10 @@
 #' @return A tibble with columns that would vary depending on what
 #'  `tidy` method is executed. When `x` is `NA`, a
 #'  tibble with columns `number` (the operation iteration),
-#'  `operation` (either "step" or "check"), 
+#'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, and a logical for `skip`. 
+#'  estimated using `prep`, and a logical for `skip`.
 #' @export
 #' @examples
 #' data(okc)
@@ -46,13 +46,13 @@ tidy.recipe <- function(x, number = NA, ...) {
   pattern <- "(^step_)|(^check_)"
   if (is.na(number)) {
     skipped <- vapply(x$steps, function(x) x$skip, logical(1))
-    
+
     oper_classes <- lapply(x$steps, class)
     oper_classes <- grep("_", unlist(oper_classes), value = TRUE)
 
     oper <- strsplit(oper_classes, split = "_")
     oper <- vapply(oper, function(x) x[1], character(1))
-    
+
     oper_types <- gsub(pattern, "", oper_classes)
     is_trained <- vapply(x$steps,
                          function(x) x$trained,
@@ -84,40 +84,3 @@ tidy.check <- function(x, ...) {
        paste0(class(x), collapse = ", "),
        call. = FALSE)
 }
-
-## Support functions
-
-is_trained <- function(x)
-  x$trained
-
-
-#' Convert Selectors to Character
-#' 
-#' This internal function takes a list of selectors (e.g. `terms` 
-#'  in most steps) and returns a character vector version for
-#'  printing. 
-#' @param x A list of selectors
-#' @return A character vector
-#' @export
-#' @keywords internal  
-
-sel2char <- function(x) {
-  term_names <- lapply(x, as.character)
-  term_names <-
-    vapply(term_names,
-           function(x) x[-1],
-           character(1))
-  term_names
-}
-
-
-simple_terms <- function(x, ...) {
-  if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
-  } else {
-    term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names)
-  }
-  res
-}
-
