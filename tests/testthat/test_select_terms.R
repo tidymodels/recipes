@@ -44,7 +44,7 @@ test_that('simple type selections', {
   )
   expect_equal(
     terms_select(info = info1, quos(all_nominal())),
-    c("diet", "location")
+    c("diet", "location", "Class")
   )
 })
 
@@ -66,10 +66,10 @@ test_that('simple name selections', {
     terms_select(info = info1, quos(date, age)),
     c("date", "age")
   )
-  ## This is weird but consistent with `dplyr::select_vars`
+
   expect_equal(
     terms_select(info = info1, quos(-age, date)),
-    c("diet", "height", "location", "date")
+    c("diet", "height", "location", "date", "Class")
   )
   expect_equal(
     terms_select(info = info1, quos(date, -age)),

@@ -18,7 +18,7 @@ test_that('numeric profile', {
   expect_true(is_unq(num_rec$location))
   expect_true(is_unq(num_rec$date))
   expect_false(is_unq(num_rec$age))
-  
+
 })
 
 
@@ -32,7 +32,7 @@ test_that('factor profile', {
   expect_true(is_unq(fact_rec$location))
   expect_true(is_unq(fact_rec$date))
   expect_true(is_unq(fact_rec$age))
-  
+
 })
 
 
@@ -46,7 +46,7 @@ test_that('date profile', {
   expect_true(is_unq(date_rec$location))
   expect_false(is_unq(date_rec$date))
   expect_true(is_unq(date_rec$age))
-  
+
 })
 
 test_that('character profile', {
@@ -59,57 +59,57 @@ test_that('character profile', {
   expect_false(is_unq(chr_rec$location))
   expect_true(is_unq(chr_rec$date))
   expect_true(is_unq(chr_rec$age))
-  
+
 })
 
 
 test_that('bad values', {
   expect_error(
-    okc_rec %>% 
-      step_profile(everything(), profile = vars(age)) %>% 
+    okc_rec %>%
+      step_profile(everything(), profile = vars(age)) %>%
       prep(data = okc)
   )
   expect_error(
-    okc_rec %>% 
-      step_profile(everything(), profile = age) %>% 
+    okc_rec %>%
+      step_profile(everything(), profile = age) %>%
       prep(data = okc)
   )
   expect_error(
-    okc_rec %>% 
-      step_profile(age, date, height, profile = vars(location, date)) %>% 
+    okc_rec %>%
+      step_profile(age, date, height, profile = vars(location, date)) %>%
       prep(data = okc)
   )
   expect_error(
-    okc_rec %>% 
-      step_profile(starts_with("q"), profile = vars(age)) %>% 
+    okc_rec %>%
+      step_profile(starts_with("q"), profile = vars(age)) %>%
       prep(data = okc)
-  ) 
+  )
   expect_error(
-    okc_rec %>% 
-      step_profile(diet, profile = vars(age), pct = -1) %>% 
+    okc_rec %>%
+      step_profile(diet, profile = vars(age), pct = -1) %>%
       prep(data = okc)
-  )  
+  )
   expect_error(
-    okc_rec %>% 
-      step_profile(diet, profile = vars(age), grid = 1:3) %>% 
+    okc_rec %>%
+      step_profile(diet, profile = vars(age), grid = 1:3) %>%
       prep(data = okc)
-  )    
+  )
   expect_error(
-    okc_rec %>% 
-      step_profile(diet, profile = vars(age), grid = list(pctl = 1, len = 2)) %>% 
+    okc_rec %>%
+      step_profile(diet, profile = vars(age), grid = list(pctl = 1, len = 2)) %>%
       prep(data = okc)
-  )     
+  )
   expect_error(
     fixed(rep(c(TRUE, FALSE), each = 5))
-  )  
-  
+  )
+
 })
 
 test_that('printing', {
   num_rec_1 <- okc_rec %>%
     step_profile(-age, profile = vars(age))
   num_rec_2 <- prep(num_rec_1, okc)
-  
+
   expect_output(print(num_rec_1))
   expect_output(print(num_rec_2))
 })
@@ -120,7 +120,7 @@ test_that('tidy', {
   num_rec_3 <- okc_rec %>%
     step_profile(-age, profile = vars(contains("age")))
   num_rec_4 <- prep(num_rec_3, okc)
-  
+
   tidy_3 <- tidy(num_rec_3, 1)
   exp_3 <- tibble(
     terms = c("-age", "contains(\"age\")"),
@@ -130,8 +130,8 @@ test_that('tidy', {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("diet", "height", "location", "date", "age"),
-    type = c("fixed", "fixed", "fixed", "fixed", "profiled")
+    terms = c("diet", "height", "location", "date", "Class", "age"),
+    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "profiled")
   )
   expect_equal(tidy_4, exp_4)
 })

@@ -3,7 +3,6 @@ library(recipes)
 
 data(okc)
 
-okc$location <- gsub(", california", "", okc$location)
 okc$diet[is.na(okc$diet)] <- "missing"
 okc <- okc[complete.cases(okc), -5]
 
@@ -12,7 +11,7 @@ okc_fac$diet <- factor(okc_fac$diet)
 okc_fac$location <- factor(okc_fac$location)
 
 test_that('dummy variables with factor inputs', {
-  rec <- recipe(age ~ ., data = okc_fac)
+  rec <- recipe(age ~ location + diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location)
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
   dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())
@@ -20,7 +19,7 @@ test_that('dummy variables with factor inputs', {
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL
 
-  exp_res <- model.matrix(age ~ ., data = okc_fac)[, -1]
+  exp_res <- model.matrix(age ~ location + diet, data = okc_fac)[, -1]
   exp_res <- exp_res[, colnames(exp_res) != "age"]
   colnames(exp_res) <- gsub("^location", "location_", colnames(exp_res))
   colnames(exp_res) <- gsub("^diet", "diet_", colnames(exp_res))
@@ -38,7 +37,7 @@ test_that('dummy variables with factor inputs', {
 })
 
 test_that('dummy variables with string inputs', {
-  rec <- recipe(age ~ ., data = okc)
+  rec <- recipe(age ~ location + diet, data = okc)
   dummy <- rec %>% step_dummy(diet, location)
   expect_error(
     prep(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
@@ -46,7 +45,7 @@ test_that('dummy variables with string inputs', {
 })
 
 test_that('create all dummy variables', {
-  rec <- recipe(age ~ ., data = okc_fac)
+  rec <- recipe(age ~ location + diet + height, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE)
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
   dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())

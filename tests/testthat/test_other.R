@@ -27,8 +27,8 @@ test_that('default inputs', {
     terms = rep(c("diet", "location"), c(4, 3)),
     retained = c(
       "anything", "mostly anything", "mostly vegetarian",
-      "strictly anything", "berkeley, california",
-      "oakland, california", "san francisco, california")
+      "strictly anything", "berkeley",
+      "oakland", "san francisco")
   )
   expect_equal(tidy_exp_tr, tidy(others, number = 1))
 
