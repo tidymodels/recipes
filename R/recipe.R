@@ -172,8 +172,7 @@ recipe.data.frame <-
 
     if (!is_tibble(x))
       x <- as_tibble(x)
-    if (is.null(vars))
-      vars <- colnames(x)
+
     if (any(table(vars) > 1))
       stop("`vars` should have unique members", call. = FALSE)
     if (any(!(vars %in% colnames(x))))
@@ -335,8 +334,11 @@ prep.recipe <-
         stop("A training set must be supplied to the `training` argument ",
              "when `fresh = TRUE`", call. = FALSE)
       training <- x$template
-      tr_data <- train_info(training)
     } else {
+      if (!all(x$var_info$variable %in% colnames(training))) {
+        stop("Not all variables in the recipe are present in the supplied ",
+             "training set", call. = FALSE)
+      }
       training <- if (!is_tibble(training))
         as_tibble(training[, x$var_info$variable, drop = FALSE])
       else
