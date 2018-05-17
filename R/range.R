@@ -135,7 +135,7 @@ bake.step_range <- function(object, newdata, ...) {
 print.step_range <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Range scaling to [", x$min, ",", x$max, "] for ", sep = "")
-    printer(names(x$ranges), x$terms, x$trained, width = width)
+    printer(colnames(x$ranges), x$terms, x$trained, width = width)
     invisible(x)
   }
 
