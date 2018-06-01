@@ -142,7 +142,7 @@ step_dummy_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
+#' @importFrom stats as.formula model.frame na.pass
 #' @importFrom dplyr bind_cols
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
@@ -158,7 +158,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 
 
   ## I hate doing this but currently we are going to have
-  ## to save the terms object form the original (= training)
+  ## to save the terms object from the original (= training)
   ## data
   levels <- vector(mode = "list", length = length(col_names))
   names(levels) <- col_names
@@ -170,7 +170,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     form <- as.formula(form_chr)
     terms <- model.frame(form,
                          data = training,
-                         xlev = x$levels[[i]])
+                         xlev = x$levels[[i]],
+                         na.action = na.pass)
     levels[[i]] <- attr(terms, "terms")
 
     ## About factor levels here: once dummy variables are made,
@@ -218,12 +219,21 @@ bake.step_dummy <- function(object, newdata, ...) {
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
+    
+    indicators <- 
+      model.frame(
+        as.formula(paste0("~", orig_var)),
+        data = newdata[, orig_var],
+        xlev = attr(object$levels[[i]], "values"),
+        na.action = na.pass
+      )
 
     indicators <-
       model.matrix(
         object = object$levels[[i]],
-        data = newdata
+        data = indicators
       )
+    indicators <- as_tibble(indicators)
 
     options(na.action = old_opt)
     on.exit(expr = NULL)

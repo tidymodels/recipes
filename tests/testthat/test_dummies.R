@@ -3,6 +3,8 @@ library(recipes)
 
 data(okc)
 
+okc_missing <- okc
+
 okc$diet[is.na(okc$diet)] <- "missing"
 okc <- okc[complete.cases(okc), -5]
 
@@ -27,7 +29,7 @@ test_that('dummy variables with factor inputs', {
   exp_res <- exp_res[, order(colnames(exp_res))]
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
-  expect_equal(dummy_pred, exp_res)
+  expect_equivalent(dummy_pred, exp_res)
 
   dum_tibble <-
     tibble(terms = c("diet", "location"))
@@ -85,6 +87,40 @@ test_that('tests for issue #91', {
   ordered_data_2 <- bake(orderedfac, newdata = okc %>% filter(diet != 'halal'))
   expect_equal(names(ordered_data_1), names(ordered_data_2))
 
+})
+
+test_that('tests for NA values in factor', {
+  rec <- recipe(~ diet, data = okc_missing)
+  factors <- rec %>% step_dummy(diet)
+  factors <- prep(factors, training = okc_missing, retain = TRUE)
+  
+  factors_data_0 <- juice(factors)
+  factors_data_1 <- bake(factors, newdata = okc_missing)
+  
+  expect_true(
+    all(complete.cases(factors_data_0) == complete.cases(okc_missing[, "diet"]))
+  )
+  expect_true(
+    all(complete.cases(factors_data_1) == complete.cases(okc_missing[, "diet"]))
+  )  
+})
+
+test_that('tests for NA values in ordered factor', {
+  okc_ordered <- okc_missing
+  okc_ordered$diet <- as.ordered(okc_ordered$diet)
+  rec <- recipe(~ diet, data = okc_ordered)
+  factors <- rec %>% step_dummy(diet)
+  factors <- prep(factors, training = okc_ordered, retain = TRUE)
+  
+  factors_data_0 <- juice(factors)
+  factors_data_1 <- bake(factors, newdata = okc_ordered)
+  
+  expect_true(
+    all(complete.cases(factors_data_0) == complete.cases(okc_ordered[, "diet"]))
+  )
+  expect_true(
+    all(complete.cases(factors_data_1) == complete.cases(okc_ordered[, "diet"]))
+  )  
 })
 
 test_that('naming function', {
