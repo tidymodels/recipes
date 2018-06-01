@@ -195,6 +195,17 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   )
 }
 
+warn_new_levels <- function(dat, lvl) {
+  ind <- which(!(dat %in% lvl))
+  if (length(ind) > 0) {
+    lvl2 <- unique(dat[ind])
+    warning("There are new levels in a factor: ",
+            paste0(lvl2, collapse = ", "), 
+            call. = FALSE)
+  }
+  invisible(NULL)
+}
+
 #' @export
 bake.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
@@ -214,7 +225,12 @@ bake.step_dummy <- function(object, newdata, ...) {
 
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-
+    
+    warn_new_levels(
+      newdata[[orig_var]],
+      attr(object$levels[[i]], "values")
+    )
+    
     newdata[, orig_var] <-
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),

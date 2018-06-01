@@ -123,6 +123,42 @@ test_that('tests for NA values in ordered factor', {
   )  
 })
 
+
+
+test_that('new levels', {
+  df <- data.frame(
+    y = c(1,0,1,1,0,0,0,1,1,1,0,0,1,0,1,0,0,0,1,0),
+    x1 = c('A','B','B','B','B','A','A','A','B','A','A','B',
+           'A','C','C','B','A','B','C','A'),
+    stringsAsFactors = FALSE)
+  training <- df[1:10,]
+  testing <- df[11:20,]
+  training$y <- as.factor(training$y)
+  training$x1 <- as.factor(training$x1)
+  testing$y <- as.factor(testing$y)
+  testing$x1 <- as.factor(testing$x1)
+  
+  expect_warning(
+    recipes:::warn_new_levels(testing$x1, levels(training$x1))
+  )
+  expect_silent(
+    recipes:::warn_new_levels(training$x1, levels(training$x1))
+  ) 
+  
+  rec <- recipe(y ~ x1, data = training) %>% 
+    step_dummy(x1)
+  expect_silent(
+    rec <- prep(rec, training = training, retain = TRUE)
+  )
+  expect_warning(
+    bake(rec, newdata = testing)
+  )
+})
+
+
+
+
+
 test_that('naming function', {
   expect_equal(dummy_names("x", letters[1:3]), c("x_a", "x_b", "x_c"))
   expect_equal(dummy_names("x", letters[1:3], ordinal = TRUE),
