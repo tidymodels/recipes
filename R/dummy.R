@@ -40,7 +40,7 @@
 #'  the original column). For ordered factors, polynomial contrasts
 #'  are used to encode the numeric values.
 #'
-#' By default, the missing dummy variable (i.e. the reference
+#' By default, the excluded dummy variable (i.e. the reference
 #'  cell) will correspond to the first level of the unordered
 #'  factor being converted.
 #'
@@ -57,8 +57,15 @@
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
 #'
-#' To change the type of contrast being used, change the global contrast option
-#'  via `options`.
+#' To change the type of contrast being used, change the global 
+#' contrast option via `options`.
+#' 
+#' When the factor being converted has a missing value, all of the
+#'  corresponding dummy variables are also missing. 
+#'  
+#' When data to be processed contains novel levels (i.e., not 
+#' contained in the training set), a missing value is assigned to
+#' the results. See [step_other()] for an alternative. 
 #'
 #' The [package vignette for dummy variables](https://topepo.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
