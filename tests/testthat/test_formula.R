@@ -10,7 +10,7 @@ test_that('is trained?', {
     step_center(all_numeric())
   expect_false(fully_trained(rec2))
   
-  rec3 <- prep(rec2, training = iris)
+  rec3 <- prep(rec2, training = iris, retain = TRUE)
   expect_true(fully_trained(rec3))
   
   rec4 <- rec3 %>% step_scale(all_numeric())

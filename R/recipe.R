@@ -329,6 +329,7 @@ prep.recipe <-
            retain = FALSE,
            stringsAsFactors = TRUE,
            ...) {
+    
     if (is.null(training)) {
       if (fresh)
         stop("A training set must be supplied to the `training` argument ",
@@ -344,6 +345,26 @@ prep.recipe <-
       else
         training[, x$var_info$variable]
     }
+    
+    steps_trained <- vapply(x$steps, is_trained, logical(1))
+    if (any(steps_trained) & !fresh) {
+      if(!x$retained)
+        stop(
+          "To prep new steps after prepping the original ",
+          "recipe, `retain = TRUE` must be set each time that ",
+          "the recipe is trained.",
+          call. = FALSE
+        )
+      if (!is.null(x$training))
+        warning(
+          "The previous data will be used by `prep`; ",
+          "the data passed using `training` will be ",
+          "ignored.",
+          call. = FALSE
+        )
+      training <- x$template
+    }
+    
     tr_data <- train_info(training)
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)

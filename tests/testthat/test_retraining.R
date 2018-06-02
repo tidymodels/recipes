@@ -70,13 +70,13 @@ test_that('training in stages', {
     summary(in_stages_retrained)
   )  
   
-  # expect_error(
-  #   rec %>% 
-  #     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-  #     # should have retain = TRUE on next line
-  #     prep(training = biomass) %>% 
-  #     step_rm(sulfur) %>%  
-  #     prep(training = biomass)
-  # )
+  expect_error(
+    rec %>%
+      step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+      # should have retain = TRUE on next line
+      prep(training = biomass) %>%
+      step_rm(sulfur) %>%
+      prep(training = biomass)
+  )
   
 })
