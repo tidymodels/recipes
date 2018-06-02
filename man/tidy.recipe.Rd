@@ -34,7 +34,7 @@ method for the operation exists).
 data(okc)
 
 okc_rec <- recipe(~ ., data = okc) \%>\%
-  step_other(all_nominal(), threshold = 0.05) \%>\%
+  step_other(all_nominal(), threshold = 0.05, other = "another") \%>\%
   step_date(date, features = "dow") \%>\%
   step_center(all_numeric()) \%>\%
   step_dummy(all_nominal()) \%>\%

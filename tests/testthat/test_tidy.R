@@ -5,7 +5,7 @@ library(tibble)
 data(okc)
 
 okc_rec <- recipe(~ ., data = okc) %>%
-  step_other(all_nominal(), threshold = 0.05) %>%
+  step_other(all_nominal(), threshold = 0.05, other = "another") %>%
   step_date(date, features = "dow") %>%
   step_center(all_numeric()) %>%
   step_dummy(all_nominal()) %>%
@@ -25,7 +25,7 @@ test_that('untrained', {
 
 test_that('trained', {
   exp_res_2 <- tibble(
-    number = 1:5,
+    number = 1:5,>
     operation = c("step", "step", "step", "step", "check"),
     type = c("other", "date", "center", "dummy", "cols"),
     trained = rep(TRUE, 5),
