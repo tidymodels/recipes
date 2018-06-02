@@ -3,14 +3,20 @@
 ## New Operations:
 
 * `step_lag` can lag variables in the data set (contributed by Alex Hayes).
+
 * `step_naomit` removes rows with missing data for specific columns (contributed by Alex Hayes). 
+
 * `step_rollimpute` can be used to impute data in a sequence or series by estimating their values within a moving window. 
 
 ## Other Changes:
 
  * `step_log` gained an `offset` argument. 
+ 
  * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122).
-For `step_dummy`:
+ 
+ * When training _new_ steps after some steps have been previously trained, the `retain = TRUE` option should be set on [previous invocations of `prep`](https://github.com/topepo/recipes/issues/143). 
+ 
+ * For `step_dummy`:
 
    * It can now compute the [entire set of dummy variables](https://github.com/topepo/recipes/issues/145) per factor predictor using the `one_hot = TRUE` option. Thanks to Davis Vaughan. 
    * The `contrast` option was removed. The step uses the global option for contrasts. 
@@ -23,6 +29,7 @@ For `step_dummy`:
 ## Bug Fixes: 
   
  * [issue 125](https://github.com/topepo/recipes/issues/125) that prevented several steps from working with **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
+ 
  *  [issue 127](https://github.com/topepo/recipes/issues/127) where options to `step_discretize` were not being passed to `discretize`.
 
 # `recipes` 0.1.2
@@ -37,12 +44,19 @@ For `step_dummy`:
 ## New Operations:
 
  * `check_missing` will validate that none of the specified variables contain missing data. 
+ 
  * `detect_step` can be used to check if a recipe contains a particular preprocessing operation.
+ 
  * `step_num2factor` can be used to convert numeric data (especially integers) to factors. 
+ 
  * `step_novel` adds a new factor level to nominal variables that will be used when new data contain a level that did not exist when the recipe was prepared. 
+ 
  * `step_profile` can be used to generate design matrix grids for prediction profile plots of additive models where one variable is varied over a grid and all of the others are fixed at a single value. 
+ 
  * `step_downsample` and `step_upsample` can be used to change the number of rows in the data based on the frequency distributions of a factor variable in the training set. By default, this operation is only applied to the training set; `bake` ignores this operation.
+ 
  * `step_naomit` drops rows when specified columns contain `NA`, similar to `tidyr::drop_na`.
+ 
  * `step_lag` allows for the creation of lagged predictor columns.
 
 ## Other Changes:
