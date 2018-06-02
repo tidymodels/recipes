@@ -36,7 +36,8 @@ test_that("default lag works on a single feature",  {
     step_lag(t, lag = 2, default = start) %>%
     prep(df) %>%
     bake(df)
-  expected <- mutate(df, lag_2_t = dplyr::lag(t, 2, default = start))
+  expected <- df
+  expected$lag_2_t <- dplyr::lag(expected$t, 2, default = start)
   expect_equal(baked, expected)
 
   # errors out on non-integer lag
