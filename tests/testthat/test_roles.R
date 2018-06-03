@@ -34,3 +34,14 @@ test_that('change existing role', {
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
+
+test_that('bad args', {
+  expect_error(
+    recipe(x = biomass) %>%
+      add_role(carbon, new_role = letters[1:2])
+  )
+  expect_error(
+    recipe(x = biomass) %>%
+      add_role(new_role = "some other role")
+  )
+})
