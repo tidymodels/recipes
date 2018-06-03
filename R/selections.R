@@ -123,52 +123,6 @@ type_selectors <- c("has_type", "all_numeric", "all_nominal")
 selectors <-
   unique(c(name_selectors, role_selectors, type_selectors))
 
-## Get the components of the formula split by +/-. The
-## function also returns the sign
-f_elements <- function(x) {
-  trms_obj <- terms(x)
-  ## Their order will change here (minus at the end)
-  clls <- attr(trms_obj, "variables")
-  ## Any formula element with a minus prefix will not
-  ## have an colname in the `factor` attribute of the
-  ## terms object. We will check these against the
-  ## list of calls
-  tmp <- colnames(attr(trms_obj, "factors"))
-  kept <- vector(mode = "list", length = length(tmp))
-  for (j in seq_along(tmp))
-    kept[[j]] <- as.name(tmp[j])
-
-  term_signs <- rep("", length(clls) - 1)
-  for (i in seq_along(term_signs)) {
-    ## Check to see if the elements are in the `factors`
-    ## part of `terms` and these will have a + sign
-    retained <- any(unlist(lapply(kept,
-                                  function(x, y)
-                                    any(y == x),
-                                  y = clls[[i + 1]])))
-    term_signs[i] <- if (retained)
-      "+"
-    else
-      "-"
-  }
-  list(terms  = clls, signs = term_signs)
-}
-
-## This adds the appropriate argument based on whether the call is for
-## a variable name, role, or data type.
-add_arg <- function(cl) {
-  func <- fun_calls(cl)
-  if (func %in% name_selectors) {
-    cl$vars <- quote(var_vals)
-  } else {
-    if (func %in% role_selectors) {
-      cl$roles <- quote(role_vals)
-    } else
-      cl$types <- quote(type_vals)
-  }
-  cl
-}
-
 ## This flags formulas that are not allowed. When called from `recipe.formula`
 ## `allowed` is NULL.
 element_check <- function(x, allowed = selectors) {
@@ -193,13 +147,6 @@ element_check <- function(x, allowed = selectors) {
       )
   }
   invisible(NULL)
-}
-
-has_selector <- function(x, allowed = selectors) {
-  res <- rep(NA, length(x) - 1)
-  for (i in 2:length(x))
-    res[[i - 1]] <- isTRUE(fun_calls(x[[i]]) %in% allowed)
-  res
 }
 
 #' Select Terms in a Step Function.

@@ -96,11 +96,6 @@ step_string2factor_new <-
 get_ord_lvls <- function(x)
   sort(unique(x))
 
-assign_ord <- function(x, ord = FALSE) {
-  x$ordered <- ord
-  x
-}
-
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
