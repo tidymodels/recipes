@@ -8,6 +8,8 @@
 
 * `step_rollimpute` can be used to impute data in a sequence or series by estimating their values within a moving window. 
 
+* `step_pls` can conduct supervised feature extraction for predictors. 
+
 ## Other Changes:
 
  * `step_log` gained an `offset` argument. 

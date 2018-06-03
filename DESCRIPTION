@@ -32,7 +32,8 @@ Imports:
     tidyselect (>= 0.1.1),
     magrittr,
     Matrix,
-    tidyr
+    tidyr,
+    pls
 Suggests: 
     testthat,
     rpart,
