@@ -31,6 +31,7 @@ reference:
     - step_BoxCox
     - step_bs
     - step_hyperbolic
+    - step_inverse
     - step_invlogit
     - step_log
     - step_logit
@@ -73,6 +74,7 @@ reference:
     - step_isomap
     - step_kpca
     - step_pca
+    - step_pls
     - step_ratio
     - step_spatialsign
   - title: Step Functions - Filters
@@ -104,7 +106,7 @@ reference:
 
 navbar:
   left:
-  - text: Simple Example 
+  - text: "Simple Example"
     href: articles/Simple_Example.html   
   - text: "Articles"
     menu:
@@ -120,7 +122,7 @@ navbar:
         href: articles/Skipping.html      
       - text: "Subsampling for Class Imbalances"
         href: articles/articles/Subsampling.html      
-      - text: Multivariate Analysis using Partial Least Squares
+      - text: "Multivariate Analysis using Partial Least Squares"
         href: articles/articles/Multivariate_PLS.html                           
   - text: Reference
     href: reference/index.html

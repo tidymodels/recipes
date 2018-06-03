@@ -149,6 +149,7 @@ test_that('non-default values - multivariate', {
 
 
 test_that('non-default values - univariate', {
+  skip_on_cran()
   nondefault_uni_rec <- recipe(yield ~ N + P + K, data = tr_data) %>%
     step_pls(
       all_predictors(),
