@@ -27,7 +27,10 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
+
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{slack_prop}{The allowed slack as a proportion of the range
 of the variable in the train set.}
@@ -67,22 +70,28 @@ the second to compute the allowed slack at the upper end.
   slack_new_data <- data_frame(x = -10:110)
 
   # this will fail the check both ends
+\dontrun{
   recipe(slack_df) \%>\%
     check_range(x) \%>\%
     prep() \%>\%
     bake(slack_new_data)
+ }
 
   # this will fail the check only at the upper end
+\dontrun{
   recipe(slack_df) \%>\%
     check_range(x, slack_prop = c(0.1, 0.05)) \%>\%
     prep() \%>\%
     bake(slack_new_data)
+}
 
   # give a warning instead of an error
+\dontrun{
   recipe(slack_df) \%>\%
     check_range(x, warn = TRUE) \%>\%
     prep() \%>\%
     bake(slack_new_data)
+}
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}

@@ -17,7 +17,9 @@
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations
+#'  the computations for subsequent operations.
+#' @param trained A logical to indicate if the quantities for
+#'  preprocessing have been estimated.
 #' @param slack_prop The allowed slack as a proportion of the range
 #'   of the variable in the train set.
 #' @param warn If `TRUE` the check will throw a warning instead
@@ -45,22 +47,28 @@
 #'   slack_new_data <- data_frame(x = -10:110)
 #'
 #'   # this will fail the check both ends
+#' \dontrun{
 #'   recipe(slack_df) %>%
 #'     check_range(x) %>%
 #'     prep() %>%
 #'     bake(slack_new_data)
+#'  }
 #'
 #'   # this will fail the check only at the upper end
+#' \dontrun{
 #'   recipe(slack_df) %>%
 #'     check_range(x, slack_prop = c(0.1, 0.05)) %>%
 #'     prep() %>%
 #'     bake(slack_new_data)
+#' }
 #'
 #'   # give a warning instead of an error
+#' \dontrun{
 #'   recipe(slack_df) %>%
 #'     check_range(x, warn = TRUE) %>%
 #'     prep() %>%
 #'     bake(slack_new_data)
+#' }
 #' @seealso [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
 check_range <-
