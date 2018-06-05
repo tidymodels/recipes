@@ -24,7 +24,7 @@ test_that('correct means and std devs', {
   expect_equal(tidy(standardized, 1), cent_tibble_un)
   expect_equal(as.data.frame(tidy(standardized, 2)), as.data.frame(cent_tibble_un))
 
-  standardized_trained <- prep(standardized, training = biomass, verbose = FALSE)
+  standardized_trained <- prep(standardized, training = biomass)
 
   cent_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
@@ -34,8 +34,10 @@ test_that('correct means and std devs', {
            value = sds)
 
   expect_equal(tidy(standardized_trained, 1), cent_tibble_tr)
-  expect_equal(as.data.frame(tidy(standardized_trained, 2)), as.data.frame(scal_tibble_tr))
-
+  expect_equal(
+    as.data.frame(tidy(standardized_trained, 2)), 
+    as.data.frame(scal_tibble_tr)
+  )
 
   expect_equal(standardized_trained$steps[[1]]$means, means)
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
@@ -46,20 +48,20 @@ test_that('training in stages', {
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  at_once_trained <- prep(at_once, training = biomass, verbose = FALSE)
+  at_once_trained <- prep(at_once, training = biomass, retain = TRUE)
 
   ## not train in stages
   center_first <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  center_first_trained <- prep(center_first, training = biomass, verbose = FALSE)
+  center_first_trained <- prep(center_first, training = biomass, retain = TRUE)
   in_stages <- center_first_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  in_stages_trained <- prep(in_stages, training = biomass, verbose = FALSE)
-  in_stages_retrained <- prep(in_stages, training = biomass, verbose = FALSE, fresh = TRUE)
+  in_stages_trained <- prep(in_stages, retain = TRUE)
+  in_stages_retrained <- 
+    prep(in_stages, training = biomass, fresh = TRUE, retain = TRUE)
 
   expect_equal(at_once_trained, in_stages_trained)
   expect_equal(at_once_trained, in_stages_retrained)
-
 })
 
 
@@ -68,7 +70,7 @@ test_that('single predictor', {
     step_center(carbon) %>%
     step_scale(hydrogen)
 
-  standardized_trained <- prep(standardized, training = biomass, verbose = FALSE)
+  standardized_trained <- prep(standardized, training = biomass)
   results <- bake(standardized_trained, biomass)
 
   exp_res <- biomass[, 3:8]

@@ -36,19 +36,6 @@ get_types <- function(x) {
   tibble(variable = names(res), type = unname(res))
 }
 
-type_by_var <- function(classes, dat) {
-  res <- sapply(dat, is_one_of, what = classes)
-  names(res)[res]
-}
-
-is_one_of <- function(x, what) {
-  res <- sapply(as.list(what),
-                function(class, obj)
-                  inherits(obj, what = class),
-                obj = x)
-  any(res)
-}
-
 ## get variables from formulas
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
@@ -88,21 +75,6 @@ get_lhs_terms <- function(x) x
 get_rhs_terms <- function(x) x
 
 ## ancillary step functions
-
-
-
-
-var_by_role <-
-  function(rec,
-           role = "predictor",
-           returnform = TRUE) {
-    res <- rec$var_info$variable[rec$var_info$role == role]
-    if (returnform)
-      res <- as.formula(paste("~",
-                              paste(res, collapse = "+")))
-    res
-  }
-
 
 ## then 9 is to keep space for "[trained]"
 format_ch_vec <-
@@ -266,11 +238,6 @@ train_info <- function(x) {
              ncomplete = sum(complete.cases(x)))
 }
 
-# Per LH and HW, brought in from the `dplyr` package
-is_negated <- function(x) {
-  is_lang(x, "-", n = 1)
-}
-
 ## `merge_term_info` takes the information on the current variable
 ## list and the information on the new set of variables (after each step)
 ## and merges them. Special attention is paid to cases where the
@@ -416,7 +383,6 @@ skip_me <- function(x) {
   else
     return(x$skip)
 }
-
 
 is_qual <- function(x)
   is.factor(x) | is.character(x)

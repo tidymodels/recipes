@@ -1,3 +1,6 @@
+library(testthat)
+library(recipes)
+
 context("Testing retraining")
 
 data(biomass)
@@ -6,22 +9,74 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
 
 test_that('training in stages', {
-  skip_on_cran()
-  at_once <- rec %>% 
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>% 
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) 
   
-  at_once_trained <- prep(at_once, training = biomass, verbose = FALSE)
+  whole_recipe <- rec %>% 
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>% 
+    step_rm(sulfur) %>% 
+    step_scale(carbon, hydrogen, oxygen, nitrogen)
+  
+  at_same_time <- prep(whole_recipe, training = biomass)
   
   ## not train in stages
   center_first <- rec %>% 
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  center_first_trained <- prep(center_first, training = biomass, verbose = FALSE)
-  in_stages <- center_first_trained %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) 
-  in_stages_trained <- prep(in_stages, training = biomass, verbose = FALSE)
-  in_stages_retrained <- prep(in_stages, training = biomass, verbose = FALSE, fresh = TRUE) 
+  center_first_trained <- 
+    prep(center_first, training = biomass, retain = TRUE)
   
-  expect_equal(at_once_trained, in_stages_trained)
-  expect_equal(at_once_trained, in_stages_retrained)
+  no_sulfur <- center_first_trained %>% 
+    step_rm(sulfur)
+  no_sulfur_trained <- 
+    prep(no_sulfur, retain = TRUE)
+  
+  scale_last <- no_sulfur_trained %>% 
+    step_scale(carbon, hydrogen, oxygen, nitrogen)
+  sequentially <- prep(scale_last)  
+  
+  
+  in_stages <- center_first_trained  %>% 
+    step_rm(sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen) 
+  in_stages_trained <- 
+    prep(in_stages, retain = TRUE)
+  in_stages_retrained <- 
+    prep(in_stages, training = biomass, fresh = TRUE) 
+  
+  # check baked values
+  
+  expect_equal(
+    bake(at_same_time, head(biomass)),
+    bake(sequentially, head(biomass))
+  )
+  expect_equal(
+    bake(at_same_time, head(biomass)),
+    bake(in_stages_trained, head(biomass))
+  )  
+  expect_equal(
+    bake(at_same_time, head(biomass)),
+    bake(in_stages_retrained, head(biomass))
+  )   
+  
+  # variable lists
+  expect_equal(
+    summary(at_same_time),
+    summary(sequentially)
+  )
+  expect_equal(
+    summary(at_same_time),
+    summary(in_stages_trained)
+  )  
+  expect_equal(
+    summary(at_same_time),
+    summary(in_stages_retrained)
+  )  
+  
+  expect_error(
+    rec %>%
+      step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+      # should have retain = TRUE on next line
+      prep(training = biomass) %>%
+      step_rm(sulfur) %>%
+      prep(training = biomass)
+  )
+  
 })

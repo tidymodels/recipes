@@ -40,7 +40,7 @@
 #'  the original column). For ordered factors, polynomial contrasts
 #'  are used to encode the numeric values.
 #'
-#' By default, the missing dummy variable (i.e. the reference
+#' By default, the excluded dummy variable (i.e. the reference
 #'  cell) will correspond to the first level of the unordered
 #'  factor being converted.
 #'
@@ -57,8 +57,15 @@
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
 #'
-#' To change the type of contrast being used, change the global contrast option
-#'  via `options`.
+#' To change the type of contrast being used, change the global 
+#' contrast option via `options`.
+#' 
+#' When the factor being converted has a missing value, all of the
+#'  corresponding dummy variables are also missing. 
+#'  
+#' When data to be processed contains novel levels (i.e., not 
+#' contained in the training set), a missing value is assigned to
+#' the results. See [step_other()] for an alternative. 
 #'
 #' The [package vignette for dummy variables](https://topepo.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
@@ -142,7 +149,7 @@ step_dummy_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
+#' @importFrom stats as.formula model.frame na.pass
 #' @importFrom dplyr bind_cols
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
@@ -158,7 +165,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 
 
   ## I hate doing this but currently we are going to have
-  ## to save the terms object form the original (= training)
+  ## to save the terms object from the original (= training)
   ## data
   levels <- vector(mode = "list", length = length(col_names))
   names(levels) <- col_names
@@ -170,7 +177,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     form <- as.formula(form_chr)
     terms <- model.frame(form,
                          data = training,
-                         xlev = x$levels[[i]])
+                         xlev = x$levels[[i]],
+                         na.action = na.pass)
     levels[[i]] <- attr(terms, "terms")
 
     ## About factor levels here: once dummy variables are made,
@@ -194,6 +202,17 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   )
 }
 
+warn_new_levels <- function(dat, lvl) {
+  ind <- which(!(dat %in% lvl))
+  if (length(ind) > 0) {
+    lvl2 <- unique(dat[ind])
+    warning("There are new levels in a factor: ",
+            paste0(lvl2, collapse = ", "), 
+            call. = FALSE)
+  }
+  invisible(NULL)
+}
+
 #' @export
 bake.step_dummy <- function(object, newdata, ...) {
   ## Maybe do this in C?
@@ -213,17 +232,31 @@ bake.step_dummy <- function(object, newdata, ...) {
 
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-
+    
+    warn_new_levels(
+      newdata[[orig_var]],
+      attr(object$levels[[i]], "values")
+    )
+    
     newdata[, orig_var] <-
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
+    
+    indicators <- 
+      model.frame(
+        as.formula(paste0("~", orig_var)),
+        data = newdata[, orig_var],
+        xlev = attr(object$levels[[i]], "values"),
+        na.action = na.pass
+      )
 
     indicators <-
       model.matrix(
         object = object$levels[[i]],
-        data = newdata
+        data = indicators
       )
+    indicators <- as_tibble(indicators)
 
     options(na.action = old_opt)
     on.exit(expr = NULL)

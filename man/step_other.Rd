@@ -25,7 +25,9 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A single numeric value in (0, 1) for pooling.}
+\item{threshold}{A single numeric value between 0 (inclusive)
+and 1 for pooling. Factor levels whose rate of occurrence in
+the training set are below \code{threshold} will be "othered".}
 
 \item{other}{A single character value for the "other" category.}
 
@@ -70,6 +72,9 @@ except for the most frequent are collapsed to the \code{other} level.
 If the retained categories include the value of \code{other}, an error is
 thrown. If \code{other} is in the list of discarded levels, no error
 occurs.
+
+When data to be processed contains novel levels (i.e., not
+contained in the training set), the other category is assigned.
 }
 \examples{
 data(okc)
@@ -91,6 +96,11 @@ collapsed <- bake(rec, okc_te)
 table(okc_te$diet, collapsed$diet, useNA = "always")
 
 tidy(rec, number = 1)
+
+# novel levels are also "othered"
+tahiti <- okc[1,]
+tahiti$location <- "a magical place"
+bake(rec, tahiti)
 }
 \seealso{
 \code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},

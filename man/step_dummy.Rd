@@ -69,7 +69,7 @@ columns of 0/1 data for two of those three values (and remove
 the original column). For ordered factors, polynomial contrasts
 are used to encode the numeric values.
 
-By default, the missing dummy variable (i.e. the reference
+By default, the excluded dummy variable (i.e. the reference
 cell) will correspond to the first level of the unordered
 factor being converted.
 
@@ -86,8 +86,15 @@ Instead of values such as "\code{.L}", "\code{.Q}", or "\code{^4}", ordinal
 dummy variables are given simple integer suffixes such as
 "\code{_1}", "\code{_2}", etc.
 
-To change the type of contrast being used, change the global contrast option
-via \code{options}.
+To change the type of contrast being used, change the global
+contrast option via \code{options}.
+
+When the factor being converted has a missing value, all of the
+corresponding dummy variables are also missing.
+
+When data to be processed contains novel levels (i.e., not
+contained in the training set), a missing value is assigned to
+the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
 The \href{https://topepo.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.

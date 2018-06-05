@@ -209,6 +209,13 @@ hot_helmert
 
 Since this contrast doesn't make sense using all _C_ columns, it reverts back to the default encoding. 
 
+## Novel Levels
+
+When a recipe is used with new samples, some factors may have acquired new levels that were not present when `prep` was run. If `step_dummy` encounters this situation, a warning is issues ("There are new levels in a factor") and the indicator variables that correspond to the factor are assigned missing values. 
+
+One way around this is to use `step_other`. This step can convert infrequently occurring levels to a new category (that defaults to "other"). This step can also be used to convert new factor levels to "other" also. 
+
+The [`embed`](https://github.com/topepo/embed) package can also handle novel factors levels within a recipe. `step_embed` and `step_tfembed` assign a common numeric score to novel levels.  
 
 ## Other Steps Related to Dummy Variables
 
@@ -221,6 +228,8 @@ There are a bunch of steps related to going in-between factors and dummy variabl
  * [`step_lincomb`](https://topepo.github.io/recipes/reference/step_lincomb.html) can be useful if you _over-specify_ interactions and need to remove linear dependencies. 
  * [`step_zv`](https://topepo.github.io/recipes/reference/step_zv.html) can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).
  * [`step_bin2factor`](https://topepo.github.io/recipes/reference/step_bin2factor.html) takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models. 
+ * `step_embed` and `step_tfembed` in the [`embed`](https://github.com/topepo/embed) package can use one or more (non-binary) values to encode factor predictors into a numeric form. 
+ 
  
 [`step_dummy`](https://topepo.github.io/recipes/reference/step_dummy.html) also works with _ordered factors_. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:
 

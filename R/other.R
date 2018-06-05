@@ -12,7 +12,9 @@
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param threshold A single numeric value in (0, 1) for pooling.
+#' @param threshold A single numeric value between 0 (inclusive) 
+#'  and 1 for pooling. Factor levels whose rate of occurrence in 
+#'  the training set are below `threshold` will be "othered".
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
@@ -40,6 +42,9 @@
 #' If the retained categories include the value of `other`, an error is
 #'   thrown. If `other` is in the list of discarded levels, no error
 #'   occurs.
+#'   
+#' When data to be processed contains novel levels (i.e., not 
+#' contained in the training set), the other category is assigned.   
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()], 
 #'  [step_ordinalscore()], [step_unorder()], [step_novel()]
@@ -63,7 +68,11 @@
 #' table(okc_te$diet, collapsed$diet, useNA = "always")
 #'
 #' tidy(rec, number = 1)
-
+#' 
+#' # novel levels are also "othered"
+#' tahiti <- okc[1,]
+#' tahiti$location <- "a magical place"
+#' bake(rec, tahiti)
 step_other <-
   function(recipe,
            ...,
@@ -139,14 +148,18 @@ bake.step_other <- function(object, newdata, ...) {
         as.character(getElement(newdata, i))
       else
         getElement(newdata, i)
-
-      tmp <- ifelse(tmp %in% object$objects[[i]]$keep,
-                    tmp,
-                    object$objects[[i]]$other)
+      
+      tmp <- ifelse(
+        !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
+        object$objects[[i]]$other,
+        tmp
+      )
+      
+      # assign other factor levels other here too. 
       tmp <- factor(tmp,
                     levels = c(object$objects[[i]]$keep,
                                object$objects[[i]]$other))
-      tmp[is.na(getElement(newdata, i))] <- NA
+      
       newdata[, i] <- tmp
     }
   }
@@ -169,22 +182,25 @@ keep_levels <- function(x, prop = .1, other = "other") {
     sort(table(x, useNA = "no"), decreasing = TRUE) / sum(!is.na(x))
   dropped <- which(xtab < prop)
   orig <- levels(x)
-  collapse <- length(dropped) > 0
-  if (collapse) {
+  
+  if (length(dropped) > 0)
     keepers <- names(xtab[-dropped])
-    if (length(keepers) == 0)
-      keepers <- names(xtab)[which.max(xtab)]
-    if (other %in% keepers)
-      stop(
-        "The level ",
-        other,
-        " is already a factor level that will be retained. ",
-        "Please choose a different value.", call. = FALSE
-      )
-  } else
+  else
     keepers <- orig
+  
+  if (length(keepers) == 0)
+    keepers <- names(xtab)[which.max(xtab)]
+  
+  if (other %in% keepers)
+    stop(
+      "The level ",
+      other,
+      " is already a factor level that will be retained. ",
+      "Please choose a different value.", call. = FALSE
+    )
+  
   list(keep = orig[orig %in% keepers],
-       collapse = collapse,
+       collapse = TRUE, # not needed but kept for old versions
        other = other)
 }
 
