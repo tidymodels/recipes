@@ -6,7 +6,7 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  offset = 0, columns = NULL, skip = FALSE)
+  offset = 0, columns = NULL, skip = FALSE, signed = FALSE)
 
 \method{tidy}{step_log}(x, ...)
 }
@@ -40,6 +40,10 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{signed}{A logical indicating wether to take the signed log.
+This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
+If \code{TRUE} the \code{offset} argument will be ignored.}
+
 \item{x}{A \code{step_log} object.}
 }
 \value{
@@ -69,6 +73,22 @@ plot(examples$V1, transformed_te$V1)
 
 tidy(log_trans, number = 1)
 tidy(log_obj, number = 1)
+
+# using the signed argument with negative values
+
+examples2 <- matrix(rnorm(40, sd = 5), ncol = 2)
+examples2 <- as.data.frame(examples2)
+
+recipe(~ V1 + V2, data = examples2) \%>\%
+  step_log(all_predictors()) \%>\%
+  prep(training = examples2) \%>\%
+  bake(examples2)
+
+recipe(~ V1 + V2, data = examples2) \%>\%
+  step_log(all_predictors(), signed = TRUE) \%>\%
+  prep(training = examples2) \%>\%
+  bake(examples2)
+
 }
 \seealso{
 \code{\link[=step_logit]{step_logit()}} \code{\link[=step_invlogit]{step_invlogit()}}
