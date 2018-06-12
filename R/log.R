@@ -128,6 +128,7 @@ prep.step_log <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_log <- function(object, newdata, ...) {
   col_names <- object$columns
   # for backward compat
