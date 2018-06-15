@@ -12,9 +12,9 @@
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param min A single numeric value for the smallest value in the
-#'  range
+#'  range.
 #' @param max A single numeric value for the largest value in the
-#'  range
+#'  range.
 #' @param ranges A character vector of variables that will be
 #'  normalized. Note that this is ignored until the values are
 #'  determined by [prep.recipe()]. Setting this value will

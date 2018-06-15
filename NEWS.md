@@ -2,6 +2,7 @@
 
 ## New Operations:
 
+* `check_range` breaks `bake` if variable range in new data is outside the range that was learned from the train set (contributed by Edwin Thoen)
 * `step_lag` can lag variables in the data set (contributed by Alex Hayes).
 
 * `step_naomit` removes rows with missing data for specific columns (contributed by Alex Hayes). 

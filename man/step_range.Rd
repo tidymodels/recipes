@@ -26,10 +26,10 @@ created.}
 preprocessing have been estimated.}
 
 \item{min}{A single numeric value for the smallest value in the
-range}
+range.}
 
 \item{max}{A single numeric value for the largest value in the
-range}
+range.}
 
 \item{ranges}{A character vector of variables that will be
 normalized. Note that this is ignored until the values are
