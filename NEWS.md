@@ -13,6 +13,8 @@
 ## Other Changes:
 
  * `step_log` gained an `offset` argument. 
+
+ * `step_log` gained a `signed` argument (contributed by Edwin Thoen).
  
  * The internal functions `sel2char` and `printer` have been exported to enable [other packages to contain steps](https://github.com/topepo/recipes/issues/122).
  
