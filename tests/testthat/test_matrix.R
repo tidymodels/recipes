@@ -59,15 +59,3 @@ test_that('bad args', {
   expect_error(bake(rec, newdata = okc_te, composition = "matrix"))
   expect_error(juice(rec, composition = "matrix"))
 })
-
-test_that('works with logical values', {
-  d1 <- tibble(foo = c(TRUE, FALSE))
-  d2 <- tibble(foo = c(FALSE, TRUE))
-  rec <- recipe(~ foo, d1) %>%
-    prep(d1, retain = TRUE)
-  expect_equal(as.vector(class(bake(rec, newdata = d2,
-                                    composition = "matrix"))),
-               "matrix")
-  expect_equal(as.vector(class(juice(rec, composition = "matrix"))),
-               "matrix")
-})

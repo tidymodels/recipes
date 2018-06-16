@@ -4,7 +4,7 @@
 \alias{formula.recipe}
 \title{Create a Formula from a Prepared Recipe}
 \usage{
-\method{formula}{recipe}(x, ...)
+formula.recipe(x, ...)
 }
 \arguments{
 \item{x}{A recipe object where all steps have been prepared.}

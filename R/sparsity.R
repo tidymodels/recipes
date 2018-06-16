@@ -1,31 +1,37 @@
+# valid classes for model.matrix convert_matrix
+is_mm_class <- function(x) {
+  is.numeric(x) | is.logical(x) | is.factor(x)
+}
 
 #' @importFrom Matrix sparse.model.matrix
 #' @importFrom stats model.matrix
-convert_matrix <- function(x, sparse = TRUE) {
-  is_num <- vapply(x, is.numeric, logical(1))
-  is_lgl <- vapply(x, is.logical, logical(1))
-  if (!all(is_num | is_lgl)) {
-    num_viol <- sum(!(is_num | is_lgl))
-    if (num_viol < 5)
-      stop(
-        "Columns (",
-        paste0("`", names(is_num)[!is_num], "`", collapse = ", "),
-        ") are not numeric; cannot convert to matrix.",
-        call. = FALSE
-      )
-    else
-      stop(num_viol, " columns are not numeric; cannot ",
-           "convert to matrix.",
-           call. = FALSE)
+#' @importFrom purrr map_chr map_lgl
+convert_matrix <- function(x, sparse = TRUE, type = "numeric") {
+  if (type == "numeric") {
+    ok_cols <- map_lgl(x, is_mm_class)
+    num_viol <- sum(!ok_cols)
+    if (num_viol) {
+      if (num_viol < 5) {
+        stop("All columns must be numeric, logical, or factors. ",
+             "These columns are not: ",
+             paste0("`", names(ok_cols)[!ok_cols], "`",
+                    collapse = ","), ".", call. = FALSE)
+      } else {
+        stop("All columns must be numeric, logical, or factors. ",
+             num_viol, " columns are not.", call. = FALSE)
+      }
+    }
+    if (sparse) {
+      res <- sparse.model.matrix(~ 0 + ., data = x)
+    } else {
+      res <- model.matrix(~ 0 + ., data = x)
+    }
+  } else if (type == "character") {
+    res <- flatten_chr(map(x, as.character))
+    dim(res) <- dim(x)
   }
-  # convert logical vectors only after checking for problems
-  for (i in names(x)[is_lgl]) {
-    x[[i]] <- as.numeric(x[[i]])
-  }
-  if (sparse)
-    res <- sparse.model.matrix( ~ . + 0, data = x)
-  else
-    res <- model.matrix( ~ . + 0, data = x)
   res
+
+
 }
 
