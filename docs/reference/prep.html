@@ -33,8 +33,8 @@
 <meta property="og:title" content="Train a Data Recipe — prep" />
 
 <meta property="og:description" content="For a recipe with at least one preprocessing operation, estimate the required
-  parameters from a training set that can be later applied to other data
-  sets." />
+parameters from a training set that can be later applied to other data
+sets." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -130,8 +136,8 @@
     <div class="ref-description">
     
     <p>For a recipe with at least one preprocessing operation, estimate the required
-  parameters from a training set that can be later applied to other data
-  sets.</p>
+parameters from a training set that can be later applied to other data
+sets.</p>
     
     </div>
 
@@ -161,8 +167,8 @@ parameters for preprocessing.</p></td>
     <tr>
       <th>fresh</th>
       <td><p>A logical indicating whether already trained operation should be
-re-trained. If `TRUE`, you should pass in a data set to the argument
-`training`.</p></td>
+re-trained. If <code>TRUE</code>, you should pass in a data set to the argument
+<code>training</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -171,40 +177,40 @@ are executed.</p></td>
     </tr>
     <tr>
       <th>retain</th>
-      <td><p>A logical: should the *preprocessed* training set be saved
-into the `template` slot of the recipe after training? This is a good
-  idea if you want to add more steps later but want to avoid re-training
-  the existing steps. Also, it is advisable to use `retain = TRUE`
-  if any steps use the option `skip = FALSE`.</p></td>
+      <td><p>A logical: should the <em>preprocessed</em> training set be saved
+into the <code>template</code> slot of the recipe after training? This is a good
+idea if you want to add more steps later but want to avoid re-training
+the existing steps. Also, it is advisable to use <code>retain = TRUE</code>
+if any steps use the option <code>skip = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>stringsAsFactors</th>
       <td><p>A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
-`retain = TRUE`) as well as the results of `bake.recipe`.</p></td>
+<code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A recipe whose step objects have been updated with the required
-  quantities (e.g. parameter estimates, model objects, etc). Also, the
-  `term_info` object is likely to be modified as the operations are
-  executed.</p>
+quantities (e.g. parameter estimates, model objects, etc). Also, the
+<code>term_info</code> object is likely to be modified as the operations are
+executed.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Given a data set, this function estimates the required quantities
-  and statistics required by any operations.</p>
-<p>[prep()] returns an updated recipe with the estimates.</p>
+and statistics required by any operations.</p>
+<p><code>prep()</code> returns an updated recipe with the estimates.</p>
 <p>Note that missing data handling is handled in the steps; there is no global
-  `na.rm` option at the recipe-level or in [prep()].</p>
-<p>Also, if a recipe has been trained using [prep()] and then steps
-  are added, [prep()] will only update the new operations. If
-  `fresh = TRUE`, all of the operations will be (re)estimated.</p>
-<p>As the steps are executed, the `training` set is updated. For example,
-  if the first step is to center the data and the second is to scale the
-  data, the step for scaling is given the centered data.</p>
+<code>na.rm</code> option at the recipe-level or in <code>prep()</code>.</p>
+<p>Also, if a recipe has been trained using <code>prep()</code> and then steps
+are added, <code>prep()</code> will only update the new operations. If
+<code>fresh = TRUE</code>, all of the operations will be (re)estimated.</p>
+<p>As the steps are executed, the <code>training</code> set is updated. For example,
+if the first step is to center the data and the second is to scale the
+data, the step for scaling is given the centered data.</p>
     
 
   </div>

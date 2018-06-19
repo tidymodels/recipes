@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Isomap Embedding — step_isomap" />
 
-<meta property="og:description" content="`step_isomap` creates a *specification* of a recipe
- step that will convert numeric data into one or more new
- dimensions." />
+<meta property="og:description" content="step_isomap creates a specification of a recipe
+step that will convert numeric data into one or more new
+dimensions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`step_isomap` creates a *specification* of a recipe
- step that will convert numeric data into one or more new
- dimensions.</p>
+    <p><code>step_isomap</code> creates a <em>specification</em> of a recipe
+step that will convert numeric data into one or more new
+dimensions.</p>
     
     </div>
 
@@ -154,7 +160,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the dimensions. See
-[selections()] for more details. For the `tidy`
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -172,20 +178,20 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>num</th>
       <td><p>The number of isomap dimensions to retain as new
-predictors. If `num` is greater than the number of columns
+predictors. If <code>num</code> is greater than the number of columns
 or the number of possible dimensions, a smaller value will be
 used.</p></td>
     </tr>
     <tr>
       <th>options</th>
       <td><p>A list of options to
-[dimRed::Isomap()].</p></td>
+<code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>dimRed::Isomap()</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The [dimRed::Isomap()] object is stored
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>dimRed::Isomap()</a></code> object is stored
 here once this preprocessing step has be trained by
-[prep.recipe()].</p></td>
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -195,59 +201,59 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_isomap` object</p></td>
+      <td><p>A <code>step_isomap</code> object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- selectors or variables selected).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Isomap is a form of multidimensional scaling (MDS).
- MDS methods try to find a reduced set of dimensions such that
- the geometric distances between the original data points are
- preserved. This version of MDS uses nearest neighbors in the
- data as a method for increasing the fidelity of the new
- dimensions to the original data values.</p>
+MDS methods try to find a reduced set of dimensions such that
+the geometric distances between the original data points are
+preserved. This version of MDS uses nearest neighbors in the
+data as a method for increasing the fidelity of the new
+dimensions to the original data values.</p>
 <p>It is advisable to center and scale the variables prior to
- running Isomap (`step_center` and `step_scale` can be
- used for this purpose).</p>
-<p>The argument `num` controls the number of components that
- will be retained (the original variables that are used to derive
- the components are removed from the data). The new components
- will have names that begin with `prefix` and a sequence of
- numbers. The variable names are padded with zeros. For example,
- if `num &lt; 10`, their names will be `Isomap1` -
- `Isomap9`. If `num = 101`, the names would be
- `Isomap001` - `Isomap101`.</p>
+running Isomap (<code>step_center</code> and <code>step_scale</code> can be
+used for this purpose).</p>
+<p>The argument <code>num</code> controls the number of components that
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with <code>prefix</code> and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if <code>num &lt; 10</code>, their names will be <code>Isomap1</code> -
+<code>Isomap9</code>. If <code>num = 101</code>, the names would be
+<code>Isomap001</code> - <code>Isomap101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>De Silva, V., and Tenenbaum, J. B. (2003). Global
- versus local methods in nonlinear dimensionality reduction.
- *Advances in Neural Information Processing Systems*.
- 721-728.</p>
+versus local methods in nonlinear dimensionality reduction.
+<em>Advances in Neural Information Processing Systems</em>.
+721-728.</p>
 <p><span class="pkg">dimRed</span>, a framework for dimensionality reduction,
-  https://github.com/gdkrmr</p>
+https://github.com/gdkrmr</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[step_pca()] [step_kpca()]
-  [step_ica()] [recipe()] [prep.recipe()]
-  [bake.recipe()]</p></div>
+    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
+<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -267,8 +273,8 @@ the computations for subsequent operations</p></td>
               <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>100</span>),
               <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:40: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:41: DONE</span></div><div class='input'>
+<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:22: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:22: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:22: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:23: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:23: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:23: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:23: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: DONE</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:24: DONE</span></div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
 <span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='input'>

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -60,6 +60,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -294,12 +300,13 @@
 #&gt; [31] "step_modeimpute"    "step_naomit"        "step_novel"        
 #&gt; [34] "step_ns"            "step_num2factor"    "step_nzv"          
 #&gt; [37] "step_ordinalscore"  "step_other"         "step_pca"          
-#&gt; [40] "step_poly"          "step_profile"       "step_range"        
-#&gt; [43] "step_ratio"         "step_regex"         "step_relu"         
-#&gt; [46] "step_rm"            "step_rollimpute"    "step_scale"        
-#&gt; [49] "step_shuffle"       "step_spatialsign"   "step_sqrt"         
-#&gt; [52] "step_string2factor" "step_unorder"       "step_upsample"     
-#&gt; [55] "step_window"        "step_YeoJohnson"    "step_zv"</code></pre>
+#&gt; [40] "step_pls"           "step_poly"          "step_profile"      
+#&gt; [43] "step_range"         "step_ratio"         "step_regex"        
+#&gt; [46] "step_relu"          "step_rm"            "step_rollimpute"   
+#&gt; [49] "step_scale"         "step_shuffle"       "step_spatialsign"  
+#&gt; [52] "step_sqrt"          "step_string2factor" "step_unorder"      
+#&gt; [55] "step_upsample"      "step_window"        "step_YeoJohnson"   
+#&gt; [58] "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">
@@ -309,7 +316,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">trained_rec &lt;-<span class="st"> </span>trained_rec <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/check_missing.html">check_missing</a></span>(<span class="kw">contains</span>(<span class="st">"Marital"</span>))</a></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
-<pre><code>#&gt; [1] "check_cols"    "check_missing"</code></pre>
+<pre><code>#&gt; [1] "check_cols"    "check_missing" "check_range"   "check_type"</code></pre>
 </div>
   </div>
 

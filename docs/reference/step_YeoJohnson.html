@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Yeo-Johnson Transformation — step_YeoJohnson" />
 
-<meta property="og:description" content="`step_YeoJohnson` creates a *specification* of a
- recipe step that will transform data using a simple Yeo-Johnson
- transformation." />
+<meta property="og:description" content="step_YeoJohnson creates a specification of a
+recipe step that will transform data using a simple Yeo-Johnson
+transformation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`step_YeoJohnson` creates a *specification* of a
- recipe step that will transform data using a simple Yeo-Johnson
- transformation.</p>
+    <p><code>step_YeoJohnson</code> creates a <em>specification</em> of a
+recipe step that will transform data using a simple Yeo-Johnson
+transformation.</p>
     
     </div>
 
@@ -152,8 +158,8 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See [selections()]
-for more details. For the `tidy` method, these are not
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
     <tr>
@@ -169,7 +175,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>lambdas</th>
       <td><p>A numeric vector of transformation values. This
-is `NULL` until computed by [prep.recipe()].</p></td>
+is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>limits</th>
@@ -183,58 +189,58 @@ values will not be evaluate for a transformation.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>A logical value indicating whether `NA`
+      <td><p>A logical value indicating whether <code>NA</code>
 values should be removed during computations.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_YeoJohnson` object.</p></td>
+      <td><p>A <code>step_YeoJohnson</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- selectors or variables selected) and `value` (the
- lambda estimate).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> (the
+lambda estimate).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Yeo-Johnson transformation is very similar to the
- Box-Cox but does not require the input variables to be strictly
- positive. In the package, the partial log-likelihood function is
- directly optimized within a reasonable set of transformation
- values (which can be changed by the user).</p>
+Box-Cox but does not require the input variables to be strictly
+positive. In the package, the partial log-likelihood function is
+directly optimized within a reasonable set of transformation
+values (which can be changed by the user).</p>
 <p>This transformation is typically done on the outcome variable
- using the residuals for a statistical model (such as ordinary
- least squares). Here, a simple null model (intercept only) is
- used to apply the transformation to the *predictor*
- variables individually. This can have the effect of making the
- variable distributions more symmetric.</p>
+using the residuals for a statistical model (such as ordinary
+least squares). Here, a simple null model (intercept only) is
+used to apply the transformation to the <em>predictor</em>
+variables individually. This can have the effect of making the
+variable distributions more symmetric.</p>
 <p>If the transformation parameters are estimated to be very
- closed to the bounds, or if the optimization fails, a value of
- `NA` is used and no transformation is applied.</p>
+closed to the bounds, or if the optimization fails, a value of
+<code>NA</code> is used and no transformation is applied.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Yeo, I. K., and Johnson, R. A. (2000). A new family of power
-  transformations to improve normality or symmetry. *Biometrika*.</p>
+transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[step_BoxCox()] [recipe()]
-  [prep.recipe()] [bake.recipe()]</p></div>
+    <div class='dont-index'><p><code><a href='step_BoxCox.html'>step_BoxCox()</a></code> <code><a href='recipe.html'>recipe()</a></code>
+<code>prep.recipe()</code> <code>bake.recipe()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -32,10 +32,10 @@
   
 <meta property="og:title" content="Dummy Variables Creation — step_dummy" />
 
-<meta property="og:description" content="`step_dummy` creates a a *specification* of a recipe
- step that will convert nominal data (e.g. character or factors)
- into one or more numeric binary model terms for the levels of
- the original data." />
+<meta property="og:description" content="step_dummy creates a a specification of a recipe
+step that will convert nominal data (e.g. character or factors)
+into one or more numeric binary model terms for the levels of
+the original data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -93,6 +93,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -130,16 +136,15 @@
 
     <div class="ref-description">
     
-    <p>`step_dummy` creates a a *specification* of a recipe
- step that will convert nominal data (e.g. character or factors)
- into one or more numeric binary model terms for the levels of
- the original data.</p>
+    <p><code>step_dummy</code> creates a a <em>specification</em> of a recipe
+step that will convert nominal data (e.g. character or factors)
+into one or more numeric binary model terms for the levels of
+the original data.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='fu'>options</span>(<span class='st'>"contrasts"</span>), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>one_hot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_dummy</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -156,8 +161,8 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to create the dummy variables. See
-[selections()] for more details. The selected
-variables must be factors. For the `tidy` method, these are
+<code><a href='selections.html'>selections()</a></code> for more details. The selected
+variables must be factors. For the <code>tidy</code> method, these are
 not currently used.</p></td>
     </tr>
     <tr>
@@ -173,11 +178,9 @@ variables will be used as predictors in a model.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
-      <th>contrast</th>
-      <td><p>A specification for which type of contrast
-should be used to make a set of full rank dummy variables. See
-[stats::contrasts()] for more details. **not
-currently working**</p></td>
+      <th>one_hot</th>
+      <td><p>A logical. For C levels, should C dummy variables be created
+rather than C-1?</p></td>
     </tr>
     <tr>
       <th>naming</th>
@@ -188,62 +191,71 @@ new dummy columns. See Details below.</p></td>
       <th>levels</th>
       <td><p>A list that contains the information needed to
 create dummy variables for each variable contained in
-`terms`. This is `NULL` until the step is trained by
-[prep.recipe()].</p></td>
+<code>terms</code>. This is <code>NULL</code> until the step is trained by
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_dummy` object.</p></td>
+      <td><p>A <code>step_dummy</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- selectors or variables selected).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>`step_dummy` will create a set of binary dummy
- variables from a factor variable. For example, if an unordered
- factor column in the data set has levels of "red", "green",
- "blue", the dummy variable bake will create two additional
- columns of 0/1 data for two of those three values (and remove
- the original column). For ordered factors, polynomial contrasts
- are used to encode the numeric values.</p>
-<p>By default, the missing dummy variable (i.e. the reference 
- cell) will correspond to the first level of the unordered 
- factor being converted.</p>
+    <p><code>step_dummy</code> will create a set of binary dummy
+variables from a factor variable. For example, if an unordered
+factor column in the data set has levels of "red", "green",
+"blue", the dummy variable bake will create two additional
+columns of 0/1 data for two of those three values (and remove
+the original column). For ordered factors, polynomial contrasts
+are used to encode the numeric values.</p>
+<p>By default, the excluded dummy variable (i.e. the reference
+cell) will correspond to the first level of the unordered
+factor being converted.</p>
 <p>The function allows for non-standard naming of the resulting
- variables. For an unordered factor named `x`, with levels `"a"`
- and `"b"`, the default naming convention would be to create a
- new variable called `x_b`. Note that if the factor levels are
- not valid variable names (e.g. "some text with spaces"), it will
- be changed by [base::make.names()] to be valid (see the example
- below). The naming format can be changed using the `naming`
- argument and the function [dummy_names()] is the default. This
- function will also change the names of ordinal dummy variables.
- Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
- dummy variables are given simple integer suffixes such as
- "`_1`", "`_2`", etc.</p>
+variables. For an unordered factor named <code>x</code>, with levels <code>"a"</code>
+and <code>"b"</code>, the default naming convention would be to create a
+new variable called <code>x_b</code>. Note that if the factor levels are
+not valid variable names (e.g. "some text with spaces"), it will
+be changed by <code><a href='http://www.rdocumentation.org/packages/base/topics/make.names'>base::make.names()</a></code> to be valid (see the example
+below). The naming format can be changed using the <code>naming</code>
+argument and the function <code><a href='names0.html'>dummy_names()</a></code> is the default. This
+function will also change the names of ordinal dummy variables.
+Instead of values such as "<code>.L</code>", "<code>.Q</code>", or "<code>^4</code>", ordinal
+dummy variables are given simple integer suffixes such as
+"<code>_1</code>", "<code>_2</code>", etc.</p>
+<p>To change the type of contrast being used, change the global
+contrast option via <code>options</code>.</p>
+<p>When the factor being converted has a missing value, all of the
+corresponding dummy variables are also missing.</p>
+<p>When data to be processed contains novel levels (i.e., not
+contained in the training set), a missing value is assigned to
+the results. See <code><a href='step_other.html'>step_other()</a></code> for an alternative.</p>
+<p>The <a href='https://topepo.github.io/recipes/articles/Dummies.html'>package vignette for dummy variables</a>
+and interactions has more information.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[step_factor2string()], [step_string2factor()],
- [dummy_names()], [step_regex()], [step_count()], 
- [step_ordinalscore()], [step_unorder()], [step_other()]
- [step_novel()]</p></div>
+    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
+<code><a href='names0.html'>dummy_names()</a></code>, <code><a href='step_regex.html'>step_regex()</a></code>, <code><a href='step_count.html'>step_count()</a></code>,
+<code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_other.html'>step_other()</a></code>
+<code><a href='step_novel.html'>step_novel()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -271,6 +283,17 @@ the computations for subsequent operations</p></td>
 #&gt; [13] "diet_strictly.other"      "diet_strictly.vegan"     
 #&gt; [15] "diet_strictly.vegetarian" "diet_vegan"              
 #&gt; [17] "diet_vegetarian"         </div><div class='input'>
+<span class='co'># Obtain the full set of dummy variables using `one_hot` option</span>
+<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_dummy</span>(<span class='no'>diet</span>, <span class='kw'>one_hot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"diet"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>names</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
+<span class='fu'>length</span>(<span class='fu'>unique</span>(<span class='no'>okc</span>$<span class='no'>diet</span>))</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
+<span class='co'># Without one_hot</span>
+<span class='fu'>length</span>(<span class='fu'>grep</span>(<span class='st'>"^diet"</span>, <span class='fu'>names</span>(<span class='no'>dummy_data</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
+
 <span class='fu'>tidy</span>(<span class='no'>dummies</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
 #&gt;   terms
 #&gt;   &lt;chr&gt;

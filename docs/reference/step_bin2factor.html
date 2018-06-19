@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Create a Factors from A Dummy Variable — step_bin2factor" />
 
-<meta property="og:description" content="`step_bin2factor` creates a *specification* of a
- recipe step that will create a two-level factor from a single
- dummy variable." />
+<meta property="og:description" content="step_bin2factor creates a specification of a
+recipe step that will create a two-level factor from a single
+dummy variable." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,14 +135,14 @@
 
     <div class="ref-description">
     
-    <p>`step_bin2factor` creates a *specification* of a
- recipe step that will create a two-level factor from a single
- dummy variable.</p>
+    <p><code>step_bin2factor</code> creates a <em>specification</em> of a
+recipe step that will create a two-level factor from a single
+dummy variable.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>step_bin2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>,
-  <span class='st'>"no"</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='st'>"no"</span>), <span class='kw'>ref_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_bin2factor</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -152,8 +158,8 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>Selector functions that choose which variables will
-be converted. See [selections()] for more details. For
-the `tidy` method, these are not currently used.</p></td>
+be converted. See <code><a href='selections.html'>selections()</a></code> for more details. For
+the <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -172,41 +178,46 @@ factor levels for the 1's (in the first position) and the zeros
 (second)</p></td>
     </tr>
     <tr>
+      <th>ref_first</th>
+      <td><p>Logical. Should the first level, which replaces
+1's, be the factor reference level?</p></td>
+    </tr>
+    <tr>
       <th>columns</th>
       <td><p>A vector with the selected variable names. This
-is `NULL` until computed by [prep.recipe()].</p></td>
+is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_bin2factor` object.</p></td>
+      <td><p>A <code>step_bin2factor</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- columns that will be affected).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+columns that will be affected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This operation may be useful for situations where a
- binary piece of information may need to be represented as
- categorical instead of numeric. For example, naive Bayes models
- would do better to have factor predictors so that the binomial
- distribution is modeled in stead of a Gaussian probability
- density of numeric binary data. Note that the numeric data is
- only verified to be numeric (and does not count levels).</p>
+binary piece of information may need to be represented as
+categorical instead of numeric. For example, naive Bayes models
+would do better to have factor predictors so that the binomial
+distribution is modeled in stead of a Gaussian probability
+density of numeric binary data. Note that the numeric data is
+only verified to be numeric (and does not count levels).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

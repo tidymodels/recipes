@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Convert Ordinal Factors to Numeric Scores — step_ordinalscore" />
 
-<meta property="og:description" content="`step_ordinalscore` creates a *specification* of a
- recipe step that will convert ordinal factor variables into
- numeric scores." />
+<meta property="og:description" content="step_ordinalscore creates a specification of a
+recipe step that will convert ordinal factor variables into
+numeric scores." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`step_ordinalscore` creates a *specification* of a
- recipe step that will convert ordinal factor variables into
- numeric scores.</p>
+    <p><code>step_ordinalscore</code> creates a <em>specification</em> of a
+recipe step that will convert ordinal factor variables into
+numeric scores.</p>
     
     </div>
 
@@ -152,8 +158,8 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See [selections()]
-for more details. For the `tidy` method, these are not
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
     <tr>
@@ -169,8 +175,8 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>columns</th>
       <td><p>A character string of variables that will be
-converted. This is `NULL` until computed by
-[prep.recipe()].</p></td>
+converted. This is <code>NULL</code> until computed by
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>convert</th>
@@ -180,34 +186,34 @@ as an input and outputs a single numeric variable.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_ordinalscore` object.</p></td>
+      <td><p>A <code>step_ordinalscore</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- columns that will be affected).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+columns that will be affected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Dummy variables from ordered factors with `C`
- levels will create polynomial basis functions with `C-1`
- terms. As an alternative, this step can be used to translate the
- ordered levels into a single numeric vector of values that
- represent (subjective) scores. By default, the translation uses
- a linear scale (1, 2, 3, ... `C`) but custom score
- functions can also be used (see the example below).</p>
+    <p>Dummy variables from ordered factors with <code>C</code>
+levels will create polynomial basis functions with <code>C-1</code>
+terms. As an alternative, this step can be used to translate the
+ordered levels into a single numeric vector of values that
+represent (subjective) scores. By default, the translation uses
+a linear scale (1, 2, 3, ... <code>C</code>) but custom score
+functions can also be used (see the example below).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

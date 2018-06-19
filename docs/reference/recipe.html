@@ -33,7 +33,7 @@
 <meta property="og:title" content="Create a Recipe for Preprocessing Data — recipe" />
 
 <meta property="og:description" content="A recipe is a description of what steps should be applied to a data set in
-  order to get it ready for data analysis." />
+order to get it ready for data analysis." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -91,6 +91,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,7 +135,7 @@
     <div class="ref-description">
     
     <p>A recipe is a description of what steps should be applied to a data set in
-  order to get it ready for data analysis.</p>
+order to get it ready for data analysis.</p>
     
     </div>
 
@@ -153,7 +159,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x, data</th>
-      <td><p>A data frame or tibble of the *template* data set
+      <td><p>A data frame or tibble of the <em>template</em> data set
 (see below).</p></td>
     </tr>
     <tr>
@@ -164,10 +170,10 @@ used).</p></td>
     <tr>
       <th>formula</th>
       <td><p>A model formula. No in-line functions should be used here
-(e.g. `log(x)`, `x:y`, etc.). These types of transformations
-should be enacted using `step` functions in this package. Dots are
+(e.g. <code>log(x)</code>, <code>x:y</code>, etc.). These types of transformations
+should be enacted using <code>step</code> functions in this package. Dots are
 allowed as are simple multivariate outcome terms (i.e. no need for
-`cbind`; see Examples).</p></td>
+<code>cbind</code>; see Examples).</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -176,62 +182,62 @@ that will be used in any context (see below)</p></td>
     </tr>
     <tr>
       <th>roles</th>
-      <td><p>A character string (the same length of `vars`) that
+      <td><p>A character string (the same length of <code>vars</code>) that
 describes a single role that the variable will take. This value could be
-anything but common roles are `"outcome"`, `"predictor"`,
-`"case_weight"`, or `"ID"`</p></td>
+anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>,
+<code>"case_weight"</code>, or <code>"ID"</code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class `recipe` with sub-objects:</p>
+    <p>An object of class <code>recipe</code> with sub-objects:</p>
 <dt>var_info</dt><dd><p>A tibble containing information about the original data
-  set columns</p></dd>
-  <dt>term_info</dt><dd><p>A tibble that contains the current set of terms in the
-  data set. This initially defaults to the same data contained in
-  `var_info`.</p></dd>
-  <dt>steps</dt><dd><p>A list of `step`  or `check` objects that define the sequence of
-  preprocessing operations that will be applied to data. The default value is
-  `NULL`</p></dd>
-  <dt>template</dt><dd><p>A tibble of the data. This is initialized to be the same
-  as the data given in the `data` argument but can be different after
-  the recipe is trained.</p></dd>
+set columns</p></dd>
+<dt>term_info</dt><dd><p>A tibble that contains the current set of terms in the
+data set. This initially defaults to the same data contained in
+<code>var_info</code>.</p></dd>
+<dt>steps</dt><dd><p>A list of <code>step</code>  or <code>check</code> objects that define the sequence of
+preprocessing operations that will be applied to data. The default value is
+<code>NULL</code></p></dd>
+<dt>template</dt><dd><p>A tibble of the data. This is initialized to be the same
+as the data given in the <code>data</code> argument but can be different after
+the recipe is trained.</p></dd>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Recipes are alternative methods for creating design matrices and
-  for preprocessing data.</p>
-<p>Variables in recipes can have any type of *role* in subsequent analyses
-  such as: outcome, predictor, case weights, stratification variables, etc.</p>
-<p>`recipe` objects can be created in several ways. If the analysis only
-  contains outcomes and predictors, the simplest way to create one is to use
-  a simple formula (e.g. `y ~ x1 + x2`) that does not contain inline
-  functions such as `log(x3)`. An example is given below.</p>
-<p>Alternatively, a `recipe` object can be created by first specifying
-  which variables in a data set should be used and then sequentially
-  defining their roles (see the last example).</p>
+for preprocessing data.</p>
+<p>Variables in recipes can have any type of <em>role</em> in subsequent analyses
+such as: outcome, predictor, case weights, stratification variables, etc.</p>
+<p><code>recipe</code> objects can be created in several ways. If the analysis only
+contains outcomes and predictors, the simplest way to create one is to use
+a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline
+functions such as <code>log(x3)</code>. An example is given below.</p>
+<p>Alternatively, a <code>recipe</code> object can be created by first specifying
+which variables in a data set should be used and then sequentially
+defining their roles (see the last example).</p>
 <p>There are two different types of operations that can be
- sequentially added to a recipe. **Steps**  can include common
- operations like logging a variable, creating dummy variables or
- interactions and so on. More computationally complex actions
- such as dimension reduction or imputation can also be specified.
- **Checks** are operations that conduct specific tests of the
- data. When the test is satisfied, the data are returned without
- issue or modification. Otherwise, any error is thrown.</p>
-<p>Once a recipe has been defined, the [prep()] function can be
- used to estimate quantities required for the operations using a
- data set (a.k.a. the training data). [prep()] returns another
- recipe.</p>
-<p>To apply the recipe to a data set, the [bake()] function is
-  used in the same manner as `predict` would be for models. This
-  applies the steps to any data set.</p>
-<p>Note that the data passed to `recipe` need not be the complete data
-  that will be used to train the steps (by [prep()]). The recipe
-  only needs to know the names and types of data that will be used. For
-  large data sets, `head` could be used to pass the recipe a smaller
-  data set to save time and memory.</p>
+sequentially added to a recipe. <strong>Steps</strong>  can include common
+operations like logging a variable, creating dummy variables or
+interactions and so on. More computationally complex actions
+such as dimension reduction or imputation can also be specified.
+<strong>Checks</strong> are operations that conduct specific tests of the
+data. When the test is satisfied, the data are returned without
+issue or modification. Otherwise, any error is thrown.</p>
+<p>Once a recipe has been defined, the <code><a href='prep.html'>prep()</a></code> function can be
+used to estimate quantities required for the operations using a
+data set (a.k.a. the training data). <code><a href='prep.html'>prep()</a></code> returns another
+recipe.</p>
+<p>To apply the recipe to a data set, the <code><a href='bake.html'>bake()</a></code> function is
+used in the same manner as <code>predict</code> would be for models. This
+applies the steps to any data set.</p>
+<p>Note that the data passed to <code>recipe</code> need not be the complete data
+that will be used to train the steps (by <code><a href='prep.html'>prep()</a></code>). The recipe
+only needs to know the names and types of data that will be used. For
+large data sets, <code>head</code> could be used to pass the recipe a smaller
+data set to save time and memory.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

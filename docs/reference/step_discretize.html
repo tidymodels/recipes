@@ -32,10 +32,10 @@
   
 <meta property="og:title" content="Discretize Numeric Variables — step_discretize" />
 
-<meta property="og:description" content="`step_discretize` creates a a *specification* of a recipe
- step that will convert numeric data into a factor with
- bins having approximately the same number of data points (based
- on a training set)." />
+<meta property="og:description" content="step_discretize creates a a specification of a recipe
+step that will convert numeric data into a factor with
+bins having approximately the same number of data points (based
+on a training set)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -93,6 +93,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -130,10 +136,10 @@
 
     <div class="ref-description">
     
-    <p>`step_discretize` creates a a *specification* of a recipe
- step that will convert numeric data into a factor with
- bins having approximately the same number of data points (based
- on a training set).</p>
+    <p><code>step_discretize</code> creates a a <em>specification</em> of a recipe
+step that will convert numeric data into a factor with
+bins having approximately the same number of data points (based
+on a training set).</p>
     
     </div>
 
@@ -153,10 +159,10 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>For `step_discretize`, the dots specify
+      <td><p>For <code>step_discretize</code>, the dots specify
 one or more selector functions to choose which variables are
-affected by the step. See [selections()] for more
-details. For the `tidy` method, these are not currently
+affected by the step. See <code><a href='selections.html'>selections()</a></code> for more
+details. For the <code>tidy</code> method, these are not currently
 used.</p></td>
     </tr>
     <tr>
@@ -171,40 +177,40 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>The [discretize()] objects are stored
+      <td><p>The <code><a href='discretize.html'>discretize()</a></code> objects are stored
 here once the recipe has be trained by
-[prep.recipe()].</p></td>
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to [discretize()]. A
-defaults is set for the argument `x`. Note that the using
-the options `prefix` and `labels` when more than one
+      <td><p>A list of options to <code><a href='discretize.html'>discretize()</a></code>. A
+defaults is set for the argument <code>x</code>. Note that the using
+the options <code>prefix</code> and <code>labels</code> when more than one
 variable is being transformed might be problematic as all
 variables inherit those values.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_discretize` object</p></td>
+      <td><p>A <code>step_discretize</code> object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`step_discretize` returns an updated version of
- `recipe` with the new step added to the sequence of
- existing steps (if any). For the `tidy` method, a tibble
- with columns `terms` (the selectors or variables selected)
- and `value` (the breaks).</p>
+    <p><code>step_discretize</code> returns an updated version of
+<code>recipe</code> with the new step added to the sequence of
+existing steps (if any). For the <code>tidy</code> method, a tibble
+with columns <code>terms</code> (the selectors or variables selected)
+and <code>value</code> (the breaks).</p>
     
 
   </div>

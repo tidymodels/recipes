@@ -1,6 +1,6 @@
 pandoc: 2.0.5
-pkgdown: 0.1.0.9000
-pkgdown_sha: b524cc3bf952f00c11a6a1b342d681a4d59d00c3
+pkgdown: 1.0.0
+pkgdown_sha: d43ca38c74827d1d6babc3a80d48cd3a8e8fad8c
 articles:
   Custom_Steps: Custom_Steps.html
   Dummies: Dummies.html
@@ -8,4 +8,6 @@ articles:
   Selecting_Variables: Selecting_Variables.html
   Simple_Example: Simple_Example.html
   Skipping: Skipping.html
+  Multivariate_PLS: articles/Multivariate_PLS.html
+  Subsampling: articles/Subsampling.html
 

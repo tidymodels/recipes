@@ -32,8 +32,8 @@
   
 <meta property="og:title" content="Manually Add Roles — add_role" />
 
-<meta property="og:description" content="`add_role` can add a role definition to an existing variable in the
-  recipe." />
+<meta property="og:description" content="add_role can add a role definition to an existing variable in the
+recipe." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -91,6 +91,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -128,8 +134,8 @@
 
     <div class="ref-description">
     
-    <p>`add_role` can add a role definition to an existing variable in the
-  recipe.</p>
+    <p><code>add_role</code> can add a role definition to an existing variable in the
+recipe.</p>
     
     </div>
 
@@ -140,12 +146,12 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>An existing [recipe()].</p></td>
+      <td><p>An existing <code><a href='recipe.html'>recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables are
-being assigned a role. See [selections()] for more details.</p></td>
+being assigned a role. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>new_role</th>
@@ -160,7 +166,7 @@ being assigned a role. See [selections()] for more details.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If a variable is selected that currently has a role, the role is
-  changed and a warning is issued.</p>
+changed and a warning is issued.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

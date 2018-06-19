@@ -32,16 +32,16 @@
   
 <meta property="og:title" content="recipes: A package for computing and preprocessing design matrices. — recipes" />
 
-<meta property="og:description" content="The `recipes` package can be used to create design matrices for modeling
-  and to conduct preprocessing of variables. It is meant to be a more
-  extensive framework that R's formula method. Some differences between
-  simple formula methods and recipes are that
+<meta property="og:description" content="The recipes package can be used to create design matrices for modeling
+and to conduct preprocessing of variables. It is meant to be a more
+extensive framework that R's formula method. Some differences between
+simple formula methods and recipes are that
 Variables can have arbitrary roles in the analysis beyond predictors
- and outcomes.
+and outcomes.
 A recipe consists of one or more steps that define actions on the
- variables.
+variables.
 Recipes can be defined sequentially using pipes as well as being
- modifiable and extensible.
+modifiable and extensible.
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -70,7 +70,7 @@ Recipes can be defined sequentially using pipes as well as being
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -100,6 +100,12 @@ Recipes can be defined sequentially using pipes as well as being
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -137,16 +143,16 @@ Recipes can be defined sequentially using pipes as well as being
 
     <div class="ref-description">
     
-    <p>The `recipes` package can be used to create design matrices for modeling
-  and to conduct preprocessing of variables. It is meant to be a more
-  extensive framework that R's formula method. Some differences between
-  simple formula methods and recipes are that</p><ol>
+    <p>The <code>recipes</code> package can be used to create design matrices for modeling
+and to conduct preprocessing of variables. It is meant to be a more
+extensive framework that R's formula method. Some differences between
+simple formula methods and recipes are that</p><ol>
 <li><p>Variables can have arbitrary roles in the analysis beyond predictors
- and outcomes.</p></li>
+and outcomes.</p></li>
 <li><p>A recipe consists of one or more steps that define actions on the
- variables.</p></li>
+variables.</p></li>
 <li><p>Recipes can be defined sequentially using pipes as well as being
- modifiable and extensible.</p></li>
+modifiable and extensible.</p></li>
 </ol>
     
     </div>
@@ -155,20 +161,20 @@ Recipes can be defined sequentially using pipes as well as being
     <h2 class="hasAnchor" id="basic-functions"><a class="anchor" href="#basic-functions"></a>Basic Functions</h2>
 
     
-    <p>The three main functions are [recipe()], [prep()],
-  and [bake()].</p>
-<p>[recipe()] defines the operations on the data and the associated
-  roles. Once the preprocessing steps are defined, any parameters are
-  estimated using [prep()]. Once the data are ready for
-  transformation, the [bake()] function applies the operations.</p>
+    <p>The three main functions are <code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep()</a></code>,
+and <code><a href='bake.html'>bake()</a></code>.</p>
+<p><code><a href='recipe.html'>recipe()</a></code> defines the operations on the data and the associated
+roles. Once the preprocessing steps are defined, any parameters are
+estimated using <code><a href='prep.html'>prep()</a></code>. Once the data are ready for
+transformation, the <code><a href='bake.html'>bake()</a></code> function applies the operations.</p>
     
     <h2 class="hasAnchor" id="step-functions"><a class="anchor" href="#step-functions"></a>Step Functions</h2>
 
     
     <p>These functions are used to add new actions to the recipe and have the
-  naming convention `"step_action"`. For example,
-  [step_center()] centers the data to have a zero mean and
-  [step_dummy()] is used to create dummy variables.</p>
+naming convention <code>"step_action"</code>. For example,
+<code><a href='step_center.html'>step_center()</a></code> centers the data to have a zero mean and
+<code><a href='step_dummy.html'>step_dummy()</a></code> is used to create dummy variables.</p>
     
 
   </div>

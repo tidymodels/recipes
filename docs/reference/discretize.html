@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Discretize Numeric Variables — discretize" />
 
-<meta property="og:description" content="`discretize` converts a numeric vector into a factor with
- bins having approximately the same number of data points (based
- on a training set)." />
+<meta property="og:description" content="discretize converts a numeric vector into a factor with
+bins having approximately the same number of data points (based
+on a training set)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`discretize` converts a numeric vector into a factor with
- bins having approximately the same number of data points (based
- on a training set).</p>
+    <p><code>discretize</code> converts a numeric vector into a factor with
+bins having approximately the same number of data points (based
+on a training set).</p>
     
     </div>
 
@@ -157,8 +163,8 @@
     <tr>
       <th>...</th>
       <td><p>Options to pass to
-[stats::quantile()] that should not include `x`
-or `probs`.</p></td>
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/quantile'>stats::quantile()</a></code> that should not include <code>x</code>
+or <code>probs</code>.</p></td>
     </tr>
     <tr>
       <th>cuts</th>
@@ -169,19 +175,19 @@ data.</p></td>
       <th>labels</th>
       <td><p>A character vector defining the factor levels
 that will be in the new factor (from smallest to largest). This
-should have length `cuts+1` and should not include a level
-for missing (see `keep_na` below).</p></td>
+should have length <code>cuts+1</code> and should not include a level
+for missing (see <code>keep_na</code> below).</p></td>
     </tr>
     <tr>
       <th>prefix</th>
       <td><p>A single parameter value to be used as a prefix
-for the factor levels (e.g. `bin1`, `bin2`, ...). If
+for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If
 the string is not a valid R name, it is coerced to one.</p></td>
     </tr>
     <tr>
       <th>keep_na</th>
       <td><p>A logical for whether a factor level should be
-created to identify missing values in `x`.</p></td>
+created to identify missing values in <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>infs</th>
@@ -192,12 +198,12 @@ largest cut point should be infinite.</p></td>
       <th>min_unique</th>
       <td><p>An integer defining a sample size line of
 dignity for the binning. If (the number of unique
-values)`/(cuts+1)` is less than `min_unique`, no
+values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no
 discretization takes place.</p></td>
     </tr>
     <tr>
       <th>object</th>
-      <td><p>An object of class `discretize`.</p></td>
+      <td><p>An object of class <code>discretize</code>.</p></td>
     </tr>
     <tr>
       <th>newdata</th>
@@ -207,23 +213,23 @@ discretization takes place.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`discretize` returns an object of class
- `discretize` and `predict.discretize` returns a factor
- vector.</p>
+    <p><code>discretize</code> returns an object of class
+<code>discretize</code> and <code>predict.discretize</code> returns a factor
+vector.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>`discretize` estimates the cut points from
- `x` using percentiles. For example, if `cuts = 3`, the
- function estimates the quartiles of `x` and uses these as
- the cut points. If `cuts = 2`, the bins are defined as
- being above or below the median of `x`.</p>
-<p>The `predict` method can then be used to turn numeric
- vectors into factor vectors.</p>
-<p>If `keep_na = TRUE`, a suffix of "_missing" is used as a
- factor level (see the examples below).</p>
-<p>If `infs = FALSE` and a new value is greater than the
- largest value of `x`, a missing value will result.</p>
+    <p><code>discretize</code> estimates the cut points from
+<code>x</code> using percentiles. For example, if <code>cuts = 3</code>, the
+function estimates the quartiles of <code>x</code> and uses these as
+the cut points. If <code>cuts = 2</code>, the bins are defined as
+being above or below the median of <code>x</code>.</p>
+<p>The <code>predict</code> method can then be used to turn numeric
+vectors into factor vectors.</p>
+<p>If <code>keep_na = TRUE</code>, a suffix of "_missing" is used as a
+factor level (see the examples below).</p>
+<p>If <code>infs = FALSE</code> and a new value is greater than the
+largest value of <code>x</code>, a missing value will result.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

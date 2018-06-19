@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="ICA Signal Extraction — step_ica" />
 
-<meta property="og:description" content="`step_ica` creates a *specification* of a recipe step
- that will convert numeric data into one or more independent
- components." />
+<meta property="og:description" content="step_ica creates a specification of a recipe step
+that will convert numeric data into one or more independent
+components." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`step_ica` creates a *specification* of a recipe step
- that will convert numeric data into one or more independent
- components.</p>
+    <p><code>step_ica</code> creates a <em>specification</em> of a recipe step
+that will convert numeric data into one or more independent
+components.</p>
     
     </div>
 
@@ -153,7 +159,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-[selections()] for more details. For the `tidy`
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -171,22 +177,22 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>num</th>
       <td><p>The number of ICA components to retain as new
-predictors. If `num` is greater than the number of columns
+predictors. If <code>num</code> is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.</p></td>
     </tr>
     <tr>
       <th>options</th>
       <td><p>A list of options to
-[fastICA::fastICA()]. No defaults are set here.
-**Note** that the arguments `X` and `n.comp` should
+<code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code>. No defaults are set here.
+<strong>Note</strong> that the arguments <code>X</code> and <code>n.comp</code> should
 not be passed here.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The [fastICA::fastICA()] object is stored
+      <td><p>The <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code> object is stored
 here once this preprocessing step has be trained by
-[prep.recipe()].</p></td>
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -196,60 +202,60 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_ica` object.</p></td>
+      <td><p>A <code>step_ica</code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- selectors or variables selected), `value` (the loading),
- and `component`.</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected), <code>value</code> (the loading),
+and <code>component</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Independent component analysis (ICA) is a
- transformation of a group of variables that produces a new set
- of artificial features or components. ICA assumes that the
- variables are mixtures of a set of distinct, non-Gaussian
- signals and attempts to transform the data to isolate these
- signals. Like PCA, the components are statistically independent
- from one another. This means that they can be used to combat
- large inter-variables correlations in a data set. Also like PCA,
- it is advisable to center and scale the variables prior to
- running ICA.</p>
+transformation of a group of variables that produces a new set
+of artificial features or components. ICA assumes that the
+variables are mixtures of a set of distinct, non-Gaussian
+signals and attempts to transform the data to isolate these
+signals. Like PCA, the components are statistically independent
+from one another. This means that they can be used to combat
+large inter-variables correlations in a data set. Also like PCA,
+it is advisable to center and scale the variables prior to
+running ICA.</p>
 <p>This package produces components using the "FastICA"
- methodology (see reference below).</p>
-<p>The argument `num` controls the number of components that
- will be retained (the original variables that are used to derive
- the components are removed from the data). The new components
- will have names that begin with `prefix` and a sequence of
- numbers. The variable names are padded with zeros. For example,
- if `num &lt; 10`, their names will be `IC1` - `IC9`.
- If `num = 101`, the names would be `IC001` -
- `IC101`.</p>
+methodology (see reference below).</p>
+<p>The argument <code>num</code> controls the number of components that
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with <code>prefix</code> and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if <code>num &lt; 10</code>, their names will be <code>IC1</code> - <code>IC9</code>.
+If <code>num = 101</code>, the names would be <code>IC001</code> -
+<code>IC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hyvarinen, A., and Oja, E. (2000). Independent
- component analysis: algorithms and applications. *Neural
- Networks*, 13(4-5), 411-430.</p>
+component analysis: algorithms and applications. <em>Neural
+Networks</em>, 13(4-5), 411-430.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[step_pca()] [step_kpca()]
-  [step_isomap()] [recipe()] [prep.recipe()]
-  [bake.recipe()]</p></div>
+    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
+<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

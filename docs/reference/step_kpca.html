@@ -32,9 +32,9 @@
   
 <meta property="og:title" content="Kernel PCA Signal Extraction — step_kpca" />
 
-<meta property="og:description" content="`step_kpca` a *specification* of a recipe step that
- will convert numeric data into one or more principal components
- using a kernel basis expansion." />
+<meta property="og:description" content="step_kpca a specification of a recipe step that
+will convert numeric data into one or more principal components
+using a kernel basis expansion." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">recipes</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -92,6 +92,12 @@
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+    </li>
+    <li>
+      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -129,9 +135,9 @@
 
     <div class="ref-description">
     
-    <p>`step_kpca` a *specification* of a recipe step that
- will convert numeric data into one or more principal components
- using a kernel basis expansion.</p>
+    <p><code>step_kpca</code> a <em>specification</em> of a recipe step that
+will convert numeric data into one or more principal components
+using a kernel basis expansion.</p>
     
     </div>
 
@@ -154,7 +160,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-[selections()] for more details. For the `tidy`
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -172,22 +178,22 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>num</th>
       <td><p>The number of PCA components to retain as new
-predictors. If `num` is greater than the number of columns
+predictors. If <code>num</code> is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>An S4 [kernlab::kpca()] object is stored
+      <td><p>An S4 <code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kernlab::kpca()</a></code> object is stored
 here once this preprocessing step has be trained by
-[prep.recipe()].</p></td>
+<code>prep.recipe()</code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
       <td><p>A list of options to
-[kernlab::kpca()]. Defaults are set for the arguments
-`kernel` and `kpar` but others can be passed in.
-**Note** that the arguments `x` and `features`
+<code><a href='http://www.rdocumentation.org/packages/kernlab/topics/kpca'>kernlab::kpca()</a></code>. Defaults are set for the arguments
+<code>kernel</code> and <code>kpar</code> but others can be passed in.
+<strong>Note</strong> that the arguments <code>x</code> and <code>features</code>
 should not be passed here (or at all).</p></td>
     </tr>
     <tr>
@@ -198,67 +204,67 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by [bake.recipe()]? While all operations are baked
-when [prep.recipe()] is run, some operations may not be able to be
+recipe is baked by <code>bake.recipe()</code>? While all operations are baked
+when <code>prep.recipe()</code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using `skip = TRUE` as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A `step_kpca` object</p></td>
+      <td><p>A <code>step_kpca</code> object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of `recipe` with the new step
- added to the sequence of existing steps (if any). For the
- `tidy` method, a tibble with columns `terms` (the
- selectors or variables selected).</p>
+    <p>An updated version of <code>recipe</code> with the new step
+added to the sequence of existing steps (if any). For the
+<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+selectors or variables selected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Kernel principal component analysis (kPCA) is an
- extension a PCA analysis that conducts the calculations in a
- broader dimensionality defined by a kernel function. For
- example, if a quadratic kernel function were used, each variable
- would be represented by its original values as well as its
- square. This nonlinear mapping is used during the PCA analysis
- and can potentially help find better representations of the
- original data.</p>
+extension a PCA analysis that conducts the calculations in a
+broader dimensionality defined by a kernel function. For
+example, if a quadratic kernel function were used, each variable
+would be represented by its original values as well as its
+square. This nonlinear mapping is used during the PCA analysis
+and can potentially help find better representations of the
+original data.</p>
 <p>As with ordinary PCA, it is important to standardized the
- variables prior to running PCA (`step_center` and
- `step_scale` can be used for this purpose).</p>
+variables prior to running PCA (<code>step_center</code> and
+<code>step_scale</code> can be used for this purpose).</p>
 <p>When performing kPCA, the kernel function (and any important
- kernel parameters) must be chosen. The <span class="pkg">kernlab</span> package is
- used and the reference below discusses the types of kernels
- available and their parameter(s). These specifications can be
- made in the `kernel` and `kpar` slots of the
- `options` argument to `step_kpca`.</p>
-<p>The argument `num` controls the number of components that
- will be retained (the original variables that are used to derive
- the components are removed from the data). The new components
- will have names that begin with `prefix` and a sequence of
- numbers. The variable names are padded with zeros. For example,
- if `num &lt; 10`, their names will be `kPC1` -
- `kPC9`. If `num = 101`, the names would be
- `kPC001` - `kPC101`.</p>
+kernel parameters) must be chosen. The <span class="pkg">kernlab</span> package is
+used and the reference below discusses the types of kernels
+available and their parameter(s). These specifications can be
+made in the <code>kernel</code> and <code>kpar</code> slots of the
+<code>options</code> argument to <code>step_kpca</code>.</p>
+<p>The argument <code>num</code> controls the number of components that
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with <code>prefix</code> and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if <code>num &lt; 10</code>, their names will be <code>kPC1</code> -
+<code>kPC9</code>. If <code>num = 101</code>, the names would be
+<code>kPC001</code> - <code>kPC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Scholkopf, B., Smola, A., and Muller, K. (1997).
- Kernel principal component analysis. *Lecture Notes in
- Computer Science*, 1327, 583-588.</p>
+Kernel principal component analysis. <em>Lecture Notes in
+Computer Science</em>, 1327, 583-588.</p>
 <p>Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
- kernlab - An S4 package for kernel methods in R. *Journal
- of Statistical Software*, 11(1), 1-20.</p>
+kernlab - An S4 package for kernel methods in R. <em>Journal
+of Statistical Software</em>, 11(1), 1-20.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[step_pca()] [step_ica()]
-  [step_isomap()] [recipe()] [prep.recipe()]
-  [bake.recipe()]</p></div>
+    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_ica.html'>step_ica()</a></code>
+<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
+<code>bake.recipe()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -276,7 +282,7 @@ the computations for subsequent operations</p></td>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_kpca</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:42: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:42: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2018-04-24 11:14:42: DONE</span></div><div class='input'>
+<span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:25: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:25: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2018-06-19 10:52:25: DONE</span></div><div class='input'>
 <span class='no'>kpca_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>kpca_estimates</span>, <span class='no'>biomass_te</span>)
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>))
