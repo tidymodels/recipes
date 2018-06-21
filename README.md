@@ -4,7 +4,7 @@
 [![Build
 Status](https://travis-ci.org/topepo/recipes.svg?branch=master)](https://travis-ci.org/topepo/recipes)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/topepo/recipes/master.svg)](https://codecov.io/github/topepo/recipes?branch=master)
+Status](https://img.shields.io/codecov/c/github/tidymodels/recipes/master.svg)](https://codecov.io/github/tidymodels/recipes?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes)
 [![Downloads](http://cranlogs.r-pkg.org/badges/recipes)](http://cran.rstudio.com/package=recipes)
 ![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
@@ -49,5 +49,5 @@ install.packages("recipes")
 
 ## for development version:
 require("devtools")
-install_github("topepo/recipes")
+install_github("tidymodels/recipes")
 ```
