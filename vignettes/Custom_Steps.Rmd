@@ -57,7 +57,7 @@ Based on the training set, `r round(mean(biomass_tr$carbon <= biomass_te$carbon[
 
 Our new step will do this computation for any numeric variables of interest. We will call this `step_percentile`. The code below is designed for illustration and not speed or best practices. I've left out a lot of error trapping that we would want in a real implementation.  
 
-# Create the initial function. 
+# Create the initial function
 
 The user-exposed function `step_percentile` is just a simple wrapper around an internal function called `add_step`. This function takes the same arguments as your function and simply adds it to a new recipe. The `...` signifies the variable selectors that can be used.
 
