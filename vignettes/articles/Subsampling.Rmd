@@ -130,7 +130,7 @@ To measure model effectiveness, two metrics are used:
  * The area under the [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is an overall assessment of performance across _all_ cutoffs. Values near one indicate very good results while values near 0.05 would imply that the model is very poor. 
  * The _J_ index (a.k.a. [Youden's _J_](https://en.wikipedia.org/wiki/Youden%27s_J_statistic) statistic) is `sensitivity + specificity - 1`. Values near one are once again best. 
 
-If a model is poorly calibrated, the ROC curve value might not sure diminished performance. However, the _J_ index would be lower for models with pathological distributions for the class probabilities. The `yardstick` package will be used to compute these metrics. 
+If a model is poorly calibrated, the ROC curve value might not show diminished performance. However, the _J_ index would be lower for models with pathological distributions for the class probabilities. The `yardstick` package will be used to compute these metrics. 
 
 Now, we train the models and generate the predictions. These are stored in list columns where each list element is a data frame of the predictions on the assessment data:
 
