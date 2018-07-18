@@ -25,10 +25,13 @@
 #' @concept preprocessing variable_encodings factors
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
-#'  convert all factors to have the same levels. Also, note that
-#'  `prep` has an option `stringsAsFactors` that defaults
-#'  to `TRUE`. This should be changed so that raw character
-#'  data will be applied to `step_string2factor`.
+#'  convert all variables affected by this step to have the same
+#'  levels.
+#'
+#'  Also, note that `prep` has an option `stringsAsFactors` that
+#'  defaults to `TRUE`. This should be changed so that raw character
+#'  data will be applied to `step_string2factor`. However, this step
+#'  can also take existing factors (but will leave them as-is).
 #' @seealso [step_factor2string()] [step_dummy()] [step_other()]
 #'  [step_novel()]
 #' @examples
@@ -100,7 +103,11 @@ get_ord_lvls <- function(x)
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   str_check <-
-    vapply(training[, col_names], is.character, logical(1))
+    vapply(
+      training[, col_names],
+      function(x) is.character(x) | is.factor(x),
+      logical(1)
+    )
   if (any(!str_check))
     stop(
       "The following variables are not character vectors: ",
@@ -127,6 +134,8 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
 }
 
 make_factor <- function(x, lvl, ord) {
+  if (is.factor(x))
+    return(x)
   factor(x, levels = lvl, ordered = ord)
 }
 

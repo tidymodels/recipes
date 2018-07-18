@@ -53,10 +53,13 @@ vectors to factors (ordered or unordered).
 }
 \details{
 If \code{levels} is given, \code{step_string2factor} will
-convert all factors to have the same levels. Also, note that
-\code{prep} has an option \code{stringsAsFactors} that defaults
-to \code{TRUE}. This should be changed so that raw character
-data will be applied to \code{step_string2factor}.
+convert all variables affected by this step to have the same
+levels.
+
+Also, note that \code{prep} has an option \code{stringsAsFactors} that
+defaults to \code{TRUE}. This should be changed so that raw character
+data will be applied to \code{step_string2factor}. However, this step
+can also take existing factors (but will leave them as-is).
 }
 \examples{
 data(okc)
