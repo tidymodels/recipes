@@ -157,8 +157,8 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom gower gower_topn
-nn_index <- function(.new, .old, vars, K) {
-  gower_topn(.old[, vars], .new[, vars], n = K, nthread = 1)$index
+nn_index <- function(miss_data, ref_data, vars, K) {
+  gower_topn(ref_data[, vars], miss_data[, vars], n = K, nthread = 1)$index
 }
 
 nn_pred <- function(index, dat) {
@@ -191,7 +191,10 @@ bake.step_knnimpute <- function(object, newdata, ...) {
       if (all(is.na(new_data))) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
-        nn_ind <- nn_index(object$ref_data, new_data, preds, object$K)
+        imp_var_complete <- !is.na(object$ref_data[[imp_var]])
+        nn_ind <- nn_index(object$ref_data[imp_var_complete,], 
+                           new_data, preds, 
+                           object$K)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[, imp_var])
         newdata[missing_rows, imp_var] <- pred_vals

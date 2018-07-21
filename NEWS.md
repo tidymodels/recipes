@@ -4,6 +4,7 @@
 ## Other Changes:
 
  * `step_step_string2factor` will [now accept factors](https://github.com/tidymodels/recipes/issues/174) and leave them as-is. 
+ * `step_knnimpute` now excludes missing data in the variable to be imputed from the nearest-neighbor calculation. this would have resulted in some missing data to not be imputed (i.e. return another missing value). 
 
 # `recipes` 0.1.3
 
