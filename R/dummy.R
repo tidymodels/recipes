@@ -67,7 +67,7 @@
 #' contained in the training set), a missing value is assigned to
 #' the results. See [step_other()] for an alternative. 
 #'
-#' The [package vignette for dummy variables](https://topepo.github.io/recipes/articles/Dummies.html)
+#' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],

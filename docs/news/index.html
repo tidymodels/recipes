@@ -148,21 +148,21 @@
 <ul>
 <li><p><code>step_log</code> gained an <code>offset</code> argument.</p></li>
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
-<li><p>The internal functions <code>sel2char</code> and <code>printer</code> have been exported to enable <a href="https://github.com/topepo/recipes/issues/122">other packages to contain steps</a>.</p></li>
-<li><p>When training <em>new</em> steps after some steps have been previously trained, the <code>retain = TRUE</code> option should be set on <a href="https://github.com/topepo/recipes/issues/143">previous invocations of <code>prep</code></a>.</p></li>
+<li><p>The internal functions <code>sel2char</code> and <code>printer</code> have been exported to enable <a href="https://github.com/tidymodels/recipes/issues/122">other packages to contain steps</a>.</p></li>
+<li><p>When training <em>new</em> steps after some steps have been previously trained, the <code>retain = TRUE</code> option should be set on <a href="https://github.com/tidymodels/recipes/issues/143">previous invocations of <code>prep</code></a>.</p></li>
 <li>
 <p>For <code>step_dummy</code>:</p>
 <ul>
-<li>It can now compute the <a href="https://github.com/topepo/recipes/issues/145">entire set of dummy variables</a> per factor predictor using the <code>one_hot = TRUE</code> option. Thanks to Davis Vaughan.</li>
+<li>It can now compute the <a href="https://github.com/tidymodels/recipes/issues/145">entire set of dummy variables</a> per factor predictor using the <code>one_hot = TRUE</code> option. Thanks to Davis Vaughan.</li>
 <li>The <code>contrast</code> option was removed. The step uses the global option for contrasts.</li>
-<li>`The step also produces missing indicator variables when the original factor <a href="https://github.com/topepo/recipes/issues/133">has a missing value</a>
+<li>`The step also produces missing indicator variables when the original factor <a href="https://github.com/tidymodels/recipes/issues/133">has a missing value</a>
 </li>
 </ul>
 </li>
 <li>
 <code>step_other</code> will now convert novel levels of the factor to the “other” level.</li>
 <li>
-<code>step_bin2factor</code> now has an option to choose <a href="https://github.com/topepo/recipes/issues/142">how the values are translated to the levels</a> (contributed by Michael Levy).</li>
+<code>step_bin2factor</code> now has an option to choose <a href="https://github.com/tidymodels/recipes/issues/142">how the values are translated to the levels</a> (contributed by Michael Levy).</li>
 <li>
 <code>bake</code> and <code>juice</code> can now export basic data frames.</li>
 <li><p>The <code>okc</code> data were updated with two additional columns.</p></li>
@@ -172,8 +172,8 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes:</h2>
 <ul>
-<li><p><a href="https://github.com/topepo/recipes/issues/125">issue 125</a> that prevented several steps from working with <strong>dplyr</strong> grouped data frames. (contributed by Jeffrey Arnold)</p></li>
-<li><p><a href="https://github.com/topepo/recipes/issues/127">issue 127</a> where options to <code>step_discretize</code> were not being passed to <code>discretize</code>.</p></li>
+<li><p><a href="https://github.com/tidymodels/recipes/issues/125">issue 125</a> that prevented several steps from working with <strong>dplyr</strong> grouped data frames. (contributed by Jeffrey Arnold)</p></li>
+<li><p><a href="https://github.com/tidymodels/recipes/issues/127">issue 127</a> where options to <code>step_discretize</code> were not being passed to <code>discretize</code>.</p></li>
 </ul>
 </div>
 </div>
@@ -184,8 +184,8 @@
 <h2 class="hasAnchor">
 <a href="#general-changes" class="anchor"></a>General Changes:</h2>
 <ul>
-<li><p>Edwin Thoen suggested <a href="https://github.com/topepo/recipes/pull/104">adding validation checks</a> for certain data characteristics. This fed into the existing notion of expanding <code>recipes</code> beyond steps (see the <a href="https://github.com/topepo/recipes/projects">non-step steps project</a>). A new set of operations, called <strong><code>checks</code></strong>, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise.</p></li>
-<li><p>Steps now have a <code>skip</code> option that will not apply preprocessing when <code>bake</code> is used. See the article <a href="https://topepo.github.io/recipes/articles/Skipping.html">on skipping steps</a> for more information.</p></li>
+<li><p>Edwin Thoen suggested <a href="https://github.com/tidymodels/recipes/pull/104">adding validation checks</a> for certain data characteristics. This fed into the existing notion of expanding <code>recipes</code> beyond steps (see the <a href="https://github.com/tidymodels/recipes/projects">non-step steps project</a>). A new set of operations, called <strong><code>checks</code></strong>, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise.</p></li>
+<li><p>Steps now have a <code>skip</code> option that will not apply preprocessing when <code>bake</code> is used. See the article <a href="https://tidymodels.github.io/recipes/articles/Skipping.html">on skipping steps</a> for more information.</p></li>
 </ul>
 </div>
 <div id="new-operations-1" class="section level2">
@@ -219,7 +219,7 @@
 <li>The <code>verbose</code> option for <code>prep</code> is now defaulted to <code>FALSE</code>
 </li>
 <li>
-<a href="https://github.com/topepo/recipes/issues/83">A bug in <code>step_dummy</code></a> was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, <code>step_dummy</code> now requires factor inputs.</li>
+<a href="https://github.com/tidymodels/recipes/issues/83">A bug in <code>step_dummy</code></a> was fixed that makes sure that the correct binary variables are generated despite the levels or values of the incoming factor. Also, <code>step_dummy</code> now requires factor inputs.</li>
 <li>
 <code>step_dummy</code> also has a new default naming function that works better for factors. However, there is an extra argument (<code>ordinal</code>) now to the functions that can be passed to <code>step_dummy</code>.<br>
 </li>
@@ -228,7 +228,7 @@
 <li>
 <code>step_YeoJohnson</code> gained an <code>na.rm</code> option.</li>
 <li>
-<a href="https://github.com/topepo/recipes/issues/85"><code><a href="http://dplyr.tidyverse.org/reference/reexports.html">dplyr::one_of</a></code></a> was added to the list of selectors.</li>
+<a href="https://github.com/tidymodels/recipes/issues/85"><code><a href="http://dplyr.tidyverse.org/reference/reexports.html">dplyr::one_of</a></code></a> was added to the list of selectors.</li>
 <li>
 <code>step_bs</code> adds B-spline basis functions.</li>
 <li>
@@ -244,7 +244,7 @@
 <li>A series of <code>tidy</code> methods were added for recipes and many (but not all) steps.</li>
 <li>In <code>bake.recipe</code>, the argument <code>newdata</code> is now without a default.</li>
 <li>
-<code>bake</code> and <code>juice</code> can now save the <em>final</em> processed data set in <a href="https://github.com/topepo/recipes/issues/49">sparse format</a>. Note that, as the steps are processed, a non-sparse data frame is used to store the results.</li>
+<code>bake</code> and <code>juice</code> can now save the <em>final</em> processed data set in <a href="https://github.com/tidymodels/recipes/issues/49">sparse format</a>. Note that, as the steps are processed, a non-sparse data frame is used to store the results.</li>
 <li>A formula method was added for recipes to get a formula with the outcome(s) and predictors based on the trained recipe.</li>
 </ul>
 </div>
@@ -253,7 +253,7 @@
 <a href="#recipes-0-1-0" class="anchor"></a><small> 2017-07-27 </small><code>recipes</code> 0.1.0</h1>
 <p>First CRAN release.</p>
 <ul>
-<li>Changed <code>prepare</code> to <code>prep</code> per <a href="https://github.com/topepo/recipes/issues/59">issue <a href='https://github.com/tidymodels/recipes/issues/59'>#59</a></a>
+<li>Changed <code>prepare</code> to <code>prep</code> per <a href="https://github.com/tidymodels/recipes/issues/59">issue <a href='https://github.com/tidymodels/recipes/issues/59'>#59</a></a>
 </li>
 </ul>
 </div>
@@ -261,7 +261,7 @@
 <h1 class="page-header">
 <a href="#recipes-0-0-1-9003" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9003</h1>
 <ul>
-<li>Two of the main functions <a href="https://github.com/topepo/recipes/issues/57">changed names</a>. <code>learn</code> has become <code>prepare</code> and <code>process</code> has become <code>bake</code>
+<li>Two of the main functions <a href="https://github.com/tidymodels/recipes/issues/57">changed names</a>. <code>learn</code> has become <code>prepare</code> and <code>process</code> has become <code>bake</code>
 </li>
 </ul>
 </div>
@@ -292,9 +292,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-0-1-9001" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9001</h1>
 <ul>
-<li>The class system for <code>recipe</code> objects was changed so that <a href="https://github.com/topepo/recipes/issues/46">pipes can be used to create the recipe with a formula</a>.</li>
+<li>The class system for <code>recipe</code> objects was changed so that <a href="https://github.com/tidymodels/recipes/issues/46">pipes can be used to create the recipe with a formula</a>.</li>
 <li>
-<code>process.recipe</code> lost the <code>role</code> argument in factor of a general set of <a href="https://topepo.github.io/recipes/articles/Selecting_Variables.html">selectors</a>. If no selector is used, all the predictors are returned.</li>
+<code>process.recipe</code> lost the <code>role</code> argument in factor of a general set of <a href="https://tidymodels.github.io/recipes/articles/Selecting_Variables.html">selectors</a>. If no selector is used, all the predictors are returned.</li>
 <li>Two steps for simple imputation using the mean or mode were added.</li>
 </ul>
 </div>
