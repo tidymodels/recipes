@@ -2,6 +2,9 @@ template:
   params:
     bootswatch: united
 
+development:
+  mode: auto
+
 figures:
   fig.width: 8
   fig.height: 5.75
@@ -23,6 +26,7 @@ reference:
     - current_info
     - add_role
     - tidy.recipe
+    - prepper
   - title: Step Functions - Imputation
     contents:
     - matches("impute")
