@@ -13,8 +13,7 @@
 #' @param recipe An untrained `recipe` object.
 #' @param ... Arguments to pass to `prep` such as `verbose` or `retain`.
 #' @export
-#' @importFrom rsample analysis
 prepper <- function(split_obj, recipe, ...) {
-  prep(recipe, training = analysis(split_obj), ...)
+  prep(recipe, training = rsample::analysis(split_obj), ...)
 }
 # alternate names: chef? dr_prepper?

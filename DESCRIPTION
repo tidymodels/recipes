@@ -33,10 +33,10 @@ Imports:
     magrittr,
     Matrix,
     tidyr,
-    pls,
-    rsample (>= 0.0.2.9000)
+    pls
 Suggests: 
     testthat,
+    rsample (>= 0.0.2.9000),
     rpart,
     kernlab,
     fastICA,
