@@ -228,7 +228,7 @@ There are a bunch of steps related to going in-between factors and dummy variabl
  * [`step_lincomb`](https://tidymodels.github.io/recipes/reference/step_lincomb.html) can be useful if you _over-specify_ interactions and need to remove linear dependencies. 
  * [`step_zv`](https://tidymodels.github.io/recipes/reference/step_zv.html) can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).
  * [`step_bin2factor`](https://tidymodels.github.io/recipes/reference/step_bin2factor.html) takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models. 
- * `step_embed` and `step_tfembed` in the [`embed`](https://github.com/tidymodels/embed) package can use one or more (non-binary) values to encode factor predictors into a numeric form. 
+ * `step_embed`, `step_lencode_glm`, `step_lencode_bayes` and others  in the [`embed`](https://github.com/tidymodels/embed) package can use one or more (non-binary) values to encode factor predictors into a numeric form. 
  
  
 [`step_dummy`](https://tidymodels.github.io/recipes/reference/step_dummy.html) also works with _ordered factors_. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:

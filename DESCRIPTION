@@ -28,7 +28,7 @@ Imports:
     rlang (>= 0.1.1),
     stats,
     tibble,
-    tidyr
+    tidyr,
     tidyselect (>= 0.1.1),
     timeDate
 Suggests: 
