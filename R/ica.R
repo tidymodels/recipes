@@ -47,7 +47,9 @@
 #'  running ICA.
 #'
 #' This package produces components using the "FastICA"
-#'  methodology (see reference below).
+#'  methodology (see reference below). This step requires the
+#'  \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
+#'  step will stop with a note about installing these packages.
 #'
 #' The argument `num` controls the number of components that
 #'  will be retained (the original variables that are used to derive
@@ -98,6 +100,9 @@ step_ica <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
+    
+    recipes_pkg_check(c("dimRed", "fastICA"))
+    
     add_step(
       recipe,
       step_ica_new(
@@ -122,6 +127,7 @@ step_ica_new <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
+    
     step(
       subclass = "ica",
       terms = terms,
@@ -135,7 +141,6 @@ step_ica_new <-
     )
   }
 
-#' @importFrom dimRed FastICA dimRedData
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -143,10 +148,12 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
   x$num <- min(x$num, length(col_names))
 
-  indc <- FastICA(stdpars = x$options)
+  indc <- dimRed::FastICA(stdpars = x$options)
   indc <-
-    indc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-             list(ndim = x$num))
+    indc@fun(
+      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+      list(ndim = x$num)
+      )
 
   step_ica_new(
     terms = x$terms,
@@ -165,7 +172,7 @@ bake.step_ica <- function(object, newdata, ...) {
   ica_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
-      dimRedData(
+      dimRed::dimRedData(
         as.data.frame(newdata[, ica_vars, drop = FALSE])
         )
       )@data
@@ -187,7 +194,6 @@ print.step_ica <-
 
 
 #' @importFrom utils stack
-#' @importFrom dimRed getRotationMatrix
 #' @rdname step_ica
 #' @param x A `step_ica` object.
 tidy.step_ica <- function(x, ...) {

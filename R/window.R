@@ -48,6 +48,9 @@
 #'  smoothed with a 5-point moving median, the first three smoothed
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
+#'  
+# This step requires the \pkg{RcppRoll} package. If not installed, the
+#'  step will stop with a note about installing the package.
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -200,14 +203,14 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom RcppRoll roll_max roll_maxl roll_maxr
-#' @importFrom RcppRoll roll_mean roll_meanl roll_meanr
-#' @importFrom RcppRoll roll_median roll_medianl roll_medianr
-#' @importFrom RcppRoll roll_min roll_minl roll_minr
-#' @importFrom RcppRoll roll_prod roll_prodl roll_prodr
-#' @importFrom RcppRoll roll_sd roll_sdl roll_sdr
-#' @importFrom RcppRoll roll_sum roll_suml roll_sumr
-#' @importFrom RcppRoll roll_var roll_varl roll_varr
+# @importFrom RcppRoll roll_max roll_maxl roll_maxr
+# @importFrom RcppRoll roll_mean roll_meanl roll_meanr
+# @importFrom RcppRoll roll_median roll_medianl roll_medianr
+# @importFrom RcppRoll roll_min roll_minl roll_minr
+# @importFrom RcppRoll roll_prod roll_prodl roll_prodr
+# @importFrom RcppRoll roll_sd roll_sdl roll_sdr
+# @importFrom RcppRoll roll_sum roll_suml roll_sumr
+# @importFrom RcppRoll roll_var roll_varl roll_varr
 roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
 
   m <- length(x)
@@ -217,15 +220,13 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
     stop("The window is too large.", call. = FALSE)
 
   ## stats for centered window
-  roll_cl <- quote(
-    roll_mean(
-      x = x, n = window, weights = NULL, by = 1L,
-      fill = NA, partial = FALSE,
-      normalize = TRUE, na.rm = na.rm
-    )
+  opts <- list(
+    x = x, n = window, by = 1L,
+    fill = NA, partial = FALSE,
+    normalize = TRUE, na.rm = na.rm
   )
-
-  roll_cl[[1]] <- as.name(paste0("roll_", stat))
+  
+  roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
   x2 <- eval(roll_cl)
 
   ## Fill in the left-hand points. Add enough data so that the

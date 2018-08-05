@@ -71,6 +71,10 @@ preserved. This version of MDS uses nearest neighbors in the
 data as a method for increasing the fidelity of the new
 dimensions to the original data values.
 
+This step requires the \pkg{dimRed}, \pkg{RSpectra},
+\pkg{igraph}, and \pkg{RANN} packages. If not installed, the
+step will stop with a note about installing these packages.
+
 It is advisable to center and scale the variables prior to
 running Isomap (\code{step_center} and \code{step_scale} can be
 used for this purpose).

@@ -78,6 +78,9 @@ point not close to the centroid. \code{step_depth} can compute a
 class-specific depth for a new data point based on the proximity
 of the new value to the training set distribution.
 
+This step requires the \pkg{ddalpha} package. If not installed, the
+step will stop with a note about installing the package.
+
 Note that the entire training set is saved to compute future
 depth values. The saved data have been trained (i.e. prepared)
 and baked (i.e. processed) up to the point before the location

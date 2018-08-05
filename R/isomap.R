@@ -39,6 +39,11 @@
 #'  data as a method for increasing the fidelity of the new
 #'  dimensions to the original data values.
 #'
+#' This step requires the \pkg{dimRed}, \pkg{RSpectra},
+#'  \pkg{igraph}, and \pkg{RANN} packages. If not installed, the
+#'  step will stop with a note about installing these packages.
+#'
+#' 
 #' It is advisable to center and scale the variables prior to
 #'  running Isomap (`step_center` and `step_scale` can be
 #'  used for this purpose).
@@ -100,6 +105,9 @@ step_isomap <-
            res = NULL,
            prefix = "Isomap",
            skip = FALSE) {
+    
+    recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
+    
     add_step(
       recipe,
       step_isomap_new(
@@ -137,7 +145,6 @@ step_isomap_new <-
     )
   }
 
-#' @importFrom dimRed embed dimRedData
 #' @export
 prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -147,8 +154,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
   x$options$knn <- min(x$options$knn, nrow(training))
 
   imap <-
-    embed(
-      dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+    dimRed::embed(
+      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
       "Isomap",
       knn = x$options$knn,
       ndim = x$num,
@@ -172,7 +179,7 @@ bake.step_isomap <- function(object, newdata, ...) {
   isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
-      dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
+      dimRed::dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
       )@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)

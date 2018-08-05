@@ -40,6 +40,9 @@
 #'  the new features. The data should be scaled (and perhaps
 #'  centered) prior to running these calculations.
 #'
+#' This step requires the \pkg{pls} package. If not installed, the
+#'  step will stop with a note about installing the package.
+#' 
 #' The argument `num` controls the number of components that will
 #'  be retained (the original variables that are used to derive the
 #'  components are removed from the data). The new components will
@@ -87,7 +90,9 @@ step_pls <-
            skip = FALSE) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
-
+ 
+    recipes_pkg_check("pls")
+    
     add_step(
       recipe,
       step_pls_new(
@@ -128,7 +133,6 @@ step_pls_new <-
     )
   }
 
-#' @importFrom pls plsr
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
   x_names <- terms_select(x$terms, info = info)

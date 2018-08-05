@@ -73,6 +73,9 @@ analysis that requires one or more numeric outcomes to compute
 the new features. The data should be scaled (and perhaps
 centered) prior to running these calculations.
 
+This step requires the \pkg{pls} package. If not installed, the
+step will stop with a note about installing the package.
+
 The argument \code{num} controls the number of components that will
 be retained (the original variables that are used to derive the
 components are removed from the data). The new components will

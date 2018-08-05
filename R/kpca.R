@@ -43,6 +43,10 @@
 #'  square. This nonlinear mapping is used during the PCA analysis
 #'  and can potentially help find better representations of the
 #'  original data.
+#'  
+#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+#' If not installed, the step will stop with a note about installing
+#' these packages.    
 #'
 #' As with ordinary PCA, it is important to standardized the
 #'  variables prior to running PCA (`step_center` and
@@ -112,19 +116,22 @@ step_kpca <-
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
            skip = FALSE) {
-  add_step(
-    recipe,
-    step_kpca_new(
-      terms = ellipse_check(...),
-      role = role,
-      trained = trained,
-      num = num,
-      res = res,
-      options = options,
-      prefix = prefix,
-      skip = skip
+    
+    recipes_pkg_check(c("dimRed", "kernlab"))
+    
+    add_step(
+      recipe,
+      step_kpca_new(
+        terms = ellipse_check(...),
+        role = role,
+        trained = trained,
+        num = num,
+        res = res,
+        options = options,
+        prefix = prefix,
+        skip = skip
+      )
     )
-  )
 }
 
 step_kpca_new <-
@@ -149,15 +156,14 @@ step_kpca_new <-
   )
 }
 
-#' @importFrom dimRed kPCA dimRedData
 #' @export
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  kprc <- kPCA(stdpars = c(list(ndim = x$num), x$options))
+  kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num), x$options))
   kprc <- kprc@fun(
-    dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+    dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
     kprc@stdpars
   )
 
@@ -177,7 +183,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 bake.step_kpca <- function(object, newdata, ...) {
   pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(
-    dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))
+    dimRed::dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))
     )@data
   comps <- comps[, 1:object$num, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)

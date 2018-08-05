@@ -78,7 +78,9 @@ it is advisable to center and scale the variables prior to
 running ICA.
 
 This package produces components using the "FastICA"
-methodology (see reference below).
+methodology (see reference below). This step requires the
+\pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
+step will stop with a note about installing these packages.
 
 The argument \code{num} controls the number of components that
 will be retained (the original variables that are used to derive

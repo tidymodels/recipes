@@ -76,6 +76,10 @@ square. This nonlinear mapping is used during the PCA analysis
 and can potentially help find better representations of the
 original data.
 
+This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+If not installed, the step will stop with a note about installing
+these packages.
+
 As with ordinary PCA, it is important to standardized the
 variables prior to running PCA (\code{step_center} and
 \code{step_scale} can be used for this purpose).

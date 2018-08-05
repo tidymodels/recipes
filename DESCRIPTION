@@ -21,21 +21,20 @@ Imports:
     tibble,
     stats,
     ipred,
-    dimRed (>= 0.1.0),
     lubridate,
     timeDate,
-    ddalpha,
     purrr (>= 0.2.3),
     rlang (>= 0.1.1),
     gower,
-    RcppRoll,
     tidyselect (>= 0.1.1),
     magrittr,
     Matrix,
-    tidyr,
-    pls
+    tidyr
 Suggests: 
     testthat,
+    ddalpha,
+    RcppRoll,
+    dimRed (>= 0.1.0),
     rsample (>= 0.0.2.9000),
     rpart,
     kernlab,
@@ -45,7 +44,8 @@ Suggests:
     knitr,
     ggplot2,
     rmarkdown,
-    covr
+    covr,
+    pls
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8

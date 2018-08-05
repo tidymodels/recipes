@@ -47,7 +47,10 @@
 #'  class-specific depth for a new data point based on the proximity
 #'  of the new value to the training set distribution.
 #'
-#'   Note that the entire training set is saved to compute future
+#' This step requires the \pkg{ddalpha} package. If not installed, the
+#'  step will stop with a note about installing the package.
+#'  
+#' Note that the entire training set is saved to compute future
 #'  depth values. The saved data have been trained (i.e. prepared)
 #'  and baked (i.e. processed) up to the point before the location
 #'  that `step_depth` occupies in the recipe. Also, the data
@@ -86,6 +89,9 @@ step_depth <-
            skip = FALSE) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
+    
+    recipes_pkg_check("ddalpha")
+    
     add_step(
       recipe,
       step_depth_new(
@@ -145,21 +151,19 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
   )
 }
 
-
+#' @importFrom rlang call2
 get_depth <- function(tr_dat, new_dat, metric, opts) {
   if (!is.matrix(new_dat))
     new_dat <- as.matrix(new_dat)
   opts$data <- tr_dat
   opts$x <- new_dat
-  do.call(paste0("depth.", metric), opts)
+  dd_call <- call2(paste0("depth.", metric), !!!opts, .ns = "ddalpha")
+  eval(dd_call)
 }
 
 
 
 #' @importFrom tibble as_tibble
-#' @importFrom ddalpha depth.halfspace depth.Mahalanobis depth.potential
-#'   depth.projection depth.simplicial depth.simplicialVolume depth.spatial
-#'   depth.zonoid
 #' @export
 bake.step_depth <- function(object, newdata, ...) {
   x_names <- colnames(object$data[[1]])

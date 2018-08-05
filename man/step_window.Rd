@@ -82,6 +82,8 @@ respectively. For example if a column \code{x} with 12 values is
 smoothed with a 5-point moving median, the first three smoothed
 values are estimated by \code{median(x[1:5])} and the fourth
 uses \code{median(x[2:6])}.
+
+step will stop with a note about installing the package.
 }
 \examples{
 library(recipes)
