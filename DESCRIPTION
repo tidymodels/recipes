@@ -40,7 +40,7 @@ Suggests:
     igraph,
     kernlab,
     knitr,
-    pls
+    pls,
     RANN,
     rmarkdown,
     rpart,
