@@ -1,6 +1,6 @@
 template:
-  params:
-    bootswatch: united
+  package: tidytemplate
+  default_assets: false
 
 development:
   mode: auto
