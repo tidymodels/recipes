@@ -70,11 +70,11 @@ The data contained in the `data` argument need not be the training set; this dat
 
 ## Preprocessing Steps
 
-From here, preprocessing steps can be added sequentially in one of two ways:
+From here, preprocessing steps for some step _X_ can be added sequentially in one of two ways:
 
 ```{r step_code, eval = FALSE}
-rec_obj <- step_name(rec_obj, arguments)    ## or
-rec_obj <- rec_obj %>% step_name(arguments)
+rec_obj <- step_{X}(rec_obj, arguments)    ## or
+rec_obj <- rec_obj %>% step_{X}(arguments)
 ```
 
 `step_dummy` and the other functions will always return updated recipes. 
