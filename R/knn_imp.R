@@ -196,7 +196,7 @@ bake.step_knnimpute <- function(object, newdata, ...) {
                            new_data, preds, 
                            object$K)
         pred_vals <-
-          apply(nn_ind, 2, nn_pred, dat = object$ref_data[, imp_var])
+          apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
         newdata[missing_rows, imp_var] <- pred_vals
       }
     }
