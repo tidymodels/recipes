@@ -82,6 +82,10 @@ Keep in mind that the location of down-sampling in the step
 may have effects. For example, if centering and scaling,
 it is not clear whether those operations should be conducted
 \emph{before} or \emph{after} rows are removed.
+
+When used in modeling, users should strongly consider using the
+option \code{skip = TRUE} so that the extra sampling is \emph{not}
+conducted outside of the training set.
 }
 \examples{
 data(okc)

@@ -77,6 +77,10 @@ frequency as the majority level, all data will be retained.
 
 All columns in the data are sampled and returned by \code{\link[=juice]{juice()}}
 and \code{\link[=bake]{bake()}}.
+
+When used in modeling, users should strongly consider using the
+option \code{skip = TRUE} so that the extra sampling is \emph{not}
+conducted outside of the training set.
 }
 \examples{
 data(okc)

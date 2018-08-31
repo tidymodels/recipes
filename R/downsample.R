@@ -49,6 +49,11 @@
 #'  may have effects. For example, if centering and scaling,
 #'  it is not clear whether those operations should be conducted
 #'  _before_ or _after_ rows are removed. 
+#'  
+#' When used in modeling, users should strongly consider using the 
+#'  option `skip = TRUE` so that the extra sampling is _not_ 
+#'  conducted outside of the training set. 
+#'    
 #' @keywords datagen
 #' @concept preprocessing subsampling
 #' @export
