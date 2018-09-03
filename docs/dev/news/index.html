@@ -123,6 +123,9 @@
 <code>step_step_string2factor</code> will <a href="https://github.com/tidymodels/recipes/issues/174">now accept factors</a> and leave them as-is.</li>
 <li>
 <code>step_knnimpute</code> now excludes missing data in the variable to be imputed from the nearest-neighbor calculation. This would have resulted in some missing data to not be imputed (i.e. return another missing value).</li>
+<li>
+<code>step_dummy</code> now produces a warning (instead of failing) when non-factor columns are selected. Only factor columns are used; no conversion is done for character data. <a href="https://github.com/tidymodels/recipes/issues/186">issue <a href='https://github.com/tidymodels/recipes/issues/186'>#186</a></a>
+</li>
 </ul>
 </div>
 </div>
@@ -149,10 +152,14 @@
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
 <li><p>The internal functions <code>sel2char</code> and <code>printer</code> have been exported to enable <a href="https://github.com/tidymodels/recipes/issues/122">other packages to contain steps</a>.</p></li>
 <li><p>When training <em>new</em> steps after some steps have been previously trained, the <code>retain = TRUE</code> option should be set on <a href="https://github.com/tidymodels/recipes/issues/143">previous invocations of <code>prep</code></a>.</p></li>
-<li><p>For <code>step_dummy</code>:</p></li>
+<li>
+<p>For <code>step_dummy</code>:</p>
+<ul>
 <li>It can now compute the <a href="https://github.com/tidymodels/recipes/issues/145">entire set of dummy variables</a> per factor predictor using the <code>one_hot = TRUE</code> option. Thanks to Davis Vaughan.</li>
 <li>The <code>contrast</code> option was removed. The step uses the global option for contrasts.</li>
 <li>`The step also produces missing indicator variables when the original factor <a href="https://github.com/tidymodels/recipes/issues/133">has a missing value</a>
+</li>
+</ul>
 </li>
 <li>
 <code>step_other</code> will now convert novel levels of the factor to the “other” level.</li>

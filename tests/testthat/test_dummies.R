@@ -38,12 +38,23 @@ test_that('dummy variables with factor inputs', {
   expect_equal(tidy(dummy_trained, 1), dum_tibble)
 })
 
-test_that('dummy variables with string inputs', {
+test_that('dummy variables with non-factor inputs', {
   rec <- recipe(age ~ location + diet, data = okc)
   dummy <- rec %>% step_dummy(diet, location)
   expect_error(
     prep(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
   )
+  
+  okc_fac_ish <- 
+    okc_fac %>%
+    mutate(diet = as.character(diet))
+  
+  expect_warning(
+    recipe(age ~ location + height + diet, data = okc_fac_ish) %>% 
+      step_dummy(diet, location, height) %>%
+      prep(training = okc_fac_ish, verbose = FALSE, stringsAsFactors = FALSE)
+  )  
+  
 })
 
 test_that('create all dummy variables', {

@@ -116,7 +116,8 @@
 <li>[ ] Start a new R session</li>
 <li>[ ] Install the latest version of of the package: <code>update.packages(oldPkgs="recipes", ask=FALSE)</code>
 </li>
-<li>[ ] [Write a minimal reproducible example](<a href="http://stackoverflow.com/a/5963610" class="uri">http://stackoverflow.com/a/5963610</a>)</li>
+<li>[ ] <a href="http://stackoverflow.com/a/5963610">Write a minimal reproducible example</a>
+</li>
 <li>[ ] run <code>sessionInfo()</code> and add the results to the issue. Even better would be to use the <a href="https://github.com/r-lib/sessioninfo"><code>sessioninfo</code></a> package’s <code>session_info()</code>.</li>
 </ul>
 <div id="minimal-reproducible-example" class="section level3">
@@ -128,36 +129,36 @@
 <h4 class="hasAnchor">
 <a href="#minimal-reproducible-dataset" class="anchor"></a><em>Minimal</em> Reproducible Dataset:</h4>
 <p>If you are not using a data set in a package then use e.g. <code>dput()</code> to give us something that can be put in R immediately, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dput</span>(<span class="kw">head</span>(iris,<span class="dv">4</span>))</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">dput</span>(<span class="kw">head</span>(iris,<span class="dv">4</span>))</a></code></pre></div>
 <p>Without a dataset, there usually isn’t much that we can do to help.</p>
 <p>If your data frame has a factor with many levels, the <code>dput</code> output can be unwieldy because it will still list all the possible factor levels even if they aren’t present in the the subset of your data. To solve this issue, you can use the <code>droplevels()</code> function. Notice below how species is a factor with only one level: <code>dput(droplevels(head(iris, 4)))</code>.</p>
 </div>
 <div id="minimal-runnable-code" class="section level4">
 <h4 class="hasAnchor">
 <a href="#minimal-runnable-code" class="anchor"></a>Minimal, runnable code:</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(recipes)
-<span class="kw">data</span>(biomass)
-
-biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]
-biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]
-
-rec &lt;-<span class="st"> </span><span class="kw"><a href="reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>carbon <span class="op">+</span><span class="st"> </span>hydrogen <span class="op">+</span><span class="st"> </span>oxygen <span class="op">+</span><span class="st"> </span>nitrogen <span class="op">+</span><span class="st"> </span>sulfur,
-              <span class="dt">data =</span> biomass_tr)
-
-center_trans &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="reference/step_center.html">step_center</a></span>(carbon, <span class="kw">contains</span>(<span class="st">"gen"</span>), <span class="op">-</span>hydrogen)
-
-center_obj &lt;-<span class="st"> </span><span class="kw"><a href="reference/prep.html">prep</a></span>(center_trans, <span class="dt">training =</span> biomass_tr)
-
-transformed_te &lt;-<span class="st"> </span><span class="kw"><a href="reference/bake.html">bake</a></span>(center_obj, biomass_te) </code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">data</span>(biomass)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">rec &lt;-<span class="st"> </span><span class="kw"><a href="reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>carbon <span class="op">+</span><span class="st"> </span>hydrogen <span class="op">+</span><span class="st"> </span>oxygen <span class="op">+</span><span class="st"> </span>nitrogen <span class="op">+</span><span class="st"> </span>sulfur,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">              <span class="dt">data =</span> biomass_tr)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">center_trans &lt;-<span class="st"> </span>rec <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="reference/step_center.html">step_center</a></span>(carbon, <span class="kw">contains</span>(<span class="st">"gen"</span>), <span class="op">-</span>hydrogen)</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">center_obj &lt;-<span class="st"> </span><span class="kw"><a href="reference/prep.html">prep</a></span>(center_trans, <span class="dt">training =</span> biomass_tr)</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">transformed_te &lt;-<span class="st"> </span><span class="kw"><a href="reference/bake.html">bake</a></span>(center_obj, biomass_te) </a></code></pre></div>
 </div>
 </div>
 <div id="session-info" class="section level3">
 <h3 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info:</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()
-
-<span class="co"># or sessioninfo::session_info()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># or sessioninfo::session_info()</span></a></code></pre></div>
 <p>Be sure to test your chunks of code in an empty R session before submitting your issue!</p>
 </div>
 

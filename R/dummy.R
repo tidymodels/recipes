@@ -8,7 +8,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will be used to create the dummy variables. See
+#'  _factor_ variables will be used to create the dummy variables. See
 #'  [selections()] for more details. The selected
 #'  variables must be factors. For the `tidy` method, these are
 #'  not currently used.
@@ -157,12 +157,17 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
   if (any(!fac_check))
-    stop(
-      "The following variables are not factor vectors: ",
+    warning(
+      "The following variables are not factor vectors and will be ignored: ",
       paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
       call. = FALSE
     )
-
+  col_names <- col_names[fac_check]
+  if (length(col_names) == 0) {
+    stop("The `terms` argument in `step_dummy` did not select ",
+         "any factor columns.", call. = FALSE)
+  }
+  
 
   ## I hate doing this but currently we are going to have
   ## to save the terms object from the original (= training)

@@ -15,7 +15,7 @@ step_dummy(recipe, ..., role = "predictor", trained = FALSE,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will be used to create the dummy variables. See
+\emph{factor} variables will be used to create the dummy variables. See
 \code{\link[=selections]{selections()}} for more details. The selected
 variables must be factors. For the \code{tidy} method, these are
 not currently used.}
