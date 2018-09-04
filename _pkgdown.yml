@@ -47,7 +47,7 @@ reference:
   - title: Step Functions - Discretization
     contents:
     - matches("discreti")
-  - title: Step Functions - Dummy Variables
+  - title: Step Functions - Dummy Variables and Encodings
     contents:
     - step_bin2factor
     - step_count    
@@ -55,6 +55,7 @@ reference:
     - step_dummy
     - step_factor2string
     - step_holiday
+    - step_integer
     - step_novel
     - step_num2factor
     - step_ordinalscore

@@ -215,6 +215,8 @@ When a recipe is used with new samples, some factors may have acquired new level
 
 One way around this is to use `step_other`. This step can convert infrequently occurring levels to a new category (that defaults to "other"). This step can also be used to convert new factor levels to "other" also. 
 
+Also, `step_integer` has functionality similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) and encodes new values as zero.
+
 The [`embed`](https://github.com/tidymodels/embed) package can also handle novel factors levels within a recipe. `step_embed` and `step_tfembed` assign a common numeric score to novel levels.  
 
 ## Other Steps Related to Dummy Variables

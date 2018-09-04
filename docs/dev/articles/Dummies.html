@@ -349,6 +349,7 @@
 <a href="#novel-levels" class="anchor"></a>Novel Levels</h2>
 <p>When a recipe is used with new samples, some factors may have acquired new levels that were not present when <code>prep</code> was run. If <code>step_dummy</code> encounters this situation, a warning is issues (“There are new levels in a factor”) and the indicator variables that correspond to the factor are assigned missing values.</p>
 <p>One way around this is to use <code>step_other</code>. This step can convert infrequently occurring levels to a new category (that defaults to “other”). This step can also be used to convert new factor levels to “other” also.</p>
+<p>Also, <code>step_integer</code> has functionality similar to <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a> and encodes new values as zero.</p>
 <p>The <a href="https://github.com/tidymodels/embed"><code>embed</code></a> package can also handle novel factors levels within a recipe. <code>step_embed</code> and <code>step_tfembed</code> assign a common numeric score to novel levels.</p>
 </div>
 <div id="other-steps-related-to-dummy-variables" class="section level2">

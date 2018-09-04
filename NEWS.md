@@ -1,5 +1,9 @@
 # `recipes` 0.1.3.9000
 
+## New Operations:
+
+ * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html). It is 1-based with zero reserved for new values. issues [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
+
 
 ## Other Changes:
 
