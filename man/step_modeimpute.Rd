@@ -5,8 +5,8 @@
 \alias{tidy.step_modeimpute}
 \title{Impute Nominal Data Using the Most Common Value}
 \usage{
-step_modeimpute(recipe, ..., role = NA, trained = FALSE, modes = NULL,
-  skip = FALSE)
+step_modeimpute(recipe, ..., role = NA, trained = FALSE,
+  modes = NULL, skip = FALSE)
 
 \method{tidy}{step_modeimpute}(x, ...)
 }
@@ -83,7 +83,5 @@ table(credit_te$Home, imputed_te$Home, useNA = "always")
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

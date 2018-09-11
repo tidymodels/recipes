@@ -97,7 +97,5 @@ the second to compute the allowed slack at the upper end.
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

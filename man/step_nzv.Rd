@@ -5,8 +5,9 @@
 \alias{tidy.step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
-step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
-  = 95/5, unique_cut = 10), removals = NULL, skip = FALSE)
+step_nzv(recipe, ..., role = NA, trained = FALSE,
+  options = list(freq_cut = 95/5, unique_cut = 10), removals = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_nzv}(x, ...)
 }
@@ -104,7 +105,5 @@ tidy(filter_obj, number = 1)
 \code{\link[=step_corr]{step_corr()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

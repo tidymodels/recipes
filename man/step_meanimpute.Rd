@@ -5,8 +5,8 @@
 \alias{tidy.step_meanimpute}
 \title{Impute Numeric Data Using the Mean}
 \usage{
-step_meanimpute(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  trim = 0, skip = FALSE)
+step_meanimpute(recipe, ..., role = NA, trained = FALSE,
+  means = NULL, trim = 0, skip = FALSE)
 
 \method{tidy}{step_meanimpute}(x, ...)
 }
@@ -88,7 +88,5 @@ imputed_te[missing_examples, names(credit_te)]
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

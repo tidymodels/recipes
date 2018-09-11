@@ -5,8 +5,8 @@
 \alias{tidy.step_ordinalscore}
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
-step_ordinalscore(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  convert = as.numeric, skip = FALSE)
+step_ordinalscore(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, convert = as.numeric, skip = FALSE)
 
 \method{tidy}{step_ordinalscore}(x, ...)
 }
@@ -97,7 +97,5 @@ juice(nonlin_scores, everything())
 
 tidy(nonlin_scores, number = 2)
 }
-\concept{
-preprocessing ordinal_data
-}
+\concept{preprocessing ordinal_data}
 \keyword{datagen}

@@ -99,7 +99,5 @@ A review. \emph{The Statistician}, 169-178..
 \code{\link[=step_YeoJohnson]{step_YeoJohnson()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

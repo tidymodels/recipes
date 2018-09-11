@@ -5,8 +5,8 @@
 \alias{tidy.step_invlogit}
 \title{Inverse Logit Transformation}
 \usage{
-step_invlogit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+step_invlogit(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, skip = FALSE)
 
 \method{tidy}{step_invlogit}(x, ...)
 }
@@ -78,7 +78,5 @@ plot(biomass_te$carbon, transformed_te$carbon)
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

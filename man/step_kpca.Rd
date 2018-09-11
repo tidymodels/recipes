@@ -6,8 +6,8 @@
 \title{Kernel PCA Signal Extraction}
 \usage{
 step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
-  prefix = "kPC", skip = FALSE)
+  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
+  0.2)), prefix = "kPC", skip = FALSE)
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -140,7 +140,5 @@ of Statistical Software}, 11(1), 1-20.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pca projection_methods kernel_methods
-}
+\concept{preprocessing pca projection_methods kernel_methods}
 \keyword{datagen}

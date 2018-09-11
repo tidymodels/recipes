@@ -5,8 +5,9 @@
 \alias{tidy.step_bin2factor}
 \title{Create a Factors from A Dummy Variable}
 \usage{
-step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
-  "no"), ref_first = TRUE, columns = NULL, skip = FALSE)
+step_bin2factor(recipe, ..., role = NA, trained = FALSE,
+  levels = c("yes", "no"), ref_first = TRUE, columns = NULL,
+  skip = FALSE)
 
 \method{tidy}{step_bin2factor}(x, ...)
 }
@@ -80,7 +81,5 @@ table(results$rocks, results$more_rocks)
 
 tidy(rec, number = 3)
 }
-\concept{
-preprocessing dummy_variables factors
-}
+\concept{preprocessing dummy_variables factors}
 \keyword{datagen}

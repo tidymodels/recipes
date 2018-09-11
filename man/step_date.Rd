@@ -103,7 +103,5 @@ tidy(date_rec, number = 1)
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing model_specification variable_encodings dates
-}
+\concept{preprocessing model_specification variable_encodings dates}
 \keyword{datagen}

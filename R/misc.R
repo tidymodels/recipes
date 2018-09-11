@@ -148,6 +148,8 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  that result _after_ `model.matrix` is called (see the
 #'  example below).
 #' @param ordinal A logical; was the original factor ordered?
+#' @param sep A single character value for the separator between the names and
+#'  levels.  
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`,
@@ -179,12 +181,12 @@ names0 <- function(num, prefix = "x") {
 
 #' @export
 #' @rdname names0
-dummy_names <- function(var, lvl, ordinal = FALSE) {
+dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   if(!ordinal)
-    nms <- paste(var, make.names(lvl), sep = "_")
+    nms <- paste(var, make.names(lvl), sep = sep)
   else
     # assuming they are in order:
-    nms <- paste0(var, names0(length(lvl), "_"))
+    nms <- paste0(var, names0(length(lvl), sep))
 
   nms
 }

@@ -3,7 +3,6 @@
 \name{bake}
 \alias{bake}
 \alias{bake.recipe}
-\alias{bake.recipe}
 \title{Apply a Trained Data Recipe}
 \usage{
 bake(object, ...)
@@ -57,7 +56,5 @@ of the steps applied.
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

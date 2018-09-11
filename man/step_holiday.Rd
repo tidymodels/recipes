@@ -6,8 +6,8 @@
 \title{Holiday Feature Generator}
 \usage{
 step_holiday(recipe, ..., role = "predictor", trained = FALSE,
-  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL,
-  skip = FALSE)
+  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+  columns = NULL, skip = FALSE)
 
 \method{tidy}{step_holiday}(x, ...)
 }
@@ -78,8 +78,6 @@ holiday_values
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
 }
-\concept{
-preprocessing model_specification variable_encodings
-dates
-}
+\concept{preprocessing model_specification variable_encodings
+dates}
 \keyword{datagen}

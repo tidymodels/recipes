@@ -91,7 +91,5 @@ ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
 }
-\concept{
-preprocessing
-}
+\concept{preprocessing}
 \keyword{datagen}

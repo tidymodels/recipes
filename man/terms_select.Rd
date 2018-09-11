@@ -34,7 +34,5 @@ terms_select(info = info, quos(all_predictors()))
 \code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}}
 }
-\concept{
-preprocessing
-}
+\concept{preprocessing}
 \keyword{datagen}

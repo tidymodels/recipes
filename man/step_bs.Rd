@@ -5,8 +5,9 @@
 \alias{tidy.step_bs}
 \title{B-Spline Basis Functions}
 \usage{
-step_bs(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
-  options = list(df = NULL, degree = 3), skip = FALSE)
+step_bs(recipe, ..., role = "predictor", trained = FALSE,
+  objects = NULL, options = list(df = NULL, degree = 3),
+  skip = FALSE)
 
 \method{tidy}{step_bs}(x, ...)
 }
@@ -82,7 +83,5 @@ expanded
 \code{\link[=step_poly]{step_poly()}} \code{\link[=recipe]{recipe()}} \code{\link[=step_ns]{step_ns()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing basis_expansion
-}
+\concept{preprocessing basis_expansion}
 \keyword{datagen}

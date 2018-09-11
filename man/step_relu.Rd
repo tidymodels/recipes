@@ -5,8 +5,9 @@
 \alias{tidy.step_relu}
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
-step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE, prefix = "right_relu_", skip = FALSE)
+step_relu(recipe, ..., role = "predictor", trained = FALSE,
+  shift = 0, reverse = FALSE, smooth = FALSE,
+  prefix = "right_relu_", skip = FALSE)
 
 \method{tidy}{step_relu}(x, ...)
 }

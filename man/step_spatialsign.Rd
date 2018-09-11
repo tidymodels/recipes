@@ -91,7 +91,5 @@ Serneels, S., De Nolf, E., and Van Espen, P.
 moderate robustness to multivariate estimators. \emph{Journal of
 Chemical Information and Modeling}, 46(3), 1402-1409.
 }
-\concept{
-preprocessing projection_methods
-}
+\concept{preprocessing projection_methods}
 \keyword{datagen}

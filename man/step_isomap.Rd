@@ -5,9 +5,9 @@
 \alias{tidy.step_isomap}
 \title{Isomap Embedding}
 \usage{
-step_isomap(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  options = list(knn = 50, .mute = c("message", "output")), res = NULL,
-  prefix = "Isomap", skip = FALSE)
+step_isomap(recipe, ..., role = "predictor", trained = FALSE,
+  num = 5, options = list(knn = 50, .mute = c("message", "output")),
+  res = NULL, prefix = "Isomap", skip = FALSE)
 
 \method{tidy}{step_isomap}(x, ...)
 }
@@ -130,7 +130,5 @@ https://github.com/gdkrmr
 \code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing isomap projection_methods
-}
+\concept{preprocessing isomap projection_methods}
 \keyword{datagen}

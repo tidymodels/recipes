@@ -5,8 +5,8 @@
 \alias{tidy.step_range}
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
-step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
-  ranges = NULL, skip = FALSE)
+step_range(recipe, ..., role = NA, trained = FALSE, min = 0,
+  max = 1, ranges = NULL, skip = FALSE)
 
 \method{tidy}{step_range}(x, ...)
 }
@@ -83,7 +83,5 @@ transformed_te
 tidy(ranged_trans, number = 1)
 tidy(ranged_obj, number = 1)
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

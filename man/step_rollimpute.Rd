@@ -5,8 +5,8 @@
 \alias{tidy.step_rollimpute}
 \title{Impute Numeric Data Using a Rolling Window Statistic}
 \usage{
-step_rollimpute(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  statistic = median, window = 5, skip = FALSE)
+step_rollimpute(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, statistic = median, window = 5, skip = FALSE)
 
 \method{tidy}{step_rollimpute}(x, ...)
 }
@@ -95,7 +95,5 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
 
 juice(seven_pt)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

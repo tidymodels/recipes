@@ -64,7 +64,5 @@ bake(rand_set, integers)
 tidy(rec, number = 1)
 tidy(rand_set, number = 1)
 }
-\concept{
-preprocessing randomization permutation
-}
+\concept{preprocessing randomization permutation}
 \keyword{datagen}

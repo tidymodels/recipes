@@ -17,8 +17,8 @@ estimate_yj(dat, limits = c(-5, 5), nunique = 5, na.rm = TRUE)
 
 ellipse_check(...)
 
-printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE, width = max(20,
-  options()$width - 30))
+printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE,
+  width = max(20, options()$width - 30))
 
 prepare(x, ...)
 
@@ -58,11 +58,7 @@ A character vector
 \description{
 These are not to be used directly by the users.
 
-Check for Empty Ellipses
-
 This internal function is used for printing steps.
-
-Check to see if a step or check as been trained
 
 This internal function takes a list of selectors (e.g. \code{terms}
 in most steps) and returns a character vector version for

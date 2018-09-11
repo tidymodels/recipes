@@ -125,7 +125,5 @@ tidy(ratio_recipe2, number = 1)
 Gower, C. (1971) "A general coefficient of
 similarity and some of its properties," Biometrics, 857-871.
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

@@ -117,7 +117,5 @@ names(dat_2)
 tidy(int_mod_1, number = 1)
 tidy(int_mod_2, number = 1)
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

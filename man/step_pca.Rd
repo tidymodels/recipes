@@ -132,7 +132,5 @@ Analysis}. Springer.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pca projection_methods
-}
+\concept{preprocessing pca projection_methods}
 \keyword{datagen}

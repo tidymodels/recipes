@@ -11,6 +11,8 @@
  * `step_step_string2factor` will [now accept factors](https://github.com/tidymodels/recipes/issues/174) and leave them as-is. 
  * `step_knnimpute` now excludes missing data in the variable to be imputed from the nearest-neighbor calculation. This would have resulted in some missing data to not be imputed (i.e. return another missing value). 
  * `step_dummy` now produces a warning (instead of failing) when non-factor columns are selected. Only factor columns are used; no conversion is done for character data. [issue #186](https://github.com/tidymodels/recipes/issues/186)
+ * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
+
 
 # `recipes` 0.1.3
 

@@ -5,8 +5,8 @@
 \alias{tidy.step_string2factor}
 \title{Convert Strings to Factors}
 \usage{
-step_string2factor(recipe, ..., role = NA, trained = FALSE, levels = NULL,
-  ordered = FALSE, skip = FALSE)
+step_string2factor(recipe, ..., role = NA, trained = FALSE,
+  levels = NULL, ordered = FALSE, skip = FALSE)
 
 \method{tidy}{step_string2factor}(x, ...)
 }
@@ -82,7 +82,5 @@ tidy(make_factor, number = 1)
 \code{\link[=step_factor2string]{step_factor2string()}} \code{\link[=step_dummy]{step_dummy()}} \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}
 }
-\concept{
-preprocessing variable_encodings factors
-}
+\concept{preprocessing variable_encodings factors}
 \keyword{datagen}

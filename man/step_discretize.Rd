@@ -5,8 +5,8 @@
 \alias{tidy.step_discretize}
 \title{Discretize Numeric Variables}
 \usage{
-step_discretize(recipe, ..., role = NA, trained = FALSE, objects = NULL,
-  options = list(), skip = FALSE)
+step_discretize(recipe, ..., role = NA, trained = FALSE,
+  objects = NULL, options = list(), skip = FALSE)
 
 \method{tidy}{step_discretize}(x, ...)
 }

@@ -5,8 +5,8 @@
 \alias{tidy.step_novel}
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
-step_novel(recipe, ..., role = NA, trained = FALSE, new_level = "new",
-  objects = NULL, skip = FALSE)
+step_novel(recipe, ..., role = NA, trained = FALSE,
+  new_level = "new", objects = NULL, skip = FALSE)
 
 \method{tidy}{step_novel}(x, ...)
 }
@@ -91,7 +91,5 @@ tidy(rec, number = 1)
 \code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 }
-\concept{
-preprocessing factors
-}
+\concept{preprocessing factors}
 \keyword{datagen}

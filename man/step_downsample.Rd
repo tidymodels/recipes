@@ -102,7 +102,5 @@ table(juice(ds_rec)$diet, useNA = "always")
 baked_okc <- bake(ds_rec, newdata = okc)
 table(baked_okc$diet, useNA = "always")
 }
-\concept{
-preprocessing subsampling
-}
+\concept{preprocessing subsampling}
 \keyword{datagen}

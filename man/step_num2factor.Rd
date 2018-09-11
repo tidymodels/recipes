@@ -90,7 +90,5 @@ table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 \code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
 \code{\link[=step_dummy]{step_dummy()}}
 }
-\concept{
-preprocessing variable_encodings factors
-}
+\concept{preprocessing variable_encodings factors}
 \keyword{datagen}

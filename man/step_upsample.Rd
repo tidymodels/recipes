@@ -110,7 +110,5 @@ data.frame(
   baked_freq = as.vector(baked)
 )
 }
-\concept{
-preprocessing subsampling
-}
+\concept{preprocessing subsampling}
 \keyword{datagen}

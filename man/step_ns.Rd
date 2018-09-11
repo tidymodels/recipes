@@ -5,8 +5,8 @@
 \alias{tidy.step_ns}
 \title{Nature Spline Basis Functions}
 \usage{
-step_ns(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
-  options = list(df = 2), skip = FALSE)
+step_ns(recipe, ..., role = "predictor", trained = FALSE,
+  objects = NULL, options = list(df = 2), skip = FALSE)
 
 \method{tidy}{step_ns}(x, ...)
 }
@@ -82,7 +82,5 @@ expanded
 \code{\link[=step_poly]{step_poly()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing basis_expansion
-}
+\concept{preprocessing basis_expansion}
 \keyword{datagen}

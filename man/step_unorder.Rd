@@ -74,7 +74,5 @@ tidy(factor_obj, number = 1)
 \code{\link[=step_ordinalscore]{step_ordinalscore()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing ordinal_data
-}
+\concept{preprocessing ordinal_data}
 \keyword{datagen}

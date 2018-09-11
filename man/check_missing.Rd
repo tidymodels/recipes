@@ -5,8 +5,8 @@
 \alias{tidy.check_missing}
 \title{Check for Missing Values}
 \usage{
-check_missing(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+check_missing(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, skip = FALSE)
 
 \method{tidy}{check_missing}(x, ...)
 }

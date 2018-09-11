@@ -7,7 +7,7 @@
 \usage{
 names0(num, prefix = "x")
 
-dummy_names(var, lvl, ordinal = FALSE)
+dummy_names(var, lvl, ordinal = FALSE, sep = "_")
 }
 \arguments{
 \item{num}{A single integer for how many elements are created.}
@@ -22,6 +22,9 @@ that result \emph{after} \code{model.matrix} is called (see the
 example below).}
 
 \item{ordinal}{A logical; was the original factor ordered?}
+
+\item{sep}{A single character value for the separator between the names and
+levels.}
 }
 \value{
 \code{names0} returns a character string of length \code{num} and
@@ -50,7 +53,5 @@ levels(example$y)
 
 dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
 }
-\concept{
-string_functions naming_functions
-}
+\concept{string_functions naming_functions}
 \keyword{datagen}

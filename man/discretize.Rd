@@ -11,8 +11,9 @@ discretize(x, ...)
 
 \method{discretize}{default}(x, ...)
 
-\method{discretize}{numeric}(x, cuts = 4, labels = NULL, prefix = "bin",
-  keep_na = TRUE, infs = TRUE, min_unique = 10, ...)
+\method{discretize}{numeric}(x, cuts = 4, labels = NULL,
+  prefix = "bin", keep_na = TRUE, infs = TRUE, min_unique = 10,
+  ...)
 
 \method{predict}{discretize}(object, newdata, ...)
 }
@@ -101,7 +102,5 @@ rec <- prep(rec, biomass_tr)
 binned_te <- bake(rec, biomass_te)
 table(binned_te$carbon)
 }
-\concept{
-preprocessing discretization factors
-}
+\concept{preprocessing discretization factors}
 \keyword{datagen}

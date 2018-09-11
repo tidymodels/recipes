@@ -89,7 +89,5 @@ tidy(lincomb_filter_trained, number = 1)
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}
