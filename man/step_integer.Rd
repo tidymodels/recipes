@@ -27,6 +27,9 @@ used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
+\item{strict}{A logical for whether the values should be returned as
+integers (as opposed to double).}
+
 \item{key}{A list that contains the information needed to
 create integer variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
@@ -40,9 +43,6 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{x}{A \code{step_integer} object.}
-
-\item{strick}{A logical for whether the values should be returned as
-integers (as opposed to double).}
 }
 \value{
 An updated version of \code{recipe} with the new step added

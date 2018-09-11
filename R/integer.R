@@ -18,7 +18,7 @@
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param strick A logical for whether the values should be returned as 
+#' @param strict A logical for whether the values should be returned as 
 #'  integers (as opposed to double). 
 #' @return An updated version of `recipe` with the new step added
 #'  to the sequence of existing steps (if any). For the `tidy`
