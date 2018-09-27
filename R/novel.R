@@ -29,17 +29,17 @@
 #'  position. During preparation there will be no data points
 #'  associated with this new level since all of the data have been
 #'  seen.
-#'  
+#'
 #' Note that if the original columns are character, they will be
 #'  converted to factors by this step.
-#'  
-#' Missing values will remain missing. 
-#' 
+#'
+#' Missing values will remain missing.
+#'
 #' If `new_level` is already in the data given to `prep`, an error
-#'  is thrown. 
-#'  
+#'  is thrown.
+#'
 #' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()], 
+#'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #' @examples
 #' data(okc)
@@ -127,19 +127,19 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
              collapse = ", "),
       call. = FALSE
     )
-  
+
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
-  level_check <- 
+  level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check))
     stop(
       "Columns already contain the new level: ",
       paste0(names(level_check)[level_check], collapse = ", "),
       call. = FALSE
-    )  
-  
+    )
+
   step_novel_new(
     terms = x$terms,
     role = x$role,
@@ -161,9 +161,9 @@ bake.step_novel <- function(object, newdata, ...) {
       object$new_level,
       as.character(newdata[[i]])
     )
-    
-    newdata[[i]] <- 
-      factor(newdata[[i]], 
+
+    newdata[[i]] <-
+      factor(newdata[[i]],
              levels = c(object$object[[i]], object$new_level),
              ordered = attributes(object$object[[i]])$is_ordered)
   }
@@ -182,6 +182,7 @@ print.step_novel <-
 #' @rdname step_novel
 #' @param x A `step_novel` object.
 #' @importFrom purrr map
+#' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),

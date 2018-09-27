@@ -321,6 +321,7 @@ print.step_discretize <-
 #' @importFrom rlang na_dbl
 #' @rdname step_discretize
 #' @param x A `step_discretize` object
+#' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {
     brks <- lapply(x$objects,

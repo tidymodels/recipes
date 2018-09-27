@@ -170,6 +170,7 @@ denom_vars <- function(...) quos(...)
 
 #' @rdname step_ratio
 #' @param x A `step_ratio` object
+#' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
     res <- x$columns

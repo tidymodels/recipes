@@ -68,7 +68,7 @@ step_regex <- function(recipe,
 
   terms <- ellipse_check(...)
   if (length(terms) > 1)
-    stop("For this step, only a single selector can be used.", 
+    stop("For this step, only a single selector can be used.",
          call. = FALSE)
 
   add_step(
@@ -163,6 +163,7 @@ print.step_regex <-
 
 #' @rdname step_regex
 #' @param x A `step_regex` object.
+#' @export
 tidy.step_regex <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)

@@ -251,6 +251,7 @@ print.step_date <-
 
 #' @rdname step_date
 #' @param x A `step_date` object.
+#' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- expand.grid(

@@ -178,6 +178,7 @@ print.step_count <-
 
 #' @rdname step_count
 #' @param x A `step_count` object.
+#' @export
 tidy.step_count <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)

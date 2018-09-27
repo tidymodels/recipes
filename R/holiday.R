@@ -175,6 +175,7 @@ print.step_holiday <-
 
 #' @rdname step_holiday
 #' @param x A `step_holiday` object.
+#' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,

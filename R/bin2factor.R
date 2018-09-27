@@ -133,6 +133,7 @@ print.step_bin2factor <-
 
 #' @rdname step_bin2factor
 #' @param x A `step_bin2factor` object.
+#' @export
 tidy.step_bin2factor <- function(x, ...) {
   simple_terms(x, ...)
 }

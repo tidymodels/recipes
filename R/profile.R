@@ -44,62 +44,62 @@
 #'  not determined until [prep.recipe()] is called.
 #' @details This step is atypical in that, when baked, the
 #'  `newdata` argument is ignored; the resulting data set is
-#'  based on the fixed and profiled variable's information. 
+#'  based on the fixed and profiled variable's information.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (which
 #'  is the columns that will be affected), and `type` (fixed or
 #'  profiled).
 #' @keywords datagen
-#' @concept preprocessing 
+#' @concept preprocessing
 #' @export
 #' @examples
 #' data(okc)
-#' 
+#'
 #' # Setup a grid across date but keep the other values fixed
 #' recipe(~ diet + height + date, data = okc) %>%
 #'   step_profile(-date, profile = vars(date)) %>%
 #'   prep(training = okc, retain = TRUE) %>%
 #'   juice
-#' 
-#' 
+#'
+#'
 #' ##########
-#' 
+#'
 #' # An *additive* model; not for use when there are interactions or
 #' # other functional relationships between predictors
-#' 
+#'
 #' lin_mod <- lm(mpg ~ poly(disp, 2) + cyl + hp, data = mtcars)
-#' 
+#'
 #' # Show the difference in the two grid creation methods
-#' 
+#'
 #' disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) %>%
 #'   step_profile(-disp, profile = vars(disp)) %>%
 #'   prep(training = mtcars, retain = TRUE)
-#' 
+#'
 #' disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) %>%
 #'   step_profile(
-#'     -disp, 
+#'     -disp,
 #'     profile = vars(disp),
 #'     grid = list(pctl = FALSE, len = 100)
 #'   ) %>%
 #'   prep(training = mtcars, retain = TRUE)
-#' 
-#' grid_data <- juice(disp_grid) 
+#'
+#' grid_data <- juice(disp_grid)
 #' grid_data <- grid_data %>%
 #'   mutate(pred = predict(lin_mod, grid_data),
 #'          method = "grid")
-#' 
+#'
 #' pctl_data <- juice(disp_pctl)
 #' pctl_data <- pctl_data %>%
 #'   mutate(pred = predict(lin_mod, pctl_data),
 #'          method = "percentile")
-#' 
+#'
 #' plot_data <- bind_rows(grid_data, pctl_data)
-#' 
+#'
 #' library(ggplot2)
-#' 
-#' ggplot(plot_data, aes(x = disp, y = pred)) + 
-#'   geom_point(alpha = .5, cex = 1) + 
+#'
+#' ggplot(plot_data, aes(x = disp, y = pred)) +
+#'   geom_point(alpha = .5, cex = 1) +
 #'   facet_wrap(~ method)
 
 step_profile <- function(recipe,
@@ -112,7 +112,7 @@ step_profile <- function(recipe,
                          role = NA,
                          trained = FALSE,
                          skip = FALSE) {
-  
+
   if (pct < 0 | pct > 1)
     stop("`pct should be on [0, 1]`", call. = FALSE)
   if (length(grid) != 2)
@@ -122,10 +122,10 @@ step_profile <- function(recipe,
     stop("`grid` should have two named elements. See ?step_profile",
          call. = FALSE)
   if (grid$len < 2)
-    stop("`grid$len should be at least 2.`", call. = FALSE)  
+    stop("`grid$len should be at least 2.`", call. = FALSE)
   if (!is.logical(grid$pctl))
-    stop("`grid$pctl should be logical.`", call. = FALSE)  
-  
+    stop("`grid$pctl should be logical.`", call. = FALSE)
+
   add_step(recipe,
            step_profile_new(
              terms = ellipse_check(...),
@@ -168,21 +168,21 @@ step_profile_new <- function(terms = NULL,
 prep.step_profile <- function(x, training, info = NULL, ...) {
   fixed_names <- terms_select(x$terms, info = info)
   profile_name <- terms_select(x$profile, info = info)
-  
+
   if(length(fixed_names) == 0)
     stop("At least one variable should be fixed", call. = FALSE)
   if(length(profile_name) != 1)
-    stop("Only one variable should be profiled", call. = FALSE)  
+    stop("Only one variable should be profiled", call. = FALSE)
   if(any(profile_name == fixed_names))
     stop("The profiled variable cannot be in the list of ",
          "variables to be fixed.", call. = FALSE)
   fixed_vals <- lapply(
-    training[, fixed_names], 
-    fixed, 
-    pct = x$pct, 
+    training[, fixed_names],
+    fixed,
+    pct = x$pct,
     index = x$index
   )
-  profile_vals <- 
+  profile_vals <-
     list(prof(training[[profile_name]], grid = x$grid))
   names(profile_vals)[[1]] <- profile_name
 
@@ -207,7 +207,7 @@ bake.step_profile <- function(object, newdata, ...) {
   # Keep the predictors in the same order
   keepers <- names(newdata)[names(newdata) %in% keepers]
   newdata <- dplyr::select(newdata,! !keepers)
-  
+
   for (i in names(object$columns)) {
     newdata[[i]] <- rep(object$columns[[i]], n)
   }
@@ -225,6 +225,7 @@ print.step_profile <-
 #' @rdname step_profile
 #' @param x A `step_profile` object.
 #' @importFrom dplyr bind_rows
+#' @export
 tidy.step_profile <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns)
@@ -246,9 +247,9 @@ tidy.step_profile <- function(x, ...) {
 # some classes for the fixed values
 
 #' Helper Functions for Profile Data Sets
-#' 
+#'
 #' @param x A vector
-#' @param pct,index,...,grid Options pass from [step_profile()] 
+#' @param pct,index,...,grid Options pass from [step_profile()]
 #' @export
 #' @keywords internal
 fixed <- function (x, pct, index, ...) UseMethod("fixed")
@@ -312,8 +313,8 @@ prof.numeric <- function(x, grid, ...) {
   out <- unname(quantile(x, probs = pct, na.rm = TRUE))
   } else {
     out <- seq(
-      min(x, na.rm = TRUE), 
-      max(x, na.rm = TRUE), 
+      min(x, na.rm = TRUE),
+      max(x, na.rm = TRUE),
       length = grid$len
     )
   }

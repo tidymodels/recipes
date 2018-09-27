@@ -141,6 +141,7 @@ print.step_range <-
 
 #' @rdname step_range
 #' @param x A `step_range` object.
+#' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$ranges),

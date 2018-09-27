@@ -162,6 +162,7 @@ print.step_log <-
 
 #' @rdname step_log
 #' @param x A `step_log` object.
+#' @export
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$base <- x$base

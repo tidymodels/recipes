@@ -135,6 +135,7 @@ print.step_center <-
 
 #' @rdname step_center
 #' @param x A `step_center` object.
+#' @export
 tidy.step_center <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),

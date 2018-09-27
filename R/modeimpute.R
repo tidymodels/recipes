@@ -127,6 +127,7 @@ mode_est <- function(x) {
 
 #' @rdname step_modeimpute
 #' @param x A `step_modeimpute` object.
+#' @export
 tidy.step_modeimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$modes),

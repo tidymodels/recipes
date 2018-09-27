@@ -164,6 +164,7 @@ print.step_poly <-
 
 #' @rdname step_poly
 #' @param x A `step_poly` object.
+#' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),

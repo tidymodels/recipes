@@ -192,8 +192,8 @@ bake.step_knnimpute <- function(object, newdata, ...) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
-        nn_ind <- nn_index(object$ref_data[imp_var_complete,], 
-                           new_data, preds, 
+        nn_ind <- nn_index(object$ref_data[imp_var_complete,],
+                           new_data, preds,
                            object$K)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
@@ -217,6 +217,7 @@ print.step_knnimpute <-
 #' @importFrom purrr map_df
 #' @rdname step_knnimpute
 #' @param x A `step_knnimpute` object.
+#' @export
 tidy.step_knnimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- purrr::map_df(x$columns,

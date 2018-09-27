@@ -83,7 +83,7 @@ step_inverse_new <-
 prep.step_inverse <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
-  
+
   step_inverse_new(
     terms = x$terms,
     role = x$role,
@@ -100,7 +100,7 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 bake.step_inverse <- function(object, newdata, ...) {
   for (i in seq_along(object$columns))
     newdata[, object$columns[i]] <-
-      1 / (newdata [[ object$columns[i] ]] + object$offset) 
+      1 / (newdata [[ object$columns[i] ]] + object$offset)
   as_tibble(newdata)
 }
 
@@ -114,6 +114,7 @@ print.step_inverse <-
 
 #' @rdname step_inverse
 #' @param x A `step_inverse` object.
+#' @export
 tidy.step_inverse <- function(x, ...) {
   simple_terms(x, ...)
 }

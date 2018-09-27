@@ -138,6 +138,7 @@ print.step_lowerimpute <-
 
 #' @rdname step_lowerimpute
 #' @param x A `step_lowerimpute` object.
+#' @export
 tidy.step_lowerimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$threshold),

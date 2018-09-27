@@ -205,6 +205,7 @@ estimate_bc <- function(dat,
 
 #' @rdname step_BoxCox
 #' @param x A `step_BoxCox` object.
+#' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),

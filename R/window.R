@@ -48,7 +48,7 @@
 #'  smoothed with a 5-point moving median, the first three smoothed
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
-#'  
+#'
 # This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #' @examples
@@ -225,7 +225,7 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
     fill = NA, partial = FALSE,
     normalize = TRUE, na.rm = na.rm
   )
-  
+
   roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
   x2 <- eval(roll_cl)
 
@@ -276,6 +276,7 @@ print.step_window <-
 
 #' @rdname step_window
 #' @param x A `step_window` object.
+#' @export
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$statistic <- x$statistic

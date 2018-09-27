@@ -159,6 +159,7 @@ print.step_bs <-
 
 #' @rdname step_bs
 #' @param x A `step_bs` object.
+#' @export
 tidy.step_bs <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,

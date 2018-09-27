@@ -224,6 +224,7 @@ imp_vars <- function(...) quos(...)
 
 #' @rdname step_bagimpute
 #' @param x A `step_bagimpute` object.
+#' @export
 tidy.step_bagimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),

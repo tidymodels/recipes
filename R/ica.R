@@ -100,9 +100,9 @@ step_ica <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
-    
+
     recipes_pkg_check(c("dimRed", "fastICA"))
-    
+
     add_step(
       recipe,
       step_ica_new(
@@ -127,7 +127,7 @@ step_ica_new <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
-    
+
     step(
       subclass = "ica",
       terms = terms,
@@ -196,6 +196,7 @@ print.step_ica <-
 #' @importFrom utils stack
 #' @rdname step_ica
 #' @param x A `step_ica` object.
+#' @export
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
     rot <- dimRed::getRotationMatrix(x$res)

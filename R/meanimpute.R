@@ -135,6 +135,7 @@ print.step_meanimpute <-
 
 #' @rdname step_meanimpute
 #' @param x A `step_meanimpute` object.
+#' @export
 tidy.step_meanimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),

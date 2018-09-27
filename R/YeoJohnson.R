@@ -250,4 +250,5 @@ estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5,
 
 #' @rdname step_YeoJohnson
 #' @param x A `step_YeoJohnson` object.
+#' @export
 tidy.step_YeoJohnson <- tidy.step_BoxCox

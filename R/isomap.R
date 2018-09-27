@@ -43,7 +43,7 @@
 #'  \pkg{igraph}, and \pkg{RANN} packages. If not installed, the
 #'  step will stop with a note about installing these packages.
 #'
-#' 
+#'
 #' It is advisable to center and scale the variables prior to
 #'  running Isomap (`step_center` and `step_scale` can be
 #'  used for this purpose).
@@ -105,9 +105,9 @@ step_isomap <-
            res = NULL,
            prefix = "Isomap",
            skip = FALSE) {
-    
+
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
-    
+
     add_step(
       recipe,
       step_isomap_new(
@@ -202,6 +202,7 @@ print.step_isomap <-
 
 #' @rdname step_isomap
 #' @param x A `step_isomap` object
+#' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$res@org.data))

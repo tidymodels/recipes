@@ -133,6 +133,7 @@ print.step_hyperbolic <-
 
 #' @rdname step_hyperbolic
 #' @param x A `step_hyperbolic` object.
+#' @export
 tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$inverse <- x$inverse
