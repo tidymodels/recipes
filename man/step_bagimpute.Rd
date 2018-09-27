@@ -118,6 +118,23 @@ imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
+
+## Specifying which variables to imputate with
+
+ impute_rec <- rec \%>\%
+  step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt,
+                 impute_with = imp_vars(Time, Age, Expenses))
+
+imp_models <- prep(impute_rec, training = credit_tr)
+
+imputed_te <- bake(imp_models, newdata = credit_te, everything())
+
+credit_te[missing_examples,]
+imputed_te[missing_examples, names(credit_te)]
+
+tidy(impute_rec, number = 1)
+tidy(imp_models, number = 1)
+
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied
