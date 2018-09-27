@@ -4,6 +4,8 @@
 #'  regarding a recipe or operation within the recipe (when a `tidy`
 #'  method for the operation exists).
 #'
+#' @name tidy.recipe
+#'
 #' @param x A `recipe` object (trained or otherwise).
 #' @param number An integer or `NA`. If missing, the return
 #'  value is a list of the operation in the recipe. If a number is
@@ -17,7 +19,7 @@
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
 #'  estimated using `prep`, and a logical for `skip`.
-#' @export
+#'
 #' @examples
 #' data(okc)
 #'
@@ -37,8 +39,11 @@
 #'
 #' tidy(okc_rec_trained)
 #' tidy(okc_rec_trained, number = 3)
+NULL
 
+#' @rdname tidy.recipe
 #' @importFrom broom tidy
+#' @export
 tidy.recipe <- function(x, number = NA, ...) {
   num_oper <- length(x$steps)
   if (num_oper == 0)
@@ -72,12 +77,15 @@ tidy.recipe <- function(x, number = NA, ...) {
   res
 }
 
+#' @rdname tidy.recipe
 #' @export
 tidy.step <- function(x, ...) {
   stop("No `tidy` method for a step with classes: ",
        paste0(class(x), collapse = ", "),
        call. = FALSE)
 }
+
+#' @rdname tidy.recipe
 #' @export
 tidy.check <- function(x, ...) {
   stop("No `tidy` method for a check with classes: ",
