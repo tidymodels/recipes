@@ -12,6 +12,7 @@
  * `step_knnimpute` now excludes missing data in the variable to be imputed from the nearest-neighbor calculation. This would have resulted in some missing data to not be imputed (i.e. return another missing value). 
  * `step_dummy` now produces a warning (instead of failing) when non-factor columns are selected. Only factor columns are used; no conversion is done for character data. [issue #186](https://github.com/tidymodels/recipes/issues/186)
  * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
+ * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
 
 
 # `recipes` 0.1.3
