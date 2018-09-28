@@ -6,7 +6,6 @@
 \alias{ellipse_check}
 \alias{printer}
 \alias{prepare}
-\alias{check_type}
 \alias{is_trained}
 \alias{sel2char}
 \title{Internal Functions}
@@ -21,8 +20,6 @@ printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE,
   width = max(20, options()$width - 30))
 
 prepare(x, ...)
-
-check_type(dat, quant = TRUE)
 
 is_trained(x)
 

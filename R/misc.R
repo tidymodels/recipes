@@ -149,7 +149,7 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  example below).
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
-#'  levels.  
+#'  levels.
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`,
@@ -389,9 +389,16 @@ skip_me <- function(x) {
 is_qual <- function(x)
   is.factor(x) | is.character(x)
 
+#' Quantitatively check on variables
+#'
+#' This internal function is to be used in the prep function to ensure that
+#'   the type of the variables matches the expectation. Throws an error if
+#'   check fails.
+#' @param dat A data frame or tibble of the training data.
+#' @param quant A logical indicating whether the data is expected to be numeric
+#'   (TRUE) or a factor/character (FALSE).
 #' @export
 #' @keywords internal
-#' @rdname recipes-internal
 check_type <- function(dat, quant = TRUE) {
   if (quant) {
     all_good <- vapply(dat, is.numeric, logical(1))
