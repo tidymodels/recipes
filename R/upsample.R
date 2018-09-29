@@ -22,6 +22,7 @@
 #'  half as many rows than the majority level.
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
+#' @param seed An integer that will be used as the seed when upsampling.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -82,7 +83,9 @@
 
 step_upsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = TRUE) {
+           column = NULL, target = NA, skip = TRUE,
+           seed = sample.int(10^5, 1)) {
+
     add_step(recipe,
              step_upsample_new(
                terms = ellipse_check(...),
@@ -91,13 +94,16 @@ step_upsample <-
                trained = trained,
                column = column,
                target = target,
-               skip = skip
+               skip = skip,
+               seed = seed
              ))
   }
 
 step_upsample_new <-
   function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = FALSE) {
+           column = NULL, target = NA, skip = FALSE,
+           seed = sample.int(10^5, 1)) {
+    
     step(
       subclass = "upsample",
       terms = terms,
@@ -106,7 +112,8 @@ step_upsample_new <-
       trained = trained,
       column = column,
       target = target,
-      skip = skip
+      skip = skip,
+      seed = seed
     )
   }
 
@@ -130,7 +137,8 @@ prep.step_upsample <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     column = col_name,
     target = floor(majority * x$ratio),
-    skip = x$skip
+    skip = x$skip,
+    seed = x$seed
   )
 }
 
@@ -140,12 +148,14 @@ supsamp <- function(x, num) {
   if (nrow(x) == num)
     out <- x
   else
+    # upsampling is done with replacement
     out <- x[sample(1:n, max(num, n), replace = TRUE), ]
   out
 }
 
 #' @importFrom tibble as_tibble
 #' @importFrom purrr map_dfr
+#' @importFrom withr with_seed
 #' @export
 bake.step_upsample <- function(object, newdata, ...) {
   if (any(is.na(newdata[[object$column]])))
@@ -154,9 +164,17 @@ bake.step_upsample <- function(object, newdata, ...) {
     missing <- NULL
   split_up <- split(newdata, newdata[[object$column]])
 
-  newdata <- map_dfr(split_up, supsamp, num = object$target)
-  if (!is.null(missing))
-    newdata <- bind_rows(newdata, supsamp(missing, object$target))
+  # Upsample with seed for reproducibility
+  with_seed(
+    seed = object$seed,
+    code = {
+      newdata <- map_dfr(split_up, supsamp, num = object$target)
+      if (!is.null(missing)) {
+        newdata <- bind_rows(newdata, supsamp(missing, object$target))
+      }
+    }
+  )
+
   as_tibble(newdata)
 }
 

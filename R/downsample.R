@@ -22,6 +22,7 @@
 #'  twice as many rows than the minority level.
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
+#' @param seed An integer that will be used as the seed when downsampling.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -74,7 +75,9 @@
 
 step_downsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = TRUE) {
+           column = NULL, target = NA, skip = TRUE,
+           seed = sample.int(10^5, 1)) {
+
     add_step(recipe,
              step_downsample_new(
                terms = ellipse_check(...),
@@ -83,13 +86,16 @@ step_downsample <-
                trained = trained,
                column = column,
                target = target,
-               skip = skip
+               skip = skip,
+               seed = seed
              ))
   }
 
 step_downsample_new <-
   function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = FALSE) {
+           column = NULL, target = NA, skip = FALSE,
+           seed = sample.int(10^5, 1)) {
+
     step(
       subclass = "downsample",
       terms = terms,
@@ -98,7 +104,8 @@ step_downsample_new <-
       trained = trained,
       column = column,
       target = target,
-      skip = skip
+      skip = skip,
+      seed = seed
     )
   }
 
@@ -121,7 +128,8 @@ prep.step_downsample <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     column = col_name,
     target = floor(minority * x$ratio),
-    skip = x$skip
+    skip = x$skip,
+    seed = x$seed
   )
 }
 
@@ -131,12 +139,14 @@ subsamp <- function(x, num) {
   if (nrow(x) == num)
     out <- x
   else
+    # downsampling is done without replacement
     out <- x[sample(1:n, min(num, n)), ]
   out
 }
 
 #' @importFrom tibble as_tibble
 #' @importFrom purrr map_dfr
+#' @importFrom withr with_seed
 #' @export
 bake.step_downsample <- function(object, newdata, ...) {
   if (any(is.na(newdata[[object$column]])))
@@ -145,9 +155,17 @@ bake.step_downsample <- function(object, newdata, ...) {
     missing <- NULL
   split_up <- split(newdata, newdata[[object$column]])
 
-  newdata <- map_dfr(split_up, subsamp, num = object$target)
-  if (!is.null(missing))
-    newdata <- bind_rows(newdata, subsamp(missing, object$target))
+  # Downsample with seed for reproducibility
+  with_seed(
+    seed = object$seed,
+    code = {
+      newdata <- map_dfr(split_up, subsamp, num = object$target)
+      if (!is.null(missing)) {
+        newdata <- bind_rows(newdata, subsamp(missing, object$target))
+      }
+    }
+  )
+  
   as_tibble(newdata)
 }
 

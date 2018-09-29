@@ -6,7 +6,8 @@
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
 step_downsample(recipe, ..., ratio = 1, role = NA, trained = FALSE,
-  column = NULL, target = NA, skip = TRUE)
+  column = NULL, target = NA, skip = TRUE, seed = sample.int(10^5,
+  1))
 
 \method{tidy}{step_downsample}(x, ...)
 }
@@ -45,6 +46,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{seed}{An integer that will be used as the seed when downsampling.}
 
 \item{x}{A \code{step_downsample} object.}
 }
