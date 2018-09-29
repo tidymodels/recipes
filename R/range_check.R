@@ -209,6 +209,7 @@ print.check_range <-
 
 #' @rdname check_range
 #' @param x A `check_range` object.
+#' @export
 tidy.check_range <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns)

@@ -42,7 +42,7 @@
 #'
 #' This step requires the \pkg{pls} package. If not installed, the
 #'  step will stop with a note about installing the package.
-#' 
+#'
 #' The argument `num` controls the number of components that will
 #'  be retained (the original variables that are used to derive the
 #'  components are removed from the data). The new components will
@@ -90,9 +90,9 @@ step_pls <-
            skip = FALSE) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
- 
+
     recipes_pkg_check("pls")
-    
+
     add_step(
       recipe,
       step_pls_new(
@@ -200,6 +200,7 @@ print.step_pls <-
 
 #' @rdname step_pls
 #' @param x A `step_pls` object
+#' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
     res <- as.data.frame(x$res$projection)

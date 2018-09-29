@@ -173,6 +173,7 @@ print.step_string2factor <-
 
 #' @rdname step_string2factor
 #' @param x A `step_string2factor` object.
+#' @export
 tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)

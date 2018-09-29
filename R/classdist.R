@@ -222,6 +222,7 @@ get_centroid <- function(x) {
 #' @rdname step_classdist
 #' @param x A `step_classdist` object.
 #' @importFrom dplyr bind_rows
+#' @export
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {
     centroids <- lapply(x$objects, get_centroid)

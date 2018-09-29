@@ -104,6 +104,7 @@ print.step_shuffle <-
 
 #' @rdname step_shuffle
 #' @param x A `step_shuffle` object.
+#' @export
 tidy.step_shuffle <- function(x, ...) {
   simple_terms(x, ...)
 }

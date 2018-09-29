@@ -127,6 +127,7 @@ print.step_scale <-
 
 #' @rdname step_scale
 #' @param x A `step_scale` object.
+#' @export
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$sds),

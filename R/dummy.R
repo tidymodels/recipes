@@ -57,15 +57,15 @@
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
 #'
-#' To change the type of contrast being used, change the global 
+#' To change the type of contrast being used, change the global
 #' contrast option via `options`.
-#' 
+#'
 #' When the factor being converted has a missing value, all of the
-#'  corresponding dummy variables are also missing. 
-#'  
-#' When data to be processed contains novel levels (i.e., not 
+#'  corresponding dummy variables are also missing.
+#'
+#' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), a missing value is assigned to
-#' the results. See [step_other()] for an alternative. 
+#' the results. See [step_other()] for an alternative.
 #'
 #' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
@@ -167,7 +167,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     stop("The `terms` argument in `step_dummy` did not select ",
          "any factor columns.", call. = FALSE)
   }
-  
+
 
   ## I hate doing this but currently we are going to have
   ## to save the terms object from the original (= training)
@@ -212,7 +212,7 @@ warn_new_levels <- function(dat, lvl) {
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
     warning("There are new levels in a factor: ",
-            paste0(lvl2, collapse = ", "), 
+            paste0(lvl2, collapse = ", "),
             call. = FALSE)
   }
   invisible(NULL)
@@ -237,18 +237,18 @@ bake.step_dummy <- function(object, newdata, ...) {
 
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-    
+
     warn_new_levels(
       newdata[[orig_var]],
       attr(object$levels[[i]], "values")
     )
-    
+
     newdata[, orig_var] <-
       factor(getElement(newdata, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
-    
-    indicators <- 
+
+    indicators <-
       model.frame(
         as.formula(paste0("~", orig_var)),
         data = newdata[, orig_var],
@@ -299,6 +299,7 @@ print.step_dummy <-
 
 #' @rdname step_dummy
 #' @param x A `step_dummy` object.
+#' @export
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$levels))

@@ -49,7 +49,7 @@
 #'
 #' This step requires the \pkg{ddalpha} package. If not installed, the
 #'  step will stop with a note about installing the package.
-#'  
+#'
 #' Note that the entire training set is saved to compute future
 #'  depth values. The saved data have been trained (i.e. prepared)
 #'  and baked (i.e. processed) up to the point before the location
@@ -89,9 +89,9 @@ step_depth <-
            skip = FALSE) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
-    
+
     recipes_pkg_check("ddalpha")
-    
+
     add_step(
       recipe,
       step_depth_new(
@@ -199,6 +199,7 @@ print.step_depth <-
 
 #' @rdname step_depth
 #' @param x A `step_depth` object.
+#' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$data[[1]]),

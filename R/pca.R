@@ -216,6 +216,7 @@ print.step_pca <-
 #' @importFrom utils stack
 #' @rdname step_pca
 #' @param x A `step_pca` object.
+#' @export
 tidy.step_pca <- function(x, ...) {
   if (is_trained(x)) {
     rot <- as.data.frame(x$res$rotation)

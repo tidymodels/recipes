@@ -186,6 +186,7 @@ print.step_rollimpute <-
 
 #' @rdname step_rollimpute
 #' @param x A `step_rollimpute` object.
+#' @export
 tidy.step_rollimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns, window = x$window)

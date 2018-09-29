@@ -205,4 +205,5 @@ tidy_filter <- function(x, ...) {
 
 #' @rdname step_corr
 #' @param x A `step_corr` object.
+#' @export
 tidy.step_corr <- tidy_filter

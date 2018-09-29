@@ -133,6 +133,7 @@ print.step_factor2string <-
 
 #' @rdname step_factor2string
 #' @param x A `step_factor2string` object.
+#' @export
 tidy.step_factor2string <- function(x, ...) {
   simple_terms(x, ...)
 }

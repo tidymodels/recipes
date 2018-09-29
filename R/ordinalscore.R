@@ -143,6 +143,7 @@ print.step_ordinalscore <-
 
 #' @rdname step_ordinalscore
 #' @param x A `step_ordinalscore` object.
+#' @export
 tidy.step_ordinalscore <- function(x, ...) {
   simple_terms(x, ...)
 }

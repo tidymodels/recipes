@@ -10,14 +10,14 @@
 #'  columns does contain `NA` values. If the check passes, nothing is changed
 #'  to the data.
 #' @examples
-#' 
+#'
 #' data(biomass)
-#' 
+#'
 #' biomass_rec <- recipe(HHV ~ ., data = biomass) %>%
 #'    step_rm(sample, dataset) %>%
 #'    check_cols(contains("gen")) %>%
 #'    step_center(all_predictors())
-#'    
+#'
 #' \dontrun{
 #' bake(biomass_rec, biomass[, c("carbon", "HHV")])
 #' }
@@ -69,7 +69,7 @@ bake.check_cols <- function(object, newdata, ...) {
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    stop("The following cols are missing from newdata: ", 
+    stop("The following cols are missing from newdata: ",
          mis_cols, ".", call. = FALSE)
   }
   newdata
@@ -84,6 +84,7 @@ print.check_cols <-
 
 #' @rdname check_cols
 #' @param x A `check_cols` object.
+#' @export
 tidy.check_cols <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns)

@@ -85,6 +85,7 @@ step_upsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1)) {
+
     add_step(recipe,
              step_upsample_new(
                terms = ellipse_check(...),
@@ -102,6 +103,7 @@ step_upsample_new <-
   function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = FALSE,
            seed = sample.int(10^5, 1)) {
+    
     step(
       subclass = "upsample",
       terms = terms,
@@ -186,6 +188,7 @@ print.step_upsample <-
 
 #' @rdname step_upsample
 #' @param x A `step_upsample` object.
+#' @export
 tidy.step_upsample <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$column)

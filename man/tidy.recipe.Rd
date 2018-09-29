@@ -2,9 +2,15 @@
 % Please edit documentation in R/tidy.R
 \name{tidy.recipe}
 \alias{tidy.recipe}
+\alias{tidy.step}
+\alias{tidy.check}
 \title{Tidy the Result of a Recipe}
 \usage{
 \method{tidy}{recipe}(x, number = NA, ...)
+
+\method{tidy}{step}(x, ...)
+
+\method{tidy}{check}(x, ...)
 }
 \arguments{
 \item{x}{A \code{recipe} object (trained or otherwise).}

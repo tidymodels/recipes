@@ -77,6 +77,7 @@ step_downsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1)) {
+
     add_step(recipe,
              step_downsample_new(
                terms = ellipse_check(...),
@@ -94,6 +95,7 @@ step_downsample_new <-
   function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = FALSE,
            seed = sample.int(10^5, 1)) {
+
     step(
       subclass = "downsample",
       terms = terms,
@@ -163,7 +165,7 @@ bake.step_downsample <- function(object, newdata, ...) {
       }
     }
   )
-
+  
   as_tibble(newdata)
 }
 
@@ -177,6 +179,7 @@ print.step_downsample <-
 
 #' @rdname step_downsample
 #' @param x A `step_downsample` object.
+#' @export
 tidy.step_downsample <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$column)

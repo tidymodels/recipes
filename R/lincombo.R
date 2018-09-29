@@ -211,4 +211,5 @@ iter_lc_rm <- function(x,
 
 #' @rdname step_lincomb
 #' @param x A `step_lincomb` object.
+#' @export
 tidy.step_lincomb <- tidy_filter

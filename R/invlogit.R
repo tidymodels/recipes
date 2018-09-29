@@ -107,6 +107,7 @@ print.step_invlogit <-
 
 #' @rdname step_invlogit
 #' @param x A `step_invlogit` object.
+#' @export
 tidy.step_invlogit <- function(x, ...) {
   simple_terms(x, ...)
 }

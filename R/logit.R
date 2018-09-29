@@ -110,6 +110,7 @@ print.step_logit <-
 
 #' @rdname step_logit
 #' @param x A `step_logit` object.
+#' @export
 tidy.step_logit <- function(x, ...) {
   simple_terms(x, ...)
 }

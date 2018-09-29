@@ -158,6 +158,7 @@ print.step_ns <-
 
 #' @rdname step_ns
 #' @param x A `step_ns` object.
+#' @export
 tidy.step_ns <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
