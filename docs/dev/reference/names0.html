@@ -124,7 +124,7 @@ dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p
 
     <pre class="usage"><span class='fu'>names0</span>(<span class='no'>num</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"x"</span>)
 
-<span class='fu'>dummy_names</span>(<span class='no'>var</span>, <span class='no'>lvl</span>, <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>dummy_names</span>(<span class='no'>var</span>, <span class='no'>lvl</span>, <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +151,11 @@ example below).</p></td>
     <tr>
       <th>ordinal</th>
       <td><p>A logical; was the original factor ordered?</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>A single character value for the separator between the names and
+levels.</p></td>
     </tr>
     </table>
     

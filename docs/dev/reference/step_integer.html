@@ -154,17 +154,22 @@ used as predictors in a model.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
+      <th>strict</th>
+      <td><p>A logical for whether the values should be returned as
+integers (as opposed to double).</p></td>
+    </tr>
+    <tr>
       <th>key</th>
       <td><p>A list that contains the information needed to
 create integer variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -172,11 +177,6 @@ the computations for subsequent operations</p></td>
     <tr>
       <th>x</th>
       <td><p>A <code>step_integer</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>strick</th>
-      <td><p>A logical for whether the values should be returned as
-integers (as opposed to double).</p></td>
     </tr>
     </table>
     

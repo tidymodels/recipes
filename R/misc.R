@@ -435,15 +435,21 @@ is_trained <- function(x)
 #' @param x A list of selectors
 #' @return A character vector
 #' @export
+#' @importFrom purrr map_chr
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
-  term_names <- lapply(x, as.character)
-  term_names <-
-    vapply(term_names,
-           function(x) x[-1],
-           character(1))
-  term_names
+  map_chr(x, to_character)
+}
+
+#' @importFrom rlang is_quosure quo_text as_character
+to_character <- function(x) {
+  if (rlang::is_quosure(x)) {
+    res <- rlang::quo_text(x)
+  } else {
+    res <- as_character(x)
+  }
+  res
 }
 
 

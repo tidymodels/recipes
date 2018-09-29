@@ -121,7 +121,13 @@ method for the operation exists).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for step</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for check</span>
+<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +185,9 @@ estimated using <code>prep</code>, and a logical for <code>skip</code>.</p>
 #&gt;   terms         value
 #&gt;   &lt;chr&gt;         &lt;dbl&gt;
 #&gt; 1 all_numeric()    NA</div><div class='input'>
-<span class='no'>okc_rec_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
+<span class='no'>okc_rec_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `overscope_eval_next()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `eval_tidy()` with a data mask instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
 <span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 5
 #&gt;   number operation type   trained skip 
 #&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt;

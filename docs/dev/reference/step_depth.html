@@ -122,7 +122,8 @@ class variable.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_depth</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for step_depth</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -180,13 +181,13 @@ depth functions. See <code><a href='http://www.rdocumentation.org/packages/ddalp
     <tr>
       <th>data</th>
       <td><p>The training data are stored here once after
-<code>prep.recipe()</code> is executed.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>

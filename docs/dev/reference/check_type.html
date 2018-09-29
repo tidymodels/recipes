@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summarize a Recipe — summary.recipe • recipes</title>
+<title>Quantitatively check on variables — check_type • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -107,91 +107,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summarize a Recipe</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
-    <div class="hidden name"><code>summary.recipe.Rd</code></div>
+    <h1>Quantitatively check on variables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/misc.R'><code>R/misc.R</code></a></small>
+    <div class="hidden name"><code>check_type.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function prints the current set of variables/features and some of their
-characteristics.</p>
+    <p>This internal function is to be used in the prep function to ensure that
+the type of the variables matches the expectation. Throws an error if
+check fails.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>original</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_type</span>(<span class='no'>dat</span>, <span class='kw'>quant</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>A <code>recipe</code> object</p></td>
+      <th>dat</th>
+      <td><p>A data frame or tibble of the training data.</p></td>
     </tr>
     <tr>
-      <th>original</th>
-      <td><p>A logical: show the current set of variables or the original
-set when the recipe was defined.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>further arguments passed to or from other methods (not currently
-used).</p></td>
+      <th>quant</th>
+      <td><p>A logical indicating whether the data is expected to be numeric
+(TRUE) or a factor/character (FALSE).</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
-and <code>source</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Note that, until the recipe has been trained, the current and
-original variables are the same.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
-#&gt;   variable type    role      source  
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
-#&gt; 1 Murder   numeric predictor original
-#&gt; 2 Assault  numeric predictor original
-#&gt; 3 UrbanPop numeric predictor original
-#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet trained</span></div><div class='output co'>#&gt; # A tibble: 4 x 4
-#&gt;   variable type    role      source  
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
-#&gt; 1 Murder   numeric predictor original
-#&gt; 2 Assault  numeric predictor original
-#&gt; 3 UrbanPop numeric predictor original
-#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
-#&gt;   variable type    role      source 
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  
-#&gt; 1 PC1      numeric predictor derived
-#&gt; 2 PC2      numeric predictor derived
-#&gt; 3 PC3      numeric predictor derived</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

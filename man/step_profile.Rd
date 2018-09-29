@@ -112,13 +112,13 @@ disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
 
 disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(
-    -disp, 
+    -disp,
     profile = vars(disp),
     grid = list(pctl = FALSE, len = 100)
   ) \%>\%
   prep(training = mtcars, retain = TRUE)
 
-grid_data <- juice(disp_grid) 
+grid_data <- juice(disp_grid)
 grid_data <- grid_data \%>\%
   mutate(pred = predict(lin_mod, grid_data),
          method = "grid")
@@ -132,8 +132,8 @@ plot_data <- bind_rows(grid_data, pctl_data)
 
 library(ggplot2)
 
-ggplot(plot_data, aes(x = disp, y = pred)) + 
-  geom_point(alpha = .5, cex = 1) + 
+ggplot(plot_data, aes(x = disp, y = pred)) +
+  geom_point(alpha = .5, cex = 1) +
   facet_wrap(~ method)
 }
 \concept{preprocessing}

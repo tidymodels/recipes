@@ -165,13 +165,13 @@ the training set are below <code>threshold</code> will be "othered".</p></td>
       <th>objects</th>
       <td><p>A list of objects that contain the information
 to pool infrequent levels that is determined by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -197,7 +197,7 @@ category is used in place of any categorical levels whose individual
 proportion in the training set is less than <code>threshold</code>.</p>
 <p>If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of <code>stringsAsFactors</code> in
-<code>prep.recipe()</code>). Otherwise, a factor is always returned with
+<code><a href='prep.html'>prep.recipe()</a></code>). Otherwise, a factor is always returned with
 different factor levels.</p>
 <p>If <code>threshold</code> is less than the largest category proportion, all levels
 except for the most frequent are collapsed to the <code>other</code> level.</p>

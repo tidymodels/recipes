@@ -177,7 +177,7 @@ values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
       <th>columns</th>
       <td><p>A character string that contains the names of
 columns that should be processed. These values are not
-determined until <code>prep.recipe()</code> is called.</p></td>
+determined until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>names</th>
@@ -190,8 +190,8 @@ the names of the new columns created by the step.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -246,9 +246,15 @@ uses <code>median(x[2:6])</code>.</p>
               <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_window</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>),
               <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
-              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
-
+              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `list_len()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_list()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `chr_along()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_character_along()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `lang()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `call2()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `new_overscope()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_data_mask()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='input'>
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
 <span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/tidyeval'>quos</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
