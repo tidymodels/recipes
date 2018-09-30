@@ -70,12 +70,7 @@ step_zv <-
   }
 
 step_zv_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           removals = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,

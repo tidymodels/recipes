@@ -75,14 +75,7 @@ step_bin2factor <-
   }
 
 step_bin2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ref_first = NULL,
-           columns = NULL,
-           skip = skip,
-           id = id) {
+  function(terms, role, trained, levels, ref_first, columns, skip, id) {
     step(
       subclass = "bin2factor",
       terms = terms,

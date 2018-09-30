@@ -126,15 +126,7 @@ step_isomap <-
   }
 
 step_isomap_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "isomap",
-           skip = skip,
-           id) {
+  function(terms, role, trained, num, options, res, prefix, skip, id) {
     step(
       subclass = "isomap",
       terms = terms,

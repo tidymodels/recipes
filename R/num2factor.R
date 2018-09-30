@@ -88,15 +88,7 @@ step_num2factor <-
   }
 
 step_num2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           transform = NULL,
-           trained = FALSE,
-           levels = NULL,
-           ordered = NULL,
-           skip = skip,
-           id 
-  ) {
+  function(terms, role, transform, trained, levels, ordered, skip, id) {
     step(
       subclass = "num2factor",
       terms = terms,

@@ -67,19 +67,18 @@ step_intercept <- function(recipe, ..., role = "predictor",
   )
 }
 
-step_intercept_new <- function(role = "predictor", trained = FALSE,
-                               name = "intercept", value = 1,
-                               skip = FALSE, id) {
-  step(
-    subclass = "intercept",
-    role = role,
-    trained = trained,
-    name = name,
-    value = value,
-    skip = skip,
-    id = id
-  )
-}
+step_intercept_new <- 
+  function(role, trained, name, value, skip, id) {
+    step(
+      subclass = "intercept",
+      role = role,
+      trained = trained,
+      name = name,
+      value = value,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_intercept <- function(x, training, info = NULL, ...) {

@@ -111,13 +111,7 @@ step_interact <-
 
 ## Initializes a new object
 step_interact_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           sep = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, objects, sep, skip, id) {
     step(
       subclass = "interact",
       terms = terms,

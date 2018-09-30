@@ -63,12 +63,7 @@ step_logit <-
   }
 
 step_logit_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "logit",
       terms = terms,

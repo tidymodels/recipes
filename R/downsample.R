@@ -93,10 +93,7 @@ step_downsample <-
   }
 
 step_downsample_new <-
-  function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = FALSE,
-           seed = sample.int(10^5, 1), id) {
-
+  function(terms, ratio, role, trained, column, target, skip, seed, id) {
     step(
       subclass = "downsample",
       terms = terms,

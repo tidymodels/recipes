@@ -121,7 +121,8 @@ between two or more variables.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_interact</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>))
 
 <span class='co'># S3 method for step_interact</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -170,6 +171,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -250,18 +255,18 @@ all two-way interactions are created.</p>
 #&gt;  [4] "nitrogen"            "sulfur"              "HHV"                
 #&gt;  [7] "hydrogen_x_oxygen"   "hydrogen_x_nitrogen" "hydrogen_x_sulfur"  
 #&gt; [10] "oxygen_x_nitrogen"   "oxygen_x_sulfur"     "nitrogen_x_sulfur"  </div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms          
-#&gt;   &lt;chr&gt;          
-#&gt; 1 carbon:hydrogen</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 1
-#&gt;   terms            
-#&gt;   &lt;chr&gt;            
-#&gt; 1 hydrogen:oxygen  
-#&gt; 2 hydrogen:nitrogen
-#&gt; 3 hydrogen:sulfur  
-#&gt; 4 oxygen:nitrogen  
-#&gt; 5 oxygen:sulfur    
-#&gt; 6 nitrogen:sulfur  </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms           id            
+#&gt;   &lt;chr&gt;           &lt;chr&gt;         
+#&gt; 1 carbon:hydrogen interact_tXXxK</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 2
+#&gt;   terms             id            
+#&gt;   &lt;chr&gt;             &lt;chr&gt;         
+#&gt; 1 hydrogen:oxygen   interact_7fUgy
+#&gt; 2 hydrogen:nitrogen interact_7fUgy
+#&gt; 3 hydrogen:sulfur   interact_7fUgy
+#&gt; 4 oxygen:nitrogen   interact_7fUgy
+#&gt; 5 oxygen:sulfur     interact_7fUgy
+#&gt; 6 nitrogen:sulfur   interact_7fUgy</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

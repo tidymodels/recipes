@@ -73,13 +73,7 @@ step_ns <-
   }
 
 step_ns_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "ns",
       terms = terms,

@@ -83,13 +83,7 @@ step_spatialsign <-
   }
 
 step_spatialsign_new <-
-  function(terms = NULL,
-           role = "predictor",
-           na.rm = TRUE,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id ) {
+  function(terms, role, na.rm, trained, columns, skip, id) {
     step(
       subclass = "spatialsign",
       terms = terms,

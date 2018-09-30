@@ -60,10 +60,7 @@ step_sqrt <- function(recipe, ..., role = NA,
 }
 
 step_sqrt_new <-
-  function(terms = NULL, role = NA, trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "sqrt",
       terms = terms,

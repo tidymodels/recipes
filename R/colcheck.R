@@ -43,12 +43,7 @@ check_cols <-
   }
 
 check_cols_new <-
-  function(terms = NULL,
-           role  = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id = id) {
+  function(terms, role, trained, columns, skip, id) {
     check(subclass = "cols",
           prefix   = "check_",
           terms    = terms,

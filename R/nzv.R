@@ -98,13 +98,7 @@ step_nzv <-
   }
 
 step_nzv_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           options = NULL,
-           removals = NULL,
-        skip = skip,
-        id ) {
+  function(terms, role, trained, options, removals, skip, id) {
     step(
       subclass = "nzv",
       terms = terms,

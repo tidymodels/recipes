@@ -86,13 +86,7 @@ step_center <-
 
 ## Initializes a new object
 step_center_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           na.rm = NULL,
-           skip = skip,
-           id = rand_id()) {
+  function(terms, role, trained, means, na.rm, skip, id) {
     step(
       subclass = "center",
       terms = terms,

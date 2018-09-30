@@ -64,13 +64,7 @@ step_inverse <-
   }
 
 step_inverse_new <-
-  function(terms = NULL,
-           role = NA,
-           offset = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, offset, trained, columns, skip, id) {
     step(
       subclass = "inverse",
       terms = terms,

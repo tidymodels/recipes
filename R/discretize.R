@@ -254,13 +254,7 @@ step_discretize <- function(recipe,
 }
 
 step_discretize_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "discretize",
       terms = terms,

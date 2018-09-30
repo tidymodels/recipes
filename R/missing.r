@@ -83,12 +83,7 @@ check_missing <-
   }
 
 check_missing_new <-
-  function(terms = NULL,
-           role  = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, skip, id) {
     check(subclass = "missing",
           prefix   = "check_",
           terms    = terms,

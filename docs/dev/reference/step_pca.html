@@ -122,7 +122,7 @@ components.</p>
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pca"</span>))
 
 <span class='co'># S3 method for step_pca</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -195,6 +195,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -279,28 +283,28 @@ Analysis</em>. Springer.</p>
 #&gt;  9 -2.98    0.0388 -0.571  -0.0953 
 #&gt; 10 -1.62    1.27   -0.339   1.07   
 #&gt; # ... with 40 more rows</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   terms         value component
-#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    
-#&gt; 1 all_numeric()    NA &lt;NA&gt;     </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 3
-#&gt;    terms      value component
-#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
-#&gt;  1 Murder   -0.536  PC1      
-#&gt;  2 Assault  -0.583  PC1      
-#&gt;  3 UrbanPop -0.278  PC1      
-#&gt;  4 Rape     -0.543  PC1      
-#&gt;  5 Murder    0.418  PC2      
-#&gt;  6 Assault   0.188  PC2      
-#&gt;  7 UrbanPop -0.873  PC2      
-#&gt;  8 Rape     -0.167  PC2      
-#&gt;  9 Murder   -0.341  PC3      
-#&gt; 10 Assault  -0.268  PC3      
-#&gt; 11 UrbanPop -0.378  PC3      
-#&gt; 12 Rape      0.818  PC3      
-#&gt; 13 Murder    0.649  PC4      
-#&gt; 14 Assault  -0.743  PC4      
-#&gt; 15 UrbanPop  0.134  PC4      
-#&gt; 16 Rape      0.0890 PC4      </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;   terms         value component id       
+#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
+#&gt; 1 all_numeric()    NA &lt;NA&gt;      pca_UJdaV</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 4
+#&gt;    terms      value component id       
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
+#&gt;  1 Murder   -0.536  PC1       pca_UJdaV
+#&gt;  2 Assault  -0.583  PC1       pca_UJdaV
+#&gt;  3 UrbanPop -0.278  PC1       pca_UJdaV
+#&gt;  4 Rape     -0.543  PC1       pca_UJdaV
+#&gt;  5 Murder    0.418  PC2       pca_UJdaV
+#&gt;  6 Assault   0.188  PC2       pca_UJdaV
+#&gt;  7 UrbanPop -0.873  PC2       pca_UJdaV
+#&gt;  8 Rape     -0.167  PC2       pca_UJdaV
+#&gt;  9 Murder   -0.341  PC3       pca_UJdaV
+#&gt; 10 Assault  -0.268  PC3       pca_UJdaV
+#&gt; 11 UrbanPop -0.378  PC3       pca_UJdaV
+#&gt; 12 Rape      0.818  PC3       pca_UJdaV
+#&gt; 13 Murder    0.649  PC4       pca_UJdaV
+#&gt; 14 Assault  -0.743  PC4       pca_UJdaV
+#&gt; 15 UrbanPop  0.134  PC4       pca_UJdaV
+#&gt; 16 Rape      0.0890 PC4       pca_UJdaV</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

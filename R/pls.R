@@ -112,16 +112,7 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           outcome = outcome,
-           options = NULL,
-           res = NULL,
-           prefix = "pls",
-           skip = skip,
-           id) {
+  function(terms, role, trained, num, outcome, options, res, prefix, skip, id) {
     step(
       subclass = "pls",
       terms = terms,

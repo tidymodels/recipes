@@ -45,6 +45,8 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 \item{upper}{A named numeric vector of maximum values in the train set.
 This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{check_range} object.}
 }
 \value{

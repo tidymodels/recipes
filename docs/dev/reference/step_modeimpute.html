@@ -121,7 +121,7 @@ variables by the training set mode of those variables.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_modeimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>))
 
 <span class='co'># S3 method for step_modeimpute</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -164,6 +164,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -223,17 +227,17 @@ data has more than one mode, one is selected at random.</p>
 #&gt;   priv         0     0     0       0  134    0    0
 #&gt;   rent         0     0     0       0    0  556    0
 #&gt;   &lt;NA&gt;         0     0     2       0    0    0    0</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;   terms   model
-#&gt;   &lt;chr&gt;   &lt;chr&gt;
-#&gt; 1 Status  &lt;NA&gt; 
-#&gt; 2 Home    &lt;NA&gt; 
-#&gt; 3 Marital &lt;NA&gt; </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;   terms   model  
-#&gt;   &lt;chr&gt;   &lt;chr&gt;  
-#&gt; 1 Status  good   
-#&gt; 2 Home    owner  
-#&gt; 3 Marital married</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;   terms   model id              
+#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;           
+#&gt; 1 Status  &lt;NA&gt;  modeimpute_iNKND
+#&gt; 2 Home    &lt;NA&gt;  modeimpute_iNKND
+#&gt; 3 Marital &lt;NA&gt;  modeimpute_iNKND</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;   terms   model   id              
+#&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;           
+#&gt; 1 Status  good    modeimpute_iNKND
+#&gt; 2 Home    owner   modeimpute_iNKND
+#&gt; 3 Marital married modeimpute_iNKND</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

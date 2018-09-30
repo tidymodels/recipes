@@ -102,16 +102,7 @@ step_relu <-
   }
 
 step_relu_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           shift = 0,
-           reverse = FALSE,
-           smooth = FALSE,
-           prefix = "right_relu_",
-           columns,
-           skip = skip,
-           id) {
+  function(terms, role, trained, shift, reverse, smooth, prefix, columns, skip, id) {
     step(
       subclass = "relu",
       terms = terms,

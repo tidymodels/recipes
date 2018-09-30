@@ -131,15 +131,7 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           one_hot = one_hot,
-           naming = naming,
-           levels = levels,
-           skip = skip,
-           id
-  ) {
+  function(terms, role, trained, one_hot, naming, levels, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,

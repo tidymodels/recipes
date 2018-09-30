@@ -121,16 +121,7 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "IC",
-           skip = skip,
-           id) {
-
+  function(terms, role, trained, num, options, res, prefix, skip, id) {
     step(
       subclass = "ica",
       terms = terms,

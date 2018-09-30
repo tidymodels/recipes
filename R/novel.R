@@ -84,13 +84,7 @@ step_novel <-
   }
 
 step_novel_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           new_level = NULL,
-           objects = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, new_level, objects, skip, id) {
     step(
       subclass = "novel",
       terms = terms,

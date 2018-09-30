@@ -80,14 +80,7 @@ step_string2factor <-
   }
 
 step_string2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ordered = NULL,
-           skip = skip,
-           id
-  ) {
+  function(terms, role, trained, levels, ordered, skip, id) {
     step(
       subclass = "string2factor",
       terms = terms,

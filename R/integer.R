@@ -89,14 +89,7 @@ step_integer <-
   }
 
 step_integer_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           strict = strict,
-           key = key,
-           skip = skip,
-           id
-  ) {
+  function(terms, role, trained, strict, key, skip, id) {
     step(
       subclass = "integer",
       terms = terms,

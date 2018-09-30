@@ -78,23 +78,19 @@ step_poly <-
     )
   }
 
-step_poly_new <- function(terms = NULL,
-                          role = NA,
-                          trained = FALSE,
-                          objects = NULL,
-                          options = NULL,
-                          skip = FALSE, id) {
-  step(
-    subclass = "poly",
-    terms = terms,
-    role = role,
-    trained = trained,
-    objects = objects,
-    options = options,
-    skip = skip,
-    id = id
-  )
-}
+step_poly_new <- 
+  function(terms, role, trained, objects, options, skip, id) {
+    step(
+      subclass = "poly",
+      terms = terms,
+      role = role,
+      trained = trained,
+      objects = objects,
+      options = options,
+      skip = skip,
+      id = id
+    )
+  }
 
 
 poly_wrapper <- function(x, args) {

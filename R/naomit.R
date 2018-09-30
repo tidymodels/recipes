@@ -52,8 +52,7 @@ step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
   )
 }
 
-step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE,
-                            columns, skip = FALSE, id) {
+step_naomit_new <- function(terms, role, trained, columns, skip, id) {
   step(
     subclass = "naomit",
     terms = terms,

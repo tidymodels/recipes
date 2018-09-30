@@ -101,15 +101,7 @@ check_range <-
 
 ## Initializes a new object
 check_range_new <-
-  function(terms   = NULL,
-           role    = NA,
-           skip    = FALSE,
-           trained = FALSE,
-           slack_prop = NULL,
-           warn       = FALSE,
-           lower      = NULL,
-           upper      = NULL,
-           id) {
+  function(terms, role, skip, trained, slack_prop, warn, lower, upper, id) {
     check(
       subclass = "range",
       terms    = terms,

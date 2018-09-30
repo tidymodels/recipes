@@ -110,32 +110,21 @@ step_date <-
 }
 
 step_date_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = FALSE,
-    id
-  ) {
-  step(
-    subclass = "date",
-    terms = terms,
-    role = role,
-    trained = trained,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = skip,
-    id = id
-  )
-}
+  function(terms, role, trained, features, abbr, label, ordinal, columns, skip, id) {
+    step(
+      subclass = "date",
+      terms = terms,
+      role = role,
+      trained = trained,
+      features = features,
+      abbr = abbr,
+      label = label,
+      ordinal = ordinal,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export

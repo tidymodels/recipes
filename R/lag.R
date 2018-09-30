@@ -78,15 +78,7 @@ step_lag <-
   }
 
 step_lag_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           lag = 1,
-           default = NA,
-           prefix = "lag_",
-           columns, 
-           skip = skip,
-           id) {
+  function(terms, role, trained, lag, default, prefix, columns, skip, id) {
     step(
       subclass = "lag",
       terms = terms,

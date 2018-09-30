@@ -90,11 +90,7 @@ step_YeoJohnson <-
   }
 
 step_YeoJohnson_new <-
-  function(terms = NULL, role = NA, trained = FALSE,
-           lambdas = NULL, limits = NULL, nunique = NULL,
-           na.rm = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, lambdas, limits, nunique, na.rm, skip, id) {
     step(
       subclass = "YeoJohnson",
       terms = terms,

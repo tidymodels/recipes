@@ -92,15 +92,7 @@ step_log <-
   }
 
 step_log_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           base = NULL,
-           offset = NULL,
-           columns = NULL,
-           skip = skip,
-           signed = FALSE,
-           id) {
+  function(terms, role, trained, base, offset, columns, skip, signed, id) {
     step(
       subclass = "log",
       terms = terms,

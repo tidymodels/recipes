@@ -80,12 +80,7 @@ step_lowerimpute <-
   }
 
 step_lowerimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           threshold = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, threshold, skip, id) {
     step(
       subclass = "lowerimpute",
       terms = terms,

@@ -110,15 +110,7 @@ step_depth <-
   }
 
 step_depth_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           metric = NULL,
-           options = NULL,
-           data = NULL,
-           skip = skip,
-           id) {
+  function(terms, class, role, trained, metric, options, data, skip, id) {
     step(
       subclass = "depth",
       terms = terms,

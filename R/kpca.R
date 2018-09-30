@@ -137,28 +137,20 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           res = NULL,
-           options = NULL,
-           prefix = "kPC",
-           skip = skip,
-           id) {
-  step(
-    subclass = "kpca",
-    terms = terms,
-    role = role,
-    trained = trained,
-    num = num,
-    res = res,
-    options = options,
-    prefix = prefix,
-    skip = skip,
-    id = id
-  )
-}
+  function(terms, role, trained, num, res, options, prefix, skip, id) {
+    step(
+      subclass = "kpca",
+      terms = terms,
+      role = role,
+      trained = trained,
+      num = num,
+      res = res,
+      options = options,
+      prefix = prefix,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_kpca <- function(x, training, info = NULL, ...) {

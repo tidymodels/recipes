@@ -57,12 +57,7 @@ step_rm <- function(recipe,
            ))
 }
 
-step_rm_new <- function(terms = NULL,
-                        role = NA,
-                        trained = FALSE,
-                        removals = NULL,
-                        skip = FALSE,
-                        id) {
+step_rm_new <- function(terms, role, trained, removals, skip, id) {
   step(
     subclass = "rm",
     terms = terms,

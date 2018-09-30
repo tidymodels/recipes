@@ -79,13 +79,7 @@ step_lincomb <-
   }
 
 step_lincomb_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           max_steps = NULL,
-           removals = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, max_steps, removals, skip, id) {
     step(
       subclass = "lincomb",
       terms = terms,

@@ -95,14 +95,7 @@ step_rollimpute <-
   }
 
 step_rollimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           statistic = NULL,
-           window = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, statistic, window, skip, id) {
     step(
       subclass = "rollimpute",
       terms = terms,

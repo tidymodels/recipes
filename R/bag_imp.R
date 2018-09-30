@@ -131,15 +131,7 @@ step_bagimpute <-
   }
 
 step_bagimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           models = NULL,
-           options = NULL,
-           impute_with = NULL,
-           seed_val = NA,
-        skip = skip,
-        id = rand_id()) {
+  function(terms, role, trained, models, options, impute_with, seed_val, skip, id) {
     step(
       subclass = "bagimpute",
       terms = terms,

@@ -55,12 +55,7 @@ step_shuffle <- function(recipe,
            ))
 }
 
-step_shuffle_new <- function(terms = NULL,
-                             role = NA,
-                             trained = FALSE,
-                             columns = NULL,
-                             skip = FALSE,
-                             id) {
+step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
   step(
     subclass = "shuffle",
     terms = terms,

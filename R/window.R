@@ -155,16 +155,7 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           size = NULL,
-           na.rm = NULL,
-           statistic = NULL,
-           columns = NULL,
-           names = names,
-           skip = skip,
-           id) {
+  function(terms, role, trained, size, na.rm, statistic, columns, names, skip, id) {
     step(
       subclass = "window",
       terms = terms,

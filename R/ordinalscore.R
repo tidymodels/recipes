@@ -90,13 +90,7 @@ step_ordinalscore <-
   }
 
 step_ordinalscore_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           convert = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, convert, skip, id) {
     step(
       subclass = "ordinalscore",
       terms = terms,

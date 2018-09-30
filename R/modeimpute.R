@@ -74,12 +74,7 @@ step_modeimpute <-
   }
 
 step_modeimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           modes = NULL,
-        skip = skip,
-        id) {
+  function(terms, role, trained, modes, skip, id) {
     step(
       subclass = "modeimpute",
       terms = terms,

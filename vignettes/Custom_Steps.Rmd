@@ -22,7 +22,7 @@ options(digits = 3)
 The `recipes` package contains a number of different operations:
 
 ```{r step_list}
-library(recipes)
+library(tidymodels)
 ls("package:recipes", pattern = "^step_")
 ```
 
@@ -69,13 +69,15 @@ step_percentile <- function(
   ref_dist = NULL,
   approx = FALSE, 
   options = list(probs = (0:100)/100, names = TRUE),
-  skip = FALSE
+  skip = FALSE,
+  id = rand_id("percentile")
   ) {
-## The variable selectors are not immediately evaluated by using
-## the `quos` function in `rlang`
-  terms <- rlang::quos(...) 
-  if(length(terms) == 0)
-    stop("Please supply at least one variable specification. See ?selections.")
+
+  ## The variable selectors are not immediately evaluated by using
+  ##  the `quos` function in `rlang`. `ellipse_check` captures the
+  ##  values and also checks to make sure that they are not empty.  
+  terms <- ellipse_check(...) 
+
   add_step(
     recipe, 
     step_percentile_new(
@@ -85,7 +87,10 @@ step_percentile <- function(
       ref_dist = ref_dist,
       approx = approx,
       options = options,
-      skip = skip))
+      skip = skip,
+      id = id
+    )
+  )
 }
 ```
 
@@ -94,6 +99,7 @@ You should always keep the first four arguments (`recipe` though `trained`) the 
  * the `role` argument is used when you either 1) create new variables and want their role to be pre-set or 2) replace the existing variables with new values. The latter is what we will be doing and using `role = NA` will leave the existing role intact. 
  * `trained` is set by the package when the estimation step has been run. You should default your function definition's argument to `FALSE`. 
  * `skip` is a logical. Whenever a recipe is prepped, each step is trained and then baked. However, there are some steps that should not be applied when a call to `bake` is used. For example, if a step is applied to the variables with roles of "outcomes", these data would not be available for new samples. 
+ * `id` is a character string that can be used to identify steps in package code. 
 
 I've added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the `ref_dist` object. 
 However, this might be problematic if the data set is large. `approx` would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If `approx = TRUE`, the argument `ref_dist` will contain the grid for each variable. 
@@ -106,27 +112,23 @@ We will use the `stats::quantile` to compute the grid. However, we might also wa
 Next, you can utilize the internal function `step` that sets the class of new objects. Using `subclass = "percentile"` will set the class of new objects to `"step_percentile". 
 
 ```{r initialize}
-step_percentile_new <- function(
-  terms = NULL, 
-  role = NA, 
-  trained = FALSE, 
-  ref_dist = NULL, 
-  approx = NULL, 
-  options = NULL,
-  skip = FALSE
-) {
-  step(
-    subclass = "percentile", 
-    terms = terms,
-    role = role,
-    trained = trained,
-    ref_dist = ref_dist,
-    approx = approx,
-    options = options,
-    skip = skip
-  )
-}
+step_percentile_new <- 
+  function(terms, role, trained, ref_dist, approx, options, skip, id) {
+    step(
+      subclass = "percentile", 
+      terms = terms,
+      role = role,
+      trained = trained,
+      ref_dist = ref_dist,
+      approx = approx,
+      options = options,
+      skip = skip,
+      id = id
+    )
+  }
 ```
+
+This constructor function should have no default argument values. 
 
 # Define the estimation procedure
 
@@ -162,25 +164,21 @@ get_pctl <- function(x, args) {
 
 prep.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(terms = x$terms, info = info) 
-  ## You can add error trapping for non-numeric data here and so on.
+  ## You can add error trapping for non-numeric data here and so on. See the
+  ## `check_type` function to do this for basic types. 
+  
   ## We'll use the names later so
-  if(x$options$names == FALSE)
+  if (x$options$names == FALSE)
     stop("`names` should be set to TRUE", call. = FALSE)
   
-  if(!x$approx) {
+  if (!x$approx) {
     ref_dist <- training[, col_names]
   } else {
-    pctl <- lapply(
-      training[, col_names],  
-      get_pctl, 
-      args = x$options
-    )
-    ref_dist <- pctl
+    ref_dist <- map(training[, col_names],  get_pctl, args = x$options)
   }
 
-  ## It is a good idea to use the constructor function
-  ## to return the updated object. Note that `trained` is
-  ## set to TRUE
+  ## Use the constructor function to return the updated object. 
+  ## Note that `trained` is set to TRUE
   
   step_percentile_new(
     terms = x$terms, 
@@ -189,7 +187,8 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
     ref_dist = ref_dist,
     approx = x$approx,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 ```
@@ -224,8 +223,8 @@ bake.step_percentile <- function(object, newdata, ...) {
   ## and do the computations
   vars <- names(object$ref_dist)
   
-  for(i in vars) {
-    if(!object$approx) {
+  for (i in vars) {
+    if (!object$approx) {
       ## We can use `apply` since tibbles do not drop dimensions:
       newdata[, i] <- apply(newdata[, i], 1, pctl_by_mean, 
                             ref = object$ref_dist[, i])
@@ -242,11 +241,10 @@ bake.step_percentile <- function(object, newdata, ...) {
 Let's use the example data to make sure that it works: 
 
 ```{r example}
-rec_obj <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)])
-rec_obj <- rec_obj %>%
-  step_percentile(all_predictors(), approx = TRUE) 
-
-rec_obj <- prep(rec_obj, training = biomass_tr)
+rec_obj <- 
+  recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
+  step_percentile(all_predictors(), approx = TRUE) %>%
+  prep(training = biomass_tr)
 
 percentiles <- bake(rec_obj, biomass_te)
 percentiles

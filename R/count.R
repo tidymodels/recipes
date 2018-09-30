@@ -93,30 +93,22 @@ step_count <- function(recipe,
   )
 }
 
-step_count_new <- function(terms = NULL,
-                           role = NA,
-                           trained = FALSE,
-                           pattern = NULL,
-                           normalize = NULL,
-                           options = NULL,
-                           result = NULL,
-                           input = NULL,
-                           skip = FALSE,
-                           id) {
-  step(
-    subclass = "count",
-    terms = terms,
-    role = role,
-    trained = trained,
-    pattern = pattern,
-    normalize = normalize,
-    options = options,
-    result = result,
-    input = input,
-    skip = skip,
-    id = id
-  )
-}
+step_count_new <- 
+  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+    step(
+      subclass = "count",
+      terms = terms,
+      role = role,
+      trained = trained,
+      pattern = pattern,
+      normalize = normalize,
+      options = options,
+      result = result,
+      input = input,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {

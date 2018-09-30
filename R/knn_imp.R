@@ -120,15 +120,7 @@ step_knnimpute <-
   }
 
 step_knnimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           K = NULL,
-           impute_with = NULL,
-           ref_data = NULL,
-           columns = NA,
-           skip = skip,
-           id) {
+  function(terms, role, trained, K, impute_with, ref_data, columns, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,

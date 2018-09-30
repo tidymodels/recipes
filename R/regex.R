@@ -88,15 +88,8 @@ step_regex <- function(recipe,
   )
 }
 
-step_regex_new <- function(terms = NULL,
-                           role = NA,
-                           trained = FALSE,
-                           pattern = NULL,
-                           options = NULL,
-                           result = NULL,
-                           input = NULL,
-                           skip = FALSE, 
-                           id) {
+step_regex_new <- 
+  function(terms, role, trained, pattern, options, result, input, skip, id) {
   step(
     subclass = "regex",
     terms = terms,

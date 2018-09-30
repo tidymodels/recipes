@@ -73,13 +73,7 @@ step_bs <-
   }
 
 step_bs_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = skip,
-           id = id) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "bs",
       terms = terms,

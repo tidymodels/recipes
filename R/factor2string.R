@@ -76,12 +76,7 @@ step_factor2string <-
   }
 
 step_factor2string_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "factor2string",
       terms = terms,

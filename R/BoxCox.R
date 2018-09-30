@@ -89,14 +89,7 @@ step_BoxCox <-
   }
 
 step_BoxCox_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           lambdas = NULL,
-           limits = NULL,
-           nunique = NULL,
-           skip = skip,
-           id = id) {
+  function(terms, role, trained, lambdas, limits, nunique, skip, id) {
     step(
       subclass = "BoxCox",
       terms = terms,

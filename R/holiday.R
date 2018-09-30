@@ -77,26 +77,18 @@ step_holiday <-
 }
 
 step_holiday_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    holidays = holidays,
-    columns = columns,
-    skip = FALSE,
-    id 
-    ) {
-  step(
-    subclass = "holiday",
-    terms = terms,
-    role = role,
-    trained = trained,
-    holidays = holidays,
-    columns = columns,
-    skip = skip,
-    id = id
-  )
-}
+  function(terms, role, trained, holidays, columns, skip, id) {
+    step(
+      subclass = "holiday",
+      terms = terms,
+      role = role,
+      trained = trained,
+      holidays = holidays,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export

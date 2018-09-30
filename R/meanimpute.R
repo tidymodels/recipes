@@ -81,13 +81,7 @@ step_meanimpute <-
   }
 
 step_meanimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, means, trim, skip, id) {
     step(
       subclass = "meanimpute",
       terms = terms,

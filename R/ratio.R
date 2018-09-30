@@ -87,15 +87,7 @@ step_ratio <-
   }
 
 step_ratio_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           denom = NULL,
-           naming = NULL,
-           columns = NULL,
-           skip = skip,
-           id
-  ) {
+  function(terms, role, trained, denom, naming, columns, skip, id) {
     step(
       subclass = "ratio",
       terms = terms,

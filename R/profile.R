@@ -143,30 +143,22 @@ step_profile <- function(recipe,
   )
 }
 
-step_profile_new <- function(terms = NULL,
-                             profile = NULL,
-                             pct = NULL,
-                             index = NULL,
-                             grid = NULL,
-                             columns = NULL,
-                             role = NA,
-                             trained = FALSE,
-                             skip = FALSE,
-                             id) {
-  step(
-    subclass = "profile",
-    terms = terms,
-    profile = profile,
-    pct = pct,
-    index = index,
-    grid = grid,
-    columns = columns,
-    role = role,
-    trained = trained,
-    skip = skip,
-    id = id
-  )
-}
+step_profile_new <- 
+  function(terms, profile, pct, index, grid, columns, role, trained, skip, id) {
+    step(
+      subclass = "profile",
+      terms = terms,
+      profile = profile,
+      pct = pct,
+      index = index,
+      grid = grid,
+      columns = columns,
+      role = role,
+      trained = trained,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_profile <- function(x, training, info = NULL, ...) {

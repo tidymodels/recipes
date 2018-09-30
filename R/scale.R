@@ -74,13 +74,7 @@ step_scale <-
   }
 
 step_scale_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           sds = NULL,
-           na.rm = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, sds, na.rm, skip, id) {
     step(
       subclass = "scale",
       terms = terms,

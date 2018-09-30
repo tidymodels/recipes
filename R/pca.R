@@ -128,29 +128,22 @@ step_pca <- function(recipe,
   )
 }
 
-step_pca_new <- function(terms = NULL,
-                         role = "predictor",
-                         trained = FALSE,
-                         num  = NULL,
-                         threshold = NULL,
-                         options = NULL,
-                         res = NULL,
-                         prefix = "PC",
-                         skip = FALSE, id) {
-  step(
-    subclass = "pca",
-    terms = terms,
-    role = role,
-    trained = trained,
-    num = num,
-    threshold = threshold,
-    options = options,
-    res = res,
-    prefix = prefix,
-    skip = skip,
-    id = id
-  )
-}
+step_pca_new <- 
+  function(terms, role, trained, num, threshold, options, res, prefix, skip, id) {
+    step(
+      subclass = "pca",
+      terms = terms,
+      role = role,
+      trained = trained,
+      num = num,
+      threshold = threshold,
+      options = options,
+      res = res,
+      prefix = prefix,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats prcomp
 #' @importFrom rlang expr

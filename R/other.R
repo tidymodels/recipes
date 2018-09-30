@@ -103,14 +103,7 @@ step_other <-
   }
 
 step_other_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           threshold = NULL,
-           other = NULL,
-           objects = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, threshold, other, objects, skip, id) {
     step(
       subclass = "other",
       terms = terms,

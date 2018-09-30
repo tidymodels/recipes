@@ -92,17 +92,7 @@ step_corr <- function(recipe,
 }
 
 step_corr_new <-
-  function(
-    terms = NULL,
-    role = NA,
-    trained = FALSE,
-    threshold = NULL,
-    use = NULL,
-    method = NULL,
-    removals = NULL,
-    skip = FALSE,
-    id
-  ) {
+  function(terms, role, trained, threshold, use, method, removals, skip, id) {
     step(
       subclass = "corr",
       terms = terms,

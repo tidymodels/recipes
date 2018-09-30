@@ -62,12 +62,7 @@ step_unorder <-
   }
 
 step_unorder_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "unorder",
       terms = terms,

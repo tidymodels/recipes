@@ -77,14 +77,7 @@ step_range <-
   }
 
 step_range_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           min = 0,
-           max = 1,
-           ranges = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, min, max, ranges, skip, id) {
     step(
       subclass = "range",
       terms = terms,

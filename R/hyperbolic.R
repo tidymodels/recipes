@@ -75,14 +75,7 @@ step_hyperbolic <-
   }
 
 step_hyperbolic_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           func = NULL,
-           inverse = NULL,
-           columns = NULL,
-           skip = skip,
-           id) {
+  function(terms, role, trained, func, inverse, columns, skip, id) {
     step(
       subclass = "hyperbolic",
       terms = terms,
