@@ -28,12 +28,14 @@ test_that('imputation values', {
     step_knnimpute(carbon,
                    nitrogen,
                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   K = 3)
+                   K = 3, 
+                   id = "")
 
   imp_exp_un <- tibble(
     terms = c("carbon", "nitrogen"),
     predictors = rep(NA_character_, 2),
-    K = rep(3, 2)
+    K = rep(3, 2),
+    id = ""
   )
   expect_equal(imp_exp_un, tidy(impute_rec, number = 2))
 
@@ -70,6 +72,7 @@ test_that('imputation values', {
   )
   imp_exp_tr <- imp_exp_tr[imp_exp_tr$terms != imp_exp_tr$predictors,]
   imp_exp_tr$K <- 3
+  imp_exp_tr$id <- ""
   imp_exp_tr <- as_tibble(imp_exp_tr)
   expect_equal(imp_exp_tr, tidy(impute_rec, number = 2))
 

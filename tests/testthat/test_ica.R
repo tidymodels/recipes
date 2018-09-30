@@ -70,7 +70,7 @@ rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2, id = "")
 
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
@@ -86,7 +86,8 @@ test_that('correct ICA values', {
   tidy_exp_un <- tibble(
     terms = rep(vars, 2),
     value = rep(NA_real_, 2*5),
-    component = rep(c("IC1", "IC2"), 5)
+    component = rep(c("IC1", "IC2"), 5),
+    id = ""
   )
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 1))
 
@@ -100,7 +101,8 @@ test_that('correct ICA values', {
   tidy_exp_tr <- tibble(
     terms = tidy_exp_un$terms,
     value = loadings$values,
-    component = as.character(loadings$ind)
+    component = as.character(loadings$ind),
+    id = ""
   )
   expect_equal(tidy_exp_tr, tidy(ica_extract_trained, number = 1))
 

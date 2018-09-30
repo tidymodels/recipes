@@ -19,8 +19,10 @@ test_that('simple skip', {
   expect_equal(baked_1$Sepal.Length, iris$Sepal.Length)
   expect_equal(juiced_1$Sepal.Length, log(iris$Sepal.Length))
 
-  prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
-
+  expect_warning(
+    prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
+  )
+  
   baked_2  <- bake(prepped_2, newdata = iris[, -1])
   baked_3  <- bake(prepped_2, newdata = iris)
   expect_false(

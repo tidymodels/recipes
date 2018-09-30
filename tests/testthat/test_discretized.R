@@ -63,13 +63,14 @@ test_that('NA values with step_discretize (issue #127)', {
 
 test_that('printing and tidys', {
   rec <- recipe(~., data = ex_tr) %>%
-    step_discretize(x1)
+    step_discretize(x1, id = "")
   expect_output(print(rec))
   expect_output(prep(rec, training = ex_tr, verbose = TRUE))
 
   tidy_exp_un <- tibble(
     terms = "x1",
-    value = NA_real_
+    value = NA_real_,
+    id = ""
   )
   expect_equal(tidy(rec, 1), tidy_exp_un)
 
@@ -77,7 +78,8 @@ test_that('printing and tidys', {
   br <- rec_trained$steps[[1]]$objects$x1$breaks
   tidy_exp_tr <- tibble(
     terms = rep("x1", length(br)),
-    value = br
+    value = br,
+    id = ""
   )
   expect_equal(tidy(rec_trained, 1), tidy_exp_tr)
 

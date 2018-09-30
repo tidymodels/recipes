@@ -15,7 +15,7 @@ rec <- recipe(X1 ~ ., data = tr_dat)
 
 test_that('correct kernel PCA values', {
   kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6)
+    step_kpca(X2, X3, X4, X5, X6, id = "")
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
@@ -35,7 +35,7 @@ test_that('correct kernel PCA values', {
   expect_equal(pca_pred, pca_pred_exp)
 
   kpca_tibble <-
-    tibble(terms = c("X2", "X3", "X4", "X5", "X6"))
+    tibble(terms = c("X2", "X3", "X4", "X5", "X6"), id = "")
 
   expect_equal(tidy(kpca_rec, 1), kpca_tibble)
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)

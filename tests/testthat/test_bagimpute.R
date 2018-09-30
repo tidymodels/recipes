@@ -46,10 +46,12 @@ test_that('imputation models', {
 
   imp_tibble_un <-
     tibble(terms = c("carbon", "fac"),
-           model = rep(NA, 2))
+           model = rep(NA, 2),
+           id = imputed_trained$steps[[1]]$id)
   imp_tibble_tr <-
     tibble(terms = c("carbon", "fac"),
-           model = imputed_trained$steps[[1]]$models)
+           model = imputed_trained$steps[[1]]$models,
+           id = imputed_trained$steps[[1]]$id)
 
   expect_equal(tidy(imputed, 1), imp_tibble_un)
   expect_equal(tidy(imputed_trained, 1)$terms, imp_tibble_tr$terms)

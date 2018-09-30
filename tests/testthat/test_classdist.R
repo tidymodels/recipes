@@ -12,7 +12,7 @@ eps <- if (capabilities("long.double"))
 
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species", log = FALSE)
+    step_classdist(all_predictors(), class = "Species", log = FALSE, id = "")
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, newdata = iris)
   dists <- dists[, grepl("classdist", names(dists))]
@@ -31,7 +31,8 @@ test_that("defaults", {
   tidy_exp_un <- tibble(
     terms = "all_predictors()",
     value = NA_real_,
-    class = NA_character_
+    class = NA_character_,
+    id = ""
   )
   expect_equal(tidy_exp_un, tidy(rec, number = 1))
   means <- lapply(split_up, colMeans)
@@ -40,7 +41,8 @@ test_that("defaults", {
   tidy_exp_tr <- tibble(
     terms = names(means),
     value = unname(means),
-    class = rep(names(split_up), each = 4)
+    class = rep(names(split_up), each = 4),
+    id = ""
   )
   expect_equal(
     as.data.frame(tidy_exp_tr),

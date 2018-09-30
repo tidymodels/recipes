@@ -19,7 +19,7 @@ test_that('correct PCA values', {
     step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
-             options = list(retx = TRUE))
+             options = list(retx = TRUE), id = "")
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
@@ -37,7 +37,8 @@ test_that('correct PCA values', {
   tidy_exp_un <- tibble(
     terms = c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur"),
     value = rep(NA_real_, 5),
-    component = rep(NA_character_, 5)
+    component = rep(NA_character_, 5),
+    id = ""
   )
   expect_equal(tidy_exp_un, tidy(pca_extract, number = 3))
 
@@ -50,7 +51,8 @@ test_that('correct PCA values', {
   tidy_exp_tr <- tibble(
     terms = rep(tidy_exp_un$terms, pca_extract_trained$steps[[3]]$num),
     value = pca_obj$values,
-    component = as.character(pca_obj$ind)
+    component = as.character(pca_obj$ind),
+    id = ""
   )
   expect_equal(
     as.data.frame(tidy_exp_tr),

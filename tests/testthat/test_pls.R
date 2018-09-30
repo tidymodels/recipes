@@ -16,11 +16,15 @@ te_data <- example_data[-(1:20),]
 
 test_that('default values - multivariate', {
   default_mult_rec <- recipe(yield + y2 ~ ., data = tr_data) %>%
-    step_pls(all_predictors(), outcome = vars(starts_with("y")))
+    step_pls(all_predictors(), outcome = vars(starts_with("y")), id = "")
 
-  default_mult_ty_un <- tibble(
-    terms = "all_predictors()",
-    value = NA_real_, component = NA_character_)
+  default_mult_ty_un <- 
+    tibble(
+      terms = "all_predictors()",
+      value = NA_real_, 
+      component = NA_character_,
+      id = ""
+    )
   expect_equal(default_mult_ty_un, tidy(default_mult_rec, number = 1))
 
   default_mult_rec <- default_mult_rec %>%

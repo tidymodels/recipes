@@ -13,10 +13,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct basis functions', {
   with_poly <- rec %>%
-    step_poly(carbon, hydrogen)
+    step_poly(carbon, hydrogen, id = "")
 
   exp_tidy_un <- tibble(terms = c("carbon", "hydrogen"),
-                        degree = rep(2, 2))
+                        degree = rep(2, 2),
+                        id = "")
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
 

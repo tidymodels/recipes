@@ -27,7 +27,7 @@ rec <- recipe( ~ ., data = dat1)
 test_that('correct Isomap values', {
   skip_on_cran()
   im_rec <- rec %>%
-    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
+    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3, id = "")
 
   im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
 
@@ -36,7 +36,7 @@ test_that('correct Isomap values', {
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
 
   im_tibble <-
-    tibble(terms = c("x1", "x2", "x3"))
+    tibble(terms = c("x1", "x2", "x3"), id = "")
 
   expect_equal(tidy(im_rec, 1), im_tibble)
   expect_equal(tidy(im_trained, 1), im_tibble)

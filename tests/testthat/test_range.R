@@ -13,7 +13,7 @@ rec <- recipe(HHV ~ carbon + hydrogen,
 
 test_that('correct values', {
   standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12)
+    step_range(carbon, hydrogen, min = -12, id = "")
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
@@ -44,11 +44,13 @@ test_that('correct values', {
   rng_tibble_un <-
     tibble(terms = c("carbon", "hydrogen"),
            min = rep(NA_real_, 2),
-           max = rep(NA_real_, 2))
+           max = rep(NA_real_, 2),
+           id = "")
   rng_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen"),
            min = mins,
-           max = maxs)
+           max = maxs,
+           id = "")
 
   expect_equal(tidy(standardized, 1), rng_tibble_un)
   expect_equal(tidy(standardized_trained, 1), rng_tibble_tr)

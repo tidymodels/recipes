@@ -15,7 +15,7 @@ test_that('simple modes', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_modeimpute(Status, Home, Marital)
+    step_modeimpute(Status, Home, Marital, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, newdata = credit_te)
 
@@ -35,10 +35,12 @@ test_that('simple modes', {
                   recipes:::mode_est, character(1))
   imp_tibble_un <-
     tibble(terms = c("Status", "Home", "Marital"),
-           model = rep(NA_character_, 3))
+           model = rep(NA_character_, 3),
+           id = "")
   imp_tibble_tr <-
     tibble(terms = c("Status", "Home", "Marital"),
-           model = modes)
+           model = modes,
+           id = "")
 
   expect_equal(tidy(impute_rec, 1), imp_tibble_un)
   expect_equal(tidy(imputed, 1), imp_tibble_tr)
