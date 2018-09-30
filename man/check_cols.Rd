@@ -5,7 +5,8 @@
 \alias{tidy.check_cols}
 \title{Check if all Columns are Present}
 \usage{
-check_cols(recipe, ..., role = NA, trained = FALSE, skip = FALSE)
+check_cols(recipe, ..., role = NA, trained = FALSE, skip = skip,
+  id = rand_id("cols"))
 
 \method{tidy}{check_cols}(x, ...)
 }

@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+
+context("General tidy method")
+
 data(okc)
 
 okc_rec <- recipe(~ ., data = okc) %>%

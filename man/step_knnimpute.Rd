@@ -7,7 +7,7 @@
 \usage{
 step_knnimpute(recipe, ..., role = NA, trained = FALSE, K = 5,
   impute_with = imp_vars(all_predictors()), ref_data = NULL,
-  columns = NULL, skip = FALSE)
+  columns = NULL, skip = skip, id = rand_id("knnimpute"))
 
 \method{tidy}{step_knnimpute}(x, ...)
 }
@@ -53,6 +53,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_knnimpute} object.}
 }

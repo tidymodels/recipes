@@ -6,7 +6,7 @@
 \title{Shuffle Variables}
 \usage{
 step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("shuffle"))
 
 \method{tidy}{step_shuffle}(x, ...)
 }
@@ -35,6 +35,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_shuffle} object.}
 }

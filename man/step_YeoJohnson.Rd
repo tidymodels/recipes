@@ -7,7 +7,7 @@
 \usage{
 step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
   lambdas = NULL, limits = c(-5, 5), nunique = 5, na.rm = TRUE,
-  skip = FALSE)
+  skip = skip, id = rand_id("YeoJohnson"))
 
 \method{tidy}{step_YeoJohnson}(x, ...)
 }
@@ -44,6 +44,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_YeoJohnson} object.}
 }

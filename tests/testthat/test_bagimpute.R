@@ -2,6 +2,9 @@ library(testthat)
 library(ipred)
 library(rpart)
 library(recipes)
+
+context("bagged imputation")
+
 data("biomass")
 
 biomass$fac <- factor(sample(letters[1:2], size = nrow(biomass), replace = TRUE))

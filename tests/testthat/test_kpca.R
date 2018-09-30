@@ -2,6 +2,9 @@ library(testthat)
 library(kernlab)
 library(recipes)
 
+context("Kernel PCA")
+
+
 set.seed(131)
 tr_dat <- matrix(rnorm(100*6), ncol = 6)
 te_dat <- matrix(rnorm(20*6), ncol = 6)

@@ -463,7 +463,8 @@ simple_terms <- function(x, ...) {
   res
 }
 
-
+#' Make a random identification field for steps
+#' 
 #' @export
 #' @param prefix A single character string
 #' @param len An integer for the number of random characters

@@ -76,7 +76,7 @@ step_intercept_new <- function(role = "predictor", trained = FALSE,
     trained = trained,
     name = name,
     value = value,
-    skip = skip.
+    skip = skip,
     id = id
   )
 }

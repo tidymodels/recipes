@@ -6,7 +6,8 @@
 \title{Impute Numeric Data Using a Rolling Window Statistic}
 \usage{
 step_rollimpute(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, statistic = median, window = 5, skip = FALSE)
+  columns = NULL, statistic = median, window = 5, skip = skip,
+  id = rand_id("rollimpute"))
 
 \method{tidy}{step_rollimpute}(x, ...)
 }
@@ -43,6 +44,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_rollimpute} object.}
 }

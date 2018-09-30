@@ -7,7 +7,7 @@
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
   na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
-  skip = FALSE)
+  skip = skip, id = rand_id("window"))
 
 \method{tidy}{step_window}(x, ...)
 }
@@ -57,6 +57,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_window} object.}
 }

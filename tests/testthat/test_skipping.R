@@ -1,6 +1,9 @@
 library(recipes)
 library(testthat)
 
+context("Skipping steps")
+
+
 
 test_that('simple skip', {
   rec_1 <- recipe(Sepal.Length ~ ., data = iris) %>%

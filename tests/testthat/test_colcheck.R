@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("column checking")
+
+
 rp1 <- recipe(mtcars, cyl ~ .)
 rp2 <- recipe(mtcars, cyl ~ mpg + drat)
 

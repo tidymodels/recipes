@@ -118,7 +118,7 @@ step_depth_new <-
            options = NULL,
            data = NULL,
            skip = skip,
-           id {
+           id) {
     step(
       subclass = "depth",
       terms = terms,

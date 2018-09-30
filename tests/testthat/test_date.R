@@ -3,6 +3,9 @@ library(recipes)
 library(lubridate)
 library(tibble)
 
+context("Date features")
+
+
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 

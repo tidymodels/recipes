@@ -7,7 +7,8 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, columns = NULL, skip = FALSE)
+  ordinal = FALSE, columns = NULL, skip = skip,
+  id = rand_id("date"))
 
 \method{tidy}{step_date}(x, ...)
 }
@@ -60,6 +61,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_date} object.}
 }

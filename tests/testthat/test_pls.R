@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("PLS")
+
+
 example_data <- npk
 example_data$block <- NULL
 example_data$y2 <- 1:nrow(example_data)

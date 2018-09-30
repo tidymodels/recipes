@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Creating profiling data")
+
+
 data(okc)
 okc <- okc[1:20,]
 okc$diet <- factor(okc$diet)

@@ -6,8 +6,8 @@
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = NULL, degree = 3),
-  skip = FALSE)
+  objects = NULL, options = list(df = NULL, degree = 3), skip = skip,
+  id = rand_id("bs"))
 
 \method{tidy}{step_bs}(x, ...)
 }
@@ -40,6 +40,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_bs} object.}
 }

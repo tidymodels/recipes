@@ -6,7 +6,8 @@
 \title{Convert Numbers to Factors}
 \usage{
 step_num2factor(recipe, ..., role = NA, transform = function(x) x,
-  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE)
+  trained = FALSE, levels = NULL, ordered = FALSE, skip = skip,
+  id = rand_id("num2factor"))
 
 \method{tidy}{step_num2factor}(x, ...)
 }
@@ -42,6 +43,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_num2factor} object.}
 }

@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data("credit_data")
 
+context("Mean imputation")
+
+
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 

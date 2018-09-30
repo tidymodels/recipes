@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("Missing data checks")
+
+
 set_with_na <- data_frame(
   a = c(1, 2, NA),
   b = c(1, 2, NA_real_),

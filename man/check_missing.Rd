@@ -6,7 +6,7 @@
 \title{Check for Missing Values}
 \usage{
 check_missing(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, skip = FALSE)
+  columns = NULL, skip = skip, id = rand_id("missing"))
 
 \method{tidy}{check_missing}(x, ...)
 }

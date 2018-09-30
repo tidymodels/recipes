@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 library(dplyr)
+
+context("Lower limit imputation")
+
 data("biomass")
 
 biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)

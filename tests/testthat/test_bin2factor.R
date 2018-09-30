@@ -1,6 +1,8 @@
 library(testthat)
 library(recipes)
 
+context("binary to factor conversion")
+
 data(covers)
 rec <- recipe(~ description, covers) %>%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%

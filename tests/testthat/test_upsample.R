@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+
+context("Upsampling")
+
 iris2 <- iris[-(1:45),]
 iris2$Species[seq(6, 96, by = 5)] <- NA
 iris2$Species2 <- sample(iris2$Species)

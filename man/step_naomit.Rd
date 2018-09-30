@@ -5,7 +5,8 @@
 \alias{tidy.step_naomit}
 \title{Remove observations with missing values}
 \usage{
-step_naomit(recipe, ..., role = NA, trained = FALSE, skip = FALSE)
+step_naomit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
+  skip = FALSE, id = rand_id("naomit"))
 
 \method{tidy}{step_naomit}(x, ...)
 }
@@ -22,6 +23,9 @@ variables must be factors.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
+
+\item{columns}{A character string of variable names that will
+be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

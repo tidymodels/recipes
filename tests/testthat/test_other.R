@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Pooling to other category")
+
+
 data(okc)
 
 set.seed(19)

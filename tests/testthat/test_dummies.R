@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Dummy variable creation")
+
+
 data(okc)
 
 okc_missing <- okc

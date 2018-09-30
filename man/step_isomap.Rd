@@ -7,7 +7,8 @@
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE,
   num = 5, options = list(knn = 50, .mute = c("message", "output")),
-  res = NULL, prefix = "Isomap", skip = FALSE)
+  res = NULL, prefix = "Isomap", skip = skip,
+  id = rand_id("isomap"))
 
 \method{tidy}{step_isomap}(x, ...)
 }
@@ -49,6 +50,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_isomap} object}
 }

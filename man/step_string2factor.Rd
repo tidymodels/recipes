@@ -6,7 +6,8 @@
 \title{Convert Strings to Factors}
 \usage{
 step_string2factor(recipe, ..., role = NA, trained = FALSE,
-  levels = NULL, ordered = FALSE, skip = FALSE)
+  levels = NULL, ordered = FALSE, skip = skip,
+  id = rand_id("string2factor"))
 
 \method{tidy}{step_string2factor}(x, ...)
 }
@@ -38,6 +39,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_string2factor} object.}
 }

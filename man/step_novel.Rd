@@ -6,7 +6,8 @@
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
 step_novel(recipe, ..., role = NA, trained = FALSE,
-  new_level = "new", objects = NULL, skip = FALSE)
+  new_level = "new", objects = NULL, skip = skip,
+  id = rand_id("novel"))
 
 \method{tidy}{step_novel}(x, ...)
 }
@@ -37,6 +38,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_novel} object.}
 }

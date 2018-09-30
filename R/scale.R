@@ -80,7 +80,7 @@ step_scale_new <-
            sds = NULL,
            na.rm = NULL,
            skip = skip,
-           id=) {
+           id) {
     step(
       subclass = "scale",
       terms = terms,
