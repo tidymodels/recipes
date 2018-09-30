@@ -46,7 +46,8 @@ Suggests:
     rmarkdown,
     rpart,
     rsample (>= 0.0.2.9000),
-    testthat
+    testthat,
+    tidymodels
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
