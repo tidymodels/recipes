@@ -127,7 +127,7 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   if (any(col_check$type != "nominal"))
     stop(
       "Columns must be character or factor: ",
-      paste0(col_check$variables[col_check$type != "nominal"],
+      paste0(col_check$variable[col_check$type != "nominal"],
              collapse = ", "),
       call. = FALSE
     )
