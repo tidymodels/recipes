@@ -57,7 +57,8 @@ step_scale <-
            trained = FALSE,
            sds = NULL,
            na.rm = TRUE,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("scale")) {
     add_step(
       recipe,
       step_scale_new(
@@ -66,7 +67,8 @@ step_scale <-
         trained = trained,
         sds = sds,
         na.rm = na.rm,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -77,7 +79,8 @@ step_scale_new <-
            trained = FALSE,
            sds = NULL,
            na.rm = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id=) {
     step(
       subclass = "scale",
       terms = terms,
@@ -85,7 +88,8 @@ step_scale_new <-
       trained = trained,
       sds = sds,
       na.rm = na.rm,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -103,7 +107,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     sds,
     na.rm = x$na.rm,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

@@ -49,7 +49,8 @@ step_inverse <-
            offset = 0,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("inverse")) {
     add_step(recipe,
              step_inverse_new(
                terms = ellipse_check(...),
@@ -57,7 +58,8 @@ step_inverse <-
                offset = offset,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
@@ -67,7 +69,8 @@ step_inverse_new <-
            offset = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "inverse",
       terms = terms,
@@ -75,7 +78,8 @@ step_inverse_new <-
       offset = offset,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -90,7 +94,8 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
     offset = x$offset,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

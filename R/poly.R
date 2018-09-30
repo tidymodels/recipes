@@ -62,7 +62,8 @@ step_poly <-
            trained = FALSE,
            objects = NULL,
            options = list(degree = 2),
-           skip = FALSE) {
+        skip = skip,
+        id = rand_id("poly")) {
     add_step(
       recipe,
       step_poly_new(
@@ -71,7 +72,8 @@ step_poly <-
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -81,7 +83,7 @@ step_poly_new <- function(terms = NULL,
                           trained = FALSE,
                           objects = NULL,
                           options = NULL,
-                          skip = FALSE) {
+                          skip = FALSE, id) {
   step(
     subclass = "poly",
     terms = terms,
@@ -89,7 +91,8 @@ step_poly_new <- function(terms = NULL,
     trained = trained,
     objects = objects,
     options = options,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -123,7 +126,8 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

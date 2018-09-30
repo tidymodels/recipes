@@ -62,7 +62,8 @@ step_lincomb <-
            trained = FALSE,
            max_steps = 5,
            removals = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("lincomp")) {
     add_step(
       recipe,
       step_lincomb_new(
@@ -71,7 +72,8 @@ step_lincomb <-
         trained = trained,
         max_steps = max_steps,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -82,7 +84,8 @@ step_lincomb_new <-
            trained = FALSE,
            max_steps = NULL,
            removals = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "lincomb",
       terms = terms,
@@ -90,7 +93,8 @@ step_lincomb_new <-
       trained = trained,
       max_steps = max_steps,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -108,7 +112,8 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     max_steps = x$max_steps,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

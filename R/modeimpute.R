@@ -58,7 +58,8 @@ step_modeimpute <-
            role = NA,
            trained = FALSE,
            modes = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("modeimpute")) {
     add_step(
       recipe,
       step_modeimpute_new(
@@ -66,7 +67,8 @@ step_modeimpute <-
         role = role,
         trained = trained,
         modes = modes,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -76,14 +78,16 @@ step_modeimpute_new <-
            role = NA,
            trained = FALSE,
            modes = NULL,
-           skip = FALSE) {
+        skip = skip,
+        id) {
     step(
       subclass = "modeimpute",
       terms = terms,
       role = role,
       trained = trained,
       modes = modes,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -96,7 +100,8 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     modes = modes,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

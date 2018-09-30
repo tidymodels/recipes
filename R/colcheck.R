@@ -26,7 +26,8 @@ check_cols <-
            ...,
            role = NA,
            trained = FALSE,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("cols")) {
     add_check(
       recipe,
       check_cols_new(
@@ -34,7 +35,8 @@ check_cols <-
         role    = role,
         trained = trained,
         columns = NULL,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -44,14 +46,16 @@ check_cols_new <-
            role  = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = id) {
     check(subclass = "cols",
           prefix   = "check_",
           terms    = terms,
           role     = role,
           trained  = trained,
           columns  = columns,
-          skip = skip)
+          skip     = skip,
+          id       = id)
   }
 
 prep.check_cols <- function(x, training, info = NULL, ...) {
@@ -60,7 +64,8 @@ prep.check_cols <- function(x, training, info = NULL, ...) {
                  role  = x$role,
                  trained = TRUE,
                  columns = col_names,
-                 skip = x$skip)
+                 skip = x$skip,
+                 id = x$id)
 }
 
 bake.check_cols <- function(object, newdata, ...) {

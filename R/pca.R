@@ -107,7 +107,8 @@ step_pca <- function(recipe,
                      options = list(),
                      res = NULL,
                      prefix = "PC",
-                     skip = FALSE) {
+                     skip = FALSE,
+                     id = rand_id("pca")) {
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
   add_step(
@@ -121,7 +122,8 @@ step_pca <- function(recipe,
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -134,7 +136,7 @@ step_pca_new <- function(terms = NULL,
                          options = NULL,
                          res = NULL,
                          prefix = "PC",
-                         skip = FALSE) {
+                         skip = FALSE, id) {
   step(
     subclass = "pca",
     terms = terms,
@@ -145,7 +147,8 @@ step_pca_new <- function(terms = NULL,
     options = options,
     res = res,
     prefix = prefix,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -189,7 +192,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = prc_obj,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

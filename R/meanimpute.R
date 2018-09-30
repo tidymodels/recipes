@@ -64,7 +64,8 @@ step_meanimpute <-
            trained = FALSE,
            means = NULL,
            trim = 0,
-           skip = FALSE) {
+        skip = skip,
+        id = rand_id("meanimpute")) {
     add_step(
       recipe,
       step_meanimpute_new(
@@ -73,7 +74,8 @@ step_meanimpute <-
         trained = trained,
         means = means,
         trim = trim,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -84,7 +86,8 @@ step_meanimpute_new <-
            trained = FALSE,
            means = NULL,
            trim = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "meanimpute",
       terms = terms,
@@ -92,7 +95,8 @@ step_meanimpute_new <-
       trained = trained,
       means = means,
       trim = trim,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -113,7 +117,8 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     means,
     trim = x$trim,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

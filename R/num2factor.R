@@ -67,7 +67,8 @@ step_num2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("num2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
 
@@ -80,7 +81,8 @@ step_num2factor <-
         trained = trained,
         levels = levels,
         ordered = ordered,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -92,7 +94,8 @@ step_num2factor_new <-
            trained = FALSE,
            levels = NULL,
            ordered = NULL,
-           skip = FALSE
+           skip = skip,
+           id 
   ) {
     step(
       subclass = "num2factor",
@@ -102,7 +105,8 @@ step_num2factor_new <-
       trained = trained,
       levels = levels,
       ordered = ordered,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -126,7 +130,8 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     levels = res,
     ordered = ord,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

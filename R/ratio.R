@@ -66,7 +66,8 @@ step_ratio <-
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("ratio")) {
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",
            "See ?selections.", call. = FALSE)
@@ -79,7 +80,8 @@ step_ratio <-
         denom = denom,
         naming = naming,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -91,7 +93,8 @@ step_ratio_new <-
            denom = NULL,
            naming = NULL,
            columns = NULL,
-           skip = FALSE
+           skip = skip,
+           id
   ) {
     step(
       subclass = "ratio",
@@ -101,7 +104,8 @@ step_ratio_new <-
       denom = denom,
       naming = naming,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -129,7 +133,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     denom = x$denom,
     naming = x$naming,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

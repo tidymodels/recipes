@@ -58,7 +58,8 @@ step_string2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("string2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
     if((!is.null(levels) & !is.character(levels)) | is.list(levels))
@@ -72,7 +73,8 @@ step_string2factor <-
         trained = trained,
         levels = levels,
         ordered = ordered,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -83,7 +85,8 @@ step_string2factor_new <-
            trained = FALSE,
            levels = NULL,
            ordered = NULL,
-           skip = FALSE
+           skip = skip,
+           id
   ) {
     step(
       subclass = "string2factor",
@@ -92,7 +95,8 @@ step_string2factor_new <-
       trained = trained,
       levels = levels,
       ordered = ordered,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -129,7 +133,8 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     levels = res,
     ordered = ord,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

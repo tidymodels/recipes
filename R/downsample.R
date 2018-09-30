@@ -76,7 +76,7 @@
 step_downsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
-           seed = sample.int(10^5, 1)) {
+           seed = sample.int(10^5, 1), id = rand_id("downsample")) {
 
     add_step(recipe,
              step_downsample_new(
@@ -87,14 +87,15 @@ step_downsample <-
                column = column,
                target = target,
                skip = skip,
-               seed = seed
+               seed = seed,
+               id = id
              ))
   }
 
 step_downsample_new <-
   function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = FALSE,
-           seed = sample.int(10^5, 1)) {
+           seed = sample.int(10^5, 1), id) {
 
     step(
       subclass = "downsample",
@@ -105,7 +106,9 @@ step_downsample_new <-
       column = column,
       target = target,
       skip = skip,
-      seed = seed
+      id = id,
+      seed = seed,
+      id = id
     )
   }
 
@@ -129,7 +132,9 @@ prep.step_downsample <- function(x, training, info = NULL, ...) {
     column = col_name,
     target = floor(minority * x$ratio),
     skip = x$skip,
-    seed = x$seed
+    id = x$id,
+    seed = x$seed,
+    id = x$id
   )
 }
 

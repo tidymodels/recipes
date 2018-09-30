@@ -60,7 +60,8 @@ step_count <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
-                       skip = FALSE) {
+                       skip = FALSE,
+                       id = rand_id("count")) {
   if (!is.character(pattern))
     stop("`pattern` should be a character string", call. = FALSE)
   if (length(pattern) != 1)
@@ -86,7 +87,8 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -99,7 +101,8 @@ step_count_new <- function(terms = NULL,
                            options = NULL,
                            result = NULL,
                            input = NULL,
-                           skip = FALSE) {
+                           skip = FALSE,
+                           id) {
   step(
     subclass = "count",
     terms = terms,
@@ -110,7 +113,8 @@ step_count_new <- function(terms = NULL,
     options = options,
     result = result,
     input = input,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -131,7 +135,8 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

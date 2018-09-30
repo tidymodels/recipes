@@ -42,14 +42,16 @@ step_shuffle <- function(recipe,
                          role = NA,
                          trained = FALSE,
                          columns = NULL,
-                         skip = FALSE) {
+                         skip = FALSE,
+                         id = rand_id("shuffle")) {
   add_step(recipe,
            step_shuffle_new(
              terms = ellipse_check(...),
              role = role,
              trained = trained,
              columns = columns,
-             skip = skip
+             skip = skip,
+             id = id
            ))
 }
 
@@ -57,14 +59,16 @@ step_shuffle_new <- function(terms = NULL,
                              role = NA,
                              trained = FALSE,
                              columns = NULL,
-                             skip = FALSE) {
+                             skip = FALSE,
+                             id) {
   step(
     subclass = "shuffle",
     terms = terms,
     role = role,
     trained = trained,
     columns = columns,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -76,7 +80,8 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

@@ -71,8 +71,9 @@ step_log <-
            base = exp(1),
            offset = 0,
            columns = NULL,
-           skip = FALSE,
-           signed = FALSE
+           skip = skip,
+           signed = FALSE,
+           id = rand_id("log")
            ) {
     add_step(
       recipe,
@@ -84,7 +85,8 @@ step_log <-
         offset = offset,
         columns = columns,
         skip = skip,
-        signed = signed
+        signed = signed,
+        id = id
       )
     )
   }
@@ -96,8 +98,9 @@ step_log_new <-
            base = NULL,
            offset = NULL,
            columns = NULL,
-           skip = FALSE,
-           signed = FALSE) {
+           skip = skip,
+           signed = FALSE,
+           id) {
     step(
       subclass = "log",
       terms = terms,
@@ -107,7 +110,8 @@ step_log_new <-
       offset = offset,
       columns = columns,
       skip = skip,
-      signed = signed
+      signed = signed,
+      id = id
     )
   }
 
@@ -124,7 +128,8 @@ prep.step_log <- function(x, training, info = NULL, ...) {
     offset = x$offset,
     columns = col_names,
     skip = x$skip,
-    signed = x$signed
+    signed = x$signed,
+    id = x$id
   )
 }
 

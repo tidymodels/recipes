@@ -73,7 +73,8 @@ step_classdist <- function(recipe,
                            pool = FALSE,
                            log = TRUE,
                            objects = NULL,
-                           skip = FALSE) {
+                           skip = FALSE,
+                           id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1)
     stop("`class` should be a single character value.")
   add_step(
@@ -88,7 +89,8 @@ step_classdist <- function(recipe,
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -103,7 +105,8 @@ step_classdist_new <-
            pool = NULL,
            log = NULL,
            objects = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = id) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -115,7 +118,8 @@ step_classdist_new <-
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -160,7 +164,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     pool = x$pool,
     log = x$log,
     objects = res,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

@@ -104,7 +104,8 @@ step_isomap <-
            options = list(knn = 50, .mute = c("message", "output")),
            res = NULL,
            prefix = "Isomap",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("isomap")) {
 
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
 
@@ -118,7 +119,8 @@ step_isomap <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -131,7 +133,8 @@ step_isomap_new <-
            options = NULL,
            res = NULL,
            prefix = "isomap",
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "isomap",
       terms = terms,
@@ -141,7 +144,8 @@ step_isomap_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -170,7 +174,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = imap,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

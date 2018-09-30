@@ -33,26 +33,29 @@
 #'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE) {
+step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
+                        id = rand_id("naomit")) {
   add_step(
     recipe,
     step_naomit_new(
       terms = ellipse_check(...),
       role = role,
       trained = trained,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE,
-                            skip = FALSE) {
+                            skip = FALSE, id) {
   step(
     subclass = "naomit",
     terms = terms,
     role = role,
     trained = trained,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 

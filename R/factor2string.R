@@ -60,7 +60,8 @@ step_factor2string <-
            role = NA,
            trained = FALSE,
            columns = FALSE,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("factor2string")) {
     add_step(
       recipe,
       step_factor2string_new(
@@ -68,7 +69,8 @@ step_factor2string <-
         role = role,
         trained = trained,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -78,14 +80,16 @@ step_factor2string_new <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "factor2string",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,7 +110,8 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

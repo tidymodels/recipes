@@ -87,7 +87,8 @@ step_pls <-
            options = NULL,
            res = NULL,
            prefix = "PLS",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("pls")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
 
@@ -104,7 +105,8 @@ step_pls <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -118,7 +120,8 @@ step_pls_new <-
            options = NULL,
            res = NULL,
            prefix = "pls",
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "pls",
       terms = terms,
@@ -129,7 +132,8 @@ step_pls_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -164,7 +168,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = mod[c("projection", "Xmeans", "scale")],
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

@@ -115,7 +115,8 @@ step_kpca <-
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))
 
@@ -129,7 +130,8 @@ step_kpca <-
         res = res,
         options = options,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
 }
@@ -142,7 +144,8 @@ step_kpca_new <-
            res = NULL,
            options = NULL,
            prefix = "kPC",
-           skip = FALSE) {
+           skip = skip,
+           id) {
   step(
     subclass = "kpca",
     terms = terms,
@@ -152,7 +155,8 @@ step_kpca_new <-
     res = res,
     options = options,
     prefix = prefix,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -175,7 +179,8 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = kprc,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

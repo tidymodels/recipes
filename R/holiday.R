@@ -54,7 +54,8 @@ step_holiday <-
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
     columns = NULL,
-    skip = FALSE
+    skip = FALSE,
+    id = rand_id("holiday")
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
@@ -69,7 +70,8 @@ step_holiday <-
       trained = trained,
       holidays = holidays,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -81,7 +83,8 @@ step_holiday_new <-
     trained = FALSE,
     holidays = holidays,
     columns = columns,
-    skip = FALSE
+    skip = FALSE,
+    id 
     ) {
   step(
     subclass = "holiday",
@@ -90,7 +93,8 @@ step_holiday_new <-
     trained = trained,
     holidays = holidays,
     columns = columns,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -110,7 +114,8 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     holidays = x$holidays,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

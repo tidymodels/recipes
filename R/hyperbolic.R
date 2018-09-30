@@ -53,7 +53,8 @@ step_hyperbolic <-
            func = "sin",
            inverse = TRUE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
       stop("`func` should be either `sin``, `cos`, or `tan`",
@@ -67,7 +68,8 @@ step_hyperbolic <-
         func = func,
         inverse = inverse,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -79,7 +81,8 @@ step_hyperbolic_new <-
            func = NULL,
            inverse = NULL,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "hyperbolic",
       terms = terms,
@@ -88,7 +91,8 @@ step_hyperbolic_new <-
       func = func,
       inverse = inverse,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -104,7 +108,8 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
     func = x$func,
     inverse = x$inverse,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

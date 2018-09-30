@@ -59,7 +59,8 @@ step_range <-
            min = 0,
            max = 1,
            ranges = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("range")) {
     add_step(
       recipe,
       step_range_new(
@@ -69,7 +70,8 @@ step_range <-
         min = min,
         max = max,
         ranges = ranges,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -81,7 +83,8 @@ step_range_new <-
            min = 0,
            max = 1,
            ranges = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "range",
       terms = terms,
@@ -90,7 +93,8 @@ step_range_new <-
       min = min,
       max = max,
       ranges = ranges,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -111,7 +115,8 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     min = x$min,
     max = x$max,
     ranges = rbind(mins, maxs),
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

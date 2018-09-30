@@ -111,7 +111,8 @@ step_profile <- function(recipe,
                          columns = NULL,
                          role = NA,
                          trained = FALSE,
-                         skip = FALSE) {
+                         skip = FALSE,
+                         id = rand_id("profile")) {
 
   if (pct < 0 | pct > 1)
     stop("`pct should be on [0, 1]`", call. = FALSE)
@@ -136,7 +137,8 @@ step_profile <- function(recipe,
              columns = columns,
              role = role,
              trained = trained,
-             skip = skip
+             skip = skip,
+             id = id
            )
   )
 }
@@ -149,7 +151,8 @@ step_profile_new <- function(terms = NULL,
                              columns = NULL,
                              role = NA,
                              trained = FALSE,
-                             skip = FALSE) {
+                             skip = FALSE,
+                             id) {
   step(
     subclass = "profile",
     terms = terms,
@@ -160,7 +163,8 @@ step_profile_new <- function(terms = NULL,
     columns = columns,
     role = role,
     trained = trained,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -195,7 +199,8 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     grid = x$grid,
     columns = fixed_vals,
     trained = TRUE,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

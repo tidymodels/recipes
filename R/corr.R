@@ -83,7 +83,8 @@ step_corr <- function(recipe,
       use = use,
       method = method,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -108,7 +109,8 @@ step_corr_new <-
       use = use,
       method = method,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -132,7 +134,8 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
     use = x$use,
     method = x$method,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

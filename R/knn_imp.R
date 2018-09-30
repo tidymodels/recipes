@@ -99,7 +99,8 @@ step_knnimpute <-
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("knnimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
@@ -112,7 +113,8 @@ step_knnimpute <-
         impute_with = impute_with,
         ref_data = ref_data,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -125,7 +127,8 @@ step_knnimpute_new <-
            impute_with = NULL,
            ref_data = NULL,
            columns = NA,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -135,7 +138,8 @@ step_knnimpute_new <-
       impute_with = impute_with,
       ref_data = ref_data,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 

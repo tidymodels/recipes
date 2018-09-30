@@ -110,7 +110,8 @@ step_bagimpute <-
            options = list(nbagg = 25, keepX = FALSE),
            impute_with = imp_vars(all_predictors()),
            seed_val = sample.int(10 ^ 4, 1),
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("bagimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
@@ -123,7 +124,8 @@ step_bagimpute <-
         options = options,
         impute_with = impute_with,
         seed_val = seed_val,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -136,7 +138,8 @@ step_bagimpute_new <-
            options = NULL,
            impute_with = NULL,
            seed_val = NA,
-           skip = FALSE) {
+        skip = skip,
+        id = rand_id()) {
     step(
       subclass = "bagimpute",
       terms = terms,
@@ -146,7 +149,8 @@ step_bagimpute_new <-
       options = options,
       impute_with = impute_with,
       seed_val = seed_val,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 

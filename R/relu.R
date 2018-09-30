@@ -71,7 +71,8 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("relu")) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
@@ -90,7 +91,8 @@ step_relu <-
         reverse = reverse,
         smooth = smooth,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -103,7 +105,8 @@ step_relu_new <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "relu",
       terms = terms,
@@ -113,7 +116,8 @@ step_relu_new <-
       reverse = reverse,
       smooth = smooth,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 

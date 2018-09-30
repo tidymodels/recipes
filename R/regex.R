@@ -55,7 +55,8 @@ step_regex <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
-                       skip = FALSE) {
+                       skip = FALSE,
+                       id = rand_id("regex")) {
   if (!is.character(pattern))
     stop("`pattern` should be a character string", call. = FALSE)
   if (length(pattern) != 1)
@@ -81,7 +82,8 @@ step_regex <- function(recipe,
       options = options,
       result = result,
       input = input,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -93,7 +95,8 @@ step_regex_new <- function(terms = NULL,
                            options = NULL,
                            result = NULL,
                            input = NULL,
-                           skip = FALSE) {
+                           skip = FALSE, 
+                           id) {
   step(
     subclass = "regex",
     terms = terms,
@@ -103,7 +106,8 @@ step_regex_new <- function(terms = NULL,
     options = options,
     result = result,
     input = input,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -123,7 +127,8 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

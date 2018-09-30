@@ -72,7 +72,8 @@ step_integer <-
            trained = FALSE,
            strict = FALSE,
            key = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("integer")) {
     add_step(
       recipe,
       step_integer_new(
@@ -81,7 +82,8 @@ step_integer <-
         trained = trained,
         strict = strict,
         key = key,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -92,7 +94,8 @@ step_integer_new <-
            trained = FALSE,
            strict = strict,
            key = key,
-           skip = FALSE
+           skip = skip,
+           id
   ) {
     step(
       subclass = "integer",
@@ -101,7 +104,8 @@ step_integer_new <-
       trained = trained,
       strict = strict,
       key = key,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -140,7 +144,8 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     strict = x$strict,
     key = map(training[, col_names], get_unique_values),
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

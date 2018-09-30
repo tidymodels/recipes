@@ -111,7 +111,8 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("window")) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
@@ -145,7 +146,8 @@ step_window <-
         statistic = statistic,
         columns = columns,
         names = names,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -161,7 +163,8 @@ step_window_new <-
            statistic = NULL,
            columns = NULL,
            names = names,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "window",
       terms = terms,
@@ -172,7 +175,8 @@ step_window_new <-
       statistic = statistic,
       columns = columns,
       names = names,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -199,7 +203,8 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

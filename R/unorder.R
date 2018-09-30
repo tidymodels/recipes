@@ -48,14 +48,16 @@ step_unorder <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("unorder")) {
     add_step(recipe,
              step_unorder_new(
                terms = ellipse_check(...),
                role = role,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
@@ -64,14 +66,16 @@ step_unorder_new <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "unorder",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -99,7 +103,8 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

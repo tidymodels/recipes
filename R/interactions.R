@@ -93,7 +93,8 @@ step_interact <-
            trained = FALSE,
            objects = NULL,
            sep = "_x_",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("interact")) {
     add_step(
       recipe,
       step_interact_new(
@@ -102,7 +103,8 @@ step_interact <-
         role = role,
         objects = objects,
         sep = sep,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -114,7 +116,8 @@ step_interact_new <-
            trained = FALSE,
            objects = NULL,
            sep = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "interact",
       terms = terms,
@@ -122,7 +125,8 @@ step_interact_new <-
       trained = trained,
       objects = objects,
       sep = sep,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -182,7 +186,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = int_terms,
     sep = x$sep,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

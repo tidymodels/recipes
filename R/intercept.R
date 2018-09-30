@@ -46,7 +46,7 @@
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept", 
                            value = 1,
-                           skip = FALSE) {
+                           skip = FALSE, id = rand_id("intercept")) {
   if (length(list(...)) > 0)
     warning("Selectors are not used for this step.", call. = FALSE)
   if (!is.numeric(value))
@@ -61,21 +61,23 @@ step_intercept <- function(recipe, ..., role = "predictor",
       trained = trained,
       name = name,
       value = value,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_intercept_new <- function(role = "predictor", trained = FALSE,
                                name = "intercept", value = 1,
-                               skip = FALSE) {
+                               skip = FALSE, id) {
   step(
     subclass = "intercept",
     role = role,
     trained = trained,
     name = name,
     value = value,
-    skip = skip
+    skip = skip.
+    id = id
   )
 }
 

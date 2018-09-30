@@ -56,7 +56,8 @@ step_bs <-
            trained = FALSE,
            objects = NULL,
            options = list(df = NULL, degree = 3),
-           skip = FALSE) {
+        skip = skip,
+        id = rand_id("bs")) {
     add_step(
       recipe,
       step_bs_new(
@@ -65,7 +66,8 @@ step_bs <-
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -76,7 +78,8 @@ step_bs_new <-
            trained = FALSE,
            objects = NULL,
            options = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = id) {
     step(
       subclass = "bs",
       terms = terms,
@@ -84,7 +87,8 @@ step_bs_new <-
       trained = trained,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -118,7 +122,8 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

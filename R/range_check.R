@@ -80,7 +80,8 @@ check_range <-
            slack_prop = 0.05,
            warn       = FALSE,
            lower      = NULL,
-           upper      = NULL) {
+           upper      = NULL,
+           id = rand_id("range_check_")) {
     add_check(
       recipe,
       check_range_new(
@@ -91,7 +92,8 @@ check_range <-
         warn    = warn,
         lower   = lower,
         upper   = upper,
-        slack_prop = slack_prop
+        slack_prop = slack_prop,
+        id = id
       )
     )
   }
@@ -105,7 +107,8 @@ check_range_new <-
            slack_prop = NULL,
            warn       = FALSE,
            lower      = NULL,
-           upper      = NULL) {
+           upper      = NULL,
+           id) {
     check(
       subclass = "range",
       terms    = terms,
@@ -115,7 +118,8 @@ check_range_new <-
       warn     = warn,
       lower    = lower,
       upper    = upper,
-      slack_prop = slack_prop
+      slack_prop = slack_prop,
+      id       = id
     )
   }
 
@@ -139,7 +143,8 @@ prep.check_range <- function(x,
     warn    = x$warn,
     lower   = lower_vals,
     upper   = upper_vals,
-    slack_prop = x$slack_prop
+    slack_prop = x$slack_prop,
+    id = x$id
   )
 }
 

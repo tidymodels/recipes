@@ -72,7 +72,8 @@ step_rollimpute <-
            columns = NULL,
            statistic = median,
            window = 5,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("rollimpute")) {
 
     if (window < 3 | window %% 2 != 1)
       stop("`window` should be an odd integer >= 3", call. = FALSE)
@@ -87,7 +88,8 @@ step_rollimpute <-
         columns = columns,
         statistic = statistic,
         window = window,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -99,7 +101,8 @@ step_rollimpute_new <-
            columns = NULL,
            statistic = NULL,
            window = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "rollimpute",
       terms = terms,
@@ -108,7 +111,8 @@ step_rollimpute_new <-
       columns = columns,
       statistic = statistic,
       window = window,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -128,7 +132,8 @@ prep.step_rollimpute <- function(x, training, info = NULL, ...) {
     columns = col_names,
     statistic = x$statistic,
     window = x$window,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

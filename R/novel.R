@@ -67,7 +67,8 @@ step_novel <-
            trained = FALSE,
            new_level = "new",
            objects = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("novel")) {
     add_step(
       recipe,
       step_novel_new(
@@ -76,7 +77,8 @@ step_novel <-
         trained = trained,
         new_level = new_level,
         objects = objects,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -87,7 +89,8 @@ step_novel_new <-
            trained = FALSE,
            new_level = NULL,
            objects = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "novel",
       terms = terms,
@@ -95,7 +98,8 @@ step_novel_new <-
       trained = trained,
       new_level = new_level,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -146,7 +150,8 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     new_level = x$new_level,
     objects = objects,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

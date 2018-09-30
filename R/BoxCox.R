@@ -71,7 +71,8 @@ step_BoxCox <-
            lambdas = NULL,
            limits = c(-5, 5),
            nunique = 5,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("BoxCox")) {
     add_step(
       recipe,
       step_BoxCox_new(
@@ -81,7 +82,8 @@ step_BoxCox <-
         lambdas = lambdas,
         limits = sort(limits)[1:2],
         nunique = nunique,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -93,7 +95,8 @@ step_BoxCox_new <-
            lambdas = NULL,
            limits = NULL,
            nunique = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = id) {
     step(
       subclass = "BoxCox",
       terms = terms,
@@ -102,7 +105,8 @@ step_BoxCox_new <-
       lambdas = lambdas,
       limits = limits,
       nunique = nunique,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -126,7 +130,8 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     lambdas = values,
     limits = x$limits,
     nunique = x$nunique,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

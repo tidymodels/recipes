@@ -48,27 +48,29 @@
 
 step_invlogit <-
   function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE) {
+           skip = skip, id = rand_id("invlogit")) {
     add_step(recipe,
              step_invlogit_new(
                terms = ellipse_check(...),
                role = role,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_invlogit_new <-
   function(terms = NULL, role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE) {
+        skip = skip, id) {
     step(
       subclass = "invlogit",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -82,7 +84,8 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

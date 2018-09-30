@@ -81,7 +81,8 @@ step_nzv <-
            trained = FALSE,
            options = list(freq_cut = 95 / 5, unique_cut = 10),
            removals = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("nzv")) {
     add_step(
       recipe,
       step_nzv_new(
@@ -90,7 +91,8 @@ step_nzv <-
         trained = trained,
         options = options,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -101,7 +103,8 @@ step_nzv_new <-
            trained = FALSE,
            options = NULL,
            removals = NULL,
-           skip = FALSE) {
+        skip = skip,
+        id ) {
     step(
       subclass = "nzv",
       terms = terms,
@@ -109,7 +112,8 @@ step_nzv_new <-
       trained = trained,
       options = options,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -128,7 +132,8 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     options = x$options,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

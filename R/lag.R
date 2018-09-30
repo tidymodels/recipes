@@ -55,7 +55,8 @@ step_lag <-
            lag = 1,
            prefix = "lag_",
            default = NA,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("lag")) {
     add_step(
       recipe,
       step_lag_new(
@@ -65,7 +66,8 @@ step_lag <-
         lag = lag,
         default = default,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -77,7 +79,8 @@ step_lag_new <-
            lag = 1,
            default = NA,
            prefix = "lag_",
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "lag",
       terms = terms,
@@ -86,7 +89,9 @@ step_lag_new <-
       lag = lag,
       default = default,
       prefix = prefix,
-      skip = skip)
+      skip = skip,
+      id = id
+    )
   }
 
 #' @export

@@ -86,7 +86,8 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id(depth)) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
 
@@ -102,7 +103,8 @@ step_depth <-
         metric = metric,
         options = options,
         data = data,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -115,7 +117,8 @@ step_depth_new <-
            metric = NULL,
            options = NULL,
            data = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id {
     step(
       subclass = "depth",
       terms = terms,
@@ -125,7 +128,8 @@ step_depth_new <-
       metric = metric,
       options = options,
       data = data,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -147,7 +151,8 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     metric = x$metric,
     options = x$options,
     data = x_dat,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

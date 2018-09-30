@@ -99,7 +99,8 @@ step_ica <-
            options = list(),
            res = NULL,
            prefix = "IC",
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("ica")) {
 
     recipes_pkg_check(c("dimRed", "fastICA"))
 
@@ -113,7 +114,8 @@ step_ica <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -126,7 +128,8 @@ step_ica_new <-
            options = NULL,
            res = NULL,
            prefix = "IC",
-           skip = FALSE) {
+           skip = skip,
+           id) {
 
     step(
       subclass = "ica",
@@ -137,7 +140,8 @@ step_ica_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -163,7 +167,8 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = indc,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

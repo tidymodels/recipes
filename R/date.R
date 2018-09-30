@@ -77,7 +77,8 @@ step_date <-
            label = TRUE,
            ordinal = FALSE,
            columns = NULL,
-           skip = FALSE
+           skip = skip,
+           id = rand_id("date")
   ) {
   feat <-
     c("year",
@@ -102,7 +103,8 @@ step_date <-
       label = label,
       ordinal = ordinal,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
@@ -117,7 +119,8 @@ step_date_new <-
     label = label,
     ordinal = ordinal,
     columns = columns,
-    skip = FALSE
+    skip = FALSE,
+    id
   ) {
   step(
     subclass = "date",
@@ -129,7 +132,8 @@ step_date_new <-
     label = label,
     ordinal = ordinal,
     columns = columns,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -152,7 +156,8 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     label = x$label,
     ordinal = x$ordinal,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

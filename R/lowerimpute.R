@@ -64,7 +64,8 @@ step_lowerimpute <-
            role = NA,
            trained = FALSE,
            threshold = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id = rand_id("lowerimpute")) {
     add_step(
       recipe,
       step_lowerimpute_new(
@@ -72,7 +73,8 @@ step_lowerimpute <-
         role = role,
         trained = trained,
         threshold = threshold,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -82,14 +84,16 @@ step_lowerimpute_new <-
            role = NA,
            trained = FALSE,
            threshold = NULL,
-           skip = FALSE) {
+           skip = skip,
+           id) {
     step(
       subclass = "lowerimpute",
       terms = terms,
       role = role,
       trained = trained,
       threshold = threshold,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -114,7 +118,8 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     threshold = threshold,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
