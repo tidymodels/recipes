@@ -29,7 +29,7 @@ tibble with columns \code{number} (the operation iteration),
 \code{operation} (either "step" or "check"),
 \code{type} (the method, e.g. "nzv", "center"), a logical
 column called \code{trained} for whether the operation has been
-estimated using \code{prep}, and a logical for \code{skip}.
+estimated using \code{prep}, a logical for \code{skip}, and a character column \code{id}.
 }
 \description{
 \code{tidy} will return a data frame that contains information

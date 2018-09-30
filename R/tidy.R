@@ -18,7 +18,7 @@
 #'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, and a logical for `skip`.
+#'  estimated using `prep`, a logical for `skip`, and a character column `id`. 
 #'
 #' @examples
 #' data(okc)
@@ -51,6 +51,7 @@ tidy.recipe <- function(x, number = NA, ...) {
   pattern <- "(^step_)|(^check_)"
   if (is.na(number)) {
     skipped <- vapply(x$steps, function(x) x$skip, logical(1))
+    ids <- vapply(x$steps, function(x) x$id, character(1))
 
     oper_classes <- lapply(x$steps, class)
     oper_classes <- grep("_", unlist(oper_classes), value = TRUE)
@@ -66,7 +67,8 @@ tidy.recipe <- function(x, number = NA, ...) {
                   operation = oper,
                   type = oper_types,
                   trained = is_trained,
-                  skip = skipped)
+                  skip = skipped,
+                  id = ids)
   } else {
     if (number > num_oper || length(number) > 1)
       stop("`number` should be a single value between 1 and ",
