@@ -140,5 +140,7 @@ print.step_factor2string <-
 #' @param x A `step_factor2string` object.
 #' @export
 tidy.step_factor2string <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

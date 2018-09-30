@@ -180,5 +180,6 @@ tidy.step_relu <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$shift <- x$shift
   out$reverse <- x$reverse
+  out$id <- x$id
   out
 }

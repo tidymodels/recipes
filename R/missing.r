@@ -137,5 +137,6 @@ tidy.check_missing <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

@@ -194,5 +194,6 @@ tidy.step_count <- function(x, ...) {
     res <- tibble(terms = term_names,
                   result = rep(na_chr, p))
   }
+  res$id <- x$id
   res
 }

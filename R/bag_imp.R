@@ -254,5 +254,6 @@ tidy.step_bagimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = NA)
   }
+  res$id <- x$id
   res
 }

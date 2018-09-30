@@ -218,5 +218,6 @@ tidy.step_pls <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl, component = na_chr)
   }
+  res$id <- x$id
   res
 }

@@ -215,5 +215,6 @@ tidy.step_isomap <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
   }
+  res$id <- x$id
   res
 }

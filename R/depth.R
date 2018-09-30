@@ -214,6 +214,7 @@ tidy.step_depth <- function(x, ...) {
     res <- tibble(terms = term_names,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }
 

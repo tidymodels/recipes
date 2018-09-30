@@ -141,5 +141,6 @@ tidy.step_modeimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)
   }
+  res$id <- x$id
   res
 }

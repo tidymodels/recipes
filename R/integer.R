@@ -187,5 +187,6 @@ tidy.step_integer <- function(x, ...) {
     res <- tibble(terms = sel2char(x$terms))
     res$value = NA
   }
+  res$id <- x$id
   res
 }

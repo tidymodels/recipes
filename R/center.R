@@ -151,5 +151,6 @@ tidy.step_center <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = na_dbl)
   }
+  res$id <- x$id
   res
 }

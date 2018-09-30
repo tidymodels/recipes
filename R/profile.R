@@ -246,6 +246,7 @@ tidy.step_profile <- function(x, ...) {
   prof_res <- tibble(terms = prof_names,
                      type = rep("profiled", length = length(prof_names)))
   res <- bind_rows(fixed_res, prof_res)
+  res$id <- x$id
   res
 }
 

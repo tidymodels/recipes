@@ -171,5 +171,6 @@ print.step_log <-
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$base <- x$base
+  out$id <- x$id
   out
 }

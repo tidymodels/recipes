@@ -286,5 +286,6 @@ tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$statistic <- x$statistic
   out$size <- x$size
+  out$id <- x$id
   out
 }

@@ -110,5 +110,7 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
 #' @param x A `step_sqrt` object.
 #' @export
 tidy.step_sqrt <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

@@ -201,5 +201,6 @@ tidy.step_upsample <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = unname(term_names))
   }
+  res$id <- x$id
   res
 }

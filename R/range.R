@@ -158,5 +158,6 @@ tidy.step_range <- function(x, ...) {
                   min = na_dbl,
                   max = na_dbl)
   }
+  res$id <- x$id
   res
 }

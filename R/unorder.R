@@ -131,5 +131,7 @@ print.step_unorder <-
 #' @param x A `step_unorder` object.
 #' @export
 tidy.step_unorder <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

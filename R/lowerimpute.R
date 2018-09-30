@@ -152,6 +152,7 @@ tidy.step_lowerimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
   }
+  res$id <- x$id
   res
 }
 

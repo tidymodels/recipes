@@ -143,5 +143,6 @@ tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$inverse <- x$inverse
   out$func <- x$func
+  out$id <- x$id
   out
 }

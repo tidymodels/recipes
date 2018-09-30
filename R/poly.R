@@ -178,5 +178,6 @@ tidy.step_poly <- function(x, ...) {
     res <- tibble(terms = term_names,
                   degree = x$options$degree)
   }
+  res$id <- x$id
   res
 }

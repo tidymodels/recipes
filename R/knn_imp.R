@@ -238,6 +238,7 @@ tidy.step_knnimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, predictors = na_chr, K = x$K)
   }
+  res$id <- x$id
   res
 }
 

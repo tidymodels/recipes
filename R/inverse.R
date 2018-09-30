@@ -121,5 +121,7 @@ print.step_inverse <-
 #' @param x A `step_inverse` object.
 #' @export
 tidy.step_inverse <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

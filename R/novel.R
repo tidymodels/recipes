@@ -197,6 +197,7 @@ tidy.step_novel <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = rep(x$new_level, length(term_names)))
   }
+  res$id <- x$id
   res
 }
 

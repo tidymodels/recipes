@@ -224,6 +224,7 @@ tidy.step_ica <- function(x, ...) {
     res$component <- as.character(res$component)
     res <- as_tibble(res)
   }
+  res$id <- x$id
   res
 }
 

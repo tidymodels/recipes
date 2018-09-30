@@ -272,6 +272,7 @@ tidy.step_date <- function(x, ...) {
       ordinal = x$ordinal
     )
   }
+  res$id <- x$id
   as_tibble(res)
 }
 

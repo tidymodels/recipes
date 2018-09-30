@@ -149,5 +149,6 @@ tidy.step_meanimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)
   }
+  res$id <- x$id
   res
 }

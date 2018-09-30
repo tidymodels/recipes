@@ -187,6 +187,7 @@ tidy.step_ratio <- function(x, ...) {
                        stringsAsFactors = FALSE)
     res <- as_tibble(res)
   }
+  res$id <- x$id
   res
 }
 

@@ -237,5 +237,6 @@ tidy.step_pca <- function(x, ...) {
                   value = na_dbl,
                   component  = na_chr)
   }
+  res$id <- x$id
   res
 }

@@ -199,5 +199,6 @@ tidy.step_rollimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, window = x$window)
   }
+  res$id <- x$id
   res
 }

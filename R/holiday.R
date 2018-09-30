@@ -186,5 +186,6 @@ tidy.step_holiday <- function(x, ...) {
   res <- expand.grid(terms = res$terms,
                      holiday = x$holidays,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

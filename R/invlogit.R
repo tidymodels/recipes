@@ -112,5 +112,7 @@ print.step_invlogit <-
 #' @param x A `step_invlogit` object.
 #' @export
 tidy.step_invlogit <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

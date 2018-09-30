@@ -169,5 +169,6 @@ tidy.step_bs <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

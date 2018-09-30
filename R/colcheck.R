@@ -60,12 +60,14 @@ check_cols_new <-
 
 prep.check_cols <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  check_cols_new(terms = x$terms,
-                 role  = x$role,
-                 trained = TRUE,
-                 columns = col_names,
-                 skip = x$skip,
-                 id = x$id)
+  check_cols_new(
+    terms = x$terms,
+    role  = x$role,
+    trained = TRUE,
+    columns = col_names,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 bake.check_cols <- function(object, newdata, ...) {
@@ -96,6 +98,7 @@ tidy.check_cols <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }
 

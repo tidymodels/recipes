@@ -189,6 +189,7 @@ tidy.step_string2factor <- function(x, ...) {
     res <- tibble(terms = term_names,
                   ordered = rep(x$ordered, p))
   }
+  res$id <- x$id
   res
 }
 

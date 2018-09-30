@@ -241,5 +241,6 @@ tidy.step_classdist <- function(x, ...) {
                   value = na_dbl,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }

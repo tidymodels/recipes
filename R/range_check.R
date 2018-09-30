@@ -136,15 +136,15 @@ prep.check_range <- function(x,
   upper_vals <- vapply(training[ ,col_names], max, c(max = 1),
                        na.rm = TRUE)
   check_range_new(
-    terms   = x$terms,
-    role    = x$role,
-    trained = TRUE,
-    skip    = x$skip,
-    warn    = x$warn,
-    lower   = lower_vals,
-    upper   = upper_vals,
+    terms      = x$terms,
+    role       = x$role,
+    trained    = TRUE,
+    skip       = x$skip,
+    warn       = x$warn,
+    lower      = lower_vals,
+    upper      = upper_vals,
     slack_prop = x$slack_prop,
-    id = x$id
+    id         = x$id
   )
 }
 
@@ -221,5 +221,6 @@ tidy.check_range <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

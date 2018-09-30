@@ -139,5 +139,7 @@ print.step_spatialsign <-
 #' @param x A `step_spatialsign` object.
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

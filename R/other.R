@@ -225,5 +225,6 @@ tidy.step_other <- function(x, ...) {
     res <- tibble(terms = term_names,
                   retained = rep(na_chr, length(term_names)))
   }
+  res$id <- x$id
   res
 }

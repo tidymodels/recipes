@@ -83,5 +83,7 @@ print.step_naomit <-
 #' @param x A `step_naomit` object.
 #' @export
 tidy.step_naomit <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }
