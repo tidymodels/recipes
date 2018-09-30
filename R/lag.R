@@ -21,6 +21,7 @@
 #'  be populated (eventually) by the `terms` argument.
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the step be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be

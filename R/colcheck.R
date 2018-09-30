@@ -6,6 +6,7 @@
 #'
 #' @inheritParams check_missing
 #' @export
+#' @param id A character string that is unique to this step to identify it.
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed
 #'  to the data.

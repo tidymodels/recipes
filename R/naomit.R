@@ -15,6 +15,7 @@
 #'   have been estimated. Again included for consistency.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the step be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be

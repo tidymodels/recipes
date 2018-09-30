@@ -34,6 +34,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_naomit} object.}
 }
 \value{

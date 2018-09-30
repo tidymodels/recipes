@@ -37,6 +37,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the

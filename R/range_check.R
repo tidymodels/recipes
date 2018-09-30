@@ -12,6 +12,7 @@
 #'  currently used.
 #' @param role Not used by this check since no new variables are
 #'  created.
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the check be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
