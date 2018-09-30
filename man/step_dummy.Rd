@@ -7,7 +7,7 @@
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
   one_hot = FALSE, naming = dummy_names, levels = NULL,
-  skip = FALSE, id = rand_id(dummy))
+  skip = FALSE, id = rand_id("dummy"))
 
 \method{tidy}{step_dummy}(x, ...)
 }

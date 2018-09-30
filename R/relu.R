@@ -130,7 +130,7 @@ step_relu_new <-
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
   columns <- terms_select(x$terms, info = info)
-  check_type(training[, x$columns])
+  check_type(training[, columns])
 
   step_relu_new(
     terms = x$terms,

@@ -132,7 +132,6 @@ prep.step_downsample <- function(x, training, info = NULL, ...) {
     column = col_name,
     target = floor(minority * x$ratio),
     skip = x$skip,
-    id = x$id,
     seed = x$seed,
     id = x$id
   )

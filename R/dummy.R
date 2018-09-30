@@ -114,7 +114,7 @@ step_dummy <-
            naming = dummy_names,
            levels = NULL,
            skip = FALSE,
-           id = rand_id(dummy)) {
+           id = rand_id("dummy")) {
     add_step(
       recipe,
       step_dummy_new(

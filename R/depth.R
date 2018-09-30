@@ -87,7 +87,7 @@ step_depth <-
            options = list(),
            data = NULL,
            skip = FALSE,
-           id = rand_id(depth)) {
+           id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
 

@@ -100,7 +100,8 @@ step_corr_new <-
     use = NULL,
     method = NULL,
     removals = NULL,
-    skip = FALSE
+    skip = FALSE,
+    id
   ) {
     step(
       subclass = "corr",
@@ -205,6 +206,7 @@ tidy_filter <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = na_chr)
   }
+  res$id <- x$id
   res
 }
 
