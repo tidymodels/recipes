@@ -110,7 +110,7 @@ step_bagimpute <-
            options = list(nbagg = 25, keepX = FALSE),
            impute_with = imp_vars(all_predictors()),
            seed_val = sample.int(10 ^ 4, 1),
-           skip = skip,
+           skip = FALSE,
            id = rand_id("bagimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)

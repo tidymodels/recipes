@@ -113,7 +113,7 @@ step_dummy <-
            one_hot = FALSE,
            naming = dummy_names,
            levels = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id(dummy)) {
     add_step(
       recipe,

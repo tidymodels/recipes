@@ -55,8 +55,8 @@ step_bin2factor <-
            levels = c("yes", "no"),
            ref_first = TRUE,
            columns = NULL,
-        skip = skip,
-        id = rand_id("bin2factor")) {
+           skip = FALSE,
+           id = rand_id("bin2factor")) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
     add_step(

@@ -99,7 +99,7 @@ step_ica <-
            options = list(),
            res = NULL,
            prefix = "IC",
-           skip = skip,
+           skip = FALSE,
            id = rand_id("ica")) {
 
     recipes_pkg_check(c("dimRed", "fastICA"))

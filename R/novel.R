@@ -67,7 +67,7 @@ step_novel <-
            trained = FALSE,
            new_level = "new",
            objects = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("novel")) {
     add_step(
       recipe,

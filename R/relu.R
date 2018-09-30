@@ -74,7 +74,7 @@ step_relu <-
            smooth = FALSE,
            prefix = "right_relu_",
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("relu")) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)

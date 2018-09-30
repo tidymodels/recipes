@@ -7,7 +7,7 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, columns = NULL, skip = skip,
+  ordinal = FALSE, columns = NULL, skip = FALSE,
   id = rand_id("date"))
 
 \method{tidy}{step_date}(x, ...)

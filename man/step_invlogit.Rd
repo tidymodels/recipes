@@ -6,7 +6,7 @@
 \title{Inverse Logit Transformation}
 \usage{
 step_invlogit(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, skip = skip, id = rand_id("invlogit"))
+  columns = NULL, skip = FALSE, id = rand_id("invlogit"))
 
 \method{tidy}{step_invlogit}(x, ...)
 }

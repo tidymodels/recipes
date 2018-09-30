@@ -64,8 +64,8 @@ step_meanimpute <-
            trained = FALSE,
            means = NULL,
            trim = 0,
-        skip = skip,
-        id = rand_id("meanimpute")) {
+           skip = FALSE,
+           id = rand_id("meanimpute")) {
     add_step(
       recipe,
       step_meanimpute_new(

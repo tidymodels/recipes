@@ -6,7 +6,7 @@
 \title{Centering Numeric Data}
 \usage{
 step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  na.rm = TRUE, skip = skip, id = rand_id("center"))
+  na.rm = TRUE, skip = FALSE, id = rand_id("center"))
 
 \method{tidy}{step_center}(x, ...)
 }

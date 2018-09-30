@@ -6,7 +6,7 @@
 \title{Nature Spline Basis Functions}
 \usage{
 step_ns(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = 2), skip = skip,
+  objects = NULL, options = list(df = 2), skip = FALSE,
   id = rand_id("ns"))
 
 \method{tidy}{step_ns}(x, ...)

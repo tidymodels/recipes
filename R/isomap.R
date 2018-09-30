@@ -104,7 +104,7 @@ step_isomap <-
            options = list(knn = 50, .mute = c("message", "output")),
            res = NULL,
            prefix = "Isomap",
-           skip = skip,
+           skip = FALSE,
            id = rand_id("isomap")) {
 
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))

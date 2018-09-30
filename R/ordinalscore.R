@@ -73,7 +73,7 @@ step_ordinalscore <-
            trained = FALSE,
            columns = NULL,
            convert = as.numeric,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("ordinalscore")) {
     add_step(
       recipe,

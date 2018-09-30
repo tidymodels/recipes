@@ -87,7 +87,7 @@ step_pls <-
            options = NULL,
            res = NULL,
            prefix = "PLS",
-           skip = skip,
+           skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)

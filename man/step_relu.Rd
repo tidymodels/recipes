@@ -7,7 +7,7 @@
 \usage{
 step_relu(recipe, ..., role = "predictor", trained = FALSE,
   shift = 0, reverse = FALSE, smooth = FALSE,
-  prefix = "right_relu_", columns = NULL, skip = skip,
+  prefix = "right_relu_", columns = NULL, skip = FALSE,
   id = rand_id("relu"))
 
 \method{tidy}{step_relu}(x, ...)

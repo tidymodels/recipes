@@ -53,7 +53,7 @@ step_hyperbolic <-
            func = "sin",
            inverse = TRUE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))

@@ -62,7 +62,7 @@ step_poly <-
            trained = FALSE,
            objects = NULL,
            options = list(degree = 2),
-        skip = skip,
+        skip = FALSE,
         id = rand_id("poly")) {
     add_step(
       recipe,

@@ -6,7 +6,7 @@
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
 step_novel(recipe, ..., role = NA, trained = FALSE,
-  new_level = "new", objects = NULL, skip = skip,
+  new_level = "new", objects = NULL, skip = FALSE,
   id = rand_id("novel"))
 
 \method{tidy}{step_novel}(x, ...)

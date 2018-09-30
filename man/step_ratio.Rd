@@ -9,7 +9,7 @@
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   denom = denom_vars(), naming = function(numer, denom)
   make.names(paste(numer, denom, sep = "_o_")), columns = NULL,
-  skip = skip, id = rand_id("ratio"))
+  skip = FALSE, id = rand_id("ratio"))
 
 denom_vars(...)
 

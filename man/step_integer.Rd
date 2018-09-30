@@ -6,7 +6,8 @@
 \title{Convert values to predefined integers}
 \usage{
 step_integer(recipe, ..., role = "predictor", trained = FALSE,
-  strict = FALSE, key = NULL, skip = skip, id = rand_id("integer"))
+  strict = FALSE, key = NULL, skip = FALSE,
+  id = rand_id("integer"))
 
 \method{tidy}{step_integer}(x, ...)
 }

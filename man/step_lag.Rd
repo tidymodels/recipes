@@ -5,7 +5,7 @@
 \title{Create a lagged predictor}
 \usage{
 step_lag(recipe, ..., role = "predictor", trained = FALSE, lag = 1,
-  prefix = "lag_", default = NA, columns = NULL, skip = skip,
+  prefix = "lag_", default = NA, columns = NULL, skip = FALSE,
   id = rand_id("lag"))
 }
 \arguments{

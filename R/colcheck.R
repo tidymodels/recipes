@@ -26,7 +26,7 @@ check_cols <-
            ...,
            role = NA,
            trained = FALSE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("cols")) {
     add_check(
       recipe,

@@ -48,7 +48,7 @@
 
 step_invlogit <-
   function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
-           skip = skip, id = rand_id("invlogit")) {
+           skip = FALSE, id = rand_id("invlogit")) {
     add_step(recipe,
              step_invlogit_new(
                terms = ellipse_check(...),

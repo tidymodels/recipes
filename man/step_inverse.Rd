@@ -6,7 +6,7 @@
 \title{Inverse Transformation}
 \usage{
 step_inverse(recipe, ..., role = NA, offset = 0, trained = FALSE,
-  columns = NULL, skip = skip, id = rand_id("inverse"))
+  columns = NULL, skip = FALSE, id = rand_id("inverse"))
 
 \method{tidy}{step_inverse}(x, ...)
 }

@@ -60,7 +60,7 @@ step_factor2string <-
            role = NA,
            trained = FALSE,
            columns = FALSE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("factor2string")) {
     add_step(
       recipe,

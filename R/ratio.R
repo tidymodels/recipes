@@ -66,7 +66,7 @@ step_ratio <-
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("ratio")) {
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",

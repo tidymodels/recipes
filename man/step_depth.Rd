@@ -6,8 +6,8 @@
 \title{Data Depths}
 \usage{
 step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
-  metric = "halfspace", options = list(), data = NULL, skip = skip,
-  id = rand_id(depth))
+  metric = "halfspace", options = list(), data = NULL,
+  skip = FALSE, id = rand_id(depth))
 
 \method{tidy}{step_depth}(x, ...)
 }

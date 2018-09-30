@@ -7,7 +7,7 @@
 \usage{
 step_knnimpute(recipe, ..., role = NA, trained = FALSE, K = 5,
   impute_with = imp_vars(all_predictors()), ref_data = NULL,
-  columns = NULL, skip = skip, id = rand_id("knnimpute"))
+  columns = NULL, skip = FALSE, id = rand_id("knnimpute"))
 
 \method{tidy}{step_knnimpute}(x, ...)
 }

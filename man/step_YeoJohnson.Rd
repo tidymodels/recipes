@@ -7,7 +7,7 @@
 \usage{
 step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
   lambdas = NULL, limits = c(-5, 5), nunique = 5, na.rm = TRUE,
-  skip = skip, id = rand_id("YeoJohnson"))
+  skip = FALSE, id = rand_id("YeoJohnson"))
 
 \method{tidy}{step_YeoJohnson}(x, ...)
 }

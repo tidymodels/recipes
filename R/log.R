@@ -71,7 +71,7 @@ step_log <-
            base = exp(1),
            offset = 0,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            signed = FALSE,
            id = rand_id("log")
            ) {

@@ -56,8 +56,8 @@ step_bs <-
            trained = FALSE,
            objects = NULL,
            options = list(df = NULL, degree = 3),
-        skip = skip,
-        id = rand_id("bs")) {
+           skip = FALSE,
+           id = rand_id("bs")) {
     add_step(
       recipe,
       step_bs_new(

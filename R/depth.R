@@ -86,7 +86,7 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id(depth)) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")

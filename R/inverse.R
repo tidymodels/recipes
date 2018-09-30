@@ -49,7 +49,7 @@ step_inverse <-
            offset = 0,
            trained = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("inverse")) {
     add_step(recipe,
              step_inverse_new(

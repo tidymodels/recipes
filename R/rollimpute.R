@@ -72,7 +72,7 @@ step_rollimpute <-
            columns = NULL,
            statistic = median,
            window = 5,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("rollimpute")) {
 
     if (window < 3 | window %% 2 != 1)

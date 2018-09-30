@@ -93,7 +93,7 @@ step_interact <-
            trained = FALSE,
            objects = NULL,
            sep = "_x_",
-           skip = skip,
+           skip = FALSE,
            id = rand_id("interact")) {
     add_step(
       recipe,

@@ -7,7 +7,7 @@
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE,
   num = 5, options = list(knn = 50, .mute = c("message", "output")),
-  res = NULL, prefix = "Isomap", skip = skip,
+  res = NULL, prefix = "Isomap", skip = FALSE,
   id = rand_id("isomap"))
 
 \method{tidy}{step_isomap}(x, ...)

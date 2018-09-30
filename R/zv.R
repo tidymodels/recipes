@@ -54,7 +54,7 @@ step_zv <-
            role = NA,
            trained = FALSE,
            removals = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("zv")) {
     add_step(
       recipe,

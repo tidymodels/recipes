@@ -9,7 +9,7 @@
 step_bagimpute(recipe, ..., role = NA, trained = FALSE,
   models = NULL, options = list(nbagg = 25, keepX = FALSE),
   impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4,
-  1), skip = skip, id = rand_id("bagimpute"))
+  1), skip = FALSE, id = rand_id("bagimpute"))
 
 imp_vars(...)
 

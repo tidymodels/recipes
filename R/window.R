@@ -111,7 +111,7 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("window")) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",

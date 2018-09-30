@@ -58,7 +58,7 @@ step_lag <-
            prefix = "lag_",
            default = NA,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("lag")) {
     add_step(
       recipe,

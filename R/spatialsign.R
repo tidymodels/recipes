@@ -68,7 +68,7 @@ step_spatialsign <-
            na.rm = TRUE,
            trained = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("spatialsign")) {
     add_step(recipe,
              step_spatialsign_new(

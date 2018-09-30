@@ -64,7 +64,7 @@ step_lowerimpute <-
            role = NA,
            trained = FALSE,
            threshold = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("lowerimpute")) {
     add_step(
       recipe,

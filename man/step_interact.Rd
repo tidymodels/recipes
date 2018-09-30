@@ -6,7 +6,7 @@
 \title{Create Interaction Variables}
 \usage{
 step_interact(recipe, terms, role = "predictor", trained = FALSE,
-  objects = NULL, sep = "_x_", skip = skip,
+  objects = NULL, sep = "_x_", skip = FALSE,
   id = rand_id("interact"))
 
 \method{tidy}{step_interact}(x, ...)

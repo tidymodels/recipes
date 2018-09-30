@@ -6,7 +6,7 @@
 \title{Convert Strings to Factors}
 \usage{
 step_string2factor(recipe, ..., role = NA, trained = FALSE,
-  levels = NULL, ordered = FALSE, skip = skip,
+  levels = NULL, ordered = FALSE, skip = FALSE,
   id = rand_id("string2factor"))
 
 \method{tidy}{step_string2factor}(x, ...)

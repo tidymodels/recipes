@@ -81,7 +81,7 @@ step_nzv <-
            trained = FALSE,
            options = list(freq_cut = 95 / 5, unique_cut = 10),
            removals = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("nzv")) {
     add_step(
       recipe,

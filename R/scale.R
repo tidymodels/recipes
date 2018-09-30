@@ -57,7 +57,7 @@ step_scale <-
            trained = FALSE,
            sds = NULL,
            na.rm = TRUE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("scale")) {
     add_step(
       recipe,

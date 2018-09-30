@@ -67,7 +67,7 @@ step_num2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("num2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")

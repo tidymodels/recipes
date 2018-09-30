@@ -66,7 +66,7 @@ check_missing <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("missing")) {
     add_check(
       recipe,

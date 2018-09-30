@@ -7,7 +7,7 @@
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
   na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
-  skip = skip, id = rand_id("window"))
+  skip = FALSE, id = rand_id("window"))
 
 \method{tidy}{step_window}(x, ...)
 }

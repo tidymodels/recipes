@@ -48,7 +48,7 @@ step_unorder <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("unorder")) {
     add_step(recipe,
              step_unorder_new(

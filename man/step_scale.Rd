@@ -6,7 +6,7 @@
 \title{Scaling Numeric Data}
 \usage{
 step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
-  na.rm = TRUE, skip = skip, id = rand_id("scale"))
+  na.rm = TRUE, skip = FALSE, id = rand_id("scale"))
 
 \method{tidy}{step_scale}(x, ...)
 }

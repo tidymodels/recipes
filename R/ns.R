@@ -56,7 +56,7 @@ step_ns <-
            trained = FALSE,
            objects = NULL,
            options = list(df = 2),
-           skip = skip,
+           skip = FALSE,
            id = rand_id("ns")) {
     add_step(
       recipe,

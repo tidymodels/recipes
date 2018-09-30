@@ -71,7 +71,7 @@ step_BoxCox <-
            lambdas = NULL,
            limits = c(-5, 5),
            nunique = 5,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("BoxCox")) {
     add_step(
       recipe,

@@ -6,7 +6,7 @@
 \title{Zero Variance Filter}
 \usage{
 step_zv(recipe, ..., role = NA, trained = FALSE, removals = NULL,
-  skip = skip, id = rand_id("zv"))
+  skip = FALSE, id = rand_id("zv"))
 
 \method{tidy}{step_zv}(x, ...)
 }

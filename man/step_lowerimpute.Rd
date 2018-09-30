@@ -6,7 +6,7 @@
 \title{Impute Numeric Data Below the Threshold of Measurement}
 \usage{
 step_lowerimpute(recipe, ..., role = NA, trained = FALSE,
-  threshold = NULL, skip = skip, id = rand_id("lowerimpute"))
+  threshold = NULL, skip = FALSE, id = rand_id("lowerimpute"))
 
 \method{tidy}{step_lowerimpute}(x, ...)
 }

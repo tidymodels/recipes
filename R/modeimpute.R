@@ -58,7 +58,7 @@ step_modeimpute <-
            role = NA,
            trained = FALSE,
            modes = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("modeimpute")) {
     add_step(
       recipe,

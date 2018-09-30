@@ -115,7 +115,7 @@ step_kpca <-
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
-           skip = skip,
+           skip = FALSE,
            id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))

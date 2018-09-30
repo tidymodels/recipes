@@ -99,7 +99,7 @@ step_knnimpute <-
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("knnimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)

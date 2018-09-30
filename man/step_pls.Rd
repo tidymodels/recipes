@@ -7,7 +7,7 @@
 \usage{
 step_pls(recipe, ..., role = "predictor", trained = FALSE, num = 2,
   outcome = NULL, options = NULL, res = NULL, prefix = "PLS",
-  skip = skip, id = rand_id("pls"))
+  skip = FALSE, id = rand_id("pls"))
 
 \method{tidy}{step_pls}(x, ...)
 }

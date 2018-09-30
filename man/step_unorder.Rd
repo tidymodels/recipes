@@ -6,7 +6,7 @@
 \title{Convert Ordered Factors to Unordered Factors}
 \usage{
 step_unorder(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = skip, id = rand_id("unorder"))
+  skip = FALSE, id = rand_id("unorder"))
 
 \method{tidy}{step_unorder}(x, ...)
 }

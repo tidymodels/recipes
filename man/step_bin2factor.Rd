@@ -7,7 +7,7 @@
 \usage{
 step_bin2factor(recipe, ..., role = NA, trained = FALSE,
   levels = c("yes", "no"), ref_first = TRUE, columns = NULL,
-  skip = skip, id = rand_id("bin2factor"))
+  skip = FALSE, id = rand_id("bin2factor"))
 
 \method{tidy}{step_bin2factor}(x, ...)
 }

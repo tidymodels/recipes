@@ -6,8 +6,8 @@
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = NULL, degree = 3), skip = skip,
-  id = rand_id("bs"))
+  objects = NULL, options = list(df = NULL, degree = 3),
+  skip = FALSE, id = rand_id("bs"))
 
 \method{tidy}{step_bs}(x, ...)
 }

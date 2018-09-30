@@ -49,7 +49,7 @@ step_logit <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("logit")) {
     add_step(recipe,
              step_logit_new(

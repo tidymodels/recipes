@@ -6,7 +6,7 @@
 \title{Logit Transformation}
 \usage{
 step_logit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = skip, id = rand_id("logit"))
+  skip = FALSE, id = rand_id("logit"))
 
 \method{tidy}{step_logit}(x, ...)
 }

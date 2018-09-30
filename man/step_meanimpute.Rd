@@ -6,7 +6,7 @@
 \title{Impute Numeric Data Using the Mean}
 \usage{
 step_meanimpute(recipe, ..., role = NA, trained = FALSE,
-  means = NULL, trim = 0, skip = skip, id = rand_id("meanimpute"))
+  means = NULL, trim = 0, skip = FALSE, id = rand_id("meanimpute"))
 
 \method{tidy}{step_meanimpute}(x, ...)
 }

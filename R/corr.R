@@ -72,7 +72,9 @@ step_corr <- function(recipe,
                       use = "pairwise.complete.obs",
                       method = "pearson",
                       removals = NULL,
-                      skip = FALSE) {
+                      skip = FALSE,
+                      id = rand_id("corr")
+                      ) {
   add_step(
     recipe,
     step_corr_new(

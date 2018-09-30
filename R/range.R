@@ -59,7 +59,7 @@ step_range <-
            min = 0,
            max = 1,
            ranges = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("range")) {
     add_step(
       recipe,

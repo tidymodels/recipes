@@ -77,7 +77,7 @@ step_date <-
            label = TRUE,
            ordinal = FALSE,
            columns = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("date")
   ) {
   feat <-

@@ -6,7 +6,7 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  offset = 0, columns = NULL, skip = skip, signed = FALSE,
+  offset = 0, columns = NULL, skip = FALSE, signed = FALSE,
   id = rand_id("log"))
 
 \method{tidy}{step_log}(x, ...)

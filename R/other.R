@@ -81,7 +81,7 @@ step_other <-
            threshold = .05,
            other = "other",
            objects = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("other")) {
     if (threshold <= 0)
       stop("`threshold` should be greater than zero", call. = FALSE)

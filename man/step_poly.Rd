@@ -6,7 +6,7 @@
 \title{Orthogonal Polynomial Basis Functions}
 \usage{
 step_poly(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(degree = 2), skip = skip,
+  objects = NULL, options = list(degree = 2), skip = FALSE,
   id = rand_id("poly"))
 
 \method{tidy}{step_poly}(x, ...)

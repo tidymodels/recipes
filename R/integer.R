@@ -72,7 +72,7 @@ step_integer <-
            trained = FALSE,
            strict = FALSE,
            key = NULL,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("integer")) {
     add_step(
       recipe,

@@ -7,7 +7,7 @@
 \usage{
 step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
-  0.2)), prefix = "kPC", skip = skip, id = rand_id("kpca"))
+  0.2)), prefix = "kPC", skip = FALSE, id = rand_id("kpca"))
 
 \method{tidy}{step_kpca}(x, ...)
 }

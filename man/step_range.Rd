@@ -6,7 +6,7 @@
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
 step_range(recipe, ..., role = NA, trained = FALSE, min = 0,
-  max = 1, ranges = NULL, skip = skip, id = rand_id("range"))
+  max = 1, ranges = NULL, skip = FALSE, id = rand_id("range"))
 
 \method{tidy}{step_range}(x, ...)
 }

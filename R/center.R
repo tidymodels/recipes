@@ -68,7 +68,7 @@ step_center <-
            trained = FALSE,
            means = NULL,
            na.rm = TRUE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("center")) {
     add_step(
       recipe,

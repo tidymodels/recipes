@@ -71,7 +71,7 @@ step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), nunique = 5,
            na.rm = TRUE,
-           skip = skip,
+           skip = FALSE,
            id = rand_id("YeoJohnson")) {
     add_step(
       recipe,
