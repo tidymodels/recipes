@@ -17,6 +17,8 @@
 #' @param lag A vector of positive integers. Each specified column will be
 #'  lagged for each value in the vector.
 #' @param prefix A prefix for generated column names, default to "lag_".
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the `terms` argument.
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
 #' @param skip A logical. Should the step be skipped when the
@@ -55,6 +57,7 @@ step_lag <-
            lag = 1,
            prefix = "lag_",
            default = NA,
+           columns = NULL,
            skip = skip,
            id = rand_id("lag")) {
     add_step(
@@ -66,6 +69,7 @@ step_lag <-
         lag = lag,
         default = default,
         prefix = prefix,
+        columns = columns,
         skip = skip,
         id = id
       )
@@ -79,6 +83,7 @@ step_lag_new <-
            lag = 1,
            default = NA,
            prefix = "lag_",
+           columns, 
            skip = skip,
            id) {
     step(
@@ -89,6 +94,7 @@ step_lag_new <-
       lag = lag,
       default = default,
       prefix = prefix,
+      columns = columns,
       skip = skip,
       id = id
     )
@@ -96,9 +102,17 @@ step_lag_new <-
 
 #' @export
 prep.step_lag <- function(x, training, info = NULL, ...) {
-  x$columns <- terms_select(x$terms, info = info)
-  x$trained <- TRUE
-  x
+  step_lag_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    lag = x$lag,
+    default = x$default,
+    prefix = x$prefix,
+    columns = terms_select(x$terms, info = info),
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom dplyr select arrange mutate desc

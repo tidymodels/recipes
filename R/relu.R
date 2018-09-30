@@ -20,6 +20,8 @@
 #' @param prefix A prefix for generated column names, default to "right_relu_"
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
@@ -71,6 +73,7 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
+           columns = NULL,
            skip = skip,
            id = rand_id("relu")) {
     if (!is.numeric(shift))
@@ -91,6 +94,7 @@ step_relu <-
         reverse = reverse,
         smooth = smooth,
         prefix = prefix,
+        columns = columns,
         skip = skip,
         id = id
       )
@@ -105,6 +109,7 @@ step_relu_new <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
+           columns,
            skip = skip,
            id) {
     step(
@@ -116,6 +121,7 @@ step_relu_new <-
       reverse = reverse,
       smooth = smooth,
       prefix = prefix,
+      columns = columns,
       skip = skip,
       id = id
     )
@@ -123,11 +129,21 @@ step_relu_new <-
 
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
-  x$columns <- terms_select(x$terms, info = info)
+  columns <- terms_select(x$terms, info = info)
   check_type(training[, x$columns])
 
-  x$trained <- TRUE
-  x
+  step_relu_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    shift = x$shift,
+    reverse = x$reverse,
+    smooth = x$smooth,
+    prefix = x$prefix,
+    columns = columns,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom dplyr select_vars tbl_vars

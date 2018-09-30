@@ -13,6 +13,8 @@
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the `terms` argument.
 #' @param skip A logical. Should the step be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
@@ -33,7 +35,8 @@
 #'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
+step_naomit <- function(recipe, ..., role = NA, trained = FALSE, 
+                        columns = NULL, skip = FALSE,
                         id = rand_id("naomit")) {
   add_step(
     recipe,
@@ -41,6 +44,7 @@ step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
       terms = ellipse_check(...),
       role = role,
       trained = trained,
+      columns = columns,
       skip = skip,
       id = id
     )
@@ -48,12 +52,13 @@ step_naomit <- function(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
 }
 
 step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE,
-                            skip = FALSE, id) {
+                            columns, skip = FALSE, id) {
   step(
     subclass = "naomit",
     terms = terms,
     role = role,
     trained = trained,
+    columns = columns,
     skip = skip,
     id = id
   )
@@ -61,14 +66,19 @@ step_naomit_new <- function(terms = NULL, role = NA, trained = FALSE,
 
 #' @export
 prep.step_naomit <- function(x, training, info = NULL, ...) {
-  x$col_names <- terms_select(x$terms, info = info)
-  x$trained <- TRUE
-  x
+  step_naomit_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    columns = terms_select(x$terms, info = info),
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @export
 bake.step_naomit <- function(object, newdata, ...) {
-  tibble::as_tibble(tidyr::drop_na(newdata, object$col_names))
+  tibble::as_tibble(tidyr::drop_na(newdata, object$columns))
 }
 
 print.step_naomit <-
