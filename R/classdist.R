@@ -96,17 +96,8 @@ step_classdist <- function(recipe,
 }
 
 step_classdist_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           mean_func = NULL,
-           cov_func = NULL,
-           pool = NULL,
-           log = NULL,
-           objects = NULL,
-           skip = skip,
-           id = id) {
+  function(terms, class, role, trained, mean_func, 
+           cov_func, pool, log, objects, skip, id) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -138,7 +129,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
   check_type(training[, x_names])
-
+  
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
   if (x$pool) {
@@ -146,7 +137,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
       center = lapply(x_dat, get_center, mfun = x$mean_func),
       scale = x$cov_func(training[, x_names])
     )
-
+    
   } else {
     res <-
       lapply(x_dat,
