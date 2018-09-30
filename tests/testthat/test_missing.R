@@ -52,7 +52,3 @@ test_that("check_missing on a new set", {
   expect_error(bake(rp, na),
                "The following columns contain missing values: `a`.")
 })
-
-test_that("tidy mthod for check_missing", {
-  set_with_na
-})
