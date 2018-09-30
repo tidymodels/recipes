@@ -154,10 +154,17 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
 
-  x$columns <- var_lists
-  x$ref_data <- training[, all_x_vars]
-  x$trained <- TRUE
-  x
+  step_knnimpute_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    K = x$K,
+    impute_with = x$impute_with,
+    ref_data = training[, all_x_vars],
+    columns = var_lists,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom gower gower_topn

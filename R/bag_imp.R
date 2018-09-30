@@ -199,8 +199,18 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
     seed_val = x$seed_val
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
-  x$trained <- TRUE
-  x
+
+  step_bagimpute_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    models = x$models,
+    options = x$options,
+    impute_with = x$impute_with,
+    seed_val = x$seed_val,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom tibble as_tibble
