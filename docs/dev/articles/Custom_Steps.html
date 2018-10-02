@@ -113,15 +113,15 @@
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; [25] "step_kpca"          "step_lag"           "step_lincomb"      </span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; [28] "step_log"           "step_logit"         "step_lowerimpute"  </span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; [31] "step_meanimpute"    "step_modeimpute"    "step_naomit"       </span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; [34] "step_novel"         "step_ns"            "step_num2factor"   </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; [37] "step_nzv"           "step_ordinalscore"  "step_other"        </span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; [40] "step_pca"           "step_pls"           "step_poly"         </span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; [43] "step_profile"       "step_range"         "step_ratio"        </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; [46] "step_regex"         "step_relu"          "step_rm"           </span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; [49] "step_rollimpute"    "step_scale"         "step_shuffle"      </span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; [52] "step_spatialsign"   "step_sqrt"          "step_string2factor"</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; [55] "step_unorder"       "step_upsample"      "step_window"       </span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; [58] "step_YeoJohnson"    "step_zv"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; [34] "step_nnmf"          "step_novel"         "step_ns"           </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; [37] "step_num2factor"    "step_nzv"           "step_ordinalscore" </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; [40] "step_other"         "step_pca"           "step_pls"          </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; [43] "step_poly"          "step_profile"       "step_range"        </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; [46] "step_ratio"         "step_regex"         "step_relu"         </span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; [49] "step_rm"            "step_rollimpute"    "step_scale"        </span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; [52] "step_shuffle"       "step_spatialsign"   "step_sqrt"         </span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; [55] "step_string2factor" "step_unorder"       "step_upsample"     </span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; [58] "step_window"        "step_YeoJohnson"    "step_zv"</span></a></code></pre></div>
 <p>You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/tidymodels/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/tidymodels/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <p>For checks, the process is very similar. Notes on this are given at the end of this document.</p>
 <div id="a-new-step-definition" class="section level1">

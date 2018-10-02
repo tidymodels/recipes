@@ -35,12 +35,13 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dimRed (>= 0.1.0),
+    dimRed (>= 0.1.0.9001),
     fastICA,
     ggplot2,
     igraph,
     kernlab,
     knitr,
+    NMF,
     pls,
     RANN,
     rmarkdown,
@@ -56,4 +57,5 @@ RoxygenNote: 6.1.0.9000
 Roxygen: list(markdown = TRUE)
 Remotes:
     tidymodels/rsample,
-    r-lib/rlang
+    r-lib/rlang,
+    gdkrmr/dimRed
