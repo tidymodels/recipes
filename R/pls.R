@@ -42,7 +42,7 @@
 #'
 #' This step requires the \pkg{pls} package. If not installed, the
 #'  step will stop with a note about installing the package.
-#' 
+#'
 #' The argument `num` controls the number of components that will
 #'  be retained (the original variables that are used to derive the
 #'  components are removed from the data). The new components will
@@ -90,9 +90,9 @@ step_pls <-
            skip = FALSE) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
- 
+
     recipes_pkg_check("pls")
-    
+
     add_step(
       recipe,
       step_pls_new(
@@ -180,7 +180,9 @@ bake.step_pls <- function(object, newdata, ...) {
   input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
 
   comps <- input_data %*% object$res$projection
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  newname <- names0(ncol(comps), object$prefix)
+  check_name(colnames(newdata), newname, "step_pls()")
+  colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% pls_vars), drop = FALSE]

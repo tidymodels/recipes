@@ -43,7 +43,7 @@
 #'  \pkg{igraph}, and \pkg{RANN} packages. If not installed, the
 #'  step will stop with a note about installing these packages.
 #'
-#' 
+#'
 #' It is advisable to center and scale the variables prior to
 #'  running Isomap (`step_center` and `step_scale` can be
 #'  used for this purpose).
@@ -105,9 +105,9 @@ step_isomap <-
            res = NULL,
            prefix = "Isomap",
            skip = FALSE) {
-    
+
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
-    
+
     add_step(
       recipe,
       step_isomap_new(
@@ -182,7 +182,9 @@ bake.step_isomap <- function(object, newdata, ...) {
       dimRed::dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
       )@data
   comps <- comps[, 1:object$num, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  newname <- names0(ncol(comps), object$prefix)
+  check_name(colnames(newdata), newname, "step_isomap()")
+  colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% isomap_vars), drop = FALSE]

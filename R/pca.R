@@ -199,7 +199,9 @@ bake.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(object$res$rotation)
   comps <- predict(object$res, newdata = newdata[, pca_vars])
   comps <- comps[, 1:object$num, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  newname <- names0(ncol(comps), object$prefix)
+  check_name(colnames(newdata), newname, "step_pca()")
+  colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]

@@ -100,9 +100,9 @@ step_ica <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
-    
+
     recipes_pkg_check(c("dimRed", "fastICA"))
-    
+
     add_step(
       recipe,
       step_ica_new(
@@ -127,7 +127,7 @@ step_ica_new <-
            res = NULL,
            prefix = "IC",
            skip = FALSE) {
-    
+
     step(
       subclass = "ica",
       terms = terms,
@@ -177,7 +177,9 @@ bake.step_ica <- function(object, newdata, ...) {
         )
       )@data
   comps <- comps[, 1:object$num, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  newname <- names0(ncol(comps), object$prefix)
+  check_name(colnames(newdata), newname, "step_ica()")
+  colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% ica_vars), drop = FALSE]

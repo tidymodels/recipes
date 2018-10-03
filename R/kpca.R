@@ -43,10 +43,10 @@
 #'  square. This nonlinear mapping is used during the PCA analysis
 #'  and can potentially help find better representations of the
 #'  original data.
-#'  
+#'
 #' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
 #' If not installed, the step will stop with a note about installing
-#' these packages.    
+#' these packages.
 #'
 #' As with ordinary PCA, it is important to standardized the
 #'  variables prior to running PCA (`step_center` and
@@ -116,9 +116,9 @@ step_kpca <-
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
            skip = FALSE) {
-    
+
     recipes_pkg_check(c("dimRed", "kernlab"))
-    
+
     add_step(
       recipe,
       step_kpca_new(
@@ -186,7 +186,9 @@ bake.step_kpca <- function(object, newdata, ...) {
     dimRed::dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))
     )@data
   comps <- comps[, 1:object$num, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  newname <- names0(ncol(comps), object$prefix)
+  check_name(colnames(newdata), newname, "step_kpca()")
+  colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
   as_tibble(newdata)
