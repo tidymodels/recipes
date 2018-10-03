@@ -20,7 +20,7 @@
 #'  used.
 #' @param num_run A positive integer for the number of computations runs used
 #'  to obtain a consensus projection. 
-#' @param options A list of options to [NNLM::nnmf()] by way of
+#' @param options A list of options to [NMF::nmf()] by way of
 #'  [dimRed::NNMF()]. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
 #' @param res The [dimRed::NNMF()] object is stored

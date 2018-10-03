@@ -92,6 +92,7 @@ if \code{num < 10}, their names will be \code{Isomap1} -
 \code{Isomap001} - \code{Isomap101}.
 }
 \examples{
+\donttest{
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -118,6 +119,7 @@ plot(im_te$Isomap1, im_te$Isomap2,
 
 tidy(im_trans, number = 4)
 tidy(im_estimates, number = 4)
+}
 }
 \references{
 De Silva, V., and Tenenbaum, J. B. (2003). Global

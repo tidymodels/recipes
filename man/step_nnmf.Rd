@@ -37,7 +37,7 @@ used.}
 \item{num_run}{A positive integer for the number of computations runs used
 to obtain a consensus projection.}
 
-\item{options}{A list of options to \code{\link[NNLM:nnmf]{NNLM::nnmf()}} by way of
+\item{options}{A list of options to \code{\link[NMF:nmf]{NMF::nmf()}} by way of
 \code{\link[dimRed:NNMF]{dimRed::NNMF()}}. \strong{Note} that the arguments
 \code{data} and \code{ndim} should not be passed here.}
 

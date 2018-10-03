@@ -65,6 +65,7 @@
 #'   https://github.com/gdkrmr
 #'
 #' @examples
+#' \donttest{
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -91,6 +92,7 @@
 #'
 #' tidy(im_trans, number = 4)
 #' tidy(im_estimates, number = 4)
+#' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
