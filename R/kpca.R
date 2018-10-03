@@ -187,7 +187,7 @@ bake.step_kpca <- function(object, newdata, ...) {
     )@data
   comps <- comps[, 1:object$num, drop = FALSE]
   newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, "step_kpca()")
+  check_name(colnames(newdata), newname, object)
   colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]

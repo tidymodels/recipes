@@ -457,11 +457,11 @@ simple_terms <- function(x, ...) {
   res
 }
 
-check_name <- function(x, y, name) {
+check_name <- function(x, y, object) {
   intersection <- x %in% y
 
   if(any(intersection)) {
-    stop("Name collision occured in `", name,
+    stop("Name collision occured in `", class(object)[1],
          "`. The following variable names already exists: ",
          paste0(x[intersection], collapse = ", "), ".",
          call. = FALSE)

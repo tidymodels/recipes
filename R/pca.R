@@ -200,7 +200,7 @@ bake.step_pca <- function(object, newdata, ...) {
   comps <- predict(object$res, newdata = newdata[, pca_vars])
   comps <- comps[, 1:object$num, drop = FALSE]
   newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, "step_pca()")
+  check_name(colnames(newdata), newname, object)
   colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-

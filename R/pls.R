@@ -181,7 +181,7 @@ bake.step_pls <- function(object, newdata, ...) {
 
   comps <- input_data %*% object$res$projection
   newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, "step_pls()")
+  check_name(colnames(newdata), newname, object)
   colnames(comps) <- newname
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
