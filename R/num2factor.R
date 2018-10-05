@@ -67,7 +67,8 @@ step_num2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("num2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
 
@@ -80,20 +81,14 @@ step_num2factor <-
         trained = trained,
         levels = levels,
         ordered = ordered,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_num2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           transform = NULL,
-           trained = FALSE,
-           levels = NULL,
-           ordered = NULL,
-           skip = FALSE
-  ) {
+  function(terms, role, transform, trained, levels, ordered, skip, id) {
     step(
       subclass = "num2factor",
       terms = terms,
@@ -102,7 +97,8 @@ step_num2factor_new <-
       trained = trained,
       levels = levels,
       ordered = ordered,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -126,7 +122,8 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     levels = res,
     ordered = ord,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -160,6 +157,7 @@ print.step_num2factor <-
 
 #' @rdname step_num2factor
 #' @param x A `step_num2factor` object.
+#' @export
 tidy.step_num2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
@@ -170,6 +168,7 @@ tidy.step_num2factor <- function(x, ...) {
     res <- tibble(terms = term_names,
                   ordered = rep(x$ordered, p))
   }
+  res$id <- x$id
   res
 }
 

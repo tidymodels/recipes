@@ -121,7 +121,8 @@ on the original data values.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_integer</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"integer"</span>))
 
 <span class='co'># S3 method for step_integer</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -154,29 +155,33 @@ used as predictors in a model.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
+      <th>strict</th>
+      <td><p>A logical for whether the values should be returned as
+integers (as opposed to double).</p></td>
+    </tr>
+    <tr>
       <th>key</th>
       <td><p>A list that contains the information needed to
 create integer variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>A <code>step_integer</code> object.</p></td>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
-      <th>strick</th>
-      <td><p>A logical for whether the values should be returned as
-integers (as opposed to double).</p></td>
+      <th>x</th>
+      <td><p>A <code>step_integer</code> object.</p></td>
     </tr>
     </table>
     
@@ -232,14 +237,14 @@ ordered by <code>sort</code>.</p>
 #&gt; 2    11    NA      9       25     0
 #&gt; 3     0     2     10       31    36
 #&gt; 4    20     3     11      102     0
-#&gt; 5    12     1      4      102    33</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 2
-#&gt;   terms    value             
-#&gt;   &lt;chr&gt;    &lt;list&gt;            
-#&gt; 1 age      &lt;tibble [23 × 2]&gt; 
-#&gt; 2 diet     &lt;tibble [8 × 2]&gt;  
-#&gt; 3 height   &lt;tibble [18 × 2]&gt; 
-#&gt; 4 location &lt;tibble [135 × 2]&gt;
-#&gt; 5 date     &lt;tibble [38 × 2]&gt; </div></pre>
+#&gt; 5    12     1      4      102    33</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 3
+#&gt;   terms    value              id           
+#&gt;   &lt;chr&gt;    &lt;list&gt;             &lt;chr&gt;        
+#&gt; 1 age      &lt;tibble [23 × 2]&gt;  integer_ePkup
+#&gt; 2 diet     &lt;tibble [8 × 2]&gt;   integer_ePkup
+#&gt; 3 height   &lt;tibble [18 × 2]&gt;  integer_ePkup
+#&gt; 4 location &lt;tibble [135 × 2]&gt; integer_ePkup
+#&gt; 5 date     &lt;tibble [38 × 2]&gt;  integer_ePkup</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -120,7 +120,7 @@ that will remove variables based on their name, type, or role.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rm"</span>))
 
 <span class='co'># S3 method for step_rm</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -154,16 +154,20 @@ preprocessing have been estimated.</p></td>
       <th>removals</th>
       <td><p>A character string that contains the names of
 columns that should be removed. These values are not determined
-until <code>prep.recipe()</code> is called.</p></td>
+until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -209,12 +213,12 @@ is the columns that will be removed.</p>
 #&gt;  9   29.2   4.9   11.1
 #&gt; 10   27.8   1.05  10.8
 #&gt; # ... with 70 more rows</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>smaller_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 1
-#&gt;   terms   
-#&gt;   &lt;chr&gt;   
-#&gt; 1 hydrogen
-#&gt; 2 oxygen  
-#&gt; 3 nitrogen</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>smaller_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
+#&gt;   terms    id      
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 hydrogen rm_RmDwK
+#&gt; 2 oxygen   rm_RmDwK
+#&gt; 3 nitrogen rm_RmDwK</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

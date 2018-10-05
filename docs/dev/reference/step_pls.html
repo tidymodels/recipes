@@ -121,7 +121,7 @@ convert numeric data into one or more new dimensions.</p>
 
     <pre class="usage"><span class='fu'>step_pls</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PLS"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>))
 
 <span class='co'># S3 method for step_pls</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -176,7 +176,7 @@ separated by commas or different selectors (see <code><a href='selections.html'>
       <th>res</th>
       <td><p>The <code><a href='http://www.rdocumentation.org/packages/pls/topics/mvr'>pls::plsr()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -186,11 +186,15 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -223,8 +227,8 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
-<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
-<code>bake.recipe()</code></p></div>
+<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
+<code><a href='bake.html'>bake.recipe()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -248,17 +252,17 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 
 <span class='no'>pls_test_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>[, -<span class='fl'>8</span>])
 
-<span class='fu'>tidy</span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt;       terms      value component
-#&gt; 1    carbon  0.8281346      PLS1
-#&gt; 2  hydrogen -0.2069634      PLS1
-#&gt; 3    oxygen -0.4924124      PLS1
-#&gt; 4  nitrogen -0.1226340      PLS1
-#&gt; 5    sulfur  0.1176868      PLS1
-#&gt; 6    carbon  0.7184695      PLS2
-#&gt; 7  hydrogen  0.6429989      PLS2
-#&gt; 8    oxygen  0.2991768      PLS2
-#&gt; 9  nitrogen -0.1727191      PLS2
-#&gt; 10   sulfur -0.2173418      PLS2</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt;       terms      value component        id
+#&gt; 1    carbon  0.8281346      PLS1 pls_ef5Dr
+#&gt; 2  hydrogen -0.2069634      PLS1 pls_ef5Dr
+#&gt; 3    oxygen -0.4924124      PLS1 pls_ef5Dr
+#&gt; 4  nitrogen -0.1226340      PLS1 pls_ef5Dr
+#&gt; 5    sulfur  0.1176868      PLS1 pls_ef5Dr
+#&gt; 6    carbon  0.7184695      PLS2 pls_ef5Dr
+#&gt; 7  hydrogen  0.6429989      PLS2 pls_ef5Dr
+#&gt; 8    oxygen  0.2991768      PLS2 pls_ef5Dr
+#&gt; 9  nitrogen -0.1727191      PLS2 pls_ef5Dr
+#&gt; 10   sulfur -0.2173418      PLS2 pls_ef5Dr</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

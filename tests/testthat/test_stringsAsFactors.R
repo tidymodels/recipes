@@ -1,6 +1,10 @@
 library(testthat)
 library(recipes)
 
+
+context("stringsAsFactors conversion")
+
+
 n <- 20
 
 set.seed(752)

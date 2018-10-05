@@ -6,7 +6,8 @@
 \title{ICA Signal Extraction}
 \usage{
 step_ica(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  options = list(), res = NULL, prefix = "IC", skip = FALSE)
+  options = list(), res = NULL, prefix = "IC", skip = FALSE,
+  id = rand_id("ica"))
 
 \method{tidy}{step_ica}(x, ...)
 }
@@ -50,6 +51,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_ica} object.}
 }

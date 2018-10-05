@@ -121,7 +121,7 @@ variables.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_shuffle</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"shuffle"</span>))
 
 <span class='co'># S3 method for step_shuffle</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -155,16 +155,20 @@ preprocessing have been estimated.</p></td>
       <th>columns</th>
       <td><p>A character string that contains the names of
 columns that should be shuffled. These values are not determined
-until <code>prep.recipe()</code> is called.</p></td>
+until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -205,15 +209,15 @@ is the columns that will be affected.</p>
 #&gt; 10     4    16    34
 #&gt; 11     1    24    35
 #&gt; 12     8    13    36</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 A    
-#&gt; 2 B    </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rand_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 A    
-#&gt; 2 B    </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms id           
+#&gt;   &lt;chr&gt; &lt;chr&gt;        
+#&gt; 1 A     shuffle_S0jH3
+#&gt; 2 B     shuffle_S0jH3</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rand_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms id           
+#&gt;   &lt;chr&gt; &lt;chr&gt;        
+#&gt; 1 A     shuffle_S0jH3
+#&gt; 2 B     shuffle_S0jH3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

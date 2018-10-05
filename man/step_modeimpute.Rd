@@ -6,7 +6,7 @@
 \title{Impute Nominal Data Using the Most Common Value}
 \usage{
 step_modeimpute(recipe, ..., role = NA, trained = FALSE,
-  modes = NULL, skip = FALSE)
+  modes = NULL, skip = FALSE, id = rand_id("modeimpute"))
 
 \method{tidy}{step_modeimpute}(x, ...)
 }
@@ -34,6 +34,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_modeimpute} object.}
 }

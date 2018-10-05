@@ -121,7 +121,8 @@ when categories are encoded as integers.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_num2factor</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"num2factor"</span>))
 
 <span class='co'># S3 method for step_num2factor</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -161,7 +162,7 @@ preprocessing have been estimated.</p></td>
       <th>levels</th>
       <td><p>A list of values that will be used as the levels.
 These are the numeric data converted to character and ordered.
-This is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
+This is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
@@ -171,11 +172,15 @@ ordered?</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -230,10 +235,10 @@ of <code>NA</code> to these rows (see the example below).</p>
 #&gt; 3    38 anything              68 san francisco       2012-06-27 other
 #&gt; 4    23 vegetarian            71 berkeley            2012-06-28 other
 #&gt; 5    29 &lt;NA&gt;                  66 san francisco       2012-06-27 other
-#&gt; 6    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;   terms   ordered
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;  
-#&gt; 1 Species FALSE  </div><div class='input'>
+#&gt; 6    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   terms   ordered id              
+#&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;           
+#&gt; 1 Species FALSE   num2factor_UJowD</div><div class='input'>
 <span class='co'># When novel values are exposed</span>
 <span class='no'>with_transform</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_num2factor</span>(<span class='no'>Species</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>paste0</span>(<span class='st'>"val_"</span>, <span class='no'>x</span>))

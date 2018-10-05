@@ -120,10 +120,10 @@ missing data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>nbagg</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'>sample.int</span>(<span class='fl'>10</span>^<span class='fl'>4</span>, <span class='fl'>1</span>),
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>nbagg</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'>sample.int</span>(<span class='fl'>10</span>^<span class='fl'>4</span>,
+  <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>))
 
 <span class='fu'>imp_vars</span>(<span class='no'>...</span>)
 
@@ -161,7 +161,7 @@ preprocessing have been estimated.</p></td>
       <th>models</th>
       <td><p>The <code><a href='http://www.rdocumentation.org/packages/ipred/topics/bagging'>ipred::ipredbagg()</a></code> objects are
 stored here once this bagged trees have be trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -189,11 +189,15 @@ The same seed is used across all imputation models.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -272,25 +276,70 @@ Predictive Modeling</em>. Springer Verlag.</p>
 #&gt; 3 bad           24 priv     60    46 married no      fixed       60   165 
 #&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
 #&gt; #   Price &lt;int&gt;</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1 Status  NA   
-#&gt; 2 Home    NA   
-#&gt; 3 Marital NA   
-#&gt; 4 Job     NA   
-#&gt; 5 Income  NA   
-#&gt; 6 Assets  NA   
-#&gt; 7 Debt    NA   </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model          
-#&gt;   &lt;chr&gt;   &lt;list&gt;         
-#&gt; 1 Status  &lt;S3: classbagg&gt;
-#&gt; 2 Home    &lt;S3: classbagg&gt;
-#&gt; 3 Marital &lt;S3: classbagg&gt;
-#&gt; 4 Job     &lt;S3: classbagg&gt;
-#&gt; 5 Income  &lt;S3: regbagg&gt;  
-#&gt; 6 Assets  &lt;S3: regbagg&gt;  
-#&gt; 7 Debt    &lt;S3: regbagg&gt;  </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model id             
+#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
+#&gt; 1 Status  NA    bagimpute_NKNDt
+#&gt; 2 Home    NA    bagimpute_NKNDt
+#&gt; 3 Marital NA    bagimpute_NKNDt
+#&gt; 4 Job     NA    bagimpute_NKNDt
+#&gt; 5 Income  NA    bagimpute_NKNDt
+#&gt; 6 Assets  NA    bagimpute_NKNDt
+#&gt; 7 Debt    NA    bagimpute_NKNDt</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model           id             
+#&gt;   &lt;chr&gt;   &lt;list&gt;          &lt;chr&gt;          
+#&gt; 1 Status  &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 2 Home    &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 3 Marital &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 4 Job     &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 5 Income  &lt;S3: regbagg&gt;   bagimpute_NKNDt
+#&gt; 6 Assets  &lt;S3: regbagg&gt;   bagimpute_NKNDt
+#&gt; 7 Debt    &lt;S3: regbagg&gt;   bagimpute_NKNDt</div><div class='input'>
+<span class='co'>## Specifying which variables to imputate with</span>
+
+ <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>,
+                 <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='no'>Time</span>, <span class='no'>Age</span>, <span class='no'>Expenses</span>))
+
+<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+
+<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+
+<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
+#&gt; 30      bad         0 &lt;NA&gt;   48  37  single      no  &lt;NA&gt;       35     NA
+#&gt; 736     bad         1 priv   48  36  single     yes fixed       35    173
+#&gt; 1057    bad        24 priv   60  46 married      no fixed       60    165
+#&gt;      Assets Debt Amount Price
+#&gt; 30       NA   NA   1500  1850
+#&gt; 736    7700    0   1000  2008
+#&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'>names</span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
+#&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
+#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
+#&gt; 1 bad            0 pare…    48    37 single  no      fixed       35   129.
+#&gt; 2 bad            1 priv     48    36 single  yes     fixed       35   173 
+#&gt; 3 bad           24 priv     60    46 married no      fixed       60   165 
+#&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
+#&gt; #   Price &lt;int&gt;</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model id             
+#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
+#&gt; 1 Status  NA    bagimpute_eCtKx
+#&gt; 2 Home    NA    bagimpute_eCtKx
+#&gt; 3 Marital NA    bagimpute_eCtKx
+#&gt; 4 Job     NA    bagimpute_eCtKx
+#&gt; 5 Income  NA    bagimpute_eCtKx
+#&gt; 6 Assets  NA    bagimpute_eCtKx
+#&gt; 7 Debt    NA    bagimpute_eCtKx</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model           id             
+#&gt;   &lt;chr&gt;   &lt;list&gt;          &lt;chr&gt;          
+#&gt; 1 Status  &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 2 Home    &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 3 Marital &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 4 Job     &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 5 Income  &lt;S3: regbagg&gt;   bagimpute_eCtKx
+#&gt; 6 Assets  &lt;S3: regbagg&gt;   bagimpute_eCtKx
+#&gt; 7 Debt    &lt;S3: regbagg&gt;   bagimpute_eCtKx</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

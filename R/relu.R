@@ -20,6 +20,8 @@
 #' @param prefix A prefix for generated column names, default to "right_relu_"
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
@@ -71,7 +73,9 @@ step_relu <-
            reverse = FALSE,
            smooth = FALSE,
            prefix = "right_relu_",
-           skip = FALSE) {
+           columns = NULL,
+           skip = FALSE,
+           id = rand_id("relu")) {
     if (!is.numeric(shift))
       stop("Shift argument must be a numeric value.", call. = FALSE)
     if (!is.logical(reverse))
@@ -90,20 +94,15 @@ step_relu <-
         reverse = reverse,
         smooth = smooth,
         prefix = prefix,
-        skip = skip
+        columns = columns,
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_relu_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           shift = 0,
-           reverse = FALSE,
-           smooth = FALSE,
-           prefix = "right_relu_",
-           skip = FALSE) {
+  function(terms, role, trained, shift, reverse, smooth, prefix, columns, skip, id) {
     step(
       subclass = "relu",
       terms = terms,
@@ -113,17 +112,29 @@ step_relu_new <-
       reverse = reverse,
       smooth = smooth,
       prefix = prefix,
-      skip = skip
+      columns = columns,
+      skip = skip,
+      id = id
     )
   }
 
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
-  x$columns <- terms_select(x$terms, info = info)
-  check_type(training[, x$columns])
+  columns <- terms_select(x$terms, info = info)
+  check_type(training[, columns])
 
-  x$trained <- TRUE
-  x
+  step_relu_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    shift = x$shift,
+    reverse = x$reverse,
+    smooth = x$smooth,
+    prefix = x$prefix,
+    columns = columns,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom dplyr select_vars tbl_vars
@@ -173,9 +184,11 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
 
 #' @rdname step_relu
 #' @param x A `step_relu` object.
+#' @export
 tidy.step_relu <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$shift <- x$shift
   out$reverse <- x$reverse
+  out$id <- x$id
   out
 }

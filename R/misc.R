@@ -435,15 +435,21 @@ is_trained <- function(x)
 #' @param x A list of selectors
 #' @return A character vector
 #' @export
+#' @importFrom purrr map_chr
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
-  term_names <- lapply(x, as.character)
-  term_names <-
-    vapply(term_names,
-           function(x) x[-1],
-           character(1))
-  term_names
+  map_chr(x, to_character)
+}
+
+#' @importFrom rlang is_quosure quo_text as_character
+to_character <- function(x) {
+  if (rlang::is_quosure(x)) {
+    res <- rlang::quo_text(x)
+  } else {
+    res <- as_character(x)
+  }
+  res
 }
 
 
@@ -457,6 +463,7 @@ simple_terms <- function(x, ...) {
   res
 }
 
+
 check_name <- function(x, y, object) {
   intersection <- x %in% y
 
@@ -466,4 +473,19 @@ check_name <- function(x, y, object) {
          paste0(x[intersection], collapse = ", "), ".",
          call. = FALSE)
   }
+
+#' Make a random identification field for steps
+#' 
+#' @export
+#' @param prefix A single character string
+#' @param len An integer for the number of random characters
+#' @return A character string with the prefix and random letters separated by
+#'  and underscore. 
+#' @keywords internal
+rand_id <- function(prefix = "step", len = 5) {
+  candidates <- c(letters, LETTERS, paste(0:9))
+  paste(prefix, 
+        paste0(sample(candidates, len, replace = TRUE), collapse = ""),
+        sep = "_"
+  )
 }

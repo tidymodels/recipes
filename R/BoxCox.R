@@ -71,7 +71,8 @@ step_BoxCox <-
            lambdas = NULL,
            limits = c(-5, 5),
            nunique = 5,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("BoxCox")) {
     add_step(
       recipe,
       step_BoxCox_new(
@@ -81,19 +82,14 @@ step_BoxCox <-
         lambdas = lambdas,
         limits = sort(limits)[1:2],
         nunique = nunique,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_BoxCox_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           lambdas = NULL,
-           limits = NULL,
-           nunique = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, lambdas, limits, nunique, skip, id) {
     step(
       subclass = "BoxCox",
       terms = terms,
@@ -102,7 +98,8 @@ step_BoxCox_new <-
       lambdas = lambdas,
       limits = limits,
       nunique = nunique,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -126,7 +123,8 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     lambdas = values,
     limits = x$limits,
     nunique = x$nunique,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -205,6 +203,7 @@ estimate_bc <- function(dat,
 
 #' @rdname step_BoxCox
 #' @param x A `step_BoxCox` object.
+#' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),
@@ -214,5 +213,6 @@ tidy.step_BoxCox <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = na_dbl)
   }
+  res$id <- x$id
   res
 }

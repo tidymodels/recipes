@@ -3,6 +3,8 @@ library(recipes)
 data(biomass)
 library(splines)
 
+context("B-splines")
+
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 

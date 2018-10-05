@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Data framedness")
+
+
 ###################################################################
 
 data(okc)

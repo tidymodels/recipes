@@ -7,7 +7,8 @@
 \usage{
 step_count(recipe, ..., role = "predictor", trained = FALSE,
   pattern = ".", normalize = FALSE, options = list(),
-  result = make.names(pattern), input = NULL, skip = FALSE)
+  result = make.names(pattern), input = NULL, skip = FALSE,
+  id = rand_id("count"))
 
 \method{tidy}{step_count}(x, ...)
 }
@@ -53,6 +54,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_count} object.}
 }

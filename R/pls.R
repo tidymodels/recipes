@@ -87,7 +87,8 @@ step_pls <-
            options = NULL,
            res = NULL,
            prefix = "PLS",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("pls")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
 
@@ -104,21 +105,14 @@ step_pls <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_pls_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           outcome = outcome,
-           options = NULL,
-           res = NULL,
-           prefix = "pls",
-           skip = FALSE) {
+  function(terms, role, trained, num, outcome, options, res, prefix, skip, id) {
     step(
       subclass = "pls",
       terms = terms,
@@ -129,7 +123,8 @@ step_pls_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -164,7 +159,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = mod[c("projection", "Xmeans", "scale")],
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -202,6 +198,7 @@ print.step_pls <-
 
 #' @rdname step_pls
 #' @param x A `step_pls` object
+#' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
     res <- as.data.frame(x$res$projection)
@@ -214,5 +211,6 @@ tidy.step_pls <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl, component = na_chr)
   }
+  res$id <- x$id
   res
 }

@@ -7,7 +7,7 @@
 \usage{
 step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
-  0.2)), prefix = "kPC", skip = FALSE)
+  0.2)), prefix = "kPC", skip = FALSE, id = rand_id("kpca"))
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -52,6 +52,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_kpca} object}
 }

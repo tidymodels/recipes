@@ -115,7 +115,8 @@ step_kpca <-
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))
 
@@ -129,32 +130,27 @@ step_kpca <-
         res = res,
         options = options,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
 }
 
 step_kpca_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           res = NULL,
-           options = NULL,
-           prefix = "kPC",
-           skip = FALSE) {
-  step(
-    subclass = "kpca",
-    terms = terms,
-    role = role,
-    trained = trained,
-    num = num,
-    res = res,
-    options = options,
-    prefix = prefix,
-    skip = skip
-  )
-}
+  function(terms, role, trained, num, res, options, prefix, skip, id) {
+    step(
+      subclass = "kpca",
+      terms = terms,
+      role = role,
+      trained = trained,
+      num = num,
+      res = res,
+      options = options,
+      prefix = prefix,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_kpca <- function(x, training, info = NULL, ...) {
@@ -175,7 +171,8 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = kprc,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -209,6 +206,7 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 
 #' @rdname step_kpca
 #' @param x A `step_kpca` object
+#' @export
 tidy.step_kpca <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$res@org.data))
@@ -216,6 +214,7 @@ tidy.step_kpca <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
   }
+  res$id <- x$id
   res
 }
 

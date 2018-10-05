@@ -2,9 +2,15 @@
 % Please edit documentation in R/tidy.R
 \name{tidy.recipe}
 \alias{tidy.recipe}
+\alias{tidy.step}
+\alias{tidy.check}
 \title{Tidy the Result of a Recipe}
 \usage{
 \method{tidy}{recipe}(x, number = NA, ...)
+
+\method{tidy}{step}(x, ...)
+
+\method{tidy}{check}(x, ...)
 }
 \arguments{
 \item{x}{A \code{recipe} object (trained or otherwise).}
@@ -23,7 +29,7 @@ tibble with columns \code{number} (the operation iteration),
 \code{operation} (either "step" or "check"),
 \code{type} (the method, e.g. "nzv", "center"), a logical
 column called \code{trained} for whether the operation has been
-estimated using \code{prep}, and a logical for \code{skip}.
+estimated using \code{prep}, a logical for \code{skip}, and a character column \code{id}.
 }
 \description{
 \code{tidy} will return a data frame that contains information

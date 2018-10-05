@@ -76,7 +76,8 @@
 step_downsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
-           seed = sample.int(10^5, 1)) {
+           seed = sample.int(10^5, 1), id = rand_id("downsample")) {
+
     add_step(recipe,
              step_downsample_new(
                terms = ellipse_check(...),
@@ -86,14 +87,13 @@ step_downsample <-
                column = column,
                target = target,
                skip = skip,
-               seed = seed
+               seed = seed,
+               id = id
              ))
   }
 
 step_downsample_new <-
-  function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = FALSE,
-           seed = sample.int(10^5, 1)) {
+  function(terms, ratio, role, trained, column, target, skip, seed, id) {
     step(
       subclass = "downsample",
       terms = terms,
@@ -103,7 +103,9 @@ step_downsample_new <-
       column = column,
       target = target,
       skip = skip,
-      seed = seed
+      id = id,
+      seed = seed,
+      id = id
     )
   }
 
@@ -127,7 +129,8 @@ prep.step_downsample <- function(x, training, info = NULL, ...) {
     column = col_name,
     target = floor(minority * x$ratio),
     skip = x$skip,
-    seed = x$seed
+    seed = x$seed,
+    id = x$id
   )
 }
 
@@ -163,7 +166,7 @@ bake.step_downsample <- function(object, newdata, ...) {
       }
     }
   )
-
+  
   as_tibble(newdata)
 }
 
@@ -177,6 +180,7 @@ print.step_downsample <-
 
 #' @rdname step_downsample
 #' @param x A `step_downsample` object.
+#' @export
 tidy.step_downsample <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$column)
@@ -185,5 +189,6 @@ tidy.step_downsample <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = unname(term_names))
   }
+  res$id <- x$id
   res
 }

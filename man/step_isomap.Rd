@@ -7,7 +7,8 @@
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE,
   num = 5, options = list(knn = 50, .mute = c("message", "output")),
-  res = NULL, prefix = "Isomap", skip = FALSE)
+  res = NULL, prefix = "Isomap", skip = FALSE,
+  id = rand_id("isomap"))
 
 \method{tidy}{step_isomap}(x, ...)
 }
@@ -50,6 +51,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_isomap} object}
 }
 \value{
@@ -89,6 +92,7 @@ if \code{num < 10}, their names will be \code{Isomap1} -
 \code{Isomap001} - \code{Isomap101}.
 }
 \examples{
+\donttest{
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -115,6 +119,7 @@ plot(im_te$Isomap1, im_te$Isomap2,
 
 tidy(im_trans, number = 4)
 tidy(im_estimates, number = 4)
+}
 }
 \references{
 De Silva, V., and Tenenbaum, J. B. (2003). Global

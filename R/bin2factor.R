@@ -55,7 +55,8 @@ step_bin2factor <-
            levels = c("yes", "no"),
            ref_first = TRUE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("bin2factor")) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
     add_step(
@@ -67,19 +68,14 @@ step_bin2factor <-
         levels = levels,
         ref_first = ref_first,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_bin2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ref_first = NULL,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, levels, ref_first, columns, skip, id) {
     step(
       subclass = "bin2factor",
       terms = terms,
@@ -88,7 +84,8 @@ step_bin2factor_new <-
       levels = levels,
       ref_first = ref_first,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,7 +103,8 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
     levels = x$levels,
     ref_first = x$ref_first,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -133,6 +131,9 @@ print.step_bin2factor <-
 
 #' @rdname step_bin2factor
 #' @param x A `step_bin2factor` object.
+#' @export
 tidy.step_bin2factor <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

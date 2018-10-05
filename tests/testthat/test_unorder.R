@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+
+context("Unordering data")
+
 lmh <- c("Low", "Med", "High")
 
 examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),

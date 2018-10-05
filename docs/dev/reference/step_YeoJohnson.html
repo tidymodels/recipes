@@ -120,8 +120,9 @@ transformation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>step_YeoJohnson</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>step_YeoJohnson</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>nunique</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"YeoJohnson"</span>))
 
 <span class='co'># S3 method for step_YeoJohnson</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -154,7 +155,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>lambdas</th>
       <td><p>A numeric vector of transformation values. This
-is <code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
+is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>limits</th>
@@ -174,11 +175,15 @@ values should be removed during computations.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -219,7 +224,7 @@ transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_BoxCox.html'>step_BoxCox()</a></code> <code><a href='recipe.html'>recipe()</a></code>
-<code>prep.recipe()</code> <code>bake.recipe()</code></p></div>
+<code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -239,18 +244,18 @@ transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
 <span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)
 
 <span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_YeoJohnson-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_YeoJohnson-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>yj_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;   terms         value
-#&gt;   &lt;chr&gt;         &lt;dbl&gt;
-#&gt; 1 all_numeric()    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 2
-#&gt;   terms      value
-#&gt;   &lt;chr&gt;      &lt;dbl&gt;
-#&gt; 1 carbon   -0.0225
-#&gt; 2 hydrogen  2.10  
-#&gt; 3 oxygen    1.78  
-#&gt; 4 nitrogen -0.830 
-#&gt; 5 sulfur   -4.09  
-#&gt; 6 HHV      -0.388 </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>yj_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   terms         value id              
+#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;           
+#&gt; 1 all_numeric()    NA YeoJohnson_PFOFZ</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 3
+#&gt;   terms      value id              
+#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;           
+#&gt; 1 carbon   -0.0225 YeoJohnson_PFOFZ
+#&gt; 2 hydrogen  2.10   YeoJohnson_PFOFZ
+#&gt; 3 oxygen    1.78   YeoJohnson_PFOFZ
+#&gt; 4 nitrogen -0.830  YeoJohnson_PFOFZ
+#&gt; 5 sulfur   -4.09   YeoJohnson_PFOFZ
+#&gt; 6 HHV      -0.388  YeoJohnson_PFOFZ</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

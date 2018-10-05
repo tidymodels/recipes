@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Regex pattern matching indicators")
+
+
 data(covers)
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))

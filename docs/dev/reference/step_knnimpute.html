@@ -122,7 +122,7 @@ neighbors.</p>
 
     <pre class="usage"><span class='fu'>step_knnimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>K</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>))
 
 <span class='co'># S3 method for step_knnimpute</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -173,22 +173,26 @@ impute itself.</p></td>
       <td><p>A tibble of data that will reflect the data
 preprocessing done up to the point of this imputation step. This
 is <code>NULL</code> until the step is trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>The column names that will be imputed and used
 for imputation. This is <code>NULL</code> until the step is trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -262,32 +266,32 @@ similarity and some of its properties," Biometrics, 857-871.</p>
 #&gt; [1,]    1.2 1.2033333
 #&gt; [2,]    1.2 0.5666667
 #&gt; [3,]    1.4 0.7600000</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   terms            predictors     K
-#&gt;   &lt;chr&gt;            &lt;chr&gt;      &lt;dbl&gt;
-#&gt; 1 all_predictors() &lt;NA&gt;           3</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 3
-#&gt;    terms    predictors     K
-#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
-#&gt;  1 carbon   hydrogen       3
-#&gt;  2 carbon   oxygen         3
-#&gt;  3 carbon   nitrogen       3
-#&gt;  4 carbon   sulfur         3
-#&gt;  5 hydrogen carbon         3
-#&gt;  6 hydrogen oxygen         3
-#&gt;  7 hydrogen nitrogen       3
-#&gt;  8 hydrogen sulfur         3
-#&gt;  9 oxygen   carbon         3
-#&gt; 10 oxygen   hydrogen       3
-#&gt; 11 oxygen   nitrogen       3
-#&gt; 12 oxygen   sulfur         3
-#&gt; 13 nitrogen carbon         3
-#&gt; 14 nitrogen hydrogen       3
-#&gt; 15 nitrogen oxygen         3
-#&gt; 16 nitrogen sulfur         3
-#&gt; 17 sulfur   carbon         3
-#&gt; 18 sulfur   hydrogen       3
-#&gt; 19 sulfur   oxygen         3
-#&gt; 20 sulfur   nitrogen       3</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;   terms            predictors     K id             
+#&gt;   &lt;chr&gt;            &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;          
+#&gt; 1 all_predictors() &lt;NA&gt;           3 knnimpute_RN6fZ</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 4
+#&gt;    terms    predictors     K id             
+#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;          
+#&gt;  1 carbon   hydrogen       3 knnimpute_RN6fZ
+#&gt;  2 carbon   oxygen         3 knnimpute_RN6fZ
+#&gt;  3 carbon   nitrogen       3 knnimpute_RN6fZ
+#&gt;  4 carbon   sulfur         3 knnimpute_RN6fZ
+#&gt;  5 hydrogen carbon         3 knnimpute_RN6fZ
+#&gt;  6 hydrogen oxygen         3 knnimpute_RN6fZ
+#&gt;  7 hydrogen nitrogen       3 knnimpute_RN6fZ
+#&gt;  8 hydrogen sulfur         3 knnimpute_RN6fZ
+#&gt;  9 oxygen   carbon         3 knnimpute_RN6fZ
+#&gt; 10 oxygen   hydrogen       3 knnimpute_RN6fZ
+#&gt; 11 oxygen   nitrogen       3 knnimpute_RN6fZ
+#&gt; 12 oxygen   sulfur         3 knnimpute_RN6fZ
+#&gt; 13 nitrogen carbon         3 knnimpute_RN6fZ
+#&gt; 14 nitrogen hydrogen       3 knnimpute_RN6fZ
+#&gt; 15 nitrogen oxygen         3 knnimpute_RN6fZ
+#&gt; 16 nitrogen sulfur         3 knnimpute_RN6fZ
+#&gt; 17 sulfur   carbon         3 knnimpute_RN6fZ
+#&gt; 18 sulfur   hydrogen       3 knnimpute_RN6fZ
+#&gt; 19 sulfur   oxygen         3 knnimpute_RN6fZ
+#&gt; 20 sulfur   nitrogen       3 knnimpute_RN6fZ</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -77,7 +77,8 @@ step_date <-
            label = TRUE,
            ordinal = FALSE,
            columns = NULL,
-           skip = FALSE
+           skip = FALSE,
+           id = rand_id("date")
   ) {
   feat <-
     c("year",
@@ -102,36 +103,28 @@ step_date <-
       label = label,
       ordinal = ordinal,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_date_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = FALSE
-  ) {
-  step(
-    subclass = "date",
-    terms = terms,
-    role = role,
-    trained = trained,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = skip
-  )
-}
+  function(terms, role, trained, features, abbr, label, ordinal, columns, skip, id) {
+    step(
+      subclass = "date",
+      terms = terms,
+      role = role,
+      trained = trained,
+      features = features,
+      abbr = abbr,
+      label = label,
+      ordinal = ordinal,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export
@@ -152,7 +145,8 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     label = x$label,
     ordinal = x$ordinal,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -251,6 +245,7 @@ print.step_date <-
 
 #' @rdname step_date
 #' @param x A `step_date` object.
+#' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- expand.grid(
@@ -266,6 +261,7 @@ tidy.step_date <- function(x, ...) {
       ordinal = x$ordinal
     )
   }
+  res$id <- x$id
   as_tibble(res)
 }
 

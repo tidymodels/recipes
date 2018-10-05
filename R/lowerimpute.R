@@ -55,7 +55,7 @@
 #' transformed_te <- bake(impute_rec, biomass_te)
 #'
 #' plot(transformed_te$carbon, biomass_te$carbon,
-#'      xlab = "pre-imputation", ylab = "imputed")
+#'      ylab = "pre-imputation", xlab = "imputed")
 
 
 step_lowerimpute <-
@@ -64,7 +64,8 @@ step_lowerimpute <-
            role = NA,
            trained = FALSE,
            threshold = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("lowerimpute")) {
     add_step(
       recipe,
       step_lowerimpute_new(
@@ -72,24 +73,22 @@ step_lowerimpute <-
         role = role,
         trained = trained,
         threshold = threshold,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_lowerimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           threshold = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, threshold, skip, id) {
     step(
       subclass = "lowerimpute",
       terms = terms,
       role = role,
       trained = trained,
       threshold = threshold,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -114,7 +113,8 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     threshold = threshold,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -138,6 +138,7 @@ print.step_lowerimpute <-
 
 #' @rdname step_lowerimpute
 #' @param x A `step_lowerimpute` object.
+#' @export
 tidy.step_lowerimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$threshold),
@@ -146,6 +147,7 @@ tidy.step_lowerimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
   }
+  res$id <- x$id
   res
 }
 
