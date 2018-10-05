@@ -22,7 +22,7 @@ options(digits = 3)
 The `recipes` package contains a number of different operations:
 
 ```{r step_list}
-library(tidymodels)
+library(recipes)
 ls("package:recipes", pattern = "^step_")
 ```
 
@@ -174,7 +174,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   if (!x$approx) {
     ref_dist <- training[, col_names]
   } else {
-    ref_dist <- map(training[, col_names],  get_pctl, args = x$options)
+    ref_dist <- purrr::map(training[, col_names],  get_pctl, args = x$options)
   }
 
   ## Use the constructor function to return the updated object. 
@@ -241,6 +241,7 @@ bake.step_percentile <- function(object, newdata, ...) {
 Let's use the example data to make sure that it works: 
 
 ```{r example}
+library(purrr)
 rec_obj <- 
   recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
   step_percentile(all_predictors(), approx = TRUE) %>%

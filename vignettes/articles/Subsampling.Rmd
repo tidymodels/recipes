@@ -56,7 +56,7 @@ To demonstrate this, `step_downsample` will be used in a recipe for the simulate
 Here is a simple recipe: 
 
 ```{r rec}
-library(tidymodels)
+library(recipes)
 imbal_rec <- 
   recipe(Class ~ ., data = imbal_data) %>%
   step_downsample(Class)
@@ -65,6 +65,7 @@ imbal_rec <-
 Basic cross-validation is used to resample the model:
 
 ```{r cv}
+library(rsample)
 set.seed(5732)
 cv_folds <- vfold_cv(imbal_data, strata = "Class", repeats = 5)
 ```
@@ -72,6 +73,7 @@ cv_folds <- vfold_cv(imbal_data, strata = "Class", repeats = 5)
 An additional column is added to the data that contains the trained recipes for each resample:
 
 ```{r prep}
+library(purrr)
 cv_folds <- 
   cv_folds %>%
   mutate(recipes = map(splits, prepper, recipe = imbal_rec, retain = TRUE))
@@ -140,6 +142,7 @@ cv_folds
 Now, the performance metrics are computed: 
 
 ```{r perf}
+library(yardstick)
 cv_folds <- 
   cv_folds %>%
   mutate(

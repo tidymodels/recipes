@@ -118,31 +118,33 @@
 <li>The subsampling process should only be applied to the analysis set. The assessment set should reflect the event rates seen “in the wild” and, for this reason, the <code>skip</code> argument to <code>step_downsample</code> is defaulted to <code>TRUE</code>.</li>
 </ul>
 <p>Here is a simple recipe:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidymodels)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">imbal_rec &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> imbal_data) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../../reference/step_downsample.html">step_downsample</a></span>(Class)</a></code></pre></div>
 <p>Basic cross-validation is used to resample the model:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">5732</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(imbal_data, <span class="dt">strata =</span> <span class="st">"Class"</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(rsample)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">5732</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">cv_folds &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/vfold_cv">vfold_cv</a></span>(imbal_data, <span class="dt">strata =</span> <span class="st">"Class"</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
 <p>An additional column is added to the data that contains the trained recipes for each resample:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw">map</span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Data Recipe</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Inputs:</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;       role #variables</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;    outcome          1</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  predictor         15</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; Training data contained 900 data points and no missing data.</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Operations:</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; Down-sampling based on Class [trained]</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(purrr)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Data Recipe</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; Inputs:</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;       role #variables</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;    outcome          1</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  predictor         15</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Training data contained 900 data points and no missing data.</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; Operations:</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; Down-sampling based on Class [trained]</span></a></code></pre></div>
 <p>The model that will be used to demonstrate subsampling is <a href="https://en.wikipedia.org/wiki/Quadratic_classifier#Quadratic_discriminant_analysis">quadratic discriminant analysis</a> via the <code>MASS</code> package. A function will be used to train the model and to produce class probabilities as well as hard class predictions using the default 50% cutoff. When a recipe is passed to the function, down-sampling will be applied. If no recipe is given, the data are used to fit the model as-is:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(MASS)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
@@ -150,14 +152,14 @@
 <a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(rec))</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">    mod_data &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/juice.html">juice</a></span>(rec)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="cf">else</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    mod_data &lt;-<span class="st"> </span><span class="kw">analysis</span>(split)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    mod_data &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/as.data.frame.rsplit">analysis</a></span>(split)</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">  </a>
 <a class="sourceLine" id="cb5-9" data-line-number="9">  mod_fit &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/qda">qda</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mod_data)</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">  </a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(rec))</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    eval_data &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bake.html">bake</a></span>(rec, <span class="kw">assessment</span>(split))</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">    eval_data &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bake.html">bake</a></span>(rec, <span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/as.data.frame.rsplit">assessment</a></span>(split))</a>
 <a class="sourceLine" id="cb5-13" data-line-number="13">  <span class="cf">else</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">    eval_data &lt;-<span class="st"> </span><span class="kw">assessment</span>(split)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">    eval_data &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/as.data.frame.rsplit">assessment</a></span>(split)</a>
 <a class="sourceLine" id="cb5-15" data-line-number="15">  </a>
 <a class="sourceLine" id="cb5-16" data-line-number="16">  eval_data &lt;-<span class="st"> </span>eval_data </a>
 <a class="sourceLine" id="cb5-17" data-line-number="17">  predictions &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_fit, eval_data)</a>
@@ -200,8 +202,8 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">cv_folds &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">sampled_pred =</span> <span class="kw">map2</span>(splits, recipes, assess_res),</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">normal_pred  =</span>  <span class="kw">map</span>(splits, assess_res)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">sampled_pred =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(splits, recipes, assess_res),</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">normal_pred  =</span>  <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(splits, assess_res)</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6">  )</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">cv_folds</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; #  10-fold cross-validation repeated 5 times using stratification </span></a>
@@ -220,25 +222,26 @@
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; 10 &lt;S3: rspl… Repeat1 Fold10 &lt;S3: reci… &lt;tibble [100 ×… &lt;data.frame [100 …</span></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; # ... with 40 more rows</span></a></code></pre></div>
 <p>Now, the performance metrics are computed:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="dt">sampled_roc =</span> </a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">      <span class="kw">map_dfr</span>(sampled_pred, roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">    </a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">normal_roc =</span>  </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">      <span class="kw">map_dfr</span>(normal_pred,  roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),  </a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">    </a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">    <span class="dt">sampled_J =</span>   </a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">      <span class="kw">map_dfr</span>(sampled_pred, j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">    </a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">    <span class="dt">normal_J =</span>    </a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">      <span class="kw">map_dfr</span>(normal_pred,  j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>)       </a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">  )</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(yardstick)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="dt">sampled_roc =</span> </a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_dfr</a></span>(sampled_pred, roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">normal_roc =</span>  </a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">      <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_dfr</a></span>(normal_pred,  roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),  </a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">    </a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="dt">sampled_J =</span>   </a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">      <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_dfr</a></span>(sampled_pred, j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">    </a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">    <span class="dt">normal_J =</span>    </a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">      <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_dfr</a></span>(normal_pred,  j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>)       </a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">  )</a></code></pre></div>
 <p>What do the ROC values look like? A <a href="https://en.wikipedia.org/wiki/Bland%E2%80%93Altman_plot">Bland-Altman plot</a> can be used to show the differences in the results over the range of results:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(cv_folds, </a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> (sampled_roc <span class="op">+</span><span class="st"> </span>normal_roc)<span class="op">/</span><span class="dv">2</span>, </a>
@@ -266,8 +269,8 @@
 <a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; Gradient evaluation took 0.000121 seconds</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 1.21 seconds.</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; Gradient evaluation took 0.000143 seconds</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 1.43 seconds.</span></a>
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt; Adjust your expectations accordingly!</span></a>
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; </span></a>
@@ -284,15 +287,15 @@
 <a class="sourceLine" id="cb11-27" data-line-number="27"><span class="co">#&gt; Iteration: 4500 / 5000 [ 90%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-28" data-line-number="28"><span class="co">#&gt; Iteration: 5000 / 5000 [100%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-30" data-line-number="30"><span class="co">#&gt;  Elapsed Time: 1.46484 seconds (Warm-up)</span></a>
-<a class="sourceLine" id="cb11-31" data-line-number="31"><span class="co">#&gt;                1.2366 seconds (Sampling)</span></a>
-<a class="sourceLine" id="cb11-32" data-line-number="32"><span class="co">#&gt;                2.70144 seconds (Total)</span></a>
+<a class="sourceLine" id="cb11-30" data-line-number="30"><span class="co">#&gt;  Elapsed Time: 2.45573 seconds (Warm-up)</span></a>
+<a class="sourceLine" id="cb11-31" data-line-number="31"><span class="co">#&gt;                2.01926 seconds (Sampling)</span></a>
+<a class="sourceLine" id="cb11-32" data-line-number="32"><span class="co">#&gt;                4.47499 seconds (Total)</span></a>
 <a class="sourceLine" id="cb11-33" data-line-number="33"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-34" data-line-number="34"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-35" data-line-number="35"><span class="co">#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span></a>
 <a class="sourceLine" id="cb11-36" data-line-number="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-37" data-line-number="37"><span class="co">#&gt; Gradient evaluation took 2.8e-05 seconds</span></a>
-<a class="sourceLine" id="cb11-38" data-line-number="38"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.28 seconds.</span></a>
+<a class="sourceLine" id="cb11-37" data-line-number="37"><span class="co">#&gt; Gradient evaluation took 4.4e-05 seconds</span></a>
+<a class="sourceLine" id="cb11-38" data-line-number="38"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.</span></a>
 <a class="sourceLine" id="cb11-39" data-line-number="39"><span class="co">#&gt; Adjust your expectations accordingly!</span></a>
 <a class="sourceLine" id="cb11-40" data-line-number="40"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-41" data-line-number="41"><span class="co">#&gt; </span></a>
@@ -309,15 +312,15 @@
 <a class="sourceLine" id="cb11-52" data-line-number="52"><span class="co">#&gt; Iteration: 4500 / 5000 [ 90%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-53" data-line-number="53"><span class="co">#&gt; Iteration: 5000 / 5000 [100%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-54" data-line-number="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-55" data-line-number="55"><span class="co">#&gt;  Elapsed Time: 1.57046 seconds (Warm-up)</span></a>
-<a class="sourceLine" id="cb11-56" data-line-number="56"><span class="co">#&gt;                1.98533 seconds (Sampling)</span></a>
-<a class="sourceLine" id="cb11-57" data-line-number="57"><span class="co">#&gt;                3.55579 seconds (Total)</span></a>
+<a class="sourceLine" id="cb11-55" data-line-number="55"><span class="co">#&gt;  Elapsed Time: 2.50303 seconds (Warm-up)</span></a>
+<a class="sourceLine" id="cb11-56" data-line-number="56"><span class="co">#&gt;                3.24247 seconds (Sampling)</span></a>
+<a class="sourceLine" id="cb11-57" data-line-number="57"><span class="co">#&gt;                5.7455 seconds (Total)</span></a>
 <a class="sourceLine" id="cb11-58" data-line-number="58"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-59" data-line-number="59"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-60" data-line-number="60"><span class="co">#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span></a>
 <a class="sourceLine" id="cb11-61" data-line-number="61"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-62" data-line-number="62"><span class="co">#&gt; Gradient evaluation took 2.8e-05 seconds</span></a>
-<a class="sourceLine" id="cb11-63" data-line-number="63"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.28 seconds.</span></a>
+<a class="sourceLine" id="cb11-62" data-line-number="62"><span class="co">#&gt; Gradient evaluation took 4.3e-05 seconds</span></a>
+<a class="sourceLine" id="cb11-63" data-line-number="63"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.43 seconds.</span></a>
 <a class="sourceLine" id="cb11-64" data-line-number="64"><span class="co">#&gt; Adjust your expectations accordingly!</span></a>
 <a class="sourceLine" id="cb11-65" data-line-number="65"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-66" data-line-number="66"><span class="co">#&gt; </span></a>
@@ -334,15 +337,15 @@
 <a class="sourceLine" id="cb11-77" data-line-number="77"><span class="co">#&gt; Iteration: 4500 / 5000 [ 90%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-78" data-line-number="78"><span class="co">#&gt; Iteration: 5000 / 5000 [100%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-79" data-line-number="79"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-80" data-line-number="80"><span class="co">#&gt;  Elapsed Time: 1.67144 seconds (Warm-up)</span></a>
-<a class="sourceLine" id="cb11-81" data-line-number="81"><span class="co">#&gt;                1.01759 seconds (Sampling)</span></a>
-<a class="sourceLine" id="cb11-82" data-line-number="82"><span class="co">#&gt;                2.68904 seconds (Total)</span></a>
+<a class="sourceLine" id="cb11-80" data-line-number="80"><span class="co">#&gt;  Elapsed Time: 2.70859 seconds (Warm-up)</span></a>
+<a class="sourceLine" id="cb11-81" data-line-number="81"><span class="co">#&gt;                1.65559 seconds (Sampling)</span></a>
+<a class="sourceLine" id="cb11-82" data-line-number="82"><span class="co">#&gt;                4.36418 seconds (Total)</span></a>
 <a class="sourceLine" id="cb11-83" data-line-number="83"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-84" data-line-number="84"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-85" data-line-number="85"><span class="co">#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span></a>
 <a class="sourceLine" id="cb11-86" data-line-number="86"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-87" data-line-number="87"><span class="co">#&gt; Gradient evaluation took 3.8e-05 seconds</span></a>
-<a class="sourceLine" id="cb11-88" data-line-number="88"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.38 seconds.</span></a>
+<a class="sourceLine" id="cb11-87" data-line-number="87"><span class="co">#&gt; Gradient evaluation took 4.7e-05 seconds</span></a>
+<a class="sourceLine" id="cb11-88" data-line-number="88"><span class="co">#&gt; 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.</span></a>
 <a class="sourceLine" id="cb11-89" data-line-number="89"><span class="co">#&gt; Adjust your expectations accordingly!</span></a>
 <a class="sourceLine" id="cb11-90" data-line-number="90"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-91" data-line-number="91"><span class="co">#&gt; </span></a>
@@ -359,9 +362,9 @@
 <a class="sourceLine" id="cb11-102" data-line-number="102"><span class="co">#&gt; Iteration: 4500 / 5000 [ 90%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-103" data-line-number="103"><span class="co">#&gt; Iteration: 5000 / 5000 [100%]  (Sampling)</span></a>
 <a class="sourceLine" id="cb11-104" data-line-number="104"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb11-105" data-line-number="105"><span class="co">#&gt;  Elapsed Time: 1.6287 seconds (Warm-up)</span></a>
-<a class="sourceLine" id="cb11-106" data-line-number="106"><span class="co">#&gt;                1.17824 seconds (Sampling)</span></a>
-<a class="sourceLine" id="cb11-107" data-line-number="107"><span class="co">#&gt;                2.80694 seconds (Total)</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-105" data-line-number="105"><span class="co">#&gt;  Elapsed Time: 2.67687 seconds (Warm-up)</span></a>
+<a class="sourceLine" id="cb11-106" data-line-number="106"><span class="co">#&gt;                1.89431 seconds (Sampling)</span></a>
+<a class="sourceLine" id="cb11-107" data-line-number="107"><span class="co">#&gt;                4.57118 seconds (Total)</span></a></code></pre></div>
 <p>A simple plot of the posterior distributions of the <em>J</em> indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">tidy</span>(j_mod, <span class="dt">seed =</span> <span class="dv">234</span>))</a></code></pre></div>
 <p><img src="Subsampling_files/figure-html/post-plot-1.png" width="768"></p>
