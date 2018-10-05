@@ -1,4 +1,4 @@
-# `recipes` 0.1.3.9000
+# `recipes` 0.1.3.9001
 
 ## New Operations:
 
@@ -13,6 +13,7 @@
  * `step_dummy` now produces a warning (instead of failing) when non-factor columns are selected. Only factor columns are used; no conversion is done for character data. [issue #186](https://github.com/tidymodels/recipes/issues/186)
  * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
  * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
+ * All steps gain an `id` field that will be used in the future to reference other steps. 
 
 
 # `recipes` 0.1.3
