@@ -93,7 +93,8 @@ step_interact <-
            trained = FALSE,
            objects = NULL,
            sep = "_x_",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("interact")) {
     add_step(
       recipe,
       step_interact_new(
@@ -102,19 +103,15 @@ step_interact <-
         role = role,
         objects = objects,
         sep = sep,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 step_interact_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           sep = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, objects, sep, skip, id) {
     step(
       subclass = "interact",
       terms = terms,
@@ -122,7 +119,8 @@ step_interact_new <-
       trained = trained,
       objects = objects,
       sep = sep,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -182,7 +180,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = int_terms,
     sep = x$sep,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -285,7 +284,9 @@ int_name <- function(x)
 #' @param x A `step_interact` object
 #' @export
 tidy.step_interact <- function(x, ...) {
-  tibble(terms = vapply(x$objects, int_name, character(1)))
+  res <- tibble(terms = vapply(x$objects, int_name, character(1)))
+  res$id <- x$id
+  res
 }
 
 map_call <- function(x, f, ...) as.call(lapply(x, f, ...))

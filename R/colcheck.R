@@ -6,6 +6,7 @@
 #'
 #' @inheritParams check_missing
 #' @export
+#' @param id A character string that is unique to this step to identify it.
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed
 #'  to the data.
@@ -26,7 +27,8 @@ check_cols <-
            ...,
            role = NA,
            trained = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("cols")) {
     add_check(
       recipe,
       check_cols_new(
@@ -34,33 +36,34 @@ check_cols <-
         role    = role,
         trained = trained,
         columns = NULL,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 check_cols_new <-
-  function(terms = NULL,
-           role  = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     check(subclass = "cols",
           prefix   = "check_",
           terms    = terms,
           role     = role,
           trained  = trained,
           columns  = columns,
-          skip = skip)
+          skip     = skip,
+          id       = id)
   }
 
 prep.check_cols <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  check_cols_new(terms = x$terms,
-                 role  = x$role,
-                 trained = TRUE,
-                 columns = col_names,
-                 skip = x$skip)
+  check_cols_new(
+    terms = x$terms,
+    role  = x$role,
+    trained = TRUE,
+    columns = col_names,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 bake.check_cols <- function(object, newdata, ...) {
@@ -91,6 +94,7 @@ tidy.check_cols <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }
 

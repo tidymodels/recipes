@@ -49,7 +49,8 @@ step_inverse <-
            offset = 0,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("inverse")) {
     add_step(recipe,
              step_inverse_new(
                terms = ellipse_check(...),
@@ -57,17 +58,13 @@ step_inverse <-
                offset = offset,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_inverse_new <-
-  function(terms = NULL,
-           role = NA,
-           offset = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, offset, trained, columns, skip, id) {
     step(
       subclass = "inverse",
       terms = terms,
@@ -75,7 +72,8 @@ step_inverse_new <-
       offset = offset,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -90,7 +88,8 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
     offset = x$offset,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -116,5 +115,7 @@ print.step_inverse <-
 #' @param x A `step_inverse` object.
 #' @export
 tidy.step_inverse <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

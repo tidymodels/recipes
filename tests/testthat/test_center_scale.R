@@ -1,7 +1,8 @@
 library(testthat)
-context("Testing center and scale")
 library(rlang)
 library(recipes)
+
+context("Testing center and scale")
 
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))
 sds <- vapply(biomass[, 3:7], sd, c(sd = 0))
@@ -14,24 +15,29 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct means and std devs', {
   standardized <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
   cent_tibble_un <-
     tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = rep(na_dbl, 5))
+           value = rep(na_dbl, 5),
+           id = standardized$steps[[1]]$id)
+  scal_tibble_un <- cent_tibble_un
+  scal_tibble_un$id <- standardized$steps[[2]]$id
 
   expect_equal(tidy(standardized, 1), cent_tibble_un)
-  expect_equal(as.data.frame(tidy(standardized, 2)), as.data.frame(cent_tibble_un))
+  expect_equal(as.data.frame(tidy(standardized, 2)), as.data.frame(scal_tibble_un))
 
   standardized_trained <- prep(standardized, training = biomass)
 
   cent_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = means)
+           value = means,
+           id = standardized$steps[[1]]$id)
   scal_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = sds)
+           value = sds,
+           id = standardized$steps[[2]]$id)
 
   expect_equal(tidy(standardized_trained, 1), cent_tibble_tr)
   expect_equal(
@@ -45,17 +51,17 @@ test_that('correct means and std devs', {
 
 test_that('training in stages', {
   at_once <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
   at_once_trained <- prep(at_once, training = biomass, retain = TRUE)
 
   ## not train in stages
   center_first <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center")
   center_first_trained <- prep(center_first, training = biomass, retain = TRUE)
   in_stages <- center_first_trained %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
   in_stages_trained <- prep(in_stages, retain = TRUE)
   in_stages_retrained <- 
     prep(in_stages, training = biomass, fresh = TRUE, retain = TRUE)

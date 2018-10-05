@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Near zero variance filter")
+
+
 n <- 50
 set.seed(424)
 dat <- data.frame(x1 = rnorm(n),
@@ -23,10 +26,11 @@ vars <- names(pct_uni)
 test_that('nzv filtering', {
   rec <- recipe(y ~ ., data = dat)
   filtering <- rec %>%
-    step_nzv(x1, x2, x3, x4)
+    step_nzv(x1, x2, x3, x4, id = "")
 
   exp_tidy_un <- tibble(terms = "")
   exp_tidy_un$terms[1] <- NA
+  exp_tidy_un$id <- ""
   expect_equal(exp_tidy_un, tidy(filtering, number = 1))
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -35,7 +39,7 @@ test_that('nzv filtering', {
     pct_uni <= filtering_trained$steps[[1]]$options$unique_cut &
       f_ratio >= filtering_trained$steps[[1]]$options$freq_cut]
 
-  exp_tidy_tr <- tibble(terms = removed)
+  exp_tidy_tr <- tibble(terms = removed, id = "")
   expect_equal(exp_tidy_tr, tidy(filtering_trained, number = 1))
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)

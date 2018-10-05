@@ -121,7 +121,7 @@ linear combinations between them.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_lincomb</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max_steps</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"lincomp"</span>))
 
 <span class='co'># S3 method for step_lincomb</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -169,6 +169,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -229,14 +233,14 @@ applied multiple times (as defined by <code>max_steps</code>).</p>
 #&gt; Operations:
 #&gt; 
 #&gt; Linear combination filter removed new_1, new_2 [trained]</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>lincomb_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 &lt;NA&gt; </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>lincomb_filter_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 new_1
-#&gt; 2 new_2</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>lincomb_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms id           
+#&gt;   &lt;chr&gt; &lt;chr&gt;        
+#&gt; 1 &lt;NA&gt;  lincomp_FteZ7</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>lincomb_filter_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms id           
+#&gt;   &lt;chr&gt; &lt;chr&gt;        
+#&gt; 1 new_1 lincomp_FteZ7
+#&gt; 2 new_2 lincomp_FteZ7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

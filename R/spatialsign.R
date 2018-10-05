@@ -68,7 +68,8 @@ step_spatialsign <-
            na.rm = TRUE,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("spatialsign")) {
     add_step(recipe,
              step_spatialsign_new(
                terms = ellipse_check(...),
@@ -76,17 +77,13 @@ step_spatialsign <-
                na.rm = na.rm,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_spatialsign_new <-
-  function(terms = NULL,
-           role = "predictor",
-           na.rm = TRUE,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, na.rm, trained, columns, skip, id) {
     step(
       subclass = "spatialsign",
       terms = terms,
@@ -94,7 +91,8 @@ step_spatialsign_new <-
       na.rm = na.rm,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -109,7 +107,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
     na.rm = x$na.rm,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -134,5 +133,7 @@ print.step_spatialsign <-
 #' @param x A `step_spatialsign` object.
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

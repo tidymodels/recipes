@@ -6,7 +6,8 @@
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
 step_ordinalscore(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, convert = as.numeric, skip = FALSE)
+  columns = NULL, convert = as.numeric, skip = FALSE,
+  id = rand_id("ordinalscore"))
 
 \method{tidy}{step_ordinalscore}(x, ...)
 }
@@ -38,6 +39,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_ordinalscore} object.}
 }

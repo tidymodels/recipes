@@ -7,7 +7,7 @@
 \usage{
 step_profile(recipe, ..., profile = NULL, pct = 0.5, index = 1,
   grid = list(pctl = TRUE, len = 100), columns = NULL, role = NA,
-  trained = FALSE, skip = FALSE)
+  trained = FALSE, skip = FALSE, id = rand_id("profile"))
 
 \method{tidy}{step_profile}(x, ...)
 }
@@ -65,6 +65,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_profile} object.}
 }

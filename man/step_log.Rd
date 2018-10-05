@@ -6,7 +6,8 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  offset = 0, columns = NULL, skip = FALSE, signed = FALSE)
+  offset = 0, columns = NULL, skip = FALSE, signed = FALSE,
+  id = rand_id("log"))
 
 \method{tidy}{step_log}(x, ...)
 }
@@ -43,6 +44,8 @@ the computations for subsequent operations}
 \item{signed}{A logical indicating wether to take the signed log.
 This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_log} object.}
 }

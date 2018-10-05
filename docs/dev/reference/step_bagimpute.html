@@ -123,7 +123,7 @@ missing data.</p>
     <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>nbagg</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
   <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'>sample.int</span>(<span class='fl'>10</span>^<span class='fl'>4</span>,
-  <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>))
 
 <span class='fu'>imp_vars</span>(<span class='no'>...</span>)
 
@@ -194,6 +194,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -272,25 +276,25 @@ Predictive Modeling</em>. Springer Verlag.</p>
 #&gt; 3 bad           24 priv     60    46 married no      fixed       60   165 
 #&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
 #&gt; #   Price &lt;int&gt;</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1 Status  NA   
-#&gt; 2 Home    NA   
-#&gt; 3 Marital NA   
-#&gt; 4 Job     NA   
-#&gt; 5 Income  NA   
-#&gt; 6 Assets  NA   
-#&gt; 7 Debt    NA   </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model          
-#&gt;   &lt;chr&gt;   &lt;list&gt;         
-#&gt; 1 Status  &lt;S3: classbagg&gt;
-#&gt; 2 Home    &lt;S3: classbagg&gt;
-#&gt; 3 Marital &lt;S3: classbagg&gt;
-#&gt; 4 Job     &lt;S3: classbagg&gt;
-#&gt; 5 Income  &lt;S3: regbagg&gt;  
-#&gt; 6 Assets  &lt;S3: regbagg&gt;  
-#&gt; 7 Debt    &lt;S3: regbagg&gt;  </div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model id             
+#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
+#&gt; 1 Status  NA    bagimpute_NKNDt
+#&gt; 2 Home    NA    bagimpute_NKNDt
+#&gt; 3 Marital NA    bagimpute_NKNDt
+#&gt; 4 Job     NA    bagimpute_NKNDt
+#&gt; 5 Income  NA    bagimpute_NKNDt
+#&gt; 6 Assets  NA    bagimpute_NKNDt
+#&gt; 7 Debt    NA    bagimpute_NKNDt</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model           id             
+#&gt;   &lt;chr&gt;   &lt;list&gt;          &lt;chr&gt;          
+#&gt; 1 Status  &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 2 Home    &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 3 Marital &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 4 Job     &lt;S3: classbagg&gt; bagimpute_NKNDt
+#&gt; 5 Income  &lt;S3: regbagg&gt;   bagimpute_NKNDt
+#&gt; 6 Assets  &lt;S3: regbagg&gt;   bagimpute_NKNDt
+#&gt; 7 Debt    &lt;S3: regbagg&gt;   bagimpute_NKNDt</div><div class='input'>
 <span class='co'>## Specifying which variables to imputate with</span>
 
  <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
@@ -316,25 +320,25 @@ Predictive Modeling</em>. Springer Verlag.</p>
 #&gt; 3 bad           24 priv     60    46 married no      fixed       60   165 
 #&gt; # ... with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;,
 #&gt; #   Price &lt;int&gt;</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;
-#&gt; 1 Status  NA   
-#&gt; 2 Home    NA   
-#&gt; 3 Marital NA   
-#&gt; 4 Job     NA   
-#&gt; 5 Income  NA   
-#&gt; 6 Assets  NA   
-#&gt; 7 Debt    NA   </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 2
-#&gt;   terms   model          
-#&gt;   &lt;chr&gt;   &lt;list&gt;         
-#&gt; 1 Status  &lt;S3: classbagg&gt;
-#&gt; 2 Home    &lt;S3: classbagg&gt;
-#&gt; 3 Marital &lt;S3: classbagg&gt;
-#&gt; 4 Job     &lt;S3: classbagg&gt;
-#&gt; 5 Income  &lt;S3: regbagg&gt;  
-#&gt; 6 Assets  &lt;S3: regbagg&gt;  
-#&gt; 7 Debt    &lt;S3: regbagg&gt;  </div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model id             
+#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
+#&gt; 1 Status  NA    bagimpute_eCtKx
+#&gt; 2 Home    NA    bagimpute_eCtKx
+#&gt; 3 Marital NA    bagimpute_eCtKx
+#&gt; 4 Job     NA    bagimpute_eCtKx
+#&gt; 5 Income  NA    bagimpute_eCtKx
+#&gt; 6 Assets  NA    bagimpute_eCtKx
+#&gt; 7 Debt    NA    bagimpute_eCtKx</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   terms   model           id             
+#&gt;   &lt;chr&gt;   &lt;list&gt;          &lt;chr&gt;          
+#&gt; 1 Status  &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 2 Home    &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 3 Marital &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 4 Job     &lt;S3: classbagg&gt; bagimpute_eCtKx
+#&gt; 5 Income  &lt;S3: regbagg&gt;   bagimpute_eCtKx
+#&gt; 6 Assets  &lt;S3: regbagg&gt;   bagimpute_eCtKx
+#&gt; 7 Debt    &lt;S3: regbagg&gt;   bagimpute_eCtKx</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

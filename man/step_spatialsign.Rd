@@ -6,7 +6,8 @@
 \title{Spatial Sign Preprocessing}
 \usage{
 step_spatialsign(recipe, ..., role = "predictor", na.rm = TRUE,
-  trained = FALSE, columns = NULL, skip = FALSE)
+  trained = FALSE, columns = NULL, skip = FALSE,
+  id = rand_id("spatialsign"))
 
 \method{tidy}{step_spatialsign}(x, ...)
 }
@@ -37,6 +38,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_spatialsign} object.}
 }

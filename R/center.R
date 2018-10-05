@@ -23,6 +23,7 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations
+#' @param id A character string that is unique to this step to identify it.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -67,7 +68,8 @@ step_center <-
            trained = FALSE,
            means = NULL,
            na.rm = TRUE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("center")) {
     add_step(
       recipe,
       step_center_new(
@@ -76,19 +78,15 @@ step_center <-
         role = role,
         means = means,
         na.rm = na.rm,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 step_center_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           na.rm = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, means, na.rm, skip, id) {
     step(
       subclass = "center",
       terms = terms,
@@ -96,7 +94,8 @@ step_center_new <-
       trained = trained,
       means = means,
       na.rm = na.rm,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -112,7 +111,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     means = means,
     na.rm = x$na.rm,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -145,5 +145,6 @@ tidy.step_center <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = na_dbl)
   }
+  res$id <- x$id
   res
 }

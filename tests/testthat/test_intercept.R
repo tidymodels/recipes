@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Intercept creation")
+
+
 context("step_intercept")
 
 ex_dat <- data.frame(cat = rep(c("A", "B"), each = 5), numer = 1:10)

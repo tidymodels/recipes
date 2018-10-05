@@ -99,7 +99,8 @@ step_ica <-
            options = list(),
            res = NULL,
            prefix = "IC",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("ica")) {
 
     recipes_pkg_check(c("dimRed", "fastICA"))
 
@@ -113,21 +114,14 @@ step_ica <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ica_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "IC",
-           skip = FALSE) {
-
+  function(terms, role, trained, num, options, res, prefix, skip, id) {
     step(
       subclass = "ica",
       terms = terms,
@@ -137,7 +131,8 @@ step_ica_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -163,7 +158,8 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = indc,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -219,6 +215,7 @@ tidy.step_ica <- function(x, ...) {
     res$component <- as.character(res$component)
     res <- as_tibble(res)
   }
+  res$id <- x$id
   res
 }
 

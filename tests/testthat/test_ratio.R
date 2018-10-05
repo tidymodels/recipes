@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Ratio creation")
+
+
 n <- 20
 ex_dat <- data.frame(
   x1 = -1:8,
@@ -15,10 +18,10 @@ rec <- recipe( ~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
 
 test_that('1:many', {
   rec1 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_numeric()))
+    step_ratio(x1, denom = denom_vars(all_numeric()), id = "")
 
   exp_un_1 <- tibble(
-    terms = "x1", denom = "all_numeric()"
+    terms = "x1", denom = "all_numeric()", id = ""
   )
   expect_equal(tidy(rec1, number = 1), exp_un_1)
 
@@ -34,7 +37,8 @@ test_that('1:many', {
 
   exp_tr_1 <- tibble(
     terms = rep("x1", 3),
-    denom = c("x2", "x3", "x4")
+    denom = c("x2", "x3", "x4"),
+    id = ""
   )
   expect_equal(tidy(rec1, number = 1), exp_tr_1)
 })
@@ -42,10 +46,10 @@ test_that('1:many', {
 
 test_that('many:1', {
   rec2 <- rec %>%
-    step_ratio(all_numeric(), denom = denom_vars(x1))
+    step_ratio(all_numeric(), denom = denom_vars(x1), id = "")
 
   exp_un_2 <- tibble(
-    terms = "all_numeric()", denom = "x1"
+    terms = "all_numeric()", denom = "x1", id = ""
   )
   expect_equal(tidy(rec2, number = 1), exp_un_2)
 
@@ -62,7 +66,8 @@ test_that('many:1', {
 
   exp_tr_2 <- tibble(
     terms = c("x2", "x3", "x4"),
-    denom = rep("x1", 3)
+    denom = rep("x1", 3),
+    id = ""
   )
   expect_equal(tidy(rec2, number = 1), exp_tr_2)
 })
@@ -70,10 +75,10 @@ test_that('many:1', {
 
 test_that('many:many', {
   rec3 <- rec %>%
-    step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
+    step_ratio(all_numeric(), denom = denom_vars(all_numeric()), id = "")
 
   exp_un_3 <- tibble(
-    terms = "all_numeric()", denom = "all_numeric()"
+    terms = "all_numeric()", denom = "all_numeric()", id = ""
   )
   expect_equal(tidy(rec3, number = 1), exp_un_3)
 
@@ -105,6 +110,7 @@ test_that('many:many', {
     stringsAsFactors = FALSE
   )
   exp_tr_3 <- exp_tr_3[exp_tr_3$terms != exp_tr_3$denom,]
+  exp_tr_3$id <- ""
   exp_tr_3 <- as_tibble(exp_tr_3)
 
   expect_equal(tidy(rec3, number = 1), exp_tr_3)

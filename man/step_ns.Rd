@@ -6,7 +6,8 @@
 \title{Nature Spline Basis Functions}
 \usage{
 step_ns(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = 2), skip = FALSE)
+  objects = NULL, options = list(df = 2), skip = FALSE,
+  id = rand_id("ns"))
 
 \method{tidy}{step_ns}(x, ...)
 }
@@ -39,6 +40,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_ns} object.}
 }

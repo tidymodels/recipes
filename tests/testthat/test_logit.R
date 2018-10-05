@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Logit transformation")
+
+
 n <- 20
 set.seed(12)
 ex_dat <- data.frame(x1 = runif(n),

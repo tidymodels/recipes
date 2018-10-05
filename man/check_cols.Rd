@@ -5,7 +5,8 @@
 \alias{tidy.check_cols}
 \title{Check if all Columns are Present}
 \usage{
-check_cols(recipe, ..., role = NA, trained = FALSE, skip = FALSE)
+check_cols(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
+  id = rand_id("cols"))
 
 \method{tidy}{check_cols}(x, ...)
 }
@@ -30,6 +31,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{check_cols} object.}
 }

@@ -122,7 +122,7 @@ absolute correlations with other variables.</p>
 
     <pre class="usage"><span class='fu'>step_corr</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>))
 
 <span class='co'># S3 method for step_corr</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -185,6 +185,10 @@ Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_corr</code> object.</p></td>
     </tr>
@@ -240,14 +244,14 @@ largest absolute correlation between the variables less than
 #&gt; sulfur        0.26     0.16   1.00 0.08      0.13
 #&gt; HHV           0.10     0.11   0.08 1.00      0.94
 #&gt; duplicate     0.20     0.13   0.13 0.94      1.00</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 &lt;NA&gt; </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>filter_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms 
-#&gt;   &lt;chr&gt; 
-#&gt; 1 oxygen
-#&gt; 2 carbon</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms id        
+#&gt;   &lt;chr&gt; &lt;chr&gt;     
+#&gt; 1 &lt;NA&gt;  corr_dBf6A</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>filter_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms  id        
+#&gt;   &lt;chr&gt;  &lt;chr&gt;     
+#&gt; 1 oxygen corr_dBf6A
+#&gt; 2 carbon corr_dBf6A</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

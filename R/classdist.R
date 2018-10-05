@@ -73,7 +73,8 @@ step_classdist <- function(recipe,
                            pool = FALSE,
                            log = TRUE,
                            objects = NULL,
-                           skip = FALSE) {
+                           skip = FALSE,
+                           id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1)
     stop("`class` should be a single character value.")
   add_step(
@@ -88,22 +89,15 @@ step_classdist <- function(recipe,
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_classdist_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           mean_func = NULL,
-           cov_func = NULL,
-           pool = NULL,
-           log = NULL,
-           objects = NULL,
-           skip = FALSE) {
+  function(terms, class, role, trained, mean_func, 
+           cov_func, pool, log, objects, skip, id) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -115,7 +109,8 @@ step_classdist_new <-
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -134,7 +129,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
   check_type(training[, x_names])
-
+  
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
   if (x$pool) {
@@ -142,7 +137,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
       center = lapply(x_dat, get_center, mfun = x$mean_func),
       scale = x$cov_func(training[, x_names])
     )
-
+    
   } else {
     res <-
       lapply(x_dat,
@@ -160,7 +155,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     pool = x$pool,
     log = x$log,
     objects = res,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -236,5 +232,6 @@ tidy.step_classdist <- function(x, ...) {
                   value = na_dbl,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }

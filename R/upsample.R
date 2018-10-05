@@ -84,7 +84,8 @@
 step_upsample <-
   function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
-           seed = sample.int(10^5, 1)) {
+           seed = sample.int(10^5, 1),
+           id = rand_id("upsample")) {
 
     add_step(recipe,
              step_upsample_new(
@@ -95,15 +96,13 @@ step_upsample <-
                column = column,
                target = target,
                skip = skip,
-               seed = seed
+               seed = seed,
+               id = id
              ))
   }
 
 step_upsample_new <-
-  function(terms = NULL, ratio = NA, role = NA, trained = FALSE,
-           column = NULL, target = NA, skip = FALSE,
-           seed = sample.int(10^5, 1)) {
-    
+  function(terms, ratio, role, trained, column, target, skip, seed, id) {
     step(
       subclass = "upsample",
       terms = terms,
@@ -113,6 +112,7 @@ step_upsample_new <-
       column = column,
       target = target,
       skip = skip,
+      id = id,
       seed = seed
     )
   }
@@ -138,6 +138,7 @@ prep.step_upsample <- function(x, training, info = NULL, ...) {
     column = col_name,
     target = floor(majority * x$ratio),
     skip = x$skip,
+    id = x$id,
     seed = x$seed
   )
 }
@@ -197,5 +198,6 @@ tidy.step_upsample <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = unname(term_names))
   }
+  res$id <- x$id
   res
 }

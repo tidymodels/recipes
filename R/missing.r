@@ -15,6 +15,7 @@
 #' have been resolved by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the terms argument.
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the check be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
@@ -66,7 +67,8 @@ check_missing <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("missing")) {
     add_check(
       recipe,
       check_missing_new(
@@ -74,24 +76,22 @@ check_missing <-
         role    = role,
         trained = trained,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 check_missing_new <-
-  function(terms = NULL,
-           role  = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     check(subclass = "missing",
           prefix   = "check_",
           terms    = terms,
           role     = role,
           trained  = trained,
           columns  = columns,
-          skip = skip)
+          skip     = skip,
+          id       = id)
   }
 
 prep.check_missing <- function(x, training, info = NULL, ...) {
@@ -100,7 +100,8 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
                     role  = x$role,
                     trained = TRUE,
                     columns = col_names,
-                    skip = x$skip)
+                    skip = x$skip,
+                    id = x$id)
 }
 
 bake.check_missing <- function(object, newdata, ...) {
@@ -132,5 +133,6 @@ tidy.check_missing <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

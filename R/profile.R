@@ -111,7 +111,8 @@ step_profile <- function(recipe,
                          columns = NULL,
                          role = NA,
                          trained = FALSE,
-                         skip = FALSE) {
+                         skip = FALSE,
+                         id = rand_id("profile")) {
 
   if (pct < 0 | pct > 1)
     stop("`pct should be on [0, 1]`", call. = FALSE)
@@ -136,33 +137,28 @@ step_profile <- function(recipe,
              columns = columns,
              role = role,
              trained = trained,
-             skip = skip
+             skip = skip,
+             id = id
            )
   )
 }
 
-step_profile_new <- function(terms = NULL,
-                             profile = NULL,
-                             pct = NULL,
-                             index = NULL,
-                             grid = NULL,
-                             columns = NULL,
-                             role = NA,
-                             trained = FALSE,
-                             skip = FALSE) {
-  step(
-    subclass = "profile",
-    terms = terms,
-    profile = profile,
-    pct = pct,
-    index = index,
-    grid = grid,
-    columns = columns,
-    role = role,
-    trained = trained,
-    skip = skip
-  )
-}
+step_profile_new <- 
+  function(terms, profile, pct, index, grid, columns, role, trained, skip, id) {
+    step(
+      subclass = "profile",
+      terms = terms,
+      profile = profile,
+      pct = pct,
+      index = index,
+      grid = grid,
+      columns = columns,
+      role = role,
+      trained = trained,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_profile <- function(x, training, info = NULL, ...) {
@@ -195,7 +191,8 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     grid = x$grid,
     columns = fixed_vals,
     trained = TRUE,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -241,6 +238,7 @@ tidy.step_profile <- function(x, ...) {
   prof_res <- tibble(terms = prof_names,
                      type = rep("profiled", length = length(prof_names)))
   res <- bind_rows(fixed_res, prof_res)
+  res$id <- x$id
   res
 }
 

@@ -65,6 +65,7 @@
 #'   https://github.com/gdkrmr
 #'
 #' @examples
+#' \donttest{
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -91,6 +92,7 @@
 #'
 #' tidy(im_trans, number = 4)
 #' tidy(im_estimates, number = 4)
+#' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -104,7 +106,8 @@ step_isomap <-
            options = list(knn = 50, .mute = c("message", "output")),
            res = NULL,
            prefix = "Isomap",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("isomap")) {
 
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
 
@@ -118,20 +121,14 @@ step_isomap <-
         options = options,
         res = res,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_isomap_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "isomap",
-           skip = FALSE) {
+  function(terms, role, trained, num, options, res, prefix, skip, id) {
     step(
       subclass = "isomap",
       terms = terms,
@@ -141,7 +138,8 @@ step_isomap_new <-
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -170,7 +168,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = imap,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -210,5 +209,6 @@ tidy.step_isomap <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
   }
+  res$id <- x$id
   res
 }

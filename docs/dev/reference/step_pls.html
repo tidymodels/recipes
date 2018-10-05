@@ -121,7 +121,7 @@ convert numeric data into one or more new dimensions.</p>
 
     <pre class="usage"><span class='fu'>step_pls</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PLS"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>))
 
 <span class='co'># S3 method for step_pls</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -193,6 +193,10 @@ Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
       <td><p>A <code>step_pls</code> object</p></td>
     </tr>
@@ -248,17 +252,17 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 
 <span class='no'>pls_test_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>[, -<span class='fl'>8</span>])
 
-<span class='fu'>tidy</span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt;       terms      value component
-#&gt; 1    carbon  0.8281346      PLS1
-#&gt; 2  hydrogen -0.2069634      PLS1
-#&gt; 3    oxygen -0.4924124      PLS1
-#&gt; 4  nitrogen -0.1226340      PLS1
-#&gt; 5    sulfur  0.1176868      PLS1
-#&gt; 6    carbon  0.7184695      PLS2
-#&gt; 7  hydrogen  0.6429989      PLS2
-#&gt; 8    oxygen  0.2991768      PLS2
-#&gt; 9  nitrogen -0.1727191      PLS2
-#&gt; 10   sulfur -0.2173418      PLS2</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt;       terms      value component        id
+#&gt; 1    carbon  0.8281346      PLS1 pls_ef5Dr
+#&gt; 2  hydrogen -0.2069634      PLS1 pls_ef5Dr
+#&gt; 3    oxygen -0.4924124      PLS1 pls_ef5Dr
+#&gt; 4  nitrogen -0.1226340      PLS1 pls_ef5Dr
+#&gt; 5    sulfur  0.1176868      PLS1 pls_ef5Dr
+#&gt; 6    carbon  0.7184695      PLS2 pls_ef5Dr
+#&gt; 7  hydrogen  0.6429989      PLS2 pls_ef5Dr
+#&gt; 8    oxygen  0.2991768      PLS2 pls_ef5Dr
+#&gt; 9  nitrogen -0.1727191      PLS2 pls_ef5Dr
+#&gt; 10   sulfur -0.2173418      PLS2 pls_ef5Dr</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

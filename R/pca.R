@@ -107,7 +107,8 @@ step_pca <- function(recipe,
                      options = list(),
                      res = NULL,
                      prefix = "PC",
-                     skip = FALSE) {
+                     skip = FALSE,
+                     id = rand_id("pca")) {
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
   add_step(
@@ -121,33 +122,28 @@ step_pca <- function(recipe,
       options = options,
       res = res,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
-step_pca_new <- function(terms = NULL,
-                         role = "predictor",
-                         trained = FALSE,
-                         num  = NULL,
-                         threshold = NULL,
-                         options = NULL,
-                         res = NULL,
-                         prefix = "PC",
-                         skip = FALSE) {
-  step(
-    subclass = "pca",
-    terms = terms,
-    role = role,
-    trained = trained,
-    num = num,
-    threshold = threshold,
-    options = options,
-    res = res,
-    prefix = prefix,
-    skip = skip
-  )
-}
+step_pca_new <- 
+  function(terms, role, trained, num, threshold, options, res, prefix, skip, id) {
+    step(
+      subclass = "pca",
+      terms = terms,
+      role = role,
+      trained = trained,
+      num = num,
+      threshold = threshold,
+      options = options,
+      res = res,
+      prefix = prefix,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats prcomp
 #' @importFrom rlang expr
@@ -189,7 +185,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = prc_obj,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -233,5 +230,6 @@ tidy.step_pca <- function(x, ...) {
                   value = na_dbl,
                   component  = na_chr)
   }
+  res$id <- x$id
   res
 }

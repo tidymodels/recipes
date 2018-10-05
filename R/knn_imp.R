@@ -99,7 +99,8 @@ step_knnimpute <-
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("knnimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
@@ -112,20 +113,14 @@ step_knnimpute <-
         impute_with = impute_with,
         ref_data = ref_data,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_knnimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           K = NULL,
-           impute_with = NULL,
-           ref_data = NULL,
-           columns = NA,
-           skip = FALSE) {
+  function(terms, role, trained, K, impute_with, ref_data, columns, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -135,7 +130,8 @@ step_knnimpute_new <-
       impute_with = impute_with,
       ref_data = ref_data,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -150,10 +146,17 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
 
-  x$columns <- var_lists
-  x$ref_data <- training[, all_x_vars]
-  x$trained <- TRUE
-  x
+  step_knnimpute_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    K = x$K,
+    impute_with = x$impute_with,
+    ref_data = training[, all_x_vars],
+    columns = var_lists,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom gower gower_topn
@@ -234,6 +237,7 @@ tidy.step_knnimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, predictors = na_chr, K = x$K)
   }
+  res$id <- x$id
   res
 }
 

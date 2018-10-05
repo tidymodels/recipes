@@ -81,7 +81,8 @@ step_other <-
            threshold = .05,
            other = "other",
            objects = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("other")) {
     if (threshold <= 0)
       stop("`threshold` should be greater than zero", call. = FALSE)
     if (threshold >= 1)
@@ -95,19 +96,14 @@ step_other <-
         threshold = threshold,
         other = other,
         objects = objects,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_other_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           threshold = NULL,
-           other = NULL,
-           objects = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, threshold, other, objects, skip, id) {
     step(
       subclass = "other",
       terms = terms,
@@ -116,7 +112,8 @@ step_other_new <-
       threshold = threshold,
       other = other,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -135,7 +132,8 @@ prep.step_other <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     other = x$other,
     objects = objects,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -220,5 +218,6 @@ tidy.step_other <- function(x, ...) {
     res <- tibble(terms = term_names,
                   retained = rep(na_chr, length(term_names)))
   }
+  res$id <- x$id
   res
 }

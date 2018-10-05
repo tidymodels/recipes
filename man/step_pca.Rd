@@ -7,7 +7,7 @@
 \usage{
 step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
   threshold = NA, options = list(), res = NULL, prefix = "PC",
-  skip = FALSE)
+  skip = FALSE, id = rand_id("pca"))
 
 \method{tidy}{step_pca}(x, ...)
 }
@@ -57,6 +57,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_pca} object.}
 }

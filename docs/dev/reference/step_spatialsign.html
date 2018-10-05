@@ -121,7 +121,8 @@ unit sphere.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_spatialsign</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"spatialsign"</span>))
 
 <span class='co'># S3 method for step_spatialsign</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -169,6 +170,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -220,15 +225,15 @@ Chemical Information and Modeling</em>, 46(3), 1402-1409.</p>
 
 <span class='fu'>plot</span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>hydrogen</span>)</div><div class='img'><img src='step_spatialsign-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>hydrogen</span>)</div><div class='img'><img src='step_spatialsign-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>ss_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms   
-#&gt;   &lt;chr&gt;   
-#&gt; 1 carbon  
-#&gt; 2 hydrogen</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>ss_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
-#&gt;   terms   
-#&gt;   &lt;chr&gt;   
-#&gt; 1 carbon  
-#&gt; 2 hydrogen</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>ss_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms    id               
+#&gt;   &lt;chr&gt;    &lt;chr&gt;            
+#&gt; 1 carbon   spatialsign_44e8l
+#&gt; 2 hydrogen spatialsign_44e8l</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>ss_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   terms    id               
+#&gt;   &lt;chr&gt;    &lt;chr&gt;            
+#&gt; 1 carbon   spatialsign_44e8l
+#&gt; 2 hydrogen spatialsign_44e8l</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

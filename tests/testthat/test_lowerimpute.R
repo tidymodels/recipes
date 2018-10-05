@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 library(dplyr)
+
+context("Lower limit imputation")
+
 data("biomass")
 
 biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
@@ -16,11 +19,12 @@ biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 test_that('basic usage', {
   rec1 <- rec %>%
-    step_lowerimpute(carbon, hydrogen)
+    step_lowerimpute(carbon, hydrogen, id = "")
  
   untrained <- tibble(
     terms = c("carbon", "hydrogen"),
-    value = rep(NA_real_, 2)
+    value = rep(NA_real_, 2),
+    id = ""
   )
   
   expect_equal(untrained, tidy(rec1, number = 1))
@@ -29,7 +33,8 @@ test_that('basic usage', {
 
   trained <- tibble(
     terms = c("carbon", "hydrogen"),
-    value = c(40, 5)
+    value = c(40, 5),
+    id = ""
   )  
   
   expect_equal(trained, tidy(rec1, number = 1))

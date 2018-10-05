@@ -72,7 +72,9 @@ step_corr <- function(recipe,
                       use = "pairwise.complete.obs",
                       method = "pearson",
                       removals = NULL,
-                      skip = FALSE) {
+                      skip = FALSE,
+                      id = rand_id("corr")
+                      ) {
   add_step(
     recipe,
     step_corr_new(
@@ -83,22 +85,14 @@ step_corr <- function(recipe,
       use = use,
       method = method,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_corr_new <-
-  function(
-    terms = NULL,
-    role = NA,
-    trained = FALSE,
-    threshold = NULL,
-    use = NULL,
-    method = NULL,
-    removals = NULL,
-    skip = FALSE
-  ) {
+  function(terms, role, trained, threshold, use, method, removals, skip, id) {
     step(
       subclass = "corr",
       terms = terms,
@@ -108,7 +102,8 @@ step_corr_new <-
       use = use,
       method = method,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -132,7 +127,8 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
     use = x$use,
     method = x$method,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -200,6 +196,7 @@ tidy_filter <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = na_chr)
   }
+  res$id <- x$id
   res
 }
 

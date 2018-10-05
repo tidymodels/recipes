@@ -86,7 +86,8 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
 
@@ -102,20 +103,14 @@ step_depth <-
         metric = metric,
         options = options,
         data = data,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_depth_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           metric = NULL,
-           options = NULL,
-           data = NULL,
-           skip = FALSE) {
+  function(terms, class, role, trained, metric, options, data, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -125,7 +120,8 @@ step_depth_new <-
       metric = metric,
       options = options,
       data = data,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -147,7 +143,8 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     metric = x$metric,
     options = x$options,
     data = x_dat,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -209,6 +206,7 @@ tidy.step_depth <- function(x, ...) {
     res <- tibble(terms = term_names,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }
 

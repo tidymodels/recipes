@@ -121,7 +121,8 @@ numeric scores.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ordinalscore"</span>))
 
 <span class='co'># S3 method for step_ordinalscore</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -170,6 +171,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -235,10 +240,10 @@ functions can also be used (see the example below).</p>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
 
-<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms        
-#&gt;   &lt;chr&gt;        
-#&gt; 1 fail_severity</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms         id                
+#&gt;   &lt;chr&gt;         &lt;chr&gt;             
+#&gt; 1 fail_severity ordinalscore_TNuGp</div><div class='input'>
 <span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
@@ -247,10 +252,10 @@ functions can also be used (see the example below).</p>
 #&gt; 1             1              1            0
 #&gt; 2             3              0            1
 #&gt; 3             7              0            0</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms        
-#&gt;   &lt;chr&gt;        
-#&gt; 1 fail_severity</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms         id                
+#&gt;   &lt;chr&gt;         &lt;chr&gt;             
+#&gt; 1 fail_severity ordinalscore_TNuGp</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

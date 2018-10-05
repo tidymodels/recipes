@@ -9,7 +9,7 @@
 step_bagimpute(recipe, ..., role = NA, trained = FALSE,
   models = NULL, options = list(nbagg = 25, keepX = FALSE),
   impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4,
-  1), skip = FALSE)
+  1), skip = FALSE, id = rand_id("bagimpute"))
 
 imp_vars(...)
 
@@ -59,6 +59,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_bagimpute} object.}
 }

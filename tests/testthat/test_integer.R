@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Integer conversion")
+
+
 data(okc)
 
 okc$location <- factor(okc$location)

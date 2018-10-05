@@ -122,7 +122,7 @@ levels in a specific factor level equal.</p>
 
     <pre class="usage"><span class='fu'>step_upsample</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>column</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fu'>sample.int</span>(<span class='fl'>10</span>^<span class='fl'>5</span>,
-  <span class='fl'>1</span>))
+  <span class='fl'>1</span>), <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"upsample"</span>))
 
 <span class='co'># S3 method for step_upsample</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -184,6 +184,10 @@ the computations for subsequent operations</p></td>
     <tr>
       <th>seed</th>
       <td><p>An integer that will be used as the seed when upsampling.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>

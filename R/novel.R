@@ -67,7 +67,8 @@ step_novel <-
            trained = FALSE,
            new_level = "new",
            objects = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("novel")) {
     add_step(
       recipe,
       step_novel_new(
@@ -76,18 +77,14 @@ step_novel <-
         trained = trained,
         new_level = new_level,
         objects = objects,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_novel_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           new_level = NULL,
-           objects = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, new_level, objects, skip, id) {
     step(
       subclass = "novel",
       terms = terms,
@@ -95,7 +92,8 @@ step_novel_new <-
       trained = trained,
       new_level = new_level,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -123,7 +121,7 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   if (any(col_check$type != "nominal"))
     stop(
       "Columns must be character or factor: ",
-      paste0(col_check$variables[col_check$type != "nominal"],
+      paste0(col_check$variable[col_check$type != "nominal"],
              collapse = ", "),
       call. = FALSE
     )
@@ -146,7 +144,8 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     new_level = x$new_level,
     objects = objects,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -192,6 +191,7 @@ tidy.step_novel <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = rep(x$new_level, length(term_names)))
   }
+  res$id <- x$id
   res
 }
 

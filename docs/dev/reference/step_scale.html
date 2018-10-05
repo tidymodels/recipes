@@ -121,7 +121,7 @@ deviation of one.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_scale</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>))
 
 <span class='co'># S3 method for step_scale</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -169,6 +169,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -233,15 +237,15 @@ using these standard deviations.</p>
 #&gt;  8   4.04     3.89   33.8     0.95   0.2   16.2
 #&gt;  9   2.81     3.68   31.1     0.14   4.9   11.1
 #&gt; 10   2.67     3.15   23.7     4.63   1.05  10.8
-#&gt; # ... with 70 more rows</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt;   terms    value
-#&gt;   &lt;chr&gt;    &lt;dbl&gt;
-#&gt; 1 carbon      NA
-#&gt; 2 hydrogen    NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt;   terms    value
-#&gt;   &lt;chr&gt;    &lt;dbl&gt;
-#&gt; 1 carbon   10.4 
-#&gt; 2 hydrogen  1.20</div><div class='input'>
+#&gt; # ... with 70 more rows</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   terms    value id         
+#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
+#&gt; 1 carbon      NA scale_jgvs3
+#&gt; 2 hydrogen    NA scale_jgvs3</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   terms    value id         
+#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
+#&gt; 1 carbon   10.4  scale_jgvs3
+#&gt; 2 hydrogen  1.20 scale_jgvs3</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

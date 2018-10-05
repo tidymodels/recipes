@@ -113,7 +113,8 @@ step_dummy <-
            one_hot = FALSE,
            naming = dummy_names,
            levels = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("dummy")) {
     add_step(
       recipe,
       step_dummy_new(
@@ -123,20 +124,14 @@ step_dummy <-
         one_hot = one_hot,
         naming = naming,
         levels = levels,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_dummy_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           one_hot = one_hot,
-           naming = naming,
-           levels = levels,
-           skip = FALSE
-  ) {
+  function(terms, role, trained, one_hot, naming, levels, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,
@@ -145,7 +140,8 @@ step_dummy_new <-
       one_hot = one_hot,
       naming = naming,
       levels = levels,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -203,7 +199,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     one_hot = x$one_hot,
     naming = x$naming,
     levels = levels,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -306,5 +303,6 @@ tidy.step_dummy <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

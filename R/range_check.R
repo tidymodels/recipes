@@ -12,6 +12,7 @@
 #'  currently used.
 #' @param role Not used by this check since no new variables are
 #'  created.
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the check be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
@@ -80,7 +81,8 @@ check_range <-
            slack_prop = 0.05,
            warn       = FALSE,
            lower      = NULL,
-           upper      = NULL) {
+           upper      = NULL,
+           id = rand_id("range_check_")) {
     add_check(
       recipe,
       check_range_new(
@@ -91,21 +93,15 @@ check_range <-
         warn    = warn,
         lower   = lower,
         upper   = upper,
-        slack_prop = slack_prop
+        slack_prop = slack_prop,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 check_range_new <-
-  function(terms   = NULL,
-           role    = NA,
-           skip    = FALSE,
-           trained = FALSE,
-           slack_prop = NULL,
-           warn       = FALSE,
-           lower      = NULL,
-           upper      = NULL) {
+  function(terms, role, skip, trained, slack_prop, warn, lower, upper, id) {
     check(
       subclass = "range",
       terms    = terms,
@@ -115,7 +111,8 @@ check_range_new <-
       warn     = warn,
       lower    = lower,
       upper    = upper,
-      slack_prop = slack_prop
+      slack_prop = slack_prop,
+      id       = id
     )
   }
 
@@ -132,14 +129,15 @@ prep.check_range <- function(x,
   upper_vals <- vapply(training[ ,col_names], max, c(max = 1),
                        na.rm = TRUE)
   check_range_new(
-    terms   = x$terms,
-    role    = x$role,
-    trained = TRUE,
-    skip    = x$skip,
-    warn    = x$warn,
-    lower   = lower_vals,
-    upper   = upper_vals,
-    slack_prop = x$slack_prop
+    terms      = x$terms,
+    role       = x$role,
+    trained    = TRUE,
+    skip       = x$skip,
+    warn       = x$warn,
+    lower      = lower_vals,
+    upper      = upper_vals,
+    slack_prop = x$slack_prop,
+    id         = x$id
   )
 }
 
@@ -216,5 +214,6 @@ tidy.check_range <- function(x, ...) {
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

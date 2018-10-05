@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Rolling features")
+
+
 set.seed(5522)
 sim_dat <- data.frame(x1 = (20:100) / 10)
 n <- nrow(sim_dat)

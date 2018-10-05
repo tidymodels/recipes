@@ -123,7 +123,7 @@ the original data.</p>
 
     <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>one_hot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"dummy"</span>))
 
 <span class='co'># S3 method for step_dummy</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -181,6 +181,10 @@ when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations 
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -273,10 +277,10 @@ and interactions has more information.</p>
 <span class='co'># Without one_hot</span>
 <span class='fu'>length</span>(<span class='fu'>grep</span>(<span class='st'>"^diet"</span>, <span class='fu'>names</span>(<span class='no'>dummy_data</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
 
-<span class='fu'>tidy</span>(<span class='no'>dummies</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms
-#&gt;   &lt;chr&gt;
-#&gt; 1 diet </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>dummies</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms id         
+#&gt;   &lt;chr&gt; &lt;chr&gt;      
+#&gt; 1 diet  dummy_1j7cf</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

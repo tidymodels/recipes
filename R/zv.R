@@ -54,7 +54,8 @@ step_zv <-
            role = NA,
            trained = FALSE,
            removals = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("zv")) {
     add_step(
       recipe,
       step_zv_new(
@@ -62,24 +63,22 @@ step_zv <-
         role = role,
         trained = trained,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_zv_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           removals = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -96,7 +95,8 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     removals = names(filter)[filter],
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 

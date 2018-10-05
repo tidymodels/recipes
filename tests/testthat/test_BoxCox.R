@@ -1,5 +1,8 @@
 library(testthat)
 library(recipes)
+library(rlang)
+
+context("Box-Cox trans")
 
 n <- 20
 set.seed(1)
@@ -42,7 +45,8 @@ test_that('simple Box Cox', {
 
   bc_tibble_un <-
     tibble(terms = c("x1", "x2", "x3", "x4"),
-           value = rep(na_dbl, 4))
+           value = rep(na_dbl, 4),
+           id = rec$steps[[1]]$id)
   expect_equal(bc_tibble_un, tidy(rec, number = 1))
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
