@@ -16,7 +16,7 @@ prepper(split_obj, recipe, ...)
 \description{
 When working with the \pkg{rsample} package, a simple recipe
 must be \emph{prepared} using the \code{prep}
-function first. When using recipies with \pkg{rsample} it
+function first. When using recipes with \pkg{rsample} it
 is helpful to have a function that can prepare a recipe
 across a series of \code{split} objects that are produced
 in this package. \code{prepper} is a wrapper function
