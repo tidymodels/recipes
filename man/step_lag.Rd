@@ -5,7 +5,8 @@
 \title{Create a lagged predictor}
 \usage{
 step_lag(recipe, ..., role = "predictor", trained = FALSE, lag = 1,
-  prefix = "lag_", default = NA, skip = FALSE)
+  prefix = "lag_", default = NA, columns = NULL, skip = FALSE,
+  id = rand_id("lag"))
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -27,12 +28,17 @@ lagged for each value in the vector.}
 \item{default}{Passed to \code{dplyr::lag}, determines what fills empty rows
 left by lagging (defaults to NA).}
 
+\item{columns}{A character string of variable names that will
+be populated (eventually) by the \code{terms} argument.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the

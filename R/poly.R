@@ -62,7 +62,8 @@ step_poly <-
            trained = FALSE,
            objects = NULL,
            options = list(degree = 2),
-           skip = FALSE) {
+        skip = FALSE,
+        id = rand_id("poly")) {
     add_step(
       recipe,
       step_poly_new(
@@ -71,27 +72,25 @@ step_poly <-
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
-step_poly_new <- function(terms = NULL,
-                          role = NA,
-                          trained = FALSE,
-                          objects = NULL,
-                          options = NULL,
-                          skip = FALSE) {
-  step(
-    subclass = "poly",
-    terms = terms,
-    role = role,
-    trained = trained,
-    objects = objects,
-    options = options,
-    skip = skip
-  )
-}
+step_poly_new <- 
+  function(terms, role, trained, objects, options, skip, id) {
+    step(
+      subclass = "poly",
+      terms = terms,
+      role = role,
+      trained = trained,
+      objects = objects,
+      options = options,
+      skip = skip,
+      id = id
+    )
+  }
 
 
 poly_wrapper <- function(x, args) {
@@ -123,7 +122,8 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -164,6 +164,7 @@ print.step_poly <-
 
 #' @rdname step_poly
 #' @param x A `step_poly` object.
+#' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),
@@ -173,5 +174,6 @@ tidy.step_poly <- function(x, ...) {
     res <- tibble(terms = term_names,
                   degree = x$options$degree)
   }
+  res$id <- x$id
   res
 }

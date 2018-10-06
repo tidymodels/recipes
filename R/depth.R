@@ -49,7 +49,7 @@
 #'
 #' This step requires the \pkg{ddalpha} package. If not installed, the
 #'  step will stop with a note about installing the package.
-#'  
+#'
 #' Note that the entire training set is saved to compute future
 #'  depth values. The saved data have been trained (i.e. prepared)
 #'  and baked (i.e. processed) up to the point before the location
@@ -86,12 +86,13 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
-    
+
     recipes_pkg_check("ddalpha")
-    
+
     add_step(
       recipe,
       step_depth_new(
@@ -102,20 +103,14 @@ step_depth <-
         metric = metric,
         options = options,
         data = data,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_depth_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           metric = NULL,
-           options = NULL,
-           data = NULL,
-           skip = FALSE) {
+  function(terms, class, role, trained, metric, options, data, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -125,7 +120,8 @@ step_depth_new <-
       metric = metric,
       options = options,
       data = data,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -147,7 +143,8 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     metric = x$metric,
     options = x$options,
     data = x_dat,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -199,6 +196,7 @@ print.step_depth <-
 
 #' @rdname step_depth
 #' @param x A `step_depth` object.
+#' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$data[[1]]),
@@ -208,6 +206,7 @@ tidy.step_depth <- function(x, ...) {
     res <- tibble(terms = term_names,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }
 

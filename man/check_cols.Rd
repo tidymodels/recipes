@@ -5,7 +5,8 @@
 \alias{tidy.check_cols}
 \title{Check if all Columns are Present}
 \usage{
-check_cols(recipe, ..., role = NA, trained = FALSE, skip = FALSE)
+check_cols(recipe, ..., role = NA, trained = FALSE, skip = FALSE,
+  id = rand_id("cols"))
 
 \method{tidy}{check_cols}(x, ...)
 }
@@ -31,6 +32,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{check_cols} object.}
 }
 \description{
@@ -51,7 +54,7 @@ biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%
    step_rm(sample, dataset) \%>\%
    check_cols(contains("gen")) \%>\%
    step_center(all_predictors())
-   
+
 \dontrun{
 bake(biomass_rec, biomass[, c("carbon", "HHV")])
 }

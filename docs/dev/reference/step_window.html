@@ -122,7 +122,7 @@ functions that compute statistics across moving windows.</p>
 
     <pre class="usage"><span class='fu'>step_window</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"window"</span>))
 
 <span class='co'># S3 method for step_window</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -177,7 +177,7 @@ values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
       <th>columns</th>
       <td><p>A character string that contains the names of
 columns that should be processed. These values are not
-determined until <code>prep.recipe()</code> is called.</p></td>
+determined until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>names</th>
@@ -190,11 +190,15 @@ the names of the new columns created by the step.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -228,7 +232,9 @@ uses <code>median(x[2:6])</code>.</p>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>recipes</span>)
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='fu'>library</span>(<span class='no'>rlang</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
+#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:Biobase’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    exprs</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:recipes’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    is_formula</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -246,9 +252,15 @@ uses <code>median(x[2:6])</code>.</p>
               <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_window</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>),
               <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
-              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
-
+              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `list_len()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_list()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `chr_along()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_character_along()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `lang()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `call2()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `new_overscope()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_data_mask()` instead</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='input'>
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
 <span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/tidyeval'>quos</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
@@ -259,15 +271,15 @@ uses <code>median(x[2:6])</code>.</p>
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_bw</a></span>()</div><div class='img'><img src='step_window-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   terms statistic  size
-#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
-#&gt; 1 y1    median        7
-#&gt; 2 y2    median        7</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   terms statistic  size
-#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
-#&gt; 1 y1    mean          3
-#&gt; 2 y2    mean          3</div><div class='input'>
+<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 4
+#&gt;   terms statistic  size id          
+#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;       
+#&gt; 1 y1    median        7 window_dpLN5
+#&gt; 2 y2    median        7 window_dpLN5</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 4
+#&gt;   terms statistic  size id          
+#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;       
+#&gt; 1 y1    mean          3 window_6Fpc1
+#&gt; 2 y2    mean          3 window_6Fpc1</div><div class='input'>
 <span class='co'># If you want to replace the selected variables with the rolling statistic</span>
 <span class='co'># don't set `names`</span>
 <span class='no'>sim_dat</span>$<span class='no'>original</span> <span class='kw'>&lt;-</span> <span class='no'>sim_dat</span>$<span class='no'>y1</span>

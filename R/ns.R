@@ -56,7 +56,8 @@ step_ns <-
            trained = FALSE,
            objects = NULL,
            options = list(df = 2),
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("ns")) {
     add_step(
       recipe,
       step_ns_new(
@@ -65,18 +66,14 @@ step_ns <-
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ns_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "ns",
       terms = terms,
@@ -84,7 +81,8 @@ step_ns_new <-
       trained = trained,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -117,7 +115,8 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -158,10 +157,12 @@ print.step_ns <-
 
 #' @rdname step_ns
 #' @param x A `step_ns` object.
+#' @export
 tidy.step_ns <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      degree = x$degree,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

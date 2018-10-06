@@ -48,7 +48,7 @@
 #'  smoothed with a 5-point moving median, the first three smoothed
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
-#'  
+#'
 # This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #' @examples
@@ -111,7 +111,8 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("window")) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
@@ -145,7 +146,8 @@ step_window <-
         statistic = statistic,
         columns = columns,
         names = names,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -153,15 +155,7 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           size = NULL,
-           na.rm = NULL,
-           statistic = NULL,
-           columns = NULL,
-           names = names,
-           skip = FALSE) {
+  function(terms, role, trained, size, na.rm, statistic, columns, names, skip, id) {
     step(
       subclass = "window",
       terms = terms,
@@ -172,7 +166,8 @@ step_window_new <-
       statistic = statistic,
       columns = columns,
       names = names,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -199,7 +194,8 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -225,7 +221,7 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
     fill = NA, partial = FALSE,
     normalize = TRUE, na.rm = na.rm
   )
-  
+
   roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
   x2 <- eval(roll_cl)
 
@@ -276,9 +272,11 @@ print.step_window <-
 
 #' @rdname step_window
 #' @param x A `step_window` object.
+#' @export
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$statistic <- x$statistic
   out$size <- x$size
+  out$id <- x$id
   out
 }

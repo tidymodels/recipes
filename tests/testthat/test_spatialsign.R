@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data("biomass")
 
+context("Spatial sign transformation")
+
+
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
 

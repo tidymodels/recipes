@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Pooling to other category")
+
+
 data(okc)
 
 set.seed(19)
@@ -15,11 +18,12 @@ rec <- recipe(~ diet + location, data = okc_tr)
 # all(sort(unique(okc_tr$location)) == sort(unique(okc$location)))
 
 test_that('default inputs', {
-  others <- rec %>% step_other(diet, location, other = "another")
+  others <- rec %>% step_other(diet, location, other = "another", id = "")
 
   tidy_exp_un <- tibble(
     terms = c("diet", "location"),
-    retained = rep(NA_character_, 2)
+    retained = rep(NA_character_, 2),
+    id = ""
   )
   expect_equal(tidy_exp_un, tidy(others, number = 1))
 
@@ -31,7 +35,8 @@ test_that('default inputs', {
     retained = c(
       "anything", "mostly anything", "mostly vegetarian",
       "strictly anything", "berkeley",
-      "oakland", "san francisco")
+      "oakland", "san francisco"),
+    id = ""
   )
   expect_equal(tidy_exp_tr, tidy(others, number = 1))
 

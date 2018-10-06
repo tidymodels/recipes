@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("Down-sampling")
+
+
 iris2 <- iris[-(1:45),]
 iris2$Species[seq(6, 96, by = 5)] <- NA
 iris2$Species2 <- sample(iris2$Species)
@@ -11,10 +14,11 @@ rec <- recipe( ~ ., data = iris2)
 
 test_that('basic usage', {
   rec1 <- rec %>%
-    step_downsample(matches("Species$"))
+    step_downsample(matches("Species$"), id = "")
 
   untrained <- tibble(
-    terms = "matches(\"Species$\")"
+    terms = "matches(\"Species$\")",
+    id = ""
   )
 
   expect_equivalent(untrained, tidy(rec1, number = 1))
@@ -22,7 +26,8 @@ test_that('basic usage', {
   rec1_p <- prep(rec1, training = iris2, retain = TRUE)
 
   trained <- tibble(
-    terms = "Species"
+    terms = "Species",
+    id = ""
   )
 
   expect_equal(trained, tidy(rec1_p, number = 1))

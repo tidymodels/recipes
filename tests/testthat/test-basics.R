@@ -1,8 +1,9 @@
 library(testthat)
-context("Testing basic functionalities")
 library(tibble)
-
 library(recipes)
+
+context("Testing basic functionalities")
+
 data("biomass")
 
 test_that("Recipe correctly identifies output variable", {

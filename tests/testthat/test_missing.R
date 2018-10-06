@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("Missing data checks")
+
+
 set_with_na <- data_frame(
   a = c(1, 2, NA),
   b = c(1, 2, NA_real_),
@@ -48,8 +51,4 @@ test_that("check_missing on a new set", {
   rp    <- recipe(no_na) %>% check_missing(a) %>% prep(no_na)
   expect_error(bake(rp, na),
                "The following columns contain missing values: `a`.")
-})
-
-test_that("tidy mthod for check_missing", {
-  set_with_na
 })

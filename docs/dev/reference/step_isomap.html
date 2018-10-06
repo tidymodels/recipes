@@ -120,9 +120,10 @@ dimensions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>.mute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"message"</span>, <span class='st'>"output"</span>)), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Isomap"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>step_isomap</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>.mute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"message"</span>, <span class='st'>"output"</span>)),
+  <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"Isomap"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"isomap"</span>))
 
 <span class='co'># S3 method for step_isomap</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -170,7 +171,7 @@ used.</p></td>
       <th>res</th>
       <td><p>The <code><a href='http://www.rdocumentation.org/packages/dimRed/topics/Isomap-class'>dimRed::Isomap()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code>prep.recipe()</code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -180,11 +181,15 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -234,8 +239,8 @@ https://github.com/gdkrmr</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
-<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
-<code>bake.recipe()</code></p></div>
+<code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
+<code><a href='bake.html'>bake.recipe()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -255,22 +260,22 @@ https://github.com/gdkrmr</p>
               <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>knn</span> <span class='kw'>=</span> <span class='fl'>100</span>),
               <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:22: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: DONE</span></div><div class='input'>
-<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-09-03 21:10:23: DONE</span></div><div class='input'>
+<span class='no'>im_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>im_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: DONE</span></div><div class='input'>
+<span class='no'>im_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>im_estimates</span>, <span class='no'>biomass_te</span>)</div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-10-04 22:20:22: DONE</span></div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>))
 <span class='fu'>plot</span>(<span class='no'>im_te</span>$<span class='no'>Isomap1</span>, <span class='no'>im_te</span>$<span class='no'>Isomap2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>im_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 1
-#&gt;   terms           
-#&gt;   &lt;chr&gt;           
-#&gt; 1 all_predictors()</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>im_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 1
-#&gt;   terms   
-#&gt;   &lt;chr&gt;   
-#&gt; 1 carbon  
-#&gt; 2 hydrogen
-#&gt; 3 oxygen  
-#&gt; 4 nitrogen
-#&gt; 5 sulfur  </div></pre>
+<span class='fu'>tidy</span>(<span class='no'>im_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   terms            id          
+#&gt;   &lt;chr&gt;            &lt;chr&gt;       
+#&gt; 1 all_predictors() isomap_cSTG2</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>im_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 2
+#&gt;   terms    id          
+#&gt;   &lt;chr&gt;    &lt;chr&gt;       
+#&gt; 1 carbon   isomap_cSTG2
+#&gt; 2 hydrogen isomap_cSTG2
+#&gt; 3 oxygen   isomap_cSTG2
+#&gt; 4 nitrogen isomap_cSTG2
+#&gt; 5 sulfur   isomap_cSTG2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

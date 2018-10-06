@@ -7,7 +7,7 @@
 \usage{
 step_downsample(recipe, ..., ratio = 1, role = NA, trained = FALSE,
   column = NULL, target = NA, skip = TRUE, seed = sample.int(10^5,
-  1))
+  1), id = rand_id("downsample"))
 
 \method{tidy}{step_downsample}(x, ...)
 }
@@ -48,6 +48,8 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{seed}{An integer that will be used as the seed when downsampling.}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_downsample} object.}
 }

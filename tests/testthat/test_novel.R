@@ -1,6 +1,9 @@
 library(recipes)
 library(testthat)
 
+context("Indicator for novel levels")
+
+
 n <- 200
 
 set.seed(8575)

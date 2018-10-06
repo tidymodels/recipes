@@ -2,7 +2,7 @@
 #'
 #' `step_integer` creates a a *specification* of a recipe
 #'  step that will convert new data into a set of integers based
-#'  on the original data values. 
+#'  on the original data values.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
@@ -18,8 +18,8 @@
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param strict A logical for whether the values should be returned as 
-#'  integers (as opposed to double). 
+#' @param strict A logical for whether the values should be returned as
+#'  integers (as opposed to double).
 #' @return An updated version of `recipe` with the new step added
 #'  to the sequence of existing steps (if any). For the `tidy`
 #'  method, a tibble with columns `terms` (the selectors or
@@ -33,7 +33,7 @@
 #'  order them, and then assign integers to each value. When baked,
 #'  each data point is translated to its corresponding integer or a
 #'  value of zero for yet unseen data. Missing values propagate.
-#' 
+#'
 #' Factor inputs are ordered by their levels. All others are
 #'  ordered by `sort`.
 #'
@@ -47,21 +47,21 @@
 #'  [step_novel()], [step_dummy()]
 #' @examples
 #' data(okc)
-#' 
+#'
 #' okc$location <- factor(okc$location)
-#' 
+#'
 #' okc_tr <- okc[1:100, ]
 #' okc_tr$age[1] <- NA
-#' 
+#'
 #' okc_te <- okc[101:105, ]
 #' okc_te$age[1] <- NA
 #' okc_te$diet[1] <- "fast food"
 #' okc_te$diet[2] <- NA
-#' 
+#'
 #' rec <- recipe(Class ~ ., data = okc_tr) %>%
 #'   step_integer(all_predictors()) %>%
 #'   prep(training = okc_tr, retain = TRUE)
-#' 
+#'
 #' bake(rec, okc_te, all_predictors())
 #' tidy(rec, number = 1)
 
@@ -72,7 +72,8 @@ step_integer <-
            trained = FALSE,
            strict = FALSE,
            key = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("integer")) {
     add_step(
       recipe,
       step_integer_new(
@@ -81,19 +82,14 @@ step_integer <-
         trained = trained,
         strict = strict,
         key = key,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_integer_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           strict = strict,
-           key = key,
-           skip = FALSE
-  ) {
+  function(terms, role, trained, strict, key, skip, id) {
     step(
       subclass = "integer",
       terms = terms,
@@ -101,7 +97,8 @@ step_integer_new <-
       trained = trained,
       strict = strict,
       key = key,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -119,7 +116,7 @@ get_unique_values <- function(x) {
 map_key_to_int <- function(dat, key, strict = FALSE) {
   if (is.factor(dat))
     dat <- as.character(dat)
-  
+
   res <- full_join(tibble(value = dat, .row = seq_along(dat)), key, by = "value")
   res <- dplyr::filter(res, !is.na(.row))
   res <- arrange(res, .row)
@@ -140,7 +137,8 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     strict = x$strict,
     key = map(training[, col_names], get_unique_values),
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -148,7 +146,7 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
 bake.step_integer <- function(object, newdata, ...) {
 
   for (i in names(object$key)) {
-    newdata[[i]] <- 
+    newdata[[i]] <-
       map_key_to_int(newdata[[i]], object$key[[i]], object$strict)
   }
   if (!is_tibble(newdata))
@@ -174,6 +172,7 @@ print.step_integer <-
 
 #' @rdname step_integer
 #' @param x A `step_integer` object.
+#' @export
 tidy.step_integer <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$key), value = x$key)
@@ -181,5 +180,6 @@ tidy.step_integer <- function(x, ...) {
     res <- tibble(terms = sel2char(x$terms))
     res$value = NA
   }
+  res$id <- x$id
   res
 }

@@ -60,7 +60,8 @@ step_factor2string <-
            role = NA,
            trained = FALSE,
            columns = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("factor2string")) {
     add_step(
       recipe,
       step_factor2string_new(
@@ -68,24 +69,22 @@ step_factor2string <-
         role = role,
         trained = trained,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_factor2string_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "factor2string",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,7 +105,8 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -133,6 +133,9 @@ print.step_factor2string <-
 
 #' @rdname step_factor2string
 #' @param x A `step_factor2string` object.
+#' @export
 tidy.step_factor2string <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

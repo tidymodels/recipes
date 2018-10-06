@@ -12,3 +12,4 @@ recipes_hex.png
 ^codecov\.yml$
 ^pkgdown$
 .github
+^revdep$

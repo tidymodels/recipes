@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Ordinal data to scores")
+
+
 n <- 20
 
 set.seed(752)

@@ -122,7 +122,8 @@ class variable.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_depth</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"depth"</span>))
 
 <span class='co'># S3 method for step_depth</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -180,16 +181,20 @@ depth functions. See <code><a href='http://www.rdocumentation.org/packages/ddalp
     <tr>
       <th>data</th>
       <td><p>The training data are stored here once after
-<code>prep.recipe()</code> is executed.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -253,16 +258,16 @@ replace the original values and have the prefix <code>depth_</code>.</p>
 #&gt; 10          4.9         3.1          1.5         0.1 setosa          0.02
 #&gt; # ... with 140 more rows, and 2 more variables: depth_versicolor &lt;dbl&gt;,
 #&gt; #   depth_virginica &lt;dbl&gt;</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;   terms            class
-#&gt;   &lt;chr&gt;            &lt;chr&gt;
-#&gt; 1 all_predictors() &lt;NA&gt; </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 2
-#&gt;   terms        class  
-#&gt;   &lt;chr&gt;        &lt;chr&gt;  
-#&gt; 1 Sepal.Length Species
-#&gt; 2 Sepal.Width  Species
-#&gt; 3 Petal.Length Species
-#&gt; 4 Petal.Width  Species</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   terms            class id         
+#&gt;   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      
+#&gt; 1 all_predictors() &lt;NA&gt;  depth_6fiq7</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 3
+#&gt;   terms        class   id         
+#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;      
+#&gt; 1 Sepal.Length Species depth_6fiq7
+#&gt; 2 Sepal.Width  Species depth_6fiq7
+#&gt; 3 Petal.Length Species depth_6fiq7
+#&gt; 4 Petal.Width  Species depth_6fiq7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -237,7 +237,8 @@ step_discretize <- function(recipe,
                             trained = FALSE,
                             objects = NULL,
                             options = list(),
-                            skip = FALSE) {
+                            skip = FALSE,
+                            id = rand_id("discretize")) {
   add_step(
     recipe,
     step_discretize_new(
@@ -246,18 +247,14 @@ step_discretize <- function(recipe,
       role = role,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_discretize_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "discretize",
       terms = terms,
@@ -265,7 +262,8 @@ step_discretize_new <-
       trained = trained,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -296,7 +294,8 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -321,6 +320,7 @@ print.step_discretize <-
 #' @importFrom rlang na_dbl
 #' @rdname step_discretize
 #' @param x A `step_discretize` object
+#' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {
     brks <- lapply(x$objects,
@@ -333,6 +333,7 @@ tidy.step_discretize <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
   }
+  res$id <- x$id
   res
 }
 

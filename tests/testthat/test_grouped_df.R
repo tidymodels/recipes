@@ -1,6 +1,9 @@
 library(tibble)
 library(dplyr)
 
+context("Grouped data frame tests")
+
+
 n <- 20
 ex_dat <- data.frame(x1 = seq(0, 1, length = n),
                      x2 = rep(1:5, 4)) %>%

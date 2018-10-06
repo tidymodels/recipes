@@ -80,6 +80,7 @@ reference:
     - step_ica    
     - step_isomap
     - step_kpca
+    - step_nnmf    
     - step_pca
     - step_pls
     - step_ratio

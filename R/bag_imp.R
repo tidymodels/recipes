@@ -110,7 +110,8 @@ step_bagimpute <-
            options = list(nbagg = 25, keepX = FALSE),
            impute_with = imp_vars(all_predictors()),
            seed_val = sample.int(10 ^ 4, 1),
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("bagimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
     add_step(
@@ -123,20 +124,14 @@ step_bagimpute <-
         options = options,
         impute_with = impute_with,
         seed_val = seed_val,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_bagimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           models = NULL,
-           options = NULL,
-           impute_with = NULL,
-           seed_val = NA,
-           skip = FALSE) {
+  function(terms, role, trained, models, options, impute_with, seed_val, skip, id) {
     step(
       subclass = "bagimpute",
       terms = terms,
@@ -146,7 +141,8 @@ step_bagimpute_new <-
       options = options,
       impute_with = impute_with,
       seed_val = seed_val,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -195,8 +191,18 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
     seed_val = x$seed_val
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
-  x$trained <- TRUE
-  x
+
+  step_bagimpute_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    models = x$models,
+    options = x$options,
+    impute_with = x$impute_with,
+    seed_val = x$seed_val,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom tibble as_tibble
@@ -241,6 +247,7 @@ imp_vars <- function(...) quos(...)
 
 #' @rdname step_bagimpute
 #' @param x A `step_bagimpute` object.
+#' @export
 tidy.step_bagimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
@@ -249,5 +256,6 @@ tidy.step_bagimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = NA)
   }
+  res$id <- x$id
   res
 }

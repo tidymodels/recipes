@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("ISOmap")
+
+
 ## expected results form the `dimRed` package
 
 exp_res <- structure(list(Isomap1 = c(0.312570873898531, 0.371885353599467, 2.23124009833741,
@@ -23,8 +26,12 @@ rec <- recipe( ~ ., data = dat1)
 
 test_that('correct Isomap values', {
   skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  
   im_rec <- rec %>%
-    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
+    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3, id = "")
 
   im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
 
@@ -33,7 +40,7 @@ test_that('correct Isomap values', {
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
 
   im_tibble <-
-    tibble(terms = c("x1", "x2", "x3"))
+    tibble(terms = c("x1", "x2", "x3"), id = "")
 
   expect_equal(tidy(im_rec, 1), im_tibble)
   expect_equal(tidy(im_trained, 1), im_tibble)
@@ -41,6 +48,10 @@ test_that('correct Isomap values', {
 
 
 test_that('printing', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
   expect_output(print(im_rec))

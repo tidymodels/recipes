@@ -54,7 +54,8 @@ step_holiday <-
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
     columns = NULL,
-    skip = FALSE
+    skip = FALSE,
+    id = rand_id("holiday")
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
@@ -69,30 +70,25 @@ step_holiday <-
       trained = trained,
       holidays = holidays,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_holiday_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    holidays = holidays,
-    columns = columns,
-    skip = FALSE
-    ) {
-  step(
-    subclass = "holiday",
-    terms = terms,
-    role = role,
-    trained = trained,
-    holidays = holidays,
-    columns = columns,
-    skip = skip
-  )
-}
+  function(terms, role, trained, holidays, columns, skip, id) {
+    step(
+      subclass = "holiday",
+      terms = terms,
+      role = role,
+      trained = trained,
+      holidays = holidays,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export
@@ -110,7 +106,8 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     holidays = x$holidays,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -175,10 +172,12 @@ print.step_holiday <-
 
 #' @rdname step_holiday
 #' @param x A `step_holiday` object.
+#' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      holiday = x$holidays,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

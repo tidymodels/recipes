@@ -120,7 +120,7 @@ step that will normalize numeric data to have a mean of zero.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"center"</span>))
 
 <span class='co'># S3 method for step_center</span>
 <span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -153,7 +153,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>means</th>
       <td><p>A named numeric vector of means. This is
-<code>NULL</code> until computed by <code>prep.recipe()</code>.</p></td>
+<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -163,11 +163,15 @@ values should be removed during computations.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code>bake.recipe()</code>? While all operations are baked
-when <code>prep.recipe()</code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -192,8 +196,8 @@ the centering to new data sets using these means.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code>prep.recipe()</code>
-<code>bake.recipe()</code></p></div>
+    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
+<code><a href='bake.html'>bake.recipe()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -236,17 +240,17 @@ the centering to new data sets using these means.</p>
 #&gt;  9 -19.2       4.4   -7.42   -0.935   4.9   11.1
 #&gt; 10 -20.6       3.77 -14.8     3.56    1.05  10.8
 #&gt; # ... with 70 more rows</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;   terms               value
-#&gt;   &lt;chr&gt;               &lt;dbl&gt;
-#&gt; 1 carbon                 NA
-#&gt; 2 "contains(\"gen\")"    NA
-#&gt; 3 -hydrogen              NA</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
-#&gt;   terms    value
-#&gt;   &lt;chr&gt;    &lt;dbl&gt;
-#&gt; 1 carbon   48.4 
-#&gt; 2 oxygen   38.5 
-#&gt; 3 nitrogen  1.07</div></pre>
+<span class='fu'>tidy</span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;   terms               value id          
+#&gt;   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;       
+#&gt; 1 carbon                 NA center_1QJUs
+#&gt; 2 "contains(\"gen\")"    NA center_1QJUs
+#&gt; 3 -hydrogen              NA center_1QJUs</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;   terms    value id          
+#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;       
+#&gt; 1 carbon   48.4  center_1QJUs
+#&gt; 2 oxygen   38.5  center_1QJUs
+#&gt; 3 nitrogen  1.07 center_1QJUs</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
