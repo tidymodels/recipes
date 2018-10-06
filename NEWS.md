@@ -1,4 +1,4 @@
-# `recipes` 0.1.3.9001
+# `recipes` 0.1.3.9002
 
 ## New Operations:
 
@@ -14,6 +14,7 @@
  * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
  * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
  * All steps gain an `id` field that will be used in the future to reference other steps. 
+ * `broom` is no longer used to get the `tidy` generic. These are now contained in the `generics` package. 
 
 
 # `recipes` 0.1.3

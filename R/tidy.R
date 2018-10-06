@@ -42,7 +42,6 @@
 NULL
 
 #' @rdname tidy.recipe
-#' @importFrom broom tidy
 #' @export
 tidy.recipe <- function(x, number = NA, ...) {
   num_oper <- length(x$steps)

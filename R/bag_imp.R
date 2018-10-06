@@ -88,7 +88,9 @@
 #'
 #'  impute_rec <- rec %>%
 #'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt,
-#'                  impute_with = imp_vars(Time, Age, Expenses))
+#'                  impute_with = imp_vars(Time, Age, Expenses),
+#'                  # for quick execution, nbagg lowered
+#'                  options = list(nbagg = 5, keepX = FALSE))
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
