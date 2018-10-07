@@ -13,10 +13,10 @@ Description: An extensible framework to create and preprocess
     as inputs into statistical or machine learning models. 
 URL: https://github.com/tidymodels/recipes
 BugReports: https://github.com/tidymodels/recipes/issues
-Depends: 
+Depends:
     R (>= 3.1),
     dplyr
-Imports: 
+Imports:
     generics,
     gower,
     ipred,
@@ -31,8 +31,9 @@ Imports:
     tidyr,
     tidyselect (>= 0.1.1),
     timeDate,
-    withr
-Suggests: 
+    withr,
+    methods
+Suggests:
     covr,
     ddalpha,
     dimRed (>= 0.1.0.9001),
