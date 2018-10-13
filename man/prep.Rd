@@ -23,7 +23,7 @@ parameters for preprocessing.}
 re-trained. If \code{TRUE}, you should pass in a data set to the argument
 \code{training}.}
 
-\item{verbose}{A logical that controls wether progress is reported as operations
+\item{verbose}{A logical that controls whether progress is reported as operations
 are executed.}
 
 \item{retain}{A logical: should the \emph{preprocessed} training set be saved

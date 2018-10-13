@@ -16,7 +16,7 @@
 #' @param reverse A logical to indicate if the left hinge should be used as
 #'   opposed to the right hinge.
 #' @param smooth A logical indicating if the softplus function, a smooth
-#'   appromixation to the rectified linear transformation, should be used.
+#'   approximation to the rectified linear transformation, should be used.
 #' @param prefix A prefix for generated column names, default to "right_relu_"
 #'   when right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
@@ -39,7 +39,7 @@
 #'
 #' The rectified linear transformation is used in Multivariate Adaptive
 #' Regression Splines as a basis function to fit piecewise linear functions to
-#' data in a strategy similar to that employeed in tree based models. The
+#' data in a strategy similar to that employed in tree based models. The
 #' transformation is a popular choice as an activation function in many
 #' neural networks, which could then be seen as a stacked generalization of
 #' MARS when making use of ReLu activations. The hinge function also appears

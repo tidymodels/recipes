@@ -16,7 +16,7 @@
 #'  created.
 #' @param impute_with A call to `imp_vars` to specify which
 #'  variables are used to impute the variables that can include
-#'  specific variable names seperated by commas or different
+#'  specific variable names separated by commas or different
 #'  selectors (see [selections()]). If a column is
 #'  included in both lists to be imputed and to be an imputation
 #'  predictor, it will be removed from the latter and not used to

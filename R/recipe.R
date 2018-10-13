@@ -287,7 +287,7 @@ prep   <- function(x, ...)
 #' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
-#' @param verbose A logical that controls wether progress is reported as operations
+#' @param verbose A logical that controls whether progress is reported as operations
 #'   are executed.
 #' @param retain A logical: should the *preprocessed* training set be saved
 #'   into the `template` slot of the recipe after training? This is a good
@@ -329,7 +329,7 @@ prep.recipe <-
            retain = FALSE,
            stringsAsFactors = TRUE,
            ...) {
-    
+
     if (is.null(training)) {
       if (fresh)
         stop("A training set must be supplied to the `training` argument ",
@@ -345,7 +345,7 @@ prep.recipe <-
       else
         training[, x$var_info$variable]
     }
-    
+
     steps_trained <- vapply(x$steps, is_trained, logical(1))
     if (any(steps_trained) & !fresh) {
       if(!x$retained)
@@ -364,7 +364,7 @@ prep.recipe <-
         )
       training <- x$template
     }
-    
+
     tr_data <- train_info(training)
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
