@@ -121,13 +121,13 @@ method for the operation exists).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for step</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for check</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,7 +170,7 @@ estimated using <code>prep</code>, a logical for <code>skip</code>, and a charac
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='check_cols.html'>check_cols</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"date"</span>), <span class='no'>age</span>, <span class='no'>height</span>)
 
-<span class='fu'>tidy</span>(<span class='no'>okc_rec</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>okc_rec</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
 #&gt;   number operation type   trained skip  id          
 #&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;       
 #&gt; 1      1 step      other  FALSE   FALSE other_g6xzQ 
@@ -178,24 +178,24 @@ estimated using <code>prep</code>, a logical for <code>skip</code>, and a charac
 #&gt; 3      3 step      center FALSE   FALSE center_ccO0Y
 #&gt; 4      4 step      dummy  FALSE   FALSE dummy_ILC16 
 #&gt; 5      5 check     cols   FALSE   FALSE cols_dWoJD  </div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
 #&gt;   terms value ordinal id        
 #&gt;   &lt;fct&gt; &lt;fct&gt; &lt;lgl&gt;   &lt;chr&gt;     
-#&gt; 1 date  dow   FALSE   date_2bArV</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt; 1 date  dow   FALSE   date_2bArV</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms         value id          
 #&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
 #&gt; 1 all_numeric()    NA center_ccO0Y</div><div class='input'>
 <span class='no'>okc_rec_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `overscope_eval_next()` is soft-deprecated as of rlang 0.2.0.</span>
 #&gt; <span class='warning'>Please use `eval_tidy()` with a data mask instead</span>
 #&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
 #&gt;   number operation type   trained skip  id          
 #&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;       
 #&gt; 1      1 step      other  TRUE    FALSE other_g6xzQ 
 #&gt; 2      2 step      date   TRUE    FALSE date_2bArV  
 #&gt; 3      3 step      center TRUE    FALSE center_ccO0Y
 #&gt; 4      4 step      dummy  TRUE    FALSE dummy_ILC16 
-#&gt; 5      5 check     cols   TRUE    FALSE cols_dWoJD  </div><div class='input'><span class='fu'>tidy</span>(<span class='no'>okc_rec_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt; 5      5 check     cols   TRUE    FALSE cols_dWoJD  </div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>okc_rec_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
 #&gt;   terms  value id          
 #&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;       
 #&gt; 1 age     32.3 center_ccO0Y

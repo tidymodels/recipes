@@ -126,7 +126,7 @@ numeric variables.</p>
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"date"</span>))
 
 <span class='co'># S3 method for step_date</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,7 +241,7 @@ used for this purpose.</p>
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='fu'>tidy</span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
 #&gt;   terms            value ordinal id        
 #&gt;   &lt;fct&gt;            &lt;fct&gt; &lt;lgl&gt;   &lt;chr&gt;     
 #&gt; 1 all_predictors() dow   FALSE   date_m4f47
@@ -264,7 +264,7 @@ used for this purpose.</p>
 #&gt;  9 2002-03-13 2006-01-22 Wed     Mar           2002 Sun        Jan         
 #&gt; 10 2002-03-14 2006-01-23 Thu     Mar           2002 Mon        Jan         
 #&gt; # ... with 1 more variable: Stefan_year &lt;dbl&gt;</div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
 #&gt;   terms  value ordinal id        
 #&gt;   &lt;fct&gt;  &lt;fct&gt; &lt;lgl&gt;   &lt;chr&gt;     
 #&gt; 1 Dan    dow   FALSE   date_m4f47
