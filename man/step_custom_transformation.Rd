@@ -30,13 +30,13 @@ been estimated.}
 
 \item{prep_function}{A function. This is a helper function for the
 \code{\link[=prep.recipe]{prep.recipe()}} method. It will be invoked, when the recipe is 'prepped'
-with \code{\link[=prep.recipe]{prep.recipe()}}. The function MUST satisfy the following conditions:
+by \code{\link[=prep.recipe]{prep.recipe()}}. The function MUST satisfy the following conditions:
 (1) the function must take an argument \code{x}: input data with only the
 selected variables (\code{selected_vars}), (2) the function MUST return the
-estimated the required parameters from a training set that can be later
+(required) estimated parameters from a training set that can be later
 applied to other data sets. This output can be of any appropriate type and
 shape. Leave \code{prep_function} as NULL, if the preparation of new data sets
-does not depend on statistics/parameters learned on the training set.}
+does not depend on parameters learned on the training set.}
 
 \item{prep_options}{A list with (any) additional arguments for the prep
 helper function call EXCEPT for the \code{x} argument. Leave as NULL, if no
@@ -50,7 +50,7 @@ is called.}
 \item{bake_function}{A function. This is a helper function for the 'bake'
 method. It will be invoked, when the recipe is 'baked' by \code{bake.recipe()}.
 The function MUST satisfy the following conditions: (1) the function must
-take an argument \code{x}: data set with the selected variables
+take an argument \code{x}: data set with only the selected variables
 (\code{selected_vars}) from the new data set, (2) if the preparation of new data
 sets depends on parameters learned on the train set, the function must take
 the argument \code{prep_output}: the output from the prep helper fct
@@ -102,7 +102,6 @@ df <- tibble(a = rnorm(100),
              b = rnorm(100),
              c = rnorm(100))
 
-
 # define prep helper function, that computes means and standard deviations
 # for all variables in a data set.
 compute_means_sd <- function(x, na.rm = FALSE, trim = 0) {
@@ -112,8 +111,8 @@ compute_means_sd <- function(x, na.rm = FALSE, trim = 0) {
 
 }
 
-# define prep function, that subtracts k means from the variable, and
-# divides by the standard deviation.
+# define bake helper function, that subtracts k means from the variable and
+# then divides by the standard deviation.
 center_scale <- function(x, prep_output, k) {
 
   newdata <- select(x, names(prep_output))
@@ -146,36 +145,6 @@ tidy(rec)
 tidy(rec, 1)
 tidy(rec_prep)
 tidy(rec_prep, 1)
-
-
-# create custom bake function.
-simple_calculation <- function(x) {
-
-  x \%>\%
-    transmute(d = a + b - c)
-
-}
-
-# create recipe.
-rec <- recipe(df) \%>\%
-  step_custom_transformation(everything(),
-                             bake_function = simple_calculation,
-                             bake_how = "bind_cols")
-
-# prep recipe.
-rec_prep <- prep(rec)
-
-# bake recipe.
-rec_baked <- bake(rec_prep, df)
-
-# inspect output.
-rec
-rec_baked
-tidy(rec)
-tidy(rec, 1)
-tidy(rec_prep)
-tidy(rec_prep, 1)
-
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
