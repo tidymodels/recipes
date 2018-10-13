@@ -183,6 +183,12 @@ step_custom_transformation <-
       stop("'prep_function' must be a function.")
     }
 
+    # check inputs.
+    if (is.null(prep_function) && !is.null(prep_options)) {
+      stop("Arguments for the prep helper function have been provided, but
+           no prep helper function has been set.")
+    }
+
     if (!is.null(prep_options) && !is.list(prep_options)) {
       stop("'prep_options' must be a list.")
     }
@@ -271,14 +277,7 @@ step_custom_transformation_new <-
   }
 
 # prepare step (/estimation procedure).
-#' @export
 prep.step_custom_transformation <- function(x, training, info = NULL, ...) {
-
-  # check inputs.
-  if (is.null(x$prep_function) && !is.null(x$prep_options) && length(list(...)) == 0) {
-    stop("Arguments for the prep helper function have been provided, but
-         no prep helper function has been set.")
-  }
 
   # selected vars as character vector.
   selected_vars <- terms_select(x$terms, info = info)
@@ -295,11 +294,6 @@ prep.step_custom_transformation <- function(x, training, info = NULL, ...) {
     # add additional arguments (if any).
     if (!is.null(x$prep_options)) {
       args <- append(args, x$prep_options)
-    }
-
-    # add arbitrary arguments (if any).
-    if (length(list(...)) > 0) {
-      args <- append(args, list(...))
     }
 
     # compute intermediate output from prep helper function.
@@ -335,13 +329,12 @@ prep.step_custom_transformation <- function(x, training, info = NULL, ...) {
     selected_vars = selected_vars,
     skip = x$skip,
     id = x$id
-  )
+    )
 
   }
 
 # bake step (/apply step).
-#' @export
-bake.step_custom_transformation <- function(object, newdata, info = NULL, ...) {
+bake.step_custom_transformation <- function(object, newdata, ...) {
 
   #### prepare arguments before calling the bake helper function.
 
@@ -358,11 +351,6 @@ bake.step_custom_transformation <- function(object, newdata, info = NULL, ...) {
     args <- append(args, object$bake_options)
   }
 
-  # add arbitrary arguments (if any).
-  if (length(list(...)) > 0) {
-    args <- append(args, list(...))
-  }
-
   # invoke the bake helper function.
   bake_function_output <- do.call(object$bake_function, args) %>%
     # convert output to tibble.
@@ -376,7 +364,7 @@ bake.step_custom_transformation <- function(object, newdata, info = NULL, ...) {
 
                      # check_inputs.
                      if (nrow(bake_function_output) != nrow(newdata)) {
-                       stop("There was a mismatch between the number of rows",
+                       stop("There was a mismatch between the number of rows ",
                             "in the output from the bake helper function (",
                             nrow(bake_function_output),
                             ") and the number of rows of the input data (",
