@@ -66,7 +66,6 @@
 #'
 #' @importFrom methods formalArgs
 #' @importFrom purrr safely
-#' @importFrom tibble as.tibble
 #'
 #' @export
 #'
