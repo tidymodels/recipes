@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Discretize Numeric Variables — step_discretize • recipes</title>
+<title>Smithsonian Museums — Smithsonian • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -107,103 +107,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Discretize Numeric Variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/discretize.R'><code>R/discretize.R</code></a></small>
-    <div class="hidden name"><code>step_discretize.Rd</code></div>
+    <h1>Smithsonian Museums</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>Smithsonian.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>step_discretize</code> creates a a <em>specification</em> of a recipe
-step that will convert numeric data into a factor with
-bins having approximately the same number of data points (based
-on a training set).</p>
+    <p>Geocodes for the Smithsonian museums (circa 2018).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>step_discretize</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"discretize"</span>))
+        
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-<span class='co'># S3 method for step_discretize</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>For <code>step_discretize</code>, the dots specify
-one or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more
-details. For the <code>tidy</code> method, these are not currently
-used.</p></td>
-    </tr>
-    <tr>
-      <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr>
-    <tr>
-      <th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr>
-    <tr>
-      <th>objects</th>
-      <td><p>The <code><a href='discretize.html'>discretize()</a></code> objects are stored
-here once the recipe has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>options</th>
-      <td><p>A list of options to <code><a href='discretize.html'>discretize()</a></code>. A
-defaults is set for the argument <code>x</code>. Note that the using
-the options <code>prefix</code> and <code>labels</code> when more than one
-variable is being transformed might be problematic as all
-variables inherit those values.</p></td>
-    </tr>
-    <tr>
-      <th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_discretize</code> object</p></td>
-    </tr>
-    </table>
+    <p>https://en.wikipedia.org/wiki/List_of_Smithsonian_museums</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>step_discretize</code> returns an updated version of
-<code>recipe</code> with the new step added to the sequence of
-existing steps (if any). For the <code>tidy</code> method, a tibble
-with columns <code>terms</code> (the selectors or variables selected)
-and <code>value</code> (the breaks).</p>
     
 
+<dt>Smithsonian</dt><dd><p>a tibble</p></dd>
+
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>Smithsonian</span>)
+<span class='no'>Smithsonian</span></div><div class='output co'>#&gt; # A tibble: 20 x 3
+#&gt;    name                                                    latitude longitude
+#&gt;    &lt;chr&gt;                                                      &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 Anacostia Community Museum                                  38.9     -77.0
+#&gt;  2 Arthur M. Sackler Gallery                                   38.9     -77.0
+#&gt;  3 Arts and Industries Building                                38.9     -77.0
+#&gt;  4 Cooper Hewitt, Smithsonian Design Museum                    40.8     -74.0
+#&gt;  5 Freer Gallery of Art                                        38.9     -77.0
+#&gt;  6 Hirshhorn Museum and Sculpture Garden                       38.9     -77.0
+#&gt;  7 National Air and Space Museum                               38.9     -77.0
+#&gt;  8 Steven F. Udvar-Hazy Center                                 38.9     -77.4
+#&gt;  9 National Museum of African American History and Culture     38.9     -77.0
+#&gt; 10 National Museum of African Art                              38.9     -77.0
+#&gt; 11 National Museum of American History                         38.9     -77.0
+#&gt; 12 National Museum of the American Indian                      38.9     -77.0
+#&gt; 13 George Gustav Heye Center                                   40.7     -74.0
+#&gt; 14 National Museum of Natural History                          38.9     -77.0
+#&gt; 15 National Portrait Gallery                                   38.9     -77.0
+#&gt; 16 National Postal Museum                                      38.9     -77.0
+#&gt; 17 Renwick Gallery                                             38.9     -77.0
+#&gt; 18 Smithsonian American Art Museum                             38.9     -77.0
+#&gt; 19 Smithsonian Institution Building                            38.9     -77.0
+#&gt; 20 National Zoological Park                                    38.9     -77.1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#source">Source</a></li>
+
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

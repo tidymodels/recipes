@@ -111,16 +111,18 @@
       <small>Source: <a href='https://github.com/tidymodels/recipes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="recipes-0-1-3-9000" class="section level1">
+    <div id="recipes-0-1-3-9002" class="section level1">
 <h1 class="page-header">
-<a href="#recipes-0-1-3-9000" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.3.9000</h1>
+<a href="#recipes-0-1-3-9002" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.3.9002</h1>
 <div id="new-operations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-operations" class="anchor"></a>New Operations:</h2>
 <ul>
 <li>
-<code>step_integer</code> converts data to ordered integers similar to <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a>. It is 1-based with zero reserved for new values. issues <a href="https://github.com/tidymodels/recipes/issues/123"><a href='https://github.com/tidymodels/recipes/issues/123'>#123</a></a> and <a href="https://github.com/tidymodels/recipes/issues/185"><a href='https://github.com/tidymodels/recipes/issues/185'>#185</a></a>
+<code>step_integer</code> converts data to ordered integers similar to <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a> <a href="https://github.com/tidymodels/recipes/issues/123"><a href='https://github.com/tidymodels/recipes/issues/123'>#123</a></a> and <a href="https://github.com/tidymodels/recipes/issues/185"><a href='https://github.com/tidymodels/recipes/issues/185'>#185</a></a>
 </li>
+<li>
+<code>step_geodist</code> can be used to calculate the distance between geocodes and a single reference location.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level2">
@@ -140,6 +142,9 @@
 </li>
 <li>
 <code>step_downsample</code> and <code>step_upsample</code> now have <code>seed</code> arguments for more control over randomness.</li>
+<li>All steps gain an <code>id</code> field that will be used in the future to reference other steps.</li>
+<li>
+<code>broom</code> is no longer used to get the <code>tidy</code> generic. These are now contained in the <code>generics</code> package.</li>
 </ul>
 </div>
 </div>
@@ -320,7 +325,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#recipes-0-1-3-9000">0.1.3.9000</a></li>
+        <li><a href="#recipes-0-1-3-9002">0.1.3.9002</a></li>
         <li><a href="#recipes-0-1-3">0.1.3</a></li>
         <li><a href="#recipes-0-1-2">0.1.2</a></li>
         <li><a href="#recipes-0-1-1">0.1.1</a></li>
