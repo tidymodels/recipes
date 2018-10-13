@@ -6,8 +6,6 @@ library(purrr)
 library(tibble)
 library(tidyselect)
 
-# fejl, når output ikke kan konverteres til tibble
-
 context("Testing custom transformation")
 
 # generate data.
@@ -74,7 +72,7 @@ test_that('output from prep', {
 
   expect_identical(
   rec_custom$steps[[1]]$prep_output,
-  purrr::map(df, ~ list(mean = mean(.x, trim = 0.2), sd = sd(.x)))
+  map(df, ~ list(mean = mean(.x, trim = 0.2), sd = sd(.x)))
   )
 
 })

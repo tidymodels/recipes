@@ -21,13 +21,13 @@
 #'   = TRUE` as it may affect the computations for subsequent operations.
 #' @param prep_function A function. This is a helper function for the
 #'   [prep.recipe()] method. It will be invoked, when the recipe is 'prepped'
-#'   with [prep.recipe()]. The function MUST satisfy the following conditions:
+#'   by [prep.recipe()]. The function MUST satisfy the following conditions:
 #'   (1) the function must take an argument `x`: input data with only the
 #'   selected variables (`selected_vars`), (2) the function MUST return the
-#'   estimated the required parameters from a training set that can be later
+#'   (required) estimated parameters from a training set that can be later
 #'   applied to other data sets. This output can be of any appropriate type and
 #'   shape. Leave `prep_function` as NULL, if the preparation of new data sets
-#'   does not depend on statistics/parameters learned on the training set.
+#'   does not depend on parameters learned on the training set.
 #' @param prep_options A list with (any) additional arguments for the prep
 #'   helper function call EXCEPT for the `x` argument. Leave as NULL, if no
 #'   `prep_function` is given.
@@ -38,7 +38,7 @@
 #' @param bake_function A function. This is a helper function for the 'bake'
 #'   method. It will be invoked, when the recipe is 'baked' by `bake.recipe()`.
 #'   The function MUST satisfy the following conditions: (1) the function must
-#'   take an argument `x`: data set with the selected variables
+#'   take an argument `x`: data set with only the selected variables
 #'   (`selected_vars`) from the new data set, (2) if the preparation of new data
 #'   sets depends on parameters learned on the train set, the function must take
 #'   the argument `prep_output`: the output from the prep helper fct
@@ -92,8 +92,8 @@
 #'
 #' }
 #'
-#' # define prep function, that subtracts k means from the variable, and
-#' # divides by the standard deviation.
+#' # define prep function, that subtracts k means from the variable and
+#' # then divides by the standard deviation.
 #' center_scale <- function(x, prep_output, k) {
 #'
 #'   newdata <- select(x, names(prep_output))
@@ -126,37 +126,6 @@
 #' tidy(rec, 1)
 #' tidy(rec_prep)
 #' tidy(rec_prep, 1)
-#'
-# custom transformation: custom bake function -----------------------------
-#'
-#' # create custom bake function.
-#' simple_calculation <- function(x) {
-#'
-#'   x %>%
-#'     transmute(d = a + b - c)
-#'
-#' }
-#'
-#' # create recipe.
-#' rec <- recipe(df) %>%
-#'   step_custom_transformation(everything(),
-#'                              bake_function = simple_calculation,
-#'                              bake_how = "bind_cols")
-#'
-#' # prep recipe.
-#' rec_prep <- prep(rec)
-#'
-#' # bake recipe.
-#' rec_baked <- bake(rec_prep, df)
-#'
-#' # inspect output.
-#' rec
-#' rec_baked
-#' tidy(rec)
-#' tidy(rec, 1)
-#' tidy(rec_prep)
-#' tidy(rec_prep, 1)
-#'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 step_custom_transformation <-
   function(recipe,
