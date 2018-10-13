@@ -81,8 +81,6 @@
 #'              b = rnorm(100),
 #'              c = rnorm(100))
 #'
-# custom transformation: custom prep and bake functions -------------------
-#'
 #' # define prep helper function, that computes means and standard deviations
 #' # for all variables in a data set.
 #' compute_means_sd <- function(x, na.rm = FALSE, trim = 0) {
@@ -92,7 +90,7 @@
 #'
 #' }
 #'
-#' # define prep function, that subtracts k means from the variable and
+#' # define bake helper function, that subtracts k means from the variable and
 #' # then divides by the standard deviation.
 #' center_scale <- function(x, prep_output, k) {
 #'
