@@ -5,8 +5,8 @@
 \alias{tidy.step_medianimpute}
 \title{Impute Numeric Data Using the Median}
 \usage{
-step_medianimpute(recipe, ..., role = NA, trained = FALSE, medians = NULL,
-  skip = FALSE, id = rand_id("medianimpute"))
+step_medianimpute(recipe, ..., role = NA, trained = FALSE,
+  medians = NULL, skip = FALSE, id = rand_id("medianimpute"))
 
 \method{tidy}{step_medianimpute}(x, ...)
 }
@@ -85,7 +85,5 @@ imputed_te[missing_examples, names(credit_te)]
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

@@ -234,11 +234,48 @@ strings2factors <- function(x, info) {
   x
 }
 
+
+# ------------------------------------------------------------------------------
+
+# `complete.cases` fails on list columns. This version counts a list column
+# as missing if _all_ values are missing. For if a list vector element is a
+# data frame with one missing value, that element of the list column will
+# be counted as complete. 
+#' @importFrom purrr map_dfc
+n_complete_rows <- function(x) {
+  list_cols <- purrr::map_lgl(x, is.list)
+  list_cols <- names(list_cols)[list_cols]
+  
+  if (length(list_cols) > 0) {
+    # replace with logical vector (with possible missings) for calculations
+    x[, list_cols] <- map_dfc(list_cols, convert_to_logical, x = x)
+  }
+  sum(complete.cases(x))
+}
+
+insert_na <- function(x) {
+  has_miss <- all(is.na(x))
+  if (has_miss) {
+    res <- NA
+  } else {
+    res <- FALSE
+  }
+  res
+}
+
+convert_to_logical <- function(col, x) {
+  map_lgl(x[[col]], insert_na)
+}
+
 ## short summary of training set
 train_info <- function(x) {
   data.frame(nrows = nrow(x),
-             ncomplete = sum(complete.cases(x)))
+             ncomplete = n_complete_rows(x))
 }
+
+# ------------------------------------------------------------------------------
+
+
 
 ## `merge_term_info` takes the information on the current variable
 ## list and the information on the new set of variables (after each step)
