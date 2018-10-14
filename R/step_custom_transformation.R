@@ -318,9 +318,24 @@ bake.step_custom_transformation <- function(object, newdata, ...) {
   }
 
   # invoke the bake helper function.
-  bake_function_output <- do.call(object$bake_function, args) %>%
-    # convert output to tibble.
-    as_tibble()
+  bake_function_output <-
+    tryCatch({
+      do.call(object$bake_function, args) %>%
+        # convert output to tibble.
+        as_tibble()
+    },
+    error = function(e) {
+      stop("Not able to convert output from bake helper function to tibble.")
+    })
+
+  # check dimensions of output from bake helper function.
+  if (nrow(bake_function_output) != nrow(newdata)) {
+    stop("There was a mismatch between the number of rows ",
+         "in the output from the bake helper function (",
+         nrow(bake_function_output),
+         ") and the number of rows of the input data (",
+         nrow(newdata), ").")
+  }
 
   # append to input data the output from the bake helper function.
   output <- switch(object$bake_how,
@@ -328,34 +343,15 @@ bake.step_custom_transformation <- function(object, newdata, ...) {
                    # append output to input by binding columns.
                    "bind_cols" = {
 
-                     # check_inputs.
-                     if (nrow(bake_function_output) != nrow(newdata)) {
-                       stop("There was a mismatch between the number of rows ",
-                            "in the output from the bake helper function (",
-                            nrow(bake_function_output),
-                            ") and the number of rows of the input data (",
-                            nrow(newdata), ").")
-                     }
-
                      # bind output columns to input data.frame.
                      newdata %>%
                        as.tibble() %>%
                        bind_cols(bake_function_output)
+
                    },
 
                    # replace selected variables with output.
                    "replace" = {
-
-                     # check_inputs.
-                     if (!all(names(newdata) %in% object$selected_vars) &&
-                         nrow(bake_function_output) != nrow(newdata)) {
-                       stop("There was a mismatch between the ",
-                            "number of rows in the output from ",
-                            "the bake helper function (",
-                            nrow(bake_function_output),
-                            ") and the number of rows of the input data ",
-                            "(", nrow(newdata), ").")
-                     }
 
                      newdata %>%
                        as.tibble() %>%

@@ -110,7 +110,16 @@ test_that('output from bake', {
 
 test_that('expected errors for incorrect baking output', {
 
-  # bake_how = 'bind_cols'.
+  # not able to convert output from bake helper function to tibble.
+  rec_custom <- rec %>%
+    step_custom_transformation(everything(),
+                               bake_function = function (x) {
+                                 expression("foo")
+                               })
+
+  expect_error(prep(rec_custom), retain = TRUE)
+
+  # wrong dimensions of output, bake_how = 'bind_cols'.
   rec_custom <- rec %>%
     step_custom_transformation(a, b,
                                bake_function = function (x) {
@@ -120,7 +129,7 @@ test_that('expected errors for incorrect baking output', {
 
   expect_error(prep(rec_custom, retain = TRUE))
 
-  # bake_how = 'replace'.
+  # wrong dimensions of output, bake_how = 'replace'.
   rec_custom <- rec %>%
     step_custom_transformation(a, b,
                                bake_function = function (x) {
