@@ -44,7 +44,7 @@ not be passed here.}
 
 \item{impute_with}{A call to \code{imp_vars} to specify which
 variables are used to impute the variables that can include
-specific variable names seperated by commas or different
+specific variable names separated by commas or different
 selectors (see \code{\link[=selections]{selections()}}). If a column is
 included in both lists to be imputed and to be an imputation
 predictor, it will be removed from the latter and not used to
@@ -125,7 +125,9 @@ tidy(imp_models, number = 1)
 
  impute_rec <- rec \%>\%
   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt,
-                 impute_with = imp_vars(Time, Age, Expenses))
+                 impute_with = imp_vars(Time, Age, Expenses),
+                 # for quick execution, nbagg lowered
+                 options = list(nbagg = 5, keepX = FALSE))
 
 imp_models <- prep(impute_rec, training = credit_tr)
 

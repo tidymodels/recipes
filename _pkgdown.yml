@@ -77,6 +77,7 @@ reference:
     contents:
     - step_classdist
     - step_depth
+    - step_geodist
     - step_ica    
     - step_isomap
     - step_kpca

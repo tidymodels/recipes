@@ -34,7 +34,7 @@ sel2char(x)
 resolved during preparing the recipe (e.g. the \code{columns} object
 of \code{\link[=step_log]{step_log()}}).}
 
-\item{untr_obj}{An oject of selectors prior to prepping the
+\item{untr_obj}{An object of selectors prior to prepping the
 recipe (e.g. \code{terms} in most steps).}
 
 \item{trained}{A logical for whether the step has been trained.}

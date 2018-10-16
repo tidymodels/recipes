@@ -6,7 +6,7 @@
 \title{Convert values to predefined integers}
 \usage{
 step_integer(recipe, ..., role = "predictor", trained = FALSE,
-  strict = FALSE, key = NULL, skip = FALSE,
+  strict = FALSE, zero_based = FALSE, key = NULL, skip = FALSE,
   id = rand_id("integer"))
 
 \method{tidy}{step_integer}(x, ...)
@@ -30,6 +30,9 @@ preprocessing have been estimated.}
 
 \item{strict}{A logical for whether the values should be returned as
 integers (as opposed to double).}
+
+\item{zero_based}{A logical for whether the integers should start at zero and
+new values be appended as the largest integer.}
 
 \item{key}{A list that contains the information needed to
 create integer variables for each variable contained in
@@ -64,7 +67,8 @@ on the original data values.
 each variable from the training set (excluding missing values),
 order them, and then assign integers to each value. When baked,
 each data point is translated to its corresponding integer or a
-value of zero for yet unseen data. Missing values propagate.
+value of zero for yet unseen data (although see the \code{zero_based}
+argument above). Missing values propagate.
 
 Factor inputs are ordered by their levels. All others are
 ordered by \code{sort}.

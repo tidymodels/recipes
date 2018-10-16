@@ -1,8 +1,9 @@
-# `recipes` 0.1.3.9001
+# `recipes` 0.1.3.9002
 
 ## New Operations:
 
- * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html). It is 1-based with zero reserved for new values. issues [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
+ * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
+ * `step_geodist` can be used to calculate the distance between geocodes and a single reference location. 
 
 
 ## Other Changes:
@@ -14,6 +15,7 @@
  * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
  * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
  * All steps gain an `id` field that will be used in the future to reference other steps. 
+ * `broom` is no longer used to get the `tidy` generic. These are now contained in the `generics` package. 
 
 
 # `recipes` 0.1.3

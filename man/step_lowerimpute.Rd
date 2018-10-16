@@ -87,7 +87,7 @@ tidy(impute_rec, number = 1)
 transformed_te <- bake(impute_rec, biomass_te)
 
 plot(transformed_te$carbon, biomass_te$carbon,
-     xlab = "pre-imputation", ylab = "imputed")
+     ylab = "pre-imputation", xlab = "imputed")
 }
 \concept{preprocessing imputation}
 \keyword{datagen}

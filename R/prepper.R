@@ -2,7 +2,7 @@
 #'
 #' When working with the \pkg{rsample} package, a simple recipe
 #'  must be *prepared* using the `prep`
-#'  function first. When using recipies with \pkg{rsample} it
+#'  function first. When using recipes with \pkg{rsample} it
 #'  is helpful to have a function that can prepare a recipe
 #'  across a series of `split` objects that are produced
 #'  in this package. `prepper` is a wrapper function
