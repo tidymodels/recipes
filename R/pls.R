@@ -176,9 +176,7 @@ bake.step_pls <- function(object, newdata, ...) {
   input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
 
   comps <- input_data %*% object$res$projection
-  newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, object)
-  colnames(comps) <- newname
+  comps <- check_name(comps, newdata, object)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% pls_vars), drop = FALSE]

@@ -128,7 +128,7 @@ step_pca <- function(recipe,
   )
 }
 
-step_pca_new <- 
+step_pca_new <-
   function(terms, role, trained, num, threshold, options, res, prefix, skip, id) {
     step(
       subclass = "pca",
@@ -196,9 +196,7 @@ bake.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(object$res$rotation)
   comps <- predict(object$res, newdata = newdata[, pca_vars])
   comps <- comps[, 1:object$num, drop = FALSE]
-  newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, object)
-  colnames(comps) <- newname
+  comps <- check_name(comps, newdata, object)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]

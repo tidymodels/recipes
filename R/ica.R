@@ -174,9 +174,7 @@ bake.step_ica <- function(object, newdata, ...) {
         )
       )@data
   comps <- comps[, 1:object$num, drop = FALSE]
-  newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, object)
-  colnames(comps) <- newname
+  comps <- check_name(comps, newdata, object)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% ica_vars), drop = FALSE]

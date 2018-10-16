@@ -129,10 +129,8 @@ bake.step_lag <- function(object, newdata, ...) {
   grid <- expand.grid(col = object$columns, lag_val = object$lag,
                       stringsAsFactors = FALSE)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-
   newname <- paste0(object$prefix, grid$lag_val, "_", grid$col)
-  check_name(colnames(newdata), newname, object)
-  names(calls) <- newname
+  calls <- check_name(calls, newdata, object, newname, TRUE)
 
   as_tibble(mutate(newdata, !!!calls))
 }

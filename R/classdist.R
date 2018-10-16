@@ -96,7 +96,7 @@ step_classdist <- function(recipe,
 }
 
 step_classdist_new <-
-  function(terms, class, role, trained, mean_func, 
+  function(terms, class, role, trained, mean_func,
            cov_func, pool, log, objects, skip, id) {
     step(
       subclass = "classdist",
@@ -129,7 +129,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- terms_select(x$terms, info = info)
   check_type(training[, x_names])
-  
+
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
   if (x$pool) {
@@ -137,7 +137,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
       center = lapply(x_dat, get_center, mfun = x$mean_func),
       scale = x$cov_func(training[, x_names])
     )
-    
+
   } else {
     res <-
       lapply(x_dat,
@@ -189,8 +189,7 @@ bake.step_classdist <- function(object, newdata, ...) {
     res <- lapply(res, log)
   res <- as_tibble(res)
   newname <- paste0("classdist_", colnames(res))
-  check_name(colnames(newdata), newname, object)
-  colnames(res) <- newname
+  res <- check_name(res, newdata, object, newname)
   res <- bind_cols(newdata, res)
   if (!is_tibble(res))
     res <- as_tibble(res)

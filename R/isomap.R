@@ -181,9 +181,7 @@ bake.step_isomap <- function(object, newdata, ...) {
       dimRed::dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
       )@data
   comps <- comps[, 1:object$num, drop = FALSE]
-  newname <- names0(ncol(comps), object$prefix)
-  check_name(colnames(newdata), newname, object)
-  colnames(comps) <- newname
+  comps <- check_name(comps, newdata, object)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-
     newdata[, !(colnames(newdata) %in% isomap_vars), drop = FALSE]
