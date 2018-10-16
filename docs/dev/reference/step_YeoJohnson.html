@@ -125,7 +125,7 @@ transformation.</p>
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"YeoJohnson"</span>))
 
 <span class='co'># S3 method for step_YeoJohnson</span>
-<span class='fu'>tidy</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,10 +244,10 @@ transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
 <span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)
 
 <span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_YeoJohnson-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_YeoJohnson-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'>tidy</span>(<span class='no'>yj_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms         value id              
 #&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;           
-#&gt; 1 all_numeric()    NA YeoJohnson_PFOFZ</div><div class='input'><span class='fu'>tidy</span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 3
+#&gt; 1 all_numeric()    NA YeoJohnson_PFOFZ</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 3
 #&gt;   terms      value id              
 #&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;           
 #&gt; 1 carbon   -0.0225 YeoJohnson_PFOFZ

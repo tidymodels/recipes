@@ -41,7 +41,7 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
-\item{signed}{A logical indicating wether to take the signed log.
+\item{signed}{A logical indicating whether to take the signed log.
 This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
 
