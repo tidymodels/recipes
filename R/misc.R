@@ -500,6 +500,20 @@ simple_terms <- function(x, ...) {
   res
 }
 
+#' check that newly created variable names don't overlap
+#'
+#' `check_name` is to be used in the bake function to ensure that
+#'   newly created variable names don't overlap with existing names.
+#'   Throws an error if check fails.
+#' @param res A data frame or tibble of the newly created variables.
+#' @param newdata A data frame or tibble passed to the bake function.
+#' @param object A trained object passed to the bake function.
+#' @param newname A string of variable names if prefix isn't specified
+#'   in the trained object.
+#' @param names A logical determining if the names should be set using
+#' the names function (TRUE) or colnames function (FALSE).
+#' @export
+#' @keywords internal
 check_name <- function(res, newdata, object, newname = NULL, names = FALSE) {
   if(is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
