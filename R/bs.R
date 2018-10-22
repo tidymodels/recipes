@@ -15,8 +15,10 @@
 #'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
+#' @param deg_free The degrees of freedom. 
+#' @param degree The degree of the piecewise polynomial.
 #' @param options A list of options for [splines::bs()]
-#'  which should not include `x`.
+#'  which should not include `x`, `degree`, or `df`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -54,8 +56,10 @@ step_bs <-
            ...,
            role = "predictor",
            trained = FALSE,
+           deg_free = NULL, 
+           degree = 3,
            objects = NULL,
-           options = list(df = NULL, degree = 3),
+           options = list(),
            skip = FALSE,
            id = rand_id("bs")) {
     add_step(
@@ -63,6 +67,8 @@ step_bs <-
       step_bs_new(
         terms = ellipse_check(...),
         trained = trained,
+        deg_free = deg_free, 
+        degree = degree,
         role = role,
         objects = objects,
         options = options,
@@ -73,12 +79,14 @@ step_bs <-
   }
 
 step_bs_new <-
-  function(terms, role, trained, objects, options, skip, id) {
+  function(terms, role, trained, deg_free, degree, objects, options, skip, id) {
     step(
       subclass = "bs",
       terms = terms,
       role = role,
       trained = trained,
+      deg_free = deg_free,
+      degree = degree,
       objects = objects,
       options = options,
       skip = skip,
@@ -107,13 +115,18 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  obj <- lapply(training[, col_names], bs_wrapper, x$options)
+  opt <- x$options
+  opt$df <- x$deg_free
+  opt$degree <- x$degree 
+  obj <- lapply(training[, col_names], bs_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_bs_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    deg_free = x$deg_free,
+    degree = x$degree,
     objects = obj,
     options = x$options,
     skip = x$skip,

@@ -6,9 +6,9 @@
 \title{Isomap Embedding}
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE,
-  num = 5, options = list(knn = 50, .mute = c("message", "output")),
-  res = NULL, prefix = "Isomap", skip = FALSE,
-  id = rand_id("isomap"))
+  num_terms = 5, neighbors = 50, options = list(.mute = c("message",
+  "output")), res = NULL, num = NULL, prefix = "Isomap",
+  skip = FALSE, id = rand_id("isomap"))
 
 \method{tidy}{step_isomap}(x, ...)
 }
@@ -29,17 +29,22 @@ will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of isomap dimensions to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_terms}{The number of isomap dimensions to retain as new
+predictors. If \code{num_terms} is greater than the number of columns
 or the number of possible dimensions, a smaller value will be
 used.}
 
-\item{options}{A list of options to
-\code{\link[dimRed:Isomap]{dimRed::Isomap()}}.}
+\item{neighbors}{The number of neighbors.}
+
+\item{options}{A list of options to \code{\link[dimRed:Isomap]{dimRed::Isomap()}}.}
 
 \item{res}{The \code{\link[dimRed:Isomap]{dimRed::Isomap()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{num}{The number of isomap dimensions (this will be deprecated
+in factor of  \code{num_terms} in version 0.1.5). \code{num_terms} will
+override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -82,13 +87,13 @@ It is advisable to center and scale the variables prior to
 running Isomap (\code{step_center} and \code{step_scale} can be
 used for this purpose).
 
-The argument \code{num} controls the number of components that
+The argument \code{num_terms} controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{Isomap1} -
-\code{Isomap9}. If \code{num = 101}, the names would be
+if \code{num_terms < 10}, their names will be \code{Isomap1} -
+\code{Isomap9}. If \code{num_terms = 101}, the names would be
 \code{Isomap001} - \code{Isomap101}.
 }
 \examples{
@@ -106,8 +111,8 @@ im_trans <- rec \%>\%
   step_center(all_predictors()) \%>\%
   step_scale(all_predictors()) \%>\%
   step_isomap(all_predictors(),
-              options = list(knn = 100),
-              num = 2)
+              neighbors = 100,
+              num_terms = 2)
 
 im_estimates <- prep(im_trans, training = biomass_tr)
 

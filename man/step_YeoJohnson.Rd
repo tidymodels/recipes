@@ -6,7 +6,7 @@
 \title{Yeo-Johnson Transformation}
 \usage{
 step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
-  lambdas = NULL, limits = c(-5, 5), nunique = 5, na.rm = TRUE,
+  lambdas = NULL, limits = c(-5, 5), num_unique = 5, na.rm = TRUE,
   skip = FALSE, id = rand_id("YeoJohnson"))
 
 \method{tidy}{step_YeoJohnson}(x, ...)
@@ -32,7 +32,7 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible
+\item{num_unique}{An integer where data that have less possible
 values will not be evaluate for a transformation.}
 
 \item{na.rm}{A logical value indicating whether \code{NA}

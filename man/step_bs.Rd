@@ -6,7 +6,7 @@
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = NULL, degree = 3),
+  deg_free = NULL, degree = 3, objects = NULL, options = list(),
   skip = FALSE, id = rand_id("bs"))
 
 \method{tidy}{step_bs}(x, ...)
@@ -28,11 +28,15 @@ used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
+\item{deg_free}{The degrees of freedom.}
+
+\item{degree}{The degree of the piecewise polynomial.}
+
 \item{objects}{A list of \code{\link[splines:bs]{splines::bs()}} objects
 created once the step has been trained.}
 
 \item{options}{A list of options for \code{\link[splines:bs]{splines::bs()}}
-which should not include \code{x}.}
+which should not include \code{x}, \code{degree}, or \code{df}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

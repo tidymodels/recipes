@@ -6,7 +6,7 @@
 \title{Box-Cox Transformation for Non-Negative Data}
 \usage{
 step_BoxCox(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
-  limits = c(-5, 5), nunique = 5, skip = FALSE,
+  limits = c(-5, 5), num_unique = 5, skip = FALSE,
   id = rand_id("BoxCox"))
 
 \method{tidy}{step_BoxCox}(x, ...)
@@ -32,7 +32,7 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible
+\item{num_unique}{An integer where data that have less possible
 values will not be evaluate for a transformation.}
 
 \item{skip}{A logical. Should the step be skipped when the

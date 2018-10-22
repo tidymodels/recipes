@@ -12,7 +12,7 @@
 \usage{
 yj_trans(x, lambda, eps = 0.001)
 
-estimate_yj(dat, limits = c(-5, 5), nunique = 5, na.rm = TRUE)
+estimate_yj(dat, limits = c(-5, 5), num_unique = 5, na.rm = TRUE)
 
 ellipse_check(...)
 

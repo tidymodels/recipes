@@ -26,8 +26,8 @@ test_that('correct kernel PCA values', {
                   kernel = kpca_rec$steps[[1]]$options$kernel,
                   kpar = kpca_rec$steps[[1]]$options$kpar)
 
-  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num]
-  colnames(pca_pred_exp) <- paste0("kPC", 1:kpca_trained$steps[[1]]$num)
+  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num_comp]
+  colnames(pca_pred_exp) <- paste0("kPC", 1:kpca_trained$steps[[1]]$num_comp)
 
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
@@ -41,6 +41,13 @@ test_that('correct kernel PCA values', {
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)
 })
 
+
+test_that('deprecated arg', {
+  expect_message(
+    rec %>%
+      step_kpca(X2, X3, X4, X5, X6, num = 2)
+  )
+})
 
 test_that('printing', {
   kpca_rec <- rec %>%

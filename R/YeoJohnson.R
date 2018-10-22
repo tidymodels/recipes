@@ -15,7 +15,7 @@
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
-#' @param nunique An integer where data that have less possible
+#' @param num_unique An integer where data that have less possible
 #'  values will not be evaluate for a transformation.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -69,7 +69,7 @@
 #'   [prep.recipe()] [bake.recipe()]
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
-           lambdas = NULL, limits = c(-5, 5), nunique = 5,
+           lambdas = NULL, limits = c(-5, 5), num_unique = 5,
            na.rm = TRUE,
            skip = FALSE,
            id = rand_id("YeoJohnson")) {
@@ -81,7 +81,7 @@ step_YeoJohnson <-
         trained = trained,
         lambdas = lambdas,
         limits = sort(limits)[1:2],
-        nunique = nunique,
+        num_unique = num_unique,
         na.rm = na.rm,
         skip = skip,
         id = id
@@ -90,7 +90,7 @@ step_YeoJohnson <-
   }
 
 step_YeoJohnson_new <-
-  function(terms, role, trained, lambdas, limits, nunique, na.rm, skip, id) {
+  function(terms, role, trained, lambdas, limits, num_unique, na.rm, skip, id) {
     step(
       subclass = "YeoJohnson",
       terms = terms,
@@ -98,7 +98,7 @@ step_YeoJohnson_new <-
       trained = trained,
       lambdas = lambdas,
       limits = limits,
-      nunique = nunique,
+      num_unique = num_unique,
       na.rm = na.rm,
       skip = skip,
       id = id
@@ -115,7 +115,7 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     estimate_yj,
     c(lambda = 0),
     limits = x$limits,
-    nunique = x$nunique,
+    num_unique = x$num_unique,
     na.rm = x$na.rm
   )
   values <- values[!is.na(values)]
@@ -125,7 +125,7 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     lambdas = values,
     limits = x$limits,
-    nunique = x$nunique,
+    num_unique = x$num_unique,
     na.rm = x$na.rm,
     skip = x$skip,
     id = x$id
@@ -221,7 +221,7 @@ yj_obj <- function(lam, dat){
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5,
+estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5,
                         na.rm = TRUE) {
   na_rows <- which(is.na(dat))
   if (length(na_rows) > 0) {
@@ -233,7 +233,7 @@ estimate_yj <- function(dat, limits = c(-5, 5), nunique = 5,
   }
 
   eps <- .001
-  if (length(unique(dat)) < nunique)
+  if (length(unique(dat)) < num_unique)
     return(NA)
   res <- optimize(
     yj_obj,

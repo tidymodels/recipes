@@ -5,9 +5,9 @@
 \alias{tidy.step_ica}
 \title{ICA Signal Extraction}
 \usage{
-step_ica(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  options = list(), res = NULL, prefix = "IC", skip = FALSE,
-  id = rand_id("ica"))
+step_ica(recipe, ..., role = "predictor", trained = FALSE,
+  num_comp = 5, options = list(), res = NULL, num = NULL,
+  prefix = "IC", skip = FALSE, id = rand_id("ica"))
 
 \method{tidy}{step_ica}(x, ...)
 }
@@ -28,8 +28,8 @@ original variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of ICA components to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_comp}{The number of ICA components to retain as new
+predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
 
@@ -41,6 +41,10 @@ not be passed here.}
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{num}{The number of components to retain (this will be
+deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
+will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -85,13 +89,13 @@ methodology (see reference below). This step requires the
 \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
 step will stop with a note about installing these packages.
 
-The argument \code{num} controls the number of components that
+The argument \code{num_comp} controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{IC1} - \code{IC9}.
-If \code{num = 101}, the names would be \code{IC001} -
+if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
+If \code{num_comp = 101}, the names would be \code{IC001} -
 \code{IC101}.
 }
 \examples{
@@ -108,7 +112,7 @@ rec <- recipe( ~ ., data = tr)
 
 ica_trans <- step_center(rec,  V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
-ica_trans <- step_ica(ica_trans, V1, V2, num = 2)
+ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 ica_estimates <- prep(ica_trans, training = tr)
 ica_data <- bake(ica_estimates, te)
 

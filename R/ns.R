@@ -13,10 +13,11 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
+#' @param deg_free The degrees of freedom. 
 #' @param objects A list of [splines::ns()] objects
 #'  created once the step has been trained.
 #' @param options A list of options for [splines::ns()]
-#'  which should not include `x`.
+#'  which should not include `x` or `df`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -55,7 +56,8 @@ step_ns <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(df = 2),
+           deg_free = 2,
+           options = list(),
            skip = FALSE,
            id = rand_id("ns")) {
     add_step(
@@ -63,6 +65,7 @@ step_ns <-
       step_ns_new(
         terms = ellipse_check(...),
         trained = trained,
+        deg_free = deg_free,
         role = role,
         objects = objects,
         options = options,
@@ -73,12 +76,13 @@ step_ns <-
   }
 
 step_ns_new <-
-  function(terms, role, trained, objects, options, skip, id) {
+  function(terms, role, trained, deg_free, objects, options, skip, id) {
     step(
       subclass = "ns",
       terms = terms,
       role = role,
       trained = trained,
+      deg_free = deg_free,
       objects = objects,
       options = options,
       skip = skip,
@@ -106,13 +110,16 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  obj <- lapply(training[, col_names], ns_wrapper, x$options)
+  opt <- x$options
+  opt$df <- x$deg_free
+  obj <- lapply(training[, col_names], ns_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    deg_free = x$deg_free,
     objects = obj,
     options = x$options,
     skip = x$skip,
