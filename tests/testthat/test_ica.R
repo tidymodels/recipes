@@ -70,7 +70,7 @@ rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2, id = "")
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
 
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
@@ -109,9 +109,16 @@ test_that('correct ICA values', {
 })
 
 
+test_that('deprecated arg', {
+  expect_message(
+    rec %>%
+      step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
+  )
+})
+
 test_that('printing', {
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, num = 2)
+    step_ica(carbon, hydrogen, num_comp = 2)
   expect_output(print(ica_extract))
   expect_output(prep(ica_extract, training = biomass_tr, verbose = TRUE))
 })

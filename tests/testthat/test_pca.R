@@ -27,7 +27,7 @@ test_that('correct PCA values', {
   pca_pred <- as.matrix(pca_pred)
 
   pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
-  pca_pred_exp <- predict(pca_exp, biomass_te[, 3:7])[, 1:pca_extract$steps[[3]]$num]
+  pca_pred_exp <- predict(pca_exp, biomass_te[, 3:7])[, 1:pca_extract$steps[[3]]$num_comp]
 
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
@@ -49,7 +49,7 @@ test_that('correct PCA values', {
   pca_obj <- utils::stack(pca_obj)
 
   tidy_exp_tr <- tibble(
-    terms = rep(tidy_exp_un$terms, pca_extract_trained$steps[[3]]$num),
+    terms = rep(tidy_exp_un$terms, pca_extract_trained$steps[[3]]$num_comp),
     value = pca_obj$values,
     component = as.character(pca_obj$ind),
     id = ""
@@ -70,7 +70,7 @@ test_that('correct PCA values with threshold', {
   pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
   # cumsum(pca_exp$sdev^2)/sum(pca_exp$sdev^2)
 
-  expect_equal(pca_extract_trained$steps[[3]]$num, 2)
+  expect_equal(pca_extract_trained$steps[[3]]$num_comp, 2)
 })
 
 
@@ -78,7 +78,7 @@ test_that('Reduced rotation size', {
   pca_extract <- rec %>%
     step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
     step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 3)
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
@@ -95,6 +95,12 @@ test_that('Reduced rotation size', {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
+test_that('deprecated arg', {
+  expect_message(
+    rec %>%
+      step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
+  )
+})
 
 test_that('printing', {
   pca_extract <- rec %>%

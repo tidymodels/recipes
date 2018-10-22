@@ -14,8 +14,8 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new principal component columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param num The number of PCA components to retain as new
-#'  predictors. If `num` is greater than the number of columns
+#' @param num_comp The number of PCA components to retain as new
+#'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param threshold A fraction of the total variance that should
@@ -23,7 +23,7 @@
 #'  .75` means that `step_pca` should generate enough
 #'  components to capture 75\% of the variability in the variables.
 #'  Note: using this argument will override and resent any value
-#'  given to `num`.
+#'  given to `num_comp`.
 #' @param options A list of options to the default method for
 #'  [stats::prcomp()]. Argument defaults are set to
 #'  `retx = FALSE`, `center = FALSE`, `scale. =
@@ -32,6 +32,9 @@
 #' @param res The [stats::prcomp.default()] object is
 #'  stored here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param num The number of components to retain (this will be 
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
+#'  will override this option. 
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below
 #' @return An updated version of `recipe` with the new step
@@ -57,13 +60,13 @@
 #'  `options` argument or by using [step_center()]
 #'  and [step_scale()].
 #'
-#' The argument `num` controls the number of components that
+#' The argument `num_comp` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
 #'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if `num < 10`, their names will be `PC1` - `PC9`.
-#'  If `num = 101`, the names would be `PC001` -
+#'  if `num_comp < 10`, their names will be `PC1` - `PC9`.
+#'  If `num_comp = 101`, the names would be `PC001` -
 #'  `PC101`.
 #'
 #' Alternatively, `threshold` can be used to determine the
@@ -78,7 +81,7 @@
 #' pca_trans <- rec %>%
 #'   step_center(all_numeric()) %>%
 #'   step_scale(all_numeric()) %>%
-#'   step_pca(all_numeric(), num = 3)
+#'   step_pca(all_numeric(), num_comp = 3)
 #' pca_estimates <- prep(pca_trans, training = USArrests)
 #' pca_data <- bake(pca_estimates, USArrests)
 #'
@@ -102,25 +105,30 @@ step_pca <- function(recipe,
                      ...,
                      role = "predictor",
                      trained = FALSE,
-                     num  = 5,
+                     num_comp  = 5,
                      threshold = NA,
                      options = list(),
                      res = NULL,
+                     num = NULL,
                      prefix = "PC",
                      skip = FALSE,
                      id = rand_id("pca")) {
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
+  if (!is.null(num)) 
+    message("The argument `num` is deprecated in factor of `num_comp`. ",
+            "`num` will be removed in next version.", call. = FALSE)
   add_step(
     recipe,
     step_pca_new(
       terms = ellipse_check(...),
       role = role,
       trained = trained,
-      num = num,
+      num_comp = num_comp,
       threshold = threshold,
       options = options,
       res = res,
+      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -129,16 +137,18 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <- 
-  function(terms, role, trained, num, threshold, options, res, prefix, skip, id) {
+  function(terms, role, trained, num_comp, threshold, options, res, num, 
+           prefix, skip, id) {
     step(
       subclass = "pca",
       terms = terms,
       role = role,
       trained = trained,
-      num = num,
+      num_comp = num_comp,
       threshold = threshold,
       options = options,
       res = res,
+      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -164,14 +174,14 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   prc_call$x <- expr(training[, col_names, drop = FALSE])
   prc_obj <- eval(prc_call)
 
-  x$num <- min(x$num, length(col_names))
+  x$num_comp <- min(x$num_comp, length(col_names))
   if (!is.na(x$threshold)) {
     total_var <- sum(prc_obj$sdev ^ 2)
     num_comp <-
       which.max(cumsum(prc_obj$sdev ^ 2 / total_var) >= x$threshold)
     if (length(num_comp) == 0)
       num_comp <- length(prc_obj$sdev)
-    x$num <- num_comp
+    x$num_comp <- num_comp
   }
   ## decide on removing prc elements that aren't used in new projections
   ## e.g. `sdev` etc.
@@ -180,10 +190,11 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = x$num,
+    num_comp = x$num_comp,
     threshold = x$threshold,
     options = x$options,
     res = prc_obj,
+    num = x$num_comp,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
@@ -195,7 +206,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 bake.step_pca <- function(object, newdata, ...) {
   pca_vars <- rownames(object$res$rotation)
   comps <- predict(object$res, newdata = newdata[, pca_vars])
-  comps <- comps[, 1:object$num, drop = FALSE]
+  comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <-

@@ -242,6 +242,14 @@ test_that('bad args', {
   )
 })
 
+
+test_that('deprecated arg', {
+  expect_message(
+    recipe(yield + y2 ~ ., data = tr_data) %>%
+      step_pls(all_predictors(), outcome = vars(starts_with("y")), num = 2)
+  )
+})
+
 test_that('printing', {
   nondefault_uni_rec <- recipe(yield ~ N + P + K, data = tr_data) %>%
     step_pls(

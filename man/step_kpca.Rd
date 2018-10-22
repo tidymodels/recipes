@@ -5,9 +5,10 @@
 \alias{tidy.step_kpca}
 \title{Kernel PCA Signal Extraction}
 \usage{
-step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma =
-  0.2)), prefix = "kPC", skip = FALSE, id = rand_id("kpca"))
+step_kpca(recipe, ..., role = "predictor", trained = FALSE,
+  num_comp = 5, res = NULL, options = list(kernel = "rbfdot", kpar =
+  list(sigma = 0.2)), num = NULL, prefix = "kPC", skip = FALSE,
+  id = rand_id("kpca"))
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -28,8 +29,8 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_comp}{The number of PCA components to retain as new
+predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
 
@@ -42,6 +43,10 @@ here once this preprocessing step has be trained by
 \code{kernel} and \code{kpar} but others can be passed in.
 \strong{Note} that the arguments \code{x} and \code{features}
 should not be passed here (or at all).}
+
+\item{num}{The number of components to retain (this will be
+deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
+will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -93,13 +98,13 @@ available and their parameter(s). These specifications can be
 made in the \code{kernel} and \code{kpar} slots of the
 \code{options} argument to \code{step_kpca}.
 
-The argument \code{num} controls the number of components that
+The argument \code{num_comp} controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{kPC1} -
-\code{kPC9}. If \code{num = 101}, the names would be
+if \code{num_comp < 10}, their names will be \code{kPC1} -
+\code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
 }
 \examples{
