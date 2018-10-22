@@ -16,19 +16,14 @@
  * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
  * All steps gain an `id` field that will be used in the future to reference other steps. 
  * `broom` is no longer used to get the `tidy` generic. These are now contained in the `generics` package. 
- * **Breaking change** Several argument names were changed to be consistent with other `tidymodels` packages (e.g. `dials`). 
-   * `K` in `step_knnimpute` was changed to `neighbors`. `step_isomap` had the number of neighbors promotoed to a main argument called `neighbors ` 
+ * **[Breaking change]** Several argument names were changed to be consistent with other `tidymodels` packages (e.g. `dials`). 
+   * `K` in `step_knnimpute` was changed to `neighbors`. `step_isomap` had the number of neighbors promoted to a main argument called `neighbors ` 
    *  `step_pca`, `step_pls`, `step_kpca`, `step_ica` now use  `num_comp`  instead of `num`. , `step_isomap` uses `num_terms` instead of `num`. 
+   *  `step_bagimpute` moved `nbagg` out of the options and into a main argument `trees`. 
+   *  `step_bs` and `step_ns` has degrees of freedom promoted to a main argument with name `deg_free`. Also, `step_bs` had `degree` promoted to a main argument. 
+   *  `step_BoxCox` and `step_YeoJohnson` had `nunique` change to `num_unique`.
 
-    
-   *  add a `dials` parameter for threshold on [0,1]
-   *  `step_bagimpute`: move `nbagg` out into a main option and name it `trees`. 
-   *  `nunique` to `num_unique` in BC and TJ transformations
-
-   *  `df` and `degree` in the spline steps; these need to be promoted to main args to the function
-
-
-
+ 
 
 # `recipes` 0.1.3
 
