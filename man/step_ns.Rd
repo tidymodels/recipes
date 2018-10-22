@@ -6,7 +6,7 @@
 \title{Nature Spline Basis Functions}
 \usage{
 step_ns(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(df = 2), skip = FALSE,
+  objects = NULL, deg_free = 2, options = list(), skip = FALSE,
   id = rand_id("ns"))
 
 \method{tidy}{step_ns}(x, ...)
@@ -31,8 +31,10 @@ preprocessing have been estimated.}
 \item{objects}{A list of \code{\link[splines:ns]{splines::ns()}} objects
 created once the step has been trained.}
 
+\item{deg_free}{The degrees of freedom.}
+
 \item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}}
-which should not include \code{x}.}
+which should not include \code{x} or \code{df}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
