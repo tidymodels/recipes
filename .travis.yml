@@ -12,7 +12,6 @@ r_binary_packages:
   - NMF
   - RANN
   - fastICA
-  - ddalpha
   - RcppRoll
   - Matrix
   - ipred
