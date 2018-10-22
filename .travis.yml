@@ -2,7 +2,11 @@
 
 language: R
 sudo: false
-cache: packages
+# cache: packages
+
+env:
+  global:
+  - MAKEFLAGS="-j 2"
 
 r_binary_packages: 
   - NMF
