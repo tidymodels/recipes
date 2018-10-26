@@ -4,7 +4,7 @@
 #'
 #' @param subclass A character string for the resulting class. For example,
 #'   if `subclass = "blah"` the step object that is returned has class
-#'   `step_blah` or `step_blah` depending on the context.
+#'   `step_blah` or `check_blah` depending on the context.
 #' @param ... All arguments to the operator that should be returned.
 #' @param .prefix Prefix to the subclass created.
 #' @keywords internal
