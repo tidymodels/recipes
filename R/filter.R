@@ -119,7 +119,11 @@ bake.step_filter <- function(object, newdata, ...) {
 print.step_filter <-
   function(x, width = max(20, options()$width - 35), ...) {
     cat("Row filtering")
-    printer("", "", x$trained, width = width)
+    if (x$trained) {
+      cat(" [trained]\n") 
+    } else {
+      cat("\n")
+    }
     invisible(x)
   }
 

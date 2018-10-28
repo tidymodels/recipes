@@ -41,6 +41,7 @@ reference:
     - step_invlogit
     - step_log
     - step_logit
+    - step_mutate
     - step_ns
     - step_poly
     - step_relu
@@ -95,20 +96,21 @@ reference:
     - step_zv
   - title: Step Functions - Row Operations
     contents:
+    - step_arrange  
     - step_downsample
+    - step_filter
     - step_lag
     - step_naomit
     - step_rollimpute
+    - step_sample
     - step_shuffle
+    - step_slice
     - step_upsample
   - title: Step Functions - Others
     contents:
     - step_intercept
     - step_profile
     - step_window
-  - title: dplyr Steps
-    - step_mutate
-    contents:
   - title: Check Functions
     contents:
     - matches("^check_")
