@@ -22,7 +22,7 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples. 
 #' @keywords datagen
-#' @concept preprocessing variable_filters
+#' @concept preprocessing row_filters
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%

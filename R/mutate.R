@@ -85,6 +85,8 @@ step_mutate <- function(
   inputs <- enquos(...)
   if (is_empty(inputs)) 
     stop("Please supply at least one name-value pair.", call. = FALSE)
+  if (any(names(inputs) == ""))
+    stop("Please assign new variables to names.", call. = FALSE)
   
   add_step(
     recipe, 
@@ -133,8 +135,13 @@ bake.step_mutate <- function(object, newdata, ...) {
 
 print.step_mutate <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ")
-    printer(names(x$input), names(x$input), x$trained, width = width)
+    cat("Variable mutation for ", 
+        paste0(names(x$input), collapse = ", "))
+    if (x$trained) {
+      cat(" [trained]\n") 
+    } else {
+      cat("\n")
+    }
     invisible(x)
   }
 
