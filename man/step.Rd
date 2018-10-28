@@ -12,7 +12,7 @@ check(subclass, ..., .prefix = "check_")
 \arguments{
 \item{subclass}{A character string for the resulting class. For example,
 if \code{subclass = "blah"} the step object that is returned has class
-\code{step_blah} or \code{step_blah} depending on the context.}
+\code{step_blah} or \code{check_blah} depending on the context.}
 
 \item{...}{All arguments to the operator that should be returned.}
 

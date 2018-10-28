@@ -1,0 +1,139 @@
+#' Filter rows using dplyr
+#'
+#' `step_filter` creates a *specification* of a recipe step
+#'  that will remove rows using [dplyr::filter()].
+#'
+#' @inheritParams step_center
+#' @param ... Logical predicates defined in terms of the variables 
+#'  in the data. Multiple conditions are combined with `&`. Only 
+#'  rows where the condition evaluates to `TRUE` are kept. See
+#'  [dplyr::filter()] for more details. For the `tidy`
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are
+#'  created.
+#' @param input Quosure of values given by `...`.
+#' @return An updated version of `recipe` with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  `tidy` method, a tibble with columns `terms` which
+#'  contains the conditional statements.
+#' @details When an object in the user's global environment is 
+#'  referenced in the expression defining the new variable(s), 
+#'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
+#'  the value of the object in the expression (to be portable
+#'  between sessions). See the examples. 
+#' @keywords datagen
+#' @concept preprocessing variable_filters
+#' @export
+#' @examples
+#' rec <- recipe( ~ ., data = iris) %>%
+#'   step_filter(Sepal.Length > 4.5, Species == "setosa")
+#' 
+#' prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+#' 
+#' library(dplyr)
+#' 
+#' dplyr_train <- 
+#'   iris %>%
+#'   as_tibble() %>%
+#'   slice(1:75) %>%
+#'   dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
+#' 
+#' rec_train <- juice(prepped)
+#' all.equal(dplyr_train, rec_train)
+#' 
+#' dplyr_test <- 
+#'   iris %>%
+#'   as_tibble() %>%
+#'   slice(76:150) %>%
+#'   dplyr::filter(Sepal.Length > 4.5, Species != "setosa")
+#' rec_test <- bake(prepped, iris %>% slice(76:150))
+#' all.equal(dplyr_test, rec_test)
+#' 
+#' values <- c("versicolor", "virginica")
+#' 
+#' qq_rec <-
+#'   recipe( ~ ., data = iris) %>%
+#'   # Embed the `values` object in the call using !!
+#'   step_filter(Sepal.Length > 4.5, Species  %in% !!values)
+#' 
+#' tidy(qq_rec, number = 1)
+
+step_filter <- function(
+  recipe, ..., 
+  role = NA, 
+  trained = FALSE, 
+  input = NULL,
+  skip = FALSE,
+  id = rand_id("filter")
+) {
+  
+  inputs <- enquos(...)
+  if (is_empty(inputs)) 
+    stop("Please supply at least one conditional expression.", call. = FALSE)
+  
+  add_step(
+    recipe, 
+    step_filter_new(
+      terms = terms, 
+      trained = trained,
+      role = role, 
+      input = inputs,
+      skip = skip,
+      id = id
+    )
+  )
+}
+
+step_filter_new <- 
+  function(terms, role, trained, input, skip, id) {
+    step(
+      subclass = "filter", 
+      terms = terms,
+      role = role,
+      trained = trained,
+      input = input,
+      skip = skip,
+      id = id
+    )
+  }
+
+#' @export
+prep.step_filter <- function(x, training, info = NULL, ...) {
+  step_filter_new(
+    terms = x$terms, 
+    trained = TRUE,
+    role = x$role, 
+    input = x$input,
+    skip = x$skip,
+    id = x$id
+  )
+}
+
+#' @importFrom dplyr filter
+#' @export
+bake.step_filter <- function(object, newdata, ...) {
+  dplyr::filter(newdata, !!!object$input)
+}
+
+
+print.step_filter <-
+  function(x, width = max(20, options()$width - 35), ...) {
+    cat("Row filtering")
+    printer("", "", x$trained, width = width)
+    invisible(x)
+  }
+
+#' @importFrom rlang quo_get_expr expr_text
+#' @importFrom purrr map map_chr
+#' @importFrom dplyr tibble
+#' @rdname step_filter
+#' @param x A `step_filter` object
+#' @export
+tidy.step_filter <- function(x, ...) {
+  cond_expr <- map(x$input, quo_get_expr)
+  cond_expr <- map_chr(cond_expr, expr_text, width = options()$width, nlines = 1)
+  tibble(
+    terms = cond_expr,
+    id = rep(x$id, length(x$input))
+  )
+}

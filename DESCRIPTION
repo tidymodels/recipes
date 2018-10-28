@@ -25,7 +25,7 @@ Imports:
     Matrix,
     purrr (>= 0.2.3),
     RcppRoll,
-    rlang (>= 0.2.2.9001),
+    rlang (>=  0.3.0.1),
     stats,
     tibble,
     tidyr,
@@ -56,6 +56,4 @@ RoxygenNote: 6.1.0.9000
 Roxygen: list(markdown = TRUE)
 Remotes:
     tidymodels/rsample,
-    r-lib/rlang,
-    gdkrmr/dimRed,
-    r-lib/generics
+    gdkrmr/dimRed

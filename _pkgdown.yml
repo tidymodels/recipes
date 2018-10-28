@@ -106,6 +106,9 @@ reference:
     - step_intercept
     - step_profile
     - step_window
+  - title: dplyr Steps
+    - step_mutate
+    contents:
   - title: Check Functions
     contents:
     - matches("^check_")
