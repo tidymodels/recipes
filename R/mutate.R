@@ -5,6 +5,8 @@
 #'
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
+#' If the argument is not named, the expression is converted to
+#' a column name.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? By default, the function assumes
 #'  that the new dimension columns created by the original variables
@@ -83,11 +85,9 @@ step_mutate <- function(
   id = rand_id("mutate")
 ) {
 
-  inputs <- enquos(...)
+  inputs <- enquos(..., .named = TRUE)
   if (is_empty(inputs))
     stop("Please supply at least one name-value pair.", call. = FALSE)
-  if (any(names(inputs) == ""))
-    stop("Please assign new variables to names.", call. = FALSE)
 
   add_step(
     recipe,
