@@ -4,6 +4,7 @@
 
  * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
  * `step_geodist` can be used to calculate the distance between geocodes and a single reference location. 
+ * `step_arrange`, `step_filter`, `step_mutate`, `step_sample`, and `step_slice` impliment thier `dplyr` analogs. 
 
 
 ## Other Changes:
