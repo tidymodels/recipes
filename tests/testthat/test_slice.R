@@ -13,22 +13,22 @@ iris_rec <- recipe( ~ ., data = iris)
 # ------------------------------------------------------------------------------
 
 test_that('basic usage', {
-  rec <- 
+  rec <-
     iris_rec %>%
     step_slice(1:5)
-  
+
   prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
-  
-  dplyr_train <- 
+
+  dplyr_train <-
     iris %>%
     as_tibble() %>%
     slice(1:75) %>%
     slice(1:5)
-  
+
   rec_train <- juice(prepped)
   expect_equal(dplyr_train, rec_train)
-  
-  dplyr_test <- 
+
+  dplyr_test <-
     iris %>%
     as_tibble() %>%
     slice(76:150) %>%
@@ -39,27 +39,27 @@ test_that('basic usage', {
 
 test_that('quasiquotation', {
   values <- 1:5
-  rec_1 <- 
+  rec_1 <-
     iris_rec %>%
     step_slice(values)
-  
+
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75), retain = TRUE)
-  
-  dplyr_train <- 
+
+  dplyr_train <-
     iris %>%
     as_tibble() %>%
     slice(1:75) %>%
     slice(values)
-  
+
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
-  
-  rec_2 <- 
+
+  rec_2 <-
     iris_rec %>%
     step_slice(!!values)
-  
+
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75), retain = TRUE)
-  
+
   rm(values)
   expect_error(prep(rec_1, training = iris %>% slice(1:75), retain = TRUE))
   expect_error(
@@ -71,10 +71,14 @@ test_that('quasiquotation', {
 })
 
 
-test_that('bad input', {
-  expect_error(iris_rec %>% step_slice())
+test_that('no input', {
+  no_inputs <-
+    iris_rec %>%
+    step_slice() %>%
+    prep(training = iris, retain = TRUE) %>%
+    juice(composition = "data.frame")
+  expect_equal(no_inputs, iris)
 })
-
 
 
 test_that('printing', {

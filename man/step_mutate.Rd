@@ -14,7 +14,9 @@ step_mutate(recipe, ..., role = "predictor", trained = FALSE,
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
+\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.
+If the argument is not named, the expression is converted to
+a column name.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned? By default, the function assumes
@@ -41,7 +43,8 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{values} which
-contains the \code{mutate} expressions.
+contains the \code{mutate} expressions as character strings
+(and are not reparsable).
 }
 \description{
 \code{step_mutate} creates a \emph{specification} of a recipe step
@@ -55,7 +58,7 @@ the value of the object in the expression (to be portable
 between sessions). See the examples.
 }
 \examples{
-rec <- 
+rec <-
   recipe( ~ ., data = iris) \%>\%
   step_mutate(
     dbl_width = Sepal.Width * 2,
@@ -66,7 +69,7 @@ prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
 
 library(dplyr)
 
-dplyr_train <- 
+dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
@@ -78,7 +81,7 @@ dplyr_train <-
 rec_train <- juice(prepped)
 all.equal(dplyr_train, rec_train)
 
-dplyr_test <- 
+dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%
@@ -92,7 +95,7 @@ all.equal(dplyr_test, rec_test)
 # Embedding objects:
 const <- 1.414
 
-qq_rec <- 
+qq_rec <-
   recipe( ~ ., data = iris) \%>\%
   step_mutate(
     bad_approach = Sepal.Width * const,
@@ -103,7 +106,7 @@ qq_rec <-
 juice(qq_rec, contains("appro")) \%>\% slice(1:4)
 
 # The difference:
-tidy(qq_rec, number = 1)  
+tidy(qq_rec, number = 1)
 }
 \concept{preprocessing transformation_methods}
 \keyword{datagen}

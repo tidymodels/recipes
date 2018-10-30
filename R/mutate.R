@@ -86,8 +86,6 @@ step_mutate <- function(
 ) {
 
   inputs <- enquos(..., .named = TRUE)
-  if (is_empty(inputs))
-    stop("Please supply at least one name-value pair.", call. = FALSE)
 
   add_step(
     recipe,

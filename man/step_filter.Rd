@@ -43,7 +43,8 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} which
-contains the conditional statements.
+contains the conditional statements. These
+expressions are text representations and are not parsable.
 }
 \description{
 \code{step_filter} creates a \emph{specification} of a recipe step
@@ -64,7 +65,7 @@ prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
 
 library(dplyr)
 
-dplyr_train <- 
+dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
@@ -73,7 +74,7 @@ dplyr_train <-
 rec_train <- juice(prepped)
 all.equal(dplyr_train, rec_train)
 
-dplyr_test <- 
+dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%

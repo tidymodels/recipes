@@ -63,7 +63,7 @@ tidy(prepped, number = 1)
 
 library(dplyr)
 
-dplyr_train <- 
+dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
@@ -72,7 +72,7 @@ dplyr_train <-
 rec_train <- juice(prepped)
 all.equal(dplyr_train, rec_train)
 
-dplyr_test <- 
+dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%
@@ -80,8 +80,8 @@ dplyr_test <-
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
-# Embedding the integer expression (or vector) into the 
-# recipe: 
+# Embedding the integer expression (or vector) into the
+# recipe:
 
 keep_rows <- 1:6
 

@@ -41,7 +41,8 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} which
-contains the sorting variable(s) or expression(s).
+contains the sorting variable(s) or expression(s). The
+expressions are text representations and are not parsable.
 }
 \description{
 \code{step_arrange} creates a \emph{specification} of a recipe step
@@ -63,7 +64,7 @@ tidy(prepped, number = 1)
 
 library(dplyr)
 
-dplyr_train <- 
+dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
@@ -72,7 +73,7 @@ dplyr_train <-
 rec_train <- juice(prepped)
 all.equal(dplyr_train, rec_train)
 
-dplyr_test <- 
+dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%
@@ -80,8 +81,8 @@ dplyr_test <-
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
-# When you have variables/expressions, you can create a 
-# list of symbols with `rlang::syms()`` and splice them in 
+# When you have variables/expressions, you can create a
+# list of symbols with `rlang::syms()`` and splice them in
 # the call with `!!!`. See https://tidyeval.tidyverse.org
 
 sort_vars <- c("Sepal.Length", "Petal.Length")

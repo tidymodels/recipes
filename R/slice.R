@@ -71,8 +71,6 @@ step_slice <- function(
 ) {
 
   inputs <- enquos(...)
-  if (is_empty(inputs))
-    stop("Please supply at least one positional vector.", call. = FALSE)
 
   add_step(
     recipe,

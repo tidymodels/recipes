@@ -69,8 +69,6 @@ step_filter <- function(
 ) {
 
   inputs <- enquos(...)
-  if (is_empty(inputs))
-    stop("Please supply at least one conditional expression.", call. = FALSE)
 
   add_step(
     recipe,
