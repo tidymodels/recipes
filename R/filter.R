@@ -68,8 +68,8 @@ step_filter <- function(
   id = rand_id("filter")
 ) {
 
-  inputss <- enquos(...)
-  if (is_empty(inputss))
+  inputs <- enquos(...)
+  if (is_empty(inputs))
     stop("Please supply at least one conditional expression.", call. = FALSE)
 
   add_step(
@@ -78,7 +78,7 @@ step_filter <- function(
       terms = terms,
       trained = trained,
       role = role,
-      inputs = inputss,
+      inputs = inputs,
       skip = skip,
       id = id
     )

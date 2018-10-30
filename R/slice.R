@@ -14,83 +14,83 @@
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which
 #'  contains the filterint indices.
-#' @details When an object in the user's global environment is 
-#'  referenced in the expression defining the new variable(s), 
+#' @details When an object in the user's global environment is
+#'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`)
 #'   to embed the value of the object in the expression (to
-#'   be portable between sessions). See the examples. 
+#'   be portable between sessions). See the examples.
 #' @keywords datagen
-#' @concept preprocessing 
+#' @concept preprocessing
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%
 #'   step_slice(1:3)
-#' 
+#'
 #' prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
 #' tidy(prepped, number = 1)
-#' 
+#'
 #' library(dplyr)
-#' 
-#' dplyr_train <- 
+#'
+#' dplyr_train <-
 #'   iris %>%
 #'   as_tibble() %>%
 #'   slice(1:75) %>%
 #'   slice(1:3)
-#' 
+#'
 #' rec_train <- juice(prepped)
 #' all.equal(dplyr_train, rec_train)
-#' 
-#' dplyr_test <- 
+#'
+#' dplyr_test <-
 #'   iris %>%
 #'   as_tibble() %>%
 #'   slice(76:150) %>%
 #'   slice(1:3)
 #' rec_test <- bake(prepped, iris %>% slice(76:150))
 #' all.equal(dplyr_test, rec_test)
-#' 
-#' # Embedding the integer expression (or vector) into the 
-#' # recipe: 
-#' 
+#'
+#' # Embedding the integer expression (or vector) into the
+#' # recipe:
+#'
 #' keep_rows <- 1:6
-#' 
+#'
 #' qq_rec <-
 #'   recipe( ~ ., data = iris) %>%
 #'   # Embed `keep_rows` in the call using !!
 #'   step_slice(!!keep_rows) %>%
 #'   prep(training = iris)
-#' 
+#'
 #' tidy(qq_rec, number = 1)
 
 step_slice <- function(
-  recipe, ..., 
-  role = NA, 
-  trained = FALSE, 
+  recipe, ...,
+  role = NA,
+  trained = FALSE,
   inputs = NULL,
   skip = FALSE,
   id = rand_id("slice")
 ) {
-  
-  inputss <- enquos(...)
-  if (is_empty(inputss)) 
+
+  inputs <- enquos(...)
+  if (is_empty(inputs))
     stop("Please supply at least one positional vector.", call. = FALSE)
-  
+
   add_step(
-    recipe, 
+    recipe,
     step_slice_new(
-      terms = terms, 
+      terms = terms,
       trained = trained,
-      role = role, 
-      inputs = inputss,
+      role = role,
+      inputs = inputs,
       skip = skip,
       id = id
     )
   )
 }
 
-step_slice_new <- 
+step_slice_new <-
   function(terms, role, trained, inputs, skip, id) {
     step(
-      subclass = "slice", 
+      subclass = "slice",
       terms = terms,
       role = role,
       trained = trained,
@@ -103,9 +103,9 @@ step_slice_new <-
 #' @export
 prep.step_slice <- function(x, training, info = NULL, ...) {
   step_slice_new(
-    terms = x$terms, 
+    terms = x$terms,
     trained = TRUE,
-    role = x$role, 
+    role = x$role,
     inputs = x$inputs,
     skip = x$skip,
     id = x$id
@@ -123,7 +123,7 @@ print.step_slice <-
   function(x, width = max(20, options()$width - 35), ...) {
     cat("Row filtering via position")
     if (x$trained) {
-      cat(" [trained]\n") 
+      cat(" [trained]\n")
     } else {
       cat("\n")
     }
