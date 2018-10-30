@@ -138,7 +138,7 @@ print.step_sample <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr expr_text
+#' @importFrom rlang quo_get_expr quo_text
 #' @importFrom purrr map map_chr
 #' @importFrom dplyr tibble
 #' @rdname step_sample

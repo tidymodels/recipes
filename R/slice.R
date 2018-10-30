@@ -130,7 +130,7 @@ print.step_slice <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr expr_text
+#' @importFrom rlang quo_get_expr quo_text
 #' @importFrom purrr map map_chr
 #' @importFrom dplyr tibble
 #' @rdname step_slice
@@ -138,7 +138,7 @@ print.step_slice <-
 #' @export
 tidy.step_slice <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)
-  cond_expr <- map_chr(cond_expr, expr_text, width = options()$width, nlines = 1)
+  cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = cond_expr,
     id = rep(x$id, length(x$inputs))

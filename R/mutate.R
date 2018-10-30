@@ -13,7 +13,8 @@
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `values` which
-#'  contains the `mutate` expressions.
+#'  contains the `mutate` expressions as character strings
+#'  (and are not reparsable).
 #' @details When an object in the user's global environment is 
 #'  referenced in the expression defining the new variable(s), 
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
@@ -145,7 +146,7 @@ print.step_mutate <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr expr_text
+#' @importFrom rlang quo_get_expr quo_text
 #' @importFrom purrr map map_chr
 #' @importFrom dplyr tibble
 #' @rdname step_mutate
@@ -153,7 +154,7 @@ print.step_mutate <-
 #' @export
 tidy.step_mutate <- function(x, ...) {
   var_expr <- map(x$inputs, quo_get_expr)
-  var_expr <- map_chr(var_expr, expr_text, width = options()$width, nlines = 1)
+  var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
     tibble(
       terms = names(x$inputs),
       value = var_expr,
