@@ -256,26 +256,26 @@ new column name).</p>
 #&gt; Regular expression dummy variable using `(rock|stony)` [trained]
 #&gt; Regular expression dummy variable using `ratake families` [trained]</div><div class='input'>
 <span class='no'>with_dummies</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec2</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>covers</span>)
-<span class='no'>with_dummies</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 40 x 3[39m
+<span class='no'>with_dummies</span></div><div class='output co'>#&gt; # A tibble: 40 x 3
 #&gt;    description                                            rocks ratake.families
-#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m                                                  [3m[38;5;246m&lt;dbl&gt;[39m[23m           [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m 1,cathedral family,rock outcrop complex,extremely sto…     1               0
-#&gt; [38;5;250m 2[39m 2,vanet,ratake families complex,very stony                 1               1
-#&gt; [38;5;250m 3[39m 3,haploborolis,rock outcrop complex,rubbly                 1               0
-#&gt; [38;5;250m 4[39m 4,ratake family,rock outcrop complex,rubbly                1               0
-#&gt; [38;5;250m 5[39m 5,vanet family,rock outcrop complex complex,rubbly         1               0
-#&gt; [38;5;250m 6[39m 6,vanet,wetmore families,rock outcrop complex,stony        1               0
-#&gt; [38;5;250m 7[39m 7,gothic family                                            0               0
-#&gt; [38;5;250m 8[39m 8,supervisor,limber families complex                       0               0
-#&gt; [38;5;250m 9[39m 9,troutville family,very stony                             1               0
-#&gt; [38;5;250m10[39m 10,bullwark,catamount families,rock outcrop complex,r…     1               0
-#&gt; [38;5;246m# ... with 30 more rows[39m</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+#&gt;    &lt;fct&gt;                                                  &lt;dbl&gt;           &lt;dbl&gt;
+#&gt;  1 1,cathedral family,rock outcrop complex,extremely sto…     1               0
+#&gt;  2 2,vanet,ratake families complex,very stony                 1               1
+#&gt;  3 3,haploborolis,rock outcrop complex,rubbly                 1               0
+#&gt;  4 4,ratake family,rock outcrop complex,rubbly                1               0
+#&gt;  5 5,vanet family,rock outcrop complex complex,rubbly         1               0
+#&gt;  6 6,vanet,wetmore families,rock outcrop complex,stony        1               0
+#&gt;  7 7,gothic family                                            0               0
+#&gt;  8 8,supervisor,limber families complex                       0               0
+#&gt;  9 9,troutville family,very stony                             1               0
+#&gt; 10 10,bullwark,catamount families,rock outcrop complex,r…     1               0
+#&gt; # ... with 30 more rows</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms       result id         
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m       [3m[38;5;246m&lt;chr&gt;[39m[23m  [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m description [31mNA[39m     regex_JDghS</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+#&gt;   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;      
+#&gt; 1 description &lt;NA&gt;   regex_JDghS</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms       result id         
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m       [3m[38;5;246m&lt;chr&gt;[39m[23m  [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m description rocks  regex_JDghS</div></pre>
+#&gt;   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;      
+#&gt; 1 description rocks  regex_JDghS</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

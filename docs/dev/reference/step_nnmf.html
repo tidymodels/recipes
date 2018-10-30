@@ -279,27 +279,30 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    isFALSE</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: rngtools</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: cluster</span></div><div class='output co'>#&gt; <span class='message'>NMF - BioConductor layer [OK] | Shared memory capabilities [NO: bigmemory] | Cores 19/20</span></div><div class='output co'>#&gt; <span class='message'>  To enable shared memory capabilities, try: install.extras('</span>
 #&gt; <span class='message'>NMF</span>
-#&gt; <span class='message'>')</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+#&gt; <span class='message'>')</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘NMF’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    compare</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id var"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"split variable"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_nnmf</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>473</span>, <span class='kw'>num_run</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Changing role(s) for sample</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Changing role(s) for dataset</span></div><div class='input'>
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 536 x 5[39m
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 536 x 5
 #&gt;    sample                 dataset    HHV NNMF1 NNMF2
-#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m                  [3m[38;5;246m&lt;fct&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m Akhrot Shell           Training  20.0 0.379 0.198
-#&gt; [38;5;250m 2[39m Alabama Oak Wood Waste Training  19.2 0.365 0.198
-#&gt; [38;5;250m 3[39m Alder                  Training  18.3 0.408 0.185
-#&gt; [38;5;250m 4[39m Alfalfa                Training  18.2 0.314 0.182
-#&gt; [38;5;250m 5[39m Alfalfa Seed Straw     Training  18.4 0.359 0.185
-#&gt; [38;5;250m 6[39m Alfalfa Stalks         Training  18.5 0.355 0.179
-#&gt; [38;5;250m 7[39m Alfalfa Stems          Training  18.7 0.338 0.190
-#&gt; [38;5;250m 8[39m Alfalfa Straw          Training  18.3 0.351 0.181
-#&gt; [38;5;250m 9[39m Almond                 Training  18.6 0.361 0.195
-#&gt; [38;5;250m10[39m Almond Hull            Training  18.9 0.353 0.188
-#&gt; [38;5;246m# ... with 526 more rows[39m</div><div class='input'>
+#&gt;    &lt;fct&gt;                  &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 Akhrot Shell           Training  20.0 0.379 0.198
+#&gt;  2 Alabama Oak Wood Waste Training  19.2 0.365 0.198
+#&gt;  3 Alder                  Training  18.3 0.408 0.185
+#&gt;  4 Alfalfa                Training  18.2 0.314 0.182
+#&gt;  5 Alfalfa Seed Straw     Training  18.4 0.359 0.185
+#&gt;  6 Alfalfa Stalks         Training  18.5 0.355 0.179
+#&gt;  7 Alfalfa Stems          Training  18.7 0.338 0.190
+#&gt;  8 Alfalfa Straw          Training  18.3 0.351 0.181
+#&gt;  9 Almond                 Training  18.6 0.361 0.195
+#&gt; 10 Almond Hull            Training  18.9 0.353 0.188
+#&gt; # ... with 526 more rows</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
 #&gt; <span class='message'></span>

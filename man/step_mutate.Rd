@@ -6,7 +6,7 @@
 \title{Add new variables using \code{mutate}}
 \usage{
 step_mutate(recipe, ..., role = "predictor", trained = FALSE,
-  input = NULL, skip = FALSE, id = rand_id("mutate"))
+  inputs = NULL, skip = FALSE, id = rand_id("mutate"))
 
 \method{tidy}{step_mutate}(x, ...)
 }
@@ -24,7 +24,7 @@ will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{input}{Quosure(s) of \code{...}.}
+\item{inputs}{Quosure(s) of \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

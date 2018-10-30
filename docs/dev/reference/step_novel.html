@@ -254,20 +254,20 @@ is thrown.</p>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
 
 <span class='no'>processed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
-<span class='fu'>tibble</span>(<span class='kw'>old</span> <span class='kw'>=</span> <span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='no'>processed</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 6 x 2[39m
+<span class='fu'>tibble</span>(<span class='kw'>old</span> <span class='kw'>=</span> <span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='no'>processed</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 2
 #&gt;   old               new              
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m             [3m[38;5;246m&lt;fct&gt;[39m[23m            
-#&gt; [38;5;250m1[39m vegetarian        vegetarian       
-#&gt; [38;5;250m2[39m strictly anything strictly anything
-#&gt; [38;5;250m3[39m cannibalism       new              
-#&gt; [38;5;250m4[39m vampirism         new              
-#&gt; [38;5;250m5[39m [31mNA[39m                [31mNA[39m               
-#&gt; [38;5;250m6[39m [31mNA[39m                [31mNA[39m               </div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt;   &lt;chr&gt;             &lt;fct&gt;            
+#&gt; 1 vegetarian        vegetarian       
+#&gt; 2 strictly anything strictly anything
+#&gt; 3 cannibalism       new              
+#&gt; 4 vampirism         new              
+#&gt; 5 &lt;NA&gt;              &lt;NA&gt;             
+#&gt; 6 &lt;NA&gt;              &lt;NA&gt;             </div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
 #&gt;   terms    value id         
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m diet     new   novel_UJowD
-#&gt; [38;5;250m2[39m location new   novel_UJowD</div></pre>
+#&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;      
+#&gt; 1 diet     new   novel_UJowD
+#&gt; 2 location new   novel_UJowD</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

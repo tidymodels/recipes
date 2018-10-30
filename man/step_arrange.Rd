@@ -5,7 +5,7 @@
 \alias{tidy.step_arrange}
 \title{Sort rows using dplyr}
 \usage{
-step_arrange(recipe, ..., role = NA, trained = FALSE, input = NULL,
+step_arrange(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
   skip = FALSE, id = rand_id("arrange"))
 
 \method{tidy}{step_arrange}(x, ...)
@@ -24,7 +24,7 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{input}{Quosure of values given by \code{...}.}
+\item{inputs}{Quosure of values given by \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

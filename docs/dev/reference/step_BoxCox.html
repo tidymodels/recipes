@@ -264,19 +264,19 @@ A review. <em>The Statistician</em>, 169-178..</p>
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'>as.data.frame</span>(<span class='no'>state.x77</span>))
 
 <span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms         value id          
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m         [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m       
-#&gt; [38;5;250m1[39m all_numeric()    [31mNA[39m BoxCox_XYznz</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 7 x 3[39m
+#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
+#&gt; 1 all_numeric()    NA BoxCox_XYznz</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
 #&gt;   terms          value id          
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m       
-#&gt; [38;5;250m1[39m Population  0.000[4m9[24m[4m6[24m[4m6[24m BoxCox_XYznz
-#&gt; [38;5;250m2[39m Income      0.524    BoxCox_XYznz
-#&gt; [38;5;250m3[39m Illiteracy -[31m0[39m[31m.[39m[31m379[39m    BoxCox_XYznz
-#&gt; [38;5;250m4[39m Life Exp    4.59     BoxCox_XYznz
-#&gt; [38;5;250m5[39m Murder      0.606    BoxCox_XYznz
-#&gt; [38;5;250m6[39m HS Grad     1.92     BoxCox_XYznz
-#&gt; [38;5;250m7[39m Area        0.250    BoxCox_XYznz</div><div class='input'>
+#&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
+#&gt; 1 Population  0.000966 BoxCox_XYznz
+#&gt; 2 Income      0.524    BoxCox_XYznz
+#&gt; 3 Illiteracy -0.379    BoxCox_XYznz
+#&gt; 4 Life Exp    4.59     BoxCox_XYznz
+#&gt; 5 Murder      0.606    BoxCox_XYznz
+#&gt; 6 HS Grad     1.92     BoxCox_XYznz
+#&gt; 7 Area        0.250    BoxCox_XYznz</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

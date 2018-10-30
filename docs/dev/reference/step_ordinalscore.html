@@ -255,12 +255,12 @@ functions can also be used (see the example below).</p>
 
 <span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
-#&gt;           [3m[38;5;246m&lt;dbl&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m        [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m1[39m             1              1            0
-#&gt; [38;5;250m2[39m             2              0            1
-#&gt; [38;5;250m3[39m             3              0            0</div><div class='input'>
+#&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1             1              1            0
+#&gt; 2             2              0            1
+#&gt; 3             3              0            0</div><div class='input'>
 <span class='no'>custom</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
   <span class='no'>new_values</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>7</span>)
   <span class='no'>new_values</span>[<span class='fu'>as.numeric</span>(<span class='no'>x</span>)]
@@ -270,22 +270,22 @@ functions can also be used (see the example below).</p>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 2[39m
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms         id                
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m         [3m[38;5;246m&lt;chr&gt;[39m[23m             
-#&gt; [38;5;250m1[39m fail_severity ordinalscore_qWjbW</div><div class='input'>
+#&gt;   &lt;chr&gt;         &lt;chr&gt;             
+#&gt; 1 fail_severity ordinalscore_qWjbW</div><div class='input'>
 <span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
-#&gt;           [3m[38;5;246m&lt;dbl&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m        [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m1[39m             1              1            0
-#&gt; [38;5;250m2[39m             3              0            1
-#&gt; [38;5;250m3[39m             7              0            0</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 2[39m
+#&gt;           &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1             1              1            0
+#&gt; 2             3              0            1
+#&gt; 3             7              0            0</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms         id                
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m         [3m[38;5;246m&lt;chr&gt;[39m[23m             
-#&gt; [38;5;250m1[39m fail_severity ordinalscore_qWjbW</div></pre>
+#&gt;   &lt;chr&gt;         &lt;chr&gt;             
+#&gt; 1 fail_severity ordinalscore_qWjbW</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

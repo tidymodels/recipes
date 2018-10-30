@@ -9,7 +9,7 @@
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param input Quosure of values given by `...`.
+#' @param inputs Quosure of values given by `...`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which
@@ -65,13 +65,13 @@ step_slice <- function(
   recipe, ..., 
   role = NA, 
   trained = FALSE, 
-  input = NULL,
+  inputs = NULL,
   skip = FALSE,
   id = rand_id("slice")
 ) {
   
-  inputs <- enquos(...)
-  if (is_empty(inputs)) 
+  inputss <- enquos(...)
+  if (is_empty(inputss)) 
     stop("Please supply at least one positional vector.", call. = FALSE)
   
   add_step(
@@ -80,7 +80,7 @@ step_slice <- function(
       terms = terms, 
       trained = trained,
       role = role, 
-      input = inputs,
+      inputs = inputss,
       skip = skip,
       id = id
     )
@@ -88,13 +88,13 @@ step_slice <- function(
 }
 
 step_slice_new <- 
-  function(terms, role, trained, input, skip, id) {
+  function(terms, role, trained, inputs, skip, id) {
     step(
       subclass = "slice", 
       terms = terms,
       role = role,
       trained = trained,
-      input = input,
+      inputs = inputs,
       skip = skip,
       id = id
     )
@@ -106,7 +106,7 @@ prep.step_slice <- function(x, training, info = NULL, ...) {
     terms = x$terms, 
     trained = TRUE,
     role = x$role, 
-    input = x$input,
+    inputs = x$inputs,
     skip = x$skip,
     id = x$id
   )
@@ -115,7 +115,7 @@ prep.step_slice <- function(x, training, info = NULL, ...) {
 #' @importFrom dplyr slice
 #' @export
 bake.step_slice <- function(object, newdata, ...) {
-  dplyr::slice(newdata, !!!object$input)
+  dplyr::slice(newdata, !!!object$inputs)
 }
 
 
@@ -137,10 +137,10 @@ print.step_slice <-
 #' @param x A `step_slice` object
 #' @export
 tidy.step_slice <- function(x, ...) {
-  cond_expr <- map(x$input, quo_get_expr)
+  cond_expr <- map(x$inputs, quo_get_expr)
   cond_expr <- map_chr(cond_expr, expr_text, width = options()$width, nlines = 1)
   tibble(
     terms = cond_expr,
-    id = rep(x$id, length(x$input))
+    id = rep(x$id, length(x$inputs))
   )
 }

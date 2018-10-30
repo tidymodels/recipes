@@ -258,21 +258,21 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 <span class='no'>with_splines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_splines</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_splines</span>, <span class='no'>biomass_te</span>)
-<span class='no'>expanded</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 80 x 10[39m
+<span class='no'>expanded</span></div><div class='output co'>#&gt; # A tibble: 80 x 10
 #&gt;    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3
-#&gt;     [3m[38;5;246m&lt;dbl&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m  [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m   47.2     0.3    0.22  18.3       0.437      0.273      0.056[4m8[24m 
-#&gt; [38;5;250m 2[39m   48.1     2.85   0.34  17.6       0.444      0.236      0.041[4m7[24m 
-#&gt; [38;5;250m 3[39m   49.1     2.4    0.3   17.2       0.444      0.229      0.039[4m4[24m 
-#&gt; [38;5;250m 4[39m   37.3     1.8    0.5   18.9       0.437      0.273      0.057[4m1[24m 
-#&gt; [38;5;250m 5[39m   42.8     0.2    0     20.5       0.427      0.301      0.070[4m7[24m 
-#&gt; [38;5;250m 6[39m   41.7     0.7    0.2   18.5       0.442      0.248      0.046[4m5[24m 
-#&gt; [38;5;250m 7[39m   54.1     1.19   0.51  15.1       0.440      0.184      0.025[4m6[24m 
-#&gt; [38;5;250m 8[39m   33.8     0.95   0.2   16.2       0.444      0.222      0.036[4m9[24m 
-#&gt; [38;5;250m 9[39m   31.1     0.14   4.9   11.1       0.359      0.077[4m1[24m     0.005[4m5[24m[4m2[24m
-#&gt; [38;5;250m10[39m   23.7     4.63   1.05  10.8       0.338      0.064[4m3[24m     0.004[4m0[24m[4m8[24m
-#&gt; [38;5;246m# ... with 70 more rows, and 3 more variables: hydrogen_bs_1 [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m,
-#&gt; #   hydrogen_bs_2 [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m, hydrogen_bs_3 [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m[39m</div></pre>
+#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+#&gt;  1   47.2     0.3    0.22  18.3       0.437      0.273      0.0568 
+#&gt;  2   48.1     2.85   0.34  17.6       0.444      0.236      0.0417 
+#&gt;  3   49.1     2.4    0.3   17.2       0.444      0.229      0.0394 
+#&gt;  4   37.3     1.8    0.5   18.9       0.437      0.273      0.0571 
+#&gt;  5   42.8     0.2    0     20.5       0.427      0.301      0.0707 
+#&gt;  6   41.7     0.7    0.2   18.5       0.442      0.248      0.0465 
+#&gt;  7   54.1     1.19   0.51  15.1       0.440      0.184      0.0256 
+#&gt;  8   33.8     0.95   0.2   16.2       0.444      0.222      0.0369 
+#&gt;  9   31.1     0.14   4.9   11.1       0.359      0.0771     0.00552
+#&gt; 10   23.7     4.63   1.05  10.8       0.338      0.0643     0.00408
+#&gt; # ... with 70 more rows, and 3 more variables: hydrogen_bs_1 &lt;dbl&gt;,
+#&gt; #   hydrogen_bs_2 &lt;dbl&gt;, hydrogen_bs_3 &lt;dbl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

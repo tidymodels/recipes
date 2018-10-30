@@ -148,6 +148,6 @@ tidy.step_sample <- function(x, ...) {
   tibble(
     size = x$size,
     replace = x$replace,
-    id = x$input
+    id = x$inputs
   )
 }

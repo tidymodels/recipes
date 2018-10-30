@@ -227,21 +227,21 @@ to the data.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>credit_data</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>check_missing</span>(<span class='no'>Age</span>, <span class='no'>Expenses</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>credit_data</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4,454 x 14[39m
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>credit_data</span>)</div><div class='output co'>#&gt; # A tibble: 4,454 x 14
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m      [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m   [3m[38;5;246m&lt;fct&gt;[39m[23m   [3m[38;5;246m&lt;fct&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m  [3m[38;5;246m&lt;int&gt;[39m[23m
-#&gt; [38;5;250m 1[39m good           9 rent     60    30 married no      free…       73    129
-#&gt; [38;5;250m 2[39m good          17 rent     60    58 widow   no      fixed       48    131
-#&gt; [38;5;250m 3[39m bad           10 owner    36    46 married yes     free…       90    200
-#&gt; [38;5;250m 4[39m good           0 rent     60    24 single  no      fixed       63    182
-#&gt; [38;5;250m 5[39m good           0 rent     36    26 single  no      fixed       46    107
-#&gt; [38;5;250m 6[39m good           1 owner    60    36 married no      fixed       75    214
-#&gt; [38;5;250m 7[39m good          29 owner    60    44 married no      fixed       75    125
-#&gt; [38;5;250m 8[39m good           9 pare…    12    27 single  no      fixed       35     80
-#&gt; [38;5;250m 9[39m good           0 owner    60    32 married no      free…       90    107
-#&gt; [38;5;250m10[39m bad            0 pare…    48    41 married no      part…       90     80
-#&gt; [38;5;246m# ... with 4,444 more rows, and 4 more variables: Assets [3m[38;5;246m&lt;int&gt;[38;5;246m[23m, Debt [3m[38;5;246m&lt;int&gt;[38;5;246m[23m,
-#&gt; #   Amount [3m[38;5;246m&lt;int&gt;[38;5;246m[23m, Price [3m[38;5;246m&lt;int&gt;[38;5;246m[23m[39m</div><div class='input'>
+#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
+#&gt;  1 good           9 rent     60    30 married no      free…       73    129
+#&gt;  2 good          17 rent     60    58 widow   no      fixed       48    131
+#&gt;  3 bad           10 owner    36    46 married yes     free…       90    200
+#&gt;  4 good           0 rent     60    24 single  no      fixed       63    182
+#&gt;  5 good           0 rent     36    26 single  no      fixed       46    107
+#&gt;  6 good           1 owner    60    36 married no      fixed       75    214
+#&gt;  7 good          29 owner    60    44 married no      fixed       75    125
+#&gt;  8 good           9 pare…    12    27 single  no      fixed       35     80
+#&gt;  9 good           0 owner    60    32 married no      free…       90    107
+#&gt; 10 bad            0 pare…    48    41 married no      part…       90     80
+#&gt; # ... with 4,444 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,
+#&gt; #   Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 # If your training set doesn't pass, prep() will stop with an error
 
 </div><span class='co'># NOT RUN {</span>
@@ -258,21 +258,21 @@ to the data.</p>
   <span class='fu'>check_missing</span>(<span class='no'>Income</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rp</span>, <span class='no'>train_data</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1,338 x 14[39m
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rp</span>, <span class='no'>train_data</span>)</div><div class='output co'>#&gt; # A tibble: 1,338 x 14
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m      [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m   [3m[38;5;246m&lt;fct&gt;[39m[23m   [3m[38;5;246m&lt;fct&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m  [3m[38;5;246m&lt;int&gt;[39m[23m
-#&gt; [38;5;250m 1[39m bad           10 owner    36    46 married yes     free…       90    200
-#&gt; [38;5;250m 2[39m good           0 rent     60    24 single  no      fixed       63    182
-#&gt; [38;5;250m 3[39m good           1 owner    60    36 married no      fixed       75    214
-#&gt; [38;5;250m 4[39m good           8 owner    60    30 married no      fixed       75    199
-#&gt; [38;5;250m 5[39m good          19 priv     36    37 married no      fixed       75    170
-#&gt; [38;5;250m 6[39m good          15 priv     24    52 single  no      free…       35    330
-#&gt; [38;5;250m 7[39m good          33 rent     24    68 married no      free…       65    200
-#&gt; [38;5;250m 8[39m good           5 owner    60    22 single  no      fixed       45    324
-#&gt; [38;5;250m 9[39m good          19 owner    60    43 single  no      fixed       75    180
-#&gt; [38;5;250m10[39m good          15 owner    36    43 married no      fixed       75    251
-#&gt; [38;5;246m# ... with 1,328 more rows, and 4 more variables: Assets [3m[38;5;246m&lt;int&gt;[38;5;246m[23m, Debt [3m[38;5;246m&lt;int&gt;[38;5;246m[23m,
-#&gt; #   Amount [3m[38;5;246m&lt;int&gt;[38;5;246m[23m, Price [3m[38;5;246m&lt;int&gt;[38;5;246m[23m[39m</div><span class='co'># NOT RUN {</span>
+#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
+#&gt;  1 bad           10 owner    36    46 married yes     free…       90    200
+#&gt;  2 good           0 rent     60    24 single  no      fixed       63    182
+#&gt;  3 good           1 owner    60    36 married no      fixed       75    214
+#&gt;  4 good           8 owner    60    30 married no      fixed       75    199
+#&gt;  5 good          19 priv     36    37 married no      fixed       75    170
+#&gt;  6 good          15 priv     24    52 single  no      free…       35    330
+#&gt;  7 good          33 rent     24    68 married no      free…       65    200
+#&gt;  8 good           5 owner    60    22 single  no      fixed       45    324
+#&gt;  9 good          19 owner    60    43 single  no      fixed       75    180
+#&gt; 10 good          15 owner    36    43 married no      fixed       75    251
+#&gt; # ... with 1,328 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,
+#&gt; #   Amount &lt;int&gt;, Price &lt;int&gt;</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rp</span>, <span class='no'>test_data</span>)
 <span class='co'># }</span></pre>
   </div>

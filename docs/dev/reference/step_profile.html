@@ -270,20 +270,20 @@ based on the fixed and profiled variable's information.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(-<span class='no'>date</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'>vars</span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 100 x 3[39m
+  <span class='no'>juice</span></div><div class='output co'>#&gt; # A tibble: 100 x 3
 #&gt;    diet     height date      
-#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;date&gt;[39m[23m    
-#&gt; [38;5;250m 1[39m anything     68 2011-06-27
-#&gt; [38;5;250m 2[39m anything     68 2011-06-30
-#&gt; [38;5;250m 3[39m anything     68 2011-07-04
-#&gt; [38;5;250m 4[39m anything     68 2011-07-08
-#&gt; [38;5;250m 5[39m anything     68 2011-07-11
-#&gt; [38;5;250m 6[39m anything     68 2011-07-15
-#&gt; [38;5;250m 7[39m anything     68 2011-07-19
-#&gt; [38;5;250m 8[39m anything     68 2011-07-23
-#&gt; [38;5;250m 9[39m anything     68 2011-07-26
-#&gt; [38;5;250m10[39m anything     68 2011-07-30
-#&gt; [38;5;246m# ... with 90 more rows[39m</div><div class='input'>
+#&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;date&gt;    
+#&gt;  1 anything     68 2011-06-27
+#&gt;  2 anything     68 2011-06-30
+#&gt;  3 anything     68 2011-07-04
+#&gt;  4 anything     68 2011-07-08
+#&gt;  5 anything     68 2011-07-11
+#&gt;  6 anything     68 2011-07-15
+#&gt;  7 anything     68 2011-07-19
+#&gt;  8 anything     68 2011-07-23
+#&gt;  9 anything     68 2011-07-26
+#&gt; 10 anything     68 2011-07-30
+#&gt; # ... with 90 more rows</div><div class='input'>
 
 <span class='co'>##########</span>
 

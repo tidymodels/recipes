@@ -248,14 +248,14 @@ columns that will be affected) and <code>base</code>.</p>
 
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>log_obj</span>, <span class='no'>examples</span>)
 <span class='fu'>plot</span>(<span class='no'>examples</span>$<span class='no'>V1</span>, <span class='no'>transformed_te</span>$<span class='no'>V1</span>)</div><div class='img'><img src='step_log-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>log_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>log_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms             base id       
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m            [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m all_predictors()  2.72 log_e6ZY4</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>log_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;    
+#&gt; 1 all_predictors()  2.72 log_e6ZY4</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>log_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
 #&gt;   terms  base id       
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m V1     2.72 log_e6ZY4
-#&gt; [38;5;250m2[39m V2     2.72 log_e6ZY4</div><div class='input'>
+#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;    
+#&gt; 1 V1     2.72 log_e6ZY4
+#&gt; 2 V2     2.72 log_e6ZY4</div><div class='input'>
 <span class='co'># using the signed argument with negative values</span>
 
 <span class='no'>examples2</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>40</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>)
@@ -264,55 +264,55 @@ columns that will be affected) and <code>base</code>.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>V1</span> + <span class='no'>V2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>examples2</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_log</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples2</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>examples2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 20 x 2[39m
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>examples2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; # A tibble: 20 x 2
 #&gt;          V1        V2
-#&gt;       [3m[38;5;246m&lt;dbl&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m   -[31m0[39m[31m.[39m[31m209[39m  [31mNaN[39m     
-#&gt; [38;5;250m 2[39m    1.71   [31mNaN[39m     
-#&gt; [38;5;250m 3[39m    1.12     1.06  
-#&gt; [38;5;250m 4[39m    1.65     1.19  
-#&gt; [38;5;250m 5[39m  [31mNaN[39m        2.18  
-#&gt; [38;5;250m 6[39m    1.15     1.08  
-#&gt; [38;5;250m 7[39m  [31mNaN[39m        0.555 
-#&gt; [38;5;250m 8[39m    0.102  [31mNaN[39m     
-#&gt; [38;5;250m 9[39m    0.670    1.37  
-#&gt; [38;5;250m10[39m  [31mNaN[39m        1.02  
-#&gt; [38;5;250m11[39m  [31mNaN[39m      [31mNaN[39m     
-#&gt; [38;5;250m12[39m  [31mNaN[39m      [31mNaN[39m     
-#&gt; [38;5;250m13[39m  [31mNaN[39m      [31mNaN[39m     
-#&gt; [38;5;250m14[39m    1.25    -[31m0[39m[31m.[39m[31m0[39m[31m88[4m0[24m[39m
-#&gt; [38;5;250m15[39m    2.21     0.774 
-#&gt; [38;5;250m16[39m  [31mNaN[39m      [31mNaN[39m     
-#&gt; [38;5;250m17[39m  [31mNaN[39m        2.49  
-#&gt; [38;5;250m18[39m  [31mNaN[39m        1.47  
-#&gt; [38;5;250m19[39m  [31mNaN[39m      [31mNaN[39m     
-#&gt; [38;5;250m20[39m  [31mNaN[39m      [31mNaN[39m     </div><div class='input'>
+#&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1   -0.209  NaN     
+#&gt;  2    1.71   NaN     
+#&gt;  3    1.12     1.06  
+#&gt;  4    1.65     1.19  
+#&gt;  5  NaN        2.18  
+#&gt;  6    1.15     1.08  
+#&gt;  7  NaN        0.555 
+#&gt;  8    0.102  NaN     
+#&gt;  9    0.670    1.37  
+#&gt; 10  NaN        1.02  
+#&gt; 11  NaN      NaN     
+#&gt; 12  NaN      NaN     
+#&gt; 13  NaN      NaN     
+#&gt; 14    1.25    -0.0880
+#&gt; 15    2.21     0.774 
+#&gt; 16  NaN      NaN     
+#&gt; 17  NaN        2.49  
+#&gt; 18  NaN        1.47  
+#&gt; 19  NaN      NaN     
+#&gt; 20  NaN      NaN     </div><div class='input'>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>V1</span> + <span class='no'>V2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>examples2</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_log</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>signed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples2</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>examples2</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 20 x 2[39m
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>examples2</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 2
 #&gt;        V1      V2
-#&gt;     [3m[38;5;246m&lt;dbl&gt;[39m[23m   [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m  0     -[31m1[39m[31m.[39m[31m24[39m  
-#&gt; [38;5;250m 2[39m  1.71  -[31m1[39m[31m.[39m[31m81[39m  
-#&gt; [38;5;250m 3[39m  1.12   1.06  
-#&gt; [38;5;250m 4[39m  1.65   1.19  
-#&gt; [38;5;250m 5[39m -[31m1[39m[31m.[39m[31m63[39m   2.18  
-#&gt; [38;5;250m 6[39m  1.15   1.08  
-#&gt; [38;5;250m 7[39m -[31m0[39m[31m.[39m[31m604[39m  0.555 
-#&gt; [38;5;250m 8[39m  0.102 -[31m0[39m[31m.[39m[31m565[39m 
-#&gt; [38;5;250m 9[39m  0.670  1.37  
-#&gt; [38;5;250m10[39m -[31m2[39m[31m.[39m[31m65[39m   1.02  
-#&gt; [38;5;250m11[39m -[31m1[39m[31m.[39m[31m34[39m  -[31m1[39m[31m.[39m[31m0[39m[31m4[39m  
-#&gt; [38;5;250m12[39m -[31m2[39m[31m.[39m[31m0[39m[31m6[39m  -[31m1[39m[31m.[39m[31m51[39m  
-#&gt; [38;5;250m13[39m -[31m0[39m[31m.[39m[31m613[39m -[31m1[39m[31m.[39m[31m75[39m  
-#&gt; [38;5;250m14[39m  1.25   0     
-#&gt; [38;5;250m15[39m  2.21   0.774 
-#&gt; [38;5;250m16[39m -[31m1[39m[31m.[39m[31m90[39m  -[31m0[39m[31m.[39m[31m0[39m[31m81[4m4[24m[39m
-#&gt; [38;5;250m17[39m -[31m0[39m[31m.[39m[31m762[39m  2.49  
-#&gt; [38;5;250m18[39m -[31m1[39m[31m.[39m[31m40[39m   1.47  
-#&gt; [38;5;250m19[39m -[31m1[39m[31m.[39m[31m22[39m  -[31m0[39m[31m.[39m[31m825[39m 
-#&gt; [38;5;250m20[39m -[31m1[39m[31m.[39m[31m20[39m  -[31m2[39m[31m.[39m[31m27[39m  </div><div class='input'>
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1  0     -1.24  
+#&gt;  2  1.71  -1.81  
+#&gt;  3  1.12   1.06  
+#&gt;  4  1.65   1.19  
+#&gt;  5 -1.63   2.18  
+#&gt;  6  1.15   1.08  
+#&gt;  7 -0.604  0.555 
+#&gt;  8  0.102 -0.565 
+#&gt;  9  0.670  1.37  
+#&gt; 10 -2.65   1.02  
+#&gt; 11 -1.34  -1.04  
+#&gt; 12 -2.06  -1.51  
+#&gt; 13 -0.613 -1.75  
+#&gt; 14  1.25   0     
+#&gt; 15  2.21   0.774 
+#&gt; 16 -1.90  -0.0814
+#&gt; 17 -0.762  2.49  
+#&gt; 18 -1.40   1.47  
+#&gt; 19 -1.22  -0.825 
+#&gt; 20 -1.20  -2.27  </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

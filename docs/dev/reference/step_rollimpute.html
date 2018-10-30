@@ -261,21 +261,21 @@ prior to the current point.</p>
   <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>day</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"time_index"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Changing role(s) for day</span></div><div class='input'>
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 12 x 4[39m
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
 #&gt;    day           x1    x2    x3
-#&gt;    [3m[38;5;246m&lt;date&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m 2012-06-08  0.89 0.79  0.580
-#&gt; [38;5;250m 2[39m 2012-06-09  0.53 0.79  0.45 
-#&gt; [38;5;250m 3[39m 2012-06-10  0.86 0.79  0.67 
-#&gt; [38;5;250m 4[39m 2012-06-11  0.92 0.79  0.05 
-#&gt; [38;5;250m 5[39m 2012-06-12  0.86 0.88  0.27 
-#&gt; [38;5;250m 6[39m 2012-06-13  0.86 0.6   0.13 
-#&gt; [38;5;250m 7[39m 2012-06-14  0.97 0.79  0.67 
-#&gt; [38;5;250m 8[39m 2012-06-15  0.85 0.27  0.16 
-#&gt; [38;5;250m 9[39m 2012-06-16  0.86 0.11  0.36 
-#&gt; [38;5;250m10[39m 2012-06-17  0.96 0.435 0.09 
-#&gt; [38;5;250m11[39m 2012-06-18  0.91 0.16  0.76 
-#&gt; [38;5;250m12[39m 2012-06-19  0.07 0.86  0.74 </div></pre>
+#&gt;    &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 2012-06-08  0.89 0.79  0.580
+#&gt;  2 2012-06-09  0.53 0.79  0.45 
+#&gt;  3 2012-06-10  0.86 0.79  0.67 
+#&gt;  4 2012-06-11  0.92 0.79  0.05 
+#&gt;  5 2012-06-12  0.86 0.88  0.27 
+#&gt;  6 2012-06-13  0.86 0.6   0.13 
+#&gt;  7 2012-06-14  0.97 0.79  0.67 
+#&gt;  8 2012-06-15  0.85 0.27  0.16 
+#&gt;  9 2012-06-16  0.86 0.11  0.36 
+#&gt; 10 2012-06-17  0.96 0.435 0.09 
+#&gt; 11 2012-06-18  0.91 0.16  0.76 
+#&gt; 12 2012-06-19  0.07 0.86  0.74 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

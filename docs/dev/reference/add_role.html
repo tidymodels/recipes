@@ -188,17 +188,17 @@ changed and a warning is issued.</p>
 #&gt; 
 #&gt; Inputs:
 #&gt; 
-#&gt;   8 variables (no declared roles)</div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 8 x 4[39m
+#&gt;   8 variables (no declared roles)</div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 8 x 4
 #&gt;   variable type    role  source  
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;lgl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-#&gt; [38;5;250m1[39m sample   nominal [31mNA[39m    original
-#&gt; [38;5;250m2[39m dataset  nominal [31mNA[39m    original
-#&gt; [38;5;250m3[39m carbon   numeric [31mNA[39m    original
-#&gt; [38;5;250m4[39m hydrogen numeric [31mNA[39m    original
-#&gt; [38;5;250m5[39m oxygen   numeric [31mNA[39m    original
-#&gt; [38;5;250m6[39m nitrogen numeric [31mNA[39m    original
-#&gt; [38;5;250m7[39m sulfur   numeric [31mNA[39m    original
-#&gt; [38;5;250m8[39m HHV      numeric [31mNA[39m    original</div><div class='input'>
+#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;   
+#&gt; 1 sample   nominal NA    original
+#&gt; 2 dataset  nominal NA    original
+#&gt; 3 carbon   numeric NA    original
+#&gt; 4 hydrogen numeric NA    original
+#&gt; 5 oxygen   numeric NA    original
+#&gt; 6 nitrogen numeric NA    original
+#&gt; 7 sulfur   numeric NA    original
+#&gt; 8 HHV      numeric NA    original</div><div class='input'>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>add_role</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), <span class='no'>sulfur</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_role</span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>

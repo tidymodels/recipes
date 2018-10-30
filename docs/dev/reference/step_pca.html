@@ -305,42 +305,42 @@ Analysis</em>. Springer.</p>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.99</span>)
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_thresh</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 50 x 4[39m
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; # A tibble: 50 x 4
 #&gt;        PC1     PC2     PC3      PC4
-#&gt;      [3m[38;5;246m&lt;dbl&gt;[39m[23m   [3m[38;5;246m&lt;dbl&gt;[39m[23m   [3m[38;5;246m&lt;dbl&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m -[31m0[39m[31m.[39m[31m976[39m   1.12   -[31m0[39m[31m.[39m[31m440[39m   0.155  
-#&gt; [38;5;250m 2[39m -[31m1[39m[31m.[39m[31m93[39m    1.06    2.02   -[31m0[39m[31m.[39m[31m434[39m  
-#&gt; [38;5;250m 3[39m -[31m1[39m[31m.[39m[31m75[39m   -[31m0[39m[31m.[39m[31m738[39m   0.054[4m2[24m -[31m0[39m[31m.[39m[31m826[39m  
-#&gt; [38;5;250m 4[39m  0.140   1.11    0.113  -[31m0[39m[31m.[39m[31m181[39m  
-#&gt; [38;5;250m 5[39m -[31m2[39m[31m.[39m[31m50[39m   -[31m1[39m[31m.[39m[31m53[39m    0.593  -[31m0[39m[31m.[39m[31m339[39m  
-#&gt; [38;5;250m 6[39m -[31m1[39m[31m.[39m[31m50[39m   -[31m0[39m[31m.[39m[31m978[39m   1.08    0.001[4m4[24m[4m5[24m
-#&gt; [38;5;250m 7[39m  1.34   -[31m1[39m[31m.[39m[31m0[39m[31m8[39m   -[31m0[39m[31m.[39m[31m637[39m  -[31m0[39m[31m.[39m[31m117[39m  
-#&gt; [38;5;250m 8[39m -[31m0[39m[31m.[39m[31m0[39m[31m47[4m2[24m[39m -[31m0[39m[31m.[39m[31m322[39m  -[31m0[39m[31m.[39m[31m711[39m  -[31m0[39m[31m.[39m[31m873[39m  
-#&gt; [38;5;250m 9[39m -[31m2[39m[31m.[39m[31m98[39m    0.038[4m8[24m -[31m0[39m[31m.[39m[31m571[39m  -[31m0[39m[31m.[39m[31m0[39m[31m95[4m3[24m[39m 
-#&gt; [38;5;250m10[39m -[31m1[39m[31m.[39m[31m62[39m    1.27   -[31m0[39m[31m.[39m[31m339[39m   1.07   
-#&gt; [38;5;246m# ... with 40 more rows[39m</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 4[39m
+#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 -0.976   1.12   -0.440   0.155  
+#&gt;  2 -1.93    1.06    2.02   -0.434  
+#&gt;  3 -1.75   -0.738   0.0542 -0.826  
+#&gt;  4  0.140   1.11    0.113  -0.181  
+#&gt;  5 -2.50   -1.53    0.593  -0.339  
+#&gt;  6 -1.50   -0.978   1.08    0.00145
+#&gt;  7  1.34   -1.08   -0.637  -0.117  
+#&gt;  8 -0.0472 -0.322  -0.711  -0.873  
+#&gt;  9 -2.98    0.0388 -0.571  -0.0953 
+#&gt; 10 -1.62    1.27   -0.339   1.07   
+#&gt; # ... with 40 more rows</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
 #&gt;   terms         value component id       
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m         [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m all_numeric()    [31mNA[39m [31mNA[39m        pca_UJdaV</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 16 x 4[39m
+#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
+#&gt; 1 all_numeric()    NA &lt;NA&gt;      pca_UJdaV</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 4
 #&gt;    terms      value component id       
-#&gt;    [3m[38;5;246m&lt;chr&gt;[39m[23m      [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m 1[39m Murder   -[31m0[39m[31m.[39m[31m536[39m  PC1       pca_UJdaV
-#&gt; [38;5;250m 2[39m Assault  -[31m0[39m[31m.[39m[31m583[39m  PC1       pca_UJdaV
-#&gt; [38;5;250m 3[39m UrbanPop -[31m0[39m[31m.[39m[31m278[39m  PC1       pca_UJdaV
-#&gt; [38;5;250m 4[39m Rape     -[31m0[39m[31m.[39m[31m543[39m  PC1       pca_UJdaV
-#&gt; [38;5;250m 5[39m Murder    0.418  PC2       pca_UJdaV
-#&gt; [38;5;250m 6[39m Assault   0.188  PC2       pca_UJdaV
-#&gt; [38;5;250m 7[39m UrbanPop -[31m0[39m[31m.[39m[31m873[39m  PC2       pca_UJdaV
-#&gt; [38;5;250m 8[39m Rape     -[31m0[39m[31m.[39m[31m167[39m  PC2       pca_UJdaV
-#&gt; [38;5;250m 9[39m Murder   -[31m0[39m[31m.[39m[31m341[39m  PC3       pca_UJdaV
-#&gt; [38;5;250m10[39m Assault  -[31m0[39m[31m.[39m[31m268[39m  PC3       pca_UJdaV
-#&gt; [38;5;250m11[39m UrbanPop -[31m0[39m[31m.[39m[31m378[39m  PC3       pca_UJdaV
-#&gt; [38;5;250m12[39m Rape      0.818  PC3       pca_UJdaV
-#&gt; [38;5;250m13[39m Murder    0.649  PC4       pca_UJdaV
-#&gt; [38;5;250m14[39m Assault  -[31m0[39m[31m.[39m[31m743[39m  PC4       pca_UJdaV
-#&gt; [38;5;250m15[39m UrbanPop  0.134  PC4       pca_UJdaV
-#&gt; [38;5;250m16[39m Rape      0.089[4m0[24m PC4       pca_UJdaV</div></pre>
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
+#&gt;  1 Murder   -0.536  PC1       pca_UJdaV
+#&gt;  2 Assault  -0.583  PC1       pca_UJdaV
+#&gt;  3 UrbanPop -0.278  PC1       pca_UJdaV
+#&gt;  4 Rape     -0.543  PC1       pca_UJdaV
+#&gt;  5 Murder    0.418  PC2       pca_UJdaV
+#&gt;  6 Assault   0.188  PC2       pca_UJdaV
+#&gt;  7 UrbanPop -0.873  PC2       pca_UJdaV
+#&gt;  8 Rape     -0.167  PC2       pca_UJdaV
+#&gt;  9 Murder   -0.341  PC3       pca_UJdaV
+#&gt; 10 Assault  -0.268  PC3       pca_UJdaV
+#&gt; 11 UrbanPop -0.378  PC3       pca_UJdaV
+#&gt; 12 Rape      0.818  PC3       pca_UJdaV
+#&gt; 13 Murder    0.649  PC4       pca_UJdaV
+#&gt; 14 Assault  -0.743  PC4       pca_UJdaV
+#&gt; 15 UrbanPop  0.134  PC4       pca_UJdaV
+#&gt; 16 Rape      0.0890 PC4       pca_UJdaV</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

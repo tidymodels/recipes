@@ -9,7 +9,7 @@
 #'  role should they be assigned? By default, the function assumes
 #'  that the new dimension columns created by the original variables
 #'  will be used as predictors in a model.
-#' @param input Quosure(s) of `...`.
+#' @param inputs Quosure(s) of `...`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `values` which
@@ -77,15 +77,15 @@ step_mutate <- function(
   recipe, ..., 
   role = "predictor", 
   trained = FALSE, 
-  input = NULL,
+  inputs = NULL,
   skip = FALSE,
   id = rand_id("mutate")
 ) {
   
-  inputs <- enquos(...)
-  if (is_empty(inputs)) 
+  inputss <- enquos(...)
+  if (is_empty(inputss)) 
     stop("Please supply at least one name-value pair.", call. = FALSE)
-  if (any(names(inputs) == ""))
+  if (any(names(inputss) == ""))
     stop("Please assign new variables to names.", call. = FALSE)
   
   add_step(
@@ -94,7 +94,7 @@ step_mutate <- function(
       terms = terms, 
       trained = trained,
       role = role, 
-      input = inputs,
+      inputs = inputss,
       skip = skip,
       id = id
     )
@@ -102,13 +102,13 @@ step_mutate <- function(
 }
 
 step_mutate_new <- 
-  function(terms, role, trained, input, skip, id) {
+  function(terms, role, trained, inputs, skip, id) {
     step(
       subclass = "mutate", 
       terms = terms,
       role = role,
       trained = trained,
-      input = input,
+      inputs = inputs,
       skip = skip,
       id = id
     )
@@ -120,7 +120,7 @@ prep.step_mutate <- function(x, training, info = NULL, ...) {
     terms = x$terms, 
     trained = TRUE,
     role = x$role, 
-    input = x$input,
+    inputs = x$inputs,
     skip = x$skip,
     id = x$id
   )
@@ -129,14 +129,14 @@ prep.step_mutate <- function(x, training, info = NULL, ...) {
 #' @importFrom dplyr mutate
 #' @export
 bake.step_mutate <- function(object, newdata, ...) {
-  dplyr::mutate(newdata, !!!object$input)
+  dplyr::mutate(newdata, !!!object$inputs)
 }
 
 
 print.step_mutate <-
   function(x, width = max(20, options()$width - 35), ...) {
     cat("Variable mutation for ", 
-        paste0(names(x$input), collapse = ", "))
+        paste0(names(x$inputs), collapse = ", "))
     if (x$trained) {
       cat(" [trained]\n") 
     } else {
@@ -152,11 +152,11 @@ print.step_mutate <-
 #' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
-  var_expr <- map(x$input, quo_get_expr)
+  var_expr <- map(x$inputs, quo_get_expr)
   var_expr <- map_chr(var_expr, expr_text, width = options()$width, nlines = 1)
     tibble(
-      terms = names(x$input),
+      terms = names(x$inputs),
       value = var_expr,
-      id = rep(x$id, length(x$input))
+      id = rep(x$id, length(x$inputs))
     )
 }
