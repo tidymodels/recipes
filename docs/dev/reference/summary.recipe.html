@@ -187,26 +187,26 @@ original variables are the same.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
+<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
 #&gt;   variable type    role      source  
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
-#&gt; 1 Murder   numeric predictor original
-#&gt; 2 Assault  numeric predictor original
-#&gt; 3 UrbanPop numeric predictor original
-#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>The argument `num` is deprecated in factor of `num_comp`. `num` will be removed in next version.FALSE</span></div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet trained</span></div><div class='output co'>#&gt; # A tibble: 4 x 4
+#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m   
+#&gt; [38;5;250m1[39m Murder   numeric predictor original
+#&gt; [38;5;250m2[39m Assault  numeric predictor original
+#&gt; [38;5;250m3[39m UrbanPop numeric predictor original
+#&gt; [38;5;250m4[39m Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>rec</span>, <span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>The argument `num` is deprecated in factor of `num_comp`. `num` will be removed in next version.FALSE</span></div><div class='input'><span class='fu'>summary</span>(<span class='no'>rec</span>) <span class='co'># still the same since not yet trained</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
 #&gt;   variable type    role      source  
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
-#&gt; 1 Murder   numeric predictor original
-#&gt; 2 Assault  numeric predictor original
-#&gt; 3 UrbanPop numeric predictor original
-#&gt; 4 Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
+#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m   
+#&gt; [38;5;250m1[39m Murder   numeric predictor original
+#&gt; [38;5;250m2[39m Assault  numeric predictor original
+#&gt; [38;5;250m3[39m UrbanPop numeric predictor original
+#&gt; [38;5;250m4[39m Rape     numeric predictor original</div><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
+<span class='fu'>summary</span>(<span class='no'>rec</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
 #&gt;   variable type    role      source 
-#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  
-#&gt; 1 PC1      numeric predictor derived
-#&gt; 2 PC2      numeric predictor derived
-#&gt; 3 PC3      numeric predictor derived
-#&gt; 4 PC4      numeric predictor derived</div></pre>
+#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m  
+#&gt; [38;5;250m1[39m PC1      numeric predictor derived
+#&gt; [38;5;250m2[39m PC2      numeric predictor derived
+#&gt; [38;5;250m3[39m PC3      numeric predictor derived
+#&gt; [38;5;250m4[39m PC4      numeric predictor derived</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

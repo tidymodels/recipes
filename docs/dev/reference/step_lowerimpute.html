@@ -244,18 +244,18 @@ with a random uniform value between zero and the minimum.</p>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_lowerimpute</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
 #&gt;   terms    value id               
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;            
-#&gt; 1 carbon      NA lowerimpute_wAxW7
-#&gt; 2 hydrogen    NA lowerimpute_wAxW7</div><div class='input'>
+#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m            
+#&gt; [38;5;250m1[39m carbon      [31mNA[39m lowerimpute_wAxW7
+#&gt; [38;5;250m2[39m hydrogen    [31mNA[39m lowerimpute_wAxW7</div><div class='input'>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
 #&gt;   terms    value id               
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;            
-#&gt; 1 carbon      40 lowerimpute_wAxW7
-#&gt; 2 hydrogen     5 lowerimpute_wAxW7</div><div class='input'>
+#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m            
+#&gt; [38;5;250m1[39m carbon      40 lowerimpute_wAxW7
+#&gt; [38;5;250m2[39m hydrogen     5 lowerimpute_wAxW7</div><div class='input'>
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>impute_rec</span>, <span class='no'>biomass_te</span>)
 
 <span class='fu'>plot</span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>carbon</span>,

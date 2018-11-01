@@ -163,7 +163,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     warning(
       "Categorical variables used in `step_interact` should probably be ",
       "avoided;  This can lead to differences in dummy variable values that ",
-      "are produced by `step_dummy`."
+      "are produced by `step_dummy`. Please onvert all involved variables ",
+      "to dummy variables first.", call. = FALSE
     )
 
   ## For each interaction, create a new formula that has main effects

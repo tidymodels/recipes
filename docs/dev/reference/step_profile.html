@@ -270,20 +270,20 @@ based on the fixed and profiled variable's information.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(-<span class='no'>date</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'>vars</span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span></div><div class='output co'>#&gt; # A tibble: 100 x 3
+  <span class='no'>juice</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 100 x 3[39m
 #&gt;    diet     height date      
-#&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;date&gt;    
-#&gt;  1 anything     68 2011-06-27
-#&gt;  2 anything     68 2011-06-30
-#&gt;  3 anything     68 2011-07-04
-#&gt;  4 anything     68 2011-07-08
-#&gt;  5 anything     68 2011-07-11
-#&gt;  6 anything     68 2011-07-15
-#&gt;  7 anything     68 2011-07-19
-#&gt;  8 anything     68 2011-07-23
-#&gt;  9 anything     68 2011-07-26
-#&gt; 10 anything     68 2011-07-30
-#&gt; # ... with 90 more rows</div><div class='input'>
+#&gt;    [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;date&gt;[39m[23m    
+#&gt; [38;5;250m 1[39m anything     68 2011-06-27
+#&gt; [38;5;250m 2[39m anything     68 2011-06-30
+#&gt; [38;5;250m 3[39m anything     68 2011-07-04
+#&gt; [38;5;250m 4[39m anything     68 2011-07-08
+#&gt; [38;5;250m 5[39m anything     68 2011-07-11
+#&gt; [38;5;250m 6[39m anything     68 2011-07-15
+#&gt; [38;5;250m 7[39m anything     68 2011-07-19
+#&gt; [38;5;250m 8[39m anything     68 2011-07-23
+#&gt; [38;5;250m 9[39m anything     68 2011-07-26
+#&gt; [38;5;250m10[39m anything     68 2011-07-30
+#&gt; [38;5;246m# ... with 90 more rows[39m</div><div class='input'>
 
 <span class='co'>##########</span>
 
@@ -295,13 +295,13 @@ based on the fixed and profiled variable's information.</p>
 <span class='co'># Show the difference in the two grid creation methods</span>
 
 <span class='no'>disp_pctl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_profile</span>(-<span class='no'>disp</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/vars'>vars</a></span>(<span class='no'>disp</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_profile</span>(-<span class='no'>disp</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>disp_grid</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(
     -<span class='no'>disp</span>,
-    <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/vars'>vars</a></span>(<span class='no'>disp</span>),
+    <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>),
     <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -320,9 +320,9 @@ based on the fixed and profiled variable's information.</p>
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>plot_data</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>pred</span>)) +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></pre>
+<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>plot_data</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>pred</span>)) +
+  <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+  <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
