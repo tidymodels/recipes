@@ -366,11 +366,16 @@ prep.recipe <-
     }
 
     tr_data <- train_info(training)
+    
+    # Record the original levels for later checking
+    orig_lvls <- lapply(training, get_levels)
+    
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
       training <- strings2factors(training, lvls)
-    } else
+    } else {
       lvls <- NULL
+    }
 
     # The only way to get the results for skipped steps is to
     # use `retain = TRUE` so issue a warning if this is not the case
@@ -423,6 +428,7 @@ prep.recipe <-
 
     x$tr_info <- tr_data
     x$levels <- lvls
+    x$orig_lvls <- orig_lvls
     x$retained <- retain
     x
   }
@@ -476,7 +482,7 @@ bake <- function(object, ...)
 #' @export
 bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   if (!fully_trained(object))
-    stop("At least one step has not been training. Please ",
+    stop("At least one step has not been trained. Please ",
          "run `prep`.",
          call. = FALSE)
 
@@ -487,6 +493,8 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
 
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
 
+  check_nominal_type(newdata, object$orig_lvls)
+  
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(everything())
