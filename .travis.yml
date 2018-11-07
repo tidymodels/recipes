@@ -15,6 +15,7 @@ r_binary_packages:
   - RcppRoll
   - Matrix
   - ipred
+  - RSpectra
 
 r:
 - 3.1
