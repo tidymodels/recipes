@@ -655,7 +655,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object))
-    stop("At least one step has not been training. Please ",
+    stop("At least one step has not been trained. Please ",
          "run `prep`.",
          call. = FALSE)
 

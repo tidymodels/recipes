@@ -104,11 +104,11 @@ test_that("bake without pred", {
     step_spatialsign(all_predictors())
   expect_error(
     bake(sp_signed, newdata = biomass_te),
-    "At least one step has not been training. Please run `prep`."
+    "At least one step has not been trained. Please run `prep`."
   )
   expect_error(
     juice(sp_signed),
-    "At least one step has not been training. Please run `prep`."
+    "At least one step has not been trained. Please run `prep`."
   )
 })
 
