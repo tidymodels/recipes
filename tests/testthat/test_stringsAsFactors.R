@@ -24,7 +24,7 @@ test_that('stringsAsFactors = FALSE', {
   rec1 <- prep(rec1, training = as_fact, retain = TRUE, 
                   stringsAsFactors = FALSE, verbose = FALSE)
   rec1_as_fact <- bake(rec1, newdata = as_fact)
-  rec1_as_str <- bake(rec1, newdata = as_str) 
+  expect_warning(rec1_as_str <- bake(rec1, newdata = as_str))
   expect_equal(as_fact$fact, rec1_as_fact$fact)
   expect_equal(as_fact$ord, rec1_as_fact$ord)  
   expect_equal(as_str$fact, rec1_as_str$fact)
@@ -38,7 +38,7 @@ test_that('stringsAsFactors = TRUE', {
   rec2 <- prep(rec2, training = as_fact, retain = TRUE, 
                   stringsAsFactors = TRUE, verbose = FALSE)
   rec2_as_fact <- bake(rec2, newdata = as_fact)
-  rec2_as_str <- bake(rec2, newdata = as_str) 
+  expect_warning(rec2_as_str <- bake(rec2, newdata = as_str)) 
   expect_equal(as_fact$fact, rec2_as_fact$fact)
   expect_equal(as_fact$ord, rec2_as_fact$ord)  
   expect_equal(as_fact$fact, rec2_as_str$fact)
