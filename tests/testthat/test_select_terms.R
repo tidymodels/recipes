@@ -105,5 +105,14 @@ test_that('combinations', {
   )
 })
 
-
+test_that('namespaced selectors', {
+  expect_equal(
+    terms_select(info = info1, quos(tidyselect::matches("e$"))),
+    terms_select(info = info1, quos(matches("e$")))
+  )
+  expect_equal(
+    terms_select(info = info1, quos(dplyr::matches("e$"))),
+    terms_select(info = info1, quos(matches("e$")))
+  )
+})
 
