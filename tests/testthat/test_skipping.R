@@ -22,7 +22,7 @@ test_that('simple skip', {
   expect_warning(
     prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
   )
-  
+
   baked_2  <- bake(prepped_2, newdata = iris[, -1])
   baked_3  <- bake(prepped_2, newdata = iris)
   expect_false(
@@ -39,8 +39,9 @@ test_that('simple skip', {
 
 test_that('check existing steps for `skip` arg', {
   step_check <- ls("package:recipes", pattern = "(^step_)|(^check_)")
-  # This one is not an operation
+  # These ones are not operations
   step_check <- step_check[step_check != "check_type"]
+  step_check <- step_check[step_check != "check_nominal_type"]
   has_skip_arg <- function(x) {
     x_code <- getFromNamespace(x, "recipes")
     x_args <- names(formals(x_code))
