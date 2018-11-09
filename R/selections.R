@@ -178,9 +178,8 @@ element_check <- function(x, allowed = selectors) {
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info) {
-  vars <- info$variable
-  roles <- info$role
-  types <- info$type
+  # unique in case the same var has multiple roles
+  vars <- unique(info$variable)
 
   if (is_empty(terms)) {
     stop("At least one selector should be used", call. = FALSE)
