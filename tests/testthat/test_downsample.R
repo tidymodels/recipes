@@ -14,10 +14,10 @@ rec <- recipe( ~ ., data = iris2)
 
 test_that('basic usage', {
   rec1 <- rec %>%
-    step_downsample(matches("Species$"), id = "")
+    step_downsample(tidyselect::matches("Species$"), id = "")
 
   untrained <- tibble(
-    terms = "matches(\"Species$\")",
+    terms = "tidyselect::matches(\"Species$\")",
     id = ""
   )
 
@@ -46,7 +46,7 @@ test_that('basic usage', {
 
 test_that('ratio value', {
   rec2 <- rec %>%
-    step_downsample(matches("Species$"), ratio = 2)
+    step_downsample(tidyselect::matches("Species$"), ratio = 2)
 
   rec2_p <- prep(rec2, training = iris2, retain = TRUE)
 
@@ -62,7 +62,7 @@ test_that('ratio value', {
 
 test_that('no skipping', {
   rec3 <- rec %>%
-    step_downsample(matches("Species$"), skip = FALSE)
+    step_downsample(tidyselect::matches("Species$"), skip = FALSE)
 
   rec3_p <- prep(rec3, training = iris2, retain = TRUE)
 
