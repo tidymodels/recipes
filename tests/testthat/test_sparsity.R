@@ -63,3 +63,21 @@ test_that('bad args', {
   expect_error(bake(rec, newdata = okc_te, composition = "dgCMatrix"))
   expect_error(juice(rec, composition = "dgCMatrix"))
 })
+
+test_that('issue 206 - NA values are kept when requesting matrix composition', {
+  df <- data.frame(x = factor(c("x", "x", "y")), x2 = c(NA, 1, NA))
+
+  rec <- recipe(x2 ~ ., data = df) %>%
+    step_dummy(x) %>%
+    prep(df)
+
+  res_mat <- bake(rec, df, composition = "matrix")
+  res_sparse <- bake(rec, df, composition = "dgCMatrix")
+
+  expect_equal(nrow(res_mat), 3)
+  expect_equal(nrow(res_sparse), 3)
+
+  expect_equal(as.vector(res_mat[,"x2"]), df$x2)
+  expect_equal(as.vector(res_sparse[,"x2"]), df$x2)
+
+})
