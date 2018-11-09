@@ -142,11 +142,11 @@ recipe.default <- function(x, ...)
 #' # Creating a recipe manually with different roles
 #'
 #' rec <- recipe(biomass_tr) %>%
-#'   add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+#'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
 #'            new_role = "predictor") %>%
-#'   add_role(HHV, new_role = "outcome") %>%
-#'   add_role(sample, new_role = "id variable") %>%
-#'   add_role(dataset, new_role = "splitting indicator")
+#'   update_role(HHV, new_role = "outcome") %>%
+#'   update_role(sample, new_role = "id variable") %>%
+#'   update_role(dataset, new_role = "splitting indicator")
 #' rec
 recipe.data.frame <-
   function(x,
@@ -366,10 +366,10 @@ prep.recipe <-
     }
 
     tr_data <- train_info(training)
-    
+
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
-    
+
     if (stringsAsFactors) {
       lvls <- lapply(training, get_levels)
       training <- strings2factors(training, lvls)
@@ -494,7 +494,7 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
 
   check_nominal_type(newdata, object$orig_lvls)
-  
+
   terms <- quos(...)
   if (is_empty(terms))
     terms <- quos(everything())

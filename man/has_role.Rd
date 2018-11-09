@@ -52,11 +52,11 @@ outside of step function arguments.
 data(biomass)
 
 rec <- recipe(biomass) \%>\%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
            new_role = "predictor") \%>\%
-  add_role(HHV, new_role = "outcome") \%>\%
-  add_role(sample, new_role = "id variable") \%>\%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role(dataset, new_role = "splitting indicator")
 recipe_info <- summary(rec)
 recipe_info
 
