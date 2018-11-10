@@ -14,6 +14,10 @@ colnames(te_dat) <- paste0("X", 1:6)
 rec <- recipe(X1 ~ ., data = tr_dat)
 
 test_that('correct kernel PCA values', {
+  skip_if_not_installed("Biobase")
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+  
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6, id = "")
 
@@ -43,6 +47,10 @@ test_that('correct kernel PCA values', {
 
 
 test_that('deprecated arg', {
+  skip_if_not_installed("Biobase")
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+  
   expect_message(
     rec %>%
       step_kpca(X2, X3, X4, X5, X6, num = 2)
@@ -50,6 +58,10 @@ test_that('deprecated arg', {
 })
 
 test_that('printing', {
+  skip_if_not_installed("Biobase")
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+  
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6)
   expect_output(print(kpca_rec))
