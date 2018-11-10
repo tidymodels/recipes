@@ -386,6 +386,7 @@ prep.recipe <-
               "be accessible.")
 
 
+    running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
     for (i in seq(along = x$steps)) {
       note <-
         paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
@@ -410,6 +411,10 @@ prep.recipe <-
           x$steps[[i]]$role
 
         x$term_info$source[is.na(x$term_info$source)] <- "derived"
+        
+        running_info <- 
+          rbind(running_info, 
+                x$term_info %>% mutate(number = i, skip = x$steps[[i]]$skip))
       } else {
         if (verbose)
           cat(note, "[pre-trained]\n")
@@ -430,6 +435,17 @@ prep.recipe <-
     x$levels <- lvls
     x$orig_lvls <- orig_lvls
     x$retained <- retain
+    # In case a variable was removed, and that removal step used
+    # `skip = TRUE`, we need to retain its record so that 
+    # selectors can be properly used with `bake`. This tibble 
+    # captures every variable originally in the data or that was
+    # created along the way. `number` will be the last step where
+    # that variable was available.  
+    x$last_term_info <- 
+      running_info %>%
+      group_by(variable) %>%
+      arrange(desc(number)) %>%
+      slice(1)
     x
   }
 
@@ -477,7 +493,7 @@ bake <- function(object, ...)
 #' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter group_by arrange desc
 #' @importFrom tidyselect everything
 #' @export
 bake.recipe <- function(object, newdata, ..., composition = "tibble") {
@@ -499,9 +515,17 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
   if (is_empty(terms))
     terms <- quos(everything())
 
-  ## determine return variables
-  keepers <- terms_select(terms = terms, info = object$term_info)
-
+  # Determine return variables. The context (ie. `info`) can
+  # change depending on whether a skip step was used. If so, we 
+  # use an alternate info tibble that has all possible terms
+  # in it. 
+  has_skip <- vapply(object$steps, function(x) x$skip, logical(1))
+  if (any(has_skip)) {
+    keepers <- terms_select(terms = terms, info = object$last_term_info)
+  } else {
+    keepers <- terms_select(terms = terms, info = object$term_info)
+  }
+  
   for (i in seq(along = object$steps)) {
     if (!is_skipable(object$steps[[i]])) {
       newdata <- bake(object$steps[[i]], newdata = newdata)
@@ -700,4 +724,4 @@ juice <- function(object, ..., composition = "tibble") {
 
 formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
 
-
+utils::globalVariables(c("number"))
