@@ -122,13 +122,13 @@ kpca_trans <- rec \%>\%
   step_scale(all_predictors()) \%>\%
   step_kpca(all_predictors())
 
-kpca_estimates <- prep(kpca_trans, training = biomass_tr)
+# kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
-kpca_te <- bake(kpca_estimates, biomass_te)
+# kpca_te <- bake(kpca_estimates, biomass_te)
 
-rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-plot(kpca_te$kPC1, kpca_te$kPC2,
-     xlim = rng, ylim = rng)
+# rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
+# plot(kpca_te$kPC1, kpca_te$kPC2,
+#      xlim = rng, ylim = rng)
 
 tidy(kpca_trans, number = 4)
 tidy(kpca_estimates, number = 4)
