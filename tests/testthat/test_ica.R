@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dimRed)
 data(biomass)
 
 context("ICA")
@@ -69,7 +68,6 @@ exp_comp <- structure(
 rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   

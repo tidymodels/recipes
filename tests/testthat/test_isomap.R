@@ -28,9 +28,7 @@ test_that('correct Isomap values', {
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
-  # skip_if_not_installed("bigmemory")
   
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
@@ -50,9 +48,7 @@ test_that('correct Isomap values', {
 
 
 test_that('deprecated arg', {
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
-  # skip_if_not_installed("bigmemory")
   expect_message(
     rec %>%
       step_isomap(x1, x2, x3, num = 3, id = "")
@@ -64,9 +60,7 @@ test_that('printing', {
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
-  # skip_if_not_installed("bigmemory")
   
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)

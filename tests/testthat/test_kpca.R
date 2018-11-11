@@ -14,7 +14,6 @@ colnames(te_dat) <- paste0("X", 1:6)
 rec <- recipe(X1 ~ ., data = tr_dat)
 
 test_that('correct kernel PCA values', {
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
   
@@ -47,7 +46,6 @@ test_that('correct kernel PCA values', {
 
 
 test_that('deprecated arg', {
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
   
@@ -58,7 +56,6 @@ test_that('deprecated arg', {
 })
 
 test_that('printing', {
-  skip_if_not_installed("Biobase")
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
   
