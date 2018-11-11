@@ -8,10 +8,7 @@ env:
   global:
   - MAKEFLAGS="-j 2"
 
-
-bioc_packages: Biobase
-
-r_binary_packages: 
+r_packages: 
   - NMF
   - RANN
   - fastICA
