@@ -19,6 +19,7 @@ r_binary_packages:
   - Matrix
   - ipred
   - RSpectra
+  - bigmemory
 
 r:
 - 3.1
