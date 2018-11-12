@@ -13,11 +13,11 @@ info1 <- summary(rec1)
 
 data(biomass)
 rec2 <- recipe(biomass) %>%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
            new_role = "predictor") %>%
-  add_role(HHV, new_role = "outcome") %>%
-  add_role(sample, new_role = "id variable") %>%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") %>%
+  update_role(sample, new_role = "id variable") %>%
+  update_role(dataset, new_role = "splitting indicator")
 info2 <- summary(rec2)
 
 test_that('simple role selections', {
