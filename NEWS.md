@@ -23,6 +23,7 @@
    *  `step_bagimpute` moved `nbagg` out of the options and into a main argument `trees`. 
    *  `step_bs` and `step_ns` has degrees of freedom promoted to a main argument with name `deg_free`. Also, `step_bs` had `degree` promoted to a main argument. 
    *  `step_BoxCox` and `step_YeoJohnson` had `nunique` change to `num_unique`.
+ * **[Breaking change]** `add_role()` can now only add _new_ additional roles. To alter existing roles, use `update_role()`. This change also allows for the possibility of having multiple roles/types for one variable. [#221](https://github.com/tidymodels/recipes/issues/221)
 
  
 
