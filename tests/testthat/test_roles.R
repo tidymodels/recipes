@@ -203,6 +203,19 @@ test_that('NA role can be added', {
 
 })
 
+test_that('New type for an existing role can be added', {
+
+  rec <- recipe(x = biomass)
+  rec <- update_role(rec, sample, new_role = "role1")
+  rec <- add_role(rec, sample, new_role = "role1", new_type = "text")
+
+  exp_res <- tibble(variable = c("sample", colnames(biomass)),
+                    type = c(c("nominal", "text", "nominal"), rep("numeric", 6)),
+                    role = c("role1", "role1", rep(NA, 7)),
+                    source = "original")
+  expect_equal(summary(rec, TRUE), exp_res)
+
+})
 
 test_that('bad args', {
   expect_error(

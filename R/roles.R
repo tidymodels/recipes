@@ -100,6 +100,12 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   existing_var_idx <- recipe$var_info$variable %in% vars
   role_already_exists <- recipe$var_info$role[existing_var_idx] %in% new_role
 
+  # Allow the user to add the same role with a different type
+  if (!is.null(new_type)) {
+    type_already_exists <- recipe$var_info$type[existing_var_idx] %in% new_type
+    role_already_exists <- role_already_exists & type_already_exists
+  }
+
   if (any(role_already_exists)) {
     existing_vars <- recipe$var_info$variable[existing_var_idx]
     vars_that_role_exists_for <- existing_vars[role_already_exists]
