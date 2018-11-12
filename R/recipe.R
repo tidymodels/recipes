@@ -330,20 +330,23 @@ prep.recipe <-
            stringsAsFactors = TRUE,
            ...) {
 
+    # In case a variable has multiple roles
+    vars <- unique(x$var_info$variable)
+
     if (is.null(training)) {
       if (fresh)
         stop("A training set must be supplied to the `training` argument ",
              "when `fresh = TRUE`", call. = FALSE)
       training <- x$template
     } else {
-      if (!all(x$var_info$variable %in% colnames(training))) {
+      if (!all(vars %in% colnames(training))) {
         stop("Not all variables in the recipe are present in the supplied ",
              "training set", call. = FALSE)
       }
       training <- if (!is_tibble(training))
-        as_tibble(training[, x$var_info$variable, drop = FALSE])
+        as_tibble(training[, vars, drop = FALSE])
       else
-        training[, x$var_info$variable]
+        training[, vars]
     }
 
     steps_trained <- vapply(x$steps, is_trained, logical(1))
@@ -556,7 +559,7 @@ print.recipe <- function(x, form_width = 30, ...) {
     colnames(tab) <- c("role", "#variables")
     print(tab, row.names = FALSE)
     if (any(no_role)) {
-      cat("\n ", sum(no_role), "variables without declared roles\n")
+      cat("\n ", sum(no_role), "variables with undeclared roles\n")
     }
   } else {
     cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
