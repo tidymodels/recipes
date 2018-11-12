@@ -1,8 +1,8 @@
 
-#' @importFrom Matrix sparse.model.matrix
-#' @importFrom stats model.matrix
+#' @importFrom Matrix Matrix
 convert_matrix <- function(x, sparse = TRUE) {
   is_num <- vapply(x, is.numeric, logical(1))
+
   if (!all(is_num)) {
     num_viol <- sum(!is_num)
     if (num_viol < 5)
@@ -17,10 +17,17 @@ convert_matrix <- function(x, sparse = TRUE) {
            "convert to matrix.",
            call. = FALSE)
   }
-  if (sparse)
-    res <- sparse.model.matrix( ~ . + 0, data = x)
-  else
-    res <- model.matrix( ~ . + 0, data = x)
+
+  # Issue-206: Don't use model.matrix(~ . + 0) here as it drops NA rows unless
+  # na.pass is set. At this point, all cols are numeric so we can just use
+  # as.matrix() (no need to worry about factor -> character conversion)
+
+  res <- as.matrix(x)
+
+  if (sparse) {
+    res <- Matrix(res, sparse = TRUE)
+  }
+
   res
 }
 
