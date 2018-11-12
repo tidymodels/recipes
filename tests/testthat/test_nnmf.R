@@ -7,7 +7,6 @@ test_that('Correct values', {
   skip_on_cran()
   skip_if_not_installed("dimRed")
   skip_if_not_installed("NMF")
-  skip_if_not_installed("dimRed")
   
   library(dimRed)
   library(NMF)
