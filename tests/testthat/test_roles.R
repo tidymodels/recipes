@@ -251,3 +251,60 @@ test_that('bad args', {
   )
 
 })
+
+
+# ------------------------------------------------------------------------------
+# Multiples roles + Selection testing
+
+test_that("adding multiple roles/types does not duplicate prepped columns", {
+
+  rec <- recipe(HHV ~ ., data = biomass)
+
+  # second role
+  expect_equal(
+    rec %>%
+      add_role(carbon, new_role = "carb") %>%
+      prep(training = biomass, retain = TRUE) %>%
+      juice() %>%
+      ncol(),
+
+    8
+  )
+
+  # second type
+  expect_equal(
+    rec %>%
+      add_role(carbon, new_type = "carb") %>%
+      prep(training = biomass, retain = TRUE) %>%
+      juice() %>%
+      ncol(),
+
+    8
+  )
+
+})
+
+test_that("type selectors can be combined", {
+
+  rec <- recipe(HHV ~ ., data = biomass)
+
+  rec %>%
+    add_role(carbon, new_role = "predictor", new_type = "carb") %>%
+    step_center(all_numeric(), -has_type("carb")) %>%
+    prep(training = biomass, retain = TRUE) %>%
+    juice()
+
+})
+
+test_that("step_rm() removes ALL mention of variables with that role", {
+
+  rec <- recipe(HHV ~ ., data = biomass)
+
+  rec_prepped <- rec %>%
+    add_role(carbon, new_role = "predictor", new_type = "carb") %>%
+    step_rm(has_type("carb")) %>%
+    prep(training = biomass, retain = TRUE) %>%
+    summary()
+
+  expect_false("carbon" %in% rec_prepped$variable)
+})
