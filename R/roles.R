@@ -67,6 +67,10 @@ NULL
 #' @rdname roles
 add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
+  if (length(new_role) != 1L) {
+    stop("`new_role` must have length 1.")
+  }
+
   if (is.na(new_role)) {
     new_role <- as.character(new_role)
   }
@@ -75,16 +79,12 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     stop("`new_role` must be a character vector.")
   }
 
-  if (length(new_role) != 1L) {
-    stop("`new_role` must have length 1.")
+  if (length(new_type) != 1L & length(new_type) != 0L) {
+    stop("`new_type` must have length 1.")
   }
 
   if (!is.character(new_type) & !is.null(new_type)) {
     stop("`new_type` must be a character vector, or `NULL`.")
-  }
-
-  if (length(new_type) != 1L & length(new_type) != 0L) {
-    stop("`new_type` must have length 1.")
   }
 
   terms <- quos(...)
@@ -150,6 +150,10 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 #' @rdname roles
 update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
+  if (length(new_role) != 1L) {
+    stop("`new_role` must have length 1.")
+  }
+
   if (is.na(new_role)) {
     new_role <- as.character(new_role)
   }
@@ -158,8 +162,8 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
     stop("`new_role` must be a character vector.")
   }
 
-  if (length(new_role) != 1L) {
-    stop("`new_role` must have length 1.")
+  if (length(old_role) != 1L & length(old_role) != 0L) {
+    stop("`old_role` must have length 1.")
   }
 
   if (!is.null(old_role) && is.na(old_role)) {
@@ -168,10 +172,6 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
   if (!is.character(old_role) & !is.null(old_role)) {
     stop("`old_role` must be a character vector, or `NULL`.")
-  }
-
-  if (length(old_role) != 1L & length(old_role) != 0L) {
-    stop("`old_role` must have length 1.")
   }
 
   terms <- quos(...)
