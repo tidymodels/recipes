@@ -53,7 +53,7 @@ The idea is that the preprocessing operations will all be created using the trai
 
 ## An Initial Recipe
 
-For a first recipe, let's plan on . First, we will create a recipe from the original data and then specify the processing steps. 
+First, we will create a recipe object from the original data and then specify the processing steps. 
 
 Recipes can be created manually by sequentially adding roles to variables in a data set. 
 
