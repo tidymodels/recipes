@@ -7,20 +7,26 @@
 \alias{has_type}
 \alias{all_numeric}
 \alias{all_nominal}
+\alias{peek_roles}
+\alias{peek_types}
 \alias{current_info}
 \title{Role Selection}
 \usage{
-has_role(match = "predictor", roles = current_info()$roles)
+has_role(match = "predictor", roles = peek_roles())
 
-all_predictors(roles = current_info()$roles)
+all_predictors(roles = peek_roles())
 
-all_outcomes(roles = current_info()$roles)
+all_outcomes(roles = peek_roles())
 
-has_type(match = "numeric", types = current_info()$types)
+has_type(match = "numeric", types = peek_types())
 
-all_numeric(types = current_info()$types)
+all_numeric(types = peek_types())
 
-all_nominal(types = current_info()$types)
+all_nominal(types = peek_types())
+
+peek_roles()
+
+peek_types()
 
 current_info()
 }
@@ -28,39 +34,51 @@ current_info()
 \item{match}{A single character string for the query. Exact
 matching is used (i.e. regular expressions won't work).}
 
-\item{roles}{A character string of roles for the current set of
-terms.}
+\item{roles}{A list, where each element of the list is a character vector
+of roles corresponding to that variable.}
 
-\item{types}{A character string of roles for the current set of
-data types.}
+\item{types}{A list, where each element of the list is a character vector
+of types corresponding to that variable.}
 }
 \value{
-Selector functions return an integer vector while
-\code{current_info} returns an environment with vectors \code{vars},
-\code{roles}, and \code{types}.
+Selector functions return an integer vector.
+
+\code{current_info()} returns an environment with objects \code{vars}, and \code{data}.
+
+\code{peek_roles()} and \code{peek_types()} return a list of character vectors pulled
+from \code{current_info()$data}.
 }
 \description{
-\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to
+\code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
 select variables in a formula that have certain roles.
-Similarly, \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used
+Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used
 to select columns based on their data type. See \code{\link[=selections]{selections()}}
-for more details. \code{current_info} is an internal function that is
-unlikely to help users while the others have limited utility
-outside of step function arguments.
+for more details. \code{current_info()}, \code{peek_types()} and \code{peek_roles()} are
+internal functions. All of these functions have have limited utility
+outside of column selection in step functions.
+}
+\details{
+Users should generally not have to alter \code{roles} or \code{types} as the default
+peek function will select the correct roles and types to check against.
 }
 \examples{
 data(biomass)
 
 rec <- recipe(biomass) \%>\%
-  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-           new_role = "predictor") \%>\%
+  update_role(
+    carbon, hydrogen, oxygen, nitrogen, sulfur,
+    new_role = "predictor"
+  ) \%>\%
   update_role(HHV, new_role = "outcome") \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting indicator")
+
 recipe_info <- summary(rec)
 recipe_info
 
-has_role("id variable", roles = recipe_info$role)
-all_outcomes(roles = recipe_info$role)
+roles_list <- split(recipe_info$role, recipe_info$variable)
+has_role("id variable", roles = roles_list)
+all_predictors(roles = roles_list)
+
 }
 \keyword{datagen}
