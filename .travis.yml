@@ -8,7 +8,9 @@ env:
   global:
   - MAKEFLAGS="-j 2"
 
-r_binary_packages: 
+bioc_packages: Biobase
+
+r_packages: 
   - NMF
   - RANN
   - fastICA
@@ -16,6 +18,7 @@ r_binary_packages:
   - Matrix
   - ipred
   - RSpectra
+
 
 r:
 - 3.1

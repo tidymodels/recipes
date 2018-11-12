@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dimRed)
 data(biomass)
 
 context("ICA")
@@ -69,6 +68,10 @@ exp_comp <- structure(
 rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+  
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
 
@@ -110,6 +113,7 @@ test_that('correct ICA values', {
 
 
 test_that('deprecated arg', {
+  
   expect_message(
     rec %>%
       step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
