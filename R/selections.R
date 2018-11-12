@@ -206,34 +206,28 @@ abort_selection <- exiting(function(cnd) {
 
 #' Role Selection
 #'
+#' @description
+#'
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
 #'  Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used
-#'  to select columns based on their data type. See [selections()]
-#'  for more details. `current_info()`, `peek_types()` and `peek_roles()` are
-#'  internal functions. All of these functions have have limited utility
-#'  outside of column selection in step functions.
+#'  to select columns based on their data type.
 #'
-#'  Users should generally not have to alter `roles` or `types` as the default
-#'  peek function will select the correct roles and types to check against.
+#'  See `?selections` for more details.
+#'
+#'  `current_info()` is an internal function.
+#'
+#'  All of these functions have have limited utility
+#'  outside of column selection in step functions.
 #'
 #' @param match A single character string for the query. Exact
 #'  matching is used (i.e. regular expressions won't work).
-#'
-#' @param roles A list, where each element of the list is a character vector
-#' of roles corresponding to that variable.
-#'
-#' @param types A list, where each element of the list is a character vector
-#' of types corresponding to that variable.
 #'
 #' @return
 #'
 #' Selector functions return an integer vector.
 #'
-#' `current_info()` returns an environment with objects `vars`, and `data`.
-#'
-#' `peek_roles()` and `peek_types()` return a list of character vectors pulled
-#' from `current_info()$data`.
+#' `current_info()` returns an environment with objects `vars` and `data`.
 #'
 #' @keywords datagen
 #' @examples
@@ -251,12 +245,15 @@ abort_selection <- exiting(function(cnd) {
 #' recipe_info <- summary(rec)
 #' recipe_info
 #'
-#' roles_list <- split(recipe_info$role, recipe_info$variable)
-#' has_role("id variable", roles = roles_list)
-#' all_predictors(roles = roles_list)
+#' # Centering on all predictors except carbon
+#' rec %>%
+#'   step_center(all_predictors(), -carbon) %>%
+#'   prep(training = biomass, retain = TRUE) %>%
+#'   juice()
 #'
 #' @export
-has_role <- function(match = "predictor", roles = peek_roles()) {
+has_role <- function(match = "predictor") {
+  roles <- peek_roles()
   lgl_matches <- purrr::map_lgl(roles, ~any(.x %in% match))
   which(lgl_matches)
 }
@@ -264,20 +261,22 @@ has_role <- function(match = "predictor", roles = peek_roles()) {
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_predictors <- function(roles = peek_roles())
-  has_role("predictor", roles = roles)
-
-#' @export
-#' @rdname has_role
-#' @inheritParams has_role
-all_outcomes <- function(roles = peek_roles()) {
-  has_role("outcome", roles = roles)
+all_predictors <- function() {
+  has_role("predictor")
 }
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-has_type <- function(match = "numeric", types = peek_types()) {
+all_outcomes <- function() {
+  has_role("outcome")
+}
+
+#' @export
+#' @rdname has_role
+#' @inheritParams has_role
+has_type <- function(match = "numeric") {
+  types <- peek_types()
   lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
   which(lgl_matches)
 }
@@ -285,25 +284,21 @@ has_type <- function(match = "numeric", types = peek_types()) {
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_numeric <- function(types = peek_types()) {
-  has_type("numeric", types = types)
+all_numeric <- function() {
+  has_type("numeric")
 }
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_nominal <- function(types = peek_types()) {
-  has_type("nominal", types = types)
+all_nominal <- function() {
+  has_type("nominal")
 }
 
-#' @export
-#' @rdname has_role
 peek_roles <- function() {
   peek_info("role")
 }
 
-#' @export
-#' @rdname has_role
 peek_types <- function() {
   peek_info("type")
 }
