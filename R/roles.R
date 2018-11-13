@@ -24,9 +24,16 @@
 #'
 #' @return An updated recipe object.
 #'
-#' @details With `add_role()`, if a variable is selected that already has the
+#' @details
+#'
+#' With `add_role()`, if a variable is selected that already has the
 #' `new_role`, a warning is emitted and that variable is skipped so no
 #' duplicate roles are added.
+#'
+#' Adding or updating roles is a useful way to group certain variables that
+#' don't fall in the standard `"predictor"` bucket. You can perform a step
+#' on all of the variables that have a custom role with the selector
+#' [has_role()].
 #'
 #' @keywords datagen
 #' @concept preprocessing model_specification

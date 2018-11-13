@@ -414,9 +414,9 @@ prep.recipe <-
           x$steps[[i]]$role
 
         x$term_info$source[is.na(x$term_info$source)] <- "derived"
-        
-        running_info <- 
-          rbind(running_info, 
+
+        running_info <-
+          rbind(running_info,
                 x$term_info %>% mutate(number = i, skip = x$steps[[i]]$skip))
       } else {
         if (verbose)
@@ -439,12 +439,12 @@ prep.recipe <-
     x$orig_lvls <- orig_lvls
     x$retained <- retain
     # In case a variable was removed, and that removal step used
-    # `skip = TRUE`, we need to retain its record so that 
-    # selectors can be properly used with `bake`. This tibble 
+    # `skip = TRUE`, we need to retain its record so that
+    # selectors can be properly used with `bake`. This tibble
     # captures every variable originally in the data or that was
     # created along the way. `number` will be the last step where
-    # that variable was available.  
-    x$last_term_info <- 
+    # that variable was available.
+    x$last_term_info <-
       running_info %>%
       group_by(variable) %>%
       arrange(desc(number)) %>%
@@ -519,16 +519,16 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
     terms <- quos(everything())
 
   # Determine return variables. The context (ie. `info`) can
-  # change depending on whether a skip step was used. If so, we 
+  # change depending on whether a skip step was used. If so, we
   # use an alternate info tibble that has all possible terms
-  # in it. 
+  # in it.
   has_skip <- vapply(object$steps, function(x) x$skip, logical(1))
   if (any(has_skip)) {
     keepers <- terms_select(terms = terms, info = object$last_term_info)
   } else {
     keepers <- terms_select(terms = terms, info = object$term_info)
   }
-  
+
   for (i in seq(along = object$steps)) {
     if (!is_skipable(object$steps[[i]])) {
       newdata <- bake(object$steps[[i]], newdata = newdata)
@@ -613,7 +613,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' Summarize a Recipe
 #'
 #' This function prints the current set of variables/features and some of their
-#'   characteristics.
+#' characteristics.
 #' @aliases summary.recipe
 #' @param object A `recipe` object
 #' @param original A logical: show the current set of variables or the original
@@ -622,8 +622,14 @@ print.recipe <- function(x, form_width = 30, ...) {
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
 #'   and `source`.
-#' @details Note that, until the recipe has been trained, the current and
-#'   original variables are the same.
+#' @details
+#' Note that, until the recipe has been trained,
+#' the current and original variables are the same.
+#'
+#' It is possible for variables to have multiple roles by adding them with
+#' [add_role()]. If a variable has multiple roles, it will have more than one
+#' row in the summary tibble.
+#'
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' summary(rec)

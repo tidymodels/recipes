@@ -40,6 +40,11 @@ does not overwrite old roles, as a single variable can have multiple roles.
 With \code{add_role()}, if a variable is selected that already has the
 \code{new_role}, a warning is emitted and that variable is skipped so no
 duplicate roles are added.
+
+Adding or updating roles is a useful way to group certain variables that
+don't fall in the standard \code{"predictor"} bucket. You can perform a step
+on all of the variables that have a custom role with the selector
+\code{\link[=has_role]{has_role()}}.
 }
 \examples{
 data(biomass)
