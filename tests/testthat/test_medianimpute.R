@@ -17,7 +17,7 @@ test_that('simple median', {
   impute_rec <- rec %>%
     step_medianimpute(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  te_imputed <- bake(imputed, newdata = credit_te)
+  te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Age, credit_te$Age)
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)],

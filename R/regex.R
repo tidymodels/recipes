@@ -43,7 +43,7 @@
 #' rec2 <- prep(rec, training = covers)
 #' rec2
 #'
-#' with_dummies <- bake(rec2, newdata = covers)
+#' with_dummies <- bake(rec2, new_data = covers)
 #' with_dummies
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
@@ -126,11 +126,11 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom rlang expr
-bake.step_regex <- function(object, newdata, ...) {
+bake.step_regex <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     grepl(
-      x = getElement(newdata, object$input),
+      x = getElement(new_data, object$input),
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -141,8 +141,8 @@ bake.step_regex <- function(object, newdata, ...) {
   if (length(object$options) > 0)
     regex <- mod_call_args(regex, args = object$options)
 
-  newdata[, object$result] <- ifelse(eval(regex), 1, 0)
-  newdata
+  new_data[, object$result] <- ifelse(eval(regex), 1, 0)
+  new_data
 }
 
 print.step_regex <-

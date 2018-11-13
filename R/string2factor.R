@@ -139,26 +139,26 @@ make_factor <- function(x, lvl, ord) {
 
 #' @importFrom purrr map2_df map_df
 #' @export
-bake.step_string2factor <- function(object, newdata, ...) {
+bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
   if (is.list(object$levels)) {
-    newdata[, col_names] <-
-      map2_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map2_df(new_data[, col_names],
               object$levels,
               make_factor,
               ord = object$ordered[1])
   } else {
-    newdata[, col_names] <-
-      map_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map_df(new_data[, col_names],
              make_factor,
              lvl = object$levels,
              ord = object$ordered[1])
   }
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_string2factor <-

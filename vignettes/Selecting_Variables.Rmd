@@ -63,7 +63,7 @@ Using the last definition:
 
 ```{r dummy_3}
 dummied <- prep(dummied, training = credit_data)
-with_dummy <- bake(dummied, newdata = credit_data)
+with_dummy <- bake(dummied, new_data = credit_data)
 with_dummy
 ```
 

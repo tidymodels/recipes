@@ -112,8 +112,8 @@ prep.step_slice <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr slice
 #' @export
-bake.step_slice <- function(object, newdata, ...) {
-  dplyr::slice(newdata, !!!object$inputs)
+bake.step_slice <- function(object, new_data, ...) {
+  dplyr::slice(new_data, !!!object$inputs)
 }
 
 

@@ -77,7 +77,7 @@ rec <- recipe(~ description, covers) \%>\%
 tidy(rec, number = 3)
 
 rec <- prep(rec, training = covers)
-results <- bake(rec, newdata = covers)
+results <- bake(rec, new_data = covers)
 
 table(results$rocks, results$more_rocks)
 

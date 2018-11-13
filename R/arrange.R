@@ -115,8 +115,8 @@ prep.step_arrange <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr arrange
 #' @export
-bake.step_arrange <- function(object, newdata, ...) {
-  dplyr::arrange(newdata, !!!object$inputs)
+bake.step_arrange <- function(object, new_data, ...) {
+  dplyr::arrange(new_data, !!!object$inputs)
 }
 
 

@@ -81,18 +81,18 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_shuffle <- function(object, newdata, ...) {
-  if (nrow(newdata) == 1) {
-    warning("`newdata` contains a single row; unable to shuffle",
+bake.step_shuffle <- function(object, new_data, ...) {
+  if (nrow(new_data) == 1) {
+    warning("`new_data` contains a single row; unable to shuffle",
             call. = FALSE)
-    return(newdata)
+    return(new_data)
   }
 
   if (length(object$columns) > 0)
     for (i in seq_along(object$columns))
-      newdata[, object$columns[i]] <-
-        sample(getElement(newdata, object$columns[i]))
-    as_tibble(newdata)
+      new_data[, object$columns[i]] <-
+        sample(getElement(new_data, object$columns[i]))
+    as_tibble(new_data)
 }
 
 print.step_shuffle <-

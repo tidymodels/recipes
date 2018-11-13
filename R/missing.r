@@ -34,7 +34,7 @@
 #' data(credit_data)
 #' is.na(credit_data) %>% colSums()
 #'
-#' # If the test passes, newdata is returned unaltered
+#' # If the test passes, `new_data` is returned unaltered
 #' recipe(credit_data) %>%
 #'   check_missing(Age, Expenses) %>%
 #'   prep() %>%
@@ -48,7 +48,7 @@
 #'   prep()
 #' }
 #'
-#' # If newdata contain missing values, the check will stop bake()
+#' # If `new_data` contain missing values, the check will stop bake()
 #'
 #' train_data <- credit_data %>% dplyr::filter(Income > 150)
 #' test_data  <- credit_data %>% dplyr::filter(Income <= 150 | is.na(Income))
@@ -104,9 +104,9 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
                     id = x$id)
 }
 
-bake.check_missing <- function(object, newdata, ...) {
+bake.check_missing <- function(object, new_data, ...) {
   col_names       <- object$columns
-  subset_to_check <- newdata[col_names]
+  subset_to_check <- new_data[col_names]
   nr_na           <- colSums(is.na(subset_to_check))
   if (any(nr_na > 0)) {
     with_na     <- names(nr_na[nr_na > 0])
@@ -114,7 +114,7 @@ bake.check_missing <- function(object, newdata, ...) {
     stop("The following columns contain missing values: ",
          with_na_str, ".", call. = FALSE)
   }
-  newdata
+  new_data
 }
 
 print.check_missing <-

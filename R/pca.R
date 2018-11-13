@@ -203,15 +203,15 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_pca <- function(object, newdata, ...) {
+bake.step_pca <- function(object, new_data, ...) {
   pca_vars <- rownames(object$res$rotation)
-  comps <- predict(object$res, newdata = newdata[, pca_vars])
+  comps <- predict(object$res, newdata = new_data[, pca_vars])
   comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
-  as_tibble(newdata)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+  as_tibble(new_data)
 }
 
 print.step_pca <-

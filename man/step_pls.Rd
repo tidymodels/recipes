@@ -108,7 +108,7 @@ pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
 
 pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 
-pls_test_scores <- bake(pls_rec, newdata = biomass_te[, -8])
+pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 
 tidy(pls_rec, number = 6)
 }

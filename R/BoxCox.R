@@ -129,14 +129,14 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_BoxCox <- function(object, newdata, ...) {
+bake.step_BoxCox <- function(object, new_data, ...) {
   if (length(object$lambdas) == 0)
-    return(as_tibble(newdata))
+    return(as_tibble(new_data))
   param <- names(object$lambdas)
   for (i in seq_along(object$lambdas))
-    newdata[, param[i]] <-
-    bc_trans(getElement(newdata, param[i]), lambda = object$lambdas[i])
-  as_tibble(newdata)
+    new_data[, param[i]] <-
+    bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+  as_tibble(new_data)
 }
 
 print.step_BoxCox <-

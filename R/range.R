@@ -114,8 +114,8 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_range <- function(object, newdata, ...) {
-  tmp <- as.matrix(newdata[, colnames(object$ranges)])
+bake.step_range <- function(object, new_data, ...) {
+  tmp <- as.matrix(new_data[, colnames(object$ranges)])
   tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
   tmp <- tmp * (object$max - object$min)
   tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
@@ -126,8 +126,8 @@ bake.step_range <- function(object, newdata, ...) {
 
   if (is.matrix(tmp) && ncol(tmp) == 1)
     tmp <- tmp[, 1]
-  newdata[, colnames(object$ranges)] <- tmp
-  as_tibble(newdata)
+  new_data[, colnames(object$ranges)] <- tmp
+  as_tibble(new_data)
 }
 
 print.step_range <-

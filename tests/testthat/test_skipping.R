@@ -12,7 +12,7 @@ test_that('simple skip', {
   prepped_1 <- prep(rec_1, training = iris, retain = TRUE)
 
   juiced_1 <- juice(prepped_1)
-  baked_1  <- bake(prepped_1, newdata = iris)
+  baked_1  <- bake(prepped_1, new_data = iris)
 
   expect_equal(baked_1$Sepal.Length, iris$Sepal.Length)
   expect_equal(juiced_1$Sepal.Length, log(iris$Sepal.Length))
@@ -21,8 +21,8 @@ test_that('simple skip', {
     prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
   )
 
-  baked_2  <- bake(prepped_2, newdata = iris[, -1])
-  baked_3  <- bake(prepped_2, newdata = iris)
+  baked_2  <- bake(prepped_2, new_data = iris[, -1])
+  baked_3  <- bake(prepped_2, new_data = iris)
   expect_false(
     isTRUE(
       all.equal(juiced_1$Sepal.Width, baked_3$Sepal.Length)
@@ -62,7 +62,7 @@ test_that('skips for steps that remove columns (#239)', {
   
   prep_simple <- prep(simple_ex, iris, retain=TRUE)
   simple_juiced <- juice(prep_simple)
-  simple_baked <- bake(prep_simple, newdata = iris)
+  simple_baked <- bake(prep_simple, new_data = iris)
   expect_equal(
     sort(names(simple_juiced)),
     c('Petal.Length', 'Petal.Width', 'Sepal.Length_x_Sepal.Width', 
@@ -83,7 +83,7 @@ test_that('skips for steps that remove columns (#239)', {
     prep(retain = TRUE)
   
   complex_juiced <- juice(complex_ex)
-  complex_baked <- bake(complex_ex, newdata = iris)
+  complex_baked <- bake(complex_ex, new_data = iris)
   
   expect_equal(
     sort(names(complex_juiced)),
@@ -107,7 +107,7 @@ test_that('skips for steps that remove columns (#239)', {
     prep(retain = TRUE)
   
   corr_juiced <- juice(corr_example)
-  corr_baked <- bake(corr_example, newdata = iris_dups)
+  corr_baked <- bake(corr_example, new_data = iris_dups)
   
   expect_equal(
     sort(names(corr_juiced)),

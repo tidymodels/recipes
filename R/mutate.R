@@ -127,8 +127,8 @@ prep.step_mutate <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr mutate
 #' @export
-bake.step_mutate <- function(object, newdata, ...) {
-  dplyr::mutate(newdata, !!!object$inputs)
+bake.step_mutate <- function(object, new_data, ...) {
+  dplyr::mutate(new_data, !!!object$inputs)
 }
 
 

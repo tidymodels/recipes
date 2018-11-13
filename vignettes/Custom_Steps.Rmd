@@ -198,10 +198,10 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
 Remember that the `prep` function does not _apply_ the step to the data; it only estimates any required values such as `ref_dist`. We will need to create a new method for our `step_percentile` class. The minimum arguments for this are
 
 ```r
-function(object, newdata, ...)
+function(object, new_data, ...)
 ```
 
-where `object` is the updated step function that has been through the corresponding `prep` code and `newdata` is a tibble of data to be processed. 
+where `object` is the updated step function that has been through the corresponding `prep` code and `new_data` is a tibble of data to be processed. 
 
 Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output. 
 
@@ -217,7 +217,7 @@ pctl_by_approx <- function(x, ref) {
   approx(x = ref, y = p_grid, xout = x)$y/100
 }
 
-bake.step_percentile <- function(object, newdata, ...) {
+bake.step_percentile <- function(object, new_data, ...) {
   require(tibble)
   ## For illustration (and not speed), we will loop through the affected variables
   ## and do the computations
@@ -226,13 +226,13 @@ bake.step_percentile <- function(object, newdata, ...) {
   for (i in vars) {
     if (!object$approx) {
       ## We can use `apply` since tibbles do not drop dimensions:
-      newdata[, i] <- apply(newdata[, i], 1, pctl_by_mean, 
+      new_data[, i] <- apply(new_data[, i], 1, pctl_by_mean, 
                             ref = object$ref_dist[, i])
     } else 
-      newdata[, i] <- pctl_by_approx(newdata[, i], object$ref_dist[[i]])
+      new_data[, i] <- pctl_by_approx(new_data[, i], object$ref_dist[[i]])
   }
   ## Always convert to tibbles on the way out
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 ```
 

@@ -6,7 +6,7 @@
 \title{Moving Window Functions}
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
-  na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
+  na_rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
   skip = FALSE, id = rand_id("window"))
 
 \method{tidy}{step_window}(x, ...)
@@ -32,7 +32,7 @@ preprocessing have been estimated.}
 
 \item{size}{An odd integer \code{>= 3} for the window size.}
 
-\item{na.rm}{A logical for whether missing values should be
+\item{na_rm}{A logical for whether missing values should be
 removed from the calculations within each window.}
 
 \item{statistic}{A character string for the type of statistic

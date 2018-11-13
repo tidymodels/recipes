@@ -187,33 +187,33 @@ nn_pred <- function(index, dat) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-bake.step_knnimpute <- function(object, newdata, ...) {
-  missing_rows <- !complete.cases(newdata)
+bake.step_knnimpute <- function(object, new_data, ...) {
+  missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
-    return(newdata)
+    return(new_data)
 
-  old_data <- newdata
+  old_data <- new_data
   for (i in seq(along = object$columns)) {
     imp_var <- object$columns[[i]]$y
-    missing_rows <- !complete.cases(newdata[, imp_var])
+    missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
       preds <- object$columns[[i]]$x
-      new_data <- old_data[missing_rows, preds, drop = FALSE]
+      imp_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
-      if (all(is.na(new_data))) {
+      if (all(is.na(imp_data))) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],
-                           new_data, preds,
+                           imp_data, preds,
                            object$neighbors)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
-        newdata[missing_rows, imp_var] <- pred_vals
+        new_data[missing_rows, imp_var] <- pred_vals
       }
     }
   }
-  newdata
+  new_data
 }
 
 

@@ -83,7 +83,7 @@
 #' dummies <- rec %>% step_dummy(diet)
 #' dummies <- prep(dummies, training = okc)
 #'
-#' dummy_data <- bake(dummies, newdata = okc)
+#' dummy_data <- bake(dummies, new_data = okc)
 #'
 #' unique(okc$diet)
 #' grep("^diet", names(dummy_data), value = TRUE)
@@ -216,7 +216,7 @@ warn_new_levels <- function(dat, lvl) {
 }
 
 #' @export
-bake.step_dummy <- function(object, newdata, ...) {
+bake.step_dummy <- function(object, new_data, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)
 
@@ -236,19 +236,19 @@ bake.step_dummy <- function(object, newdata, ...) {
       stop("Factor level values not recorded", call. = FALSE)
 
     warn_new_levels(
-      newdata[[orig_var]],
+      new_data[[orig_var]],
       attr(object$levels[[i]], "values")
     )
 
-    newdata[, orig_var] <-
-      factor(getElement(newdata, orig_var),
+    new_data[, orig_var] <-
+      factor(getElement(new_data, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
 
     indicators <-
       model.frame(
         as.formula(paste0("~", orig_var)),
-        data = newdata[, orig_var],
+        data = new_data[, orig_var],
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
       )
@@ -270,12 +270,12 @@ bake.step_dummy <- function(object, newdata, ...) {
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    newdata <- bind_cols(newdata, as_tibble(indicators))
-    newdata[, col_names[i]] <- NULL
+    new_data <- bind_cols(new_data, as_tibble(indicators))
+    new_data[, col_names[i]] <- NULL
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_dummy <-

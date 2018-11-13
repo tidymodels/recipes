@@ -69,7 +69,7 @@
 #' training <- table(juice(up_rec)$diet, useNA = "always")
 #'
 #' # Since `skip` defaults to TRUE, baking the step has no effect
-#' baked_okc <- bake(up_rec, newdata = okc)
+#' baked_okc <- bake(up_rec, new_data = okc)
 #' baked <- table(baked_okc$diet, useNA = "always")
 #'
 #' # Note that if the original data contained more rows than the
@@ -158,25 +158,25 @@ supsamp <- function(x, num) {
 #' @importFrom purrr map_dfr
 #' @importFrom withr with_seed
 #' @export
-bake.step_upsample <- function(object, newdata, ...) {
-  if (any(is.na(newdata[[object$column]])))
-    missing <- newdata[is.na(newdata[[object$column]]),]
+bake.step_upsample <- function(object, new_data, ...) {
+  if (any(is.na(new_data[[object$column]])))
+    missing <- new_data[is.na(new_data[[object$column]]),]
   else
     missing <- NULL
-  split_up <- split(newdata, newdata[[object$column]])
+  split_up <- split(new_data, new_data[[object$column]])
 
   # Upsample with seed for reproducibility
   with_seed(
     seed = object$seed,
     code = {
-      newdata <- map_dfr(split_up, supsamp, num = object$target)
+      new_data <- map_dfr(split_up, supsamp, num = object$target)
       if (!is.null(missing)) {
-        newdata <- bind_rows(newdata, supsamp(missing, object$target))
+        new_data <- bind_rows(new_data, supsamp(missing, object$target))
       }
     }
   )
 
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 

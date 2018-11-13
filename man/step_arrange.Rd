@@ -15,7 +15,7 @@ step_arrange(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{Comma separated list of unquoted variable names.
-Use \code{desc()`` to sort a variable in descending order. See [dplyr::arrange()] for more details. For the }tidy`
+Use \code{desc()`` to sort a variable in descending order. See [dplyr::arrange()] for more details. For the}tidy`
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are

@@ -25,8 +25,8 @@ test_that("check_col works in the bake stage", {
   expect_equal(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars),
                mtcars[ ,c(1, 2, 5)])
   expect_error(rp1 %>% check_cols(everything()) %>% prep %>% bake(mtcars[-1]),
-               "The following cols are missing from newdata: `mpg`.")
+               "The following cols are missing from `new_data`: `mpg`.")
   expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>%
                  bake(mtcars[ ,c(2, 5)]),
-               "The following cols are missing from newdata: `mpg`.")
+               "The following cols are missing from `new_data`: `mpg`.")
 })

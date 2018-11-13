@@ -173,20 +173,20 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_ica <- function(object, newdata, ...) {
+bake.step_ica <- function(object, new_data, ...) {
   ica_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
       dimRed::dimRedData(
-        as.data.frame(newdata[, ica_vars, drop = FALSE])
+        as.data.frame(new_data[, ica_vars, drop = FALSE])
         )
       )@data
   comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% ica_vars), drop = FALSE]
-  as_tibble(newdata)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+  as_tibble(new_data)
 }
 
 

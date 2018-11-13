@@ -138,15 +138,15 @@ geo_dist_calc <- function(x, a, b)
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_geodist <- function(object, newdata, ...) {
+bake.step_geodist <- function(object, new_data, ...) {
   dist_vals <-
-    geo_dist_calc(newdata[, object$columns], object$ref_lat, object$ref_lon)
+    geo_dist_calc(new_data[, object$columns], object$ref_lat, object$ref_lon)
   if (object$log) {
-    newdata[, object$name] <- log(dist_vals)
+    new_data[, object$name] <- log(dist_vals)
   } else {
-    newdata[, object$name] <- dist_vals
+    new_data[, object$name] <- dist_vals
   }
-  newdata
+  new_data
 }
 
 print.step_geodist <-

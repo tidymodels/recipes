@@ -130,28 +130,28 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
 #' @export
-bake.step_poly <- function(object, newdata, ...) {
+bake.step_poly <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   poly_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(poly_values) <- rep("", sum(new_cols))
   strt <- 1
   for (i in names(object$objects)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     poly_values[, cols] <-
-      predict(object$objects[[i]], getElement(newdata, i))
+      predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "poly", names0(new_cols[i], ""), sep = "_")
     colnames(poly_values)[cols] <- new_names
     strt <- max(cols) + 1
-    newdata[, orig_var] <- NULL
+    new_data[, orig_var] <- NULL
   }
-  newdata <- bind_cols(newdata, as_tibble(poly_values))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(poly_values))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 

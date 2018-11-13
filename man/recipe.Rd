@@ -125,7 +125,7 @@ sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 sp_signed_trained
 
 # apply the preprocessing to a data set
-test_set_values <- bake(sp_signed_trained, newdata = biomass_te)
+test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
 
 # or use pipes for the entire workflow:
 rec <- biomass_tr \%>\%

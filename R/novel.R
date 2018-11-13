@@ -151,24 +151,24 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_novel <- function(object, newdata, ...) {
+bake.step_novel <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
-    newdata[[i]] <- ifelse(
+    new_data[[i]] <- ifelse(
       # Preserve NA values by adding them to the list of existing
       # possible values
-      !(newdata[[i]] %in% c(object$object[[i]], NA)),
+      !(new_data[[i]] %in% c(object$object[[i]], NA)),
       object$new_level,
-      as.character(newdata[[i]])
+      as.character(new_data[[i]])
     )
 
-    newdata[[i]] <-
-      factor(newdata[[i]],
+    new_data[[i]] <-
+      factor(new_data[[i]],
              levels = c(object$object[[i]], object$new_level),
              ordered = attributes(object$object[[i]])$is_ordered)
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_novel <-

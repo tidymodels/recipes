@@ -86,7 +86,7 @@ models.
 }
 \details{
 This step is atypical in that, when baked, the
-\code{newdata} argument is ignored; the resulting data set is
+\code{new_data} argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.
 }
 \examples{

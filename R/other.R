@@ -139,13 +139,13 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_other <- function(object, newdata, ...) {
+bake.step_other <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(newdata[, i]))
-        as.character(getElement(newdata, i))
+      tmp <- if (!is.character(new_data[, i]))
+        as.character(getElement(new_data, i))
       else
-        getElement(newdata, i)
+        getElement(new_data, i)
 
       tmp <- ifelse(
         !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
@@ -158,12 +158,12 @@ bake.step_other <- function(object, newdata, ...) {
                     levels = c(object$objects[[i]]$keep,
                                object$objects[[i]]$other))
 
-      newdata[, i] <- tmp
+      new_data[, i] <- tmp
     }
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_other <-

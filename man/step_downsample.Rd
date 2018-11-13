@@ -104,7 +104,7 @@ ds_rec <- recipe( ~ ., data = okc) \%>\%
 table(juice(ds_rec)$diet, useNA = "always")
 
 # since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(ds_rec, newdata = okc)
+baked_okc <- bake(ds_rec, new_data = okc)
 table(baked_okc$diet, useNA = "always")
 }
 \concept{preprocessing subsampling}

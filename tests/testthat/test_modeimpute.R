@@ -17,7 +17,7 @@ test_that('simple modes', {
   impute_rec <- rec %>%
     step_modeimpute(Status, Home, Marital, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  te_imputed <- bake(imputed, newdata = credit_te)
+  te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Status, credit_te$Status)
   home_exp <- rep(recipes:::mode_est(credit_tr$Home),

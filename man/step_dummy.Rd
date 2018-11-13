@@ -111,7 +111,7 @@ rec <- recipe(~ diet + age + height, data = okc)
 dummies <- rec \%>\% step_dummy(diet)
 dummies <- prep(dummies, training = okc)
 
-dummy_data <- bake(dummies, newdata = okc)
+dummy_data <- bake(dummies, new_data = okc)
 
 unique(okc$diet)
 grep("^diet", names(dummy_data), value = TRUE)

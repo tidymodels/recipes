@@ -29,8 +29,8 @@ test_that('linear scores', {
     step_ordinalscore(starts_with("ord"))
   rec1 <- prep(rec1, training = ex_dat, retain = TRUE,
                   stringsAsFactors = FALSE, verbose = FALSE)
-  rec1_scores <- bake(rec1, newdata = ex_dat)
-  rec1_scores_NA <- bake(rec1, newdata = ex_miss)
+  rec1_scores <- bake(rec1, new_data = ex_dat)
+  rec1_scores_NA <- bake(rec1, new_data = ex_miss)
 
   expect_equal(as.numeric(ex_dat$ord1), rec1_scores$ord1)
   expect_equal(as.numeric(ex_dat$ord2), rec1_scores$ord2)
@@ -46,8 +46,8 @@ test_that('nonlinear scores', {
                       convert = score)
   rec2 <- prep(rec2, training = ex_dat, retain = TRUE,
                   stringsAsFactors = FALSE, verbose = FALSE)
-  rec2_scores <- bake(rec2, newdata = ex_dat)
-  rec2_scores_NA <- bake(rec2, newdata = ex_miss)
+  rec2_scores <- bake(rec2, new_data = ex_dat)
+  rec2_scores_NA <- bake(rec2, new_data = ex_miss)
 
   expect_equal(as.numeric(ex_dat$ord1)^2, rec2_scores$ord1)
   expect_equal(as.numeric(ex_dat$ord2)^2, rec2_scores$ord2)
