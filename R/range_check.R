@@ -181,20 +181,20 @@ range_check_func <- function(x,
 }
 
 bake.check_range <- function(object,
-                             newdata,
+                             new_data,
                              ...) {
 
   col_names <- names(object$lower)
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
-    range_check_func(newdata[[ colname ]],
+    range_check_func(new_data[[ colname ]],
                      object$lower[colname],
                      object$upper[colname],
                      object$slack_prop,
                      object$warn,
                      colname)
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.check_range <-

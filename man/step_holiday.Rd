@@ -72,7 +72,7 @@ holiday_rec <- recipe(~ someday, examples) \%>\%
    step_holiday(all_predictors())
 
 holiday_rec <- prep(holiday_rec, training = examples)
-holiday_values <- bake(holiday_rec, newdata = examples)
+holiday_values <- bake(holiday_rec, new_data = examples)
 holiday_values
 }
 \seealso{

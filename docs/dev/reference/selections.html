@@ -245,18 +245,18 @@ beyond those supported (see below).</p></li>
 <li><p>These arguments are not evaluated until the <code>prep</code>
 function for the step is executed.</p></li>
 <li><p>The <code>dplyr</code>-like syntax allows for negative sings to
-exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
+exclude variables (e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>-Murder</a></code>) and the set of selectors will
 processed in order.</p></li>
-<li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)
+<li><p>A leading exclusion in these arguments (e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>-Murder</a></code>)
 has the effect of adding all variables to the list except the
 excluded variable(s).</p></li>
 </ol>
 
     <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code>, and
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::one_of()</a></code>.
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code>, and
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::one_of()</a></code>.
 For example:</p>
 <pre>
   recipe(Species ~ ., data = iris) %&gt;%
@@ -265,7 +265,7 @@ For example:</p>
 
     <p>would only select <code>Sepal.Length</code></p>
 <p><strong>Inline</strong> functions that specify computations, such as
-<code>log(x)</code>, should not be used in selectors and will produce an
+<code><a href='https://www.rdocumentation.org/packages/base/topics/Log'>log(x)</a></code>, should not be used in selectors and will produce an
 error. A list of allowed selector functions is below.</p>
 <p>Columns of the design matrix that may not exist when the step
 is coded can also be selected. For example, when using
@@ -293,15 +293,15 @@ selected using role-specific selectors.</p>
 <p>Selectors can be used in <code><a href='step_interact.html'>step_interact()</a></code> in similar ways but
 must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
-could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be
+could be <code><a href='https://www.rdocumentation.org/packages/base/topics/tilde'>~ starts_with("Species"):Sepal.Width</a></code>. This can be
 useful if <code>Species</code> was converted to dummy variables
 previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
 <p>The complete list of allowable functions in steps:</p>
 <ul>
-<li><p><strong>By name</strong>: <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, and
-<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code></p></li>
+<li><p><strong>By name</strong>: <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::num_range()</a></code>, and
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::everything()</a></code></p></li>
 <li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
 <code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
 <li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,

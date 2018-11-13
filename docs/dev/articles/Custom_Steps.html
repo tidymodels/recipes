@@ -107,7 +107,7 @@
       <h1>Creating Custom Step Functions</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Custom_Steps.Rmd"><code>vignettes/Custom_Steps.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Custom_Steps.Rmd"><code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">vignettes/Custom_Steps.Rmd</a></code></a></small>
       <div class="hidden name"><code>Custom_Steps.Rmd</code></div>
 
     </div>
@@ -115,8 +115,8 @@
     
     
 <p>The <code>recipes</code> package contains a number of different operations:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">ls</span>(<span class="st">"package:recipes"</span>, <span class="dt">pattern =</span> <span class="st">"^step_"</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ls">ls</a></span>(<span class="st">"package:recipes"</span>, <span class="dt">pattern =</span> <span class="st">"^step_"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   </span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       </span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;  [7] "step_classdist"     "step_corr"          "step_count"        </span></a>
@@ -146,8 +146,8 @@
 <h1 class="hasAnchor">
 <a href="#a-new-step-definition" class="anchor"></a>A new step definition</h1>
 <p>As an example, let’s create a step that replaces the value of a variable with its percentile from the training set. The date that I’ll use is from the <code>recipes</code> package:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">data</span>(biomass)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">str</span>(biomass)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(biomass)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(biomass)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; 'data.frame':    536 obs. of  8 variables:</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  $ dataset : chr  "Training" "Training" "Training" "Training" ...</span></a>
@@ -161,7 +161,7 @@
 <a class="sourceLine" id="cb2-13" data-line-number="13">biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]</a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]</a></code></pre></div>
 <p>To illustrate the transformation with the <code>carbon</code> variable, the training set distribution of that variables is shown below with a vertical line for the first value of the test set.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>())</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(biomass_tr, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> carbon)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span>(<span class="dt">binwidth =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">fill =</span> <span class="st">"blue"</span>, <span class="dt">alpha =</span> <span class="fl">.5</span>) <span class="op">+</span><span class="st"> </span></a>
@@ -180,7 +180,7 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">trained =</span> <span class="ot">FALSE</span>, </a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">ref_dist =</span> <span class="ot">NULL</span>,</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">approx =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">probs =</span> (<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span>, <span class="dt">names =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">options =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">probs =</span> (<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span>, <span class="dt">names =</span> <span class="ot">TRUE</span>),</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">skip =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">id =</span> <span class="kw"><a href="../reference/rand_id.html">rand_id</a></span>(<span class="st">"percentile"</span>)</a>
 <a class="sourceLine" id="cb4-10" data-line-number="10">  ) {</a>
@@ -206,7 +206,7 @@
 <a class="sourceLine" id="cb4-30" data-line-number="30">}</a></code></pre></div>
 <p>You should always keep the first four arguments (<code>recipe</code> though <code>trained</code>) the same as listed above. Some notes:</p>
 <ul>
-<li>the <code>role</code> argument is used when you either 1) create new variables and want their role to be pre-set or 2) replace the existing variables with new values. The latter is what we will be doing and using <code>role = NA</code> will leave the existing role intact.</li>
+<li>the <code>role</code> argument is used when you either 1) create new variables and want their role to be pre-set or 2) replace the existing variables with new values. The latter is what we will be doing and using <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">role = NA</a></code> will leave the existing role intact.</li>
 <li>
 <code>trained</code> is set by the package when the estimation step has been run. You should default your function definition’s argument to <code>FALSE</code>.</li>
 <li>
@@ -214,13 +214,13 @@
 <li>
 <code>id</code> is a character string that can be used to identify steps in package code.</li>
 </ul>
-<p>I’ve added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the <code>ref_dist</code> object. However, this might be problematic if the data set is large. <code>approx</code> would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If <code>approx = TRUE</code>, the argument <code>ref_dist</code> will contain the grid for each variable.</p>
-<p>We will use the <code><a href="http://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code> to compute the grid. However, we might also want to have control over the granularity of this grid, so the <code>options</code> argument will be used to define how that calculations is done. We could just use the ellipses (aka <code>...</code>) so that any options passed to <code>step_percentile</code> that are not one of its arguments will then be passed to <code><a href="http://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code>. We recommend making a separate list object with the options and use these inside the function.</p>
+<p>I’ve added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the <code>ref_dist</code> object. However, this might be problematic if the data set is large. <code>approx</code> would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">approx = TRUE</a></code>, the argument <code>ref_dist</code> will contain the grid for each variable.</p>
+<p>We will use the <code><a href="https://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code> to compute the grid. However, we might also want to have control over the granularity of this grid, so the <code>options</code> argument will be used to define how that calculations is done. We could just use the ellipses (aka <code>...</code>) so that any options passed to <code>step_percentile</code> that are not one of its arguments will then be passed to <code><a href="https://www.rdocumentation.org/packages/stats/topics/quantile">stats::quantile</a></code>. We recommend making a separate list object with the options and use these inside the function.</p>
 </div>
 <div id="initialization-of-new-objects" class="section level1">
 <h1 class="hasAnchor">
 <a href="#initialization-of-new-objects" class="anchor"></a>Initialization of new objects</h1>
-<p>Next, you can utilize the internal function <code>step</code> that sets the class of new objects. Using <code>subclass = "percentile"</code> will set the class of new objects to `“step_percentile”.</p>
+<p>Next, you can utilize the internal function <code>step</code> that sets the class of new objects. Using <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">subclass = "percentile"</a></code> will set the class of new objects to `“step_percentile”.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">step_percentile_new &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="cf">function</span>(terms, role, trained, ref_dist, approx, options, skip, id) {</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">    <span class="kw"><a href="../reference/step.html">step</a></span>(</a>
@@ -259,7 +259,7 @@
 <p>Once we have this, we can either save the original data columns or estimate the approximation grid. For the grid, we will use a helper function that enables us to run <code>do.call</code> on a list of arguments that include the <code>options</code> list.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">get_pctl &lt;-<span class="st"> </span><span class="cf">function</span>(x, args) {</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">  args<span class="op">$</span>x &lt;-<span class="st"> </span>x</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="kw">do.call</span>(<span class="st">"quantile"</span>, args)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/do.call">do.call</a></span>(<span class="st">"quantile"</span>, args)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">prep.step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(x, training, <span class="dt">info =</span> <span class="ot">NULL</span>, ...) {</a>
@@ -269,12 +269,12 @@
 <a class="sourceLine" id="cb8-10" data-line-number="10">  </a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">  ## We'll use the names later so</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">  <span class="cf">if</span> (x<span class="op">$</span>options<span class="op">$</span>names <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="kw">stop</span>(<span class="st">"`names` should be set to TRUE"</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop</a></span>(<span class="st">"`names` should be set to TRUE"</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">  </a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">  <span class="cf">if</span> (<span class="op">!</span>x<span class="op">$</span>approx) {</a>
 <a class="sourceLine" id="cb8-16" data-line-number="16">    ref_dist &lt;-<span class="st"> </span>training[, col_names]</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">    ref_dist &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(training[, col_names],  get_pctl, <span class="dt">args =</span> x<span class="op">$</span>options)</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">    ref_dist &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(training[, col_names],  get_pctl, <span class="dt">args =</span> x<span class="op">$</span>options)</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19">  }</a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb8-21" data-line-number="21">  ## Use the constructor function to return the updated object. </a>
@@ -296,43 +296,43 @@
 <h1 class="hasAnchor">
 <a href="#create-the-bake-method" class="anchor"></a>Create the <code>bake</code> method</h1>
 <p>Remember that the <code>prep</code> function does not <em>apply</em> the step to the data; it only estimates any required values such as <code>ref_dist</code>. We will need to create a new method for our <code>step_percentile</code> class. The minimum arguments for this are</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="cf">function</span>(object, newdata, ...)</a></code></pre></div>
-<p>where <code>object</code> is the updated step function that has been through the corresponding <code>prep</code> code and <code>newdata</code> is a tibble of data to be processed.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="cf">function</span>(object, new_data, ...)</a></code></pre></div>
+<p>where <code>object</code> is the updated step function that has been through the corresponding <code>prep</code> code and <code>new_data</code> is a tibble of data to be processed.</p>
 <p>Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">## Two helper functions</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">pctl_by_mean &lt;-<span class="st"> </span><span class="cf">function</span>(x, ref) <span class="kw">mean</span>(ref <span class="op">&lt;=</span><span class="st"> </span>x)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">pctl_by_mean &lt;-<span class="st"> </span><span class="cf">function</span>(x, ref) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(ref <span class="op">&lt;=</span><span class="st"> </span>x)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">pctl_by_approx &lt;-<span class="st"> </span><span class="cf">function</span>(x, ref) {</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">  ## go from 1 column tibble to vector</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  x &lt;-<span class="st"> </span><span class="kw">getElement</span>(x, <span class="kw">names</span>(x))</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">  x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extract">getElement</a></span>(x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(x))</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">  ## get the percentiles values from the names (e.g. "10%")</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">  p_grid &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">"%$"</span>, <span class="st">""</span>, <span class="kw">names</span>(ref))) </a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">  <span class="kw">approx</span>(<span class="dt">x =</span> ref, <span class="dt">y =</span> p_grid, <span class="dt">xout =</span> x)<span class="op">$</span>y<span class="op">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">  p_grid &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">gsub</a></span>(<span class="st">"%$"</span>, <span class="st">""</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(ref))) </a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/approxfun">approx</a></span>(<span class="dt">x =</span> ref, <span class="dt">y =</span> p_grid, <span class="dt">xout =</span> x)<span class="op">$</span>y<span class="op">/</span><span class="dv">100</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10">}</a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">bake.step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(object, newdata, ...) {</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">  <span class="kw">require</span>(tibble)</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">bake.step_percentile &lt;-<span class="st"> </span><span class="cf">function</span>(object, new_data, ...) {</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(tibble)</a>
 <a class="sourceLine" id="cb10-14" data-line-number="14">  ## For illustration (and not speed), we will loop through the affected variables</a>
 <a class="sourceLine" id="cb10-15" data-line-number="15">  ## and do the computations</a>
-<a class="sourceLine" id="cb10-16" data-line-number="16">  vars &lt;-<span class="st"> </span><span class="kw">names</span>(object<span class="op">$</span>ref_dist)</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">  vars &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(object<span class="op">$</span>ref_dist)</a>
 <a class="sourceLine" id="cb10-17" data-line-number="17">  </a>
 <a class="sourceLine" id="cb10-18" data-line-number="18">  <span class="cf">for</span> (i <span class="cf">in</span> vars) {</a>
 <a class="sourceLine" id="cb10-19" data-line-number="19">    <span class="cf">if</span> (<span class="op">!</span>object<span class="op">$</span>approx) {</a>
 <a class="sourceLine" id="cb10-20" data-line-number="20">      ## We can use `apply` since tibbles do not drop dimensions:</a>
-<a class="sourceLine" id="cb10-21" data-line-number="21">      newdata[, i] &lt;-<span class="st"> </span><span class="kw">apply</span>(newdata[, i], <span class="dv">1</span>, pctl_by_mean, </a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">      new_data[, i] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/apply">apply</a></span>(new_data[, i], <span class="dv">1</span>, pctl_by_mean, </a>
 <a class="sourceLine" id="cb10-22" data-line-number="22">                            <span class="dt">ref =</span> object<span class="op">$</span>ref_dist[, i])</a>
 <a class="sourceLine" id="cb10-23" data-line-number="23">    } <span class="cf">else</span> </a>
-<a class="sourceLine" id="cb10-24" data-line-number="24">      newdata[, i] &lt;-<span class="st"> </span><span class="kw">pctl_by_approx</span>(newdata[, i], object<span class="op">$</span>ref_dist[[i]])</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">      new_data[, i] &lt;-<span class="st"> </span><span class="kw">pctl_by_approx</span>(new_data[, i], object<span class="op">$</span>ref_dist[[i]])</a>
 <a class="sourceLine" id="cb10-25" data-line-number="25">  }</a>
 <a class="sourceLine" id="cb10-26" data-line-number="26">  ## Always convert to tibbles on the way out</a>
-<a class="sourceLine" id="cb10-27" data-line-number="27">  <span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as_tibble</a></span>(newdata)</a>
+<a class="sourceLine" id="cb10-27" data-line-number="27">  <span class="kw"><a href="https://www.rdocumentation.org/packages/tibble/topics/as_tibble">as_tibble</a></span>(new_data)</a>
 <a class="sourceLine" id="cb10-28" data-line-number="28">}</a></code></pre></div>
 </div>
 <div id="running-the-example" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-the-example" class="anchor"></a>Running the example</h1>
 <p>Let’s use the example data to make sure that it works:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(purrr)</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">rec_obj &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(HHV <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> biomass_tr[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">step_percentile</span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>(), <span class="dt">approx =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
@@ -371,7 +371,7 @@
 <p>It is strongly recommended that:</p>
 <ol style="list-style-type: decimal">
 <li>The operations start with <code>check_</code> (i.e. <code>check_range</code> and <code>check_range_new</code>)</li>
-<li>The check uses <code>stop(..., call. = FALSE)</code> when the conditions are not met</li>
+<li>The check uses <code><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop(..., call. = FALSE)</a></code> when the conditions are not met</li>
 <li>The original data are returned (unaltered) by the check when the conditions are satisfied.</li>
 </ol>
 </div>

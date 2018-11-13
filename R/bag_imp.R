@@ -77,7 +77,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -95,7 +95,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -219,15 +219,15 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-bake.step_bagimpute <- function(object, newdata, ...) {
-  missing_rows <- !complete.cases(newdata)
+bake.step_bagimpute <- function(object, new_data, ...) {
+  missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
-    return(newdata)
+    return(new_data)
 
-  old_data <- newdata
+  old_data <- new_data
   for (i in seq(along = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(newdata[, imp_var])
+    missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
       preds <- object$models[[i]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
@@ -236,12 +236,12 @@ bake.step_bagimpute <- function(object, newdata, ...) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         pred_vals <- predict(object$models[[i]], pred_data)
-        newdata[missing_rows, imp_var] <- pred_vals
+        new_data[missing_rows, imp_var] <- pred_vals
       }
     }
   }
   ## changes character to factor!
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 

@@ -27,12 +27,12 @@ test_that("return character or factor values", {
   centered <- raw_recipe %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  centered_char <- prep(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
-  char_var <- bake(centered_char, newdata = head(biomass))
+  centered_char <- prep(centered, training = biomass, strings_as_factors = FALSE, retain = TRUE)
+  char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  centered_fac <- prep(centered, training = biomass, stringsAsFactors = TRUE, retain = TRUE)
-  fac_var <- bake(centered_fac, newdata = head(biomass))
+  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE, retain = TRUE)
+  fac_var <- bake(centered_fac, new_data = head(biomass))
   expect_equal(class(fac_var$sample), "factor")
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))
 })
@@ -103,7 +103,7 @@ test_that("bake without pred", {
     step_scale(all_predictors()) %>%
     step_spatialsign(all_predictors())
   expect_error(
-    bake(sp_signed, newdata = biomass_te),
+    bake(sp_signed, new_data = biomass_te),
     "At least one step has not been trained. Please run `prep`."
   )
   expect_error(

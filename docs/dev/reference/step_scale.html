@@ -151,10 +151,10 @@ deviation of one.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_scale</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>))
+  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>))
 
 <span class='co'># S3 method for step_scale</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,7 +187,7 @@ preprocessing have been estimated.</p></td>
 is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>na.rm</th>
+      <th>na_rm</th>
       <td><p>A logical value indicating whether <code>NA</code>
 values should be removed when computing the standard deviation.</p></td>
     </tr>
@@ -197,7 +197,7 @@ values should be removed when computing the standard deviation.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -229,7 +229,7 @@ using these standard deviations.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
@@ -244,7 +244,7 @@ using these standard deviations.</p>
 
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>scaled_obj</span>, <span class='no'>biomass_te</span>)
 
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'>names</span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
 #&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
 #&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
 #&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
@@ -267,11 +267,11 @@ using these standard deviations.</p>
 #&gt; [38;5;250m 8[39m   4.04     3.89   33.8     0.95   0.2   16.2
 #&gt; [38;5;250m 9[39m   2.81     3.68   31.1     0.14   4.9   11.1
 #&gt; [38;5;250m10[39m   2.67     3.15   23.7     4.63   1.05  10.8
-#&gt; [38;5;246m# ... with 70 more rows[39m</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt; [38;5;246m# ... with 70 more rows[39m</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
 #&gt;   terms    value id         
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
 #&gt; [38;5;250m1[39m carbon      [31mNA[39m scale_AOmOQ
-#&gt; [38;5;250m2[39m hydrogen    [31mNA[39m scale_AOmOQ</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt; [38;5;250m2[39m hydrogen    [31mNA[39m scale_AOmOQ</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
 #&gt;   terms    value id         
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
 #&gt; [38;5;250m1[39m carbon   10.4  scale_AOmOQ

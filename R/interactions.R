@@ -188,7 +188,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
 
 #' @export
-bake.step_interact <- function(object, newdata, ...) {
+bake.step_interact <- function(object, new_data, ...) {
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
 
@@ -197,7 +197,7 @@ bake.step_interact <- function(object, newdata, ...) {
   on.exit(options(na.action = old_opt))
 
   ## Create low level model matrices then remove the non-interaction terms.
-  res <- lapply(object$object, model.matrix, data = newdata)
+  res <- lapply(object$object, model.matrix, data = new_data)
   options(na.action = old_opt)
   on.exit(expr = NULL)
 
@@ -205,7 +205,7 @@ bake.step_interact <- function(object, newdata, ...) {
     lapply(res, function(x)
       x[, grepl(":", colnames(x)), drop = FALSE])
   ncols <- vapply(res, ncol, c(int = 1L))
-  out <- matrix(NA, nrow = nrow(newdata), ncol = sum(ncols))
+  out <- matrix(NA, nrow = nrow(new_data), ncol = sum(ncols))
   strt <- 1
   for (i in seq_along(ncols)) {
     cols <- (strt):(strt + ncols[i] - 1)
@@ -214,10 +214,10 @@ bake.step_interact <- function(object, newdata, ...) {
   }
   colnames(out) <-
     gsub(":", object$sep, unlist(lapply(res, colnames)))
-  newdata <- bind_cols(newdata, as_tibble(out))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(out))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 ## This uses the highest level of interactions

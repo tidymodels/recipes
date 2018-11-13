@@ -6,7 +6,7 @@
 \title{Yeo-Johnson Transformation}
 \usage{
 step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
-  lambdas = NULL, limits = c(-5, 5), num_unique = 5, na.rm = TRUE,
+  lambdas = NULL, limits = c(-5, 5), num_unique = 5, na_rm = TRUE,
   skip = FALSE, id = rand_id("YeoJohnson"))
 
 \method{tidy}{step_YeoJohnson}(x, ...)
@@ -35,7 +35,7 @@ compute the transformation parameter lambda.}
 \item{num_unique}{An integer where data that have less possible
 values will not be evaluate for a transformation.}
 
-\item{na.rm}{A logical value indicating whether \code{NA}
+\item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the

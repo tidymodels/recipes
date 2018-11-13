@@ -40,8 +40,8 @@ test_that('imputation values', {
   expect_equal(imp_exp_un, tidy(impute_rec, number = 2))
 
   discr_rec <- prep(discr_rec, training = biomass_tr, verbose = FALSE)
-  tr_data <- bake(discr_rec, newdata = biomass_tr)
-  te_data <- bake(discr_rec, newdata = biomass_te) %>%
+  tr_data <- bake(discr_rec, new_data = biomass_tr)
+  te_data <- bake(discr_rec, new_data = biomass_te) %>%
     dplyr::select(hydrogen, oxygen, nitrogen, carbon)
 
   nn <- gower_topn(te_data[, c("hydrogen", "oxygen", "nitrogen")],
@@ -49,7 +49,7 @@ test_that('imputation values', {
                    n = 3)$index
 
   impute_rec <- prep(impute_rec, training = biomass_tr, verbose = FALSE)
-  imputed_te <- bake(impute_rec, newdata = biomass_te)
+  imputed_te <- bake(impute_rec, new_data = biomass_te)
 
   for (i in carb_missing) {
     nn_tr_ind <- nn[, i]

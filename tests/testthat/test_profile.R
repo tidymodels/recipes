@@ -55,7 +55,7 @@ test_that('date profile', {
 test_that('character profile', {
   chr_rec <- okc_rec %>%
     step_profile(-location, profile = vars(location)) %>%
-    prep(okc, retain = TRUE, stringsAsFactors = FALSE) %>%
+    prep(okc, retain = TRUE, strings_as_factors = FALSE) %>%
     juice()
   expect_true(is_unq(chr_rec$diet))
   expect_true(is_unq(chr_rec$height))

@@ -73,7 +73,7 @@
 #'
 #' pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 #'
-#' pls_test_scores <- bake(pls_rec, newdata = biomass_te[, -8])
+#' pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 #'
 #' tidy(pls_rec, number = 6)
 #' @seealso [step_pca()] [step_kpca()]
@@ -175,10 +175,10 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_pls <- function(object, newdata, ...) {
+bake.step_pls <- function(object, new_data, ...) {
   pls_vars <- rownames(object$res$projection)
-  n <- nrow(newdata)
-  input_data <- as.matrix(newdata[, pls_vars])
+  n <- nrow(new_data)
+  input_data <- as.matrix(new_data[, pls_vars])
 
   if(!all(is.na(object$res$scale)))
     input_data <- sweep(input_data, 2, object$res$scale, "/")
@@ -187,12 +187,12 @@ bake.step_pls <- function(object, newdata, ...) {
 
   comps <- input_data %*% object$res$projection
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% pls_vars), drop = FALSE]
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 

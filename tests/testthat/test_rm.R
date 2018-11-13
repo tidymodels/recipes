@@ -15,7 +15,7 @@ test_that('basics', {
     step_rm(x1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_rm <- bake(rec_trained, newdata = ex_dat)
+  rec_rm <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(colnames(rec_rm), "x2")
 })
@@ -26,7 +26,7 @@ test_that('basics', {
 #
 #   rec_trained <- prep(rec, training = ex_dat, retain = TRUE)
 #   tr_res <- juice(rec_trained)
-#   te_res <- bake(rec_trained, newdata = ex_dat)
+#   te_res <- bake(rec_trained, new_data = ex_dat)
 #
 #   expect_equal(colnames(tr_res), "x2")
 #   expect_equal(colnames(tr_res), c("x1", "x2"))

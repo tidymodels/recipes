@@ -188,20 +188,20 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_isomap <- function(object, newdata, ...) {
+bake.step_isomap <- function(object, new_data, ...) {
   isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
-      dimRed::dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
+      dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
       )@data
   comps <- comps[, 1:object$num_terms, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% isomap_vars), drop = FALSE]
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 

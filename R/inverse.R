@@ -96,11 +96,11 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-bake.step_inverse <- function(object, newdata, ...) {
+bake.step_inverse <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      1 / (newdata [[ object$columns[i] ]] + object$offset)
-  as_tibble(newdata)
+    new_data[, object$columns[i]] <-
+      1 / (new_data [[ object$columns[i] ]] + object$offset)
+  as_tibble(new_data)
 }
 
 

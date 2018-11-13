@@ -55,7 +55,7 @@
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
-#' dists_to_species <- bake(rec_dists, newdata = iris, everything())
+#' dists_to_species <- bake(rec_dists, new_data = iris, everything())
 #' ## on log scale:
 #' dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 #' dists_to_species[, c("Species", dist_cols)]
@@ -171,25 +171,25 @@ mah_pooled <- function(means, x, cov_mat)
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_classdist <- function(object, newdata, ...) {
+bake.step_classdist <- function(object, new_data, ...) {
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     res <- lapply(
       object$objects$center,
       mah_pooled,
-      x = newdata[, x_cols],
+      x = new_data[, x_cols],
       cov_mat = object$objects$scale
     )
   } else {
     x_cols <- names(object$objects[[1]]$center)
     res <-
-      lapply(object$objects, mah_by_class, x = newdata[, x_cols])
+      lapply(object$objects, mah_by_class, x = new_data[, x_cols])
   }
   if (object$log)
     res <- lapply(res, log)
   res <- as_tibble(res)
   colnames(res) <- paste0("classdist_", colnames(res))
-  res <- bind_cols(newdata, res)
+  res <- bind_cols(new_data, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res

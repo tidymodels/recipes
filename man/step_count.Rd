@@ -81,7 +81,7 @@ rec <- recipe(~ description, covers) \%>\%
 rec2 <- prep(rec, training = covers)
 rec2
 
-count_values <- bake(rec2, newdata = covers)
+count_values <- bake(rec2, new_data = covers)
 count_values
 
 tidy(rec, number = 1)

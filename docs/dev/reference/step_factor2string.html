@@ -152,7 +152,7 @@ vectors to strings.</p>
   <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"factor2string"</span>))
 
 <span class='co'># S3 method for step_factor2string</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,7 +191,7 @@ converted. This is <code>NULL</code> until computed by
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -213,7 +213,7 @@ columns that will be affected).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>prep</code> has an option <code>stringsAsFactors</code> that
+    <p><code>prep</code> has an option <code>strings_as_factors</code> that
 defaults to <code>TRUE</code>. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.</p>
@@ -224,7 +224,7 @@ to factors after all of the steps have been prepped.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>okc</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 
@@ -233,22 +233,22 @@ to factors after all of the steps have been prepped.</p>
 
 <span class='no'>factor_test</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>,
-       <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+       <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
        <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>juice</span>
 <span class='co'># diet is a</span>
-<span class='fu'>class</span>(<span class='no'>factor_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "factor"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>factor_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "factor"</div><div class='input'>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_factor2string</span>(<span class='no'>diet</span>)
 
 <span class='no'>string_test</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>,
-       <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+       <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
        <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>juice</span>
 <span class='co'># diet is a</span>
-<span class='fu'>class</span>(<span class='no'>string_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>string_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
 #&gt;   terms ordered id                 
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;lgl&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m              
 #&gt; [38;5;250m1[39m diet  FALSE   string2factor_mefNm</div></pre>

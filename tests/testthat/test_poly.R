@@ -25,8 +25,8 @@ test_that('correct basis functions', {
 
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
-  with_poly_pred_tr <- bake(with_poly, newdata = biomass_tr)
-  with_poly_pred_te <- bake(with_poly, newdata = biomass_te)
+  with_poly_pred_tr <- bake(with_poly, new_data = biomass_tr)
+  with_poly_pred_te <- bake(with_poly, new_data = biomass_te)
 
   carbon_poly_tr_exp <- poly(biomass_tr$carbon, degree = 2)
   hydrogen_poly_tr_exp <- poly(biomass_tr$hydrogen, degree = 2)

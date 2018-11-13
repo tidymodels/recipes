@@ -65,7 +65,7 @@ category is used in place of any categorical levels whose individual
 proportion in the training set is less than \code{threshold}.
 
 If no pooling is done the data are unmodified (although character data may
-be changed to factors based on the value of \code{stringsAsFactors} in
+be changed to factors based on the value of \code{strings_as_factors} in
 \code{\link[=prep.recipe]{prep.recipe()}}). Otherwise, a factor is always returned with
 different factor levels.
 

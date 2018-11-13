@@ -103,7 +103,7 @@ up_rec <- recipe( ~ ., data = okc) \%>\%
 training <- table(juice(up_rec)$diet, useNA = "always")
 
 # Since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(up_rec, newdata = okc)
+baked_okc <- bake(up_rec, new_data = okc)
 baked <- table(baked_okc$diet, useNA = "always")
 
 # Note that if the original data contained more rows than the

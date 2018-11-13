@@ -115,7 +115,7 @@ recipe.default <- function(x, ...)
 #' sp_signed_trained
 #'
 #' # apply the preprocessing to a data set
-#' test_set_values <- bake(sp_signed_trained, newdata = biomass_te)
+#' test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
 #'
 #' # or use pipes for the entire workflow:
 #' rec <- biomass_tr %>%
@@ -294,7 +294,7 @@ prep   <- function(x, ...)
 #'     idea if you want to add more steps later but want to avoid re-training
 #'     the existing steps. Also, it is advisable to use `retain = TRUE`
 #'     if any steps use the option `skip = FALSE`.
-#' @param stringsAsFactors A logical: should character columns be converted to
+#' @param strings_as_factors A logical: should character columns be converted to
 #'   factors? This affects the preprocessed training set (when
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
@@ -327,7 +327,7 @@ prep.recipe <-
            fresh = FALSE,
            verbose = FALSE,
            retain = FALSE,
-           stringsAsFactors = TRUE,
+           strings_as_factors = TRUE,
            ...) {
 
     # In case a variable has multiple roles
@@ -373,7 +373,7 @@ prep.recipe <-
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
 
-    if (stringsAsFactors) {
+    if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       training <- strings2factors(training, lvls)
     } else {
@@ -403,7 +403,7 @@ prep.recipe <-
           prep(x$steps[[i]],
                training = training,
                info = x$term_info)
-        training <- bake(x$steps[[i]], newdata = training)
+        training <- bake(x$steps[[i]], new_data = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
 
@@ -425,7 +425,7 @@ prep.recipe <-
     }
 
     ## The steps may have changed the data so reassess the levels
-    if (stringsAsFactors) {
+    if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
@@ -467,7 +467,7 @@ bake <- function(object, ...)
 #'   [prep.recipe()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
-#' @param newdata A data frame or tibble for whom the preprocessing will be
+#' @param new_data A data frame or tibble for whom the preprocessing will be
 #'   applied.
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
@@ -480,7 +480,7 @@ bake <- function(object, ...)
 #'  called **after** any selectors and the selectors should only
 #'  resolve to numeric columns (otherwise an error is thrown).
 #' @return A tibble, matrix, or sparse matrix that may have different
-#'  columns than the original columns in `newdata`.
+#'  columns than the original columns in `new_data`.
 #' @details [bake()] takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
 #'
@@ -488,7 +488,7 @@ bake <- function(object, ...)
 #'  processed, time can be saved by using the `retain = TRUE` option
 #'  of [prep()] to avoid duplicating the same operations. With this
 #'  option set, [juice()] can be used instead of `bake` with
-#'  `newdata` equal to the training set.
+#'  `new_data` equal to the training set.
 #'
 #' Also, any steps with `skip = TRUE` will not be applied to the
 #'   data when `bake` is invoked. [juice()] will always have all
@@ -499,7 +499,7 @@ bake <- function(object, ...)
 #' @importFrom dplyr filter group_by arrange desc
 #' @importFrom tidyselect everything
 #' @export
-bake.recipe <- function(object, newdata, ..., composition = "tibble") {
+bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!fully_trained(object))
     stop("At least one step has not been trained. Please ",
          "run `prep`.",
@@ -510,9 +510,9 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
 
-  if (!is_tibble(newdata)) newdata <- as_tibble(newdata)
+  if (!is_tibble(new_data)) new_data <- as_tibble(new_data)
 
-  check_nominal_type(newdata, object$orig_lvls)
+  check_nominal_type(new_data, object$orig_lvls)
 
   terms <- quos(...)
   if (is_empty(terms))
@@ -531,15 +531,15 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
 
   for (i in seq(along = object$steps)) {
     if (!is_skipable(object$steps[[i]])) {
-      newdata <- bake(object$steps[[i]], newdata = newdata)
-      if (!is_tibble(newdata))
-        newdata <- as_tibble(newdata)
+      new_data <- bake(object$steps[[i]], new_data = new_data)
+      if (!is_tibble(new_data))
+        new_data <- as_tibble(new_data)
     }
   }
 
-  newdata <- newdata[, names(newdata) %in% keepers]
+  new_data <- new_data[, names(new_data) %in% keepers]
   ## The levels are not null when no nominal data are present or
-  ## if stringsAsFactors = FALSE in `prep`
+  ## if strings_as_factors = FALSE in `prep`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
     var_levels <- var_levels[keepers]
@@ -548,18 +548,18 @@ bake.recipe <- function(object, newdata, ..., composition = "tibble") {
         (!all(is.na(x))), c(all = TRUE))
     var_levels <- var_levels[check_values]
     if (length(var_levels) > 0)
-      newdata <- strings2factors(newdata, var_levels)
+      new_data <- strings2factors(new_data, var_levels)
   }
 
   if (composition == "dgCMatrix") {
-    newdata <- convert_matrix(newdata, sparse = TRUE)
+    new_data <- convert_matrix(new_data, sparse = TRUE)
   } else if (composition == "matrix") {
-    newdata <- convert_matrix(newdata, sparse = FALSE)
+    new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
-    newdata <- base::as.data.frame(newdata)
+    new_data <- base::as.data.frame(new_data)
   }
 
-  newdata
+  new_data
 }
 
 #' Print a Recipe
@@ -680,7 +680,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'
 #' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
 #'
-#' tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
+#' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
 #' og_values <- juice(sp_signed_trained, all_predictors())
 #'
 #' all.equal(tr_values, og_values)
@@ -706,7 +706,7 @@ juice <- function(object, ..., composition = "tibble") {
     terms <- quos(everything())
   keepers <- terms_select(terms = terms, info = object$term_info)
 
-  newdata <- object$template[, names(object$template) %in% keepers]
+  new_data <- object$template[, names(object$template) %in% keepers]
 
   ## Since most models require factors, do the conversion from character
   if (!is.null(object$levels)) {
@@ -717,18 +717,18 @@ juice <- function(object, ..., composition = "tibble") {
         (!all(is.na(x))), c(all = TRUE))
     var_levels <- var_levels[check_values]
     if (length(var_levels) > 0)
-      newdata <- strings2factors(newdata, var_levels)
+      new_data <- strings2factors(new_data, var_levels)
   }
 
   if (composition == "dgCMatrix") {
-    newdata <- convert_matrix(newdata, sparse = TRUE)
+    new_data <- convert_matrix(new_data, sparse = TRUE)
   } else if (composition == "matrix") {
-    newdata <- convert_matrix(newdata, sparse = FALSE)
+    new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
-    newdata <- base::as.data.frame(newdata)
+    new_data <- base::as.data.frame(new_data)
   }
 
-  newdata
+  new_data
 }
 
 formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")

@@ -58,7 +58,7 @@ to the data.
 data(credit_data)
 is.na(credit_data) \%>\% colSums()
 
-# If the test passes, newdata is returned unaltered
+# If the test passes, `new_data` is returned unaltered
 recipe(credit_data) \%>\%
   check_missing(Age, Expenses) \%>\%
   prep() \%>\%
@@ -72,7 +72,7 @@ recipe(credit_data)  \%>\%
   prep()
 }
 
-# If newdata contain missing values, the check will stop bake()
+# If `new_data` contain missing values, the check will stop bake()
 
 train_data <- credit_data \%>\% dplyr::filter(Income > 150)
 test_data  <- credit_data \%>\% dplyr::filter(Income <= 150 | is.na(Income))

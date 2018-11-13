@@ -76,7 +76,7 @@ rec <- recipe(~ description, covers) \%>\%
 rec2 <- prep(rec, training = covers)
 rec2
 
-with_dummies <- bake(rec2, newdata = covers)
+with_dummies <- bake(rec2, new_data = covers)
 with_dummies
 tidy(rec, number = 1)
 tidy(rec2, number = 1)

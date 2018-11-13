@@ -53,7 +53,7 @@ sp_signed <- rec \%>\%
 
 sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
 
-tr_values <- bake(sp_signed_trained, newdata = biomass_tr, all_predictors())
+tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
 og_values <- juice(sp_signed_trained, all_predictors())
 
 all.equal(tr_values, og_values)

@@ -154,7 +154,7 @@ variables by the training set mode of those variables.</p>
   <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>))
 
 <span class='co'># S3 method for step_modeimpute</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,7 +192,7 @@ preprocessing have been estimated.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -223,21 +223,21 @@ data has more than one mode, one is selected at random.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='st'>"credit_data"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
-<span class='fu'>vapply</span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>mean</span>(<span class='fu'>is.na</span>(<span class='no'>x</span>)), <span class='fu'>c</span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>vapply</a></span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>x</span>)), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
 #&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
 #&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
 #&gt;       Amount        Price 
 #&gt; 0.0000000000 0.0000000000 </div><div class='input'>
-<span class='fu'>set.seed</span>(<span class='fl'>342</span>)
-<span class='no'>in_training</span> <span class='kw'>&lt;-</span> <span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>credit_data</span>), <span class='fl'>2000</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>342</span>)
+<span class='no'>in_training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>credit_data</span>), <span class='fl'>2000</span>)
 
 <span class='no'>credit_tr</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[ <span class='no'>in_training</span>, ]
 <span class='no'>credit_te</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[-<span class='no'>in_training</span>, ]
-<span class='no'>missing_examples</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
+<span class='no'>missing_examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
 
@@ -246,9 +246,9 @@ data has more than one mode, one is selected at random.</p>
 
 <span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
 
-<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
-<span class='fu'>table</span>(<span class='no'>credit_te</span>$<span class='no'>Home</span>, <span class='no'>imputed_te</span>$<span class='no'>Home</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>credit_te</span>$<span class='no'>Home</span>, <span class='no'>imputed_te</span>$<span class='no'>Home</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
 #&gt;           ignore other owner parents priv rent &lt;NA&gt;
 #&gt;   ignore      14     0     0       0    0    0    0
 #&gt;   other        0   175     0       0    0    0    0
@@ -257,12 +257,12 @@ data has more than one mode, one is selected at random.</p>
 #&gt;   priv         0     0     0       0  134    0    0
 #&gt;   rent         0     0     0       0    0  556    0
 #&gt;   &lt;NA&gt;         0     0     2       0    0    0    0</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
 #&gt;   terms   model id              
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m           
 #&gt; [38;5;250m1[39m Status  [31mNA[39m    modeimpute_iNKND
 #&gt; [38;5;250m2[39m Home    [31mNA[39m    modeimpute_iNKND
-#&gt; [38;5;250m3[39m Marital [31mNA[39m    modeimpute_iNKND</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
+#&gt; [38;5;250m3[39m Marital [31mNA[39m    modeimpute_iNKND</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 3[39m
 #&gt;   terms   model   id              
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m           
 #&gt; [38;5;250m1[39m Status  good    modeimpute_iNKND

@@ -112,10 +112,10 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_lincomb <- function(object, newdata, ...) {
+bake.step_lincomb <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
-  as_tibble(newdata)
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  as_tibble(new_data)
 }
 
 print.step_lincomb <-

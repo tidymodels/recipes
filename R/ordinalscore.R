@@ -125,11 +125,11 @@ prep.step_ordinalscore <-
   }
 
 #' @export
-bake.step_ordinalscore <- function(object, newdata, ...) {
-  scores <- lapply(newdata[, object$columns], object$convert)
+bake.step_ordinalscore <- function(object, new_data, ...) {
+  scores <- lapply(new_data[, object$columns], object$convert)
   for (i in object$columns)
-    newdata[, i] <- scores[[i]]
-  as_tibble(newdata)
+    new_data[, i] <- scores[[i]]
+  as_tibble(new_data)
 }
 
 print.step_ordinalscore <-

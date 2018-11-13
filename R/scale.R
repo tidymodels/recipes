@@ -13,7 +13,7 @@
 #'  created.
 #' @param sds A named numeric vector of standard deviations This
 #'  is `NULL` until computed by [prep.recipe()].
-#' @param na.rm A logical value indicating whether `NA`
+#' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -56,7 +56,7 @@ step_scale <-
            role = NA,
            trained = FALSE,
            sds = NULL,
-           na.rm = TRUE,
+           na_rm = TRUE,
            skip = FALSE,
            id = rand_id("scale")) {
     add_step(
@@ -66,7 +66,7 @@ step_scale <-
         role = role,
         trained = trained,
         sds = sds,
-        na.rm = na.rm,
+        na_rm = na_rm,
         skip = skip,
         id = id
       )
@@ -74,14 +74,14 @@ step_scale <-
   }
 
 step_scale_new <-
-  function(terms, role, trained, sds, na.rm, skip, id) {
+  function(terms, role, trained, sds, na_rm, skip, id) {
     step(
       subclass = "scale",
       terms = terms,
       role = role,
       trained = trained,
       sds = sds,
-      na.rm = na.rm,
+      na_rm = na_rm,
       skip = skip,
       id = id
     )
@@ -94,26 +94,26 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na.rm)
+    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
   step_scale_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     sds,
-    na.rm = x$na.rm,
+    na_rm = x$na_rm,
     skip = x$skip,
     id = x$id
   )
 }
 
 #' @export
-bake.step_scale <- function(object, newdata, ...) {
+bake.step_scale <- function(object, new_data, ...) {
   res <-
-    sweep(as.matrix(newdata[, names(object$sds)]), 2, object$sds, "/")
+    sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
   if (is.matrix(res) && ncol(res) == 1)
     res <- res[, 1]
-  newdata[, names(object$sds)] <- res
-  as_tibble(newdata)
+  new_data[, names(object$sds)] <- res
+  as_tibble(new_data)
 }
 
 print.step_scale <-

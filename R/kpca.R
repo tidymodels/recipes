@@ -187,16 +187,16 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_kpca <- function(object, newdata, ...) {
+bake.step_kpca <- function(object, new_data, ...) {
   pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(
-    dimRed::dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))
+    dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
     )@data
   comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]
-  as_tibble(newdata)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+  as_tibble(new_data)
 }
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {

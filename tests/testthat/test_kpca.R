@@ -22,7 +22,7 @@ test_that('correct kernel PCA values', {
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
-  pca_pred <- bake(kpca_trained, newdata = te_dat, all_predictors())
+  pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
   pca_exp <- kpca(as.matrix(tr_dat[, -1]),

@@ -78,7 +78,7 @@ test_that('correct ICA values', {
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  ica_pred <- bake(ica_extract_trained, newdata = biomass_te, all_predictors())
+  ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors())
   ica_pred <- as.matrix(ica_pred)
 
   rownames(ica_pred) <- NULL
@@ -94,7 +94,7 @@ test_that('correct ICA values', {
   )
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 1))
 
-  loadings <- getRotationMatrix(ica_extract_trained$steps[[1]]$res)
+  loadings <- dimRed::getRotationMatrix(ica_extract_trained$steps[[1]]$res)
   comps <- ncol(loadings)
   loadings <- as.data.frame(loadings)
   rownames(loadings) <- vars

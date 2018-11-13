@@ -105,12 +105,12 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_unorder <- function(object, newdata, ...) {
+bake.step_unorder <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      factor(as.character(getElement(newdata, object$columns[i])),
-             levels = levels(getElement(newdata, object$columns[i])))
-  as_tibble(newdata)
+    new_data[, object$columns[i]] <-
+      factor(as.character(getElement(new_data, object$columns[i])),
+             levels = levels(getElement(new_data, object$columns[i])))
+  as_tibble(new_data)
 }
 
 

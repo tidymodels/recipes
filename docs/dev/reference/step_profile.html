@@ -155,11 +155,11 @@ models.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_profile</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pct</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"profile"</span>))
 
 <span class='co'># S3 method for step_profile</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,16 +201,16 @@ qualitative variables captured by the selectors.</p></td>
     <tr>
       <th>grid</th>
       <td><p>A named list with elements <code>pctl</code> (a logical) and
-<code>len</code> (an integer). If <code>pctl = TRUE</code>, then <code>len</code> denotes how
+<code>len</code> (an integer). If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>pctl = TRUE</a></code>, then <code>len</code> denotes how
 many percentiles to use to create the profiling grid. This
 creates a grid between 0 and 1 and the profile is determined by
-the percentiles of the data. For example, if <code>pctl = TRUE</code> and
-<code>len = 3</code>, the profile would contain the minimum, median, and
-maximum values. If <code>pctl = FALSE</code>, it defines how many grid
+the percentiles of the data. For example, if <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>pctl = TRUE</a></code> and
+<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>len = 3</a></code>, the profile would contain the minimum, median, and
+maximum values. If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>pctl = FALSE</a></code>, it defines how many grid
 points between the minimum and maximum values should be created.
 This parameter is ignored for qualitative variables (since all
 of their possible levels are profiled). In the case of date
-variables, <code>pctl = FALSE</code> will always be used since there is no
+variables, <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>pctl = FALSE</a></code> will always be used since there is no
 quantile method for dates.</p></td>
     </tr>
     <tr>
@@ -235,7 +235,7 @@ preprocessing have been estimated.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -259,12 +259,12 @@ profiled).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This step is atypical in that, when baked, the
-<code>newdata</code> argument is ignored; the resulting data set is
+<code>new_data</code> argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>okc</span>)
 
 <span class='co'># Setup a grid across date but keep the other values fixed</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
@@ -290,7 +290,7 @@ based on the fixed and profiled variable's information.</p>
 <span class='co'># An *additive* model; not for use when there are interactions or</span>
 <span class='co'># other functional relationships between predictors</span>
 
-<span class='no'>lin_mod</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>mpg</span> ~ <span class='fu'>poly</span>(<span class='no'>disp</span>, <span class='fl'>2</span>) + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='no'>lin_mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/poly'>poly</a></span>(<span class='no'>disp</span>, <span class='fl'>2</span>) + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 
 <span class='co'># Show the difference in the two grid creation methods</span>
 
@@ -302,24 +302,26 @@ based on the fixed and profiled variable's information.</p>
   <span class='fu'>step_profile</span>(
     -<span class='no'>disp</span>,
     <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>),
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>disp_grid</span>)
 <span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='no'>grid_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>lin_mod</span>, <span class='no'>grid_data</span>),
+  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>lin_mod</span>, <span class='no'>grid_data</span>),
          <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)
 
 <span class='no'>pctl_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>disp_pctl</span>)
 <span class='no'>pctl_data</span> <span class='kw'>&lt;-</span> <span class='no'>pctl_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>lin_mod</span>, <span class='no'>pctl_data</span>),
+  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>lin_mod</span>, <span class='no'>pctl_data</span>),
          <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"percentile"</span>)
 
 <span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>bind_rows</span>(<span class='no'>grid_data</span>, <span class='no'>pctl_data</span>)
 
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    alpha</span></div><div class='input'>
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>plot_data</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>pred</span>)) +
   <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></pre>

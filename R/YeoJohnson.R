@@ -70,7 +70,7 @@
 step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), num_unique = 5,
-           na.rm = TRUE,
+           na_rm = TRUE,
            skip = FALSE,
            id = rand_id("YeoJohnson")) {
     add_step(
@@ -82,7 +82,7 @@ step_YeoJohnson <-
         lambdas = lambdas,
         limits = sort(limits)[1:2],
         num_unique = num_unique,
-        na.rm = na.rm,
+        na_rm = na_rm,
         skip = skip,
         id = id
       )
@@ -90,7 +90,7 @@ step_YeoJohnson <-
   }
 
 step_YeoJohnson_new <-
-  function(terms, role, trained, lambdas, limits, num_unique, na.rm, skip, id) {
+  function(terms, role, trained, lambdas, limits, num_unique, na_rm, skip, id) {
     step(
       subclass = "YeoJohnson",
       terms = terms,
@@ -99,7 +99,7 @@ step_YeoJohnson_new <-
       lambdas = lambdas,
       limits = limits,
       num_unique = num_unique,
-      na.rm = na.rm,
+      na_rm = na_rm,
       skip = skip,
       id = id
     )
@@ -116,7 +116,7 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     c(lambda = 0),
     limits = x$limits,
     num_unique = x$num_unique,
-    na.rm = x$na.rm
+    na_rm = x$na_rm
   )
   values <- values[!is.na(values)]
   step_YeoJohnson_new(
@@ -126,22 +126,22 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     lambdas = values,
     limits = x$limits,
     num_unique = x$num_unique,
-    na.rm = x$na.rm,
+    na_rm = x$na_rm,
     skip = x$skip,
     id = x$id
   )
 }
 
 #' @export
-bake.step_YeoJohnson <- function(object, newdata, ...) {
+bake.step_YeoJohnson <- function(object, new_data, ...) {
   if (length(object$lambdas) == 0)
-    return(as_tibble(newdata))
+    return(as_tibble(new_data))
   param <- names(object$lambdas)
   for (i in seq_along(object$lambdas))
-    newdata[, param[i]] <-
-    yj_trans(getElement(newdata, param[i]),
+    new_data[, param[i]] <-
+    yj_trans(getElement(new_data, param[i]),
              lambda = object$lambdas[param[i]])
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_YeoJohnson <-
@@ -222,13 +222,13 @@ yj_obj <- function(lam, dat){
 #' @keywords internal
 #' @rdname recipes-internal
 estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5,
-                        na.rm = TRUE) {
+                        na_rm = TRUE) {
   na_rows <- which(is.na(dat))
   if (length(na_rows) > 0) {
-    if (na.rm) {
+    if (na_rm) {
       dat <- dat[-na_rows]
     } else {
-      stop("Missing values in data. See `na.rm` option", call. = FALSE)
+      stop("Missing values in data. See `na_rm` option", call. = FALSE)
     }
   }
 

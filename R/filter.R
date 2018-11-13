@@ -110,8 +110,8 @@ prep.step_filter <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr filter
 #' @export
-bake.step_filter <- function(object, newdata, ...) {
-  dplyr::filter(newdata, !!!object$inputs)
+bake.step_filter <- function(object, new_data, ...) {
+  dplyr::filter(new_data, !!!object$inputs)
 }
 
 

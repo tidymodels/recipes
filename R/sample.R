@@ -112,16 +112,16 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr sample_n sample_frac
 #' @export
-bake.step_sample <- function(object, newdata, ...) {
+bake.step_sample <- function(object, new_data, ...) {
   if (object$size >= 1) {
-    n <- min(object$size, nrow(newdata))
-    newdata <- 
-      dplyr::sample_n(newdata, size = floor(n), replace = object$replace)
+    n <- min(object$size, nrow(new_data))
+    new_data <- 
+      dplyr::sample_n(new_data, size = floor(n), replace = object$replace)
   } else {
-    newdata <- 
-      dplyr::sample_frac(newdata, size = object$size, replace = object$replace)    
+    new_data <- 
+      dplyr::sample_frac(new_data, size = object$size, replace = object$replace)    
   }
-  newdata
+  new_data
 }
 
 

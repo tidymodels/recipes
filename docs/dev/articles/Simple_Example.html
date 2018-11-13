@@ -107,7 +107,7 @@
       <h1>Basic Recipes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Simple_Example.Rmd"><code>vignettes/Simple_Example.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Simple_Example.Rmd"><code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">vignettes/Simple_Example.Rmd</a></code></a></small>
       <div class="hidden name"><code>Simple_Example.Rmd</code></div>
 
     </div>
@@ -117,28 +117,28 @@
 <p>This document demonstrates some basic uses of recipes. First, some definitions are required:</p>
 <ul>
 <li>
-<strong>variables</strong> are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula <code>Y ~ A + B + A:B</code>, the variables are <code>A</code>, <code>B</code>, and <code>Y</code>.</li>
+<strong>variables</strong> are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula <code><a href="https://www.rdocumentation.org/packages/base/topics/tilde">Y ~ A + B + A:B</a></code>, the variables are <code>A</code>, <code>B</code>, and <code>Y</code>.</li>
 <li>
 <strong>roles</strong> define how variables will be used in the model. Examples are: <code>predictor</code> (independent variables), <code>response</code>, and <code>case weight</code>. This is meant to be open-ended and extensible.</li>
 <li>
-<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms</li>
+<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code><a href="https://www.rdocumentation.org/packages/base/topics/Colon">A:B</a></code>. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms</li>
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The packages contains a data set that used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(recipes)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(rsample)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">data</span>(<span class="st">"credit_data"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"credit_data"</span>)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">55</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">55</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
+<a class="sourceLine" id="cb1-9" data-line-number="9">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
 <p>Note that there are some missing values in these data:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">vapply</span>(credit_train, <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="op">!</span><span class="kw">is.na</span>(x)), <span class="kw">numeric</span>(<span class="dv">1</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(credit_train, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x)), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">numeric</a></span>(<span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000 </span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span></a>
@@ -149,7 +149,7 @@
 <div id="an-initial-recipe" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
-<p>For a first recipe, let’s plan on . First, we will create a recipe from the original data and then specify the processing steps.</p>
+<p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only required <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Status <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> credit_train)</a>
@@ -181,7 +181,7 @@
 </ul>
 <p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">grep</span>(<span class="st">"impute$"</span>, <span class="kw">ls</span>(<span class="st">"package:recipes"</span>), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">"impute$"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ls">ls</a></span>(<span class="st">"package:recipes"</span>), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "step_bagimpute"    "step_knnimpute"    "step_lowerimpute" </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [4] "step_meanimpute"   "step_medianimpute" "step_modeimpute"  </span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [7] "step_rollimpute"</span></a></code></pre></div>
@@ -257,10 +257,10 @@
 <a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, ... [trained]</span></a></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> credit_train)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">newdata =</span> credit_test)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">new_data =</span> credit_train)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">test_data  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">new_data =</span> credit_test)</a></code></pre></div>
 <p><code>bake</code> returns a tibble that, by default, includes all of the variables:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">class</span>(test_data)</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(test_data)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">test_data</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; # A tibble: 1,113 x 23</span></a>
@@ -282,7 +282,7 @@
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt; #   Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt; #   Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt; #   Job_partime &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="kw">vapply</span>(test_data, <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="op">!</span><span class="kw">is.na</span>(x)), <span class="kw">numeric</span>(<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(test_data, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x)), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">numeric</a></span>(<span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#&gt;            Status         Seniority              Time               Age </span></a>
 <a class="sourceLine" id="cb11-25" data-line-number="25"><span class="co">#&gt;                 1                 1                 1                 1 </span></a>
 <a class="sourceLine" id="cb11-26" data-line-number="26"><span class="co">#&gt;          Expenses            Income            Assets              Debt </span></a>
@@ -295,7 +295,7 @@
 <a class="sourceLine" id="cb11-33" data-line-number="33"><span class="co">#&gt;                 1                 1                 1                 1 </span></a>
 <a class="sourceLine" id="cb11-34" data-line-number="34"><span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span></a>
 <a class="sourceLine" id="cb11-35" data-line-number="35"><span class="co">#&gt;                 1                 1                 1</span></a></code></pre></div>
-<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code><a href="../reference/bake.html">bake(object, newdata, all_predictors())</a></code>.</p>
+<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code><a href="../reference/bake.html">bake(object, new_data, all_predictors())</a></code>.</p>
 <p>There are a number of other steps included in the package:</p>
 <pre><code>#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   
 #&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       

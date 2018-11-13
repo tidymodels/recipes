@@ -15,7 +15,7 @@ discretize(x, ...)
   prefix = "bin", keep_na = TRUE, infs = TRUE, min_unique = 10,
   ...)
 
-\method{predict}{discretize}(object, newdata, ...)
+\method{predict}{discretize}(object, new_data, ...)
 }
 \arguments{
 \item{x}{A numeric vector}
@@ -49,7 +49,7 @@ discretization takes place.}
 
 \item{object}{An object of class \code{discretize}.}
 
-\item{newdata}{A new numeric object to be binned.}
+\item{new_data}{A new numeric object to be binned.}
 }
 \value{
 \code{discretize} returns an object of class

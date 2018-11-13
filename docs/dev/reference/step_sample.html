@@ -154,7 +154,7 @@ that will sample rows using <code><a href='http://dplyr.tidyverse.org/reference/
   <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"sample"</span>))
 
 <span class='co'># S3 method for step_sample</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,7 +198,7 @@ of the training set (or smaller for smaller <code>new_data</code>).</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -226,20 +226,20 @@ and <code>id</code>.</p>
   <span class='fu'>step_sample</span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>nrow</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 <span class='co'># Uses `sample_frac`</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_sample</span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.9999</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>nrow</span>()</div><div class='output co'>#&gt; [1] 150</div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 150</div><div class='input'>
 <span class='co'># Uses `sample_n` and returns _at maximum_ 120 samples. </span>
 <span class='no'>smaller_iris</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_sample</span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>1</span>:<span class='fl'>120</span>), <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>smaller_iris</span>) <span class='kw'>%&gt;%</span> <span class='fu'>nrow</span>()</div><div class='output co'>#&gt; [1] 120</div><div class='input'><span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>smaller_iris</span>, <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>121</span>:<span class='fl'>150</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>nrow</span>()</div><div class='output co'>#&gt; [1] 30</div></pre>
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>smaller_iris</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 120</div><div class='input'><span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>smaller_iris</span>, <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>121</span>:<span class='fl'>150</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -5,7 +5,7 @@
 \alias{tidy.step_spatialsign}
 \title{Spatial Sign Preprocessing}
 \usage{
-step_spatialsign(recipe, ..., role = "predictor", na.rm = TRUE,
+step_spatialsign(recipe, ..., role = "predictor", na_rm = TRUE,
   trained = FALSE, columns = NULL, skip = FALSE,
   id = rand_id("spatialsign"))
 
@@ -23,7 +23,7 @@ method, these are not currently used.}
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?}
 
-\item{na.rm}{A logical: should missing data be removed from the
+\item{na_rm}{A logical: should missing data be removed from the
 norm computation?}
 
 \item{trained}{A logical to indicate if the quantities for

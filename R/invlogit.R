@@ -91,12 +91,12 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-bake.step_invlogit <- function(object, newdata, ...) {
+bake.step_invlogit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      binomial()$linkinv(unlist(getElement(newdata, object$columns[i]),
+    new_data[, object$columns[i]] <-
+      binomial()$linkinv(unlist(getElement(new_data, object$columns[i]),
                                 use.names = FALSE))
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 

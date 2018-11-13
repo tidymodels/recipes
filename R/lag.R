@@ -110,7 +110,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
 
 #' @importFrom dplyr select arrange mutate desc
 #' @export
-bake.step_lag <- function(object, newdata, ...) {
+bake.step_lag <- function(object, new_data, ...) {
 
   if (!all(object$lag == as.integer(object$lag)))
     stop("step_lag requires 'lag' argument to be integer valued.",
@@ -131,7 +131,7 @@ bake.step_lag <- function(object, newdata, ...) {
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
   names(calls) <- paste0(object$prefix, grid$lag_val, "_", grid$col)
 
-  as_tibble(mutate(newdata, !!!calls))
+  as_tibble(mutate(new_data, !!!calls))
 }
 
 print.step_lag <-

@@ -202,7 +202,9 @@ j_mod <-
 A simple plot of the posterior distributions of the _J_ indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:
 
 ```{r post-plot}
-ggplot(tidy(j_mod, seed = 234))
+j_mod %>%
+  tidyposterior:::tidy.perf_mod(seed = 234) %>%
+  ggplot()
 ```
 
 
