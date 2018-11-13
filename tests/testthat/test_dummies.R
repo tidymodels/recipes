@@ -18,7 +18,7 @@ okc_fac$location <- factor(okc_fac$location)
 test_that('dummy variables with factor inputs', {
   rec <- recipe(age ~ location + diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, id = "")
-  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
   dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
@@ -47,7 +47,7 @@ test_that('dummy variables with non-factor inputs', {
   
   expect_warning(
     expect_error(
-      prep(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
+      prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
     )
   )
   
@@ -58,7 +58,7 @@ test_that('dummy variables with non-factor inputs', {
   expect_warning(
     recipe(age ~ location + height + diet, data = okc_fac_ish) %>% 
       step_dummy(diet, location, height) %>%
-      prep(training = okc_fac_ish, verbose = FALSE, stringsAsFactors = FALSE)
+      prep(training = okc_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
   )  
   
 })
@@ -66,7 +66,7 @@ test_that('dummy variables with non-factor inputs', {
 test_that('create all dummy variables', {
   rec <- recipe(age ~ location + diet + height, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE)
-  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
   dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)

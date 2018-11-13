@@ -59,7 +59,7 @@ If \code{levels} is given, \code{step_string2factor} will
 convert all variables affected by this step to have the same
 levels.
 
-Also, note that \code{prep} has an option \code{stringsAsFactors} that
+Also, note that \code{prep} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. This should be changed so that raw character
 data will be applied to \code{step_string2factor}. However, this step
 can also take existing factors (but will leave them as-is).
@@ -73,7 +73,7 @@ make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
                     training = okc,
-                    stringsAsFactors = FALSE,
+                    strings_as_factors = FALSE,
                     retain = TRUE)
 
 # note that `diet` is a factor

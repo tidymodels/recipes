@@ -84,12 +84,12 @@ test_that('bad data', {
   expect_error(
     rec %>%
       step_upsample(Species3) %>%
-      prep(stringsAsFactors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE, retain = TRUE)
   )
   expect_error(
     rec %>%
       step_upsample(Species, Species2) %>%
-      prep(stringsAsFactors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE, retain = TRUE)
   )
 })
 

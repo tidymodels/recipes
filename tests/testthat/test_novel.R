@@ -37,7 +37,7 @@ rec <- recipe(~ ., data = tr_dat)
 test_that('basic functionality', {
   ex_1 <- rec %>%
     step_novel(all_predictors()) %>%
-    prep(tr_dat, stringsAsFactors = FALSE, retain = TRUE) 
+    prep(tr_dat, strings_as_factors = FALSE, retain = TRUE) 
   
   ex_1_tr <- bake(ex_1, new_data = tr_dat)
   ex_1_te <- bake(ex_1, new_data = te_dat)

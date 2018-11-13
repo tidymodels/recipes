@@ -27,11 +27,11 @@ test_that("return character or factor values", {
   centered <- raw_recipe %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  centered_char <- prep(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
+  centered_char <- prep(centered, training = biomass, strings_as_factors = FALSE, retain = TRUE)
   char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  centered_fac <- prep(centered, training = biomass, stringsAsFactors = TRUE, retain = TRUE)
+  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE, retain = TRUE)
   fac_var <- bake(centered_fac, new_data = head(biomass))
   expect_equal(class(fac_var$sample), "factor")
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))

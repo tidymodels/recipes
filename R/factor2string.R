@@ -21,7 +21,7 @@
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
-#' @details `prep` has an option `stringsAsFactors` that
+#' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
@@ -36,7 +36,7 @@
 #'
 #' factor_test <- rec %>%
 #'   prep(training = okc,
-#'        stringsAsFactors = FALSE,
+#'        strings_as_factors = FALSE,
 #'        retain = TRUE) %>%
 #'   juice
 #' # diet is a
@@ -47,7 +47,7 @@
 #'
 #' string_test <- rec %>%
 #'   prep(training = okc,
-#'        stringsAsFactors = FALSE,
+#'        strings_as_factors = FALSE,
 #'        retain = TRUE) %>%
 #'   juice
 #' # diet is a

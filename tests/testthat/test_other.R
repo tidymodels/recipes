@@ -99,7 +99,7 @@ test_that('high threshold - much removals', {
 
 test_that('low threshold - no removals', {
   others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
-  others <- prep(others, training = okc_tr, stringsAsFactors = FALSE)
+  others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
   others_te <- bake(others, new_data = okc_te)
 
   expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
@@ -177,7 +177,7 @@ test_that('novel levels', {
 test_that("'other' already in use", {
   others <- rec %>% step_other(diet, location, threshold = 10^-10)
   expect_error(
-    prep(others, training = okc_tr, stringsAsFactors = FALSE)
+    prep(others, training = okc_tr, strings_as_factors = FALSE)
   )
 })
 

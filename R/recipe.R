@@ -294,7 +294,7 @@ prep   <- function(x, ...)
 #'     idea if you want to add more steps later but want to avoid re-training
 #'     the existing steps. Also, it is advisable to use `retain = TRUE`
 #'     if any steps use the option `skip = FALSE`.
-#' @param stringsAsFactors A logical: should character columns be converted to
+#' @param strings_as_factors A logical: should character columns be converted to
 #'   factors? This affects the preprocessed training set (when
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
@@ -327,7 +327,7 @@ prep.recipe <-
            fresh = FALSE,
            verbose = FALSE,
            retain = FALSE,
-           stringsAsFactors = TRUE,
+           strings_as_factors = TRUE,
            ...) {
 
     # In case a variable has multiple roles
@@ -373,7 +373,7 @@ prep.recipe <-
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
 
-    if (stringsAsFactors) {
+    if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       training <- strings2factors(training, lvls)
     } else {
@@ -425,7 +425,7 @@ prep.recipe <-
     }
 
     ## The steps may have changed the data so reassess the levels
-    if (stringsAsFactors) {
+    if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
@@ -539,7 +539,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   new_data <- new_data[, names(new_data) %in% keepers]
   ## The levels are not null when no nominal data are present or
-  ## if stringsAsFactors = FALSE in `prep`
+  ## if strings_as_factors = FALSE in `prep`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
     var_levels <- var_levels[keepers]

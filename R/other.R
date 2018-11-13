@@ -32,7 +32,7 @@
 #'   proportion in the training set is less than `threshold`.
 #'
 #' If no pooling is done the data are unmodified (although character data may
-#'   be changed to factors based on the value of `stringsAsFactors` in
+#'   be changed to factors based on the value of `strings_as_factors` in
 #'   [prep.recipe()]). Otherwise, a factor is always returned with
 #'   different factor levels.
 #'
