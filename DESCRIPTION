@@ -56,4 +56,4 @@ RoxygenNote: 6.1.0.9000
 Roxygen: list(markdown = TRUE)
 Remotes:
     tidymodels/rsample,
-    gdkrmr/dimRed
+    gdkrmr/dimRed@develop

@@ -62,10 +62,10 @@
 #'   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
 #'   prep(training = biomass, retain = TRUE)
 #'
-#' juice(rec)
+#' # juice(rec)
 #'
-#' library(ggplot2)
-#' ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+#' # library(ggplot2)
+#' # ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 #' }
 #' @seealso [step_pca()], [step_ica()], [step_kpca()],
 #'   [step_isomap()], [recipe()], [prep.recipe()],
