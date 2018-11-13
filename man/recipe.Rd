@@ -152,11 +152,11 @@ results <- bake(multi_y_trained, biomass_te)
 # Creating a recipe manually with different roles
 
 rec <- recipe(biomass_tr) \%>\%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
            new_role = "predictor") \%>\%
-  add_role(HHV, new_role = "outcome") \%>\%
-  add_role(sample, new_role = "id variable") \%>\%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role(dataset, new_role = "splitting indicator")
 rec
 }
 \author{

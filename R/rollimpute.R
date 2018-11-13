@@ -58,7 +58,7 @@
 #'
 #' library(recipes)
 #' seven_pt <- recipe(~ . , data = example_data) %>%
-#'   add_role(day, new_role = "time_index") %>%
+#'   update_role(day, new_role = "time_index") %>%
 #'   step_rollimpute(all_predictors(), window = 7) %>%
 #'   prep(training = example_data, retain = TRUE)
 #'

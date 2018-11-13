@@ -10,57 +10,62 @@
 \alias{current_info}
 \title{Role Selection}
 \usage{
-has_role(match = "predictor", roles = current_info()$roles)
+has_role(match = "predictor")
 
-all_predictors(roles = current_info()$roles)
+all_predictors()
 
-all_outcomes(roles = current_info()$roles)
+all_outcomes()
 
-has_type(match = "numeric", types = current_info()$types)
+has_type(match = "numeric")
 
-all_numeric(types = current_info()$types)
+all_numeric()
 
-all_nominal(types = current_info()$types)
+all_nominal()
 
 current_info()
 }
 \arguments{
 \item{match}{A single character string for the query. Exact
 matching is used (i.e. regular expressions won't work).}
-
-\item{roles}{A character string of roles for the current set of
-terms.}
-
-\item{types}{A character string of roles for the current set of
-data types.}
 }
 \value{
-Selector functions return an integer vector while
-\code{current_info} returns an environment with vectors \code{vars},
-\code{roles}, and \code{types}.
+Selector functions return an integer vector.
+
+\code{current_info()} returns an environment with objects \code{vars} and \code{data}.
 }
 \description{
-\code{has_role}, \code{all_predictors}, and \code{all_outcomes} can be used to
+\code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
 select variables in a formula that have certain roles.
-Similarly, \code{has_type}, \code{all_numeric}, and \code{all_nominal} are used
-to select columns based on their data type. See \code{\link[=selections]{selections()}}
-for more details. \code{current_info} is an internal function that is
-unlikely to help users while the others have limited utility
-outside of step function arguments.
+Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used
+to select columns based on their data type.
+
+See \code{?selections} for more details.
+
+\code{current_info()} is an internal function.
+
+All of these functions have have limited utility
+outside of column selection in step functions.
 }
 \examples{
 data(biomass)
 
 rec <- recipe(biomass) \%>\%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-           new_role = "predictor") \%>\%
-  add_role(HHV, new_role = "outcome") \%>\%
-  add_role(sample, new_role = "id variable") \%>\%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(
+    carbon, hydrogen, oxygen, nitrogen, sulfur,
+    new_role = "predictor"
+  ) \%>\%
+  update_role(HHV, new_role = "outcome") \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role(dataset, new_role = "splitting indicator")
+
 recipe_info <- summary(rec)
 recipe_info
 
-has_role("id variable", roles = recipe_info$role)
-all_outcomes(roles = recipe_info$role)
+# Centering on all predictors except carbon
+rec \%>\%
+  step_center(all_predictors(), -carbon) \%>\%
+  prep(training = biomass, retain = TRUE) \%>\%
+  juice()
+
 }
 \keyword{datagen}

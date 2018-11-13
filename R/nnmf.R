@@ -19,7 +19,7 @@
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param num_run A positive integer for the number of computations runs used
-#'  to obtain a consensus projection. 
+#'  to obtain a consensus projection.
 #' @param options A list of options to [NMF::nmf()] by way of
 #'  [dimRed::NNMF()]. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
@@ -56,11 +56,11 @@
 #' library(NMF)
 #' data(biomass)
 #'
-#' # rec <- recipe(HHV ~ ., data = biomass) %>%
-#' #   add_role(sample, new_role = "id var") %>%
-#' #   add_role(dataset, new_role = "split variable") %>%
-#' #   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
-#' #   prep(training = biomass, retain = TRUE)
+#' rec <- recipe(HHV ~ ., data = biomass) %>%
+#'   update_role(sample, new_role = "id var") %>%
+#'   update_role(dataset, new_role = "split variable") %>%
+#'   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
+#'   prep(training = biomass, retain = TRUE)
 #'
 #' # juice(rec)
 #'
@@ -103,7 +103,7 @@ step_nnmf <-
   }
 
 step_nnmf_new <-
-  function(terms, role, trained, num_comp, num_run, 
+  function(terms, role, trained, num_comp, num_run,
            options, res, prefix, seed, skip, id) {
     step(
       subclass = "nnmf",
@@ -126,9 +126,9 @@ step_nnmf_new <-
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
-  
+
   x$num_comp <- min(x$num_comp, length(col_names))
-  
+
   opts <- list(options = x$options)
   opts$ndim <- x$num_comp
   opts$nrun <- x$num_run
@@ -136,11 +136,11 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   opts$.mute <- c("message", "output")
   opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
   opts$.method <- "NNMF"
-  
+
   suppressPackageStartupMessages(loadNamespace("NMF"))
-  
+
  nnm <- do.call(dimRed::embed, opts)
-  
+
   step_nnmf_new(
     terms = x$terms,
     role = x$role,
