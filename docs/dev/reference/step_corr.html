@@ -155,7 +155,7 @@ absolute correlations with other variables.</p>
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>))
 
 <span class='co'># S3 method for step_corr</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,12 +192,12 @@ correlations are less than this value.</p></td>
     <tr>
       <th>use</th>
       <td><p>A character string for the <code>use</code> argument to
-the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>stats::cor()</a></code> function.</p></td>
+the <code><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>stats::cor()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>method</th>
       <td><p>A character string for the <code>method</code> argument
-to the <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>stats::cor()</a></code> function.</p></td>
+to the <code><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>stats::cor()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>removals</th>
@@ -211,7 +211,7 @@ until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -244,10 +244,10 @@ largest absolute correlation between the variables less than
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
 
-<span class='fu'>set.seed</span>(<span class='fl'>3535</span>)
-<span class='no'>biomass</span>$<span class='no'>duplicate</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>$<span class='no'>carbon</span> + <span class='fu'>rnorm</span>(<span class='fu'>nrow</span>(<span class='no'>biomass</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>3535</span>)
+<span class='no'>biomass</span>$<span class='no'>duplicate</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>$<span class='no'>carbon</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>biomass</span>))
 
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
@@ -262,22 +262,22 @@ largest absolute correlation between the variables less than
 <span class='no'>filter_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>filtered_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>filter_obj</span>, <span class='no'>biomass_te</span>)
-<span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>biomass_tr</span>[, <span class='fu'>c</span>(<span class='fl'>3</span>:<span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>biomass_tr</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>:<span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
 #&gt; carbon      1.00     0.32   0.63     0.15   0.09      1.00
 #&gt; hydrogen    0.32     1.00   0.54     0.07   0.19      0.31
 #&gt; oxygen      0.63     0.54   1.00     0.18   0.31      0.63
 #&gt; nitrogen    0.15     0.07   0.18     1.00   0.27      0.15
 #&gt; sulfur      0.09     0.19   0.31     0.27   1.00      0.10
-#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'>round</span>(<span class='fu'>abs</span>(<span class='fu'>cor</span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur  HHV duplicate
+#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur  HHV duplicate
 #&gt; hydrogen      1.00     0.11   0.26 0.10      0.20
 #&gt; nitrogen      0.11     1.00   0.16 0.11      0.13
 #&gt; sulfur        0.26     0.16   1.00 0.08      0.13
 #&gt; HHV           0.10     0.11   0.08 1.00      0.94
 #&gt; duplicate     0.20     0.13   0.13 0.94      1.00</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 2[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 2[39m
 #&gt;   terms id        
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     
-#&gt; [38;5;250m1[39m [31mNA[39m    corr_dBf6A</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>filter_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 2[39m
+#&gt; [38;5;250m1[39m [31mNA[39m    corr_dBf6A</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>filter_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 2[39m
 #&gt;   terms  id        
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m  [3m[38;5;246m&lt;chr&gt;[39m[23m     
 #&gt; [38;5;250m1[39m oxygen corr_dBf6A
@@ -298,12 +298,10 @@ largest absolute correlation between the variables less than
     </ul>
 
     <h2>Author</h2>
-    
-Original R code for filtering algorithm by Dong Li,
+    <p>Original R code for filtering algorithm by Dong Li,
 modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in <code>caret</code> package). Max Kuhn for the <code>step</code>
-function.
-
+function.</p>
   </div>
 </div>
 

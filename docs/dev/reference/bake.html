@@ -151,7 +151,7 @@ prep.recipe(), apply the computations to new data." />
     <pre class="usage"><span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>, <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
+<span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>new_data</span>, <span class='no'>...</span>, <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,7 +169,7 @@ If no selectors are given, the default is to use
 <code>everything()</code>.</p></td>
     </tr>
     <tr>
-      <th>newdata</th>
+      <th>new_data</th>
       <td><p>A data frame or tibble for whom the preprocessing will be
 applied.</p></td>
     </tr>
@@ -187,18 +187,18 @@ resolve to numeric columns (otherwise an error is thrown).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble, matrix, or sparse matrix that may have different
-columns than the original columns in <code>newdata</code>.</p>
+columns than the original columns in <code>new_data</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>bake()</code> takes a trained recipe and applies the
 operations to a data set to create a design matrix.</p>
 <p>If the original data used to train the data are to be
-processed, time can be saved by using the <code>retain = TRUE</code> option
+processed, time can be saved by using the <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code> option
 of <code><a href='prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
 option set, <code><a href='juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
-<code>newdata</code> equal to the training set.</p>
-<p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
+<code>new_data</code> equal to the training set.</p>
+<p>Also, any steps with <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> will not be applied to the
 data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
 of the steps applied.</p>
     
@@ -221,9 +221,7 @@ of the steps applied.</p>
           </ul>
 
     <h2>Author</h2>
-    
-Max Kuhn
-
+    <p>Max Kuhn</p>
   </div>
 </div>
 

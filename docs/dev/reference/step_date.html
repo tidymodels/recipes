@@ -151,12 +151,12 @@ numeric variables.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_date</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span>), <span class='kw'>abbr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>features</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span>), <span class='kw'>abbr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"date"</span>))
 
 <span class='co'># S3 method for step_date</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,7 +200,7 @@ of the following values: <code>month</code>, <code>dow</code> (day of week),
 or <code>dow</code>. <code>FALSE</code> will display the day of the week as
 an ordered factor of character strings, such as "Sunday".
 <code>TRUE</code> will display an abbreviated version of the label,
-such as "Sun". <code>abbr</code> is disregarded if <code>label = FALSE</code>.</p></td>
+such as "Sun". <code>abbr</code> is disregarded if <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>label = FALSE</a></code>.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -227,7 +227,7 @@ populated once <code><a href='prep.html'>prep.recipe()</a></code> is used.</p></
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -262,16 +262,16 @@ used for this purpose.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    date</span></div><div class='input'>
-<span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
+<span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
                        <span class='kw'>Stefan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2006-01-13"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 4[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 3 x 4[39m
 #&gt;   terms            value ordinal id        
 #&gt;   [3m[38;5;246m&lt;fct&gt;[39m[23m            [3m[38;5;246m&lt;fct&gt;[39m[23m [3m[38;5;246m&lt;lgl&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m     
 #&gt; [38;5;250m1[39m all_predictors() dow   FALSE   date_m4f47
@@ -279,7 +279,7 @@ used for this purpose.</p>
 #&gt; [38;5;250m3[39m all_predictors() year  FALSE   date_m4f47</div><div class='input'>
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>date_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)
 
-<span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>date_rec</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>examples</span>)
+<span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>date_rec</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>examples</span>)
 <span class='no'>date_values</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 10 x 8[39m
 #&gt;    Dan        Stefan     Dan_dow Dan_month Dan_year Stefan_dow Stefan_month
 #&gt;    [3m[38;5;246m&lt;date&gt;[39m[23m     [3m[38;5;246m&lt;date&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m   [3m[38;5;246m&lt;fct&gt;[39m[23m        [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m      [3m[38;5;246m&lt;fct&gt;[39m[23m       
@@ -294,7 +294,7 @@ used for this purpose.</p>
 #&gt; [38;5;250m 9[39m 2002-03-13 2006-01-22 Wed     Mar           [4m2[24m002 Sun        Jan         
 #&gt; [38;5;250m10[39m 2002-03-14 2006-01-23 Thu     Mar           [4m2[24m002 Mon        Jan         
 #&gt; [38;5;246m# ... with 1 more variable: Stefan_year [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m[39m</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 6 x 4[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 6 x 4[39m
 #&gt;   terms  value ordinal id        
 #&gt;   [3m[38;5;246m&lt;fct&gt;[39m[23m  [3m[38;5;246m&lt;fct&gt;[39m[23m [3m[38;5;246m&lt;lgl&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m     
 #&gt; [38;5;250m1[39m Dan    dow   FALSE   date_m4f47

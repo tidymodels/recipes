@@ -153,11 +153,11 @@ class variable.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_depth</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"depth"</span>))
 
 <span class='co'># S3 method for step_depth</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,14 +200,14 @@ Possible values are "potential", "halfspace", "Mahalanobis",
     <tr>
       <th>options</th>
       <td><p>A list of options to pass to the underlying
-depth functions. See <code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.halfspace'>ddalpha::depth.halfspace()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.Mahalanobis'>ddalpha::depth.Mahalanobis()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.potential'>ddalpha::depth.potential()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.projection'>ddalpha::depth.projection()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicial'>ddalpha::depth.simplicial()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicialVolume'>ddalpha::depth.simplicialVolume()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.spatial'>ddalpha::depth.spatial()</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/ddalpha/topics/depth.zonoid'>ddalpha::depth.zonoid()</a></code>.</p></td>
+depth functions. See <code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.halfspace'>ddalpha::depth.halfspace()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.Mahalanobis'>ddalpha::depth.Mahalanobis()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.potential'>ddalpha::depth.potential()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.projection'>ddalpha::depth.projection()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicial'>ddalpha::depth.simplicial()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.simplicialVolume'>ddalpha::depth.simplicialVolume()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.spatial'>ddalpha::depth.spatial()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ddalpha/topics/depth.zonoid'>ddalpha::depth.zonoid()</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -220,7 +220,7 @@ depth functions. See <code><a href='http://www.rdocumentation.org/packages/ddalp
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -257,7 +257,7 @@ depth values. The saved data have been trained (i.e. prepared)
 and baked (i.e. processed) up to the point before the location
 that <code>step_depth</code> occupies in the recipe. Also, the data
 requirements for the different step methods may vary. For
-example, using <code>metric = "Mahalanobis"</code> requires that each
+example, using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>metric = "Mahalanobis"</a></code> requires that each
 class should have at least as many rows as variables listed in
 the <code>terms</code> argument.</p>
 <p>The function will create a new column for every unique value of
@@ -273,7 +273,7 @@ replace the original values and have the prefix <code>depth_</code>.</p>
 
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
-<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>dists_to_species</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 150 x 8[39m
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species depth_setosa
 #&gt;           [3m[38;5;246m&lt;dbl&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m        [3m[38;5;246m&lt;dbl&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;fct&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m
@@ -289,10 +289,10 @@ replace the original values and have the prefix <code>depth_</code>.</p>
 #&gt; [38;5;250m10[39m          4.9         3.1          1.5         0.1 setosa          0.02
 #&gt; [38;5;246m# ... with 140 more rows, and 2 more variables: depth_versicolor [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m,
 #&gt; #   depth_virginica [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m[39m</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 3[39m
 #&gt;   terms            class id         
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m            [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m all_predictors() [31mNA[39m    depth_6fiq7</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 3[39m
+#&gt; [38;5;250m1[39m all_predictors() [31mNA[39m    depth_6fiq7</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 3[39m
 #&gt;   terms        class   id         
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m        [3m[38;5;246m&lt;chr&gt;[39m[23m   [3m[38;5;246m&lt;chr&gt;[39m[23m      
 #&gt; [38;5;250m1[39m Sepal.Length Species depth_6fiq7

@@ -160,7 +160,7 @@ variables from the processed training set.</p>
     <tr>
       <th>object</th>
       <td><p>A <code>recipe</code> object that has been prepared
-with the option <code>retain = TRUE</code>.</p></td>
+with the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -183,7 +183,7 @@ resolve to numeric columns (otherwise an error is thrown).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When preparing a recipe, if the training data set is
-retained using <code>retain = TRUE</code>, there is no need to <code>bake</code> the
+retained using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>, there is no need to <code>bake</code> the
 recipe to get the preprocessed training set.</p>
 <p><code>juice</code> will return the results of a recipes where <em>all steps</em>
 have been applied to the data, irrespective of the value of
@@ -195,7 +195,7 @@ the step's <code>skip</code> argument.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
@@ -210,10 +210,10 @@ the step's <code>skip</code> argument.</p>
 
 <span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>tr_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='no'>tr_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 <span class='no'>og_values</span> <span class='kw'>&lt;-</span> <span class='fu'>juice</span>(<span class='no'>sp_signed_trained</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='fu'>all.equal</span>(<span class='no'>tr_values</span>, <span class='no'>og_values</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span>(<span class='no'>tr_values</span>, <span class='no'>og_values</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

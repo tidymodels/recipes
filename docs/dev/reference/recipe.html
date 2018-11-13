@@ -179,7 +179,7 @@ used).</p></td>
     <tr>
       <th>formula</th>
       <td><p>A model formula. No in-line functions should be used here
-(e.g. <code>log(x)</code>, <code>x:y</code>, etc.). These types of transformations
+(e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/Log'>log(x)</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/Colon'>x:y</a></code>, etc.). These types of transformations
 should be enacted using <code>step</code> functions in this package. Dots are
 allowed as are simple multivariate outcome terms (i.e. no need for
 <code>cbind</code>; see Examples).</p></td>
@@ -222,8 +222,8 @@ for preprocessing data.</p>
 such as: outcome, predictor, case weights, stratification variables, etc.</p>
 <p><code>recipe</code> objects can be created in several ways. If the analysis only
 contains outcomes and predictors, the simplest way to create one is to use
-a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline
-functions such as <code>log(x3)</code>. An example is given below.</p>
+a simple formula (e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/tilde'>y ~ x1 + x2</a></code>) that does not contain inline
+functions such as <code><a href='https://www.rdocumentation.org/packages/base/topics/Log'>log(x3)</a></code>. An example is given below.</p>
 <p>Alternatively, a <code>recipe</code> object can be created by first specifying
 which variables in a data set should be used and then sequentially
 defining their roles (see the last example).</p>
@@ -253,7 +253,7 @@ data set to save time and memory.</p>
     <pre class="examples"><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># simple example:</span>
-<span class='fu'>data</span>(<span class='no'>biomass</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='co'># split data</span>
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
@@ -300,7 +300,7 @@ data set to save time and memory.</p>
 #&gt; Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 #&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
-<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
+<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
 
 <span class='co'># or use pipes for the entire workflow:</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>biomass_tr</span> <span class='kw'>%&gt;%</span>
@@ -327,11 +327,11 @@ data set to save time and memory.</p>
 <span class='co'># Creating a recipe manually with different roles</span>
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>biomass_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>, <span class='no'>oxygen</span>, <span class='no'>nitrogen</span>, <span class='no'>sulfur</span>,
+  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>, <span class='no'>oxygen</span>, <span class='no'>nitrogen</span>, <span class='no'>sulfur</span>,
            <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_role.html'>add_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
+  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
 <span class='no'>rec</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -355,9 +355,7 @@ data set to save time and memory.</p>
     </ul>
 
     <h2>Author</h2>
-    
-Max Kuhn
-
+    <p>Max Kuhn</p>
   </div>
 </div>
 

@@ -151,11 +151,11 @@ components.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_ica</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"IC"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ica"</span>))
 
 <span class='co'># S3 method for step_ica</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,13 +194,13 @@ used.</p></td>
     <tr>
       <th>options</th>
       <td><p>A list of options to
-<code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code>. No defaults are set here.
+<code><a href='https://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code>. No defaults are set here.
 <strong>Note</strong> that the arguments <code>X</code> and <code>n.comp</code> should
 not be passed here.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code> object is stored
+      <td><p>The <code><a href='https://www.rdocumentation.org/packages/fastICA/topics/fastICA'>fastICA::fastICA()</a></code> object is stored
 here once this preprocessing step has be trained by
 <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
@@ -221,7 +221,7 @@ resulting new variables. See notes below.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -263,8 +263,8 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with <code>prefix</code> and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if <code>num_comp &lt; 10</code>, their names will be <code>IC1</code> - <code>IC9</code>.
-If <code>num_comp = 101</code>, the names would be <code>IC001</code> -
+if <code><a href='https://www.rdocumentation.org/packages/base/topics/Logic'>num_comp &lt; 10</a></code>, their names will be <code>IC1</code> - <code>IC9</code>.
+If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>num_comp = 101</a></code>, the names would be <code>IC001</code> -
 <code>IC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -282,10 +282,10 @@ Networks</em>, 13(4-5), 411-430.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># from fastICA::fastICA</span>
-<span class='fu'>set.seed</span>(<span class='fl'>131</span>)
-<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>runif</span>(<span class='fl'>400</span>), <span class='fl'>200</span>, <span class='fl'>2</span>)
-<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='no'>S</span> <span class='kw'>%*%</span> <span class='no'>A</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>131</span>)
+<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>400</span>), <span class='fl'>200</span>, <span class='fl'>2</span>)
+<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>S</span> <span class='kw'>%*%</span> <span class='no'>A</span>)
 
 <span class='no'>tr</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>1</span>:<span class='fl'>100</span>, ]
 <span class='no'>te</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>101</span>:<span class='fl'>200</span>, ]
@@ -295,23 +295,14 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>rec</span>,  <span class='no'>V1</span>, <span class='no'>V2</span>)
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>)
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_ica</span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>ica_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>tr</span>)
-<span class='no'>ica_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ica_estimates</span>, <span class='no'>te</span>)
+<span class='co'># ica_estimates &lt;- prep(ica_trans, training = tr)</span>
+<span class='co'># ica_data &lt;- bake(ica_estimates, te)</span>
 
-<span class='fu'>plot</span>(<span class='no'>te</span>$<span class='no'>V1</span>, <span class='no'>te</span>$<span class='no'>V2</span>)</div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>ica_data</span>$<span class='no'>IC1</span>, <span class='no'>ica_data</span>$<span class='no'>IC2</span>)</div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
-#&gt;   terms value component id       
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m V1       [31mNA[39m IC1       ica_I5n9K
-#&gt; [38;5;250m2[39m V2       [31mNA[39m IC1       ica_I5n9K
-#&gt; [38;5;250m3[39m V1       [31mNA[39m IC2       ica_I5n9K
-#&gt; [38;5;250m4[39m V2       [31mNA[39m IC2       ica_I5n9K</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ica_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
-#&gt;    value component terms id       
-#&gt;    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m -[31m1[39m[31m.[39m[31m0[39m[31m4[39m  IC1       V1    ica_I5n9K
-#&gt; [38;5;250m2[39m -[31m0[39m[31m.[39m[31m773[39m IC1       V2    ica_I5n9K
-#&gt; [38;5;250m3[39m -[31m0[39m[31m.[39m[31m378[39m IC2       V1    ica_I5n9K
-#&gt; [38;5;250m4[39m  0.788 IC2       V2    ica_I5n9K</div></pre>
+<span class='co'># plot(te$V1, te$V2)</span>
+<span class='co'># plot(ica_data$IC1, ica_data$IC2)</span>
+
+<span class='co'># tidy(ica_trans, number = 3)</span>
+<span class='co'># tidy(ica_estimates, number = 3)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

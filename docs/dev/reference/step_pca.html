@@ -151,11 +151,11 @@ components.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_pca</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pca"</span>))
 
 <span class='co'># S3 method for step_pca</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,7 +194,7 @@ used.</p></td>
     <tr>
       <th>threshold</th>
       <td><p>A fraction of the total variance that should
-be covered by the components. For example, <code>threshold = .75</code> means that <code>step_pca</code> should generate enough
+be covered by the components. For example, <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>threshold = .75</a></code> means that <code>step_pca</code> should generate enough
 components to capture 75% of the variability in the variables.
 Note: using this argument will override and resent any value
 given to <code>num_comp</code>.</p></td>
@@ -202,13 +202,13 @@ given to <code>num_comp</code>.</p></td>
     <tr>
       <th>options</th>
       <td><p>A list of options to the default method for
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>stats::prcomp()</a></code>. Argument defaults are set to
-<code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and <code>tol = NULL</code>. <strong>Note</strong> that the argument
+<code><a href='https://www.rdocumentation.org/packages/stats/topics/prcomp'>stats::prcomp()</a></code>. Argument defaults are set to
+<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retx = FALSE</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>center = FALSE</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>scale. = FALSE</a></code>, and <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>tol = NULL</a></code>. <strong>Note</strong> that the argument
 <code>x</code> should not be passed here (or at all).</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/stats/topics/prcomp'>stats::prcomp.default()</a></code> object is
+      <td><p>The <code><a href='https://www.rdocumentation.org/packages/stats/topics/prcomp'>stats::prcomp.default()</a></code> object is
 stored here once this preprocessing step has be trained by
 <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
@@ -229,7 +229,7 @@ resulting new variables. See notes below</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -269,8 +269,8 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with <code>prefix</code> and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if <code>num_comp &lt; 10</code>, their names will be <code>PC1</code> - <code>PC9</code>.
-If <code>num_comp = 101</code>, the names would be <code>PC001</code> -
+if <code><a href='https://www.rdocumentation.org/packages/base/topics/Logic'>num_comp &lt; 10</a></code>, their names will be <code>PC1</code> - <code>PC9</code>.
+If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>num_comp = 101</a></code>, the names would be <code>PC001</code> -
 <code>PC101</code>.</p>
 <p>Alternatively, <code>threshold</code> can be used to determine the
 number of components that are required to capture a specified
@@ -297,8 +297,8 @@ Analysis</em>. Springer.</p>
 <span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
 <span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
 
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>extendrange</span>(<span class='fu'>c</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
-<span class='fu'>plot</span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/extendrange'>extendrange</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
@@ -319,10 +319,10 @@ Analysis</em>. Springer.</p>
 #&gt; [38;5;250m 9[39m -[31m2[39m[31m.[39m[31m98[39m    0.038[4m8[24m -[31m0[39m[31m.[39m[31m571[39m  -[31m0[39m[31m.[39m[31m0[39m[31m95[4m3[24m[39m 
 #&gt; [38;5;250m10[39m -[31m1[39m[31m.[39m[31m62[39m    1.27   -[31m0[39m[31m.[39m[31m339[39m   1.07   
 #&gt; [38;5;246m# ... with 40 more rows[39m</div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 4[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 4[39m
 #&gt;   terms         value component id       
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m         [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m all_numeric()    [31mNA[39m [31mNA[39m        pca_UJdaV</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 16 x 4[39m
+#&gt; [38;5;250m1[39m all_numeric()    [31mNA[39m [31mNA[39m        pca_UJdaV</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 16 x 4[39m
 #&gt;    terms      value component id       
 #&gt;    [3m[38;5;246m&lt;chr&gt;[39m[23m      [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m    
 #&gt; [38;5;250m 1[39m Murder   -[31m0[39m[31m.[39m[31m536[39m  PC1       pca_UJdaV

@@ -152,7 +152,7 @@ that will remove rows using <code><a href='http://dplyr.tidyverse.org/reference/
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"filter"</span>))
 
 <span class='co'># S3 method for step_filter</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,7 +190,7 @@ preprocessing have been estimated.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
+Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -226,7 +226,7 @@ between sessions). See the examples.</p>
 
 <span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>75</span>), <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>dplyr_train</span> <span class='kw'>&lt;-</span>
   <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
@@ -235,22 +235,22 @@ between sessions). See the examples.</p>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>Sepal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>4.5</span>, <span class='no'>Species</span> <span class='kw'>==</span> <span class='st'>"setosa"</span>)
 
 <span class='no'>rec_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>prepped</span>)
-<span class='fu'>all.equal</span>(<span class='no'>dplyr_train</span>, <span class='no'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span>(<span class='no'>dplyr_train</span>, <span class='no'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='no'>dplyr_test</span> <span class='kw'>&lt;-</span>
   <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>as_tibble</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span>:<span class='fl'>150</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>Sepal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>4.5</span>, <span class='no'>Species</span> <span class='kw'>!=</span> <span class='st'>"setosa"</span>)
 <span class='no'>rec_test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>prepped</span>, <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span>:<span class='fl'>150</span>))
-<span class='fu'>all.equal</span>(<span class='no'>dplyr_test</span>, <span class='no'>rec_test</span>)</div><div class='output co'>#&gt; [1] "Different number of rows"</div><div class='input'>
-<span class='no'>values</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"versicolor"</span>, <span class='st'>"virginica"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span>(<span class='no'>dplyr_test</span>, <span class='no'>rec_test</span>)</div><div class='output co'>#&gt; [1] "Different number of rows"</div><div class='input'>
+<span class='no'>values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"versicolor"</span>, <span class='st'>"virginica"</span>)
 
 <span class='no'>qq_rec</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># Embed the `values` object in the call using !!</span>
   <span class='fu'>step_filter</span>(<span class='no'>Sepal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>4.5</span>, <span class='no'>Species</span>  <span class='kw'>%in%</span> !!<span class='no'>values</span>)
 
-<span class='fu'><a href='http://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>qq_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 2[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>qq_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 2[39m
 #&gt;   terms                                           id          
 #&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m                                           [3m[38;5;246m&lt;chr&gt;[39m[23m       
 #&gt; [38;5;250m1[39m Sepal.Length &gt; 4.5                              filter_9aaTg

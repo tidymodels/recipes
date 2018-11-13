@@ -154,7 +154,7 @@ sets.</p>
 
 <span class='co'># S3 method for recipe</span>
 <span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,14 +189,14 @@ are executed.</p></td>
       <td><p>A logical: should the <em>preprocessed</em> training set be saved
 into the <code>template</code> slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
-the existing steps. Also, it is advisable to use <code>retain = TRUE</code>
-if any steps use the option <code>skip = FALSE</code>.</p></td>
+the existing steps. Also, it is advisable to use <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>
+if any steps use the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = FALSE</a></code>.</p></td>
     </tr>
     <tr>
-      <th>stringsAsFactors</th>
+      <th>strings_as_factors</th>
       <td><p>A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
-<code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
+<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>) as well as the results of <code>bake.recipe</code>.</p></td>
     </tr>
     </table>
     
@@ -216,7 +216,7 @@ and statistics required by any operations.</p>
 <code>na.rm</code> option at the recipe-level or in <code>prep()</code>.</p>
 <p>Also, if a recipe has been trained using <code>prep()</code> and then steps
 are added, <code>prep()</code> will only update the new operations. If
-<code>fresh = TRUE</code>, all of the operations will be (re)estimated.</p>
+<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>fresh = TRUE</a></code>, all of the operations will be (re)estimated.</p>
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.</p>
@@ -234,9 +234,7 @@ data, the step for scaling is given the centered data.</p>
           </ul>
 
     <h2>Author</h2>
-    
-Max Kuhn
-
+    <p>Max Kuhn</p>
   </div>
 </div>
 

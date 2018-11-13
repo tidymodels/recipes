@@ -139,6 +139,34 @@
     <div id="recipes-0-1-3-9002" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-3-9002" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.3.9002</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<ul>
+<li>Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>) and the general tidyverse naming conventions.
+<ul>
+<li>
+<code>K</code> in <code>step_knnimpute</code> was changed to <code>neighbors</code>. <code>step_isomap</code> had the number of neighbors promoted to a main argument called <code>neighbors</code>
+</li>
+<li>
+<code>step_pca</code>, <code>step_pls</code>, <code>step_kpca</code>, <code>step_ica</code> now use <code>num_comp</code> instead of <code>num</code>. , <code>step_isomap</code> uses <code>num_terms</code> instead of <code>num</code>.</li>
+<li>
+<code>step_bagimpute</code> moved <code>nbagg</code> out of the options and into a main argument <code>trees</code>.</li>
+<li>
+<code>step_bs</code> and <code>step_ns</code> has degrees of freedom promoted to a main argument with name <code>deg_free</code>. Also, <code>step_bs</code> had <code>degree</code> promoted to a main argument.</li>
+<li>
+<code>step_BoxCox</code> and <code>step_YeoJohnson</code> had <code>nunique</code> change to <code>num_unique</code>.</li>
+<li>
+<code>bake</code>, <code>juice</code> and other functions has <code>newdata</code> changed to <code>new_data</code>.</li>
+<li>Several steps had <code>na.rm</code> changed to <code>na_rm</code>.</li>
+<li>
+<code>prep</code> and a few steps had <code>stringsAsFactors</code> changed to <code>strings_as_factors</code>.</li>
+</ul>
+</li>
+<li><p><code><a href="../reference/roles.html">add_role()</a></code> can now only add <em>new</em> additional roles. To alter existing roles, use <code><a href="../reference/roles.html">update_role()</a></code>. This change also allows for the possibility of having multiple roles/types for one variable. <a href="https://github.com/tidymodels/recipes/issues/221"><a href='https://github.com/tidymodels/recipes/issues/221'>#221</a></a></p></li>
+<li><p>All steps gain an <code>id</code> field that will be used in the future to reference other steps.</p></li>
+</ul>
+</div>
 <div id="new-operations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-operations" class="anchor"></a>New Operations:</h2>
@@ -149,7 +177,9 @@
 <li>
 <code>step_geodist</code> can be used to calculate the distance between geocodes and a single reference location.</li>
 <li>
-<code>step_arrange</code>, <code>step_filter</code>, <code>step_mutate</code>, <code>step_sample</code>, and <code>step_slice</code> impliment thier <code>dplyr</code> analogs.</li>
+<code>step_arrange</code>, <code>step_filter</code>, <code>step_mutate</code>, <code>step_sample</code>, and <code>step_slice</code> implement their <code>dplyr</code> analogs.</li>
+<li>
+<code>step_nnmf</code> computes the non-negative matrix factorization for data.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level2">
@@ -169,24 +199,9 @@
 </li>
 <li>
 <code>step_downsample</code> and <code>step_upsample</code> now have <code>seed</code> arguments for more control over randomness.</li>
-<li>All steps gain an <code>id</code> field that will be used in the future to reference other steps.</li>
 <li>
 <code>broom</code> is no longer used to get the <code>tidy</code> generic. These are now contained in the <code>generics</code> package.</li>
-<li>
-<strong>[Breaking change]</strong> Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>).
-<ul>
-<li>
-<code>K</code> in <code>step_knnimpute</code> was changed to <code>neighbors</code>. <code>step_isomap</code> had the number of neighbors promoted to a main argument called <code>neighbors</code>
-</li>
-<li>
-<code>step_pca</code>, <code>step_pls</code>, <code>step_kpca</code>, <code>step_ica</code> now use <code>num_comp</code> instead of <code>num</code>. , <code>step_isomap</code> uses <code>num_terms</code> instead of <code>num</code>.</li>
-<li>
-<code>step_bagimpute</code> moved <code>nbagg</code> out of the options and into a main argument <code>trees</code>.</li>
-<li>
-<code>step_bs</code> and <code>step_ns</code> has degrees of freedom promoted to a main argument with name <code>deg_free</code>. Also, <code>step_bs</code> had <code>degree</code> promoted to a main argument.</li>
-<li>
-<code>step_BoxCox</code> and <code>step_YeoJohnson</code> had <code>nunique</code> change to <code>num_unique</code>.</li>
-</ul>
+<li>When a recipe is prepared, a running list of all columns is created and the last known use of each column is kept. This is to avoid bugs when a step that is skipped removes columns. <a href="https://github.com/tidymodels/recipes/issues/239">issue <a href='https://github.com/tidymodels/recipes/issues/239'>#239</a></a>
 </li>
 </ul>
 </div>
@@ -213,11 +228,11 @@
 <li><p><code>step_log</code> gained an <code>offset</code> argument.</p></li>
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
 <li><p>The internal functions <code>sel2char</code> and <code>printer</code> have been exported to enable <a href="https://github.com/tidymodels/recipes/issues/122">other packages to contain steps</a>.</p></li>
-<li><p>When training <em>new</em> steps after some steps have been previously trained, the <code>retain = TRUE</code> option should be set on <a href="https://github.com/tidymodels/recipes/issues/143">previous invocations of <code>prep</code></a>.</p></li>
+<li><p>When training <em>new</em> steps after some steps have been previously trained, the <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">retain = TRUE</a></code> option should be set on <a href="https://github.com/tidymodels/recipes/issues/143">previous invocations of <code>prep</code></a>.</p></li>
 <li>
 <p>For <code>step_dummy</code>:</p>
 <ul>
-<li>It can now compute the <a href="https://github.com/tidymodels/recipes/issues/145">entire set of dummy variables</a> per factor predictor using the <code>one_hot = TRUE</code> option. Thanks to Davis Vaughan.</li>
+<li>It can now compute the <a href="https://github.com/tidymodels/recipes/issues/145">entire set of dummy variables</a> per factor predictor using the <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">one_hot = TRUE</a></code> option. Thanks to Davis Vaughan.</li>
 <li>The <code>contrast</code> option was removed. The step uses the global option for contrasts.</li>
 <li>`The step also produces missing indicator variables when the original factor <a href="https://github.com/tidymodels/recipes/issues/133">has a missing value</a>
 </li>
