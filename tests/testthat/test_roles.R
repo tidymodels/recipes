@@ -288,11 +288,15 @@ test_that("type selectors can be combined", {
 
   rec <- recipe(HHV ~ ., data = biomass)
 
-  rec %>%
+  prepped <- rec %>%
     add_role(carbon, new_role = "predictor", new_type = "carb") %>%
     step_center(all_numeric(), -has_type("carb")) %>%
-    prep(training = biomass, retain = TRUE) %>%
-    juice()
+    prep(training = biomass, retain = TRUE)
+
+  expect_equal(
+    names(prepped$steps[[1]]$means),
+    c("hydrogen", "oxygen", "nitrogen", "sulfur", "HHV")
+  )
 
 })
 
