@@ -499,7 +499,7 @@ bake <- function(object, ...)
 #' @importFrom dplyr filter group_by arrange desc
 #' @importFrom tidyselect everything
 #' @export
-bake.recipe <- function(object, new_data, ..., composition = "tibble") {
+bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object))
     stop("At least one step has not been trained. Please ",
          "run `prep`.",
@@ -510,11 +510,24 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
 
+  terms <- quos(...)
+  if (is.null(new_data)) {
+    if (any(names(terms) == "newdata")) {
+      warning("Please use `new_data` instead of `newdata` with `bake`. \nIn ",
+              "recipes versions >= 0.0.4, this will cause an error.", 
+              call. = FALSE)
+      new_data <- eval_tidy(terms$newdata)
+      terms$newdata <- NULL
+    } else {
+      stop("Please pass a data set to `new_data`.", call. = FALSE)
+    }
+  }
+  
   if (!is_tibble(new_data)) new_data <- as_tibble(new_data)
 
   check_nominal_type(new_data, object$orig_lvls)
 
-  terms <- quos(...)
+
   if (is_empty(terms))
     terms <- quos(everything())
 

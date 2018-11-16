@@ -84,6 +84,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
+    recipes_pkg_check(c("dimRed", "fastICA"))
     add_step(
       recipe,
       step_nnmf_new(

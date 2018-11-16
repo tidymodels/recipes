@@ -97,7 +97,7 @@ test_that("detect_step function works", {
   expect_false(detect_step(prepped_rec, "meanimpute"))
 })
 
-test_that("bake without pred", {
+test_that("bake without prep", {
   sp_signed <-  recipe(HHV ~ ., data = biomass) %>%
     step_center(all_predictors()) %>%
     step_scale(all_predictors()) %>%
@@ -112,3 +112,15 @@ test_that("bake without pred", {
   )
 })
 
+
+test_that("bake without newdata", {
+  rec <-  recipe(HHV ~ ., data = biomass) %>%
+    step_center(all_numeric()) %>%
+    step_scale(all_numeric()) %>%
+    prep(training = biomass, retain = TRUE)
+  expect_error(bake(rec))
+  expect_warning(
+    bake(rec, newdata = biomass),
+    "0.0.4"
+  )
+})
