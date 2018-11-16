@@ -499,7 +499,7 @@ bake <- function(object, ...)
 #' @importFrom dplyr filter group_by arrange desc
 #' @importFrom tidyselect everything
 #' @export
-bake.recipe <- function(object, new_data, ..., composition = "tibble") {
+bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object))
     stop("At least one step has not been trained. Please ",
          "run `prep`.",
@@ -510,11 +510,39 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
 
+  terms <- quos(...)
+
+  # In case someone used the deprecated `newdata`:
+  if (is.null(new_data) || is.null(ncol(new_data))) {
+    if (any(names(terms) == "newdata")) {
+      warning("Please use `new_data` instead of `newdata` with `bake`. \nIn ",
+              "recipes versions >= 0.1.4, this will cause an error.",
+              call. = FALSE)
+      # If a single selector is passed in, it is now in `new_data`.
+      if (!is.null(match.call()$new_data)) {
+        slctr <- as_quosure(match.call()$new_data)
+      } else slctr <- NULL
+      new_data <- eval_tidy(terms$newdata)
+      if (length(terms) > 1) {
+        terms$newdata <- NULL
+        if (!is.null(slctr)) {
+          terms <- c(slctr, terms)
+        }
+      } else {
+        if (!is.null(slctr)) {
+          terms <- list(slctr)
+        } else terms <- quos()
+      }
+    } else {
+      stop("Please pass a data set to `new_data`.", call. = FALSE)
+    }
+  }
+
   if (!is_tibble(new_data)) new_data <- as_tibble(new_data)
 
   check_nominal_type(new_data, object$orig_lvls)
 
-  terms <- quos(...)
+
   if (is_empty(terms))
     terms <- quos(everything())
 

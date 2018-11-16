@@ -7,7 +7,7 @@
    *  `step_bagimpute` moved `nbagg` out of the options and into a main argument `trees`. 
    *  `step_bs` and `step_ns` has degrees of freedom promoted to a main argument with name `deg_free`. Also, `step_bs` had `degree` promoted to a main argument. 
    *  `step_BoxCox` and `step_YeoJohnson` had `nunique` change to `num_unique`.
-   * `bake`, `juice` and other functions has `newdata` changed to `new_data`. 
+   * `bake`, `juice` and other functions has `newdata` changed to `new_data`. For _this version only_, using `newdata` will only result in a wanring. 
    * Several steps had `na.rm` changed to `na_rm`.
    * `prep` and a few steps had `stringsAsFactors` changed to `strings_as_factors`. 
 
