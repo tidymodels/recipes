@@ -114,13 +114,41 @@ test_that("bake without prep", {
 
 
 test_that("bake without newdata", {
+  # This will be deprecated in versions > 0.1.4
+  expect_false(
+    package_version(packageVersion("recipes")) > package_version("0.1.4"),
+    "deprecate allowing `newdata` instead of `new_data`"
+  )
+
   rec <-  recipe(HHV ~ ., data = biomass) %>%
     step_center(all_numeric()) %>%
     step_scale(all_numeric()) %>%
     prep(training = biomass, retain = TRUE)
+
+  exp_1 <- bake(rec, new_data = biomass)
+  exp_2 <- bake(rec, new_data = biomass, all_predictors())
+  exp_3 <- bake(rec, new_data = biomass, all_predictors(), -all_nominal())
+
   expect_error(bake(rec))
+
   expect_warning(
-    bake(rec, newdata = biomass),
-    "0.0.4"
+    obs_1 <- bake(rec, newdata = biomass),
+    "0.1.4"
   )
+  expect_equal(obs_1, exp_1)
+  expect_equal(bake(rec, biomass), exp_1)
+
+  expect_warning(
+    obs_2 <- bake(rec, newdata = biomass, all_predictors()),
+    "0.1.4"
+  )
+  expect_equal(obs_2, exp_2)
+  expect_equal(bake(rec, biomass, all_predictors()), exp_2)
+
+  expect_warning(
+    obs_3 <- bake(rec, newdata = biomass, all_predictors(), -all_nominal()),
+    "0.1.4"
+  )
+  expect_equal(obs_3, exp_3)
+  expect_equal(bake(rec, biomass, all_predictors(), -all_nominal()), exp_3)
 })
