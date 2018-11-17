@@ -31,6 +31,7 @@ Imports:
     tidyr,
     tidyselect (>= 0.1.1),
     timeDate,
+    utils,
     withr
 Suggests: 
     covr,
@@ -46,7 +47,7 @@ Suggests:
     RANN,
     rmarkdown,
     rpart,
-    rsample (>= 0.0.2.9000),
+    rsample,
     testthat
 License: GPL-2
 VignetteBuilder: knitr
@@ -54,5 +55,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-Remotes:
-    tidymodels/rsample
+

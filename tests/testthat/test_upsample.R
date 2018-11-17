@@ -39,7 +39,7 @@ test_that('basic usage', {
   expect_equal(sum(is.na(juice(rec1_p)$Species)), max(og_xtab))
   expect_equal(te_xtab, og_xtab)
 
-  expect_warning(prep(rec1, training = iris2))
+  expect_warning(prep(rec1, training = iris2), NA)
 })
 
 test_that('ratio value', {
