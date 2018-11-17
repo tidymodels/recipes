@@ -42,7 +42,7 @@
 #' tidy(rec, number = 3)
 #'
 #' rec <- prep(rec, training = covers)
-#' results <- bake(rec, newdata = covers)
+#' results <- bake(rec, new_data = covers)
 #'
 #' table(results$rocks, results$more_rocks)
 #'
@@ -108,17 +108,17 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.step_bin2factor <- function(object, newdata, ...) {
+bake.step_bin2factor <- function(object, new_data, ...) {
   levs <- if (object$ref_first) object$levels else rev(object$levels)
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
+    new_data[, object$columns[i]] <-
       factor(ifelse(
-        getElement(newdata, object$columns[i]) == 1,
+        getElement(new_data, object$columns[i]) == 1,
         object$levels[1],
         object$levels[2]
       ),
       levels = levs)
-  newdata
+  new_data
 }
 
 print.step_bin2factor <-

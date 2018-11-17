@@ -46,7 +46,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' table(credit_te$Home, imputed_te$Home, useNA = "always")
 #'
@@ -101,12 +101,12 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_modeimpute <- function(object, newdata, ...) {
+bake.step_modeimpute <- function(object, new_data, ...) {
   for (i in names(object$modes)) {
-    if (any(is.na(newdata[, i])))
-      newdata[is.na(newdata[, i]), i] <- object$modes[i]
+    if (any(is.na(new_data[, i])))
+      new_data[is.na(new_data[, i]), i] <- object$modes[i]
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_modeimpute <-

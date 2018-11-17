@@ -25,7 +25,7 @@ Imports:
     Matrix,
     purrr (>= 0.2.3),
     RcppRoll,
-    rlang (>= 0.2.2.9001),
+    rlang (>=  0.3.0.1),
     stats,
     tibble,
     tidyr,
@@ -35,7 +35,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dimRed (>= 0.1.0.9001),
+    dimRed (>= 0.2.2),
     fastICA,
     ggplot2,
     igraph,
@@ -52,10 +52,7 @@ License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Remotes:
-    tidymodels/rsample,
-    r-lib/rlang,
-    gdkrmr/dimRed,
-    r-lib/generics
+    tidymodels/rsample

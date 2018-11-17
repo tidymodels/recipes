@@ -14,8 +14,8 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new principal component columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param num The number of PCA components to retain as new
-#'  predictors. If `num` is greater than the number of columns
+#' @param num_comp The number of PCA components to retain as new
+#'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param options A list of options to
@@ -26,6 +26,9 @@
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param num The number of components to retain (this will be 
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
+#'  will override this option. 
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -59,13 +62,13 @@
 #'  made in the `kernel` and `kpar` slots of the
 #'  `options` argument to `step_kpca`.
 #'
-#' The argument `num` controls the number of components that
+#' The argument `num_comp` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
 #'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if `num < 10`, their names will be `kPC1` -
-#'  `kPC9`. If `num = 101`, the names would be
+#'  if `num_comp < 10`, their names will be `kPC1` -
+#'  `kPC9`. If `num_comp = 101`, the names would be
 #'  `kPC001` - `kPC101`.
 #'
 #' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
@@ -91,16 +94,16 @@
 #'   step_scale(all_predictors()) %>%
 #'   step_kpca(all_predictors())
 #'
-#' kpca_estimates <- prep(kpca_trans, training = biomass_tr)
+#' # kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 #'
-#' kpca_te <- bake(kpca_estimates, biomass_te)
+#' # kpca_te <- bake(kpca_estimates, biomass_te)
 #'
-#' rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-#' plot(kpca_te$kPC1, kpca_te$kPC2,
-#'      xlim = rng, ylim = rng)
+#' # rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
+#' # plot(kpca_te$kPC1, kpca_te$kPC2,
+#' #      xlim = rng, ylim = rng)
 #'
-#' tidy(kpca_trans, number = 4)
-#' tidy(kpca_estimates, number = 4)
+#' # tidy(kpca_trans, number = 4)
+#' # tidy(kpca_estimates, number = 4)
 #' @seealso [step_pca()] [step_ica()]
 #'   [step_isomap()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -110,24 +113,29 @@ step_kpca <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num  = 5,
+           num_comp  = 5,
            res = NULL,
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
+           num = NULL,
            prefix = "kPC",
            skip = FALSE,
            id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))
-
+    if (!is.null(num)) 
+      message("The argument `num` is deprecated in factor of `num_comp`. ",
+              "`num` will be removed in next version.", call. = FALSE)
+    
     add_step(
       recipe,
       step_kpca_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        num = num,
+        num_comp = num_comp,
         res = res,
+        num = num,
         options = options,
         prefix = prefix,
         skip = skip,
@@ -137,16 +145,17 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms, role, trained, num, res, options, prefix, skip, id) {
+  function(terms, role, trained, num_comp, res, options, prefix, num, skip, id) {
     step(
       subclass = "kpca",
       terms = terms,
       role = role,
       trained = trained,
-      num = num,
+      num_comp = num_comp,
       res = res,
       options = options,
       prefix = prefix,
+      num = num,
       skip = skip,
       id = id
     )
@@ -157,7 +166,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num), x$options))
+  kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
   kprc <- kprc@fun(
     dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
     kprc@stdpars
@@ -167,22 +176,23 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = x$num,
+    num_comp = x$num_comp,
     options = x$options,
     res = kprc,
     prefix = x$prefix,
+    num = x$num_comp,
     skip = x$skip,
     id = x$id
   )
 }
 
 #' @export
-bake.step_kpca <- function(object, newdata, ...) {
+bake.step_kpca <- function(object, new_data, ...) {
   pca_vars <- colnames(environment(object$res@apply)$indata)
   comps <- object$res@apply(
-    dimRed::dimRedData(as.data.frame(newdata[, pca_vars, drop = FALSE]))
+    dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
     )@data
-  comps <- comps[, 1:object$num, drop = FALSE]
+  comps <- comps[, 1:object$num_comp, drop = FALSE]
   comps <- check_name(comps, newdata, object)
   newdata <- bind_cols(newdata, as_tibble(comps))
   newdata <- newdata[, !(colnames(newdata) %in% pca_vars), drop = FALSE]

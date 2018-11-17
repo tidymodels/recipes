@@ -131,19 +131,19 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_ratio <- function(object, newdata, ...) {
-  res <- newdata[, object$columns$top] /
-    newdata[, object$columns$bottom]
+bake.step_ratio <- function(object, new_data, ...) {
+  res <- new_data[, object$columns$top] /
+    new_data[, object$columns$bottom]
   colnames(res) <-
     apply(object$columns, 1, function(x)
       object$naming(x[1], x[2]))
   if (!is_tibble(res))
     res <- as_tibble(res)
 
-  newdata <- bind_cols(newdata, res)
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, res)
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_ratio <-

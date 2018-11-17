@@ -14,10 +14,10 @@ rec <- recipe( ~ ., data = iris2)
 
 test_that('basic usage', {
   rec1 <- rec %>%
-    step_downsample(matches("Species$"), id = "")
+    step_downsample(tidyselect::matches("Species$"), id = "")
 
   untrained <- tibble(
-    terms = "matches(\"Species$\")",
+    terms = "tidyselect::matches(\"Species$\")",
     id = ""
   )
 
@@ -34,7 +34,7 @@ test_that('basic usage', {
 
 
   tr_xtab <- table(juice(rec1_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec1_p, newdata = iris2)$Species, useNA = "always")
+  te_xtab <- table(bake(rec1_p, new_data = iris2)$Species, useNA = "always")
   og_xtab <- table(iris2$Species, useNA = "always")
 
   expect_equal(max(tr_xtab), 5)
@@ -46,12 +46,12 @@ test_that('basic usage', {
 
 test_that('ratio value', {
   rec2 <- rec %>%
-    step_downsample(matches("Species$"), ratio = 2)
+    step_downsample(tidyselect::matches("Species$"), ratio = 2)
 
   rec2_p <- prep(rec2, training = iris2, retain = TRUE)
 
   tr_xtab <- table(juice(rec2_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec2_p, newdata = iris2)$Species, useNA = "always")
+  te_xtab <- table(bake(rec2_p, new_data = iris2)$Species, useNA = "always")
   og_xtab <- table(iris2$Species, useNA = "always")
 
   expect_equal(max(tr_xtab), 10)
@@ -62,12 +62,12 @@ test_that('ratio value', {
 
 test_that('no skipping', {
   rec3 <- rec %>%
-    step_downsample(matches("Species$"), skip = FALSE)
+    step_downsample(tidyselect::matches("Species$"), skip = FALSE)
 
   rec3_p <- prep(rec3, training = iris2, retain = TRUE)
 
   tr_xtab <- table(juice(rec3_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec3_p, newdata = iris2)$Species, useNA = "always")
+  te_xtab <- table(bake(rec3_p, new_data = iris2)$Species, useNA = "always")
   og_xtab <- table(iris2$Species, useNA = "always")
 
   expect_equal(max(tr_xtab), 5)
@@ -85,12 +85,12 @@ test_that('bad data', {
   expect_error(
     rec %>%
       step_downsample(Species3) %>%
-      prep(stringsAsFactors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE, retain = TRUE)
   )
   expect_error(
     rec %>%
       step_downsample(Species, Species2) %>%
-      prep(stringsAsFactors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE, retain = TRUE)
   )
 })
 

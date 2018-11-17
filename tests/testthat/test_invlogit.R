@@ -15,7 +15,7 @@ test_that('simple logit trans', {
     step_invlogit(x1, id = "")
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_tidy_un <- tibble(terms = "x1", id = "")
   expect_equal(exp_tidy_un, tidy(rec, number = 1))

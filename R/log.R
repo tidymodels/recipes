@@ -126,7 +126,7 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_log <- function(object, newdata, ...) {
+bake.step_log <- function(object, new_data, ...) {
   col_names <- object$columns
   # for backward compat
   if(all(names(object) != "offset"))
@@ -134,19 +134,19 @@ bake.step_log <- function(object, newdata, ...) {
 
   if (!object$signed){
     for (i in seq_along(col_names))
-      newdata[, col_names[i]] <-
-        log(newdata[[ col_names[i] ]] + object$offset, base = object$base)
+      new_data[, col_names[i]] <-
+        log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
   } else {
     if (object$offset != 0)
       warning("When signed is TRUE, offset will be ignored")
      for (i in seq_along(col_names))
-       newdata[, col_names[i]] <-
-         ifelse(abs(newdata[[ col_names[i] ]]) < 1,
+       new_data[, col_names[i]] <-
+         ifelse(abs(new_data[[ col_names[i] ]]) < 1,
                 0,
-                sign(newdata[[ col_names[i] ]]) *
-                  log(abs(newdata[[ col_names[i] ]]), base = object$base ))
+                sign(new_data[[ col_names[i] ]]) *
+                  log(abs(new_data[[ col_names[i] ]]), base = object$base ))
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_log <-

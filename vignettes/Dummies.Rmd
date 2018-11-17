@@ -150,6 +150,8 @@ The entire interaction formula is shown here:
 iris_int
 ```
 
+For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. `starts_with("x_"):starts_with("y_")`). 
+
 ## Warning!
 
 Would it work if I didn't convert species to a factor and used the interactions step? 

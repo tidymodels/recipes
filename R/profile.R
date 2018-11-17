@@ -43,7 +43,7 @@
 #'  columns that should be fixed and their values. These values are
 #'  not determined until [prep.recipe()] is called.
 #' @details This step is atypical in that, when baked, the
-#'  `newdata` argument is ignored; the resulting data set is
+#'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -197,19 +197,19 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_profile <- function(object, newdata, ...) {
+bake.step_profile <- function(object, new_data, ...) {
   n <- length(object$profile[[1]])
-  newdata <- newdata[rep(1, n), ]
+  new_data <- new_data[rep(1, n), ]
   keepers <- c(names(object$columns), names(object$profile))
   # Keep the predictors in the same order
-  keepers <- names(newdata)[names(newdata) %in% keepers]
-  newdata <- dplyr::select(newdata,! !keepers)
+  keepers <- names(new_data)[names(new_data) %in% keepers]
+  new_data <- dplyr::select(new_data,! !keepers)
 
   for (i in names(object$columns)) {
-    newdata[[i]] <- rep(object$columns[[i]], n)
+    new_data[[i]] <- rep(object$columns[[i]], n)
   }
-  newdata[[names(object$profile)]] <- object$profile[[1]]
-  as_tibble(newdata)
+  new_data[[names(object$profile)]] <- object$profile[[1]]
+  as_tibble(new_data)
 }
 
 print.step_profile <-

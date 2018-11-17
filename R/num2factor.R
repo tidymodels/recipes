@@ -56,7 +56,7 @@
 #'
 #' with_transform <- prep(with_transform,
 #'                        training = iris2[1:75,])
-#' new_values <- bake(with_transform, newdata = iris2, Species)
+#' new_values <- bake(with_transform, new_data = iris2, Species)
 #' table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 
 step_num2factor <-
@@ -132,19 +132,19 @@ make_factor_num <- function (x, lvl, ord, foo)
 
 #' @importFrom purrr map2_df map_df
 #' @export
-bake.step_num2factor <- function(object, newdata, ...) {
+bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
-  newdata[, col_names] <-
-    map2_df(newdata[, col_names],
+  new_data[, col_names] <-
+    map2_df(new_data[, col_names],
             object$levels,
             make_factor_num,
             ord = object$ordered[1],
             foo = object$transform)
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_num2factor <-

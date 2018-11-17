@@ -6,7 +6,7 @@
 \title{Centering Numeric Data}
 \usage{
 step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  na.rm = TRUE, skip = FALSE, id = rand_id("center"))
+  na_rm = TRUE, skip = FALSE, id = rand_id("center"))
 
 \method{tidy}{step_center}(x, ...)
 }
@@ -28,7 +28,7 @@ preprocessing have been estimated.}
 \item{means}{A named numeric vector of means. This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{na.rm}{A logical value indicating whether \code{NA}
+\item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the

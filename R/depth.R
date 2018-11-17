@@ -71,7 +71,7 @@
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
-#' dists_to_species <- bake(rec_dists, newdata = iris)
+#' dists_to_species <- bake(rec_dists, new_data = iris)
 #' dists_to_species
 #'
 #' tidy(rec, number = 1)
@@ -162,9 +162,9 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_depth <- function(object, newdata, ...) {
+bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])
-  x_data <- as.matrix(newdata[, x_names])
+  x_data <- as.matrix(new_data[, x_names])
   res <- lapply(
     object$data,
     get_depth,

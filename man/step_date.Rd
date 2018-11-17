@@ -95,7 +95,7 @@ tidy(date_rec, number = 1)
 
 date_rec <- prep(date_rec, training = examples)
 
-date_values <- bake(date_rec, newdata = examples)
+date_values <- bake(date_rec, new_data = examples)
 date_values
 
 tidy(date_rec, number = 1)

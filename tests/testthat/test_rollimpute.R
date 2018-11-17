@@ -19,12 +19,12 @@ example_data$x2[c(1:4, 10)] <- NA
 example_data <- as_tibble(example_data)
 
 test_that('imputation values with 7-pt median', {
-  expect_warning(
-    seven_pt <- recipe(~ . , data = example_data) %>%
-      add_role(day, new_role = "time_index") %>%
-      step_rollimpute(all_predictors(), window = 7, id = "") %>%
-      prep(training = example_data, retain = TRUE)
-  )
+
+  seven_pt <- recipe(~ . , data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_rollimpute(all_predictors(), window = 7, id = "") %>%
+    prep(training = example_data, retain = TRUE)
+
   seven_pt_exp <- example_data
   seven_pt_exp$x1[1] <- median(seven_pt_exp$x1[1:7], na.rm = TRUE)
   seven_pt_exp$x1[5] <- median(seven_pt_exp$x1[2:8], na.rm = TRUE)
@@ -48,13 +48,13 @@ test_that('imputation values with 7-pt median', {
 })
 
 test_that('imputation values with 3-pt mean', {
-  expect_warning(
-    three_pt <- recipe(~ . , data = example_data) %>%
-      add_role(day, new_role = "time_index") %>%
-      step_rollimpute(all_predictors(), window = 3, id = "") %>%
-      prep(training = example_data, retain = TRUE)
-  )
-  
+
+  three_pt <- recipe(~ . , data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_rollimpute(all_predictors(), window = 3, id = "") %>%
+    prep(training = example_data, retain = TRUE)
+
+
   three_pt_exp <- example_data
   three_pt_exp$x1[1] <- mean(three_pt_exp$x1[1:3], na.rm = TRUE)
   three_pt_exp$x1[5] <- mean(three_pt_exp$x1[4:6], na.rm = TRUE)
@@ -84,35 +84,29 @@ test_that('bad args', {
       step_rollimpute(all_predictors(), window = 3) %>%
       prep(training = example_data, retain = TRUE)
   )
-  
+
   expect_error(
-    expect_warning(
-      recipe( ~ . , data = example_data) %>%
-        add_role(day, new_role = "time_index") %>%
-        step_rollimpute(all_predictors(), window = 4) %>%
-        prep(training = example_data, retain = TRUE)
-    )
+    recipe( ~ . , data = example_data) %>%
+      update_role(day, new_role = "time_index") %>%
+      step_rollimpute(all_predictors(), window = 4) %>%
+      prep(training = example_data, retain = TRUE)
   )
 
   example_data$x4 <- 1:12
-  expect_warning(
-    expect_error(
-      recipe( ~ . , data = example_data) %>%
-        add_role(day, new_role = "time_index") %>%
-        step_rollimpute(all_predictors(), window = 3) %>%
-        prep(training = example_data, retain = TRUE)
-    )
+  expect_error(
+    recipe( ~ . , data = example_data) %>%
+      update_role(day, new_role = "time_index") %>%
+      step_rollimpute(all_predictors(), window = 3) %>%
+      prep(training = example_data, retain = TRUE)
   )
 })
 
 
 
 test_that('printing', {
-  expect_warning(
-    seven_pt <- recipe(~ . , data = example_data) %>%
-      add_role(day, new_role = "time_index") %>%
-      step_rollimpute(all_predictors(), window = 7)
-  )
+  seven_pt <- recipe(~ . , data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_rollimpute(all_predictors(), window = 7)
   expect_output(print(seven_pt))
   expect_output(prep(seven_pt, training = example_data, verbose = TRUE))
 })

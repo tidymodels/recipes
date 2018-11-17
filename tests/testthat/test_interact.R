@@ -31,7 +31,7 @@ test_that('non-factor variables with dot', {
     prep(int_rec, training = dat_tr, verbose = FALSE)
   
   te_new <-
-    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
+    bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
   
@@ -52,7 +52,7 @@ test_that('non-factor variables with specific variables', {
     prep(int_rec, training = dat_tr, verbose = FALSE)
   
   te_new <-
-    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
+    bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
   
@@ -76,7 +76,7 @@ test_that('using selectors', {
     prep(int_rec, training = dat_tr, verbose = FALSE)
   
   te_new <-
-    bake(int_rec_trained, newdata = dat_te, all_predictors(), -all_nominal())
+    bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
   te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5", 
@@ -167,7 +167,7 @@ test_that('replacing selectors in formulas', {
 #     step_interact(~ (. - Sepal.Width)^3, sep = ":")
 #   int_rec_trained <- prep(int_rec, iris)
 #
-#   te_new <- bake(int_rec_trained, newdata = iris, role = "predictor")
+#   te_new <- bake(int_rec_trained, new_data = iris, role = "predictor")
 #   te_new <- te_new[, sort(names(te_new))]
 #   te_new <- as.matrix(te_new)
 #

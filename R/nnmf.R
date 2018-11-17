@@ -19,7 +19,7 @@
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param num_run A positive integer for the number of computations runs used
-#'  to obtain a consensus projection. 
+#'  to obtain a consensus projection.
 #' @param options A list of options to [NMF::nmf()] by way of
 #'  [dimRed::NNMF()]. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
@@ -57,15 +57,15 @@
 #' data(biomass)
 #'
 #' rec <- recipe(HHV ~ ., data = biomass) %>%
-#'   add_role(sample, new_role = "id var") %>%
-#'   add_role(dataset, new_role = "split variable") %>%
+#'   update_role(sample, new_role = "id var") %>%
+#'   update_role(dataset, new_role = "split variable") %>%
 #'   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
 #'   prep(training = biomass, retain = TRUE)
 #'
-#' juice(rec)
+#' # juice(rec)
 #'
-#' library(ggplot2)
-#' ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+#' # library(ggplot2)
+#' # ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 #' }
 #' @seealso [step_pca()], [step_ica()], [step_kpca()],
 #'   [step_isomap()], [recipe()], [prep.recipe()],
@@ -84,6 +84,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
+    recipes_pkg_check(c("dimRed", "fastICA"))
     add_step(
       recipe,
       step_nnmf_new(
@@ -103,7 +104,7 @@ step_nnmf <-
   }
 
 step_nnmf_new <-
-  function(terms, role, trained, num_comp, num_run, 
+  function(terms, role, trained, num_comp, num_run,
            options, res, prefix, seed, skip, id) {
     step(
       subclass = "nnmf",
@@ -126,9 +127,9 @@ step_nnmf_new <-
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
-  
+
   x$num_comp <- min(x$num_comp, length(col_names))
-  
+
   opts <- list(options = x$options)
   opts$ndim <- x$num_comp
   opts$nrun <- x$num_run
@@ -136,11 +137,11 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   opts$.mute <- c("message", "output")
   opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
   opts$.method <- "NNMF"
-  
+
   suppressPackageStartupMessages(loadNamespace("NMF"))
-  
+
  nnm <- do.call(dimRed::embed, opts)
-  
+
   step_nnmf_new(
     terms = x$terms,
     role = x$role,
@@ -157,20 +158,20 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_nnmf <- function(object, newdata, ...) {
+bake.step_nnmf <- function(object, new_data, ...) {
   nnmf_vars <- rownames(object$res@other.data$w)
   comps <-
     object$res@apply(
       dimRed::dimRedData(
-        as.data.frame(newdata[, nnmf_vars, drop = FALSE])
+        as.data.frame(new_data[, nnmf_vars, drop = FALSE])
       )
     )@data
   comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% nnmf_vars), drop = FALSE]
-  as_tibble(newdata)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+  as_tibble(new_data)
 }
 
 

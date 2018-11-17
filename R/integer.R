@@ -160,15 +160,15 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
 }
 
 #' @export
-bake.step_integer <- function(object, newdata, ...) {
+bake.step_integer <- function(object, new_data, ...) {
 
   for (i in names(object$key)) {
-    newdata[[i]] <-
-      map_key_to_int(newdata[[i]], object$key[[i]], object$strict, object$zero_based)
+    new_data[[i]] <-
+      map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_integer <-

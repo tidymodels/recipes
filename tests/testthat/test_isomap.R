@@ -3,7 +3,6 @@ library(recipes)
 
 context("ISOmap")
 
-
 ## expected results form the `dimRed` package
 
 exp_res <- structure(list(Isomap1 = c(0.312570873898531, 0.371885353599467, 2.23124009833741,
@@ -29,13 +28,14 @@ test_that('correct Isomap values', {
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
   
   im_rec <- rec %>%
-    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3, id = "")
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
 
   im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
 
-  im_pred <- bake(im_trained, newdata = dat2)
+  im_pred <- bake(im_trained, new_data = dat2)
 
   all.equal(as.matrix(im_pred), as.matrix(exp_res))
 
@@ -47,13 +47,23 @@ test_that('correct Isomap values', {
 })
 
 
+test_that('deprecated arg', {
+  skip_if_not_installed("dimRed")
+  expect_message(
+    rec %>%
+      step_isomap(x1, x2, x3, num = 3, id = "")
+  )
+})
+
 test_that('printing', {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  
   im_rec <- rec %>%
-    step_isomap(x1, x2, x3, options = list(knn = 3), num = 3)
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
   expect_output(print(im_rec))
   expect_output(prep(im_rec, training = dat1, verbose = TRUE))
 })

@@ -93,11 +93,11 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-bake.step_logit <- function(object, newdata, ...) {
+bake.step_logit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      binomial()$linkfun(getElement(newdata, object$columns[i]))
-  as_tibble(newdata)
+    new_data[, object$columns[i]] <-
+      binomial()$linkfun(getElement(new_data, object$columns[i]))
+  as_tibble(new_data)
 }
 
 

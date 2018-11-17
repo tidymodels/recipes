@@ -46,7 +46,7 @@
 #' rec2 <- prep(rec, training = covers)
 #' rec2
 #'
-#' count_values <- bake(rec2, newdata = covers)
+#' count_values <- bake(rec2, new_data = covers)
 #' count_values
 #'
 #' tidy(rec, number = 1)
@@ -133,11 +133,11 @@ prep.step_count <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom rlang expr
-bake.step_count <- function(object, newdata, ...) {
+bake.step_count <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(newdata, object$input),
+      text = getElement(new_data, object$input),
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -148,12 +148,12 @@ bake.step_count <- function(object, newdata, ...) {
   if (length(object$options) > 0)
     regex <- mod_call_args(regex, args = object$options)
 
-  newdata[, object$result] <- vapply(eval(regex), counter, integer(1))
+  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
   if(object$normalize) {
-    totals <- nchar(as.character(getElement(newdata, object$input)))
-    newdata[, object$result] <- newdata[, object$result]/totals
+    totals <- nchar(as.character(getElement(new_data, object$input)))
+    new_data[, object$result] <- new_data[, object$result]/totals
   }
-  newdata
+  new_data
 }
 
 counter <- function(x) length(x[x > 0])

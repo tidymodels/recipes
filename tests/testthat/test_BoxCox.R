@@ -50,7 +50,7 @@ test_that('simple Box Cox', {
   expect_equal(bc_tibble_un, tidy(rec, number = 1))
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
   expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tol = .001)

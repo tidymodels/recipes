@@ -1,9 +1,27 @@
 # `recipes` 0.1.3.9002
 
+## Breaking Changes
+ * Several argument names were changed to be consistent with other `tidymodels` packages (e.g. `dials`) and the general tidyverse naming conventions. 
+   * `K` in `step_knnimpute` was changed to `neighbors`. `step_isomap` had the number of neighbors promoted to a main argument called `neighbors ` 
+   *  `step_pca`, `step_pls`, `step_kpca`, `step_ica` now use  `num_comp`  instead of `num`. , `step_isomap` uses `num_terms` instead of `num`. 
+   *  `step_bagimpute` moved `nbagg` out of the options and into a main argument `trees`. 
+   *  `step_bs` and `step_ns` has degrees of freedom promoted to a main argument with name `deg_free`. Also, `step_bs` had `degree` promoted to a main argument. 
+   *  `step_BoxCox` and `step_YeoJohnson` had `nunique` change to `num_unique`.
+   * `bake`, `juice` and other functions has `newdata` changed to `new_data`. For _this version only_, using `newdata` will only result in a wanring. 
+   * Several steps had `na.rm` changed to `na_rm`.
+   * `prep` and a few steps had `stringsAsFactors` changed to `strings_as_factors`. 
+
+* `add_role()` can now only add _new_ additional roles. To alter existing roles, use `update_role()`. This change also allows for the possibility of having multiple roles/types for one variable. [#221](https://github.com/tidymodels/recipes/issues/221)
+
+*  All steps gain an `id` field that will be used in the future to reference other steps. 
+
+
 ## New Operations:
 
  * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
  * `step_geodist` can be used to calculate the distance between geocodes and a single reference location. 
+ * `step_arrange`, `step_filter`, `step_mutate`, `step_sample`, and `step_slice` implement their `dplyr` analogs. 
+ * `step_nnmf` computes the non-negative matrix factorization for data. 
 
 
 ## Other Changes:
@@ -14,9 +32,9 @@
  * `step_dummy` now produces a warning (instead of failing) when non-factor columns are selected. Only factor columns are used; no conversion is done for character data. [issue #186](https://github.com/tidymodels/recipes/issues/186)
  * `dummy_names` gained a separator argument. [issue #183](https://github.com/tidymodels/recipes/issues/183)
  * `step_downsample` and `step_upsample` now have `seed` arguments for more control over randomness. 
- * All steps gain an `id` field that will be used in the future to reference other steps. 
  * `broom` is no longer used to get the `tidy` generic. These are now contained in the `generics` package. 
-
+ * When a recipe is prepared, a running list of all columns is created and the last known use of each column is kept. This is to avoid bugs when a step that is skipped removes columns. [issue #239](https://github.com/tidymodels/recipes/issues/239)
+ 
 
 # `recipes` 0.1.3
 

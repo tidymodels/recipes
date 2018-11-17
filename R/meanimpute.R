@@ -49,7 +49,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -117,12 +117,12 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_meanimpute <- function(object, newdata, ...) {
+bake.step_meanimpute <- function(object, new_data, ...) {
   for (i in names(object$means)) {
-    if (any(is.na(newdata[, i])))
-      newdata[is.na(newdata[, i]), i] <- object$means[i]
+    if (any(is.na(new_data[, i])))
+      new_data[is.na(new_data[, i]), i] <- object$means[i]
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_meanimpute <-

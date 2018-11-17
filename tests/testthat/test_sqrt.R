@@ -15,7 +15,7 @@ test_that('simple sqrt trans', {
         step_sqrt(x1, x2)
 
       rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-      rec_trans <- bake(rec_trained, newdata = ex_dat)
+      rec_trans <- bake(rec_trained, new_data = ex_dat)
 
       exp_res <- as_tibble(lapply(ex_dat, sqrt))
       expect_equal(rec_trans, exp_res)

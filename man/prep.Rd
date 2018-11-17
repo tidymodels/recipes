@@ -8,7 +8,7 @@
 prep(x, ...)
 
 \method{prep}{recipe}(x, training = NULL, fresh = FALSE,
-  verbose = FALSE, retain = FALSE, stringsAsFactors = TRUE, ...)
+  verbose = FALSE, retain = FALSE, strings_as_factors = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -32,7 +32,7 @@ idea if you want to add more steps later but want to avoid re-training
 the existing steps. Also, it is advisable to use \code{retain = TRUE}
 if any steps use the option \code{skip = FALSE}.}
 
-\item{stringsAsFactors}{A logical: should character columns be converted to
+\item{strings_as_factors}{A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
 \code{retain = TRUE}) as well as the results of \code{bake.recipe}.}
 }

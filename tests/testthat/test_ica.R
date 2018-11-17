@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dimRed)
 data(biomass)
 
 context("ICA")
@@ -69,13 +68,17 @@ exp_comp <- structure(
 rownames(exp_comp) <- NULL
 
 test_that('correct ICA values', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+  
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2, id = "")
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
 
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  ica_pred <- bake(ica_extract_trained, newdata = biomass_te, all_predictors())
+  ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors())
   ica_pred <- as.matrix(ica_pred)
 
   rownames(ica_pred) <- NULL
@@ -91,7 +94,7 @@ test_that('correct ICA values', {
   )
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 1))
 
-  loadings <- getRotationMatrix(ica_extract_trained$steps[[1]]$res)
+  loadings <- dimRed::getRotationMatrix(ica_extract_trained$steps[[1]]$res)
   comps <- ncol(loadings)
   loadings <- as.data.frame(loadings)
   rownames(loadings) <- vars
@@ -109,9 +112,17 @@ test_that('correct ICA values', {
 })
 
 
+test_that('deprecated arg', {
+  
+  expect_message(
+    rec %>%
+      step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
+  )
+})
+
 test_that('printing', {
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, num = 2)
+    step_ica(carbon, hydrogen, num_comp = 2)
   expect_output(print(ica_extract))
   expect_output(prep(ica_extract, training = biomass_tr, verbose = TRUE))
 })

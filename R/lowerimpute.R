@@ -119,14 +119,14 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_lowerimpute <- function(object, newdata, ...) {
+bake.step_lowerimpute <- function(object, new_data, ...) {
   for (i in names(object$threshold)) {
-    affected <- which(newdata[[i]] <= object$threshold[[i]])
+    affected <- which(new_data[[i]] <= object$threshold[[i]])
     if (length(affected) > 0)
-      newdata[[i]][affected] <- runif(length(affected),
+      new_data[[i]][affected] <- runif(length(affected),
                                       max = object$threshold[[i]])
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_lowerimpute <-

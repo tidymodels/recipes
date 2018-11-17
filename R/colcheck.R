@@ -66,16 +66,16 @@ prep.check_cols <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.check_cols <- function(object, newdata, ...) {
+bake.check_cols <- function(object, new_data, ...) {
   original_cols <- object$columns
-  new_cols      <- names(newdata)
+  new_cols      <- names(new_data)
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    stop("The following cols are missing from newdata: ",
+    stop("The following cols are missing from `new_data`: ",
          mis_cols, ".", call. = FALSE)
   }
-  newdata
+  new_data
 }
 
 print.check_cols <-

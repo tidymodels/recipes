@@ -28,7 +28,7 @@
 #'  convert all variables affected by this step to have the same
 #'  levels.
 #'
-#'  Also, note that `prep` has an option `stringsAsFactors` that
+#'  Also, note that `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. This should be changed so that raw character
 #'  data will be applied to `step_string2factor`. However, this step
 #'  can also take existing factors (but will leave them as-is).
@@ -43,7 +43,7 @@
 #'   step_string2factor(diet)
 #' make_factor <- prep(make_factor,
 #'                     training = okc,
-#'                     stringsAsFactors = FALSE,
+#'                     strings_as_factors = FALSE,
 #'                     retain = TRUE)
 #'
 #' # note that `diet` is a factor
@@ -139,26 +139,26 @@ make_factor <- function(x, lvl, ord) {
 
 #' @importFrom purrr map2_df map_df
 #' @export
-bake.step_string2factor <- function(object, newdata, ...) {
+bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
   if (is.list(object$levels)) {
-    newdata[, col_names] <-
-      map2_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map2_df(new_data[, col_names],
               object$levels,
               make_factor,
               ord = object$ordered[1])
   } else {
-    newdata[, col_names] <-
-      map_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map_df(new_data[, col_names],
              make_factor,
              lvl = object$levels,
              ord = object$ordered[1])
   }
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_string2factor <-

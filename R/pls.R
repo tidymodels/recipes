@@ -13,8 +13,8 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dimension columns created by the original variables
 #'  will be used as predictors in a model.
-#' @param num The number of pls dimensions to retain as new
-#'  predictors. If `num` is greater than the number of columns
+#' @param num_comp The number of pls dimensions to retain as new
+#'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible dimensions, a smaller value will be
 #'  used.
 #' @param outcome When a single outcome is available, character
@@ -26,6 +26,9 @@
 #' @param res The [pls::plsr()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param num The number of components to retain (this will be 
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
+#'  will override this option. 
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -43,12 +46,12 @@
 #' This step requires the \pkg{pls} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
-#' The argument `num` controls the number of components that will
+#' The argument `num_comp` controls the number of components that will
 #'  be retained (the original variables that are used to derive the
 #'  components are removed from the data). The new components will
 #'  have names that begin with `prefix` and a sequence of numbers.
-#'  The variable names are padded with zeros. For example, if `num <
-#'  10`, their names will be `PLS1` - `PLS9`. If `num = 101`, the
+#'  The variable names are padded with zeros. For example, if `num_comp <
+#'  10`, their names will be `PLS1` - `PLS9`. If `num_comp = 101`, the
 #'  names would be `PLS001` - `PLS101`.
 #'
 #' @examples
@@ -70,7 +73,7 @@
 #'
 #' pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 #'
-#' pls_test_scores <- bake(pls_rec, newdata = biomass_te[, -8])
+#' pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 #'
 #' tidy(pls_rec, number = 6)
 #' @seealso [step_pca()] [step_kpca()]
@@ -82,16 +85,19 @@ step_pls <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num  = 2,
+           num_comp  = 2,
            outcome = NULL,
            options = NULL,
            res = NULL,
+           num = NULL,
            prefix = "PLS",
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
-
+    if (!is.null(num)) 
+      message("The argument `num` is deprecated in factor of `num_comp`. ",
+              "`num` will be removed in next version.", call. = FALSE)
     recipes_pkg_check("pls")
 
     add_step(
@@ -100,10 +106,11 @@ step_pls <-
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        num = num,
+        num_comp = num_comp,
         outcome = outcome,
         options = options,
         res = res,
+        num = num,
         prefix = prefix,
         skip = skip,
         id = id
@@ -112,16 +119,18 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms, role, trained, num, outcome, options, res, prefix, skip, id) {
+  function(terms, role, trained, num_comp, outcome, options, res, num, 
+           prefix, skip, id) {
     step(
       subclass = "pls",
       terms = terms,
       role = role,
       trained = trained,
-      num = num,
+      num_comp = num_comp,
       outcome = outcome,
       options = options,
       res = res,
+      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -143,7 +152,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
                data = training[, c(y_names, x_names)])
 
-  x$options$ncomp <- min(x$num, length(x_names))
+  x$options$ncomp <- min(x$num_comp, length(x_names))
   args <- c(args, x$options)
   mod <- do.call(pls::plsr, args)
 
@@ -154,10 +163,11 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = x$num,
+    num_comp = x$num_comp,
     outcome = x$outcome,
     options = x$options,
     res = mod[c("projection", "Xmeans", "scale")],
+    num = x$num_comp,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
@@ -165,10 +175,10 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_pls <- function(object, newdata, ...) {
+bake.step_pls <- function(object, new_data, ...) {
   pls_vars <- rownames(object$res$projection)
-  n <- nrow(newdata)
-  input_data <- as.matrix(newdata[, pls_vars])
+  n <- nrow(new_data)
+  input_data <- as.matrix(new_data[, pls_vars])
 
   if(!all(is.na(object$res$scale)))
     input_data <- sweep(input_data, 2, object$res$scale, "/")

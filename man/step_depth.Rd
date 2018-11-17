@@ -105,7 +105,7 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 
 rec_dists <- prep(rec, training = iris)
 
-dists_to_species <- bake(rec_dists, newdata = iris)
+dists_to_species <- bake(rec_dists, new_data = iris)
 dists_to_species
 
 tidy(rec, number = 1)

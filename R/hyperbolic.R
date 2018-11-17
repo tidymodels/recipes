@@ -107,16 +107,16 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_hyperbolic <- function(object, newdata, ...) {
+bake.step_hyperbolic <- function(object, new_data, ...) {
   func <- if (object$inverse)
     get(paste0("a", object$func))
   else
     get(object$func)
   col_names <- object$columns
   for (i in seq_along(col_names))
-    newdata[, col_names[i]] <-
-    func(getElement(newdata, col_names[i]))
-  as_tibble(newdata)
+    new_data[, col_names[i]] <-
+    func(getElement(new_data, col_names[i]))
+  as_tibble(new_data)
 }
 
 print.step_hyperbolic <-

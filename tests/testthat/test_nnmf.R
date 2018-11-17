@@ -1,20 +1,22 @@
 library(testthat)
 library(recipes)
+
 context("NNeg Matrix Fact")
 
 test_that('Correct values', {
   skip_on_cran()
   skip_if_not_installed("dimRed")
   skip_if_not_installed("NMF")
+  
   library(dimRed)
   library(NMF)
-  
+
   # # make test cases
   # dat <- loadDataSet("Iris")
   # factorization <- embed(dat, "NNMF", seed = 2432, nrun = 3)
   # proj_dat <- factorization@apply(dat)
   # nn_proj <- predict(factorization, iris[1:7, 1:4])
-  exp_w <- 
+  exp_w <-
     structure(
       c(
         6.8773292872624,
@@ -53,20 +55,20 @@ test_that('Correct values', {
       ),
       .Dim = c(7L,
                2L),
-      .Dimnames = list(c("1", "2", "3", "4", "5", "6", "7"), 
+      .Dimnames = list(NULL,
                        c("NNMF1", "NNMF2"))
     )
-  
+
   rec <- recipe(Species ~ ., data = iris) %>%
     step_nnmf(all_predictors(), seed = 2432, num_run = 3)
   expect_output(print(rec))
-  
+
   expect_output(rec <- prep(rec, training = iris, verbose = TRUE, retain = TRUE))
 
   rec_res <- juice(rec, all_predictors(), composition = "matrix")[1:7,]
-  
+
   expect_equivalent(rec$steps[[1]]$res@other.data$w, exp_w)
-  
+
   expect_equal(exp_pred, rec_res)
-  
+
 })

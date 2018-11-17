@@ -125,7 +125,7 @@ sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 sp_signed_trained
 
 # apply the preprocessing to a data set
-test_set_values <- bake(sp_signed_trained, newdata = biomass_te)
+test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
 
 # or use pipes for the entire workflow:
 rec <- biomass_tr \%>\%
@@ -152,11 +152,11 @@ results <- bake(multi_y_trained, biomass_te)
 # Creating a recipe manually with different roles
 
 rec <- recipe(biomass_tr) \%>\%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
            new_role = "predictor") \%>\%
-  add_role(HHV, new_role = "outcome") \%>\%
-  add_role(sample, new_role = "id variable") \%>\%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role(dataset, new_role = "splitting indicator")
 rec
 }
 \author{

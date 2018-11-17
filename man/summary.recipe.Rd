@@ -24,8 +24,12 @@ This function prints the current set of variables/features and some of their
 characteristics.
 }
 \details{
-Note that, until the recipe has been trained, the current and
-original variables are the same.
+Note that, until the recipe has been trained,
+the current and original variables are the same.
+
+It is possible for variables to have multiple roles by adding them with
+\code{\link[=add_role]{add_role()}}. If a variable has multiple roles, it will have more than one
+row in the summary tibble.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)

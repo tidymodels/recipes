@@ -21,6 +21,7 @@
 #'  included in both lists to be imputed and to be an imputation
 #'  predictor, it will be removed from the latter and not used to
 #'  impute itself.
+#' @param trees An integer for the number bagged trees to use in each model.
 #' @param options A list of options to
 #'  [ipred::ipredbagg()]. Defaults are set for the
 #'  arguments `nbagg` and `keepX` but others can be passed
@@ -76,7 +77,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -94,7 +95,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -108,9 +109,10 @@ step_bagimpute <-
            ...,
            role = NA,
            trained = FALSE,
-           models = NULL,
-           options = list(nbagg = 25, keepX = FALSE),
            impute_with = imp_vars(all_predictors()),
+           trees = 25,
+           models = NULL,
+           options = list(keepX = FALSE),
            seed_val = sample.int(10 ^ 4, 1),
            skip = FALSE,
            id = rand_id("bagimpute")) {
@@ -122,9 +124,10 @@ step_bagimpute <-
         terms = ellipse_check(...),
         role = role,
         trained = trained,
+        impute_with = impute_with,
+        trees = trees,
         models = models,
         options = options,
-        impute_with = impute_with,
         seed_val = seed_val,
         skip = skip,
         id = id
@@ -133,15 +136,17 @@ step_bagimpute <-
   }
 
 step_bagimpute_new <-
-  function(terms, role, trained, models, options, impute_with, seed_val, skip, id) {
+  function(terms, role, trained, models, options, impute_with, trees,
+           seed_val, skip, id) {
     step(
       subclass = "bagimpute",
       terms = terms,
       role = role,
       trained = trained,
+      impute_with = impute_with,
+      trees = trees,
       models = models,
       options = options,
-      impute_with = impute_with,
       seed_val = seed_val,
       skip = skip,
       id = id
@@ -185,11 +190,14 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
       impute_using = x$impute_with,
       info = info
     )
+  opt <- x$options
+  opt$nbagg <- x$trees
+  
   x$models <- lapply(
     var_lists,
     bag_wrap,
     dat = training,
-    opt = x$options,
+    opt = opt,
     seed_val = x$seed_val
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
@@ -201,6 +209,7 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
     models = x$models,
     options = x$options,
     impute_with = x$impute_with,
+    trees = x$trees,
     seed_val = x$seed_val,
     skip = x$skip,
     id = x$id
@@ -210,15 +219,15 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-bake.step_bagimpute <- function(object, newdata, ...) {
-  missing_rows <- !complete.cases(newdata)
+bake.step_bagimpute <- function(object, new_data, ...) {
+  missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
-    return(newdata)
+    return(new_data)
 
-  old_data <- newdata
+  old_data <- new_data
   for (i in seq(along = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(newdata[, imp_var])
+    missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
       preds <- object$models[[i]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
@@ -227,12 +236,12 @@ bake.step_bagimpute <- function(object, newdata, ...) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
         pred_vals <- predict(object$models[[i]], pred_data)
-        newdata[missing_rows, imp_var] <- pred_vals
+        new_data[missing_rows, imp_var] <- pred_vals
       }
     }
   }
   ## changes character to factor!
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 

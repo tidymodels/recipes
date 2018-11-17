@@ -51,7 +51,7 @@ columns that will be affected).
 vectors to strings.
 }
 \details{
-\code{prep} has an option \code{stringsAsFactors} that
+\code{prep} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.
@@ -66,7 +66,7 @@ rec <- rec \%>\%
 
 factor_test <- rec \%>\%
   prep(training = okc,
-       stringsAsFactors = FALSE,
+       strings_as_factors = FALSE,
        retain = TRUE) \%>\%
   juice
 # diet is a
@@ -77,7 +77,7 @@ rec <- rec \%>\%
 
 string_test <- rec \%>\%
   prep(training = okc,
-       stringsAsFactors = FALSE,
+       strings_as_factors = FALSE,
        retain = TRUE) \%>\%
   juice
 # diet is a

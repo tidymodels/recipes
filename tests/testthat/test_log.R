@@ -17,7 +17,7 @@ test_that('simple log trans', {
     step_log(x1, x2, x3, x4)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- as_tibble(lapply(ex_dat, log))
 
@@ -30,7 +30,7 @@ test_that('alt base', {
     step_log(x1, x2, x3, x4, base = pi)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- as_tibble(lapply(ex_dat, log, base = pi))
 
@@ -42,7 +42,7 @@ test_that('alt offset', {
     step_log(x1, x2, x3, x4, base = pi, offset = 0.1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- as_tibble(lapply(ex_dat, function(x) log(x + 0.1, base = pi)))
 

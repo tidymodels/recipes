@@ -59,7 +59,7 @@ car_recipe <- recipe(mpg ~ ., data = mtcars) %>%
 
 # These *should* produce the same results (as they do for `hp`)
 juice(car_recipe) %>% head() %>% select(disp, hp)
-bake(car_recipe, newdata = mtcars) %>% head() %>% select(disp, hp)
+bake(car_recipe, new_data = mtcars) %>% head() %>% select(disp, hp)
 ```
 
 This should emphasize that `juice` should be used to get the training set values whenever a step is skipped. 

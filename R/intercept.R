@@ -88,8 +88,8 @@ prep.step_intercept <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble add_column
 #' @export
-bake.step_intercept <- function(object, newdata, ...) {
-  tibble::add_column(newdata, !!object$name := object$value, .before = TRUE)
+bake.step_intercept <- function(object, new_data, ...) {
+  tibble::add_column(new_data, !!object$name := object$value, .before = TRUE)
 }
 
 print.step_intercept <-

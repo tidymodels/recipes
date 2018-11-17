@@ -77,8 +77,8 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_naomit <- function(object, newdata, ...) {
-  tibble::as_tibble(tidyr::drop_na(newdata, object$columns))
+bake.step_naomit <- function(object, new_data, ...) {
+  tibble::as_tibble(tidyr::drop_na(new_data, object$columns))
 }
 
 print.step_naomit <-

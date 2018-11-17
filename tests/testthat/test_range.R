@@ -17,7 +17,7 @@ test_that('correct values', {
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te, all_predictors())
+  obs_pred <- bake(standardized_trained, new_data = biomass_te, all_predictors())
   obs_pred <- as.matrix(obs_pred)
 
   mins <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, min)
@@ -63,7 +63,7 @@ test_that('defaults', {
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te, all_predictors())
+  obs_pred <- bake(standardized_trained, new_data = biomass_te, all_predictors())
   obs_pred <- as.matrix(obs_pred)
 
   mins <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, min)
@@ -95,7 +95,7 @@ test_that('one variable', {
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te)
+  obs_pred <- bake(standardized_trained, new_data = biomass_te)
 
   mins <- min(biomass_tr$carbon)
   maxs <- max(biomass_tr$carbon)

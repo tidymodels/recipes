@@ -7,9 +7,10 @@
 \title{Imputation via Bagged Trees}
 \usage{
 step_bagimpute(recipe, ..., role = NA, trained = FALSE,
-  models = NULL, options = list(nbagg = 25, keepX = FALSE),
-  impute_with = imp_vars(all_predictors()), seed_val = sample.int(10^4,
-  1), skip = FALSE, id = rand_id("bagimpute"))
+  impute_with = imp_vars(all_predictors()), trees = 25,
+  models = NULL, options = list(keepX = FALSE),
+  seed_val = sample.int(10^4, 1), skip = FALSE,
+  id = rand_id("bagimpute"))
 
 imp_vars(...)
 
@@ -32,6 +33,16 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
+\item{impute_with}{A call to \code{imp_vars} to specify which
+variables are used to impute the variables that can include
+specific variable names separated by commas or different
+selectors (see \code{\link[=selections]{selections()}}). If a column is
+included in both lists to be imputed and to be an imputation
+predictor, it will be removed from the latter and not used to
+impute itself.}
+
+\item{trees}{An integer for the number bagged trees to use in each model.}
+
 \item{models}{The \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}} objects are
 stored here once this bagged trees have be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
@@ -41,14 +52,6 @@ stored here once this bagged trees have be trained by
 arguments \code{nbagg} and \code{keepX} but others can be passed
 in. \strong{Note} that the arguments \code{X} and \code{y} should
 not be passed here.}
-
-\item{impute_with}{A call to \code{imp_vars} to specify which
-variables are used to impute the variables that can include
-specific variable names separated by commas or different
-selectors (see \code{\link[=selections]{selections()}}). If a column is
-included in both lists to be imputed and to be an imputation
-predictor, it will be removed from the latter and not used to
-impute itself.}
 
 \item{seed_val}{A integer used to create reproducible models.
 The same seed is used across all imputation models.}
@@ -113,7 +116,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
 credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]
@@ -131,7 +134,7 @@ tidy(imp_models, number = 1)
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
 credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]

@@ -86,7 +86,7 @@ with_transform <- rec \%>\%
 
 with_transform <- prep(with_transform,
                        training = iris2[1:75,])
-new_values <- bake(with_transform, newdata = iris2, Species)
+new_values <- bake(with_transform, new_data = iris2, Species)
 table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 }
 \seealso{
