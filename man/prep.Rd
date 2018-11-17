@@ -8,7 +8,7 @@
 prep(x, ...)
 
 \method{prep}{recipe}(x, training = NULL, fresh = FALSE,
-  verbose = FALSE, retain = FALSE, strings_as_factors = TRUE, ...)
+  verbose = FALSE, retain = TRUE, strings_as_factors = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -30,7 +30,10 @@ are executed.}
 into the \code{template} slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
 the existing steps. Also, it is advisable to use \code{retain = TRUE}
-if any steps use the option \code{skip = FALSE}.}
+if any steps use the option \code{skip = FALSE}. \strong{Note} that this can make
+the final recipe size large. When \code{verbose = TRUE}, a message is written
+with the approximate object size in memory but may be an underestimate
+since it does not take environments into account.}
 
 \item{strings_as_factors}{A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
