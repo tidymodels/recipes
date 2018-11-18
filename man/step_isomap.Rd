@@ -114,16 +114,18 @@ im_trans <- rec \%>\%
               neighbors = 100,
               num_terms = 2)
 
-# im_estimates <- prep(im_trans, training = biomass_tr)
+if (require(dimRed) & require(RSpectra)) {
+  im_estimates <- prep(im_trans, training = biomass_tr)
 
-# im_te <- bake(im_estimates, biomass_te)
+  im_te <- bake(im_estimates, biomass_te)
 
-# rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-# plot(im_te$Isomap1, im_te$Isomap2,
-#      xlim = rng, ylim = rng)
+  rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+  plot(im_te$Isomap1, im_te$Isomap2,
+       xlim = rng, ylim = rng)
 
-# tidy(im_trans, number = 4)
-# tidy(im_estimates, number = 4)
+  tidy(im_trans, number = 4)
+  tidy(im_estimates, number = 4)
+}
 }
 }
 \references{

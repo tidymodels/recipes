@@ -26,9 +26,9 @@
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be 
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
-#'  will override this option. 
+#' @param num The number of components to retain (this will be
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
+#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -94,16 +94,18 @@
 #'   step_scale(all_predictors()) %>%
 #'   step_kpca(all_predictors())
 #'
-#' # kpca_estimates <- prep(kpca_trans, training = biomass_tr)
+#' if (require(dimRed) & require(kernlab)) {
+#'   kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 #'
-#' # kpca_te <- bake(kpca_estimates, biomass_te)
+#'   kpca_te <- bake(kpca_estimates, biomass_te)
 #'
-#' # rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-#' # plot(kpca_te$kPC1, kpca_te$kPC2,
-#' #      xlim = rng, ylim = rng)
+#'   rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
+#'   plot(kpca_te$kPC1, kpca_te$kPC2,
+#'        xlim = rng, ylim = rng)
 #'
-#' # tidy(kpca_trans, number = 4)
-#' # tidy(kpca_estimates, number = 4)
+#'   tidy(kpca_trans, number = 4)
+#'   tidy(kpca_estimates, number = 4)
+#' }
 #' @seealso [step_pca()] [step_ica()]
 #'   [step_isomap()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -123,10 +125,10 @@ step_kpca <-
            id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))
-    if (!is.null(num)) 
+    if (!is.null(num))
       message("The argument `num` is deprecated in factor of `num_comp`. ",
               "`num` will be removed in next version.", call. = FALSE)
-    
+
     add_step(
       recipe,
       step_kpca_new(
