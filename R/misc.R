@@ -512,7 +512,7 @@ simple_terms <- function(x, ...) {
 #'   newly created variable names don't overlap with existing names.
 #'   Throws an error if check fails.
 #' @param res A data frame or tibble of the newly created variables.
-#' @param newdata A data frame or tibble passed to the bake function.
+#' @param new_data A data frame or tibble passed to the bake function.
 #' @param object A trained object passed to the bake function.
 #' @param newname A string of variable names if prefix isn't specified
 #'   in the trained object.
@@ -520,16 +520,16 @@ simple_terms <- function(x, ...) {
 #' the names function (TRUE) or colnames function (FALSE).
 #' @export
 #' @keywords internal
-check_name <- function(res, newdata, object, newname = NULL, names = FALSE) {
+check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
   if(is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
-  newdata_names <- colnames(newdata)
-  intersection <- newdata_names %in% newname
+  new_data_names <- colnames(new_data)
+  intersection <- new_data_names %in% newname
   if(any(intersection)) {
     stop("Name collision occured in `", class(object)[1],
          "`. The following variable names already exists: ",
-         paste0(newdata_names[intersection], collapse = ", "), ".",
+         paste0(new_data_names[intersection], collapse = ", "), ".",
          call. = FALSE)
   }
   if(names) {

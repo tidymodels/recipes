@@ -174,8 +174,8 @@ bake.step_depth <- function(object, new_data, ...) {
   )
   res <- as_tibble(res)
   newname <- paste0("depth_", colnames(res))
-  res <- check_name(res, newdata, object, newname)
-  res <- bind_cols(newdata, res)
+  res <- check_name(res, new_data, object, newname)
+  res <- bind_cols(new_data, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res

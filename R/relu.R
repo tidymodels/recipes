@@ -146,8 +146,8 @@ bake.step_relu <- function(object, new_data, ...) {
   }
   exprs <- purrr::map(object$columns, make_relu_call)
   newname <- paste0(object$prefix, object$columns)
-  exprs <- check_name(exprs, newdata, object, newname, TRUE)
-  dplyr::mutate(newdata, !!!exprs)
+  exprs <- check_name(exprs, new_data, object, newname, TRUE)
+  dplyr::mutate(new_data, !!!exprs)
 }
 
 

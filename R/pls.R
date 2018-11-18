@@ -186,13 +186,13 @@ bake.step_pls <- function(object, new_data, ...) {
   input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
 
   comps <- input_data %*% object$res$projection
-  comps <- check_name(comps, newdata, object)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% pls_vars), drop = FALSE]
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  comps <- check_name(comps, new_data, object)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
