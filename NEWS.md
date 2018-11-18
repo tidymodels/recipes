@@ -1,6 +1,7 @@
 # `recipes` 0.1.3.9002
 
 ## Breaking Changes
+
  * Several argument names were changed to be consistent with other `tidymodels` packages (e.g. `dials`) and the general tidyverse naming conventions. 
    * `K` in `step_knnimpute` was changed to `neighbors`. `step_isomap` had the number of neighbors promoted to a main argument called `neighbors ` 
    *  `step_pca`, `step_pls`, `step_kpca`, `step_ica` now use  `num_comp`  instead of `num`. , `step_isomap` uses `num_terms` instead of `num`. 
