@@ -4,12 +4,12 @@
 \alias{check_name}
 \title{check that newly created variable names don't overlap}
 \usage{
-check_name(res, newdata, object, newname = NULL, names = FALSE)
+check_name(res, new_data, object, newname = NULL, names = FALSE)
 }
 \arguments{
 \item{res}{A data frame or tibble of the newly created variables.}
 
-\item{newdata}{A data frame or tibble passed to the bake function.}
+\item{new_data}{A data frame or tibble passed to the bake function.}
 
 \item{object}{A trained object passed to the bake function.}
 
