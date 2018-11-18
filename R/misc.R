@@ -246,12 +246,12 @@ strings2factors <- function(x, info) {
 # `complete.cases` fails on list columns. This version counts a list column
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
-# be counted as complete. 
+# be counted as complete.
 #' @importFrom purrr map_dfc
 n_complete_rows <- function(x) {
   list_cols <- purrr::map_lgl(x, is.list)
   list_cols <- names(list_cols)[list_cols]
-  
+
   if (length(list_cols) > 0) {
     # replace with logical vector (with possible missings) for calculations
     x[, list_cols] <- map_dfc(list_cols, convert_to_logical, x = x)
@@ -506,17 +506,51 @@ simple_terms <- function(x, ...) {
   res
 }
 
+#' check that newly created variable names don't overlap
+#'
+#' `check_name` is to be used in the bake function to ensure that
+#'   newly created variable names don't overlap with existing names.
+#'   Throws an error if check fails.
+#' @param res A data frame or tibble of the newly created variables.
+#' @param new_data A data frame or tibble passed to the bake function.
+#' @param object A trained object passed to the bake function.
+#' @param newname A string of variable names if prefix isn't specified
+#'   in the trained object.
+#' @param names A logical determining if the names should be set using
+#' the names function (TRUE) or colnames function (FALSE).
+#' @export
+#' @keywords internal
+check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
+  if(is.null(newname)) {
+    newname <- names0(ncol(res), object$prefix)
+  }
+  new_data_names <- colnames(new_data)
+  intersection <- new_data_names %in% newname
+  if(any(intersection)) {
+    stop("Name collision occured in `", class(object)[1],
+         "`. The following variable names already exists: ",
+         paste0(new_data_names[intersection], collapse = ", "), ".",
+         call. = FALSE)
+  }
+  if(names) {
+    names(res) <- newname
+  } else {
+    colnames(res) <- newname
+  }
+  res
+}
+
 #' Make a random identification field for steps
-#' 
+#'
 #' @export
 #' @param prefix A single character string
 #' @param len An integer for the number of random characters
 #' @return A character string with the prefix and random letters separated by
-#'  and underscore. 
+#'  and underscore.
 #' @keywords internal
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
-  paste(prefix, 
+  paste(prefix,
         paste0(sample(candidates, len, replace = TRUE), collapse = ""),
         sep = "_"
   )

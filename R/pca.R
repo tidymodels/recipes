@@ -32,9 +32,9 @@
 #' @param res The [stats::prcomp.default()] object is
 #'  stored here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be 
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
-#'  will override this option. 
+#' @param num The number of components to retain (this will be
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
+#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below
 #' @return An updated version of `recipe` with the new step
@@ -115,9 +115,11 @@ step_pca <- function(recipe,
                      id = rand_id("pca")) {
   if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
     stop("`threshold` should be on (0, 1].", call. = FALSE)
-  if (!is.null(num)) 
+  if (!is.null(num))
     message("The argument `num` is deprecated in factor of `num_comp`. ",
             "`num` will be removed in next version.", call. = FALSE)
+  if (is.null(num_comp) & !is.null(num))
+    num_comp <- num
   add_step(
     recipe,
     step_pca_new(
@@ -136,8 +138,8 @@ step_pca <- function(recipe,
   )
 }
 
-step_pca_new <- 
-  function(terms, role, trained, num_comp, threshold, options, res, num, 
+step_pca_new <-
+  function(terms, role, trained, num_comp, threshold, options, res, num,
            prefix, skip, id) {
     step(
       subclass = "pca",
@@ -207,7 +209,7 @@ bake.step_pca <- function(object, new_data, ...) {
   pca_vars <- rownames(object$res$rotation)
   comps <- predict(object$res, newdata = new_data[, pca_vars])
   comps <- comps[, 1:object$num_comp, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- check_name(comps, new_data, object)
   new_data <- bind_cols(new_data, as_tibble(comps))
   new_data <-
     new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]

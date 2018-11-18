@@ -106,6 +106,7 @@ step_ica <-
            skip = FALSE,
            id = rand_id("ica")) {
 
+
     recipes_pkg_check(c("dimRed", "fastICA"))
     if (!is.null(num)) 
       message("The argument `num` is deprecated in factor of `num_comp`. ",

@@ -193,7 +193,7 @@ bake.step_kpca <- function(object, new_data, ...) {
     dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
     )@data
   comps <- comps[, 1:object$num_comp, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- check_name(comps, new_data, object)
   new_data <- bind_cols(new_data, as_tibble(comps))
   new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
   as_tibble(new_data)
