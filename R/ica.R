@@ -25,9 +25,9 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be 
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp` 
-#'  will override this option. 
+#' @param num The number of components to retain (this will be
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
+#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -82,14 +82,17 @@
 #' ica_trans <- step_center(rec,  V1, V2)
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
-#' # ica_estimates <- prep(ica_trans, training = tr)
-#' # ica_data <- bake(ica_estimates, te)
 #'
-#' # plot(te$V1, te$V2)
-#' # plot(ica_data$IC1, ica_data$IC2)
+#' if (require(dimRed) & require(fastICA)) {
+#'   ica_estimates <- prep(ica_trans, training = tr)
+#'   ica_data <- bake(ica_estimates, te)
 #'
-#' # tidy(ica_trans, number = 3)
-#' # tidy(ica_estimates, number = 3)
+#'   plot(te$V1, te$V2)
+#'   plot(ica_data$IC1, ica_data$IC2)
+#'
+#'   tidy(ica_trans, number = 3)
+#'   tidy(ica_estimates, number = 3)
+#' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_isomap()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -108,7 +111,7 @@ step_ica <-
 
 
     recipes_pkg_check(c("dimRed", "fastICA"))
-    if (!is.null(num)) 
+    if (!is.null(num))
       message("The argument `num` is deprecated in factor of `num_comp`. ",
               "`num` will be removed in next version.", call. = FALSE)
     add_step(

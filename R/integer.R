@@ -21,7 +21,7 @@
 #' @param strict A logical for whether the values should be returned as
 #'  integers (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and
-#'  new values be appended as the largest integer. 
+#'  new values be appended as the largest integer.
 #' @return An updated version of `recipe` with the new step added
 #'  to the sequence of existing steps (if any). For the `tidy`
 #'  method, a tibble with columns `terms` (the selectors or
@@ -38,7 +38,7 @@
 #'  argument above). Missing values propagate.
 #'
 #' Factor inputs are ordered by their levels. All others are
-#'  ordered by `sort`. 
+#'  ordered by `sort`.
 #'
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
@@ -144,12 +144,12 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
 map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
   if (is.factor(dat))
     dat <- as.character(dat)
-  
+
   res <- full_join(tibble(value = dat, .row = seq_along(dat)), key, by = "value")
   res <- dplyr::filter(res, !is.na(.row))
   res <- arrange(res, .row)
   if (zero) {
-    res$integer[is.na(res$integer) & !is.na(res$value)] <- 
+    res$integer[is.na(res$integer) & !is.na(res$value)] <-
       max(key$integer, na.rm = TRUE) + 1
   } else {
     res$integer[is.na(res$integer) & !is.na(res$value)] <- 0
@@ -200,3 +200,6 @@ tidy.step_integer <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @importFrom stats runif
+utils::globalVariables(c(".row"))

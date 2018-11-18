@@ -20,9 +20,9 @@
 #'  used.
 #' @param neighbors The number of neighbors.
 #' @param options A list of options to [dimRed::Isomap()].
-#' @param num The number of isomap dimensions (this will be deprecated 
-#'  in factor of  `num_terms` in version 0.1.5). `num_terms` will 
-#'  override this option. 
+#' @param num The number of isomap dimensions (this will be deprecated
+#'  in factor of  `num_terms` in version 0.1.5). `num_terms` will
+#'  override this option.
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
@@ -85,16 +85,18 @@
 #'               neighbors = 100,
 #'               num_terms = 2)
 #'
-#' # im_estimates <- prep(im_trans, training = biomass_tr)
+#' if (require(dimRed) & require(RSpectra)) {
+#'   im_estimates <- prep(im_trans, training = biomass_tr)
 #'
-#' # im_te <- bake(im_estimates, biomass_te)
+#'   im_te <- bake(im_estimates, biomass_te)
 #'
-#' # rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-#' # plot(im_te$Isomap1, im_te$Isomap2,
-#' #      xlim = rng, ylim = rng)
+#'   rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+#'   plot(im_te$Isomap1, im_te$Isomap2,
+#'        xlim = rng, ylim = rng)
 #'
-#' # tidy(im_trans, number = 4)
-#' # tidy(im_estimates, number = 4)
+#'   tidy(im_trans, number = 4)
+#'   tidy(im_estimates, number = 4)
+#' }
 #' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
@@ -115,7 +117,7 @@ step_isomap <-
            id = rand_id("isomap")) {
 
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
-    if (!is.null(num)) 
+    if (!is.null(num))
       message("The argument `num` is deprecated in factor of `num_terms`. ",
               "`num` will be removed in next version.", call. = FALSE)
     add_step(
@@ -137,7 +139,7 @@ step_isomap <-
   }
 
 step_isomap_new <-
-  function(terms, role, trained, num_terms, neighbors, options, res, num, 
+  function(terms, role, trained, num_terms, neighbors, options, res, num,
            prefix, skip, id) {
     step(
       subclass = "isomap",
