@@ -29,6 +29,7 @@ test_that('correct Isomap values', {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
 
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
@@ -62,6 +63,7 @@ test_that('printing', {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
 
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
