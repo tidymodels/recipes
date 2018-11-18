@@ -29,7 +29,7 @@ test_that('correct Isomap values', {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  
+
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
 
@@ -37,7 +37,8 @@ test_that('correct Isomap values', {
 
   im_pred <- bake(im_trained, new_data = dat2)
 
-  all.equal(as.matrix(im_pred), as.matrix(exp_res))
+  # unique up to sign
+  all.equal(abs(as.matrix(im_pred)), abs(as.matrix(exp_res)))
 
   im_tibble <-
     tibble(terms = c("x1", "x2", "x3"), id = "")
@@ -61,7 +62,7 @@ test_that('printing', {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  
+
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
   expect_output(print(im_rec))
