@@ -293,7 +293,10 @@ prep   <- function(x, ...)
 #'   into the `template` slot of the recipe after training? This is a good
 #'     idea if you want to add more steps later but want to avoid re-training
 #'     the existing steps. Also, it is advisable to use `retain = TRUE`
-#'     if any steps use the option `skip = FALSE`.
+#'     if any steps use the option `skip = FALSE`. **Note** that this can make
+#'     the final recipe size large. When `verbose = TRUE`, a message is written
+#'     with the approximate object size in memory but may be an underestimate
+#'     since it does not take environments into account.
 #' @param strings_as_factors A logical: should character columns be converted to
 #'   factors? This affects the preprocessed training set (when
 #'   `retain = TRUE`) as well as the results of `bake.recipe`.
@@ -326,7 +329,7 @@ prep.recipe <-
            training = NULL,
            fresh = FALSE,
            verbose = FALSE,
-           retain = FALSE,
+           retain = TRUE,
            strings_as_factors = TRUE,
            ...) {
 
@@ -431,8 +434,14 @@ prep.recipe <-
       if (!any(check_lvls)) lvls <- NULL
     } else lvls <- NULL
 
-    if (retain)
+    if (retain) {
+      if (verbose)
+        cat("The retained training set is ~",
+            format(object.size(training), units = "Mb", digits = 2),
+            " in memory.\n\n")
+
       x$template <- training
+    }
 
     x$tr_info <- tr_data
     x$levels <- lvls
@@ -498,6 +507,7 @@ bake <- function(object, ...)
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter group_by arrange desc
 #' @importFrom tidyselect everything
+#' @importFrom utils object.size
 #' @export
 bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object))

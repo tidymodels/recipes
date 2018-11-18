@@ -15,6 +15,9 @@
 
 *  All steps gain an `id` field that will be used in the future to reference other steps. 
 
+* The `retain` option to `prep` is now defaulted to `TRUE`. If `verbose = TRUE`, the approximate size of the data set is printed. [#207](https://github.com/tidymodels/recipes/issues/207)
+
+
 
 ## New Operations:
 
@@ -26,6 +29,7 @@
 
 ## Other Changes:
 
+ * The `rsample` function `prepper` was moved to `recipes` [(issue)](https://github.com/tidymodels/rsample/issues/48).
  * A number of packages were moved from "Imports" to "Suggests" to reduce the install footprint. A function was added to prompt the user to install the needed packages when the relevant steps are invoked. 
  * `step_step_string2factor` will [now accept factors](https://github.com/tidymodels/recipes/issues/174) and leave them as-is. 
  * `step_knnimpute` now excludes missing data in the variable to be imputed from the nearest-neighbor calculation. This would have resulted in some missing data to not be imputed (i.e. return another missing value). 
