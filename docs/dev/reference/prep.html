@@ -74,7 +74,7 @@ sets." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9002</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@ sets.</p>
 
 <span class='co'># S3 method for recipe</span>
 <span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,7 +190,10 @@ are executed.</p></td>
 into the <code>template</code> slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
 the existing steps. Also, it is advisable to use <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>
-if any steps use the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = FALSE</a></code>.</p></td>
+if any steps use the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = FALSE</a></code>. <strong>Note</strong> that this can make
+the final recipe size large. When <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>verbose = TRUE</a></code>, a message is written
+with the approximate object size in memory but may be an underestimate
+since it does not take environments into account.</p></td>
     </tr>
     <tr>
       <th>strings_as_factors</th>

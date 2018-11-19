@@ -74,7 +74,7 @@ components." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9002</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
         </div>
       </div>
     </div>
@@ -285,7 +285,7 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>131</span>)
 <span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>400</span>), <span class='fl'>200</span>, <span class='fl'>2</span>)
 <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>S</span> <span class='kw'>%*%</span> <span class='no'>A</span>)
+<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dimRed/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>S</span> <span class='kw'>%*%</span> <span class='no'>A</span>)
 
 <span class='no'>tr</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>1</span>:<span class='fl'>100</span>, ]
 <span class='no'>te</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>101</span>:<span class='fl'>200</span>, ]
@@ -295,14 +295,28 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>rec</span>,  <span class='no'>V1</span>, <span class='no'>V2</span>)
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>)
 <span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_ica</span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='co'># ica_estimates &lt;- prep(ica_trans, training = tr)</span>
-<span class='co'># ica_data &lt;- bake(ica_estimates, te)</span>
 
-<span class='co'># plot(te$V1, te$V2)</span>
-<span class='co'># plot(ica_data$IC1, ica_data$IC2)</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>dimRed</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>fastICA</span>)) {
+  <span class='no'>ica_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>tr</span>)
+  <span class='no'>ica_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ica_estimates</span>, <span class='no'>te</span>)
 
-<span class='co'># tidy(ica_trans, number = 3)</span>
-<span class='co'># tidy(ica_estimates, number = 3)</span></div></pre>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dimRed/topics/plot'>plot</a></span>(<span class='no'>te</span>$<span class='no'>V1</span>, <span class='no'>te</span>$<span class='no'>V2</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dimRed/topics/plot'>plot</a></span>(<span class='no'>ica_data</span>$<span class='no'>IC1</span>, <span class='no'>ica_data</span>$<span class='no'>IC2</span>)
+
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ica_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: dimRed</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: DRR</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: kernlab</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: CVST</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dimRed’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    embed</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
+#&gt;    value component terms id       
+#&gt;    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m    
+#&gt; [38;5;250m1[39m -[31m1[39m[31m.[39m[31m0[39m[31m4[39m  IC1       V1    ica_I5n9K
+#&gt; [38;5;250m2[39m -[31m0[39m[31m.[39m[31m773[39m IC1       V2    ica_I5n9K
+#&gt; [38;5;250m3[39m -[31m0[39m[31m.[39m[31m378[39m IC2       V1    ica_I5n9K
+#&gt; [38;5;250m4[39m  0.788 IC2       V2    ica_I5n9K</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
