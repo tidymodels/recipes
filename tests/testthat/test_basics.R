@@ -114,9 +114,9 @@ test_that("bake without prep", {
 
 
 test_that("bake without newdata", {
-  # This will be deprecated in versions > 0.1.4
+  # This will be deprecated in versions >= 0.1.4.9000
   expect_false(
-    package_version(packageVersion("recipes")) > package_version("0.1.4"),
+    package_version(packageVersion("recipes")) > package_version("0.1.4.9000"),
     "deprecate allowing `newdata` instead of `new_data`"
   )
 
