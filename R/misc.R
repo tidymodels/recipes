@@ -15,7 +15,8 @@ get_types <- function(x) {
       Surv = "censored",
       logical = "logical",
       Date = "date",
-      POSIXct = "date"
+      POSIXct = "date",
+      list = "list"
     )
 
   classes <- lapply(x, class)
@@ -210,7 +211,7 @@ fun_calls <- function(f) {
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x))
     return(list(values = NA, ordered = NA))
-  out <- 
+  out <-
     if (is.factor(x)) {
       list(values = levels(x),
            ordered = is.ordered(x),
@@ -559,33 +560,33 @@ rand_id <- function(prefix = "step", len = 5) {
 
 check_nominal_type <- function(x, lvl) {
   all_act_cols <- names(x)
-  
+
   # What columns do we expect to be factors based on the data
-  # _before_ the recipes was prepped. 
-  
-  # Keep in mind that some columns (like outcome data) may not 
-  # be in the current data so we remove those up-front. 
+  # _before_ the recipes was prepped.
+
+  # Keep in mind that some columns (like outcome data) may not
+  # be in the current data so we remove those up-front.
   lvl <- lvl[names(lvl) %in% all_act_cols]
-  
-  # Figure out what we expect new data to be: 
+
+  # Figure out what we expect new data to be:
   fac_ref_cols <- purrr::map_lgl(lvl, function(x) isTRUE(x$factor))
   fac_ref_cols <- names(lvl)[fac_ref_cols]
-  
+
   if (length(fac_ref_cols) > 0) {
-    
-    # Which are actual factors? 
+
+    # Which are actual factors?
     fac_act_cols <- purrr::map_lgl(x, is.factor)
-    
+
     fac_act_cols <- names(fac_act_cols)[fac_act_cols]
-    
-    # There may be some original factors that do not 
+
+    # There may be some original factors that do not
     was_factor <- fac_ref_cols[!(fac_ref_cols %in% fac_act_cols)]
-    
+
     if (length(was_factor) > 0) {
       warning(
-        " There ", 
+        " There ",
         ifelse(length(was_factor) > 1, "were ", "was "),
-        length(was_factor), 
+        length(was_factor),
         ifelse(length(was_factor) > 1, " columns ", " column "),
         "that ",
         ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
