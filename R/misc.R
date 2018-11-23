@@ -289,22 +289,17 @@ train_info <- function(x) {
 ## and merges them. Special attention is paid to cases where the
 ## _type_ of data is changed for a common column in the data.
 
-#' @importFrom dplyr left_join
+#' @importFrom dplyr right_join mutate rename select
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
   # the original value
-  tmp_new <- .new
-  names(tmp_new)[names(tmp_new) == "type"] <- "new_type"
-  tmp <- left_join(tmp_new[, c("variable", "new_type")],
-                   .old[, c("variable", "type")],
-                   by = "variable")
-  tmp <- tmp[!(is.na(tmp$new_type) | is.na(tmp$type)), ]
-  diff_type <- !(tmp$new_type == tmp$type)
-  if (any(diff_type)) {
-    ## Override old type to facilitate merge
-    .old$type[which(diff_type)] <- .new$type[which(diff_type)]
-  }
-  left_join(.new, .old, by = c("variable", "type"))
+  .old %>%
+    right_join(.new %>% dplyr::rename(new_type = type), by = "variable") %>%
+    mutate(
+      type = ifelse(is.na(type), "other", "type"),
+      type = ifelse(type != new_type, new_type, type)
+    ) %>%
+    dplyr::select(-new_type)
 }
 
 
@@ -599,3 +594,9 @@ check_nominal_type <- function(x, lvl) {
   }
   invisible(NULL)
 }
+
+# ------------------------------------------------------------------------------
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("type", "new_type"))
+
