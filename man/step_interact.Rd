@@ -92,6 +92,14 @@ create a set of specific interaction effects (e.g.
 \code{starts_with("z_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x6)}
 so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x6):z} and
 all two-way interactions are created.
+
+If a previous step had the potential to remove columns from the
+data set, it is possible that an interaction that was specified
+using columns names will fail (due to the missing column). In
+this case, no interactions from that step will be created. For
+this reason, when column filtering is used, it may be helpful
+to specify each interaction in separate calls (see the
+examples below).
 }
 \examples{
 data(biomass)
@@ -119,6 +127,35 @@ names(dat_2)
 
 tidy(int_mod_1, number = 1)
 tidy(int_mod_2, number = 1)
+
+# Missing column:
+
+# produces a warning and no interactions:
+rec \%>\%
+  step_rm(carbon) \%>\%
+  step_interact(terms = ~ carbon:hydrogen + hydrogen:oxygen) \%>\%
+  prep(biomass_tr) \%>\%
+  juice() \%>\%
+  dplyr::select(contains("_x_"))
+
+# produces a warning and one interaction:
+rec \%>\%
+  step_rm(carbon) \%>\%
+  step_interact(terms = ~ carbon:hydrogen) \%>\%
+  step_interact(terms = ~ hydrogen:oxygen) \%>\%
+  prep(biomass_tr) \%>\%
+  juice() \%>\%
+  dplyr::select(contains("_x_")) \%>\%
+  slice(1:3)
+
+rec \%>\%
+  step_rm(carbon) \%>\%
+  step_interact(terms = ~ all_predictors():all_predictors())  \%>\%
+  prep(biomass_tr) \%>\%
+  juice() \%>\%
+  dplyr::select(contains("_x_")) \%>\%
+  names()
+
 }
 \concept{preprocessing model_specification}
 \keyword{datagen}

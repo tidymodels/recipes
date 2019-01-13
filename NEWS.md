@@ -1,3 +1,9 @@
+# `recipes` 0.1.4.9000
+
+## Other Changes:
+
+ * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued and _no_ interactions from that step are created. 
+
 # `recipes` 0.1.4
 
 ## Breaking Changes
