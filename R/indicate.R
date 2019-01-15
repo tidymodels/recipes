@@ -1,12 +1,15 @@
 #' Create an indicator of missingness
 #'
 #' `step_indicate` creates a *specification* of a recipe step that
-#'   will add new columns to a dataset that indicate missingness.
+#'   will add new columns to a dataset that indicate missingness. Optionally
+#'   removes the original column.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
 #'   affected by the step. See [selections()] for more details.
+#' @param remove A logical. Should the specified columns be removed from the
+#'   data after indicating missingness? Defaults to `TRUE`.
 #' @param role Defaults to `"predictor"`.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
@@ -27,21 +30,32 @@
 #'
 #' @examples
 #'
-#' TODO
+#' i <- iris
+#' diag(i) <- NA
+#'
+#' recipe(~ Sepal.Width + Sepal.Length, data = i) %>%
+#'   step_indicate(Sepal.Width) %>%
+#'   step_indicate(Sepal.Length, remove = FALSE) %>%
+#'   prep() %>%
+#'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()] [step_naomit()]
 #'   [step_sentinel()] [is.na()]
 step_indicate <-
   function(recipe,
            ...,
-           role = TODO,
+           remove = TRUE,
+           role = "predictor",
            trained = FALSE,
            numeric = TRUE,
            skip = FALSE) {
+    # TODO: something about a random id?
+
     add_step(
       recipe,
       step_indicate_new(
         terms = ellipse_check(...),
+        remove = remove,
         role = role,
         trained = trained,
         numeric = numeric,
@@ -52,6 +66,7 @@ step_indicate <-
 
 step_indicate_new <-
   function(terms = NULL,
+           remove = TRUE,
            role = "predictor",
            trained = FALSE,
            numeric = TRUE,
@@ -59,6 +74,7 @@ step_indicate_new <-
     step(
       subclass = "indicate",
       terms = terms,
+      remove = remove,
       role = role,
       trained = trained,
       numeric = numeric,
@@ -72,13 +88,23 @@ prep.step_indicate <- function(x, training, info = NULL, ...) {
   x
 }
 
+indicate_helper <- function(x) as.numeric(is.na(x))
+
 #' @export
-bake.step_indicate <- function(object, newdata, ...) {
+bake.step_indicate <- function(object, new_data, ...) {
 
-  TODO
+  for (col in object$columns) {
+    new_col <- paste0(col, "_missing")
+    new_data <- mutate(new_data, !!new_col := indicate_helper(!!sym(col)))
+  }
 
+  if (object$remove)
+    new_data <- select(new_data, -one_of(object$columns))
+
+  new_data
 }
 
+# TODO: what's the current standard for this?
 print.step_indicate <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Indicating missingness for ",  sep = "")

@@ -79,10 +79,14 @@ prep.sentinel <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_sentinel <- function(object, newdata, ...) {
+bake.step_sentinel <- function(object, new_data, ...) {
 
-  TODO
+  # TODO: vectorize
+  for (sent in object$sentinels) {
+    new_data <- mutate_at(new_data, vars(columns), na_if, y = sent)
+  }
 
+  new_data
 }
 
 print.step_sentinel <-
