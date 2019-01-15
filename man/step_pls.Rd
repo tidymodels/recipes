@@ -5,9 +5,9 @@
 \alias{tidy.step_pls}
 \title{Partial Least Squares Feature Extraction}
 \usage{
-step_pls(recipe, ..., role = "predictor", trained = FALSE, num = 2,
-  outcome = NULL, options = NULL, res = NULL, prefix = "PLS",
-  skip = FALSE)
+step_pls(recipe, ..., role = "predictor", trained = FALSE,
+  num_comp = 2, outcome = NULL, options = NULL, res = NULL,
+  num = NULL, prefix = "PLS", skip = FALSE, id = rand_id("pls"))
 
 \method{tidy}{step_pls}(x, ...)
 }
@@ -28,8 +28,8 @@ will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of pls dimensions to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_comp}{The number of pls dimensions to retain as new
+predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible dimensions, a smaller value will be
 used.}
 
@@ -45,6 +45,10 @@ separated by commas or different selectors (see \code{\link[=selections]{selecti
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
+\item{num}{The number of components to retain (this will be
+deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
+will override this option.}
+
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
 
@@ -54,6 +58,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_pls} object}
 }
@@ -73,11 +79,14 @@ analysis that requires one or more numeric outcomes to compute
 the new features. The data should be scaled (and perhaps
 centered) prior to running these calculations.
 
-The argument \code{num} controls the number of components that will
+This step requires the \pkg{pls} package. If not installed, the
+step will stop with a note about installing the package.
+
+The argument \code{num_comp} controls the number of components that will
 be retained (the original variables that are used to derive the
 components are removed from the data). The new components will
 have names that begin with \code{prefix} and a sequence of numbers.
-The variable names are padded with zeros. For example, if \code{num < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num = 101}, the
+The variable names are padded with zeros. For example, if \code{num_comp < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num_comp = 101}, the
 names would be \code{PLS001} - \code{PLS101}.
 }
 \examples{
@@ -99,7 +108,7 @@ pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
 
 pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 
-pls_test_scores <- bake(pls_rec, newdata = biomass_te[, -8])
+pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 
 tidy(pls_rec, number = 6)
 }
@@ -108,7 +117,5 @@ tidy(pls_rec, number = 6)
 \code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pls projection_methods
-}
+\concept{preprocessing pls projection_methods}
 \keyword{datagen}

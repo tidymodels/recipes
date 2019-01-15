@@ -17,8 +17,11 @@
 #' @param lag A vector of positive integers. Each specified column will be
 #'  lagged for each value in the vector.
 #' @param prefix A prefix for generated column names, default to "lag_".
+#' @param columns A character string of variable names that will
+#'  be populated (eventually) by the `terms` argument.
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
+#' @param id A character string that is unique to this step to identify it.
 #' @param skip A logical. Should the step be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
@@ -55,7 +58,9 @@ step_lag <-
            lag = 1,
            prefix = "lag_",
            default = NA,
-           skip = FALSE) {
+           columns = NULL,
+           skip = FALSE,
+           id = rand_id("lag")) {
     add_step(
       recipe,
       step_lag_new(
@@ -65,19 +70,15 @@ step_lag <-
         lag = lag,
         default = default,
         prefix = prefix,
-        skip = skip
+        columns = columns,
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_lag_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           lag = 1,
-           default = NA,
-           prefix = "lag_",
-           skip = FALSE) {
+  function(terms, role, trained, lag, default, prefix, columns, skip, id) {
     step(
       subclass = "lag",
       terms = terms,
@@ -86,19 +87,30 @@ step_lag_new <-
       lag = lag,
       default = default,
       prefix = prefix,
-      skip = skip)
+      columns = columns,
+      skip = skip,
+      id = id
+    )
   }
 
 #' @export
 prep.step_lag <- function(x, training, info = NULL, ...) {
-  x$columns <- terms_select(x$terms, info = info)
-  x$trained <- TRUE
-  x
+  step_lag_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    lag = x$lag,
+    default = x$default,
+    prefix = x$prefix,
+    columns = terms_select(x$terms, info = info),
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom dplyr select arrange mutate desc
 #' @export
-bake.step_lag <- function(object, newdata, ...) {
+bake.step_lag <- function(object, new_data, ...) {
 
   if (!all(object$lag == as.integer(object$lag)))
     stop("step_lag requires 'lag' argument to be integer valued.",
@@ -117,9 +129,10 @@ bake.step_lag <- function(object, newdata, ...) {
   grid <- expand.grid(col = object$columns, lag_val = object$lag,
                       stringsAsFactors = FALSE)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  names(calls) <- paste0(object$prefix, grid$lag_val, "_", grid$col)
+  newname <- paste0(object$prefix, grid$lag_val, "_", grid$col)
+  calls <- check_name(calls, new_data, object, newname, TRUE)
 
-  as_tibble(mutate(newdata, !!!calls))
+  as_tibble(mutate(new_data, !!!calls))
 }
 
 print.step_lag <-

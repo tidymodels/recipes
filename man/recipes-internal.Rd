@@ -6,23 +6,20 @@
 \alias{ellipse_check}
 \alias{printer}
 \alias{prepare}
-\alias{check_type}
 \alias{is_trained}
 \alias{sel2char}
 \title{Internal Functions}
 \usage{
 yj_trans(x, lambda, eps = 0.001)
 
-estimate_yj(dat, limits = c(-5, 5), nunique = 5, na.rm = TRUE)
+estimate_yj(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE)
 
 ellipse_check(...)
 
-printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE, width = max(20,
-  options()$width - 30))
+printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE,
+  width = max(20, options()$width - 30))
 
 prepare(x, ...)
-
-check_type(dat, quant = TRUE)
 
 is_trained(x)
 
@@ -37,7 +34,7 @@ sel2char(x)
 resolved during preparing the recipe (e.g. the \code{columns} object
 of \code{\link[=step_log]{step_log()}}).}
 
-\item{untr_obj}{An oject of selectors prior to prepping the
+\item{untr_obj}{An object of selectors prior to prepping the
 recipe (e.g. \code{terms} in most steps).}
 
 \item{trained}{A logical for whether the step has been trained.}
@@ -58,11 +55,7 @@ A character vector
 \description{
 These are not to be used directly by the users.
 
-Check for Empty Ellipses
-
 This internal function is used for printing steps.
-
-Check to see if a step or check as been trained
 
 This internal function takes a list of selectors (e.g. \code{terms}
 in most steps) and returns a character vector version for

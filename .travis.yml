@@ -2,7 +2,23 @@
 
 language: R
 sudo: false
-cache: packages
+# cache: packages
+
+env:
+  global:
+  - MAKEFLAGS="-j 2"
+
+bioc_packages: Biobase
+
+r_packages: 
+  - NMF
+  - RANN
+  - fastICA
+  - RcppRoll
+  - Matrix
+  - ipred
+  - RSpectra
+
 
 r:
 - 3.1
@@ -14,6 +30,7 @@ r:
 matrix:
   allow_failures:
     - r: 3.1
+    - r: 3.2
 
 warnings_are_errors: false
 

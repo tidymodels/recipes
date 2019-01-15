@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data(biomass)
 
+context("Range scaling")
+
+
 biomass_tr <- biomass[1:10,]
 biomass_te <- biomass[c(13:14, 19, 522),]
 
@@ -10,11 +13,11 @@ rec <- recipe(HHV ~ carbon + hydrogen,
 
 test_that('correct values', {
   standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12)
+    step_range(carbon, hydrogen, min = -12, id = "")
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te, all_predictors())
+  obs_pred <- bake(standardized_trained, new_data = biomass_te, all_predictors())
   obs_pred <- as.matrix(obs_pred)
 
   mins <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, min)
@@ -41,11 +44,13 @@ test_that('correct values', {
   rng_tibble_un <-
     tibble(terms = c("carbon", "hydrogen"),
            min = rep(NA_real_, 2),
-           max = rep(NA_real_, 2))
+           max = rep(NA_real_, 2),
+           id = "")
   rng_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen"),
            min = mins,
-           max = maxs)
+           max = maxs,
+           id = "")
 
   expect_equal(tidy(standardized, 1), rng_tibble_un)
   expect_equal(tidy(standardized_trained, 1), rng_tibble_tr)
@@ -58,7 +63,7 @@ test_that('defaults', {
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te, all_predictors())
+  obs_pred <- bake(standardized_trained, new_data = biomass_te, all_predictors())
   obs_pred <- as.matrix(obs_pred)
 
   mins <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, min)
@@ -90,7 +95,7 @@ test_that('one variable', {
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  obs_pred <- bake(standardized_trained, newdata = biomass_te)
+  obs_pred <- bake(standardized_trained, new_data = biomass_te)
 
   mins <- min(biomass_tr$carbon)
   maxs <- max(biomass_tr$carbon)

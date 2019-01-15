@@ -6,7 +6,7 @@
 \title{General Variable Filter}
 \usage{
 step_rm(recipe, ..., role = NA, trained = FALSE, removals = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("rm"))
 
 \method{tidy}{step_rm}(x, ...)
 }
@@ -35,6 +35,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_rm} object.}
 }
@@ -68,7 +70,5 @@ filtered_te
 
 tidy(smaller_set, number = 1)
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

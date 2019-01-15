@@ -5,8 +5,9 @@
 \alias{tidy.step_string2factor}
 \title{Convert Strings to Factors}
 \usage{
-step_string2factor(recipe, ..., role = NA, trained = FALSE, levels = NULL,
-  ordered = FALSE, skip = FALSE)
+step_string2factor(recipe, ..., role = NA, trained = FALSE,
+  levels = NULL, ordered = FALSE, skip = FALSE,
+  id = rand_id("string2factor"))
 
 \method{tidy}{step_string2factor}(x, ...)
 }
@@ -39,6 +40,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_string2factor} object.}
 }
 \value{
@@ -53,10 +56,13 @@ vectors to factors (ordered or unordered).
 }
 \details{
 If \code{levels} is given, \code{step_string2factor} will
-convert all factors to have the same levels. Also, note that
-\code{prep} has an option \code{stringsAsFactors} that defaults
-to \code{TRUE}. This should be changed so that raw character
-data will be applied to \code{step_string2factor}.
+convert all variables affected by this step to have the same
+levels.
+
+Also, note that \code{prep} has an option \code{strings_as_factors} that
+defaults to \code{TRUE}. This should be changed so that raw character
+data will be applied to \code{step_string2factor}. However, this step
+can also take existing factors (but will leave them as-is).
 }
 \examples{
 data(okc)
@@ -67,7 +73,7 @@ make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
                     training = okc,
-                    stringsAsFactors = FALSE,
+                    strings_as_factors = FALSE,
                     retain = TRUE)
 
 # note that `diet` is a factor
@@ -79,7 +85,5 @@ tidy(make_factor, number = 1)
 \code{\link[=step_factor2string]{step_factor2string()}} \code{\link[=step_dummy]{step_dummy()}} \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}
 }
-\concept{
-preprocessing variable_encodings factors
-}
+\concept{preprocessing variable_encodings factors}
 \keyword{datagen}

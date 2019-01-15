@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Matrix data types")
+
+
 ###################################################################
 
 data(okc)
@@ -23,15 +26,15 @@ rec <- recipe( ~ ., data = okc_tr) %>%
 ###################################################################
 
 test_that('correct types', {
-  bake_default <- bake(rec, newdata = okc_te, all_numeric())
+  bake_default <- bake(rec, new_data = okc_te, all_numeric())
   bake_sparse <-
     bake(rec,
-         newdata = okc_te,
+         new_data = okc_te,
          all_numeric(),
          composition = "matrix")
   bake_sparse_1d <-
     bake(rec,
-         newdata = okc_te,
+         new_data = okc_te,
          age,
          composition = "matrix")
   juice_default <- juice(rec, all_numeric())
@@ -56,6 +59,6 @@ test_that('correct types', {
 })
 
 test_that('bad args', {
-  expect_error(bake(rec, newdata = okc_te, composition = "matrix"))
+  expect_error(bake(rec, new_data = okc_te, composition = "matrix"))
   expect_error(juice(rec, composition = "matrix"))
 })

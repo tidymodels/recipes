@@ -6,7 +6,8 @@
 \title{Convert Numbers to Factors}
 \usage{
 step_num2factor(recipe, ..., role = NA, transform = function(x) x,
-  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE)
+  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE,
+  id = rand_id("num2factor"))
 
 \method{tidy}{step_num2factor}(x, ...)
 }
@@ -42,6 +43,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_num2factor} object.}
 }
@@ -83,14 +86,12 @@ with_transform <- rec \%>\%
 
 with_transform <- prep(with_transform,
                        training = iris2[1:75,])
-new_values <- bake(with_transform, newdata = iris2, Species)
+new_values <- bake(with_transform, new_data = iris2, Species)
 table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 }
 \seealso{
 \code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
 \code{\link[=step_dummy]{step_dummy()}}
 }
-\concept{
-preprocessing variable_encodings factors
-}
+\concept{preprocessing variable_encodings factors}
 \keyword{datagen}

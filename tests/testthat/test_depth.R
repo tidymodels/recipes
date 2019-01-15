@@ -2,11 +2,14 @@ library(testthat)
 library(recipes)
 library(ddalpha)
 
+context("depth features")
+
+
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species", metric = "spatial")
+    step_depth(all_predictors(), class = "Species", metric = "spatial", id = "")
   trained <- prep(rec, training = iris, verbose = FALSE)
-  depths <- bake(trained, newdata = iris)
+  depths <- bake(trained, new_data = iris)
   depths <- depths[, grepl("depth", names(depths))]
   depths <- as.data.frame(depths)
 
@@ -22,10 +25,12 @@ test_that("defaults", {
 
   depth_tibble_un <-
     tibble(terms = "all_predictors()",
-           class = NA_character_)
+           class = NA_character_,
+           id = "")
   depth_tibble_tr <-
     tibble(terms = names(iris)[1:4],
-           class = rep("Species", 4))
+           class = rep("Species", 4),
+           id = "")
 
   expect_equal(tidy(rec, 1), depth_tibble_un)
   expect_equal(tidy(trained, 1), depth_tibble_tr)
@@ -38,7 +43,7 @@ test_that("alt args", {
                metric = "Mahalanobis",
                options = list(mah.estimate = "MCD", mah.parMcd = .75))
   trained <- prep(rec, training = iris, verbose = FALSE)
-  depths <- bake(trained, newdata = iris)
+  depths <- bake(trained, new_data = iris)
   depths <- depths[, grepl("depth", names(depths))]
   depths <- as.data.frame(depths)
 

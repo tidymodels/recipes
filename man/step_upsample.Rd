@@ -6,7 +6,8 @@
 \title{Up-Sample a Data Set Based on a Factor Variable}
 \usage{
 step_upsample(recipe, ..., ratio = 1, role = NA, trained = FALSE,
-  column = NULL, target = NA, skip = TRUE)
+  column = NULL, target = NA, skip = TRUE, seed = sample.int(10^5,
+  1), id = rand_id("upsample"))
 
 \method{tidy}{step_upsample}(x, ...)
 }
@@ -46,6 +47,10 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{seed}{An integer that will be used as the seed when upsampling.}
+
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_upsample} object.}
 }
 \value{
@@ -77,6 +82,10 @@ frequency as the majority level, all data will be retained.
 
 All columns in the data are sampled and returned by \code{\link[=juice]{juice()}}
 and \code{\link[=bake]{bake()}}.
+
+When used in modeling, users should strongly consider using the
+option \code{skip = TRUE} so that the extra sampling is \emph{not}
+conducted outside of the training set.
 }
 \examples{
 data(okc)
@@ -94,7 +103,7 @@ up_rec <- recipe( ~ ., data = okc) \%>\%
 training <- table(juice(up_rec)$diet, useNA = "always")
 
 # Since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(up_rec, newdata = okc)
+baked_okc <- bake(up_rec, new_data = okc)
 baked <- table(baked_okc$diet, useNA = "always")
 
 # Note that if the original data contained more rows than the
@@ -106,7 +115,5 @@ data.frame(
   baked_freq = as.vector(baked)
 )
 }
-\concept{
-preprocessing subsampling
-}
+\concept{preprocessing subsampling}
 \keyword{datagen}

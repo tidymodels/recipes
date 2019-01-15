@@ -7,7 +7,8 @@
 \usage{
 step_count(recipe, ..., role = "predictor", trained = FALSE,
   pattern = ".", normalize = FALSE, options = list(),
-  result = make.names(pattern), input = NULL, skip = FALSE)
+  result = make.names(pattern), input = NULL, skip = FALSE,
+  id = rand_id("count"))
 
 \method{tidy}{step_count}(x, ...)
 }
@@ -54,6 +55,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_count} object.}
 }
 \value{
@@ -78,13 +81,11 @@ rec <- recipe(~ description, covers) \%>\%
 rec2 <- prep(rec, training = covers)
 rec2
 
-count_values <- bake(rec2, newdata = covers)
+count_values <- bake(rec2, new_data = covers)
 count_values
 
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
 }
-\concept{
-preprocessing dummy_variables regular_expressions
-}
+\concept{preprocessing dummy_variables regular_expressions}
 \keyword{datagen}

@@ -37,7 +37,7 @@ The important consideration is that this preprocessing is _only applied to the t
 
 # How To Skip Steps
 
-As of version recipes 0.1.2, each step has an optional logical argument called `skip`. In almost every case, the default is `TRUE`. When using this option:
+As of version recipes 0.1.2, each step has an optional logical argument called `skip`. In almost every case, the default is `FALSE`. When using this option:
 
 * No steps are skipped during `prep`
 * Steps with `skip = TRUE` are not applied to the data when `bake` is called
@@ -59,7 +59,7 @@ car_recipe <- recipe(mpg ~ ., data = mtcars) %>%
 
 # These *should* produce the same results (as they do for `hp`)
 juice(car_recipe) %>% head() %>% select(disp, hp)
-bake(car_recipe, newdata = mtcars) %>% head() %>% select(disp, hp)
+bake(car_recipe, new_data = mtcars) %>% head() %>% select(disp, hp)
 ```
 
 This should emphasize that `juice` should be used to get the training set values whenever a step is skipped. 

@@ -1,6 +1,9 @@
 library(recipes)
 library(testthat)
 
+context("Number to factor conversion")
+
+
 n <- 200
 
 set.seed(8575)
@@ -19,7 +22,7 @@ test_that('basic functionality', {
     juice
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
-  expect_equal(class(ex_1$z), "factor")  
+  expect_equal(class(ex_1$z), "factor")
   expect_equal(levels(ex_1$z), sort(paste(1:10)))
   expect_equal(levels(ex_1$x), sort(paste(unique(ex_dat$x))))
 
@@ -39,23 +42,13 @@ test_that('bad args', {
     step_num2factor(w, x) %>%
     prep(ex_dat)
   )
-  expect_error(
-    rec %>%
-      step_string2factor(w) %>%
-      prep(ex_dat)
-  )
-  expect_error(
-    rec %>%
-      step_string2factor(w, z, ordered = "yes") %>%
-      prep(ex_dat)
-  )
 })
 
 
 test_that('printing', {
   ex_3 <- rec %>%
     step_num2factor(all_numeric()) %>%
-    prep(ex_dat, stringsAsFactors = FALSE, retain = TRUE)
+    prep(ex_dat, strings_as_factors = FALSE, retain = TRUE)
   expect_output(print(ex_3))
   expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
 })

@@ -5,8 +5,10 @@
 \alias{tidy.step_relu}
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
-step_relu(recipe, ..., role = "predictor", trained = FALSE, shift = 0,
-  reverse = FALSE, smooth = FALSE, prefix = "right_relu_", skip = FALSE)
+step_relu(recipe, ..., role = "predictor", trained = FALSE,
+  shift = 0, reverse = FALSE, smooth = FALSE,
+  prefix = "right_relu_", columns = NULL, skip = FALSE,
+  id = rand_id("relu"))
 
 \method{tidy}{step_relu}(x, ...)
 }
@@ -28,11 +30,14 @@ have been estimated.}
 opposed to the right hinge.}
 
 \item{smooth}{A logical indicating if the softplus function, a smooth
-appromixation to the rectified linear transformation, should be used.}
+approximation to the rectified linear transformation, should be used.}
 
 \item{prefix}{A prefix for generated column names, default to "right_relu_"
 when right hinge transformation and "left_relu_" for reversed/left hinge
 transformations.}
+
+\item{columns}{A character string of variable names that will
+be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -40,6 +45,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_relu} object.}
 }
@@ -66,7 +73,7 @@ also be applied to this transformation.
 
 The rectified linear transformation is used in Multivariate Adaptive
 Regression Splines as a basis function to fit piecewise linear functions to
-data in a strategy similar to that employeed in tree based models. The
+data in a strategy similar to that employed in tree based models. The
 transformation is a popular choice as an activation function in many
 neural networks, which could then be seen as a stacked generalization of
 MARS when making use of ReLu activations. The hinge function also appears

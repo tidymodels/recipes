@@ -2,6 +2,9 @@ library(tibble)
 library(recipes)
 data("biomass")
 
+context("Multivariate data")
+
+
 
 test_that('multivariate outcome', {
   raw_recipe <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)

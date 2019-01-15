@@ -9,7 +9,7 @@
 step_ratio(recipe, ..., role = "predictor", trained = FALSE,
   denom = denom_vars(), naming = function(numer, denom)
   make.names(paste(numer, denom, sep = "_o_")), columns = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("ratio"))
 
 denom_vars(...)
 
@@ -55,6 +55,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_ratio} object}
 }
 \value{
@@ -91,7 +93,5 @@ ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
 }
-\concept{
-preprocessing
-}
+\concept{preprocessing}
 \keyword{datagen}

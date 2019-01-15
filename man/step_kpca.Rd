@@ -5,9 +5,10 @@
 \alias{tidy.step_kpca}
 \title{Kernel PCA Signal Extraction}
 \usage{
-step_kpca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  res = NULL, options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
-  prefix = "kPC", skip = FALSE)
+step_kpca(recipe, ..., role = "predictor", trained = FALSE,
+  num_comp = 5, res = NULL, options = list(kernel = "rbfdot", kpar =
+  list(sigma = 0.2)), num = NULL, prefix = "kPC", skip = FALSE,
+  id = rand_id("kpca"))
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -28,8 +29,8 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_comp}{The number of PCA components to retain as new
+predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
 
@@ -43,6 +44,10 @@ here once this preprocessing step has be trained by
 \strong{Note} that the arguments \code{x} and \code{features}
 should not be passed here (or at all).}
 
+\item{num}{The number of components to retain (this will be
+deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
+will override this option.}
+
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
 
@@ -52,6 +57,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_kpca} object}
 }
@@ -76,6 +83,10 @@ square. This nonlinear mapping is used during the PCA analysis
 and can potentially help find better representations of the
 original data.
 
+This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+If not installed, the step will stop with a note about installing
+these packages.
+
 As with ordinary PCA, it is important to standardized the
 variables prior to running PCA (\code{step_center} and
 \code{step_scale} can be used for this purpose).
@@ -87,13 +98,13 @@ available and their parameter(s). These specifications can be
 made in the \code{kernel} and \code{kpar} slots of the
 \code{options} argument to \code{step_kpca}.
 
-The argument \code{num} controls the number of components that
+The argument \code{num_comp} controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{kPC1} -
-\code{kPC9}. If \code{num = 101}, the names would be
+if \code{num_comp < 10}, their names will be \code{kPC1} -
+\code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
 }
 \examples{
@@ -111,16 +122,18 @@ kpca_trans <- rec \%>\%
   step_scale(all_predictors()) \%>\%
   step_kpca(all_predictors())
 
-kpca_estimates <- prep(kpca_trans, training = biomass_tr)
+if (require(dimRed) & require(kernlab)) {
+  kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
-kpca_te <- bake(kpca_estimates, biomass_te)
+  kpca_te <- bake(kpca_estimates, biomass_te)
 
-rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-plot(kpca_te$kPC1, kpca_te$kPC2,
-     xlim = rng, ylim = rng)
+  rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
+  plot(kpca_te$kPC1, kpca_te$kPC2,
+       xlim = rng, ylim = rng)
 
-tidy(kpca_trans, number = 4)
-tidy(kpca_estimates, number = 4)
+  tidy(kpca_trans, number = 4)
+  tidy(kpca_estimates, number = 4)
+}
 }
 \references{
 Scholkopf, B., Smola, A., and Muller, K. (1997).
@@ -136,7 +149,5 @@ of Statistical Software}, 11(1), 1-20.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pca projection_methods kernel_methods
-}
+\concept{preprocessing pca projection_methods kernel_methods}
 \keyword{datagen}

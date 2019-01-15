@@ -1,6 +1,11 @@
 template:
-  params:
-    bootswatch: united
+  package: tidytemplate
+  default_assets: false
+
+# https://github.com/tidyverse/tidytemplate for css
+
+development:
+  mode: auto
 
 figures:
   fig.width: 8
@@ -23,6 +28,7 @@ reference:
     - current_info
     - add_role
     - tidy.recipe
+    - prepper
   - title: Step Functions - Imputation
     contents:
     - matches("impute")
@@ -35,6 +41,7 @@ reference:
     - step_invlogit
     - step_log
     - step_logit
+    - step_mutate
     - step_ns
     - step_poly
     - step_relu
@@ -43,7 +50,7 @@ reference:
   - title: Step Functions - Discretization
     contents:
     - matches("discreti")
-  - title: Step Functions - Dummy Variables
+  - title: Step Functions - Dummy Variables and Encodings
     contents:
     - step_bin2factor
     - step_count    
@@ -51,6 +58,7 @@ reference:
     - step_dummy
     - step_factor2string
     - step_holiday
+    - step_integer
     - step_novel
     - step_num2factor
     - step_ordinalscore
@@ -70,9 +78,11 @@ reference:
     contents:
     - step_classdist
     - step_depth
+    - step_geodist
     - step_ica    
     - step_isomap
     - step_kpca
+    - step_nnmf    
     - step_pca
     - step_pls
     - step_ratio
@@ -86,11 +96,15 @@ reference:
     - step_zv
   - title: Step Functions - Row Operations
     contents:
+    - step_arrange  
     - step_downsample
+    - step_filter
     - step_lag
     - step_naomit
     - step_rollimpute
+    - step_sample
     - step_shuffle
+    - step_slice
     - step_upsample
   - title: Step Functions - Others
     contents:

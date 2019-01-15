@@ -6,7 +6,7 @@
 \title{Shuffle Variables}
 \usage{
 step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("shuffle"))
 
 \method{tidy}{step_shuffle}(x, ...)
 }
@@ -36,6 +36,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_shuffle} object.}
 }
 \value{
@@ -64,7 +66,5 @@ bake(rand_set, integers)
 tidy(rec, number = 1)
 tidy(rand_set, number = 1)
 }
-\concept{
-preprocessing randomization permutation
-}
+\concept{preprocessing randomization permutation}
 \keyword{datagen}

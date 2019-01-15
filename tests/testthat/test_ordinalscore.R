@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Ordinal data to scores")
+
+
 n <- 20
 
 set.seed(752)
@@ -25,9 +28,9 @@ test_that('linear scores', {
   rec1 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
   rec1 <- prep(rec1, training = ex_dat, retain = TRUE,
-                  stringsAsFactors = FALSE, verbose = FALSE)
-  rec1_scores <- bake(rec1, newdata = ex_dat)
-  rec1_scores_NA <- bake(rec1, newdata = ex_miss)
+               strings_as_factors = FALSE, verbose = FALSE)
+  rec1_scores <- bake(rec1, new_data = ex_dat)
+  rec1_scores_NA <- bake(rec1, new_data = ex_miss)
 
   expect_equal(as.numeric(ex_dat$ord1), rec1_scores$ord1)
   expect_equal(as.numeric(ex_dat$ord2), rec1_scores$ord2)
@@ -42,9 +45,9 @@ test_that('nonlinear scores', {
     step_ordinalscore(starts_with("ord"),
                       convert = score)
   rec2 <- prep(rec2, training = ex_dat, retain = TRUE,
-                  stringsAsFactors = FALSE, verbose = FALSE)
-  rec2_scores <- bake(rec2, newdata = ex_dat)
-  rec2_scores_NA <- bake(rec2, newdata = ex_miss)
+               strings_as_factors = FALSE, verbose = FALSE)
+  rec2_scores <- bake(rec2, new_data = ex_dat)
+  rec2_scores_NA <- bake(rec2, new_data = ex_miss)
 
   expect_equal(as.numeric(ex_dat$ord1)^2, rec2_scores$ord1)
   expect_equal(as.numeric(ex_dat$ord2)^2, rec2_scores$ord2)

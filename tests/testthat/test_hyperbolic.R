@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Hyperbolic transformations")
+
+
 n <- 20
 ex_dat <- data.frame(x1 = seq(0, 1, length = n),
                      x2 = seq(1, 0, length = n))
@@ -18,7 +21,7 @@ test_that('simple hyperbolic trans', {
         step_hyperbolic(x1, x2, func = func, inverse = invf)
 
       rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-      rec_trans <- bake(rec_trained, newdata = ex_dat)
+      rec_trans <- bake(rec_trained, new_data = ex_dat)
 
       if(invf) {
         foo <- get(paste0("a", func))

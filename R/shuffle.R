@@ -42,29 +42,28 @@ step_shuffle <- function(recipe,
                          role = NA,
                          trained = FALSE,
                          columns = NULL,
-                         skip = FALSE) {
+                         skip = FALSE,
+                         id = rand_id("shuffle")) {
   add_step(recipe,
            step_shuffle_new(
              terms = ellipse_check(...),
              role = role,
              trained = trained,
              columns = columns,
-             skip = skip
+             skip = skip,
+             id = id
            ))
 }
 
-step_shuffle_new <- function(terms = NULL,
-                             role = NA,
-                             trained = FALSE,
-                             columns = NULL,
-                             skip = FALSE) {
+step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
   step(
     subclass = "shuffle",
     terms = terms,
     role = role,
     trained = trained,
     columns = columns,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -76,23 +75,24 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_shuffle <- function(object, newdata, ...) {
-  if (nrow(newdata) == 1) {
-    warning("`newdata` contains a single row; unable to shuffle",
+bake.step_shuffle <- function(object, new_data, ...) {
+  if (nrow(new_data) == 1) {
+    warning("`new_data` contains a single row; unable to shuffle",
             call. = FALSE)
-    return(newdata)
+    return(new_data)
   }
 
   if (length(object$columns) > 0)
     for (i in seq_along(object$columns))
-      newdata[, object$columns[i]] <-
-        sample(getElement(newdata, object$columns[i]))
-    as_tibble(newdata)
+      new_data[, object$columns[i]] <-
+        sample(getElement(new_data, object$columns[i]))
+    as_tibble(new_data)
 }
 
 print.step_shuffle <-
@@ -104,6 +104,9 @@ print.step_shuffle <-
 
 #' @rdname step_shuffle
 #' @param x A `step_shuffle` object.
+#' @export
 tidy.step_shuffle <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

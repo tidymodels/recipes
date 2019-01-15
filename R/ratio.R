@@ -66,7 +66,8 @@ step_ratio <-
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("ratio")) {
     if (is_empty(denom))
       stop("Please supply at least one denominator variable specification. ",
            "See ?selections.", call. = FALSE)
@@ -79,20 +80,14 @@ step_ratio <-
         denom = denom,
         naming = naming,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ratio_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           denom = NULL,
-           naming = NULL,
-           columns = NULL,
-           skip = FALSE
-  ) {
+  function(terms, role, trained, denom, naming, columns, skip, id) {
     step(
       subclass = "ratio",
       terms = terms,
@@ -101,7 +96,8 @@ step_ratio_new <-
       denom = denom,
       naming = naming,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -129,24 +125,25 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     denom = x$denom,
     naming = x$naming,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_ratio <- function(object, newdata, ...) {
-  res <- newdata[, object$columns$top] /
-    newdata[, object$columns$bottom]
+bake.step_ratio <- function(object, new_data, ...) {
+  res <- new_data[, object$columns$top] /
+    new_data[, object$columns$bottom]
   colnames(res) <-
     apply(object$columns, 1, function(x)
       object$naming(x[1], x[2]))
   if (!is_tibble(res))
     res <- as_tibble(res)
 
-  newdata <- bind_cols(newdata, res)
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, res)
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_ratio <-
@@ -170,6 +167,7 @@ denom_vars <- function(...) quos(...)
 
 #' @rdname step_ratio
 #' @param x A `step_ratio` object
+#' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
     res <- x$columns
@@ -181,6 +179,7 @@ tidy.step_ratio <- function(x, ...) {
                        stringsAsFactors = FALSE)
     res <- as_tibble(res)
   }
+  res$id <- x$id
   res
 }
 

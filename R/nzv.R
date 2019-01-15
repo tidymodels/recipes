@@ -81,7 +81,8 @@ step_nzv <-
            trained = FALSE,
            options = list(freq_cut = 95 / 5, unique_cut = 10),
            removals = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("nzv")) {
     add_step(
       recipe,
       step_nzv_new(
@@ -90,18 +91,14 @@ step_nzv <-
         trained = trained,
         options = options,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_nzv_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           options = NULL,
-           removals = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, options, removals, skip, id) {
     step(
       subclass = "nzv",
       terms = terms,
@@ -109,7 +106,8 @@ step_nzv_new <-
       trained = trained,
       options = options,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -128,15 +126,16 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     options = x$options,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_nzv <- function(object, newdata, ...) {
+bake.step_nzv <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
-  as_tibble(newdata)
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  as_tibble(new_data)
 }
 
 print.step_nzv <-
@@ -193,5 +192,6 @@ nzv <- function(x,
 
 #' @rdname step_nzv
 #' @param x A `step_nzv` object.
+#' @export
 tidy.step_nzv <- tidy_filter
 

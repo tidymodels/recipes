@@ -48,27 +48,28 @@
 
 step_invlogit <-
   function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE) {
+           skip = FALSE, id = rand_id("invlogit")) {
     add_step(recipe,
              step_invlogit_new(
                terms = ellipse_check(...),
                role = role,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_invlogit_new <-
-  function(terms = NULL, role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "invlogit",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -82,19 +83,20 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-bake.step_invlogit <- function(object, newdata, ...) {
+bake.step_invlogit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      binomial()$linkinv(unlist(getElement(newdata, object$columns[i]),
+    new_data[, object$columns[i]] <-
+      binomial()$linkinv(unlist(getElement(new_data, object$columns[i]),
                                 use.names = FALSE))
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 
@@ -107,6 +109,9 @@ print.step_invlogit <-
 
 #' @rdname step_invlogit
 #' @param x A `step_invlogit` object.
+#' @export
 tidy.step_invlogit <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

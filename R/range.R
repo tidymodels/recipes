@@ -59,7 +59,8 @@ step_range <-
            min = 0,
            max = 1,
            ranges = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("range")) {
     add_step(
       recipe,
       step_range_new(
@@ -69,19 +70,14 @@ step_range <-
         min = min,
         max = max,
         ranges = ranges,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_range_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           min = 0,
-           max = 1,
-           ranges = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, min, max, ranges, skip, id) {
     step(
       subclass = "range",
       terms = terms,
@@ -90,7 +86,8 @@ step_range_new <-
       min = min,
       max = max,
       ranges = ranges,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -111,13 +108,14 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     min = x$min,
     max = x$max,
     ranges = rbind(mins, maxs),
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_range <- function(object, newdata, ...) {
-  tmp <- as.matrix(newdata[, colnames(object$ranges)])
+bake.step_range <- function(object, new_data, ...) {
+  tmp <- as.matrix(new_data[, colnames(object$ranges)])
   tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
   tmp <- tmp * (object$max - object$min)
   tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
@@ -128,8 +126,8 @@ bake.step_range <- function(object, newdata, ...) {
 
   if (is.matrix(tmp) && ncol(tmp) == 1)
     tmp <- tmp[, 1]
-  newdata[, colnames(object$ranges)] <- tmp
-  as_tibble(newdata)
+  new_data[, colnames(object$ranges)] <- tmp
+  as_tibble(new_data)
 }
 
 print.step_range <-
@@ -141,6 +139,7 @@ print.step_range <-
 
 #' @rdname step_range
 #' @param x A `step_range` object.
+#' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$ranges),
@@ -152,5 +151,6 @@ tidy.step_range <- function(x, ...) {
                   min = na_dbl,
                   max = na_dbl)
   }
+  res$id <- x$id
   res
 }

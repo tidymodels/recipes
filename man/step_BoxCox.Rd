@@ -6,7 +6,8 @@
 \title{Box-Cox Transformation for Non-Negative Data}
 \usage{
 step_BoxCox(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
-  limits = c(-5, 5), nunique = 5, skip = FALSE)
+  limits = c(-5, 5), num_unique = 5, skip = FALSE,
+  id = rand_id("BoxCox"))
 
 \method{tidy}{step_BoxCox}(x, ...)
 }
@@ -31,7 +32,7 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible
+\item{num_unique}{An integer where data that have less possible
 values will not be evaluate for a transformation.}
 
 \item{skip}{A logical. Should the step be skipped when the
@@ -40,6 +41,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_BoxCox} object.}
 }
@@ -99,7 +102,5 @@ A review. \emph{The Statistician}, 169-178..
 \code{\link[=step_YeoJohnson]{step_YeoJohnson()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

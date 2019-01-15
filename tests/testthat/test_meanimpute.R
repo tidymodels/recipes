@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data("credit_data")
 
+context("Mean imputation")
+
+
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -12,9 +15,9 @@ test_that('simple mean', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_meanimpute(Age, Assets, Income)
+    step_meanimpute(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  te_imputed <- bake(imputed, newdata = credit_te)
+  te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Age, credit_te$Age)
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)],
@@ -28,10 +31,12 @@ test_that('simple mean', {
                  mean, numeric(1), na.rm = TRUE)
   imp_tibble_un <-
     tibble(terms = c("Age", "Assets", "Income"),
-           model = rep(NA_real_, 3))
+           model = rep(NA_real_, 3),
+           id = "")
   imp_tibble_tr <-
     tibble(terms = c("Age", "Assets", "Income"),
-           model = means)
+           model = means,
+           id = "")
 
   expect_equal(tidy(impute_rec, 1), imp_tibble_un)
   expect_equal(tidy(imputed, 1), imp_tibble_tr)
@@ -44,7 +49,7 @@ test_that('trimmed mean', {
   impute_rec <- rec %>%
     step_meanimpute(Assets, trim = .1)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  te_imputed <- bake(imputed, newdata = credit_te)
+  te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)],
                rep(mean(credit_tr$Assets, na.rm = TRUE, trim = .1),

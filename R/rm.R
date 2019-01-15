@@ -44,29 +44,28 @@ step_rm <- function(recipe,
                     role = NA,
                     trained = FALSE,
                     removals = NULL,
-                    skip = FALSE) {
+                    skip = FALSE,
+                    id = rand_id("rm")) {
   add_step(recipe,
            step_rm_new(
              terms = ellipse_check(...),
              role = role,
              trained = trained,
              removals = removals,
-             skip = skip
+             skip = skip,
+             id = id
            ))
 }
 
-step_rm_new <- function(terms = NULL,
-                        role = NA,
-                        trained = FALSE,
-                        removals = NULL,
-                        skip = FALSE) {
+step_rm_new <- function(terms, role, trained, removals, skip, id) {
   step(
     subclass = "rm",
     terms = terms,
     role = role,
     trained = trained,
     removals = removals,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -78,15 +77,16 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     removals = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_rm <- function(object, newdata, ...) {
+bake.step_rm <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
-  as_tibble(newdata)
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  as_tibble(new_data)
 }
 
 print.step_rm <-
@@ -111,4 +111,5 @@ print.step_rm <-
 
 #' @rdname step_rm
 #' @param x A `step_rm` object.
+#' @export
 tidy.step_rm <- tidy_filter

@@ -6,7 +6,7 @@
 \title{Zero Variance Filter}
 \usage{
 step_zv(recipe, ..., role = NA, trained = FALSE, removals = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("zv"))
 
 \method{tidy}{step_zv}(x, ...)
 }
@@ -35,6 +35,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_zv} object.}
 }
@@ -76,7 +78,5 @@ tidy(filter_obj, number = 1)
 \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

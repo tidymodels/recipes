@@ -7,7 +7,7 @@
 \usage{
 step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   mean_func = mean, cov_func = cov, pool = FALSE, log = TRUE,
-  objects = NULL, skip = FALSE)
+  objects = NULL, skip = FALSE, id = rand_id("classdist"))
 
 \method{tidy}{step_classdist}(x, ...)
 }
@@ -51,6 +51,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_classdist} object.}
 }
 \value{
@@ -91,7 +93,7 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 
 rec_dists <- prep(rec, training = iris)
 
-dists_to_species <- bake(rec_dists, newdata = iris, everything())
+dists_to_species <- bake(rec_dists, new_data = iris, everything())
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 dists_to_species[, c("Species", dist_cols)]
@@ -99,7 +101,5 @@ dists_to_species[, c("Species", dist_cols)]
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
 }
-\concept{
-preprocessing dimension_reduction
-}
+\concept{preprocessing dimension_reduction}
 \keyword{datagen}

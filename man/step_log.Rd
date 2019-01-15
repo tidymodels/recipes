@@ -6,7 +6,8 @@
 \title{Logarithmic Transformation}
 \usage{
 step_log(recipe, ..., role = NA, trained = FALSE, base = exp(1),
-  offset = 0, columns = NULL, skip = FALSE, signed = FALSE)
+  offset = 0, columns = NULL, skip = FALSE, signed = FALSE,
+  id = rand_id("log"))
 
 \method{tidy}{step_log}(x, ...)
 }
@@ -40,9 +41,11 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
-\item{signed}{A logical indicating wether to take the signed log.
+\item{signed}{A logical indicating whether to take the signed log.
 This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_log} object.}
 }
@@ -96,7 +99,5 @@ recipe(~ V1 + V2, data = examples2) \%>\%
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

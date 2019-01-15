@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data("credit_data")
 
+context("Mode imputation")
+
+
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -12,9 +15,9 @@ test_that('simple modes', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_modeimpute(Status, Home, Marital)
+    step_modeimpute(Status, Home, Marital, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  te_imputed <- bake(imputed, newdata = credit_te)
+  te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Status, credit_te$Status)
   home_exp <- rep(recipes:::mode_est(credit_tr$Home),
@@ -32,10 +35,12 @@ test_that('simple modes', {
                   recipes:::mode_est, character(1))
   imp_tibble_un <-
     tibble(terms = c("Status", "Home", "Marital"),
-           model = rep(NA_character_, 3))
+           model = rep(NA_character_, 3),
+           id = "")
   imp_tibble_tr <-
     tibble(terms = c("Status", "Home", "Marital"),
-           model = modes)
+           model = modes,
+           id = "")
 
   expect_equal(tidy(impute_rec, 1), imp_tibble_un)
   expect_equal(tidy(imputed, 1), imp_tibble_tr)

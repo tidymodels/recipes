@@ -3,6 +3,8 @@ library(recipes)
 data(biomass)
 library(splines)
 
+context("Natural splines")
+
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
@@ -15,8 +17,8 @@ test_that('correct basis functions', {
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
 
-  with_ns_pred_tr <- bake(with_ns, newdata = biomass_tr)
-  with_ns_pred_te <- bake(with_ns, newdata = biomass_te)
+  with_ns_pred_tr <- bake(with_ns, new_data = biomass_tr)
+  with_ns_pred_te <- bake(with_ns, new_data = biomass_te)
 
   carbon_ns_tr_exp <- ns(biomass_tr$carbon, df = 2)
   hydrogen_ns_tr_exp <- ns(biomass_tr$hydrogen, df = 2)

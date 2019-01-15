@@ -21,7 +21,7 @@
 #' @keywords datagen
 #' @concept preprocessing variable_encodings factors
 #' @export
-#' @details `prep` has an option `stringsAsFactors` that
+#' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
@@ -36,7 +36,7 @@
 #'
 #' factor_test <- rec %>%
 #'   prep(training = okc,
-#'        stringsAsFactors = FALSE,
+#'        strings_as_factors = FALSE,
 #'        retain = TRUE) %>%
 #'   juice
 #' # diet is a
@@ -47,7 +47,7 @@
 #'
 #' string_test <- rec %>%
 #'   prep(training = okc,
-#'        stringsAsFactors = FALSE,
+#'        strings_as_factors = FALSE,
 #'        retain = TRUE) %>%
 #'   juice
 #' # diet is a
@@ -60,7 +60,8 @@ step_factor2string <-
            role = NA,
            trained = FALSE,
            columns = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("factor2string")) {
     add_step(
       recipe,
       step_factor2string_new(
@@ -68,24 +69,22 @@ step_factor2string <-
         role = role,
         trained = trained,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_factor2string_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "factor2string",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,21 +105,22 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 
 #' @importFrom purrr map_df
 #' @export
-bake.step_factor2string <- function(object, newdata, ...) {
-  newdata[, object$columns] <-
-    map_df(newdata[, object$columns],
+bake.step_factor2string <- function(object, new_data, ...) {
+  new_data[, object$columns] <-
+    map_df(new_data[, object$columns],
            as.character)
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_factor2string <-
@@ -133,6 +133,9 @@ print.step_factor2string <-
 
 #' @rdname step_factor2string
 #' @param x A `step_factor2string` object.
+#' @export
 tidy.step_factor2string <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

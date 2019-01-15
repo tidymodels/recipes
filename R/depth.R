@@ -47,7 +47,10 @@
 #'  class-specific depth for a new data point based on the proximity
 #'  of the new value to the training set distribution.
 #'
-#'   Note that the entire training set is saved to compute future
+#' This step requires the \pkg{ddalpha} package. If not installed, the
+#'  step will stop with a note about installing the package.
+#'
+#' Note that the entire training set is saved to compute future
 #'  depth values. The saved data have been trained (i.e. prepared)
 #'  and baked (i.e. processed) up to the point before the location
 #'  that `step_depth` occupies in the recipe. Also, the data
@@ -68,7 +71,7 @@
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
-#' dists_to_species <- bake(rec_dists, newdata = iris)
+#' dists_to_species <- bake(rec_dists, new_data = iris)
 #' dists_to_species
 #'
 #' tidy(rec, number = 1)
@@ -83,9 +86,13 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
       stop("`class` should be a single character value.")
+
+    recipes_pkg_check("ddalpha")
+
     add_step(
       recipe,
       step_depth_new(
@@ -96,20 +103,14 @@ step_depth <-
         metric = metric,
         options = options,
         data = data,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_depth_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           metric = NULL,
-           options = NULL,
-           data = NULL,
-           skip = FALSE) {
+  function(terms, class, role, trained, metric, options, data, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -119,7 +120,8 @@ step_depth_new <-
       metric = metric,
       options = options,
       data = data,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -141,29 +143,28 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     metric = x$metric,
     options = x$options,
     data = x_dat,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
-
+#' @importFrom rlang call2
 get_depth <- function(tr_dat, new_dat, metric, opts) {
   if (!is.matrix(new_dat))
     new_dat <- as.matrix(new_dat)
   opts$data <- tr_dat
   opts$x <- new_dat
-  do.call(paste0("depth.", metric), opts)
+  dd_call <- call2(paste0("depth.", metric), !!!opts, .ns = "ddalpha")
+  eval(dd_call)
 }
 
 
 
 #' @importFrom tibble as_tibble
-#' @importFrom ddalpha depth.halfspace depth.Mahalanobis depth.potential
-#'   depth.projection depth.simplicial depth.simplicialVolume depth.spatial
-#'   depth.zonoid
 #' @export
-bake.step_depth <- function(object, newdata, ...) {
+bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])
-  x_data <- as.matrix(newdata[, x_names])
+  x_data <- as.matrix(new_data[, x_names])
   res <- lapply(
     object$data,
     get_depth,
@@ -172,8 +173,9 @@ bake.step_depth <- function(object, newdata, ...) {
     opts = object$options
   )
   res <- as_tibble(res)
-  colnames(res) <- paste0("depth_", colnames(res))
-  res <- bind_cols(newdata, res)
+  newname <- paste0("depth_", colnames(res))
+  res <- check_name(res, new_data, object, newname)
+  res <- bind_cols(new_data, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res
@@ -195,6 +197,7 @@ print.step_depth <-
 
 #' @rdname step_depth
 #' @param x A `step_depth` object.
+#' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$data[[1]]),
@@ -204,6 +207,7 @@ tidy.step_depth <- function(x, ...) {
     res <- tibble(terms = term_names,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }
 

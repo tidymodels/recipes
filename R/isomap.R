@@ -14,12 +14,15 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dimension columns created by the original variables
 #'  will be used as predictors in a model.
-#' @param num The number of isomap dimensions to retain as new
-#'  predictors. If `num` is greater than the number of columns
+#' @param num_terms The number of isomap dimensions to retain as new
+#'  predictors. If `num_terms` is greater than the number of columns
 #'  or the number of possible dimensions, a smaller value will be
 #'  used.
-#' @param options A list of options to
-#'  [dimRed::Isomap()].
+#' @param neighbors The number of neighbors.
+#' @param options A list of options to [dimRed::Isomap()].
+#' @param num The number of isomap dimensions (this will be deprecated
+#'  in factor of  `num_terms` in version 0.1.5). `num_terms` will
+#'  override this option.
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
@@ -39,17 +42,22 @@
 #'  data as a method for increasing the fidelity of the new
 #'  dimensions to the original data values.
 #'
+#' This step requires the \pkg{dimRed}, \pkg{RSpectra},
+#'  \pkg{igraph}, and \pkg{RANN} packages. If not installed, the
+#'  step will stop with a note about installing these packages.
+#'
+#'
 #' It is advisable to center and scale the variables prior to
 #'  running Isomap (`step_center` and `step_scale` can be
 #'  used for this purpose).
 #'
-#' The argument `num` controls the number of components that
+#' The argument `num_terms` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
 #'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if `num < 10`, their names will be `Isomap1` -
-#'  `Isomap9`. If `num = 101`, the names would be
+#'  if `num_terms < 10`, their names will be `Isomap1` -
+#'  `Isomap9`. If `num_terms = 101`, the names would be
 #'  `Isomap001` - `Isomap101`.
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
@@ -60,6 +68,7 @@
 #'   https://github.com/gdkrmr
 #'
 #' @examples
+#' \donttest{
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -73,19 +82,22 @@
 #'   step_center(all_predictors()) %>%
 #'   step_scale(all_predictors()) %>%
 #'   step_isomap(all_predictors(),
-#'               options = list(knn = 100),
-#'               num = 2)
+#'               neighbors = 100,
+#'               num_terms = 2)
 #'
-#' im_estimates <- prep(im_trans, training = biomass_tr)
+#' if (require(dimRed) & require(RSpectra)) {
+#'   im_estimates <- prep(im_trans, training = biomass_tr)
 #'
-#' im_te <- bake(im_estimates, biomass_te)
+#'   im_te <- bake(im_estimates, biomass_te)
 #'
-#' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-#' plot(im_te$Isomap1, im_te$Isomap2,
-#'      xlim = rng, ylim = rng)
+#'   rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+#'   plot(im_te$Isomap1, im_te$Isomap2,
+#'        xlim = rng, ylim = rng)
 #'
-#' tidy(im_trans, number = 4)
-#' tidy(im_estimates, number = 4)
+#'   tidy(im_trans, number = 4)
+#'   tidy(im_estimates, number = 4)
+#' }
+#' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -95,63 +107,70 @@ step_isomap <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num  = 5,
-           options = list(knn = 50, .mute = c("message", "output")),
+           num_terms  = 5,
+           neighbors = 50,
+           options = list(.mute = c("message", "output")),
            res = NULL,
+           num = NULL,
            prefix = "Isomap",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("isomap")) {
+
+    recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
+    if (!is.null(num))
+      message("The argument `num` is deprecated in factor of `num_terms`. ",
+              "`num` will be removed in next version.", call. = FALSE)
     add_step(
       recipe,
       step_isomap_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        num = num,
+        num_terms = num_terms,
+        neighbors = neighbors,
         options = options,
         res = res,
+        num = num,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_isomap_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "isomap",
-           skip = FALSE) {
+  function(terms, role, trained, num_terms, neighbors, options, res, num,
+           prefix, skip, id) {
     step(
       subclass = "isomap",
       terms = terms,
       role = role,
       trained = trained,
-      num = num,
+      num_terms = num_terms,
+      neighbors = neighbors,
       options = options,
       res = res,
+      num = num,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
-#' @importFrom dimRed embed dimRedData
 #' @export
 prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  x$num <- min(x$num, ncol(training))
-  x$options$knn <- min(x$options$knn, nrow(training))
+  x$num_terms <- min(x$num_terms, ncol(training))
+  x$neighbors <- min(x$neighbors, nrow(training))
 
   imap <-
-    embed(
-      dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+    dimRed::embed(
+      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
       "Isomap",
-      knn = x$options$knn,
-      ndim = x$num,
+      knn = x$neighbors,
+      ndim = x$num_terms,
       .mute = x$options$.mute
     )
 
@@ -159,29 +178,32 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = x$num,
+    num_terms = x$num_terms,
+    neighbors = x$neighbors,
     options = x$options,
     res = imap,
+    num = x$num_terms,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_isomap <- function(object, newdata, ...) {
+bake.step_isomap <- function(object, new_data, ...) {
   isomap_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
-      dimRedData(as.data.frame(newdata[, isomap_vars, drop = FALSE]))
+      dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
       )@data
-  comps <- comps[, 1:object$num, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% isomap_vars), drop = FALSE]
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  comps <- comps[, 1:object$num_terms, drop = FALSE]
+  comps <- check_name(comps, new_data, object)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
@@ -195,6 +217,7 @@ print.step_isomap <-
 
 #' @rdname step_isomap
 #' @param x A `step_isomap` object
+#' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = colnames(x$res@org.data))
@@ -202,5 +225,6 @@ tidy.step_isomap <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
   }
+  res$id <- x$id
   res
 }

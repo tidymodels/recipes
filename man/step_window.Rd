@@ -6,8 +6,8 @@
 \title{Moving Window Functions}
 \usage{
 step_window(recipe, ..., role = NA, trained = FALSE, size = 3,
-  na.rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
-  skip = FALSE)
+  na_rm = TRUE, statistic = "mean", columns = NULL, names = NULL,
+  skip = FALSE, id = rand_id("window"))
 
 \method{tidy}{step_window}(x, ...)
 }
@@ -32,7 +32,7 @@ preprocessing have been estimated.}
 
 \item{size}{An odd integer \code{>= 3} for the window size.}
 
-\item{na.rm}{A logical for whether missing values should be
+\item{na_rm}{A logical for whether missing values should be
 removed from the calculations within each window.}
 
 \item{statistic}{A character string for the type of statistic
@@ -58,6 +58,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_window} object.}
 }
 \value{
@@ -82,6 +84,8 @@ respectively. For example if a column \code{x} with 12 values is
 smoothed with a 5-point moving median, the first three smoothed
 values are estimated by \code{median(x[1:5])} and the fourth
 uses \code{median(x[2:6])}.
+
+step will stop with a note about installing the package.
 }
 \examples{
 library(recipes)
@@ -132,7 +136,5 @@ ggplot(smoothed_dat, aes(x = original, y = y1)) +
   geom_point() +
   theme_bw()
 }
-\concept{
-preprocessing moving_windows
-}
+\concept{preprocessing moving_windows}
 \keyword{datagen}

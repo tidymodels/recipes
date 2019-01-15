@@ -3,6 +3,9 @@ library(recipes)
 library(lubridate)
 library(tibble)
 
+context("Date features")
+
+
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 
@@ -18,7 +21,7 @@ test_that('default option', {
     step_date(all_predictors(), features = feats)
 
   date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, newdata = examples)
+  date_res <- bake(date_rec, new_data = examples)
 
   date_exp <- tibble(
     Dan = examples$Dan,
@@ -54,7 +57,7 @@ test_that('nondefault options', {
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
 
   date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, newdata = examples)
+  date_res <- bake(date_rec, new_data = examples)
 
   date_exp <- tibble(
     Dan = examples$Dan,
@@ -74,7 +77,7 @@ test_that('ordinal values', {
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
 
   date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, newdata = examples)
+  date_res <- bake(date_rec, new_data = examples)
 
   date_exp <- tibble(
     Dan = examples$Dan,

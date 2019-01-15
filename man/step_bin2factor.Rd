@@ -5,8 +5,9 @@
 \alias{tidy.step_bin2factor}
 \title{Create a Factors from A Dummy Variable}
 \usage{
-step_bin2factor(recipe, ..., role = NA, trained = FALSE, levels = c("yes",
-  "no"), ref_first = TRUE, columns = NULL, skip = FALSE)
+step_bin2factor(recipe, ..., role = NA, trained = FALSE,
+  levels = c("yes", "no"), ref_first = TRUE, columns = NULL,
+  skip = FALSE, id = rand_id("bin2factor"))
 
 \method{tidy}{step_bin2factor}(x, ...)
 }
@@ -41,6 +42,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_bin2factor} object.}
 }
 \value{
@@ -74,13 +77,11 @@ rec <- recipe(~ description, covers) \%>\%
 tidy(rec, number = 3)
 
 rec <- prep(rec, training = covers)
-results <- bake(rec, newdata = covers)
+results <- bake(rec, new_data = covers)
 
 table(results$rocks, results$more_rocks)
 
 tidy(rec, number = 3)
 }
-\concept{
-preprocessing dummy_variables factors
-}
+\concept{preprocessing dummy_variables factors}
 \keyword{datagen}

@@ -15,8 +15,10 @@
 #'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
+#' @param deg_free The degrees of freedom. 
+#' @param degree The degree of the piecewise polynomial.
 #' @param options A list of options for [splines::bs()]
-#'  which should not include `x`.
+#'  which should not include `x`, `degree`, or `df`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -54,37 +56,41 @@ step_bs <-
            ...,
            role = "predictor",
            trained = FALSE,
+           deg_free = NULL, 
+           degree = 3,
            objects = NULL,
-           options = list(df = NULL, degree = 3),
-           skip = FALSE) {
+           options = list(),
+           skip = FALSE,
+           id = rand_id("bs")) {
     add_step(
       recipe,
       step_bs_new(
         terms = ellipse_check(...),
         trained = trained,
+        deg_free = deg_free, 
+        degree = degree,
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_bs_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, deg_free, degree, objects, options, skip, id) {
     step(
       subclass = "bs",
       terms = terms,
       role = role,
       trained = trained,
+      deg_free = deg_free,
+      degree = degree,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -109,44 +115,50 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  obj <- lapply(training[, col_names], bs_wrapper, x$options)
+  opt <- x$options
+  opt$df <- x$deg_free
+  opt$degree <- x$degree 
+  obj <- lapply(training[, col_names], bs_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_bs_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    deg_free = x$deg_free,
+    degree = x$degree,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
 #' @export
-bake.step_bs <- function(object, newdata, ...) {
+bake.step_bs <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   bs_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(bs_values) <- rep("", sum(new_cols))
   strt <- 1
   for (i in names(object$objects)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     bs_values[, cols] <-
-      predict(object$objects[[i]], getElement(newdata, i))
+      predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
     strt <- max(cols) + 1
-    newdata[, orig_var] <- NULL
+    new_data[, orig_var] <- NULL
   }
-  newdata <- bind_cols(newdata, as_tibble(bs_values))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(bs_values))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
@@ -159,9 +171,11 @@ print.step_bs <-
 
 #' @rdname step_bs
 #' @param x A `step_bs` object.
+#' @export
 tidy.step_bs <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

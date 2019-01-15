@@ -8,3 +8,6 @@ inst/doc
 *.history
 .DS_Store
 .Rbuildignore~
+revdep/checks.noindex
+revdep/library.noindex
+

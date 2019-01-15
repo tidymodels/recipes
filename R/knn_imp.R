@@ -21,7 +21,7 @@
 #'  included in both lists to be imputed and to be an imputation
 #'  predictor, it will be removed from the latter and not used to
 #'  impute itself.
-#' @param K The number of neighbors.
+#' @param neighbors The number of neighbors.
 #' @param ref_data A tibble of data that will reflect the data
 #'  preprocessing done up to the point of this imputation step. This
 #'  is `NULL` until the step is trained by
@@ -29,11 +29,13 @@
 #' @param columns The column names that will be imputed and used
 #'  for imputation. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
+#' @param K The number of neighbors (this will be deprecated in factor of 
+#'  `neighbors` in version 0.1.5). `neighbors` will override this option. 
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `K`.
+#'  (those variables used to impute), and `neighbors`.
 #' @keywords datagen
 #' @concept preprocessing imputation
 #' @export
@@ -74,7 +76,7 @@
 #'               data = biomass_tr)
 #'
 #' ratio_recipe <- rec %>%
-#'   step_knnimpute(all_predictors(), K = 3)
+#'   step_knnimpute(all_predictors(), neighbors = 3)
 #' ratio_recipe2 <- prep(ratio_recipe, training = biomass_tr)
 #' imputed <- bake(ratio_recipe2, biomass_te)
 #'
@@ -95,47 +97,49 @@ step_knnimpute <-
            ...,
            role = NA,
            trained = FALSE,
-           K = 5,
+           neighbors = 5,
            impute_with = imp_vars(all_predictors()),
            ref_data = NULL,
            columns = NULL,
-           skip = FALSE) {
+           K = NULL,
+           skip = FALSE,
+           id = rand_id("knnimpute")) {
     if (is.null(impute_with))
       stop("Please list some variables in `impute_with`", call. = FALSE)
+    if (!is.null(K)) 
+      message("The argument `K` is deprecated in factor of `neighbors`. ",
+              "`K` will be removed in next version.", call. = FALSE)
     add_step(
       recipe,
       step_knnimpute_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        K = K,
+        neighbors = neighbors,
         impute_with = impute_with,
         ref_data = ref_data,
         columns = columns,
-        skip = skip
+        K = K,
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_knnimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           K = NULL,
-           impute_with = NULL,
-           ref_data = NULL,
-           columns = NA,
-           skip = FALSE) {
+  function(terms, role, trained, neighbors, impute_with, ref_data, columns, K, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,
       role = role,
       trained = trained,
-      K = K,
+      neighbors = neighbors,
       impute_with = impute_with,
       ref_data = ref_data,
       columns = columns,
-      skip = skip
+      K = K,
+      skip = skip,
+      id = id
     )
   }
 
@@ -150,15 +154,23 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
 
-  x$columns <- var_lists
-  x$ref_data <- training[, all_x_vars]
-  x$trained <- TRUE
-  x
+  step_knnimpute_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    neighbors = x$neighbors,
+    impute_with = x$impute_with,
+    ref_data = training[, all_x_vars],
+    columns = var_lists,
+    K = x$neighbors,
+    skip = x$skip,
+    id = x$id
+  )
 }
 
 #' @importFrom gower gower_topn
-nn_index <- function(.new, .old, vars, K) {
-  gower_topn(.old[, vars], .new[, vars], n = K, nthread = 1)$index
+nn_index <- function(miss_data, ref_data, vars, K) {
+  gower_topn(ref_data[, vars], miss_data[, vars], n = K, nthread = 1)$index
 }
 
 nn_pred <- function(index, dat) {
@@ -175,30 +187,33 @@ nn_pred <- function(index, dat) {
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict complete.cases
 #' @export
-bake.step_knnimpute <- function(object, newdata, ...) {
-  missing_rows <- !complete.cases(newdata)
+bake.step_knnimpute <- function(object, new_data, ...) {
+  missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
-    return(newdata)
+    return(new_data)
 
-  old_data <- newdata
+  old_data <- new_data
   for (i in seq(along = object$columns)) {
     imp_var <- object$columns[[i]]$y
-    missing_rows <- !complete.cases(newdata[, imp_var])
+    missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
       preds <- object$columns[[i]]$x
-      new_data <- old_data[missing_rows, preds, drop = FALSE]
+      imp_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
-      if (all(is.na(new_data))) {
+      if (all(is.na(imp_data))) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
-        nn_ind <- nn_index(object$ref_data, new_data, preds, object$K)
+        imp_var_complete <- !is.na(object$ref_data[[imp_var]])
+        nn_ind <- nn_index(object$ref_data[imp_var_complete,],
+                           imp_data, preds,
+                           object$neighbors)
         pred_vals <-
-          apply(nn_ind, 2, nn_pred, dat = object$ref_data[, imp_var])
-        newdata[missing_rows, imp_var] <- pred_vals
+          apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
+        new_data[missing_rows, imp_var] <- pred_vals
       }
     }
   }
-  newdata
+  new_data
 }
 
 
@@ -206,7 +221,7 @@ print.step_knnimpute <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
-    cat(x$K, "-nearest neighbor imputation for ", sep = "")
+    cat(x$neighbors, "-nearest neighbor imputation for ", sep = "")
     printer(all_x_vars, x$terms, x$trained, width = width)
     invisible(x)
   }
@@ -214,6 +229,7 @@ print.step_knnimpute <-
 #' @importFrom purrr map_df
 #' @rdname step_knnimpute
 #' @param x A `step_knnimpute` object.
+#' @export
 tidy.step_knnimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- purrr::map_df(x$columns,
@@ -225,11 +241,12 @@ tidy.step_knnimpute <- function(x, ...) {
                            )
     )
     res <- as_tibble(res)
-    res$K <- rep(x$K, nrow(res))
+    res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, predictors = na_chr, K = x$K)
+    res <- tibble(terms = term_names, predictors = na_chr, neighbors = x$neighbors)
   }
+  res$id <- x$id
   res
 }
 

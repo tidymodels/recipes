@@ -5,8 +5,8 @@
 \alias{tidy.step_invlogit}
 \title{Inverse Logit Transformation}
 \usage{
-step_invlogit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+step_invlogit(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, skip = FALSE, id = rand_id("invlogit"))
 
 \method{tidy}{step_invlogit}(x, ...)
 }
@@ -34,6 +34,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_invlogit} object.}
 }
@@ -78,7 +80,5 @@ plot(biomass_te$carbon, transformed_te$carbon)
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

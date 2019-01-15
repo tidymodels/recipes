@@ -5,8 +5,8 @@
 \alias{tidy.step_range}
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
-step_range(recipe, ..., role = NA, trained = FALSE, min = 0, max = 1,
-  ranges = NULL, skip = FALSE)
+step_range(recipe, ..., role = NA, trained = FALSE, min = 0,
+  max = 1, ranges = NULL, skip = FALSE, id = rand_id("range"))
 
 \method{tidy}{step_range}(x, ...)
 }
@@ -42,6 +42,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_range} object.}
 }
@@ -83,7 +85,5 @@ transformed_te
 tidy(ranged_trans, number = 1)
 tidy(ranged_obj, number = 1)
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

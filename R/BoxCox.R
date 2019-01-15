@@ -15,7 +15,7 @@
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
-#' @param nunique An integer where data that have less possible
+#' @param num_unique An integer where data that have less possible
 #'  values will not be evaluate for a transformation.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -70,8 +70,9 @@ step_BoxCox <-
            trained = FALSE,
            lambdas = NULL,
            limits = c(-5, 5),
-           nunique = 5,
-           skip = FALSE) {
+           num_unique = 5,
+           skip = FALSE,
+           id = rand_id("BoxCox")) {
     add_step(
       recipe,
       step_BoxCox_new(
@@ -80,20 +81,15 @@ step_BoxCox <-
         trained = trained,
         lambdas = lambdas,
         limits = sort(limits)[1:2],
-        nunique = nunique,
-        skip = skip
+        num_unique = num_unique,
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_BoxCox_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           lambdas = NULL,
-           limits = NULL,
-           nunique = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, lambdas, limits, num_unique, skip, id) {
     step(
       subclass = "BoxCox",
       terms = terms,
@@ -101,8 +97,9 @@ step_BoxCox_new <-
       trained = trained,
       lambdas = lambdas,
       limits = limits,
-      nunique = nunique,
-      skip = skip
+      num_unique = num_unique,
+      skip = skip,
+      id = id
     )
   }
 
@@ -116,7 +113,7 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     estimate_bc,
     c(lambda = 0),
     limits = x$limits,
-    nunique = x$nunique
+    num_unique = x$num_unique
   )
   values <- values[!is.na(values)]
   step_BoxCox_new(
@@ -125,20 +122,21 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     lambdas = values,
     limits = x$limits,
-    nunique = x$nunique,
-    skip = x$skip
+    num_unique = x$num_unique,
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_BoxCox <- function(object, newdata, ...) {
+bake.step_BoxCox <- function(object, new_data, ...) {
   if (length(object$lambdas) == 0)
-    return(as_tibble(newdata))
+    return(as_tibble(new_data))
   param <- names(object$lambdas)
   for (i in seq_along(object$lambdas))
-    newdata[, param[i]] <-
-    bc_trans(getElement(newdata, param[i]), lambda = object$lambdas[i])
-  as_tibble(newdata)
+    new_data[, param[i]] <-
+    bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+  as_tibble(new_data)
 }
 
 print.step_BoxCox <-
@@ -184,9 +182,9 @@ bc_obj <- function(lam, dat) {
 ## estimates the values
 estimate_bc <- function(dat,
                         limits = c(-5, 5),
-                        nunique = 5) {
+                        num_unique = 5) {
   eps <- .001
-  if (length(unique(dat)) < nunique |
+  if (length(unique(dat)) < num_unique |
       any(dat[complete.cases(dat)] <= 0))
     return(NA)
   res <- optimize(
@@ -205,6 +203,7 @@ estimate_bc <- function(dat,
 
 #' @rdname step_BoxCox
 #' @param x A `step_BoxCox` object.
+#' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),
@@ -214,5 +213,6 @@ tidy.step_BoxCox <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = na_dbl)
   }
+  res$id <- x$id
   res
 }

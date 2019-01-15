@@ -7,7 +7,7 @@
 \usage{
 step_regex(recipe, ..., role = "predictor", trained = FALSE,
   pattern = ".", options = list(), result = make.names(pattern),
-  input = NULL, skip = FALSE)
+  input = NULL, skip = FALSE, id = rand_id("regex"))
 
 \method{tidy}{step_regex}(x, ...)
 }
@@ -51,6 +51,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_regex} object.}
 }
 \value{
@@ -74,12 +76,10 @@ rec <- recipe(~ description, covers) \%>\%
 rec2 <- prep(rec, training = covers)
 rec2
 
-with_dummies <- bake(rec2, newdata = covers)
+with_dummies <- bake(rec2, new_data = covers)
 with_dummies
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
 }
-\concept{
-preprocessing dummy_variables regular_expressions
-}
+\concept{preprocessing dummy_variables regular_expressions}
 \keyword{datagen}

@@ -5,8 +5,9 @@
 \alias{tidy.step_hyperbolic}
 \title{Hyperbolic Transformations}
 \usage{
-step_hyperbolic(recipe, ..., role = NA, trained = FALSE, func = "sin",
-  inverse = TRUE, columns = NULL, skip = FALSE)
+step_hyperbolic(recipe, ..., role = NA, trained = FALSE,
+  func = "sin", inverse = TRUE, columns = NULL, skip = FALSE,
+  id = rand_id("hyperbolic"))
 
 \method{tidy}{step_hyperbolic}(x, ...)
 }
@@ -39,6 +40,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_hyperbolic} object.}
 }
@@ -77,7 +80,5 @@ tidy(cos_obj, number = 1)
 \code{\link[=step_log]{step_log()}}  \code{\link[=step_sqrt]{step_sqrt()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

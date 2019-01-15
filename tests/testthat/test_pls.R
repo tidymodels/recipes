@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+context("PLS")
+
+
 example_data <- npk
 example_data$block <- NULL
 example_data$y2 <- 1:nrow(example_data)
@@ -13,11 +16,15 @@ te_data <- example_data[-(1:20),]
 
 test_that('default values - multivariate', {
   default_mult_rec <- recipe(yield + y2 ~ ., data = tr_data) %>%
-    step_pls(all_predictors(), outcome = vars(starts_with("y")))
+    step_pls(all_predictors(), outcome = vars(starts_with("y")), id = "")
 
-  default_mult_ty_un <- tibble(
-    terms = "all_predictors()",
-    value = NA_real_, component = NA_character_)
+  default_mult_ty_un <- 
+    tibble(
+      terms = "all_predictors()",
+      value = NA_real_, 
+      component = NA_character_,
+      id = ""
+    )
   expect_equal(default_mult_ty_un, tidy(default_mult_rec, number = 1))
 
   default_mult_rec <- default_mult_rec %>%
@@ -232,6 +239,14 @@ test_that('bad args', {
     recipe(Sepal.Width ~ ., data = iris) %>%
       step_pls(all_predictors(), outcome = "Sepal.Width") %>%
       prep(training = iris)
+  )
+})
+
+
+test_that('deprecated arg', {
+  expect_message(
+    recipe(yield + y2 ~ ., data = tr_data) %>%
+      step_pls(all_predictors(), outcome = vars(starts_with("y")), num = 2)
   )
 })
 

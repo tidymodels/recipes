@@ -6,7 +6,7 @@
 \title{Impute Numeric Data Below the Threshold of Measurement}
 \usage{
 step_lowerimpute(recipe, ..., role = NA, trained = FALSE,
-  threshold = NULL, skip = FALSE)
+  threshold = NULL, skip = FALSE, id = rand_id("lowerimpute"))
 
 \method{tidy}{step_lowerimpute}(x, ...)
 }
@@ -34,6 +34,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_lowerimpute} object.}
 }
@@ -85,9 +87,7 @@ tidy(impute_rec, number = 1)
 transformed_te <- bake(impute_rec, biomass_te)
 
 plot(transformed_te$carbon, biomass_te$carbon,
-     xlab = "pre-imputation", ylab = "imputed")
+     ylab = "pre-imputation", xlab = "imputed")
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

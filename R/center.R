@@ -15,7 +15,7 @@
 #'  preprocessing have been estimated.
 #' @param means A named numeric vector of means. This is
 #'  `NULL` until computed by [prep.recipe()].
-#' @param na.rm A logical value indicating whether `NA`
+#' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed during computations.
 #' @param skip A logical. Should the step be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
@@ -23,6 +23,7 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations
+#' @param id A character string that is unique to this step to identify it.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -66,8 +67,9 @@ step_center <-
            role = NA,
            trained = FALSE,
            means = NULL,
-           na.rm = TRUE,
-           skip = FALSE) {
+           na_rm = TRUE,
+           skip = FALSE,
+           id = rand_id("center")) {
     add_step(
       recipe,
       step_center_new(
@@ -75,28 +77,25 @@ step_center <-
         trained = trained,
         role = role,
         means = means,
-        na.rm = na.rm,
-        skip = skip
+        na_rm = na_rm,
+        skip = skip,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 step_center_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           na.rm = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, means, na_rm, skip, id) {
     step(
       subclass = "center",
       terms = terms,
       role = role,
       trained = trained,
       means = means,
-      na.rm = na.rm,
-      skip = skip
+      na_rm = na_rm,
+      skip = skip,
+      id = id
     )
   }
 
@@ -105,24 +104,25 @@ prep.step_center <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   means <-
-    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na.rm)
+    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
   step_center_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     means = means,
-    na.rm = x$na.rm,
-    skip = x$skip
+    na_rm = x$na_rm,
+    skip = x$skip,
+    id = x$id
   )
 }
 
-bake.step_center <- function(object, newdata, ...) {
+bake.step_center <- function(object, new_data, ...) {
   res <-
-    sweep(as.matrix(newdata[, names(object$means)]), 2, object$means, "-")
+    sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
   if (is.matrix(res) && ncol(res) == 1)
     res <- res[, 1]
-  newdata[, names(object$means)] <- res
-  as_tibble(newdata)
+  new_data[, names(object$means)] <- res
+  as_tibble(new_data)
 }
 
 print.step_center <-
@@ -135,6 +135,7 @@ print.step_center <-
 
 #' @rdname step_center
 #' @param x A `step_center` object.
+#' @export
 tidy.step_center <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
@@ -144,5 +145,6 @@ tidy.step_center <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = na_dbl)
   }
+  res$id <- x$id
   res
 }

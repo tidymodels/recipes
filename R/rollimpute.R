@@ -58,7 +58,7 @@
 #'
 #' library(recipes)
 #' seven_pt <- recipe(~ . , data = example_data) %>%
-#'   add_role(day, new_role = "time_index") %>%
+#'   update_role(day, new_role = "time_index") %>%
 #'   step_rollimpute(all_predictors(), window = 7) %>%
 #'   prep(training = example_data, retain = TRUE)
 #'
@@ -72,7 +72,8 @@ step_rollimpute <-
            columns = NULL,
            statistic = median,
            window = 5,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("rollimpute")) {
 
     if (window < 3 | window %% 2 != 1)
       stop("`window` should be an odd integer >= 3", call. = FALSE)
@@ -87,19 +88,14 @@ step_rollimpute <-
         columns = columns,
         statistic = statistic,
         window = window,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_rollimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           statistic = NULL,
-           window = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, statistic, window, skip, id) {
     step(
       subclass = "rollimpute",
       terms = terms,
@@ -108,7 +104,8 @@ step_rollimpute_new <-
       columns = columns,
       statistic = statistic,
       window = window,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -128,7 +125,8 @@ prep.step_rollimpute <- function(x, training, info = NULL, ...) {
     columns = col_names,
     statistic = x$statistic,
     window = x$window,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -160,9 +158,9 @@ impute_rolling <- function(inds, x, statfun) {
 }
 
 #' @export
-bake.step_rollimpute <- function(object, newdata, ...) {
-  n <- nrow(newdata)
-  missing_ind <- lapply(newdata[, object$columns],
+bake.step_rollimpute <- function(object, new_data, ...) {
+  n <- nrow(new_data)
+  missing_ind <- lapply(new_data[, object$columns],
                         function(x) which(is.na(x)))
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
@@ -171,10 +169,10 @@ bake.step_rollimpute <- function(object, newdata, ...) {
   for(i in seq(along = roll_ind)) {
     imp_var <- names(roll_ind)[i]
     estimates <-
-      impute_rolling(roll_ind[[i]], newdata[[imp_var]], object$statistic)
-    newdata[missing_ind[[i]], imp_var] <- estimates
+      impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
+    new_data[missing_ind[[i]], imp_var] <- estimates
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_rollimpute <-
@@ -186,6 +184,7 @@ print.step_rollimpute <-
 
 #' @rdname step_rollimpute
 #' @param x A `step_rollimpute` object.
+#' @export
 tidy.step_rollimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns, window = x$window)
@@ -193,5 +192,6 @@ tidy.step_rollimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, window = x$window)
   }
+  res$id <- x$id
   res
 }

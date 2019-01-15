@@ -46,7 +46,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' table(credit_te$Home, imputed_te$Home, useNA = "always")
 #'
@@ -58,7 +58,8 @@ step_modeimpute <-
            role = NA,
            trained = FALSE,
            modes = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("modeimpute")) {
     add_step(
       recipe,
       step_modeimpute_new(
@@ -66,24 +67,22 @@ step_modeimpute <-
         role = role,
         trained = trained,
         modes = modes,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_modeimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           modes = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, modes, skip, id) {
     step(
       subclass = "modeimpute",
       terms = terms,
       role = role,
       trained = trained,
       modes = modes,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -96,17 +95,18 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     modes = modes,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_modeimpute <- function(object, newdata, ...) {
+bake.step_modeimpute <- function(object, new_data, ...) {
   for (i in names(object$modes)) {
-    if (any(is.na(newdata[, i])))
-      newdata[is.na(newdata[, i]), i] <- object$modes[i]
+    if (any(is.na(new_data[, i])))
+      new_data[is.na(new_data[, i]), i] <- object$modes[i]
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_modeimpute <-
@@ -127,6 +127,7 @@ mode_est <- function(x) {
 
 #' @rdname step_modeimpute
 #' @param x A `step_modeimpute` object.
+#' @export
 tidy.step_modeimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$modes),
@@ -135,5 +136,6 @@ tidy.step_modeimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)
   }
+  res$id <- x$id
   res
 }

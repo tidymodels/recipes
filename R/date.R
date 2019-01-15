@@ -59,7 +59,7 @@
 #'
 #' date_rec <- prep(date_rec, training = examples)
 #'
-#' date_values <- bake(date_rec, newdata = examples)
+#' date_values <- bake(date_rec, new_data = examples)
 #' date_values
 #'
 #' tidy(date_rec, number = 1)
@@ -77,7 +77,8 @@ step_date <-
            label = TRUE,
            ordinal = FALSE,
            columns = NULL,
-           skip = FALSE
+           skip = FALSE,
+           id = rand_id("date")
   ) {
   feat <-
     c("year",
@@ -102,36 +103,28 @@ step_date <-
       label = label,
       ordinal = ordinal,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_date_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = FALSE
-  ) {
-  step(
-    subclass = "date",
-    terms = terms,
-    role = role,
-    trained = trained,
-    features = features,
-    abbr = abbr,
-    label = label,
-    ordinal = ordinal,
-    columns = columns,
-    skip = skip
-  )
-}
+  function(terms, role, trained, features, abbr, label, ordinal, columns, skip, id) {
+    step(
+      subclass = "date",
+      terms = terms,
+      role = role,
+      trained = trained,
+      features = features,
+      abbr = abbr,
+      label = label,
+      ordinal = ordinal,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export
@@ -152,7 +145,8 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     label = x$label,
     ordinal = x$ordinal,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -206,11 +200,11 @@ get_date_features <-
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_date <- function(object, newdata, ...) {
+bake.step_date <- function(object, new_data, ...) {
   new_cols <-
     rep(length(object$features), each = length(object$columns))
   date_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(date_values) <- rep("", sum(new_cols))
   date_values <- as_tibble(date_values)
 
@@ -219,7 +213,7 @@ bake.step_date <- function(object, newdata, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
 
     tmp <- get_date_features(
-      dt = getElement(newdata, object$columns[i]),
+      dt = getElement(new_data, object$columns[i]),
       feats = object$features,
       abbr = object$abbr,
       label = object$label,
@@ -235,10 +229,10 @@ bake.step_date <- function(object, newdata, ...) {
 
     strt <- max(cols) + 1
   }
-  newdata <- bind_cols(newdata, date_values)
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, date_values)
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
@@ -251,6 +245,7 @@ print.step_date <-
 
 #' @rdname step_date
 #' @param x A `step_date` object.
+#' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- expand.grid(
@@ -266,6 +261,7 @@ tidy.step_date <- function(x, ...) {
       ordinal = x$ordinal
     )
   }
+  res$id <- x$id
   as_tibble(res)
 }
 

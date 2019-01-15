@@ -2,8 +2,11 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("General tidy method")
+
 data(okc)
 
+set.seed(131)
 okc_rec <- recipe(~ ., data = okc) %>%
   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
   step_date(date, features = "dow") %>%
@@ -17,7 +20,8 @@ test_that('untrained', {
     operation = c("step", "step", "step", "step", "check"),
     type = c("other", "date", "center", "dummy", "cols"),
     trained = rep(FALSE, 5),
-    skip = rep(FALSE, 5)
+    skip = rep(FALSE, 5),
+    id = vapply(okc_rec$steps, function(x) x$id, character(1))
   )
   expect_equal(tidy(okc_rec), exp_res_1)
 })
@@ -29,9 +33,12 @@ test_that('trained', {
     operation = c("step", "step", "step", "step", "check"),
     type = c("other", "date", "center", "dummy", "cols"),
     trained = rep(TRUE, 5),
-    skip = rep(FALSE, 5)
+    skip = rep(FALSE, 5),
+    id = vapply(okc_rec$steps, function(x) x$id, character(1))
   )
-  trained <- prep(okc_rec, training = okc)
+  expect_warning(
+    trained <- prep(okc_rec, training = okc)
+  )
   expect_equal(tidy(trained), exp_res_2)
 })
 

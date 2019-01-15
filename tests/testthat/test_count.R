@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("pattern counting")
+
+
 data(covers)
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
@@ -19,7 +22,7 @@ test_that('default options', {
     step_count(description, pattern = "(rock|stony)",
                result = "pct", normalize = TRUE)
   rec1 <- prep(rec1, training = covers)
-  res1 <- bake(rec1, newdata = covers)
+  res1 <- bake(rec1, new_data = covers)
   expect_equal(res1$X.rock.stony., counts)
   expect_equal(res1$`every thing`, chars)
   expect_equal(res1$pct, counts/chars)
@@ -32,7 +35,7 @@ test_that('nondefault options', {
                result = "rocks",
                options = list(fixed = TRUE))
   rec2 <- prep(rec2, training = covers)
-  res2 <- bake(rec2, newdata = covers)
+  res2 <- bake(rec2, new_data = covers)
   expect_equal(res2$rocks, rep(0, nrow(covers)))
 })
 

@@ -6,7 +6,8 @@
 \title{Check Range Consistency}
 \usage{
 check_range(recipe, ..., role = NA, skip = FALSE, trained = FALSE,
-  slack_prop = 0.05, warn = FALSE, lower = NULL, upper = NULL)
+  slack_prop = 0.05, warn = FALSE, lower = NULL, upper = NULL,
+  id = rand_id("range_check_"))
 
 \method{tidy}{check_range}(x, ...)
 }
@@ -43,6 +44,8 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 
 \item{upper}{A named numeric vector of maximum values in the train set.
 This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{check_range} object.}
 }
@@ -97,7 +100,5 @@ the second to compute the allowed slack at the upper end.
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

@@ -16,15 +16,9 @@ knitr::opts_chunk$set(
   comment = "#>"
   )
 options(digits = 3)
-library(recipes)
 library(caret)
-library(rsample)
-library(purrr)
 library(MASS)
-library(tidyposterior)
-library(dplyr)
-library(yardstick)
-
+library(ggplot2)
 thm <- theme_bw() + 
   theme(
     panel.background = element_rect(fill = "transparent", colour = NA), 
@@ -63,7 +57,8 @@ Here is a simple recipe:
 
 ```{r rec}
 library(recipes)
-imbal_rec <- recipe(Class ~ ., data = imbal_data) %>%
+imbal_rec <- 
+  recipe(Class ~ ., data = imbal_data) %>%
   step_downsample(Class)
 ```
 
@@ -79,9 +74,9 @@ An additional column is added to the data that contains the trained recipes for 
 
 ```{r prep}
 library(purrr)
-cv_folds <- cv_folds %>%
-  mutate(recipes = 
-           map(cv_folds$splits, prepper, recipe = imbal_rec, retain = TRUE))
+cv_folds <- 
+  cv_folds %>%
+  mutate(recipes = map(splits, prepper, recipe = imbal_rec, retain = TRUE))
 cv_folds$recipes[[1]]
 ```
 
@@ -89,7 +84,6 @@ The model that will be used to demonstrate subsampling is [quadratic discriminan
 
 ```{r func}
 library(MASS)
-library(dplyr)
 
 assess_res <- function(split, rec = NULL, ...) {
   if (!is.null(rec))
@@ -130,15 +124,16 @@ To measure model effectiveness, two metrics are used:
  * The area under the [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is an overall assessment of performance across _all_ cutoffs. Values near one indicate very good results while values near 0.05 would imply that the model is very poor. 
  * The _J_ index (a.k.a. [Youden's _J_](https://en.wikipedia.org/wiki/Youden%27s_J_statistic) statistic) is `sensitivity + specificity - 1`. Values near one are once again best. 
 
-If a model is poorly calibrated, the ROC curve value might not sure diminished performance. However, the _J_ index would be lower for models with pathological distributions for the class probabilities. The `yardstick` package will be used to compute these metrics. 
+If a model is poorly calibrated, the ROC curve value might not show diminished performance. However, the _J_ index would be lower for models with pathological distributions for the class probabilities. The `yardstick` package will be used to compute these metrics. 
 
 Now, we train the models and generate the predictions. These are stored in list columns where each list element is a data frame of the predictions on the assessment data:
 
 ```{r fits}
-cv_folds <- cv_folds %>%
+cv_folds <- 
+  cv_folds %>%
   mutate(
-    sampled_pred = map2(cv_folds$splits, cv_folds$recipes, assess_res),
-    normal_pred = map(cv_folds$splits, assess_res)
+    sampled_pred = map2(splits, recipes, assess_res),
+    normal_pred  =  map(splits, assess_res)
   )
 cv_folds
 ```
@@ -148,20 +143,30 @@ Now, the performance metrics are computed:
 
 ```{r perf}
 library(yardstick)
-cv_folds <- cv_folds %>%
+cv_folds <- 
+  cv_folds %>%
   mutate(
-    sampled_roc = map_dbl(cv_folds$sampled_pred, roc_auc, truth = "Class", estimate = "prob"),
-    normal_roc =  map_dbl(cv_folds$normal_pred,  roc_auc, truth = "Class", estimate = "prob"),  
-    sampled_J =   map_dbl(cv_folds$sampled_pred, j_index, truth = "Class", estimate = "pred"),
-    normal_J =    map_dbl(cv_folds$normal_pred,  j_index, truth = "Class", estimate = "pred")       
+    sampled_roc = 
+      map_dfr(sampled_pred, roc_auc, Class, prob) %>% 
+      pull(".estimate"),
+    
+    normal_roc =  
+      map_dfr(normal_pred,  roc_auc, Class, prob) %>% 
+      pull(".estimate"),  
+    
+    sampled_J =   
+      map_dfr(sampled_pred, j_index, Class, pred) %>% 
+      pull(".estimate"),
+    
+    normal_J =    
+      map_dfr(normal_pred,  j_index, Class, pred) %>% 
+      pull(".estimate")       
   )
 ```
 
 What do the ROC values look like? A [Bland-Altman plot](https://en.wikipedia.org/wiki/Bland%E2%80%93Altman_plot) can be used to show the differences in the results over the range of results:
 
 ```{r bland-altman-roc}
-library(ggplot2)
-
 ggplot(cv_folds, 
        aes(x = (sampled_roc + normal_roc)/2, 
            y = sampled_roc - normal_roc)) + 
@@ -176,7 +181,7 @@ For the _J_ statistic, the results show a different story:
 ```{r bland-altman-j}
 ggplot(cv_folds, 
        aes(x = (sampled_J + normal_J)/2, 
-           y = sampled_J - normal_J)) + 
+           y =  sampled_J - normal_J)) + 
   geom_point() + 
   geom_hline(yintercept = 0, col = "green")
 ```
@@ -188,7 +193,8 @@ library(tidyposterior)
 
 # Remove all columns except the resample info and the J indices,
 # then fit the Bayesian model
-j_mod <- cv_folds %>% 
+j_mod <- 
+  cv_folds %>% 
   dplyr::select(-recipes, -matches("pred$"), -matches("roc$")) %>% 
   perf_mod(seed = 62378, iter = 5000)
 ```
@@ -196,7 +202,9 @@ j_mod <- cv_folds %>%
 A simple plot of the posterior distributions of the _J_ indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:
 
 ```{r post-plot}
-ggplot(tidy(j_mod, seed = 234))
+j_mod %>%
+  tidyposterior:::tidy.perf_mod(seed = 234) %>%
+  ggplot()
 ```
 
 

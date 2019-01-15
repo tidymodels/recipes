@@ -6,8 +6,8 @@
 \title{Holiday Feature Generator}
 \usage{
 step_holiday(recipe, ..., role = "predictor", trained = FALSE,
-  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"), columns = NULL,
-  skip = FALSE)
+  holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+  columns = NULL, skip = FALSE, id = rand_id("holiday"))
 
 \method{tidy}{step_holiday}(x, ...)
 }
@@ -44,6 +44,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_holiday} object.}
 }
 \value{
@@ -70,7 +72,7 @@ holiday_rec <- recipe(~ someday, examples) \%>\%
    step_holiday(all_predictors())
 
 holiday_rec <- prep(holiday_rec, training = examples)
-holiday_values <- bake(holiday_rec, newdata = examples)
+holiday_values <- bake(holiday_rec, new_data = examples)
 holiday_values
 }
 \seealso{
@@ -78,8 +80,6 @@ holiday_values
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
 }
-\concept{
-preprocessing model_specification variable_encodings
-dates
-}
+\concept{preprocessing model_specification variable_encodings
+dates}
 \keyword{datagen}

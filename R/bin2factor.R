@@ -42,7 +42,7 @@
 #' tidy(rec, number = 3)
 #'
 #' rec <- prep(rec, training = covers)
-#' results <- bake(rec, newdata = covers)
+#' results <- bake(rec, new_data = covers)
 #'
 #' table(results$rocks, results$more_rocks)
 #'
@@ -55,7 +55,8 @@ step_bin2factor <-
            levels = c("yes", "no"),
            ref_first = TRUE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("bin2factor")) {
     if (length(levels) != 2 | !is.character(levels))
       stop("`levels` should be a two element character string", call. = FALSE)
     add_step(
@@ -67,19 +68,14 @@ step_bin2factor <-
         levels = levels,
         ref_first = ref_first,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_bin2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ref_first = NULL,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, levels, ref_first, columns, skip, id) {
     step(
       subclass = "bin2factor",
       terms = terms,
@@ -88,7 +84,8 @@ step_bin2factor_new <-
       levels = levels,
       ref_first = ref_first,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,21 +103,22 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
     levels = x$levels,
     ref_first = x$ref_first,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
-bake.step_bin2factor <- function(object, newdata, ...) {
+bake.step_bin2factor <- function(object, new_data, ...) {
   levs <- if (object$ref_first) object$levels else rev(object$levels)
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
+    new_data[, object$columns[i]] <-
       factor(ifelse(
-        getElement(newdata, object$columns[i]) == 1,
+        getElement(new_data, object$columns[i]) == 1,
         object$levels[1],
         object$levels[2]
       ),
       levels = levs)
-  newdata
+  new_data
 }
 
 print.step_bin2factor <-
@@ -133,6 +131,9 @@ print.step_bin2factor <-
 
 #' @rdname step_bin2factor
 #' @param x A `step_bin2factor` object.
+#' @export
 tidy.step_bin2factor <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

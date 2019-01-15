@@ -6,7 +6,8 @@
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
 step_downsample(recipe, ..., ratio = 1, role = NA, trained = FALSE,
-  column = NULL, target = NA, skip = TRUE)
+  column = NULL, target = NA, skip = TRUE, seed = sample.int(10^5,
+  1), id = rand_id("downsample"))
 
 \method{tidy}{step_downsample}(x, ...)
 }
@@ -46,6 +47,10 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{seed}{An integer that will be used as the seed when downsampling.}
+
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_downsample} object.}
 }
 \value{
@@ -82,6 +87,10 @@ Keep in mind that the location of down-sampling in the step
 may have effects. For example, if centering and scaling,
 it is not clear whether those operations should be conducted
 \emph{before} or \emph{after} rows are removed.
+
+When used in modeling, users should strongly consider using the
+option \code{skip = TRUE} so that the extra sampling is \emph{not}
+conducted outside of the training set.
 }
 \examples{
 data(okc)
@@ -95,10 +104,8 @@ ds_rec <- recipe( ~ ., data = okc) \%>\%
 table(juice(ds_rec)$diet, useNA = "always")
 
 # since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(ds_rec, newdata = okc)
+baked_okc <- bake(ds_rec, new_data = okc)
 table(baked_okc$diet, useNA = "always")
 }
-\concept{
-preprocessing subsampling
-}
+\concept{preprocessing subsampling}
 \keyword{datagen}

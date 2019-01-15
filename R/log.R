@@ -15,7 +15,7 @@
 #'  logging (to avoid `log(0)`).
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
-#' @param signed A logical indicating wether to take the signed log.
+#' @param signed A logical indicating whether to take the signed log.
 #'  This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @return An updated version of `recipe` with the new step
@@ -72,7 +72,8 @@ step_log <-
            offset = 0,
            columns = NULL,
            skip = FALSE,
-           signed = FALSE
+           signed = FALSE,
+           id = rand_id("log")
            ) {
     add_step(
       recipe,
@@ -84,20 +85,14 @@ step_log <-
         offset = offset,
         columns = columns,
         skip = skip,
-        signed = signed
+        signed = signed,
+        id = id
       )
     )
   }
 
 step_log_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           base = NULL,
-           offset = NULL,
-           columns = NULL,
-           skip = FALSE,
-           signed = FALSE) {
+  function(terms, role, trained, base, offset, columns, skip, signed, id) {
     step(
       subclass = "log",
       terms = terms,
@@ -107,7 +102,8 @@ step_log_new <-
       offset = offset,
       columns = columns,
       skip = skip,
-      signed = signed
+      signed = signed,
+      id = id
     )
   }
 
@@ -124,12 +120,13 @@ prep.step_log <- function(x, training, info = NULL, ...) {
     offset = x$offset,
     columns = col_names,
     skip = x$skip,
-    signed = x$signed
+    signed = x$signed,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_log <- function(object, newdata, ...) {
+bake.step_log <- function(object, new_data, ...) {
   col_names <- object$columns
   # for backward compat
   if(all(names(object) != "offset"))
@@ -137,19 +134,19 @@ bake.step_log <- function(object, newdata, ...) {
 
   if (!object$signed){
     for (i in seq_along(col_names))
-      newdata[, col_names[i]] <-
-        log(newdata[[ col_names[i] ]] + object$offset, base = object$base)
+      new_data[, col_names[i]] <-
+        log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
   } else {
     if (object$offset != 0)
       warning("When signed is TRUE, offset will be ignored")
      for (i in seq_along(col_names))
-       newdata[, col_names[i]] <-
-         ifelse(abs(newdata[[ col_names[i] ]]) < 1,
+       new_data[, col_names[i]] <-
+         ifelse(abs(new_data[[ col_names[i] ]]) < 1,
                 0,
-                sign(newdata[[ col_names[i] ]]) *
-                  log(abs(newdata[[ col_names[i] ]]), base = object$base ))
+                sign(new_data[[ col_names[i] ]]) *
+                  log(abs(new_data[[ col_names[i] ]]), base = object$base ))
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_log <-
@@ -162,8 +159,10 @@ print.step_log <-
 
 #' @rdname step_log
 #' @param x A `step_log` object.
+#' @export
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$base <- x$base
+  out$id <- x$id
   out
 }

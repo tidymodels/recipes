@@ -48,30 +48,29 @@ step_unorder <-
            role = NA,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("unorder")) {
     add_step(recipe,
              step_unorder_new(
                terms = ellipse_check(...),
                role = role,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_unorder_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, skip, id) {
     step(
       subclass = "unorder",
       terms = terms,
       role = role,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -99,18 +98,19 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_unorder <- function(object, newdata, ...) {
+bake.step_unorder <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      factor(as.character(getElement(newdata, object$columns[i])),
-             levels = levels(getElement(newdata, object$columns[i])))
-  as_tibble(newdata)
+    new_data[, object$columns[i]] <-
+      factor(as.character(getElement(new_data, object$columns[i])),
+             levels = levels(getElement(new_data, object$columns[i])))
+  as_tibble(new_data)
 }
 
 
@@ -124,6 +124,9 @@ print.step_unorder <-
 
 #' @rdname step_unorder
 #' @param x A `step_unorder` object.
+#' @export
 tidy.step_unorder <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

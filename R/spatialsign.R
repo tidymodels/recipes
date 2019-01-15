@@ -12,7 +12,7 @@
 #'  method, these are not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?
-#' @param na.rm A logical: should missing data be removed from the
+#' @param na_rm A logical: should missing data be removed from the
 #'  norm computation?
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
@@ -65,36 +65,34 @@ step_spatialsign <-
   function(recipe,
            ...,
            role = "predictor",
-           na.rm = TRUE,
+           na_rm = TRUE,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("spatialsign")) {
     add_step(recipe,
              step_spatialsign_new(
                terms = ellipse_check(...),
                role = role,
-               na.rm = na.rm,
+               na_rm = na_rm,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_spatialsign_new <-
-  function(terms = NULL,
-           role = "predictor",
-           na.rm = TRUE,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, na_rm, trained, columns, skip, id) {
     step(
       subclass = "spatialsign",
       terms = terms,
       role = role,
-      na.rm = na.rm,
+      na_rm = na_rm,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -106,21 +104,22 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   step_spatialsign_new(
     terms = x$terms,
     role = x$role,
-    na.rm = x$na.rm,
+    na_rm = x$na_rm,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_spatialsign <- function(object, newdata, ...) {
+bake.step_spatialsign <- function(object, new_data, ...) {
   col_names <- object$columns
-  ss <- function(x, na.rm)
-    x / sqrt(sum(x ^ 2, na.rm = na.rm))
-  newdata[, col_names] <-
-    t(apply(as.matrix(newdata[, col_names]), 1, ss, na.rm = object$na.rm))
-  as_tibble(newdata)
+  ss <- function(x, na_rm)
+    x / sqrt(sum(x ^ 2, na.rm = na_rm))
+  new_data[, col_names] <-
+    t(apply(as.matrix(new_data[, col_names]), 1, ss, na_rm = object$na_rm))
+  as_tibble(new_data)
 }
 
 print.step_spatialsign <-
@@ -132,6 +131,9 @@ print.step_spatialsign <-
 
 #' @rdname step_spatialsign
 #' @param x A `step_spatialsign` object.
+#' @export
 tidy.step_spatialsign <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

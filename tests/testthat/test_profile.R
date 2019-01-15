@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Creating profiling data")
+
+
 data(okc)
 okc <- okc[1:20,]
 okc$diet <- factor(okc$diet)
@@ -52,7 +55,7 @@ test_that('date profile', {
 test_that('character profile', {
   chr_rec <- okc_rec %>%
     step_profile(-location, profile = vars(location)) %>%
-    prep(okc, retain = TRUE, stringsAsFactors = FALSE) %>%
+    prep(okc, retain = TRUE, strings_as_factors = FALSE) %>%
     juice()
   expect_true(is_unq(chr_rec$diet))
   expect_true(is_unq(chr_rec$height))
@@ -118,20 +121,22 @@ test_that('printing', {
 
 test_that('tidy', {
   num_rec_3 <- okc_rec %>%
-    step_profile(-age, profile = vars(contains("age")))
+    step_profile(-age, profile = vars(contains("age")), id = "")
   num_rec_4 <- prep(num_rec_3, okc)
 
   tidy_3 <- tidy(num_rec_3, 1)
   exp_3 <- tibble(
     terms = c("-age", "contains(\"age\")"),
-    type = c("fixed", "profiled")
+    type = c("fixed", "profiled"),
+    id = ""
   )
   expect_equal(tidy_3, exp_3)
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
     terms = c("diet", "height", "location", "date", "Class", "age"),
-    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "profiled")
+    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
+    id = ""
   )
   expect_equal(tidy_4, exp_4)
 })

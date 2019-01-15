@@ -5,9 +5,9 @@
 \alias{tidy.step_pca}
 \title{PCA Signal Extraction}
 \usage{
-step_pca(recipe, ..., role = "predictor", trained = FALSE, num = 5,
-  threshold = NA, options = list(), res = NULL, prefix = "PC",
-  skip = FALSE)
+step_pca(recipe, ..., role = "predictor", trained = FALSE,
+  num_comp = 5, threshold = NA, options = list(), res = NULL,
+  num = NULL, prefix = "PC", skip = FALSE, id = rand_id("pca"))
 
 \method{tidy}{step_pca}(x, ...)
 }
@@ -28,8 +28,8 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num}{The number of PCA components to retain as new
-predictors. If \code{num} is greater than the number of columns
+\item{num_comp}{The number of PCA components to retain as new
+predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
 
@@ -37,7 +37,7 @@ used.}
 be covered by the components. For example, \code{threshold = .75} means that \code{step_pca} should generate enough
 components to capture 75\% of the variability in the variables.
 Note: using this argument will override and resent any value
-given to \code{num}.}
+given to \code{num_comp}.}
 
 \item{options}{A list of options to the default method for
 \code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to
@@ -48,6 +48,10 @@ given to \code{num}.}
 stored here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
+\item{num}{The number of components to retain (this will be
+deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
+will override this option.}
+
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below}
 
@@ -57,6 +61,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_pca} object.}
 }
@@ -87,13 +93,13 @@ the PCA calculation. This can be changed using the
 \code{options} argument or by using \code{\link[=step_center]{step_center()}}
 and \code{\link[=step_scale]{step_scale()}}.
 
-The argument \code{num} controls the number of components that
+The argument \code{num_comp} controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with \code{prefix} and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{PC1} - \code{PC9}.
-If \code{num = 101}, the names would be \code{PC001} -
+if \code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}.
+If \code{num_comp = 101}, the names would be \code{PC001} -
 \code{PC101}.
 
 Alternatively, \code{threshold} can be used to determine the
@@ -105,7 +111,7 @@ rec <- recipe( ~ ., data = USArrests)
 pca_trans <- rec \%>\%
   step_center(all_numeric()) \%>\%
   step_scale(all_numeric()) \%>\%
-  step_pca(all_numeric(), num = 3)
+  step_pca(all_numeric(), num_comp = 3)
 pca_estimates <- prep(pca_trans, training = USArrests)
 pca_data <- bake(pca_estimates, USArrests)
 
@@ -132,7 +138,5 @@ Analysis}. Springer.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing pca projection_methods
-}
+\concept{preprocessing pca projection_methods}
 \keyword{datagen}

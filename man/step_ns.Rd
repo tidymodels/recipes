@@ -5,8 +5,9 @@
 \alias{tidy.step_ns}
 \title{Nature Spline Basis Functions}
 \usage{
-step_ns(recipe, ..., role = "predictor", trained = FALSE, objects = NULL,
-  options = list(df = 2), skip = FALSE)
+step_ns(recipe, ..., role = "predictor", trained = FALSE,
+  objects = NULL, deg_free = 2, options = list(), skip = FALSE,
+  id = rand_id("ns"))
 
 \method{tidy}{step_ns}(x, ...)
 }
@@ -30,8 +31,10 @@ preprocessing have been estimated.}
 \item{objects}{A list of \code{\link[splines:ns]{splines::ns()}} objects
 created once the step has been trained.}
 
+\item{deg_free}{The degrees of freedom.}
+
 \item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}}
-which should not include \code{x}.}
+which should not include \code{x} or \code{df}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -39,6 +42,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_ns} object.}
 }
@@ -82,7 +87,5 @@ expanded
 \code{\link[=step_poly]{step_poly()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing basis_expansion
-}
+\concept{preprocessing basis_expansion}
 \keyword{datagen}

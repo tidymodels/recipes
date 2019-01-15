@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("correlation filter")
+
+
 n <- 100
 set.seed(424)
 dat <- matrix(rnorm(n*5), ncol =  5)

@@ -53,7 +53,8 @@ step_hyperbolic <-
            func = "sin",
            inverse = TRUE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
       stop("`func` should be either `sin``, `cos`, or `tan`",
@@ -67,19 +68,14 @@ step_hyperbolic <-
         func = func,
         inverse = inverse,
         columns = columns,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_hyperbolic_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           func = NULL,
-           inverse = NULL,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, func, inverse, columns, skip, id) {
     step(
       subclass = "hyperbolic",
       terms = terms,
@@ -88,7 +84,8 @@ step_hyperbolic_new <-
       func = func,
       inverse = inverse,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -104,21 +101,22 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
     func = x$func,
     inverse = x$inverse,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_hyperbolic <- function(object, newdata, ...) {
+bake.step_hyperbolic <- function(object, new_data, ...) {
   func <- if (object$inverse)
     get(paste0("a", object$func))
   else
     get(object$func)
   col_names <- object$columns
   for (i in seq_along(col_names))
-    newdata[, col_names[i]] <-
-    func(getElement(newdata, col_names[i]))
-  as_tibble(newdata)
+    new_data[, col_names[i]] <-
+    func(getElement(new_data, col_names[i]))
+  as_tibble(new_data)
 }
 
 print.step_hyperbolic <-
@@ -133,9 +131,11 @@ print.step_hyperbolic <-
 
 #' @rdname step_hyperbolic
 #' @param x A `step_hyperbolic` object.
+#' @export
 tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$inverse <- x$inverse
   out$func <- x$func
+  out$id <- x$id
   out
 }

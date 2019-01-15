@@ -49,7 +49,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, newdata = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
 #' credit_te[missing_examples,]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -64,7 +64,8 @@ step_meanimpute <-
            trained = FALSE,
            means = NULL,
            trim = 0,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("meanimpute")) {
     add_step(
       recipe,
       step_meanimpute_new(
@@ -73,18 +74,14 @@ step_meanimpute <-
         trained = trained,
         means = means,
         trim = trim,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_meanimpute_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, means, trim, skip, id) {
     step(
       subclass = "meanimpute",
       terms = terms,
@@ -92,7 +89,8 @@ step_meanimpute_new <-
       trained = trained,
       means = means,
       trim = trim,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -113,17 +111,18 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     means,
     trim = x$trim,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_meanimpute <- function(object, newdata, ...) {
+bake.step_meanimpute <- function(object, new_data, ...) {
   for (i in names(object$means)) {
-    if (any(is.na(newdata[, i])))
-      newdata[is.na(newdata[, i]), i] <- object$means[i]
+    if (any(is.na(new_data[, i])))
+      new_data[is.na(new_data[, i]), i] <- object$means[i]
   }
-  as_tibble(newdata)
+  as_tibble(new_data)
 }
 
 print.step_meanimpute <-
@@ -135,6 +134,7 @@ print.step_meanimpute <-
 
 #' @rdname step_meanimpute
 #' @param x A `step_meanimpute` object.
+#' @export
 tidy.step_meanimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
@@ -143,5 +143,6 @@ tidy.step_meanimpute <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)
   }
+  res$id <- x$id
   res
 }

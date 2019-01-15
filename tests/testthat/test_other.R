@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Pooling to other category")
+
+
 data(okc)
 
 set.seed(19)
@@ -15,23 +18,25 @@ rec <- recipe(~ diet + location, data = okc_tr)
 # all(sort(unique(okc_tr$location)) == sort(unique(okc$location)))
 
 test_that('default inputs', {
-  others <- rec %>% step_other(diet, location, other = "another")
+  others <- rec %>% step_other(diet, location, other = "another", id = "")
 
   tidy_exp_un <- tibble(
     terms = c("diet", "location"),
-    retained = rep(NA_character_, 2)
+    retained = rep(NA_character_, 2),
+    id = ""
   )
   expect_equal(tidy_exp_un, tidy(others, number = 1))
 
   others <- prep(others, training = okc_tr)
-  others_te <- bake(others, newdata = okc_te)
+  others_te <- bake(others, new_data = okc_te)
 
   tidy_exp_tr <- tibble(
     terms = rep(c("diet", "location"), c(4, 3)),
     retained = c(
       "anything", "mostly anything", "mostly vegetarian",
       "strictly anything", "berkeley",
-      "oakland", "san francisco")
+      "oakland", "san francisco"),
+    id = ""
   )
   expect_equal(tidy_exp_tr, tidy(others, number = 1))
 
@@ -65,7 +70,7 @@ test_that('default inputs', {
 test_that('high threshold - much removals', {
   others <- rec %>% step_other(diet, location, threshold = .5)
   others <- prep(others, training = okc_tr)
-  others_te <- bake(others, newdata = okc_te)
+  others_te <- bake(others, new_data = okc_te)
 
   diet_props <- table(okc_tr$diet)
   diet_levels <- others$steps[[1]]$objects$diet$keep
@@ -94,8 +99,8 @@ test_that('high threshold - much removals', {
 
 test_that('low threshold - no removals', {
   others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
-  others <- prep(others, training = okc_tr, stringsAsFactors = FALSE)
-  others_te <- bake(others, newdata = okc_te)
+  others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
+  others_te <- bake(others, new_data = okc_te)
 
   expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
   expect_equal(is.na(okc_te$location), is.na(others_te$location))
@@ -117,7 +122,7 @@ test_that('factor inputs', {
 
   others <- rec %>% step_other(diet, location)
   others <- prep(others, training = okc_tr)
-  others_te <- bake(others, newdata = okc_te)
+  others_te <- bake(others, new_data = okc_te)
 
   diet_props <- table(okc_tr$diet)/sum(!is.na(okc_tr$diet))
   diet_props <- sort(diet_props, decreasing = TRUE)
@@ -163,8 +168,8 @@ test_that('novel levels', {
     step_other(x1) 
   
   novel_level <- prep(novel_level, training = training, retain = TRUE)
-  new_results <- bake(novel_level, newdata = testing)
-  orig_results <- bake(novel_level, newdata = training)
+  new_results <- bake(novel_level, new_data = testing)
+  orig_results <- bake(novel_level, new_data = training)
   expect_true(all(new_results$x1[testing$x1 == "C"] == "other"))
   expect_true(!any(orig_results$x1 == "other"))  
 })
@@ -172,7 +177,7 @@ test_that('novel levels', {
 test_that("'other' already in use", {
   others <- rec %>% step_other(diet, location, threshold = 10^-10)
   expect_error(
-    prep(others, training = okc_tr, stringsAsFactors = FALSE)
+    prep(others, training = okc_tr, strings_as_factors = FALSE)
   )
 })
 

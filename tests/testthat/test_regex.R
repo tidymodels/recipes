@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Regex pattern matching indicators")
+
+
 data(covers)
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
@@ -12,7 +15,7 @@ test_that('default options', {
     step_regex(description, pattern = "(rock|stony)") %>%
     step_regex(description, result = "all ones")
   rec1 <- prep(rec1, training = covers)
-  res1 <- bake(rec1, newdata = covers)
+  res1 <- bake(rec1, new_data = covers)
   expect_equal(res1$X.rock.stony.,
                as.numeric(grepl("(rock|stony)", covers$description)))
   expect_equal(res1$`all ones`, rep(1, nrow(covers)))
@@ -25,7 +28,7 @@ test_that('nondefault options', {
                result = "rocks",
                options = list(fixed = TRUE))
   rec2 <- prep(rec2, training = covers)
-  res2 <- bake(rec2, newdata = covers)
+  res2 <- bake(rec2, new_data = covers)
   expect_equal(res2$rocks, rep(0, nrow(covers)))
 })
 

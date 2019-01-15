@@ -7,7 +7,7 @@
 \usage{
 step_profile(recipe, ..., profile = NULL, pct = 0.5, index = 1,
   grid = list(pctl = TRUE, len = 100), columns = NULL, role = NA,
-  trained = FALSE, skip = FALSE)
+  trained = FALSE, skip = FALSE, id = rand_id("profile"))
 
 \method{tidy}{step_profile}(x, ...)
 }
@@ -66,6 +66,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_profile} object.}
 }
 \value{
@@ -84,7 +86,7 @@ models.
 }
 \details{
 This step is atypical in that, when baked, the
-\code{newdata} argument is ignored; the resulting data set is
+\code{new_data} argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.
 }
 \examples{
@@ -112,13 +114,13 @@ disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
 
 disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(
-    -disp, 
+    -disp,
     profile = vars(disp),
     grid = list(pctl = FALSE, len = 100)
   ) \%>\%
   prep(training = mtcars, retain = TRUE)
 
-grid_data <- juice(disp_grid) 
+grid_data <- juice(disp_grid)
 grid_data <- grid_data \%>\%
   mutate(pred = predict(lin_mod, grid_data),
          method = "grid")
@@ -132,11 +134,9 @@ plot_data <- bind_rows(grid_data, pctl_data)
 
 library(ggplot2)
 
-ggplot(plot_data, aes(x = disp, y = pred)) + 
-  geom_point(alpha = .5, cex = 1) + 
+ggplot(plot_data, aes(x = disp, y = pred)) +
+  geom_point(alpha = .5, cex = 1) +
   facet_wrap(~ method)
 }
-\concept{
-preprocessing
-}
+\concept{preprocessing}
 \keyword{datagen}

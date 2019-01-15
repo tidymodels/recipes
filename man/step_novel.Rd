@@ -5,8 +5,9 @@
 \alias{tidy.step_novel}
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
-step_novel(recipe, ..., role = NA, trained = FALSE, new_level = "new",
-  objects = NULL, skip = FALSE)
+step_novel(recipe, ..., role = NA, trained = FALSE,
+  new_level = "new", objects = NULL, skip = FALSE,
+  id = rand_id("novel"))
 
 \method{tidy}{step_novel}(x, ...)
 }
@@ -37,6 +38,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_novel} object.}
 }
@@ -91,7 +94,5 @@ tidy(rec, number = 1)
 \code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 }
-\concept{
-preprocessing factors
-}
+\concept{preprocessing factors}
 \keyword{datagen}

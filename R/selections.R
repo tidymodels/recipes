@@ -128,6 +128,8 @@ selectors <-
 element_check <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
+  # i.e. tidyselect::matches()
+  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr"))]
   if (!is.null(allowed)) {
     # when called from a step
     not_good <- funs[!(funs %in% allowed)]
@@ -176,9 +178,8 @@ element_check <- function(x, allowed = selectors) {
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info) {
-  vars <- info$variable
-  roles <- info$role
-  types <- info$type
+  # unique in case a variable has multiple roles
+  vars <- unique(info$variable)
 
   if (is_empty(terms)) {
     stop("At least one selector should be used", call. = FALSE)
@@ -188,7 +189,8 @@ terms_select <- function(terms, info) {
   lapply(terms, element_check)
 
   # Set current_info so available to helpers
-  old_info <- set_current_info(info)
+  nested_info <- tidyr::nest(info, -variable)
+  old_info <- set_current_info(nested_info)
   on.exit(set_current_info(old_info), add = TRUE)
 
   sel <- with_handlers(tidyselect::vars_select(vars, !!! terms),
@@ -204,76 +206,107 @@ abort_selection <- exiting(function(cnd) {
 
 #' Role Selection
 #'
-#' `has_role`, `all_predictors`, and `all_outcomes` can be used to
+#' @description
+#'
+#' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
-#'  Similarly, `has_type`, `all_numeric`, and `all_nominal` are used
-#'  to select columns based on their data type. See [selections()]
-#'  for more details. `current_info` is an internal function that is
-#'  unlikely to help users while the others have limited utility
-#'  outside of step function arguments.
+#'  Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used
+#'  to select columns based on their data type.
+#'
+#'  See `?selections` for more details.
+#'
+#'  `current_info()` is an internal function.
+#'
+#'  All of these functions have have limited utility
+#'  outside of column selection in step functions.
 #'
 #' @param match A single character string for the query. Exact
 #'  matching is used (i.e. regular expressions won't work).
-#' @param roles A character string of roles for the current set of
-#'  terms.
-#' @param types A character string of roles for the current set of
-#'  data types.
-#' @return Selector functions return an integer vector while
-#'   `current_info` returns an environment with vectors `vars`,
-#'   `roles`, and `types`.
+#'
+#' @return
+#'
+#' Selector functions return an integer vector.
+#'
+#' `current_info()` returns an environment with objects `vars` and `data`.
+#'
 #' @keywords datagen
 #' @examples
 #' data(biomass)
 #'
 #' rec <- recipe(biomass) %>%
-#'   add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-#'            new_role = "predictor") %>%
-#'   add_role(HHV, new_role = "outcome") %>%
-#'   add_role(sample, new_role = "id variable") %>%
-#'   add_role(dataset, new_role = "splitting indicator")
+#'   update_role(
+#'     carbon, hydrogen, oxygen, nitrogen, sulfur,
+#'     new_role = "predictor"
+#'   ) %>%
+#'   update_role(HHV, new_role = "outcome") %>%
+#'   update_role(sample, new_role = "id variable") %>%
+#'   update_role(dataset, new_role = "splitting indicator")
+#'
 #' recipe_info <- summary(rec)
 #' recipe_info
 #'
-#' has_role("id variable", roles = recipe_info$role)
-#' all_outcomes(roles = recipe_info$role)
+#' # Centering on all predictors except carbon
+#' rec %>%
+#'   step_center(all_predictors(), -carbon) %>%
+#'   prep(training = biomass, retain = TRUE) %>%
+#'   juice()
+#'
 #' @export
-
-has_role <-
-  function(match = "predictor",
-           roles = current_info()$roles)
-    which(roles %in% match)
-
-#' @export
-#' @rdname has_role
-#' @inheritParams has_role
-all_predictors <- function(roles = current_info()$roles)
-  has_role("predictor", roles = roles)
+has_role <- function(match = "predictor") {
+  roles <- peek_roles()
+  lgl_matches <- purrr::map_lgl(roles, ~any(.x %in% match))
+  which(lgl_matches)
+}
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_outcomes <- function(roles = current_info()$roles)
-  has_role("outcome", roles = roles)
+all_predictors <- function() {
+  has_role("predictor")
+}
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-has_type <-
-  function(match = "numeric",
-           types = current_info()$types)
-    which(types %in% match)
+all_outcomes <- function() {
+  has_role("outcome")
+}
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_numeric <- function(types = current_info()$types)
-  has_type("numeric", types = types)
+has_type <- function(match = "numeric") {
+  types <- peek_types()
+  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
+  which(lgl_matches)
+}
 
 #' @export
 #' @rdname has_role
 #' @inheritParams has_role
-all_nominal <- function(types = current_info()$types)
-  has_type("nominal", types = types)
+all_numeric <- function() {
+  has_type("numeric")
+}
+
+#' @export
+#' @rdname has_role
+#' @inheritParams has_role
+all_nominal <- function() {
+  has_type("nominal")
+}
+
+peek_roles <- function() {
+  peek_info("role")
+}
+
+peek_types <- function() {
+  peek_info("type")
+}
+
+peek_info <- function(col) {
+  .data <- current_info()$data
+  purrr::map(.data, ~.x[[col]])
+}
 
 ## functions to get current variable info for selectors modeled after
 ## dplyr versions
@@ -282,11 +315,9 @@ all_nominal <- function(types = current_info()$types)
 cur_info_env <- child_env(env_parent(env))
 
 set_current_info <- function(x) {
-  # stopifnot(!is.environment(x))
   old <- cur_info_env
   cur_info_env$vars <- x$variable
-  cur_info_env$roles <- x$role
-  cur_info_env$types <- x$type
+  cur_info_env$data <- x$data
 
   invisible(old)
 }

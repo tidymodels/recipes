@@ -6,7 +6,7 @@
 \title{Logit Transformation}
 \usage{
 step_logit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("logit"))
 
 \method{tidy}{step_logit}(x, ...)
 }
@@ -34,6 +34,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_logit} object.}
 }
@@ -75,7 +77,5 @@ tidy(logit_obj, number = 1)
 \code{\link[=step_sqrt]{step_sqrt()}}  \code{\link[=step_hyperbolic]{step_hyperbolic()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

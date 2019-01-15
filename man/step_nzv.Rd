@@ -5,8 +5,9 @@
 \alias{tidy.step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
-step_nzv(recipe, ..., role = NA, trained = FALSE, options = list(freq_cut
-  = 95/5, unique_cut = 10), removals = NULL, skip = FALSE)
+step_nzv(recipe, ..., role = NA, trained = FALSE,
+  options = list(freq_cut = 95/5, unique_cut = 10), removals = NULL,
+  skip = FALSE, id = rand_id("nzv"))
 
 \method{tidy}{step_nzv}(x, ...)
 }
@@ -38,6 +39,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_nzv} object.}
 }
@@ -104,7 +107,5 @@ tidy(filter_obj, number = 1)
 \code{\link[=step_corr]{step_corr()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

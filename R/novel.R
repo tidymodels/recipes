@@ -29,17 +29,17 @@
 #'  position. During preparation there will be no data points
 #'  associated with this new level since all of the data have been
 #'  seen.
-#'  
+#'
 #' Note that if the original columns are character, they will be
 #'  converted to factors by this step.
-#'  
-#' Missing values will remain missing. 
-#' 
+#'
+#' Missing values will remain missing.
+#'
 #' If `new_level` is already in the data given to `prep`, an error
-#'  is thrown. 
-#'  
+#'  is thrown.
+#'
 #' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()], 
+#'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #' @examples
 #' data(okc)
@@ -67,7 +67,8 @@ step_novel <-
            trained = FALSE,
            new_level = "new",
            objects = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("novel")) {
     add_step(
       recipe,
       step_novel_new(
@@ -76,18 +77,14 @@ step_novel <-
         trained = trained,
         new_level = new_level,
         objects = objects,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_novel_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           new_level = NULL,
-           objects = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, new_level, objects, skip, id) {
     step(
       subclass = "novel",
       terms = terms,
@@ -95,7 +92,8 @@ step_novel_new <-
       trained = trained,
       new_level = new_level,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -123,53 +121,54 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   if (any(col_check$type != "nominal"))
     stop(
       "Columns must be character or factor: ",
-      paste0(col_check$variables[col_check$type != "nominal"],
+      paste0(col_check$variable[col_check$type != "nominal"],
              collapse = ", "),
       call. = FALSE
     )
-  
+
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
-  level_check <- 
+  level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check))
     stop(
       "Columns already contain the new level: ",
       paste0(names(level_check)[level_check], collapse = ", "),
       call. = FALSE
-    )  
-  
+    )
+
   step_novel_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     new_level = x$new_level,
     objects = objects,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_novel <- function(object, newdata, ...) {
+bake.step_novel <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
-    newdata[[i]] <- ifelse(
+    new_data[[i]] <- ifelse(
       # Preserve NA values by adding them to the list of existing
       # possible values
-      !(newdata[[i]] %in% c(object$object[[i]], NA)),
+      !(new_data[[i]] %in% c(object$object[[i]], NA)),
       object$new_level,
-      as.character(newdata[[i]])
+      as.character(new_data[[i]])
     )
-    
-    newdata[[i]] <- 
-      factor(newdata[[i]], 
+
+    new_data[[i]] <-
+      factor(new_data[[i]],
              levels = c(object$object[[i]], object$new_level),
              ordered = attributes(object$object[[i]])$is_ordered)
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_novel <-
@@ -182,6 +181,7 @@ print.step_novel <-
 #' @rdname step_novel
 #' @param x A `step_novel` object.
 #' @importFrom purrr map
+#' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),
@@ -191,6 +191,7 @@ tidy.step_novel <- function(x, ...) {
     res <- tibble(terms = term_names,
                   value = rep(x$new_level, length(term_names)))
   }
+  res$id <- x$id
   res
 }
 

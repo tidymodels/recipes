@@ -73,7 +73,8 @@ step_ordinalscore <-
            trained = FALSE,
            columns = NULL,
            convert = as.numeric,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("ordinalscore")) {
     add_step(
       recipe,
       step_ordinalscore_new(
@@ -82,18 +83,14 @@ step_ordinalscore <-
         trained = trained,
         columns = columns,
         convert = convert,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ordinalscore_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           convert = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, columns, convert, skip, id) {
     step(
       subclass = "ordinalscore",
       terms = terms,
@@ -101,7 +98,8 @@ step_ordinalscore_new <-
       trained = trained,
       columns = columns,
       convert = convert,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -121,16 +119,17 @@ prep.step_ordinalscore <-
       trained = TRUE,
       columns = col_names,
       convert = x$convert,
-      skip = x$skip
+      skip = x$skip,
+      id = x$id
     )
   }
 
 #' @export
-bake.step_ordinalscore <- function(object, newdata, ...) {
-  scores <- lapply(newdata[, object$columns], object$convert)
+bake.step_ordinalscore <- function(object, new_data, ...) {
+  scores <- lapply(new_data[, object$columns], object$convert)
   for (i in object$columns)
-    newdata[, i] <- scores[[i]]
-  as_tibble(newdata)
+    new_data[, i] <- scores[[i]]
+  as_tibble(new_data)
 }
 
 print.step_ordinalscore <-
@@ -143,6 +142,9 @@ print.step_ordinalscore <-
 
 #' @rdname step_ordinalscore
 #' @param x A `step_ordinalscore` object.
+#' @export
 tidy.step_ordinalscore <- function(x, ...) {
-  simple_terms(x, ...)
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

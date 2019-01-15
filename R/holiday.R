@@ -40,7 +40,7 @@
 #'    step_holiday(all_predictors())
 #'
 #' holiday_rec <- prep(holiday_rec, training = examples)
-#' holiday_values <- bake(holiday_rec, newdata = examples)
+#' holiday_values <- bake(holiday_rec, new_data = examples)
 #' holiday_values
 #' @seealso [step_date()] [step_rm()]
 #'   [recipe()] [prep.recipe()]
@@ -54,7 +54,8 @@ step_holiday <-
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
     columns = NULL,
-    skip = FALSE
+    skip = FALSE,
+    id = rand_id("holiday")
   ) {
   all_days <- listHolidays()
   if (!all(holidays %in% all_days))
@@ -69,30 +70,25 @@ step_holiday <-
       trained = trained,
       holidays = holidays,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_holiday_new <-
-  function(
-    terms = NULL,
-    role = "predictor",
-    trained = FALSE,
-    holidays = holidays,
-    columns = columns,
-    skip = FALSE
-    ) {
-  step(
-    subclass = "holiday",
-    terms = terms,
-    role = role,
-    trained = trained,
-    holidays = holidays,
-    columns = columns,
-    skip = skip
-  )
-}
+  function(terms, role, trained, holidays, columns, skip, id) {
+    step(
+      subclass = "holiday",
+      terms = terms,
+      role = role,
+      trained = trained,
+      holidays = holidays,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @importFrom stats as.formula model.frame
 #' @export
@@ -110,7 +106,8 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     holidays = x$holidays,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -136,11 +133,11 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_holiday <- function(object, newdata, ...) {
+bake.step_holiday <- function(object, new_data, ...) {
   new_cols <-
     rep(length(object$holidays), each = length(object$columns))
   holiday_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(holiday_values) <- rep("", sum(new_cols))
   holiday_values <- as_tibble(holiday_values)
 
@@ -148,7 +145,7 @@ bake.step_holiday <- function(object, newdata, ...) {
   for (i in seq_along(object$columns)) {
     cols <- (strt):(strt + new_cols[i] - 1)
 
-    tmp <- get_holiday_features(dt = getElement(newdata, object$columns[i]),
+    tmp <- get_holiday_features(dt = getElement(new_data, object$columns[i]),
                                 hdays = object$holidays)
 
     holiday_values[, cols] <- tmp
@@ -160,10 +157,10 @@ bake.step_holiday <- function(object, newdata, ...) {
 
     strt <- max(cols) + 1
   }
-  newdata <- bind_cols(newdata, as_tibble(holiday_values))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(holiday_values))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_holiday <-
@@ -175,10 +172,12 @@ print.step_holiday <-
 
 #' @rdname step_holiday
 #' @param x A `step_holiday` object.
+#' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      holiday = x$holidays,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

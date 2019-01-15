@@ -3,12 +3,12 @@
 \name{bake}
 \alias{bake}
 \alias{bake.recipe}
-\alias{bake.recipe}
 \title{Apply a Trained Data Recipe}
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, newdata, ..., composition = "tibble")
+\method{bake}{recipe}(object, new_data = NULL, ...,
+  composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
@@ -19,7 +19,7 @@ returned by the function. See \code{\link[=selections]{selections()}} for more d
 If no selectors are given, the default is to use
 \code{\link[=everything]{everything()}}.}
 
-\item{newdata}{A data frame or tibble for whom the preprocessing will be
+\item{new_data}{A data frame or tibble for whom the preprocessing will be
 applied.}
 
 \item{composition}{Either "tibble", "matrix", "data.frame", or
@@ -31,7 +31,7 @@ resolve to numeric columns (otherwise an error is thrown).}
 }
 \value{
 A tibble, matrix, or sparse matrix that may have different
-columns than the original columns in \code{newdata}.
+columns than the original columns in \code{new_data}.
 }
 \description{
 For a recipe with at least one preprocessing operations that has been trained by
@@ -45,7 +45,7 @@ If the original data used to train the data are to be
 processed, time can be saved by using the \code{retain = TRUE} option
 of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
 option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
-\code{newdata} equal to the training set.
+\code{new_data} equal to the training set.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the
 data when \code{bake} is invoked. \code{\link[=juice]{juice()}} will always have all
@@ -57,7 +57,5 @@ of the steps applied.
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

@@ -55,7 +55,7 @@
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
-#' dists_to_species <- bake(rec_dists, newdata = iris, everything())
+#' dists_to_species <- bake(rec_dists, new_data = iris, everything())
 #' ## on log scale:
 #' dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 #' dists_to_species[, c("Species", dist_cols)]
@@ -73,7 +73,8 @@ step_classdist <- function(recipe,
                            pool = FALSE,
                            log = TRUE,
                            objects = NULL,
-                           skip = FALSE) {
+                           skip = FALSE,
+                           id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1)
     stop("`class` should be a single character value.")
   add_step(
@@ -88,22 +89,15 @@ step_classdist <- function(recipe,
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_classdist_new <-
-  function(terms = NULL,
-           class = NULL,
-           role = "predictor",
-           trained = FALSE,
-           mean_func = NULL,
-           cov_func = NULL,
-           pool = NULL,
-           log = NULL,
-           objects = NULL,
-           skip = FALSE) {
+  function(terms, class, role, trained, mean_func,
+           cov_func, pool, log, objects, skip, id) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -115,7 +109,8 @@ step_classdist_new <-
       pool = pool,
       log = log,
       objects = objects,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -160,7 +155,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     pool = x$pool,
     log = x$log,
     objects = res,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -175,25 +171,26 @@ mah_pooled <- function(means, x, cov_mat)
 
 #' @importFrom tibble as_tibble
 #' @export
-bake.step_classdist <- function(object, newdata, ...) {
+bake.step_classdist <- function(object, new_data, ...) {
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     res <- lapply(
       object$objects$center,
       mah_pooled,
-      x = newdata[, x_cols],
+      x = new_data[, x_cols],
       cov_mat = object$objects$scale
     )
   } else {
     x_cols <- names(object$objects[[1]]$center)
     res <-
-      lapply(object$objects, mah_by_class, x = newdata[, x_cols])
+      lapply(object$objects, mah_by_class, x = new_data[, x_cols])
   }
   if (object$log)
     res <- lapply(res, log)
   res <- as_tibble(res)
-  colnames(res) <- paste0("classdist_", colnames(res))
-  res <- bind_cols(newdata, res)
+  newname <- paste0("classdist_", colnames(res))
+  res <- check_name(res, new_data, object, newname)
+  res <- bind_cols(new_data, res)
   if (!is_tibble(res))
     res <- as_tibble(res)
   res
@@ -222,6 +219,7 @@ get_centroid <- function(x) {
 #' @rdname step_classdist
 #' @param x A `step_classdist` object.
 #' @importFrom dplyr bind_rows
+#' @export
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {
     centroids <- lapply(x$objects, get_centroid)
@@ -235,5 +233,6 @@ tidy.step_classdist <- function(x, ...) {
                   value = na_dbl,
                   class = na_chr)
   }
+  res$id <- x$id
   res
 }

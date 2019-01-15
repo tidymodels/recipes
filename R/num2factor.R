@@ -56,7 +56,7 @@
 #'
 #' with_transform <- prep(with_transform,
 #'                        training = iris2[1:75,])
-#' new_values <- bake(with_transform, newdata = iris2, Species)
+#' new_values <- bake(with_transform, new_data = iris2, Species)
 #' table(new_values[["Species"]], iris2$Species, useNA = "ifany")
 
 step_num2factor <-
@@ -67,7 +67,8 @@ step_num2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("num2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
 
@@ -80,20 +81,14 @@ step_num2factor <-
         trained = trained,
         levels = levels,
         ordered = ordered,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_num2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           transform = NULL,
-           trained = FALSE,
-           levels = NULL,
-           ordered = NULL,
-           skip = FALSE
-  ) {
+  function(terms, role, transform, trained, levels, ordered, skip, id) {
     step(
       subclass = "num2factor",
       terms = terms,
@@ -102,7 +97,8 @@ step_num2factor_new <-
       trained = trained,
       levels = levels,
       ordered = ordered,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -126,7 +122,8 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     levels = res,
     ordered = ord,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -135,19 +132,19 @@ make_factor_num <- function (x, lvl, ord, foo)
 
 #' @importFrom purrr map2_df map_df
 #' @export
-bake.step_num2factor <- function(object, newdata, ...) {
+bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
-  newdata[, col_names] <-
-    map2_df(newdata[, col_names],
+  new_data[, col_names] <-
+    map2_df(new_data[, col_names],
             object$levels,
             make_factor_num,
             ord = object$ordered[1],
             foo = object$transform)
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_num2factor <-
@@ -160,6 +157,7 @@ print.step_num2factor <-
 
 #' @rdname step_num2factor
 #' @param x A `step_num2factor` object.
+#' @export
 tidy.step_num2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
@@ -170,6 +168,7 @@ tidy.step_num2factor <- function(x, ...) {
     res <- tibble(terms = term_names,
                   ordered = rep(x$ordered, p))
   }
+  res$id <- x$id
   res
 }
 

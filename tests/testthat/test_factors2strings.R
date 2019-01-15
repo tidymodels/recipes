@@ -1,6 +1,9 @@
 library(recipes)
 library(testthat)
 
+context("factor to string conversion")
+
+
 n <- 200
 
 set.seed(8575)
@@ -17,7 +20,7 @@ rec <- recipe(~ ., data = ex_dat)
 test_that('basic functionality', {
   ex_1 <- rec %>%
     step_factor2string(y, z) %>%
-    prep(ex_dat, stringsAsFactors = FALSE, retain = TRUE) %>%
+    prep(ex_dat, strings_as_factors = FALSE, retain = TRUE) %>%
     juice
   expect_equal(class(ex_1$w), "character")
   expect_equal(class(ex_1$x), "character")
@@ -27,7 +30,7 @@ test_that('bad args', {
   expect_error(
     rec %>%
       step_factor2string(w, x) %>%
-      prep(ex_dat, stringsAsFactors = FALSE)
+      prep(ex_dat, strings_as_factors = FALSE)
   )
 
 })
@@ -36,7 +39,7 @@ test_that('bad args', {
 test_that('printing', {
   ex_3 <- rec %>%
     step_factor2string(y, z) %>%
-    prep(ex_dat, stringsAsFactors = FALSE, retain = TRUE)
+    prep(ex_dat, strings_as_factors = FALSE, retain = TRUE)
   expect_output(print(ex_3))
   expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
 })

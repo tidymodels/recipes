@@ -46,7 +46,7 @@
 #' rec2 <- prep(rec, training = covers)
 #' rec2
 #'
-#' count_values <- bake(rec2, newdata = covers)
+#' count_values <- bake(rec2, new_data = covers)
 #' count_values
 #'
 #' tidy(rec, number = 1)
@@ -60,7 +60,8 @@ step_count <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
-                       skip = FALSE) {
+                       skip = FALSE,
+                       id = rand_id("count")) {
   if (!is.character(pattern))
     stop("`pattern` should be a character string", call. = FALSE)
   if (length(pattern) != 1)
@@ -86,33 +87,28 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
-step_count_new <- function(terms = NULL,
-                           role = NA,
-                           trained = FALSE,
-                           pattern = NULL,
-                           normalize = NULL,
-                           options = NULL,
-                           result = NULL,
-                           input = NULL,
-                           skip = FALSE) {
-  step(
-    subclass = "count",
-    terms = terms,
-    role = role,
-    trained = trained,
-    pattern = pattern,
-    normalize = normalize,
-    options = options,
-    result = result,
-    input = input,
-    skip = skip
-  )
-}
+step_count_new <- 
+  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+    step(
+      subclass = "count",
+      terms = terms,
+      role = role,
+      trained = trained,
+      pattern = pattern,
+      normalize = normalize,
+      options = options,
+      result = result,
+      input = input,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {
@@ -131,16 +127,17 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom rlang expr
-bake.step_count <- function(object, newdata, ...) {
+bake.step_count <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(newdata, object$input),
+      text = getElement(new_data, object$input),
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -151,12 +148,12 @@ bake.step_count <- function(object, newdata, ...) {
   if (length(object$options) > 0)
     regex <- mod_call_args(regex, args = object$options)
 
-  newdata[, object$result] <- vapply(eval(regex), counter, integer(1))
+  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
   if(object$normalize) {
-    totals <- nchar(as.character(getElement(newdata, object$input)))
-    newdata[, object$result] <- newdata[, object$result]/totals
+    totals <- nchar(as.character(getElement(new_data, object$input)))
+    new_data[, object$result] <- new_data[, object$result]/totals
   }
-  newdata
+  new_data
 }
 
 counter <- function(x) length(x[x > 0])
@@ -178,6 +175,7 @@ print.step_count <-
 
 #' @rdname step_count
 #' @param x A `step_count` object.
+#' @export
 tidy.step_count <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
@@ -188,5 +186,6 @@ tidy.step_count <- function(x, ...) {
     res <- tibble(terms = term_names,
                   result = rep(na_chr, p))
   }
+  res$id <- x$id
   res
 }

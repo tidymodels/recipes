@@ -8,7 +8,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will be used to create the dummy variables. See
+#'  _factor_ variables will be used to create the dummy variables. See
 #'  [selections()] for more details. The selected
 #'  variables must be factors. For the `tidy` method, these are
 #'  not currently used.
@@ -57,17 +57,17 @@
 #'  dummy variables are given simple integer suffixes such as
 #'  "`_1`", "`_2`", etc.
 #'
-#' To change the type of contrast being used, change the global 
+#' To change the type of contrast being used, change the global
 #' contrast option via `options`.
-#' 
-#' When the factor being converted has a missing value, all of the
-#'  corresponding dummy variables are also missing. 
-#'  
-#' When data to be processed contains novel levels (i.e., not 
-#' contained in the training set), a missing value is assigned to
-#' the results. See [step_other()] for an alternative. 
 #'
-#' The [package vignette for dummy variables](https://topepo.github.io/recipes/articles/Dummies.html)
+#' When the factor being converted has a missing value, all of the
+#'  corresponding dummy variables are also missing.
+#'
+#' When data to be processed contains novel levels (i.e., not
+#' contained in the training set), a missing value is assigned to
+#' the results. See [step_other()] for an alternative.
+#'
+#' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
@@ -83,7 +83,7 @@
 #' dummies <- rec %>% step_dummy(diet)
 #' dummies <- prep(dummies, training = okc)
 #'
-#' dummy_data <- bake(dummies, newdata = okc)
+#' dummy_data <- bake(dummies, new_data = okc)
 #'
 #' unique(okc$diet)
 #' grep("^diet", names(dummy_data), value = TRUE)
@@ -113,7 +113,8 @@ step_dummy <-
            one_hot = FALSE,
            naming = dummy_names,
            levels = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("dummy")) {
     add_step(
       recipe,
       step_dummy_new(
@@ -123,20 +124,14 @@ step_dummy <-
         one_hot = one_hot,
         naming = naming,
         levels = levels,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_dummy_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           one_hot = one_hot,
-           naming = naming,
-           levels = levels,
-           skip = FALSE
-  ) {
+  function(terms, role, trained, one_hot, naming, levels, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,
@@ -145,7 +140,8 @@ step_dummy_new <-
       one_hot = one_hot,
       naming = naming,
       levels = levels,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -157,11 +153,16 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
   if (any(!fac_check))
-    stop(
-      "The following variables are not factor vectors: ",
+    warning(
+      "The following variables are not factor vectors and will be ignored: ",
       paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
       call. = FALSE
     )
+  col_names <- col_names[fac_check]
+  if (length(col_names) == 0) {
+    stop("The `terms` argument in `step_dummy` did not select ",
+         "any factor columns.", call. = FALSE)
+  }
 
 
   ## I hate doing this but currently we are going to have
@@ -198,7 +199,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     one_hot = x$one_hot,
     naming = x$naming,
     levels = levels,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
@@ -207,14 +209,14 @@ warn_new_levels <- function(dat, lvl) {
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
     warning("There are new levels in a factor: ",
-            paste0(lvl2, collapse = ", "), 
+            paste0(lvl2, collapse = ", "),
             call. = FALSE)
   }
   invisible(NULL)
 }
 
 #' @export
-bake.step_dummy <- function(object, newdata, ...) {
+bake.step_dummy <- function(object, new_data, ...) {
   ## Maybe do this in C?
   col_names <- names(object$levels)
 
@@ -232,21 +234,21 @@ bake.step_dummy <- function(object, newdata, ...) {
 
     if(!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
-    
+
     warn_new_levels(
-      newdata[[orig_var]],
+      new_data[[orig_var]],
       attr(object$levels[[i]], "values")
     )
-    
-    newdata[, orig_var] <-
-      factor(getElement(newdata, orig_var),
+
+    new_data[, orig_var] <-
+      factor(getElement(new_data, orig_var),
              levels = attr(object$levels[[i]], "values"),
              ordered = fac_type == "ordered")
-    
-    indicators <- 
+
+    indicators <-
       model.frame(
         as.formula(paste0("~", orig_var)),
-        data = newdata[, orig_var],
+        data = new_data[, orig_var],
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
       )
@@ -268,12 +270,12 @@ bake.step_dummy <- function(object, newdata, ...) {
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    newdata <- bind_cols(newdata, as_tibble(indicators))
-    newdata[, col_names[i]] <- NULL
+    new_data <- bind_cols(new_data, as_tibble(indicators))
+    new_data[, col_names[i]] <- NULL
   }
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_dummy <-
@@ -294,11 +296,13 @@ print.step_dummy <-
 
 #' @rdname step_dummy
 #' @param x A `step_dummy` object.
+#' @export
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$levels))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

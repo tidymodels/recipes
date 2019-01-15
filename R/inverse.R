@@ -49,7 +49,8 @@ step_inverse <-
            offset = 0,
            trained = FALSE,
            columns = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("inverse")) {
     add_step(recipe,
              step_inverse_new(
                terms = ellipse_check(...),
@@ -57,17 +58,13 @@ step_inverse <-
                offset = offset,
                trained = trained,
                columns = columns,
-               skip = skip
+               skip = skip,
+               id = id
              ))
   }
 
 step_inverse_new <-
-  function(terms = NULL,
-           role = NA,
-           offset = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE) {
+  function(terms, role, offset, trained, columns, skip, id) {
     step(
       subclass = "inverse",
       terms = terms,
@@ -75,7 +72,8 @@ step_inverse_new <-
       offset = offset,
       trained = trained,
       columns = columns,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -83,25 +81,26 @@ step_inverse_new <-
 prep.step_inverse <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
-  
+
   step_inverse_new(
     terms = x$terms,
     role = x$role,
     offset = x$offset,
     trained = TRUE,
     columns = col_names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats binomial
 #' @export
-bake.step_inverse <- function(object, newdata, ...) {
+bake.step_inverse <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))
-    newdata[, object$columns[i]] <-
-      1 / (newdata [[ object$columns[i] ]] + object$offset) 
-  as_tibble(newdata)
+    new_data[, object$columns[i]] <-
+      1 / (new_data [[ object$columns[i] ]] + object$offset)
+  as_tibble(new_data)
 }
 
 
@@ -114,6 +113,9 @@ print.step_inverse <-
 
 #' @rdname step_inverse
 #' @param x A `step_inverse` object.
+#' @export
 tidy.step_inverse <- function(x, ...) {
-  simple_terms(x, ...)
+  res <-simple_terms(x, ...)
+  res$id <- x$id
+  res
 }

@@ -3,13 +3,12 @@
 \name{prep}
 \alias{prep}
 \alias{prep.recipe}
-\alias{prep.recipe}
 \title{Train a Data Recipe}
 \usage{
 prep(x, ...)
 
-\method{prep}{recipe}(x, training = NULL, fresh = FALSE, verbose = FALSE,
-  retain = FALSE, stringsAsFactors = TRUE, ...)
+\method{prep}{recipe}(x, training = NULL, fresh = FALSE,
+  verbose = FALSE, retain = TRUE, strings_as_factors = TRUE, ...)
 }
 \arguments{
 \item{x}{an object}
@@ -24,16 +23,19 @@ parameters for preprocessing.}
 re-trained. If \code{TRUE}, you should pass in a data set to the argument
 \code{training}.}
 
-\item{verbose}{A logical that controls wether progress is reported as operations
+\item{verbose}{A logical that controls whether progress is reported as operations
 are executed.}
 
 \item{retain}{A logical: should the \emph{preprocessed} training set be saved
 into the \code{template} slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
 the existing steps. Also, it is advisable to use \code{retain = TRUE}
-if any steps use the option \code{skip = FALSE}.}
+if any steps use the option \code{skip = FALSE}. \strong{Note} that this can make
+the final recipe size large. When \code{verbose = TRUE}, a message is written
+with the approximate object size in memory but may be an underestimate
+since it does not take environments into account.}
 
-\item{stringsAsFactors}{A logical: should character columns be converted to
+\item{strings_as_factors}{A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
 \code{retain = TRUE}) as well as the results of \code{bake.recipe}.}
 }
@@ -68,7 +70,5 @@ data, the step for scaling is given the centered data.
 \author{
 Max Kuhn
 }
-\concept{
-preprocessing model_specification
-}
+\concept{preprocessing model_specification}
 \keyword{datagen}

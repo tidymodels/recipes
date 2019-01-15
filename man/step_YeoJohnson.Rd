@@ -5,8 +5,9 @@
 \alias{tidy.step_YeoJohnson}
 \title{Yeo-Johnson Transformation}
 \usage{
-step_YeoJohnson(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
-  limits = c(-5, 5), nunique = 5, na.rm = TRUE, skip = FALSE)
+step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
+  lambdas = NULL, limits = c(-5, 5), num_unique = 5, na_rm = TRUE,
+  skip = FALSE, id = rand_id("YeoJohnson"))
 
 \method{tidy}{step_YeoJohnson}(x, ...)
 }
@@ -31,10 +32,10 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
 
-\item{nunique}{An integer where data that have less possible
+\item{num_unique}{An integer where data that have less possible
 values will not be evaluate for a transformation.}
 
-\item{na.rm}{A logical value indicating whether \code{NA}
+\item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the
@@ -43,6 +44,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_YeoJohnson} object.}
 }
@@ -106,7 +109,5 @@ transformations to improve normality or symmetry. \emph{Biometrika}.
 \code{\link[=step_BoxCox]{step_BoxCox()}} \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing transformation_methods
-}
+\concept{preprocessing transformation_methods}
 \keyword{datagen}

@@ -6,7 +6,7 @@
 \title{Linear Combination Filter}
 \usage{
 step_lincomb(recipe, ..., role = NA, trained = FALSE, max_steps = 5,
-  removals = NULL, skip = FALSE)
+  removals = NULL, skip = FALSE, id = rand_id("lincomp"))
 
 \method{tidy}{step_lincomb}(x, ...)
 }
@@ -37,6 +37,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_lincomb} object.}
 }
@@ -89,7 +91,5 @@ tidy(lincomb_filter_trained, number = 1)
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

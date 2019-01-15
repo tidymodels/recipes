@@ -25,10 +25,13 @@
 #' @concept preprocessing variable_encodings factors
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
-#'  convert all factors to have the same levels. Also, note that
-#'  `prep` has an option `stringsAsFactors` that defaults
-#'  to `TRUE`. This should be changed so that raw character
-#'  data will be applied to `step_string2factor`.
+#'  convert all variables affected by this step to have the same
+#'  levels.
+#'
+#'  Also, note that `prep` has an option `strings_as_factors` that
+#'  defaults to `TRUE`. This should be changed so that raw character
+#'  data will be applied to `step_string2factor`. However, this step
+#'  can also take existing factors (but will leave them as-is).
 #' @seealso [step_factor2string()] [step_dummy()] [step_other()]
 #'  [step_novel()]
 #' @examples
@@ -40,7 +43,7 @@
 #'   step_string2factor(diet)
 #' make_factor <- prep(make_factor,
 #'                     training = okc,
-#'                     stringsAsFactors = FALSE,
+#'                     strings_as_factors = FALSE,
 #'                     retain = TRUE)
 #'
 #' # note that `diet` is a factor
@@ -55,7 +58,8 @@ step_string2factor <-
            trained = FALSE,
            levels = NULL,
            ordered = FALSE,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("string2factor")) {
     if(!is.logical(ordered) || length(ordered) != 1)
       stop("`ordered` should be a single logical variable")
     if((!is.null(levels) & !is.character(levels)) | is.list(levels))
@@ -69,19 +73,14 @@ step_string2factor <-
         trained = trained,
         levels = levels,
         ordered = ordered,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_string2factor_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ordered = NULL,
-           skip = FALSE
-  ) {
+  function(terms, role, trained, levels, ordered, skip, id) {
     step(
       subclass = "string2factor",
       terms = terms,
@@ -89,7 +88,8 @@ step_string2factor_new <-
       trained = trained,
       levels = levels,
       ordered = ordered,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -100,7 +100,11 @@ get_ord_lvls <- function(x)
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   str_check <-
-    vapply(training[, col_names], is.character, logical(1))
+    vapply(
+      training[, col_names],
+      function(x) is.character(x) | is.factor(x),
+      logical(1)
+    )
   if (any(!str_check))
     stop(
       "The following variables are not character vectors: ",
@@ -122,36 +126,39 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     levels = res,
     ordered = ord,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 make_factor <- function(x, lvl, ord) {
+  if (is.factor(x))
+    return(x)
   factor(x, levels = lvl, ordered = ord)
 }
 
 #' @importFrom purrr map2_df map_df
 #' @export
-bake.step_string2factor <- function(object, newdata, ...) {
+bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
   if (is.list(object$levels)) {
-    newdata[, col_names] <-
-      map2_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map2_df(new_data[, col_names],
               object$levels,
               make_factor,
               ord = object$ordered[1])
   } else {
-    newdata[, col_names] <-
-      map_df(newdata[, col_names],
+    new_data[, col_names] <-
+      map_df(new_data[, col_names],
              make_factor,
              lvl = object$levels,
              ord = object$ordered[1])
   }
 
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 print.step_string2factor <-
@@ -164,6 +171,7 @@ print.step_string2factor <-
 
 #' @rdname step_string2factor
 #' @param x A `step_string2factor` object.
+#' @export
 tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
@@ -174,6 +182,7 @@ tidy.step_string2factor <- function(x, ...) {
     res <- tibble(terms = term_names,
                   ordered = rep(x$ordered, p))
   }
+  res$id <- x$id
   res
 }
 

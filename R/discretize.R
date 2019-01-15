@@ -151,12 +151,12 @@ discretize.numeric <-
 #' @rdname discretize
 #' @importFrom stats predict
 #' @param object An object of class `discretize`.
-#' @param newdata A new numeric object to be binned.
+#' @param new_data A new numeric object to be binned.
 #' @export
-predict.discretize <- function(object, newdata, ...) {
-  if (is.matrix(newdata) |
-      is.data.frame(newdata))
-    newdata <- newdata[, 1]
+predict.discretize <- function(object, new_data, ...) {
+  if (is.matrix(new_data) |
+      is.data.frame(new_data))
+    new_data <- new_data[, 1]
   object$labels <- paste0(object$prefix, object$labels)
   if (object$bins >= 1) {
     labs <- if (object$keep_na)
@@ -164,18 +164,18 @@ predict.discretize <- function(object, newdata, ...) {
     else
       object$labels
     out <-
-      cut(newdata,
+      cut(new_data,
           object$breaks,
           labels = labs,
           include.lowest = TRUE)
     if (object$keep_na) {
       out <- as.character(out)
-      if (any(is.na(newdata)))
-        out[is.na(newdata)] <- object$labels[1]
+      if (any(is.na(new_data)))
+        out[is.na(new_data)] <- object$labels[1]
       out <- factor(out, levels = object$labels)
     }
   } else
-    out <- newdata
+    out <- new_data
 
   out
 }
@@ -237,7 +237,8 @@ step_discretize <- function(recipe,
                             trained = FALSE,
                             objects = NULL,
                             options = list(),
-                            skip = FALSE) {
+                            skip = FALSE,
+                            id = rand_id("discretize")) {
   add_step(
     recipe,
     step_discretize_new(
@@ -246,18 +247,14 @@ step_discretize <- function(recipe,
       role = role,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
 step_discretize_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "discretize",
       terms = terms,
@@ -265,7 +262,8 @@ step_discretize_new <-
       trained = trained,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -296,18 +294,19 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble
 #' @importFrom stats predict
 #' @export
-bake.step_discretize <- function(object, newdata, ...) {
+bake.step_discretize <- function(object, new_data, ...) {
   for (i in names(object$objects))
-    newdata[, i] <-
-      predict(object$objects[[i]], getElement(newdata, i))
-  as_tibble(newdata)
+    new_data[, i] <-
+      predict(object$objects[[i]], getElement(new_data, i))
+  as_tibble(new_data)
 }
 
 print.step_discretize <-
@@ -321,6 +320,7 @@ print.step_discretize <-
 #' @importFrom rlang na_dbl
 #' @rdname step_discretize
 #' @param x A `step_discretize` object
+#' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {
     brks <- lapply(x$objects,
@@ -333,6 +333,7 @@ tidy.step_discretize <- function(x, ...) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
   }
+  res$id <- x$id
   res
 }
 

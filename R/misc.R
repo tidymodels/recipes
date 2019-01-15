@@ -15,7 +15,8 @@ get_types <- function(x) {
       Surv = "censored",
       logical = "logical",
       Date = "date",
-      POSIXct = "date"
+      POSIXct = "date",
+      list = "list"
     )
 
   classes <- lapply(x, class)
@@ -148,6 +149,8 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  that result _after_ `model.matrix` is called (see the
 #'  example below).
 #' @param ordinal A logical; was the original factor ordered?
+#' @param sep A single character value for the separator between the names and
+#'  levels.
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`,
@@ -179,12 +182,12 @@ names0 <- function(num, prefix = "x") {
 
 #' @export
 #' @rdname names0
-dummy_names <- function(var, lvl, ordinal = FALSE) {
+dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   if(!ordinal)
-    nms <- paste(var, make.names(lvl), sep = "_")
+    nms <- paste(var, make.names(lvl), sep = sep)
   else
     # assuming they are in order:
-    nms <- paste0(var, names0(length(lvl), "_"))
+    nms <- paste0(var, names0(length(lvl), sep))
 
   nms
 }
@@ -208,10 +211,16 @@ fun_calls <- function(f) {
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x))
     return(list(values = NA, ordered = NA))
-  out <- if (is.factor(x))
-    list(values = levels(x), ordered = is.ordered(x))
-  else
-    list(values = sort(unique(x)), ordered = FALSE)
+  out <-
+    if (is.factor(x)) {
+      list(values = levels(x),
+           ordered = is.ordered(x),
+           factor = TRUE)
+    } else {
+      list(values = sort(unique(x)),
+           ordered = FALSE,
+           factor = FALSE)
+    }
   out
 }
 
@@ -232,33 +241,65 @@ strings2factors <- function(x, info) {
   x
 }
 
+
+# ------------------------------------------------------------------------------
+
+# `complete.cases` fails on list columns. This version counts a list column
+# as missing if _all_ values are missing. For if a list vector element is a
+# data frame with one missing value, that element of the list column will
+# be counted as complete.
+#' @importFrom purrr map_dfc
+n_complete_rows <- function(x) {
+  list_cols <- purrr::map_lgl(x, is.list)
+  list_cols <- names(list_cols)[list_cols]
+
+  if (length(list_cols) > 0) {
+    # replace with logical vector (with possible missings) for calculations
+    x[, list_cols] <- map_dfc(list_cols, convert_to_logical, x = x)
+  }
+  sum(complete.cases(x))
+}
+
+insert_na <- function(x) {
+  has_miss <- all(is.na(x))
+  if (has_miss) {
+    res <- NA
+  } else {
+    res <- FALSE
+  }
+  res
+}
+
+convert_to_logical <- function(col, x) {
+  map_lgl(x[[col]], insert_na)
+}
+
 ## short summary of training set
 train_info <- function(x) {
   data.frame(nrows = nrow(x),
-             ncomplete = sum(complete.cases(x)))
+             ncomplete = n_complete_rows(x))
 }
+
+# ------------------------------------------------------------------------------
+
+
 
 ## `merge_term_info` takes the information on the current variable
 ## list and the information on the new set of variables (after each step)
 ## and merges them. Special attention is paid to cases where the
 ## _type_ of data is changed for a common column in the data.
 
-#' @importFrom dplyr left_join
+#' @importFrom dplyr right_join mutate rename select
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
   # the original value
-  tmp_new <- .new
-  names(tmp_new)[names(tmp_new) == "type"] <- "new_type"
-  tmp <- left_join(tmp_new[, c("variable", "new_type")],
-                   .old[, c("variable", "type")],
-                   by = "variable")
-  tmp <- tmp[!(is.na(tmp$new_type) | is.na(tmp$type)), ]
-  diff_type <- !(tmp$new_type == tmp$type)
-  if (any(diff_type)) {
-    ## Override old type to facilitate merge
-    .old$type[which(diff_type)] <- .new$type[which(diff_type)]
-  }
-  left_join(.new, .old, by = c("variable", "type"))
+  .old %>%
+    right_join(.new %>% dplyr::rename(new_type = type), by = "variable") %>%
+    mutate(
+      type = ifelse(is.na(type), "other", "type"),
+      type = ifelse(type != new_type, new_type, type)
+    ) %>%
+    dplyr::select(-new_type)
 }
 
 
@@ -291,7 +332,7 @@ magrittr::`%>%`
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
 #'  of [step_log()]).
-#' @param untr_obj An oject of selectors prior to prepping the
+#' @param untr_obj An object of selectors prior to prepping the
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
@@ -387,9 +428,16 @@ skip_me <- function(x) {
 is_qual <- function(x)
   is.factor(x) | is.character(x)
 
+#' Quantitatively check on variables
+#'
+#' This internal function is to be used in the prep function to ensure that
+#'   the type of the variables matches the expectation. Throws an error if
+#'   check fails.
+#' @param dat A data frame or tibble of the training data.
+#' @param quant A logical indicating whether the data is expected to be numeric
+#'   (TRUE) or a factor/character (FALSE).
 #' @export
 #' @keywords internal
-#' @rdname recipes-internal
 check_type <- function(dat, quant = TRUE) {
   if (quant) {
     all_good <- vapply(dat, is.numeric, logical(1))
@@ -426,15 +474,21 @@ is_trained <- function(x)
 #' @param x A list of selectors
 #' @return A character vector
 #' @export
+#' @importFrom purrr map_chr
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
-  term_names <- lapply(x, as.character)
-  term_names <-
-    vapply(term_names,
-           function(x) x[-1],
-           character(1))
-  term_names
+  map_chr(x, to_character)
+}
+
+#' @importFrom rlang is_quosure quo_text as_character
+to_character <- function(x) {
+  if (rlang::is_quosure(x)) {
+    res <- rlang::quo_text(x)
+  } else {
+    res <- as_character(x)
+  }
+  res
 }
 
 
@@ -447,4 +501,102 @@ simple_terms <- function(x, ...) {
   }
   res
 }
+
+#' check that newly created variable names don't overlap
+#'
+#' `check_name` is to be used in the bake function to ensure that
+#'   newly created variable names don't overlap with existing names.
+#'   Throws an error if check fails.
+#' @param res A data frame or tibble of the newly created variables.
+#' @param new_data A data frame or tibble passed to the bake function.
+#' @param object A trained object passed to the bake function.
+#' @param newname A string of variable names if prefix isn't specified
+#'   in the trained object.
+#' @param names A logical determining if the names should be set using
+#' the names function (TRUE) or colnames function (FALSE).
+#' @export
+#' @keywords internal
+check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
+  if(is.null(newname)) {
+    newname <- names0(ncol(res), object$prefix)
+  }
+  new_data_names <- colnames(new_data)
+  intersection <- new_data_names %in% newname
+  if(any(intersection)) {
+    stop("Name collision occured in `", class(object)[1],
+         "`. The following variable names already exists: ",
+         paste0(new_data_names[intersection], collapse = ", "), ".",
+         call. = FALSE)
+  }
+  if(names) {
+    names(res) <- newname
+  } else {
+    colnames(res) <- newname
+  }
+  res
+}
+
+#' Make a random identification field for steps
+#'
+#' @export
+#' @param prefix A single character string
+#' @param len An integer for the number of random characters
+#' @return A character string with the prefix and random letters separated by
+#'  and underscore.
+#' @keywords internal
+rand_id <- function(prefix = "step", len = 5) {
+  candidates <- c(letters, LETTERS, paste(0:9))
+  paste(prefix,
+        paste0(sample(candidates, len, replace = TRUE), collapse = ""),
+        sep = "_"
+  )
+}
+
+
+check_nominal_type <- function(x, lvl) {
+  all_act_cols <- names(x)
+
+  # What columns do we expect to be factors based on the data
+  # _before_ the recipes was prepped.
+
+  # Keep in mind that some columns (like outcome data) may not
+  # be in the current data so we remove those up-front.
+  lvl <- lvl[names(lvl) %in% all_act_cols]
+
+  # Figure out what we expect new data to be:
+  fac_ref_cols <- purrr::map_lgl(lvl, function(x) isTRUE(x$factor))
+  fac_ref_cols <- names(lvl)[fac_ref_cols]
+
+  if (length(fac_ref_cols) > 0) {
+
+    # Which are actual factors?
+    fac_act_cols <- purrr::map_lgl(x, is.factor)
+
+    fac_act_cols <- names(fac_act_cols)[fac_act_cols]
+
+    # There may be some original factors that do not
+    was_factor <- fac_ref_cols[!(fac_ref_cols %in% fac_act_cols)]
+
+    if (length(was_factor) > 0) {
+      warning(
+        " There ",
+        ifelse(length(was_factor) > 1, "were ", "was "),
+        length(was_factor),
+        ifelse(length(was_factor) > 1, " columns ", " column "),
+        "that ",
+        ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
+        "when the recipe was prepped:\n ",
+        paste0("'", was_factor, "'", collapse = ", "),
+        ".\n This may cause errors when processing new data.",
+        call. = FALSE
+      )
+    }
+  }
+  invisible(NULL)
+}
+
+# ------------------------------------------------------------------------------
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("type", "new_type"))
 

@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+
+context("Unordering data")
+
 lmh <- c("Low", "Med", "High")
 
 examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
@@ -13,7 +16,7 @@ test_that('correct var', {
   rec1 <- rec %>% step_unorder(X2)
 
   rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
-  rec1_trans <- bake(rec1_trained, newdata = examples)
+  rec1_trans <- bake(rec1_trained, new_data = examples)
 
   expect_true(is.factor(rec1_trans$X2))
   expect_true(!is.ordered(rec1_trans$X2))

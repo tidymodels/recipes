@@ -1,8 +1,9 @@
 library(testthat)
-context("Testing basic functionalities")
 library(tibble)
-
 library(recipes)
+
+context("Testing basic functionalities")
+
 data("biomass")
 
 test_that("Recipe correctly identifies output variable", {
@@ -26,12 +27,12 @@ test_that("return character or factor values", {
   centered <- raw_recipe %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  centered_char <- prep(centered, training = biomass, stringsAsFactors = FALSE, retain = TRUE)
-  char_var <- bake(centered_char, newdata = head(biomass))
+  centered_char <- prep(centered, training = biomass, strings_as_factors = FALSE, retain = TRUE)
+  char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  centered_fac <- prep(centered, training = biomass, stringsAsFactors = TRUE, retain = TRUE)
-  fac_var <- bake(centered_fac, newdata = head(biomass))
+  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE, retain = TRUE)
+  fac_var <- bake(centered_fac, new_data = head(biomass))
   expect_equal(class(fac_var$sample), "factor")
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))
 })
@@ -96,18 +97,58 @@ test_that("detect_step function works", {
   expect_false(detect_step(prepped_rec, "meanimpute"))
 })
 
-test_that("bake without pred", {
+test_that("bake without prep", {
   sp_signed <-  recipe(HHV ~ ., data = biomass) %>%
     step_center(all_predictors()) %>%
     step_scale(all_predictors()) %>%
     step_spatialsign(all_predictors())
   expect_error(
-    bake(sp_signed, newdata = biomass_te),
-    "At least one step has not been training. Please run `prep`."
+    bake(sp_signed, new_data = biomass_te),
+    "At least one step has not been trained. Please run `prep`."
   )
   expect_error(
     juice(sp_signed),
-    "At least one step has not been training. Please run `prep`."
+    "At least one step has not been trained. Please run `prep`."
   )
 })
 
+
+test_that("bake without newdata", {
+  # This will be deprecated in versions >= 0.1.4.9000
+  expect_false(
+    package_version(packageVersion("recipes")) > package_version("0.1.4.9000"),
+    "deprecate allowing `newdata` instead of `new_data`"
+  )
+
+  rec <-  recipe(HHV ~ ., data = biomass) %>%
+    step_center(all_numeric()) %>%
+    step_scale(all_numeric()) %>%
+    prep(training = biomass, retain = TRUE)
+
+  exp_1 <- bake(rec, new_data = biomass)
+  exp_2 <- bake(rec, new_data = biomass, all_predictors())
+  exp_3 <- bake(rec, new_data = biomass, all_predictors(), -all_nominal())
+
+  expect_error(bake(rec))
+
+  expect_warning(
+    obs_1 <- bake(rec, newdata = biomass),
+    "0.1.4"
+  )
+  expect_equal(obs_1, exp_1)
+  expect_equal(bake(rec, biomass), exp_1)
+
+  expect_warning(
+    obs_2 <- bake(rec, newdata = biomass, all_predictors()),
+    "0.1.4"
+  )
+  expect_equal(obs_2, exp_2)
+  expect_equal(bake(rec, biomass, all_predictors()), exp_2)
+
+  expect_warning(
+    obs_3 <- bake(rec, newdata = biomass, all_predictors(), -all_nominal()),
+    "0.1.4"
+  )
+  expect_equal(obs_3, exp_3)
+  expect_equal(bake(rec, biomass, all_predictors(), -all_nominal()), exp_3)
+})

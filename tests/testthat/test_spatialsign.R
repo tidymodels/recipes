@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data("biomass")
 
+context("Spatial sign transformation")
+
+
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
 
@@ -13,7 +16,7 @@ test_that('spatial sign', {
 
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
 
-  sp_sign_pred <- bake(sp_sign_trained, newdata = biomass)
+  sp_sign_pred <- bake(sp_sign_trained, new_data = biomass)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
 
   x <- as.matrix(scale(biomass[, 3:4], center = TRUE, scale = TRUE))
@@ -32,7 +35,7 @@ test_that('Missing values', {
   with_na$carbon[1] <- NA
   with_na$hydrogen[2] <- NA  
   
-  sp_sign_pred <- bake(sp_sign_trained, newdata = with_na)
+  sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
   
   x <- as.matrix(with_na[, 3:4])

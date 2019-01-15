@@ -3,6 +3,8 @@ library(recipes)
 data(biomass)
 library(splines)
 
+context("B-splines")
+
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
@@ -11,12 +13,12 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct basis functions', {
   with_bs <- rec %>%
-    step_bs(carbon, hydrogen, options = list(df = 5, degree = 2))
+    step_bs(carbon, hydrogen, deg_free = 5, degree = 2)
   
   with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
   
-  with_bs_pred_tr <- bake(with_bs, newdata = biomass_tr)
-  with_bs_pred_te <- bake(with_bs, newdata = biomass_te)
+  with_bs_pred_tr <- bake(with_bs, new_data = biomass_tr)
+  with_bs_pred_te <- bake(with_bs, new_data = biomass_te)
   
   carbon_bs_tr_exp <- bs(biomass_tr$carbon, df = 5, degree = 2)
   hydrogen_bs_tr_exp <- bs(biomass_tr$hydrogen, df = 5, degree = 2)

@@ -6,7 +6,7 @@
 \title{Centering Numeric Data}
 \usage{
 step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  na.rm = TRUE, skip = FALSE)
+  na_rm = TRUE, skip = FALSE, id = rand_id("center"))
 
 \method{tidy}{step_center}(x, ...)
 }
@@ -28,7 +28,7 @@ preprocessing have been estimated.}
 \item{means}{A named numeric vector of means. This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{na.rm}{A logical value indicating whether \code{NA}
+\item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the
@@ -37,6 +37,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_center} object.}
 }
@@ -83,7 +85,5 @@ tidy(center_obj, number = 1)
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

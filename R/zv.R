@@ -54,7 +54,8 @@ step_zv <-
            role = NA,
            trained = FALSE,
            removals = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("zv")) {
     add_step(
       recipe,
       step_zv_new(
@@ -62,24 +63,22 @@ step_zv <-
         role = role,
         trained = trained,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_zv_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           removals = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -96,15 +95,16 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     removals = names(filter)[filter],
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_zv <- function(object, newdata, ...) {
+bake.step_zv <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
-  as_tibble(newdata)
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  as_tibble(new_data)
 }
 
 print.step_zv <-
@@ -129,4 +129,5 @@ print.step_zv <-
 
 #' @rdname step_zv
 #' @param x A `step_zv` object.
+#' @export
 tidy.step_zv <- tidy_filter

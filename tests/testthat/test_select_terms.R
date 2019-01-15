@@ -4,17 +4,20 @@ library(tibble)
 library(tidyselect)
 library(rlang)
 
+context("Term selection")
+
+
 data(okc)
 rec1 <- recipe(~ ., data = okc)
 info1 <- summary(rec1)
 
 data(biomass)
 rec2 <- recipe(biomass) %>%
-  add_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
            new_role = "predictor") %>%
-  add_role(HHV, new_role = "outcome") %>%
-  add_role(sample, new_role = "id variable") %>%
-  add_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") %>%
+  update_role(sample, new_role = "id variable") %>%
+  update_role(dataset, new_role = "splitting indicator")
 info2 <- summary(rec2)
 
 test_that('simple role selections', {
@@ -102,5 +105,14 @@ test_that('combinations', {
   )
 })
 
-
+test_that('namespaced selectors', {
+  expect_equal(
+    terms_select(info = info1, quos(tidyselect::matches("e$"))),
+    terms_select(info = info1, quos(matches("e$")))
+  )
+  expect_equal(
+    terms_select(info = info1, quos(dplyr::matches("e$"))),
+    terms_select(info = info1, quos(matches("e$")))
+  )
+})
 

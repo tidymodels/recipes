@@ -6,7 +6,7 @@
 \title{Convert Factors to Strings}
 \usage{
 step_factor2string(recipe, ..., role = NA, trained = FALSE,
-  columns = FALSE, skip = FALSE)
+  columns = FALSE, skip = FALSE, id = rand_id("factor2string"))
 
 \method{tidy}{step_factor2string}(x, ...)
 }
@@ -36,6 +36,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_factor2string} object.}
 }
 \value{
@@ -49,7 +51,7 @@ columns that will be affected).
 vectors to strings.
 }
 \details{
-\code{prep} has an option \code{stringsAsFactors} that
+\code{prep} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.
@@ -64,7 +66,7 @@ rec <- rec \%>\%
 
 factor_test <- rec \%>\%
   prep(training = okc,
-       stringsAsFactors = FALSE,
+       strings_as_factors = FALSE,
        retain = TRUE) \%>\%
   juice
 # diet is a
@@ -75,7 +77,7 @@ rec <- rec \%>\%
 
 string_test <- rec \%>\%
   prep(training = okc,
-       stringsAsFactors = FALSE,
+       strings_as_factors = FALSE,
        retain = TRUE) \%>\%
   juice
 # diet is a
@@ -86,7 +88,5 @@ tidy(rec, number = 1)
 \seealso{
 \code{\link[=step_string2factor]{step_string2factor()}} \code{\link[=step_dummy]{step_dummy()}}
 }
-\concept{
-preprocessing variable_encodings factors
-}
+\concept{preprocessing variable_encodings factors}
 \keyword{datagen}

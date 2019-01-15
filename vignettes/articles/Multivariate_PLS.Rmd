@@ -68,7 +68,7 @@ Before we can finalize the PLS model, the number of PLS components to retain mus
 
 Since the data set isn't large, resampling will be used to measure these proportions. Ten repeats of 10-fold cross-validation will be used to build the PLS model on 90% of the data. For each of the 100 models, the proportions will be extracted and saved. 
 
-The folds can be created using the [`rsample` package](https://topepo.github.io/rsample/) and the recipe can be estimated for each resample using the [`prepper` function](https://topepo.github.io/rsample/reference/prepper.html): 
+The folds can be created using the [`rsample` package](https://tidymodels.github.io/rsample/) and the recipe can be estimated for each resample using the [`prepper` function](https://tidymodels.github.io/rsample/reference/prepper.html): 
 
 ```{r cv}
 library(rsample)

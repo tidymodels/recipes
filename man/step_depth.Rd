@@ -6,7 +6,8 @@
 \title{Data Depths}
 \usage{
 step_depth(recipe, ..., class, role = "predictor", trained = FALSE,
-  metric = "halfspace", options = list(), data = NULL, skip = FALSE)
+  metric = "halfspace", options = list(), data = NULL,
+  skip = FALSE, id = rand_id("depth"))
 
 \method{tidy}{step_depth}(x, ...)
 }
@@ -54,6 +55,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_depth} object.}
 }
 \value{
@@ -78,6 +81,9 @@ point not close to the centroid. \code{step_depth} can compute a
 class-specific depth for a new data point based on the proximity
 of the new value to the training set distribution.
 
+This step requires the \pkg{ddalpha} package. If not installed, the
+step will stop with a note about installing the package.
+
 Note that the entire training set is saved to compute future
 depth values. The saved data have been trained (i.e. prepared)
 and baked (i.e. processed) up to the point before the location
@@ -99,13 +105,11 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 
 rec_dists <- prep(rec, training = iris)
 
-dists_to_species <- bake(rec_dists, newdata = iris)
+dists_to_species <- bake(rec_dists, new_data = iris)
 dists_to_species
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
 }
-\concept{
-preprocessing dimension_reduction
-}
+\concept{preprocessing dimension_reduction}
 \keyword{datagen}

@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Intercept creation")
+
+
 context("step_intercept")
 
 ex_dat <- data.frame(cat = rep(c("A", "B"), each = 5), numer = 1:10)
@@ -11,7 +14,7 @@ test_that('add appropriate column with default settings', {
     step_intercept()
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- tibble::add_column(ex_dat, "intercept" = 1, .before = TRUE)
 
@@ -23,7 +26,7 @@ test_that('adds arbitrary numeric column', {
     step_intercept(name = "(Intercept)", value = 2.5)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- tibble::add_column(ex_dat, "(Intercept)" = 2.5, .before = TRUE)
 

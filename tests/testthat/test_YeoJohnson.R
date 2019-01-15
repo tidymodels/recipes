@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+
+context("Yeo Johnson transformation")
+
 n <- 20
 set.seed(1)
 ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),
@@ -41,15 +44,16 @@ exp_dat <- structure(list(x1 = c(0.435993557749438, 0.754696454247318, 0.3713279
 
 test_that('simple YJ trans', {
   rec <- recipe(~., data = ex_dat) %>%
-    step_YeoJohnson(x1, x2, x3, x4)
+    step_YeoJohnson(x1, x2, x3, x4, id = "")
 
   yj_tibble_un <-
     tibble(terms = c("x1", "x2", "x3", "x4"),
-           value = rep(na_dbl, 4))
+           value = rep(na_dbl, 4),
+           id = "")
   expect_equal(yj_tibble_un, tidy(rec, number = 1))
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
   expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tol = .001)

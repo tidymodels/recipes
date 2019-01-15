@@ -5,9 +5,10 @@
 \alias{tidy.step_knnimpute}
 \title{Imputation via K-Nearest Neighbors}
 \usage{
-step_knnimpute(recipe, ..., role = NA, trained = FALSE, K = 5,
-  impute_with = imp_vars(all_predictors()), ref_data = NULL,
-  columns = NULL, skip = FALSE)
+step_knnimpute(recipe, ..., role = NA, trained = FALSE,
+  neighbors = 5, impute_with = imp_vars(all_predictors()),
+  ref_data = NULL, columns = NULL, K = NULL, skip = FALSE,
+  id = rand_id("knnimpute"))
 
 \method{tidy}{step_knnimpute}(x, ...)
 }
@@ -28,7 +29,7 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{K}{The number of neighbors.}
+\item{neighbors}{The number of neighbors.}
 
 \item{impute_with}{A call to \code{imp_vars} to specify which
 variables are used to impute the variables that can include
@@ -47,12 +48,17 @@ is \code{NULL} until the step is trained by
 for imputation. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
+\item{K}{The number of neighbors (this will be deprecated in factor of
+\code{neighbors} in version 0.1.5). \code{neighbors} will override this option.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_knnimpute} object.}
 }
@@ -61,7 +67,7 @@ An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} (the
 selectors or variables for imputation), \code{predictors}
-(those variables used to impute), and \code{K}.
+(those variables used to impute), and \code{neighbors}.
 }
 \description{
 \code{step_knnimpute} creates a \emph{specification} of a
@@ -105,7 +111,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 ratio_recipe <- rec \%>\%
-  step_knnimpute(all_predictors(), K = 3)
+  step_knnimpute(all_predictors(), neighbors = 3)
 ratio_recipe2 <- prep(ratio_recipe, training = biomass_tr)
 imputed <- bake(ratio_recipe2, biomass_te)
 
@@ -125,7 +131,5 @@ tidy(ratio_recipe2, number = 1)
 Gower, C. (1971) "A general coefficient of
 similarity and some of its properties," Biometrics, 857-871.
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

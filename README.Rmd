@@ -1,7 +1,7 @@
 
 #  <img src="recipes_hex_thumb.png" align="center" height = "80px" align = "middle"/> 
 
-[![Build Status](https://travis-ci.org/topepo/recipes.svg?branch=master)](https://travis-ci.org/topepo/recipes)
+[![Build Status](https://travis-ci.org/tidymodels/recipes.svg?branch=master)](https://travis-ci.org/tidymodels/recipes)
 [![Coverage status](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/github/tidymodels/recipes?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes)
 [![Downloads](http://cranlogs.r-pkg.org/badges/recipes)](http://cran.rstudio.com/package=recipes)

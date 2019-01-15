@@ -62,7 +62,8 @@ step_poly <-
            trained = FALSE,
            objects = NULL,
            options = list(degree = 2),
-           skip = FALSE) {
+        skip = FALSE,
+        id = rand_id("poly")) {
     add_step(
       recipe,
       step_poly_new(
@@ -71,27 +72,25 @@ step_poly <-
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
-step_poly_new <- function(terms = NULL,
-                          role = NA,
-                          trained = FALSE,
-                          objects = NULL,
-                          options = NULL,
-                          skip = FALSE) {
-  step(
-    subclass = "poly",
-    terms = terms,
-    role = role,
-    trained = trained,
-    objects = objects,
-    options = options,
-    skip = skip
-  )
-}
+step_poly_new <- 
+  function(terms, role, trained, objects, options, skip, id) {
+    step(
+      subclass = "poly",
+      terms = terms,
+      role = role,
+      trained = trained,
+      objects = objects,
+      options = options,
+      skip = skip,
+      id = id
+    )
+  }
 
 
 poly_wrapper <- function(x, args) {
@@ -123,35 +122,36 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
 #' @export
-bake.step_poly <- function(object, newdata, ...) {
+bake.step_poly <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   poly_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(poly_values) <- rep("", sum(new_cols))
   strt <- 1
   for (i in names(object$objects)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     poly_values[, cols] <-
-      predict(object$objects[[i]], getElement(newdata, i))
+      predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "poly", names0(new_cols[i], ""), sep = "_")
     colnames(poly_values)[cols] <- new_names
     strt <- max(cols) + 1
-    newdata[, orig_var] <- NULL
+    new_data[, orig_var] <- NULL
   }
-  newdata <- bind_cols(newdata, as_tibble(poly_values))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(poly_values))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
@@ -164,6 +164,7 @@ print.step_poly <-
 
 #' @rdname step_poly
 #' @param x A `step_poly` object.
+#' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),
@@ -173,5 +174,6 @@ tidy.step_poly <- function(x, ...) {
     res <- tibble(terms = term_names,
                   degree = x$options$degree)
   }
+  res$id <- x$id
   res
 }

@@ -6,7 +6,8 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  one_hot = FALSE, naming = dummy_names, levels = NULL, skip = FALSE)
+  one_hot = FALSE, naming = dummy_names, levels = NULL,
+  skip = FALSE, id = rand_id("dummy"))
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -15,7 +16,7 @@ step_dummy(recipe, ..., role = "predictor", trained = FALSE,
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will be used to create the dummy variables. See
+\emph{factor} variables will be used to create the dummy variables. See
 \code{\link[=selections]{selections()}} for more details. The selected
 variables must be factors. For the \code{tidy} method, these are
 not currently used.}
@@ -45,6 +46,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_dummy} object.}
 }
@@ -96,7 +99,7 @@ When data to be processed contains novel levels (i.e., not
 contained in the training set), a missing value is assigned to
 the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
-The \href{https://topepo.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
+The \href{https://tidymodels.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
 }
 \examples{
@@ -108,7 +111,7 @@ rec <- recipe(~ diet + age + height, data = okc)
 dummies <- rec \%>\% step_dummy(diet)
 dummies <- prep(dummies, training = okc)
 
-dummy_data <- bake(dummies, newdata = okc)
+dummy_data <- bake(dummies, new_data = okc)
 
 unique(okc$diet)
 grep("^diet", names(dummy_data), value = TRUE)
@@ -135,8 +138,6 @@ tidy(dummies, number = 1)
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}
 }
-\concept{
-preprocessing dummy_variables model_specification
-dummy_variables variable_encodings
-}
+\concept{preprocessing dummy_variables model_specification
+dummy_variables variable_encodings}
 \keyword{datagen}

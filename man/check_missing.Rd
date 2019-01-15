@@ -5,8 +5,8 @@
 \alias{tidy.check_missing}
 \title{Check for Missing Values}
 \usage{
-check_missing(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE)
+check_missing(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, skip = FALSE, id = rand_id("missing"))
 
 \method{tidy}{check_missing}(x, ...)
 }
@@ -35,6 +35,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{check_missing} object.}
 }
 \value{
@@ -56,7 +58,7 @@ to the data.
 data(credit_data)
 is.na(credit_data) \%>\% colSums()
 
-# If the test passes, newdata is returned unaltered
+# If the test passes, `new_data` is returned unaltered
 recipe(credit_data) \%>\%
   check_missing(Age, Expenses) \%>\%
   prep() \%>\%
@@ -70,7 +72,7 @@ recipe(credit_data)  \%>\%
   prep()
 }
 
-# If newdata contain missing values, the check will stop bake()
+# If `new_data` contain missing values, the check will stop bake()
 
 train_data <- credit_data \%>\% dplyr::filter(Income > 150)
 test_data  <- credit_data \%>\% dplyr::filter(Income <= 150 | is.na(Income))

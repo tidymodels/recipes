@@ -6,7 +6,7 @@
 \title{Scaling Numeric Data}
 \usage{
 step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
-  na.rm = TRUE, skip = FALSE)
+  na_rm = TRUE, skip = FALSE, id = rand_id("scale"))
 
 \method{tidy}{step_scale}(x, ...)
 }
@@ -28,7 +28,7 @@ preprocessing have been estimated.}
 \item{sds}{A named numeric vector of standard deviations This
 is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{na.rm}{A logical value indicating whether \code{NA}
+\item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed when computing the standard deviation.}
 
 \item{skip}{A logical. Should the step be skipped when the
@@ -37,6 +37,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_scale} object.}
 }
@@ -82,7 +84,5 @@ tidy(scaled_trans, number = 1)
 tidy(scaled_obj, number = 1)
 
 }
-\concept{
-preprocessing normalization_methods
-}
+\concept{preprocessing normalization_methods}
 \keyword{datagen}

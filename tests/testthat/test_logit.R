@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+context("Logit transformation")
+
+
 n <- 20
 set.seed(12)
 ex_dat <- data.frame(x1 = runif(n),
@@ -12,7 +15,7 @@ test_that('simple logit trans', {
     step_logit(x1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   exp_res <- as_tibble(ex_dat)
   exp_res$x1 <- binomial()$linkfun(exp_res$x1)

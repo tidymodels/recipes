@@ -5,8 +5,8 @@
 \alias{tidy.step_meanimpute}
 \title{Impute Numeric Data Using the Mean}
 \usage{
-step_meanimpute(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  trim = 0, skip = FALSE)
+step_meanimpute(recipe, ..., role = NA, trained = FALSE,
+  means = NULL, trim = 0, skip = FALSE, id = rand_id("meanimpute"))
 
 \method{tidy}{step_meanimpute}(x, ...)
 }
@@ -39,6 +39,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_meanimpute} object.}
 }
@@ -80,7 +82,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, newdata = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
 credit_te[missing_examples,]
 imputed_te[missing_examples, names(credit_te)]
@@ -88,7 +90,5 @@ imputed_te[missing_examples, names(credit_te)]
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

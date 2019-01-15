@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 data(biomass)
 
+context("Polynomial features")
+
+
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
@@ -10,10 +13,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct basis functions', {
   with_poly <- rec %>%
-    step_poly(carbon, hydrogen)
+    step_poly(carbon, hydrogen, id = "")
 
   exp_tidy_un <- tibble(terms = c("carbon", "hydrogen"),
-                        degree = rep(2, 2))
+                        degree = rep(2, 2),
+                        id = "")
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
 
@@ -21,8 +25,8 @@ test_that('correct basis functions', {
 
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
-  with_poly_pred_tr <- bake(with_poly, newdata = biomass_tr)
-  with_poly_pred_te <- bake(with_poly, newdata = biomass_te)
+  with_poly_pred_tr <- bake(with_poly, new_data = biomass_tr)
+  with_poly_pred_te <- bake(with_poly, new_data = biomass_te)
 
   carbon_poly_tr_exp <- poly(biomass_tr$carbon, degree = 2)
   hydrogen_poly_tr_exp <- poly(biomass_tr$hydrogen, degree = 2)

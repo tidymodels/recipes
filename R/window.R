@@ -16,7 +16,7 @@
 #'  new columns will have a role of `NULL` unless this argument
 #'  has a value.
 #' @param size An odd integer `>= 3` for the window size.
-#' @param na.rm A logical for whether missing values should be
+#' @param na_rm A logical for whether missing values should be
 #'  removed from the calculations within each window.
 #' @param statistic A character string for the type of statistic
 #'  that should be calculated for each moving window. Possible
@@ -48,6 +48,9 @@
 #'  smoothed with a 5-point moving median, the first three smoothed
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
+#'
+# This step requires the \pkg{RcppRoll} package. If not installed, the
+#'  step will stop with a note about installing the package.
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -104,11 +107,12 @@ step_window <-
            role = NA,
            trained = FALSE,
            size = 3,
-           na.rm = TRUE,
+           na_rm = TRUE,
            statistic = "mean",
            columns = NULL,
            names = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("window")) {
     if(!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
@@ -138,11 +142,12 @@ step_window <-
         trained = trained,
         role = role,
         size = size,
-        na.rm = na.rm,
+        na_rm = na_rm,
         statistic = statistic,
         columns = columns,
         names = names,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
@@ -150,26 +155,19 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           size = NULL,
-           na.rm = NULL,
-           statistic = NULL,
-           columns = NULL,
-           names = names,
-           skip = FALSE) {
+  function(terms, role, trained, size, na_rm, statistic, columns, names, skip, id) {
     step(
       subclass = "window",
       terms = terms,
       role = role,
       trained = trained,
       size = size,
-      na.rm = na.rm,
+      na_rm = na_rm,
       statistic = statistic,
       columns = columns,
       names = names,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -192,23 +190,24 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     size = x$size,
-    na.rm = x$na.rm,
+    na_rm = x$na_rm,
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
-#' @importFrom RcppRoll roll_max roll_maxl roll_maxr
-#' @importFrom RcppRoll roll_mean roll_meanl roll_meanr
-#' @importFrom RcppRoll roll_median roll_medianl roll_medianr
-#' @importFrom RcppRoll roll_min roll_minl roll_minr
-#' @importFrom RcppRoll roll_prod roll_prodl roll_prodr
-#' @importFrom RcppRoll roll_sd roll_sdl roll_sdr
-#' @importFrom RcppRoll roll_sum roll_suml roll_sumr
-#' @importFrom RcppRoll roll_var roll_varl roll_varr
-roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
+# @importFrom RcppRoll roll_max roll_maxl roll_maxr
+# @importFrom RcppRoll roll_mean roll_meanl roll_meanr
+# @importFrom RcppRoll roll_median roll_medianl roll_medianr
+# @importFrom RcppRoll roll_min roll_minl roll_minr
+# @importFrom RcppRoll roll_prod roll_prodl roll_prodr
+# @importFrom RcppRoll roll_sd roll_sdl roll_sdr
+# @importFrom RcppRoll roll_sum roll_suml roll_sumr
+# @importFrom RcppRoll roll_var roll_varl roll_varr
+roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   m <- length(x)
 
@@ -217,15 +216,13 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
     stop("The window is too large.", call. = FALSE)
 
   ## stats for centered window
-  roll_cl <- quote(
-    roll_mean(
-      x = x, n = window, weights = NULL, by = 1L,
-      fill = NA, partial = FALSE,
-      normalize = TRUE, na.rm = na.rm
-    )
+  opts <- list(
+    x = x, n = window, by = 1L,
+    fill = NA, partial = FALSE,
+    normalize = TRUE, na.rm = na_rm
   )
 
-  roll_cl[[1]] <- as.name(paste0("roll_", stat))
+  roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
   x2 <- eval(roll_cl)
 
   ## Fill in the left-hand points. Add enough data so that the
@@ -239,23 +236,23 @@ roller <- function(x, stat = "mean", window = 3L, na.rm = TRUE) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_window <- function(object, newdata, ...) {
+bake.step_window <- function(object, new_data, ...) {
   for (i in seq(along = object$columns)) {
     if (!is.null(object$names)) {
-      newdata[, object$names[i]] <-
-        roller(x = getElement(newdata, object$columns[i]),
+      new_data[, object$names[i]] <-
+        roller(x = getElement(new_data, object$columns[i]),
                stat = object$statistic,
-               na.rm = object$na.rm,
+               na_rm = object$na_rm,
                window = object$size)
     } else {
-      newdata[, object$columns[i]] <-
-        roller(x = getElement(newdata, object$columns[i]),
+      new_data[, object$columns[i]] <-
+        roller(x = getElement(new_data, object$columns[i]),
                stat = object$statistic,
-               na.rm = object$na.rm,
+               na_rm = object$na_rm,
                window = object$size)
     }
   }
-  newdata
+  new_data
 }
 
 
@@ -275,9 +272,11 @@ print.step_window <-
 
 #' @rdname step_window
 #' @param x A `step_window` object.
+#' @export
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
   out$statistic <- x$statistic
   out$size <- x$size
+  out$id <- x$id
   out
 }

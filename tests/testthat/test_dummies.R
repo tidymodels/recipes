@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+context("Dummy variable creation")
+
+
 data(okc)
 
 okc_missing <- okc
@@ -14,9 +17,9 @@ okc_fac$location <- factor(okc_fac$location)
 
 test_that('dummy variables with factor inputs', {
   rec <- recipe(age ~ location + diet, data = okc_fac)
-  dummy <- rec %>% step_dummy(diet, location)
-  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
-  dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())
+  dummy <- rec %>% step_dummy(diet, location, id = "")
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL
@@ -32,25 +35,39 @@ test_that('dummy variables with factor inputs', {
   expect_equivalent(dummy_pred, exp_res)
 
   dum_tibble <-
-    tibble(terms = c("diet", "location"))
+    tibble(terms = c("diet", "location"), id = "")
 
   expect_equal(tidy(dummy, 1), dum_tibble)
   expect_equal(tidy(dummy_trained, 1), dum_tibble)
 })
 
-test_that('dummy variables with string inputs', {
+test_that('dummy variables with non-factor inputs', {
   rec <- recipe(age ~ location + diet, data = okc)
   dummy <- rec %>% step_dummy(diet, location)
-  expect_error(
-    prep(dummy, training = okc, verbose = FALSE, stringsAsFactors = FALSE)
+  
+  expect_warning(
+    expect_error(
+      prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
+    )
   )
+  
+  okc_fac_ish <- 
+    okc_fac %>%
+    mutate(diet = as.character(diet))
+  
+  expect_warning(
+    recipe(age ~ location + height + diet, data = okc_fac_ish) %>% 
+      step_dummy(diet, location, height) %>%
+      prep(training = okc_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
+  )  
+  
 })
 
 test_that('create all dummy variables', {
   rec <- recipe(age ~ location + diet + height, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE)
-  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, stringsAsFactors = FALSE)
-  dummy_pred <- bake(dummy_trained, newdata = okc_fac, all_predictors())
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL
@@ -71,9 +88,9 @@ test_that('tests for issue #91', {
   rec <- recipe(~ diet, data = okc)
   factors <- rec %>% step_dummy(diet)
   factors <- prep(factors, training = okc)
-  factors_data_1 <- bake(factors, newdata = okc)
+  factors_data_1 <- bake(factors, new_data = okc)
   # Remove one category in diet
-  factors_data_2 <- bake(factors, newdata = okc %>% filter(diet != 'halal'))
+  factors_data_2 <- bake(factors, new_data = okc %>% filter(diet != 'halal'))
   expect_equal(names(factors_data_1), names(factors_data_2))
 
   # now with ordered factor
@@ -82,9 +99,9 @@ test_that('tests for issue #91', {
   rec <- recipe(~ ordered_diet, data = okc)
   orderedfac <- rec %>% step_dummy(ordered_diet)
   orderedfac <- prep(orderedfac, training = okc)
-  ordered_data_1 <- bake(orderedfac, newdata = okc)
+  ordered_data_1 <- bake(orderedfac, new_data = okc)
   # Remove one category in diet
-  ordered_data_2 <- bake(orderedfac, newdata = okc %>% filter(diet != 'halal'))
+  ordered_data_2 <- bake(orderedfac, new_data = okc %>% filter(diet != 'halal'))
   expect_equal(names(ordered_data_1), names(ordered_data_2))
 
 })
@@ -92,10 +109,14 @@ test_that('tests for issue #91', {
 test_that('tests for NA values in factor', {
   rec <- recipe(~ diet, data = okc_missing)
   factors <- rec %>% step_dummy(diet)
-  factors <- prep(factors, training = okc_missing, retain = TRUE)
+  expect_warning(
+    factors <- prep(factors, training = okc_missing, retain = TRUE)
+  )
   
   factors_data_0 <- juice(factors)
-  factors_data_1 <- bake(factors, newdata = okc_missing)
+  expect_warning(
+    factors_data_1 <- bake(factors, new_data = okc_missing)
+  )
   
   expect_true(
     all(complete.cases(factors_data_0) == complete.cases(okc_missing[, "diet"]))
@@ -110,10 +131,14 @@ test_that('tests for NA values in ordered factor', {
   okc_ordered$diet <- as.ordered(okc_ordered$diet)
   rec <- recipe(~ diet, data = okc_ordered)
   factors <- rec %>% step_dummy(diet)
-  factors <- prep(factors, training = okc_ordered, retain = TRUE)
+  expect_warning(
+    factors <- prep(factors, training = okc_ordered, retain = TRUE)
+  )
   
   factors_data_0 <- juice(factors)
-  factors_data_1 <- bake(factors, newdata = okc_ordered)
+  expect_warning(
+    factors_data_1 <- bake(factors, new_data = okc_ordered)
+  )
   
   expect_true(
     all(complete.cases(factors_data_0) == complete.cases(okc_ordered[, "diet"]))
@@ -151,7 +176,7 @@ test_that('new levels', {
     rec <- prep(rec, training = training, retain = TRUE)
   )
   expect_warning(
-    bake(rec, newdata = testing)
+    bake(rec, new_data = testing)
   )
 })
 

@@ -13,10 +13,11 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
+#' @param deg_free The degrees of freedom. 
 #' @param objects A list of [splines::ns()] objects
 #'  created once the step has been trained.
 #' @param options A list of options for [splines::ns()]
-#'  which should not include `x`.
+#'  which should not include `x` or `df`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -55,36 +56,37 @@ step_ns <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(df = 2),
-           skip = FALSE) {
+           deg_free = 2,
+           options = list(),
+           skip = FALSE,
+           id = rand_id("ns")) {
     add_step(
       recipe,
       step_ns_new(
         terms = ellipse_check(...),
         trained = trained,
+        deg_free = deg_free,
         role = role,
         objects = objects,
         options = options,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ns_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           objects = NULL,
-           options = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, deg_free, objects, options, skip, id) {
     step(
       subclass = "ns",
       terms = terms,
       role = role,
       trained = trained,
+      deg_free = deg_free,
       objects = objects,
       options = options,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -108,44 +110,48 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  obj <- lapply(training[, col_names], ns_wrapper, x$options)
+  opt <- x$options
+  opt$df <- x$deg_free
+  obj <- lapply(training[, col_names], ns_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    deg_free = x$deg_free,
     objects = obj,
     options = x$options,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom tibble as_tibble is_tibble
 #' @importFrom stats predict
 #' @export
-bake.step_ns <- function(object, newdata, ...) {
+bake.step_ns <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   ns_values <-
-    matrix(NA, nrow = nrow(newdata), ncol = sum(new_cols))
+    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(ns_values) <- rep("", sum(new_cols))
   strt <- 1
   for (i in names(object$objects)) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     ns_values[, cols] <-
-      predict(object$objects[[i]], getElement(newdata, i))
+      predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
     colnames(ns_values)[cols] <- new_names
     strt <- max(cols) + 1
-    newdata[, orig_var] <- NULL
+    new_data[, orig_var] <- NULL
   }
-  newdata <- bind_cols(newdata, as_tibble(ns_values))
-  if (!is_tibble(newdata))
-    newdata <- as_tibble(newdata)
-  newdata
+  new_data <- bind_cols(new_data, as_tibble(ns_values))
+  if (!is_tibble(new_data))
+    new_data <- as_tibble(new_data)
+  new_data
 }
 
 
@@ -158,10 +164,12 @@ print.step_ns <-
 
 #' @rdname step_ns
 #' @param x A `step_ns` object.
+#' @export
 tidy.step_ns <- function(x, ...) {
   res <- simple_terms(x, ...)
   res <- expand.grid(terms = res$terms,
                      degree = x$degree,
                      stringsAsFactors = FALSE)
+  res$id <- x$id
   as_tibble(res)
 }

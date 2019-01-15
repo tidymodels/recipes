@@ -1,0 +1,287 @@
+library(testthat)
+library(recipes)
+library(tibble)
+
+context("Merging/updating term_info")
+
+# results based on second example at
+# https://github.com/tidymodels/textrecipes/issues/17#issue-382503618
+tokenize_old <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "essay0", "nominal", "predictor", "original",
+    "essay0", "nominal",   "textual", "original",
+    "essay1", "nominal", "predictor", "original",
+    "essay1", "nominal",   "textual", "original",
+    "essay2", "nominal", "predictor", "original",
+    "essay2", "nominal",   "textual", "original",
+    "essay3", "nominal", "predictor", "original",
+    "essay3", "nominal",   "textual", "original",
+    "essay4", "nominal", "predictor", "original",
+    "essay4", "nominal",   "textual", "original",
+    "essay5", "nominal", "predictor", "original",
+    "essay5", "nominal",   "textual", "original",
+    "essay6", "nominal", "predictor", "original",
+    "essay6", "nominal",   "textual", "original",
+    "essay7", "nominal", "predictor", "original",
+    "essay7", "nominal",   "textual", "original",
+    "essay8", "nominal", "predictor", "original",
+    "essay8", "nominal",   "textual", "original",
+    "essay9", "nominal", "predictor", "original",
+    "essay9", "nominal",   "textual", "original"
+  )
+
+tokenize_new <-
+  tibble::tribble(
+    ~variable,  ~type,
+    "essay0", "list",
+    "essay1", "list",
+    "essay2", "list",
+    "essay3", "list",
+    "essay4", "list",
+    "essay5", "list",
+    "essay6", "list",
+    "essay7", "list",
+    "essay8", "list",
+    "essay9", "list"
+  )
+
+tokenize_res <-
+  tibble::tribble(
+    ~variable,  ~type,       ~role,    ~source,
+    "essay0", "list", "predictor", "original",
+    "essay0", "list",   "textual", "original",
+    "essay1", "list", "predictor", "original",
+    "essay1", "list",   "textual", "original",
+    "essay2", "list", "predictor", "original",
+    "essay2", "list",   "textual", "original",
+    "essay3", "list", "predictor", "original",
+    "essay3", "list",   "textual", "original",
+    "essay4", "list", "predictor", "original",
+    "essay4", "list",   "textual", "original",
+    "essay5", "list", "predictor", "original",
+    "essay5", "list",   "textual", "original",
+    "essay6", "list", "predictor", "original",
+    "essay6", "list",   "textual", "original",
+    "essay7", "list", "predictor", "original",
+    "essay7", "list",   "textual", "original",
+    "essay8", "list", "predictor", "original",
+    "essay8", "list",   "textual", "original",
+    "essay9", "list", "predictor", "original",
+    "essay9", "list",   "textual", "original"
+  )
+
+untokenize_old <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "essay0", "nominal", "predictor", "original",
+    "essay0", "nominal",   "textual", "original",
+    "essay1", "nominal", "predictor", "original",
+    "essay1", "nominal",   "textual", "original",
+    "essay2", "nominal", "predictor", "original",
+    "essay2", "nominal",   "textual", "original",
+    "essay3", "nominal", "predictor", "original",
+    "essay3", "nominal",   "textual", "original",
+    "essay4", "nominal", "predictor", "original",
+    "essay4", "nominal",   "textual", "original",
+    "essay5", "nominal", "predictor", "original",
+    "essay5", "nominal",   "textual", "original",
+    "essay6", "nominal", "predictor", "original",
+    "essay6", "nominal",   "textual", "original",
+    "essay7", "nominal", "predictor", "original",
+    "essay7", "nominal",   "textual", "original",
+    "essay8", "nominal", "predictor", "original",
+    "essay8", "nominal",   "textual", "original",
+    "essay9", "nominal", "predictor", "original",
+    "essay9", "nominal",   "textual", "original"
+  )
+
+untokenize_new <-
+  tibble::tribble(
+    ~variable,  ~type,
+    "essay0", "list",
+    "essay1", "list",
+    "essay2", "list",
+    "essay3", "list",
+    "essay4", "list",
+    "essay5", "list",
+    "essay6", "list",
+    "essay7", "list",
+    "essay8", "list",
+    "essay9", "list"
+  )
+
+untokenize_res <-
+  tibble::tribble(
+    ~variable,  ~type,       ~role,    ~source,
+    "essay0", "list", "predictor", "original",
+    "essay0", "list",   "textual", "original",
+    "essay1", "list", "predictor", "original",
+    "essay1", "list",   "textual", "original",
+    "essay2", "list", "predictor", "original",
+    "essay2", "list",   "textual", "original",
+    "essay3", "list", "predictor", "original",
+    "essay3", "list",   "textual", "original",
+    "essay4", "list", "predictor", "original",
+    "essay4", "list",   "textual", "original",
+    "essay5", "list", "predictor", "original",
+    "essay5", "list",   "textual", "original",
+    "essay6", "list", "predictor", "original",
+    "essay6", "list",   "textual", "original",
+    "essay7", "list", "predictor", "original",
+    "essay7", "list",   "textual", "original",
+    "essay8", "list", "predictor", "original",
+    "essay8", "list",   "textual", "original",
+    "essay9", "list", "predictor", "original",
+    "essay9", "list",   "textual", "original"
+  )
+
+test_that('issue #', {
+  expect_equal(
+    recipes:::merge_term_info(.old = tokenize_old, .new = tokenize_new),
+    tokenize_res
+  )
+
+  expect_equal(
+    recipes:::merge_term_info(.old = untokenize_old, .new = untokenize_new),
+    untokenize_res
+  )
+})
+
+
+# tests based on the results of this code before the update:
+
+# data(credit_data)
+#
+# recipe(Status ~ Seniority + Job + Price + Age, data = credit_data) %>%
+#   step_dummy(Job) %>%
+#   step_poly(Price) %>%
+#   step_rm(Age) %>%
+#   prep(credit_data)
+
+dummy_old <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Job", "nominal", "predictor", "original",
+    "Price", "numeric", "predictor", "original",
+    "Age", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original"
+  )
+dummy_new <-
+  tibble::tribble(
+    ~variable,     ~type,
+    "Seniority", "numeric",
+    "Price", "numeric",
+    "Age", "numeric",
+    "Status", "nominal",
+    "Job_freelance", "numeric",
+    "Job_others", "numeric",
+    "Job_partime", "numeric"
+  )
+
+dummy_res <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Price", "numeric", "predictor", "original",
+    "Age", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original",
+    "Job_freelance", "numeric",          NA,         NA,
+    "Job_others", "numeric",          NA,         NA,
+    "Job_partime", "numeric",          NA,         NA
+  )
+
+# recipes:::merge_term_info(.new = dummy_new, .old = dummy_old)
+
+poly_old <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Price", "numeric", "predictor", "original",
+    "Age", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original",
+    "Job_freelance", "numeric", "predictor",  "derived",
+    "Job_others", "numeric", "predictor",  "derived",
+    "Job_partime", "numeric", "predictor",  "derived"
+  )
+
+poly_new <-
+  tibble::tribble(
+    ~variable,     ~type,
+    "Seniority", "numeric",
+    "Age", "numeric",
+    "Status", "nominal",
+    "Job_freelance", "numeric",
+    "Job_others", "numeric",
+    "Job_partime", "numeric",
+    "Price_poly_1", "numeric",
+    "Price_poly_2", "numeric"
+  )
+
+poly_res <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Age", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original",
+    "Job_freelance", "numeric", "predictor",  "derived",
+    "Job_others", "numeric", "predictor",  "derived",
+    "Job_partime", "numeric", "predictor",  "derived",
+    "Price_poly_1", "numeric",          NA,         NA,
+    "Price_poly_2", "numeric",          NA,         NA
+  )
+
+rm_old <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Age", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original",
+    "Job_freelance", "numeric", "predictor",  "derived",
+    "Job_others", "numeric", "predictor",  "derived",
+    "Job_partime", "numeric", "predictor",  "derived",
+    "Price_poly_1", "numeric", "predictor",  "derived",
+    "Price_poly_2", "numeric", "predictor",  "derived"
+  )
+
+rm_new <-
+  tibble::tribble(
+    ~variable,     ~type,
+    "Seniority", "numeric",
+    "Status", "nominal",
+    "Job_freelance", "numeric",
+    "Job_others", "numeric",
+    "Job_partime", "numeric",
+    "Price_poly_1", "numeric",
+    "Price_poly_2", "numeric"
+  )
+
+rm_res <-
+  tibble::tribble(
+    ~variable,     ~type,       ~role,    ~source,
+    "Seniority", "numeric", "predictor", "original",
+    "Status", "nominal",   "outcome", "original",
+    "Job_freelance", "numeric", "predictor",  "derived",
+    "Job_others", "numeric", "predictor",  "derived",
+    "Job_partime", "numeric", "predictor",  "derived",
+    "Price_poly_1", "numeric", "predictor",  "derived",
+    "Price_poly_2", "numeric", "predictor",  "derived"
+  )
+
+test_that('typical use cases', {
+  expect_equal(
+    recipes:::merge_term_info(.old = dummy_old, .new = dummy_new),
+    dummy_res
+  )
+
+  expect_equal(
+    recipes:::merge_term_info(.old = poly_old, .new = poly_new),
+    poly_res
+  )
+
+  expect_equal(
+    recipes:::merge_term_info(.old = rm_old, .new = rm_new),
+    rm_res
+  )
+})

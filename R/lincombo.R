@@ -62,7 +62,8 @@ step_lincomb <-
            trained = FALSE,
            max_steps = 5,
            removals = NULL,
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("lincomp")) {
     add_step(
       recipe,
       step_lincomb_new(
@@ -71,18 +72,14 @@ step_lincomb <-
         trained = trained,
         max_steps = max_steps,
         removals = removals,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_lincomb_new <-
-  function(terms = NULL,
-           role = NA,
-           trained = FALSE,
-           max_steps = NULL,
-           removals = NULL,
-           skip = FALSE) {
+  function(terms, role, trained, max_steps, removals, skip, id) {
     step(
       subclass = "lincomb",
       terms = terms,
@@ -90,7 +87,8 @@ step_lincomb_new <-
       trained = trained,
       max_steps = max_steps,
       removals = removals,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
@@ -108,15 +106,16 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     max_steps = x$max_steps,
     removals = filter,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_lincomb <- function(object, newdata, ...) {
+bake.step_lincomb <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    newdata <- newdata[, !(colnames(newdata) %in% object$removals)]
-  as_tibble(newdata)
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  as_tibble(new_data)
 }
 
 print.step_lincomb <-
@@ -211,4 +210,5 @@ iter_lc_rm <- function(x,
 
 #' @rdname step_lincomb
 #' @param x A `step_lincomb` object.
+#' @export
 tidy.step_lincomb <- tidy_filter

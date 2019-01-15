@@ -7,7 +7,7 @@
 \usage{
 step_corr(recipe, ..., role = NA, trained = FALSE, threshold = 0.9,
   use = "pairwise.complete.obs", method = "pearson", removals = NULL,
-  skip = FALSE)
+  skip = FALSE, id = rand_id("corr"))
 
 \method{tidy}{step_corr}(x, ...)
 }
@@ -47,6 +47,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_corr} object.}
 }
@@ -101,7 +103,5 @@ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in \code{caret} package). Max Kuhn for the \code{step}
 function.
 }
-\concept{
-preprocessing variable_filters
-}
+\concept{preprocessing variable_filters}
 \keyword{datagen}

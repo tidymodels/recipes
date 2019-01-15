@@ -1,6 +1,9 @@
 library(tibble)
 library(dplyr)
 
+context("Grouped data frame tests")
+
+
 n <- 20
 ex_dat <- data.frame(x1 = seq(0, 1, length = n),
                      x2 = rep(1:5, 4)) %>%
@@ -13,7 +16,7 @@ test_that("grouped data frames work", {
     step_poly(x2, options = list(degrees = 2))
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-  rec_trans <- bake(rec_trained, newdata = ex_dat)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
   expect_equal(names(rec_trans), c("x1", "x2_poly_1", "x2_poly_2"))
 
 })

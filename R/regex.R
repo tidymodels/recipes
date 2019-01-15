@@ -43,7 +43,7 @@
 #' rec2 <- prep(rec, training = covers)
 #' rec2
 #'
-#' with_dummies <- bake(rec2, newdata = covers)
+#' with_dummies <- bake(rec2, new_data = covers)
 #' with_dummies
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
@@ -55,7 +55,8 @@ step_regex <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
-                       skip = FALSE) {
+                       skip = FALSE,
+                       id = rand_id("regex")) {
   if (!is.character(pattern))
     stop("`pattern` should be a character string", call. = FALSE)
   if (length(pattern) != 1)
@@ -68,7 +69,7 @@ step_regex <- function(recipe,
 
   terms <- ellipse_check(...)
   if (length(terms) > 1)
-    stop("For this step, only a single selector can be used.", 
+    stop("For this step, only a single selector can be used.",
          call. = FALSE)
 
   add_step(
@@ -81,19 +82,14 @@ step_regex <- function(recipe,
       options = options,
       result = result,
       input = input,
-      skip = skip
+      skip = skip,
+      id = id
     )
   )
 }
 
-step_regex_new <- function(terms = NULL,
-                           role = NA,
-                           trained = FALSE,
-                           pattern = NULL,
-                           options = NULL,
-                           result = NULL,
-                           input = NULL,
-                           skip = FALSE) {
+step_regex_new <- 
+  function(terms, role, trained, pattern, options, result, input, skip, id) {
   step(
     subclass = "regex",
     terms = terms,
@@ -103,7 +99,8 @@ step_regex_new <- function(terms = NULL,
     options = options,
     result = result,
     input = input,
-    skip = skip
+    skip = skip,
+    id = id
   )
 }
 
@@ -123,16 +120,17 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @importFrom rlang expr
-bake.step_regex <- function(object, newdata, ...) {
+bake.step_regex <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     grepl(
-      x = getElement(newdata, object$input),
+      x = getElement(new_data, object$input),
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -143,8 +141,8 @@ bake.step_regex <- function(object, newdata, ...) {
   if (length(object$options) > 0)
     regex <- mod_call_args(regex, args = object$options)
 
-  newdata[, object$result] <- ifelse(eval(regex), 1, 0)
-  newdata
+  new_data[, object$result] <- ifelse(eval(regex), 1, 0)
+  new_data
 }
 
 print.step_regex <-
@@ -163,6 +161,7 @@ print.step_regex <-
 
 #' @rdname step_regex
 #' @param x A `step_regex` object.
+#' @export
 tidy.step_regex <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
@@ -173,6 +172,7 @@ tidy.step_regex <- function(x, ...) {
     res <- tibble(terms = term_names,
                   result = rep(na_chr, p))
   }
+  res$id <- x$id
   res
 }
 

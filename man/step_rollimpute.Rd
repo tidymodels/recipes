@@ -5,8 +5,9 @@
 \alias{tidy.step_rollimpute}
 \title{Impute Numeric Data Using a Rolling Window Statistic}
 \usage{
-step_rollimpute(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  statistic = median, window = 5, skip = FALSE)
+step_rollimpute(recipe, ..., role = NA, trained = FALSE,
+  columns = NULL, statistic = median, window = 5, skip = FALSE,
+  id = rand_id("rollimpute"))
 
 \method{tidy}{step_rollimpute}(x, ...)
 }
@@ -43,6 +44,8 @@ when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not b
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
+
+\item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_rollimpute} object.}
 }
@@ -89,13 +92,11 @@ example_data$x2[c(1:4, 10)] <- NA
 
 library(recipes)
 seven_pt <- recipe(~ . , data = example_data) \%>\%
-  add_role(day, new_role = "time_index") \%>\%
+  update_role(day, new_role = "time_index") \%>\%
   step_rollimpute(all_predictors(), window = 7) \%>\%
   prep(training = example_data, retain = TRUE)
 
 juice(seven_pt)
 }
-\concept{
-preprocessing imputation
-}
+\concept{preprocessing imputation}
 \keyword{datagen}

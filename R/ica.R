@@ -14,8 +14,8 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new independent component columns created by the
 #'  original variables will be used as predictors in a model.
-#' @param num The number of ICA components to retain as new
-#'  predictors. If `num` is greater than the number of columns
+#' @param num_comp The number of ICA components to retain as new
+#'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param options A list of options to
@@ -25,6 +25,9 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param num The number of components to retain (this will be
+#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
+#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -47,15 +50,17 @@
 #'  running ICA.
 #'
 #' This package produces components using the "FastICA"
-#'  methodology (see reference below).
+#'  methodology (see reference below). This step requires the
+#'  \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
+#'  step will stop with a note about installing these packages.
 #'
-#' The argument `num` controls the number of components that
+#' The argument `num_comp` controls the number of components that
 #'  will be retained (the original variables that are used to derive
 #'  the components are removed from the data). The new components
 #'  will have names that begin with `prefix` and a sequence of
 #'  numbers. The variable names are padded with zeros. For example,
-#'  if `num < 10`, their names will be `IC1` - `IC9`.
-#'  If `num = 101`, the names would be `IC001` -
+#'  if `num_comp < 10`, their names will be `IC1` - `IC9`.
+#'  If `num_comp = 101`, the names would be `IC001` -
 #'  `IC101`.
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
@@ -76,15 +81,18 @@
 #'
 #' ica_trans <- step_center(rec,  V1, V2)
 #' ica_trans <- step_scale(ica_trans, V1, V2)
-#' ica_trans <- step_ica(ica_trans, V1, V2, num = 2)
-#' ica_estimates <- prep(ica_trans, training = tr)
-#' ica_data <- bake(ica_estimates, te)
+#' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
-#' plot(te$V1, te$V2)
-#' plot(ica_data$IC1, ica_data$IC2)
+#' if (require(dimRed) & require(fastICA)) {
+#'   ica_estimates <- prep(ica_trans, training = tr)
+#'   ica_data <- bake(ica_estimates, te)
 #'
-#' tidy(ica_trans, number = 3)
-#' tidy(ica_estimates, number = 3)
+#'   plot(te$V1, te$V2)
+#'   plot(ica_data$IC1, ica_data$IC2)
+#'
+#'   tidy(ica_trans, number = 3)
+#'   tidy(ica_estimates, number = 3)
+#' }
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_isomap()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -93,88 +101,96 @@ step_ica <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num  = 5,
+           num_comp  = 5,
            options = list(),
            res = NULL,
+           num = NULL,
            prefix = "IC",
-           skip = FALSE) {
+           skip = FALSE,
+           id = rand_id("ica")) {
+
+
+    recipes_pkg_check(c("dimRed", "fastICA"))
+    if (!is.null(num))
+      message("The argument `num` is deprecated in factor of `num_comp`. ",
+              "`num` will be removed in next version.", call. = FALSE)
     add_step(
       recipe,
       step_ica_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
-        num = num,
+        num_comp = num_comp,
         options = options,
         res = res,
+        num = num,
         prefix = prefix,
-        skip = skip
+        skip = skip,
+        id = id
       )
     )
   }
 
 step_ica_new <-
-  function(terms = NULL,
-           role = "predictor",
-           trained = FALSE,
-           num  = NULL,
-           options = NULL,
-           res = NULL,
-           prefix = "IC",
-           skip = FALSE) {
+  function(terms, role, trained, num_comp, options, res, num, prefix, skip, id) {
     step(
       subclass = "ica",
       terms = terms,
       role = role,
       trained = trained,
-      num = num,
+      num_comp = num_comp,
       options = options,
       res = res,
+      num = num,
       prefix = prefix,
-      skip = skip
+      skip = skip,
+      id = id
     )
   }
 
-#' @importFrom dimRed FastICA dimRedData
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  x$num <- min(x$num, length(col_names))
+  x$num_comp <- min(x$num_comp, length(col_names))
 
-  indc <- FastICA(stdpars = x$options)
+  indc <- dimRed::FastICA(stdpars = x$options)
   indc <-
-    indc@fun(dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-             list(ndim = x$num))
+    indc@fun(
+      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+      list(ndim = x$num_comp)
+      )
 
   step_ica_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    num = x$num,
+    num_comp = x$num_comp,
     options = x$options,
     res = indc,
+    num = x$num_comp,
     prefix = x$prefix,
-    skip = x$skip
+    skip = x$skip,
+    id = x$id
   )
 }
 
 #' @export
-bake.step_ica <- function(object, newdata, ...) {
+bake.step_ica <- function(object, new_data, ...) {
   ica_vars <- colnames(environment(object$res@apply)$indata)
   comps <-
     object$res@apply(
-      dimRedData(
-        as.data.frame(newdata[, ica_vars, drop = FALSE])
+      dimRed::dimRedData(
+        as.data.frame(new_data[, ica_vars, drop = FALSE])
         )
       )@data
-  comps <- comps[, 1:object$num, drop = FALSE]
+  comps <- comps[, 1:object$num_comp, drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
-  newdata <- bind_cols(newdata, as_tibble(comps))
-  newdata <-
-    newdata[, !(colnames(newdata) %in% ica_vars), drop = FALSE]
-  as_tibble(newdata)
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <-
+    new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+  as_tibble(new_data)
 }
 
 
@@ -187,9 +203,9 @@ print.step_ica <-
 
 
 #' @importFrom utils stack
-#' @importFrom dimRed getRotationMatrix
 #' @rdname step_ica
 #' @param x A `step_ica` object.
+#' @export
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
     rot <- dimRed::getRotationMatrix(x$res)
@@ -204,7 +220,7 @@ tidy.step_ica <- function(x, ...) {
     res <- as_tibble(res)
   } else {
     term_names <- sel2char(x$terms)
-    comp_names <- names0(x$num, x$prefix)
+    comp_names <- names0(x$num_comp, x$prefix)
     res <- expand.grid(terms = term_names,
                        value = na_dbl,
                        component  = comp_names)
@@ -212,6 +228,7 @@ tidy.step_ica <- function(x, ...) {
     res$component <- as.character(res$component)
     res <- as_tibble(res)
   }
+  res$id <- x$id
   res
 }
 

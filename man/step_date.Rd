@@ -7,7 +7,8 @@
 \usage{
 step_date(recipe, ..., role = "predictor", trained = FALSE,
   features = c("dow", "month", "year"), abbr = TRUE, label = TRUE,
-  ordinal = FALSE, columns = NULL, skip = FALSE)
+  ordinal = FALSE, columns = NULL, skip = FALSE,
+  id = rand_id("date"))
 
 \method{tidy}{step_date}(x, ...)
 }
@@ -61,6 +62,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
+\item{id}{A character string that is unique to this step to identify it.}
+
 \item{x}{A \code{step_date} object.}
 }
 \value{
@@ -92,7 +95,7 @@ tidy(date_rec, number = 1)
 
 date_rec <- prep(date_rec, training = examples)
 
-date_values <- bake(date_rec, newdata = examples)
+date_values <- bake(date_rec, new_data = examples)
 date_values
 
 tidy(date_rec, number = 1)
@@ -103,7 +106,5 @@ tidy(date_rec, number = 1)
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{
-preprocessing model_specification variable_encodings dates
-}
+\concept{preprocessing model_specification variable_encodings dates}
 \keyword{datagen}
