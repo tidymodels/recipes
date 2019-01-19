@@ -32,12 +32,10 @@
 #' @keywords datagen
 #' @concept preprocessing dimension_reduction
 #' @export
-#' @details `step_classdist` will create a
-#'
-#' The function will create a new column for every unique value of
-#'  the `class` variable. The resulting variables will not
-#'  replace the original values and have the prefix
-#'  `classdist_`.
+#' @details `step_classdist` will create a new column for every
+#'  unique value of the `class` variable.
+#'  The resulting variables will not replace the original values
+#'  and have the prefix `classdist_`.
 #'
 #' Note that, by default, the default covariance function requires
 #'  that each class should have at least as many rows as variables
