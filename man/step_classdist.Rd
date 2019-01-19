@@ -7,7 +7,8 @@
 \usage{
 step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
   mean_func = mean, cov_func = cov, pool = FALSE, log = TRUE,
-  objects = NULL, skip = FALSE, id = rand_id("classdist"))
+  objects = NULL, prefix = "", skip = FALSE,
+  id = rand_id("classdist"))
 
 \method{tidy}{step_classdist}(x, ...)
 }
@@ -43,6 +44,9 @@ the natural log function?}
 
 \item{objects}{Statistics are stored here once this step has
 been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{prefix}{A character string that will be the prefix to
+the resulting new variables.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

@@ -24,6 +24,8 @@
 #'  the natural log function?
 #' @param objects Statistics are stored here once this step has
 #'  been trained by [prep.recipe()].
+#' @param prefix A character string that will be the prefix to
+#'  the resulting new variables.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -71,6 +73,7 @@ step_classdist <- function(recipe,
                            pool = FALSE,
                            log = TRUE,
                            objects = NULL,
+                           prefix = "",
                            skip = FALSE,
                            id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1)
@@ -87,6 +90,7 @@ step_classdist <- function(recipe,
       pool = pool,
       log = log,
       objects = objects,
+      prefix = prefix,
       skip = skip,
       id = id
     )
@@ -95,7 +99,7 @@ step_classdist <- function(recipe,
 
 step_classdist_new <-
   function(terms, class, role, trained, mean_func,
-           cov_func, pool, log, objects, skip, id) {
+           cov_func, pool, log, objects, prefix, skip, id) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -107,6 +111,7 @@ step_classdist_new <-
       pool = pool,
       log = log,
       objects = objects,
+      prefix = prefix,
       skip = skip,
       id = id
     )
@@ -153,6 +158,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     pool = x$pool,
     log = x$log,
     objects = res,
+    prefix = x$prefix,
     skip = x$skip,
     id = x$id
   )
@@ -186,7 +192,7 @@ bake.step_classdist <- function(object, new_data, ...) {
   if (object$log)
     res <- lapply(res, log)
   res <- as_tibble(res)
-  newname <- paste0("classdist_", colnames(res))
+  newname <- paste0(object$prefix, "classdist_", colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
   if (!is_tibble(res))
