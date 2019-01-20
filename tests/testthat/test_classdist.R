@@ -76,3 +76,18 @@ test_that('printing', {
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
 })
+
+
+test_that('prefix', {
+  iris_subset <- filter(iris, Species %in% c("setosa","versicolor"))
+  rec <- recipe(Species ~ ., data = iris_subset) %>%
+    step_classdist(Sepal.Length, Sepal.Width, class = "Species", prefix = "group1") %>%
+    step_classdist(Sepal.Length, Petal.Length, class = "Species", prefix = "group2")
+  expect_output(print(rec))
+  expect_output(prep(rec, training = iris_subset, verbose = TRUE))
+
+    rec <- recipe(Species ~ ., data = iris_subset) %>%
+      step_classdist(Sepal.Length, Sepal.Width, class = "Species") %>%
+      step_classdist(Sepal.Length, Petal.Length, class = "Species")
+    expect_error(prep(rec, training = iris_subset), "Name collision occured")
+})
