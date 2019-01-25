@@ -28,6 +28,7 @@ r:
 - devel
 
 matrix:
+  fast_finish: true
   allow_failures:
     - r: 3.1
     - r: 3.2
