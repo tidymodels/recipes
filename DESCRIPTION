@@ -18,6 +18,7 @@ Depends:
     dplyr
 Imports: 
     generics,
+    glue,
     gower,
     ipred,
     lubridate,
@@ -32,8 +33,7 @@ Imports:
     tidyselect (>= 0.1.1),
     timeDate,
     utils,
-    withr,
-    glue
+    withr
 Suggests: 
     covr,
     ddalpha,
