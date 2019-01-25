@@ -1,3 +1,9 @@
+# `recipes` development 
+
+## Other Changes
+
+ * To provide infrastructure for finalizing varying parameters, an `update()` method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.
+
 # `recipes` 0.1.4
 
 ## Breaking Changes
