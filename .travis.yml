@@ -2,7 +2,7 @@
 
 language: R
 sudo: false
-# cache: packages
+cache: packages
 
 env:
   global:
@@ -10,7 +10,7 @@ env:
 
 bioc_packages: Biobase
 
-r_packages: 
+r_packages:
   - NMF
   - RANN
   - fastICA
@@ -28,11 +28,10 @@ r:
 - devel
 
 matrix:
+  fast_finish: true
   allow_failures:
     - r: 3.1
     - r: 3.2
-
-warnings_are_errors: false
 
 after_success:
   - Rscript -e 'covr::codecov()'
