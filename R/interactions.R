@@ -58,14 +58,7 @@
 #'  `starts_with("z_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x6)`
 #'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x6):z` and
 #'  all two-way interactions are created.
-#'
-#' If a previous step had the potential to remove columns from the
-#'  data set, it is possible that an interaction that was specified
-#'  using columns names will fail (due to the missing column). In
-#'  this case, no interactions from that step will be created. For
-#'  this reason, when column filtering is used, it may be helpful
-#'  to specify each interaction in separate calls (see the
-#'  examples below).
+
 #' @examples
 #' data(biomass)
 #'
@@ -92,37 +85,7 @@
 #'
 #' tidy(int_mod_1, number = 1)
 #' tidy(int_mod_2, number = 1)
-#'
-#' # Missing column:
-#'
-#' # produces a warning and no interactions:
-#' rec %>%
-#'   step_rm(carbon) %>%
-#'   step_interact(terms = ~ carbon:hydrogen + hydrogen:oxygen) %>%
-#'   prep(biomass_tr) %>%
-#'   juice() %>%
-#'   dplyr::select(contains("_x_"))
-#'
-#' # produces a warning and one interaction:
-#' rec %>%
-#'   step_rm(carbon) %>%
-#'   step_interact(terms = ~ carbon:hydrogen) %>%
-#'   step_interact(terms = ~ hydrogen:oxygen) %>%
-#'   prep(biomass_tr) %>%
-#'   juice() %>%
-#'   dplyr::select(contains("_x_")) %>%
-#'   slice(1:3)
-#'
-# Since selectors are resolved when each step is prepped, there is
-# no error here:
-#' rec %>%
-#'   step_rm(carbon) %>%
-#'   step_interact(terms = ~ all_predictors():all_predictors())  %>%
-#'   prep(biomass_tr) %>%
-#'   juice() %>%
-#'   dplyr::select(contains("_x_")) %>%
-#'   names()
-#'
+
 step_interact <-
   function(recipe,
            terms,
@@ -190,43 +153,29 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   ## First, find the interaction terms based on the given formula
   int_terms <- get_term_names(x$terms, vnames = colnames(training))
-  # If any of the interaction specification uses columns that are
-  # nor in the data set, no interction is created (and a warning
-  # is issued).
-  if (is.null(int_terms)) {
-    return(
-      step_interact_new(
-        terms = x$terms,
-        role = x$role,
-        trained = TRUE,
-        objects = list(),
-        sep = x$sep,
-        skip = x$skip,
-        id = x$id
+
+  if (!all(is.na(int_terms))) {
+    ## Check to see if any variables are non-numeric and issue a warning
+    ## if that is the case
+    vars <-
+      unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
+    var_check <- info[info$variable %in% vars, ]
+    if (any(var_check$type == "nominal"))
+      warning(
+        "Categorical variables used in `step_interact` should probably be ",
+        "avoided;  This can lead to differences in dummy variable values that ",
+        "are produced by `step_dummy`. Please convert all involved variables ",
+        "to dummy variables first.", call. = FALSE
       )
-    )
+
+    ## For each interaction, create a new formula that has main effects
+    ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
+    int_forms <- make_new_formula(int_terms)
+
+    ## Generate a standard R `terms` object from these short formulas and
+    ## save to make future interactions
+    int_terms <- make_small_terms(int_forms, training)
   }
-
-  ## Check to see if any variables are non-numeric and issue a warning
-  ## if that is the case
-  vars <-
-    unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
-  var_check <- info[info$variable %in% vars, ]
-  if (any(var_check$type == "nominal"))
-    warning(
-      "Categorical variables used in `step_interact` should probably be ",
-      "avoided;  This can lead to differences in dummy variable values that ",
-      "are produced by `step_dummy`. Please convert all involved variables ",
-      "to dummy variables first.", call. = FALSE
-    )
-
-  ## For each interaction, create a new formula that has main effects
-  ## and only the interaction of choice (e.g. `a+b+c+a:b:c`)
-  int_forms <- make_new_formula(int_terms)
-
-  ## Generate a standard R `terms` object from these short formulas and
-  ## save to make future interactions
-  int_terms <- make_small_terms(int_forms, training)
 
   step_interact_new(
     terms = x$terms,
@@ -242,10 +191,10 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_interact <- function(object, new_data, ...) {
-  # In case no interactions were specified, quietly move on
-  if (isTRUE(object$object == list())) {
+
+  # When the interaction specification failed, just move on
+  if (isTRUE(all(is.na(object$object))))
     return(new_data)
-  }
 
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
@@ -300,27 +249,8 @@ make_new_formula <- function(x) {
 ## term expansion (without `.`s). This returns the factor
 ## names and would not expand dummy variables.
 get_term_names <- function(form, vnames) {
-  if(!is_formula(form))
+  if (!is_formula(form))
     form <- as.formula(form)
-
-  form_vars <- all.vars(form)
-  # We want to detect of any of the formula entries are missing
-  # from the data set. We can't do that if a dot was used
-
-  if (!any(form_vars == ".")) {
-    common_vars <- intersect(form_vars, vnames)
-    # Make sure that the variables are in the data set
-    if (length(common_vars) != length(form_vars)) {
-      missing_vars <- form_vars[!(form_vars %in% vnames)]
-      warning("Some columns specified in an interaction do not ",
-              "exist in the data set: ",
-              paste0("`", missing_vars, "`", collapse = ","),
-              ". No interactions from this step were created.",
-              call. = FALSE)
-      return(NULL)
-    }
-  }
-
 
   ## We are going to cheat and make a small fake data set to
   ## efficiently get the full formula expansion from
@@ -328,7 +258,19 @@ get_term_names <- function(form, vnames) {
   ## pick off the interactions
   dat <- matrix(1, nrow = 5, ncol = length(vnames))
   colnames(dat) <- vnames
-  nms <- colnames(model.matrix(form, data = as.data.frame(dat)))
+  nms <- try(
+    colnames(model.matrix(form, data = as.data.frame(dat))),
+    silent = TRUE
+  )
+  if (inherits(nms, "try-error")) {
+    warning(
+      "Interaction specification failed for: ",
+      deparse(form),
+      ". No interactions will be created.",
+      call. = FALSE
+      )
+    return(rlang::na_chr)
+  }
   nms <- nms[nms != "(Intercept)"]
   nms <- grep(":", nms, value = TRUE)
   nms
@@ -354,8 +296,15 @@ print.step_interact <-
     invisible(x)
   }
 
-int_name <- function(x)
-  get_term_names(x, all.vars(x))
+int_name <- function(x) {
+  if (inherits(x, "terms")) {
+    res <- get_term_names(x, all.vars(x))
+  } else {
+    res <- rlang::na_chr
+  }
+  res
+}
+
 
 #' @importFrom rlang na_dbl
 #' @rdname step_interact
