@@ -55,7 +55,8 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected).
+selectors or original variables selected) and \code{columns} (the
+list of corresponding binary columns).
 }
 \description{
 \code{step_dummy} creates a a \emph{specification} of a recipe

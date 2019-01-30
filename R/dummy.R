@@ -309,7 +309,7 @@ tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     res <- purrr::map_dfr(x$levels, get_dummy_columns, .id = "terms")
   } else {
-    res <- tibble(terms = sel2char(x$terms), columns = rlang:::na_chr)
+    res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
   }
   res$id <- x$id
   res

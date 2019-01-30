@@ -35,32 +35,46 @@ test_that('dummy variables with factor inputs', {
   expect_equivalent(dummy_pred, exp_res)
 
   dum_tibble <-
-    tibble(terms = c("diet", "location"), id = "")
-
+    tibble(terms = c("diet", "location"), columns = rep(rlang::na_chr, 2), id = "")
+  dum_tibble_prepped_1 <-
+    tibble(
+      terms = "diet",
+      columns = attributes(dummy_trained$steps[[1]]$levels$diet)$values,
+      id = ""
+    )
+  dum_tibble_prepped_2 <-
+    tibble(
+      terms = "location",
+      columns = attributes(dummy_trained$steps[[1]]$levels$location)$values,
+      id = ""
+    )
   expect_equal(tidy(dummy, 1), dum_tibble)
-  expect_equal(tidy(dummy_trained, 1), dum_tibble)
+  expect_equal(
+    tidy(dummy_trained, 1),
+    bind_rows(dum_tibble_prepped_1, dum_tibble_prepped_2)
+  )
 })
 
 test_that('dummy variables with non-factor inputs', {
   rec <- recipe(age ~ location + diet, data = okc)
   dummy <- rec %>% step_dummy(diet, location)
-  
+
   expect_warning(
     expect_error(
       prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
     )
   )
-  
-  okc_fac_ish <- 
+
+  okc_fac_ish <-
     okc_fac %>%
     mutate(diet = as.character(diet))
-  
+
   expect_warning(
-    recipe(age ~ location + height + diet, data = okc_fac_ish) %>% 
+    recipe(age ~ location + height + diet, data = okc_fac_ish) %>%
       step_dummy(diet, location, height) %>%
       prep(training = okc_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
-  )  
-  
+  )
+
 })
 
 test_that('create all dummy variables', {
@@ -112,18 +126,18 @@ test_that('tests for NA values in factor', {
   expect_warning(
     factors <- prep(factors, training = okc_missing, retain = TRUE)
   )
-  
+
   factors_data_0 <- juice(factors)
   expect_warning(
     factors_data_1 <- bake(factors, new_data = okc_missing)
   )
-  
+
   expect_true(
     all(complete.cases(factors_data_0) == complete.cases(okc_missing[, "diet"]))
   )
   expect_true(
     all(complete.cases(factors_data_1) == complete.cases(okc_missing[, "diet"]))
-  )  
+  )
 })
 
 test_that('tests for NA values in ordered factor', {
@@ -134,18 +148,18 @@ test_that('tests for NA values in ordered factor', {
   expect_warning(
     factors <- prep(factors, training = okc_ordered, retain = TRUE)
   )
-  
+
   factors_data_0 <- juice(factors)
   expect_warning(
     factors_data_1 <- bake(factors, new_data = okc_ordered)
   )
-  
+
   expect_true(
     all(complete.cases(factors_data_0) == complete.cases(okc_ordered[, "diet"]))
   )
   expect_true(
     all(complete.cases(factors_data_1) == complete.cases(okc_ordered[, "diet"]))
-  )  
+  )
 })
 
 
@@ -162,15 +176,15 @@ test_that('new levels', {
   training$x1 <- as.factor(training$x1)
   testing$y <- as.factor(testing$y)
   testing$x1 <- as.factor(testing$x1)
-  
+
   expect_warning(
     recipes:::warn_new_levels(testing$x1, levels(training$x1))
   )
   expect_silent(
     recipes:::warn_new_levels(training$x1, levels(training$x1))
-  ) 
-  
-  rec <- recipe(y ~ x1, data = training) %>% 
+  )
+
+  rec <- recipe(y ~ x1, data = training) %>%
     step_dummy(x1)
   expect_silent(
     rec <- prep(rec, training = training, retain = TRUE)

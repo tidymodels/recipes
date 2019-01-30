@@ -2,7 +2,12 @@
 
 ## Other Changes:
 
- * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued and _no_ interactions from that step are created. 
+ * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued when this happens and no interaction terms will be created. 
+ 
+## Breaking Changes
+
+* The `tidy` method for `step_dummy` now returns the original variable _and_ the levels of the future dummy variables. 
+
 
 # `recipes` 0.1.4
 
