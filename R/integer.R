@@ -201,5 +201,5 @@ tidy.step_integer <- function(x, ...) {
   res
 }
 
-#' @importFrom stats runif
+#' @importFrom utils globalVariables
 utils::globalVariables(c(".row"))
