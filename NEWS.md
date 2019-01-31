@@ -1,8 +1,15 @@
-# `recipes` development 
+# `recipes` 0.1.4.9000
 
-## Other Changes
+## Other Changes:
 
- * To provide infrastructure for finalizing varying parameters, an `update()` method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.
+* To provide infrastructure for finalizing varying parameters, an `update()` method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.
+
+ * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued when this happens and no interaction terms will be created. 
+ 
+## Breaking Changes
+
+* The `tidy` method for `step_dummy` now returns the original variable _and_ the levels of the future dummy variables. 
+
 
 # `recipes` 0.1.4
 

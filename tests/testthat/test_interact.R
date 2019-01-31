@@ -29,19 +29,19 @@ test_that('non-factor variables with dot', {
   int_rec <- rec %>% step_interact( ~ (. - y- z) ^ 3 , sep = ":")
   int_rec_trained <-
     prep(int_rec, training = dat_tr, verbose = FALSE)
-  
+
   te_new <-
     bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
-  
+
   og_terms <- terms( ~ (. - y - z) ^ 3, data = dat_te)
   te_og <- model.matrix(og_terms, data = dat_te)[,-1]
   te_og <- te_og[, sort(colnames(te_og))]
-  
+
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
-  
+
   expect_equal(te_og, te_new)
 })
 
@@ -50,48 +50,48 @@ test_that('non-factor variables with specific variables', {
   int_rec <- rec %>% step_interact( ~ x1:x2 + x3:x4:x5, sep = ":")
   int_rec_trained <-
     prep(int_rec, training = dat_tr, verbose = FALSE)
-  
+
   te_new <-
     bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
-  
+
   og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
                        x1:x2 + x3:x4:x5, data = dat_te)
   te_og <- model.matrix(og_terms, data = dat_te)[,-1]
   te_og <- te_og[, sort(colnames(te_og))]
-  
+
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
-  
+
   expect_equal(te_og, te_new)
 })
 
 
 test_that('using selectors', {
-  int_rec <- rec %>% 
+  int_rec <- rec %>%
     step_dummy(z) %>%
     step_interact( ~ starts_with("z"):x1)
   int_rec_trained <-
     prep(int_rec, training = dat_tr, verbose = FALSE)
-  
+
   te_new <-
     bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
   te_new <- te_new[, sort(names(te_new))]
   te_new <- as.matrix(te_new)
-  te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5", 
+  te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5",
                        "z_b", "z_c", "z_b_x_x1", "z_c_x_x1")]
-  
+
   og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
                        x1*z, data = dat_te)
   te_og <- model.matrix(og_terms, data = dat_te)[,-1]
   colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
-  
+
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
-  
+
   expect_equivalent(te_og, te_new)
 })
 
@@ -117,19 +117,19 @@ test_that('finding selectors in formulas', {
       ~ all_predictors() + something
     ),
     list(quote(all_predictors()))
-  )    
+  )
   expect_equal(
     recipes:::find_selectors(
       ~ (matches("wat?"))^2
     ),
     list(quote(matches("wat?")))
-  )  
+  )
   expect_equal(
     recipes:::find_selectors(
       ~ a
     ),
     list()
-  )    
+  )
 })
 
 test_that('replacing selectors in formulas', {
@@ -148,7 +148,7 @@ test_that('replacing selectors in formulas', {
       quote(a)
     ),
     ~ (a) ^ 2
-  )  
+  )
   expect_equal(
     recipes:::replace_selectors(
       ~ a + all_predictors(),
@@ -156,9 +156,34 @@ test_that('replacing selectors in formulas', {
       quote(a)
     ),
     ~ a + a
-  )    
+  )
 })
 
+test_that('missing columns', {
+  no_fail <-
+    rec %>%
+    step_rm(x1) %>%
+    step_interact(~x1:x2)
+  no_fail_rec <- expect_warning(prep(no_fail, dat_tr))
+  no_fail_res <- juice(no_fail_rec) %>% names()
+  expect_true(!any(grepl("_x_", no_fail_res)))
+
+  one_int <-
+    rec %>%
+    step_rm(x1) %>%
+    step_interact(~x1:x2) %>%
+    step_interact(~x3:x2)
+  one_int_rec <- expect_warning(prep(one_int, dat_tr))
+  one_int_res <- juice(one_int_rec) %>% names()
+  expect_true(sum(grepl("_x_", one_int_res)) == 1)
+
+  with_selectors <-
+    rec %>%
+    step_rm(x1) %>%
+    step_interact(~starts_with("x"):starts_with("x")) %>%
+    step_interact(~x3:x2)
+  expect_warning(prep(with_selectors, dat_tr), regexp = NA)
+})
 
 
 # currently failing; try to figure out why
