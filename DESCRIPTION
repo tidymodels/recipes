@@ -18,6 +18,7 @@ Depends:
     dplyr
 Imports: 
     generics,
+    glue,
     gower,
     ipred,
     lubridate,

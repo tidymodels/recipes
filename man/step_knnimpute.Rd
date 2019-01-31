@@ -48,7 +48,7 @@ is \code{NULL} until the step is trained by
 for imputation. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{K}{The number of neighbors (this will be deprecated in factor of
+\item{K}{The number of neighbors (this will be deprecated in favor of
 \code{neighbors} in version 0.1.5). \code{neighbors} will override this option.}
 
 \item{skip}{A logical. Should the step be skipped when the

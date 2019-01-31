@@ -63,18 +63,16 @@ selectors or variables selected), \code{value} (the centroid of
 the class), and \code{class}.
 }
 \description{
-\code{step_classdist} creates a a \emph{specification} of a
+\code{step_classdist} creates a \emph{specification} of a
 recipe step that will convert numeric data into Mahalanobis
 distance measurements to the data centroid. This is done for
 each value of a categorical class variable.
 }
 \details{
-\code{step_classdist} will create a
-
-The function will create a new column for every unique value of
-the \code{class} variable. The resulting variables will not
-replace the original values and have the prefix
-\code{classdist_}.
+\code{step_classdist} will create a new column for every
+unique value of the \code{class} variable.
+The resulting variables will not replace the original values
+and have the prefix \code{classdist_}.
 
 Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
