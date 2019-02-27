@@ -1,6 +1,6 @@
 #' B-Spline Basis Functions
 #'
-#' `step_ns` creates a *specification* of a recipe step
+#' `step_bs` creates a *specification* of a recipe step
 #'  that will create new columns that are basis expansions of
 #'  variables using B-splines.
 #'
