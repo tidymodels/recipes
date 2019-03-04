@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 
+if (compareVersion("3.5.0", paste(version$major, version$minor, sep = ".")) >= 0)
+  RNGkind(sample = "Rounding")
+
 context("Pooling to other category")
 
 
@@ -98,7 +101,6 @@ test_that('high threshold - much removals', {
 
 
 test_that('low threshold - no removals', {
-  RNGkind(sample = "Rounding")
   others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
   others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
   others_te <- bake(others, new_data = okc_te)

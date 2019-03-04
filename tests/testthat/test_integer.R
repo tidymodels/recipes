@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
-RNGkind(sample = "Rounding")
+
+if (compareVersion("3.5.0", paste(version$major, version$minor, sep = ".")) >= 0)
+  RNGkind(sample = "Rounding")
+
 context("Integer conversion")
 
 set.seed(364)
