@@ -25,7 +25,8 @@ r:
 - 3.2
 - oldrel
 - release
-- devel
+# travis is using the wrong r-devel on 3/4/19 (3.6.0 instewad of 3.5.2)
+# - devel
 
 matrix:
   fast_finish: true
