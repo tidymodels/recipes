@@ -33,7 +33,7 @@ test_that('basic functionality', {
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
   exp_x <- c(NA, 2, 2, 1, 0)
-  exp_y <- c(NA, 4, 3, 3, 4)
+  exp_y <- c(NA, 4, 3, 3, 0)
   exp_z <- c( 2, 8,12, 8, 0)
 
   expect_equal(te_int$x, exp_x)
