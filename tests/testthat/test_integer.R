@@ -1,18 +1,15 @@
 library(testthat)
 library(recipes)
 
-if (compareVersion("3.5.0", paste(version$major, version$minor, sep = ".")) >= 0)
-  RNGkind(sample = "Rounding")
-
 context("Integer conversion")
 
-set.seed(364)
 tr_n <- 10
 tr_dat <-
   data.frame(
-    x = sample(letters[1:5], replace = TRUE, size = tr_n),
-    y = factor(sample(LETTERS[1:5], replace = TRUE, size = tr_n)),
-    z = ordered(sample(month.abb, replace = TRUE, size = tr_n), levels = month.abb)
+    x = c('a', 'd', 'c', 'a', 'c', 'a', 'a', 'd', 'c', 'c'),
+    y = factor(c('B', 'B', 'D', 'B', 'C', 'D', 'A', 'D', 'C', 'C')),
+    z = ordered(c('Jul', 'Apr', 'Sep', 'Jul', 'Nov', 'Dec', 'Jun', 'Feb', 'Jan', 'Sep'),
+                levels = month.abb)
   )
 tr_dat$x[3] <- NA
 tr_dat$y[1] <- NA
@@ -20,10 +17,9 @@ tr_dat$y[1] <- NA
 te_n <- 4
 te_dat <-
   data.frame(
-    x = c(sample(letters[1:5], replace = TRUE, size = te_n), "?"),
-    y = factor(c(sample(LETTERS[1:5], replace = TRUE, size = te_n), "??")),
-    z = ordered(c(sample(month.abb, replace = TRUE, size = te_n), "???"),
-                levels = c(month.abb, "???"))
+    x = c('d', 'c', 'c', 'a', "?"),
+    y = factor(c('E', 'D', 'C', 'C', "??")),
+    z = ordered(c('Feb', 'Aug', 'Dec', 'Aug', "???"), levels = c(month.abb, "???"))
   )
 te_dat$x[1] <- NA
 te_dat$y[1] <- NA
@@ -36,9 +32,9 @@ test_that('basic functionality', {
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
-  exp_x <- c(NA, 1, 2, 3, 0)
-  exp_y <- c(NA, 3, 3, 3, 0)
-  exp_z <- c(11, 1, 9, 6, 0)
+  exp_x <- c(NA, 2, 2, 1, 0)
+  exp_y <- c(NA, 4, 3, 3, 4)
+  exp_z <- c( 2, 8,12, 8, 0)
 
   expect_equal(te_int$x, exp_x)
   expect_equal(te_int$y, exp_y)
@@ -56,9 +52,9 @@ test_that('zero-based', {
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
-  exp_x <- c(NA, 0, 1, 2, 4)
-  exp_y <- c(NA, 2, 2, 2, 5)
-  exp_z <- c(10, 0, 8, 5, 12)
+  exp_x <- c(NA, 1, 1, 0, 3)
+  exp_y <- c(NA, 3, 2, 2, 4)
+  exp_z <- c( 1, 7,11, 7, 12)
 
   expect_equal(te_int$x, exp_x)
   expect_equal(te_int$y, exp_y)

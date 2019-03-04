@@ -1,16 +1,13 @@
 library(testthat)
 library(recipes)
 
-if (compareVersion("3.5.0", paste(version$major, version$minor, sep = ".")) >= 0)
-  RNGkind(sample = "Rounding")
-
 context("Pooling to other category")
 
 
 data(okc)
 
 set.seed(19)
-in_test <- sample(1:nrow(okc), size = 200)
+in_test <- 1:200
 
 okc_tr <- okc[-in_test,]
 okc_te <- okc[ in_test,]
@@ -46,9 +43,9 @@ test_that('default inputs', {
   diet_props <- table(okc_tr$diet)/sum(!is.na(okc_tr$diet))
   diet_props <- sort(diet_props, decreasing = TRUE)
   diet_levels <- names(diet_props)[diet_props >= others$step[[1]]$threshold]
-  for(i in diet_levels)
-    expect_equal(sum(others_te$diet == i, na.rm =TRUE),
-                 sum(okc_te$diet == i, na.rm =TRUE))
+  for (i in diet_levels)
+    expect_equal(sum(others_te$diet == i, na.rm = TRUE),
+                 sum(okc_te$diet == i, na.rm = TRUE))
 
   diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
   expect_true(all(levels(others_te$diet) %in% diet_levels))
@@ -57,9 +54,9 @@ test_that('default inputs', {
   location_props <- table(okc_tr$location)/sum(!is.na(okc_tr$location))
   location_props <- sort(location_props, decreasing = TRUE)
   location_levels <- names(location_props)[location_props >= others$step[[1]]$threshold]
-  for(i in location_levels)
-    expect_equal(sum(others_te$location == i, na.rm =TRUE),
-                 sum(okc_te$location == i, na.rm =TRUE))
+  for (i in location_levels)
+    expect_equal(sum(others_te$location == i, na.rm = TRUE),
+                 sum(okc_te$location == i, na.rm = TRUE))
 
   location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
   expect_true(all(levels(others_te$location) %in% location_levels))
@@ -77,9 +74,9 @@ test_that('high threshold - much removals', {
 
   diet_props <- table(okc_tr$diet)
   diet_levels <- others$steps[[1]]$objects$diet$keep
-  for(i in diet_levels)
-    expect_equal(sum(others_te$diet == i, na.rm =TRUE),
-                 sum(okc_te$diet == i, na.rm =TRUE))
+  for (i in diet_levels)
+    expect_equal(sum(others_te$diet == i, na.rm = TRUE),
+                 sum(okc_te$diet == i, na.rm = TRUE))
 
   diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
   expect_true(all(levels(others_te$diet) %in% diet_levels))
@@ -87,9 +84,9 @@ test_that('high threshold - much removals', {
 
   location_props <- table(okc_tr$location)
   location_levels <- others$steps[[1]]$objects$location$keep
-  for(i in location_levels)
-    expect_equal(sum(others_te$location == i, na.rm =TRUE),
-                 sum(okc_te$location == i, na.rm =TRUE))
+  for (i in location_levels)
+    expect_equal(sum(others_te$location == i, na.rm = TRUE),
+                 sum(okc_te$location == i, na.rm = TRUE))
 
   location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
   expect_true(all(levels(others_te$location) %in% location_levels))
@@ -104,7 +101,6 @@ test_that('low threshold - no removals', {
   others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
   others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
   others_te <- bake(others, new_data = okc_te)
-  RNGkind(sample = "default")
 
   expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
   expect_equal(is.na(okc_te$location), is.na(others_te$location))
@@ -131,9 +127,9 @@ test_that('factor inputs', {
   diet_props <- table(okc_tr$diet)/sum(!is.na(okc_tr$diet))
   diet_props <- sort(diet_props, decreasing = TRUE)
   diet_levels <- names(diet_props)[diet_props >= others$step[[1]]$threshold]
-  for(i in diet_levels)
-    expect_equal(sum(others_te$diet == i, na.rm =TRUE),
-                 sum(okc_te$diet == i, na.rm =TRUE))
+  for (i in diet_levels)
+    expect_equal(sum(others_te$diet == i, na.rm = TRUE),
+                 sum(okc_te$diet == i, na.rm = TRUE))
 
   diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
   expect_true(all(levels(others_te$diet) %in% diet_levels))
@@ -142,9 +138,9 @@ test_that('factor inputs', {
   location_props <- table(okc_tr$location)/sum(!is.na(okc_tr$location))
   location_props <- sort(location_props, decreasing = TRUE)
   location_levels <- names(location_props)[location_props >= others$step[[1]]$threshold]
-  for(i in location_levels)
-    expect_equal(sum(others_te$location == i, na.rm =TRUE),
-                 sum(okc_te$location == i, na.rm =TRUE))
+  for (i in location_levels)
+    expect_equal(sum(others_te$location == i, na.rm = TRUE),
+                 sum(okc_te$location == i, na.rm = TRUE))
 
   location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
   expect_true(all(levels(others_te$location) %in% location_levels))
