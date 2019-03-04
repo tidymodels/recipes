@@ -98,13 +98,15 @@ test_that('high threshold - much removals', {
 
 
 test_that('low threshold - no removals', {
+  RNGkind(sample = "Rounding")
   others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
   others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
   others_te <- bake(others, new_data = okc_te)
+  RNGkind(sample = "default")
 
   expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
   expect_equal(is.na(okc_te$location), is.na(others_te$location))
-  
+
   expect_equal(okc_te$diet, as.character(others_te$diet))
   expect_equal(okc_te$location, as.character(others_te$location))
 })
@@ -163,15 +165,15 @@ test_that('novel levels', {
   training$x1 <- as.factor(training$x1)
   testing$y <- as.factor(testing$y)
   testing$x1 <- as.factor(testing$x1)
-  
+
   novel_level <- recipe(y ~ ., data = training) %>%
-    step_other(x1) 
-  
+    step_other(x1)
+
   novel_level <- prep(novel_level, training = training, retain = TRUE)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
   expect_true(all(new_results$x1[testing$x1 == "C"] == "other"))
-  expect_true(!any(orig_results$x1 == "other"))  
+  expect_true(!any(orig_results$x1 == "other"))
 })
 
 test_that("'other' already in use", {
