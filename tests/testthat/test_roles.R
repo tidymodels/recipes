@@ -160,6 +160,11 @@ test_that('existing role is skipped, but new one is added', {
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
+test_that('cannot add roles if the current one is `NA`', {
+  rec <- recipe(x = biomass)
+  expect_error(add_role(rec, sample, sulfur), "No role currently exists")
+})
+
 test_that('NA roles fail', {
 
   rec <- recipe(x = biomass)

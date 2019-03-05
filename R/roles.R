@@ -149,15 +149,11 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   existing_var_idx <- recipe$var_info$variable %in% vars
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
-    if (length(vars) > 1) {
-    stop("There is currently no role for columns ",
-         paste0(vars, collapse = ", "), ". Please use ",
-         "`update_role()` instead.", call. = FALSE)
-    } else {
-      stop("There are currently no roles for column ",
-           vars, ". Please use ",
-           "`update_role()` instead.", call. = FALSE)
-    }
+    vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
+    stop(glue::glue(
+      "No role currently exists for column(s): {vars}. Please use ",
+      "`update_role()` instead."
+    ), call. = FALSE)
   }
 
   role_already_exists <- recipe$var_info$role[existing_var_idx] %in% new_role
