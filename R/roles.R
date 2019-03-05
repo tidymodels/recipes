@@ -233,7 +233,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
       dplyr::group_by(variable) %>%
       dplyr::count()
     if (any(var_counts$n > 1)) {
-      stop("`old_role` can only be NULL when the variable(s) have ",
+      stop("`old_role` can only be `NULL` when the variable(s) have ",
            "a single existing role.", call. = FALSE)
     }
   }
