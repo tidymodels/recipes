@@ -126,9 +126,11 @@ test_that('existing role is skipped', {
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "blah")
   rec <- add_role(rec, sample, new_role = "some other role")
+
   # skip me
   expect_warning(
-    rec <- add_role(rec, sample, new_role = "some other role")
+    rec <- add_role(rec, sample, new_role = "some other role"),
+    "Role, 'some other role', already exists"
   )
 
   # also tests the order, new roles come directly after old ones
@@ -145,9 +147,11 @@ test_that('existing role is skipped, but new one is added', {
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "blah")
   rec <- add_role(rec, sample, new_role = "some other role")
+
   # partially skip me
   expect_warning(
-    rec <- add_role(rec, sample, dataset, new_role = "some other role")
+    rec <- add_role(rec, sample, dataset, new_role = "some other role"),
+    "Role, 'some other role', already exists"
   )
 
   exp_res <- tibble(variable = c(

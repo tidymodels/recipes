@@ -153,10 +153,16 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     existing_vars <- recipe$var_info$variable[existing_var_idx]
     vars_that_role_exists_for <- existing_vars[role_already_exists]
 
+    bad_vars <- glue::glue_collapse(
+      glue::single_quote(vars_that_role_exists_for),
+      sep = ", "
+    )
+
     warning(
-      "Role `", new_role, "` already exists for ",
-      paste0(vars_that_role_exists_for, collapse = ", "),
-      ". Skipping.",
+      glue::glue(
+        "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
+        "Skipping."
+      ),
       call. = FALSE
     )
 
