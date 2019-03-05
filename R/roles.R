@@ -53,60 +53,45 @@
 #'   update_role(dataset, new_role = "splitting variable") %>%
 #'   summary()
 #'
-#' # `udpate_role()` can only effect one role at a time and cannot set a role to NA
+#' # `update_role()` cannot set a role to NA, use `remove_role()` for that
+#' \dontrun{
 #' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
-#'   summary()
-#'
-#' # `udpate_role()` can only effect one role at a time and cannot set a role to NA
-#' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
-#'   summary()
+#'   update_role(sample, new_role = NA_character_)
+#' }
 #'
 #' # ------------------------------------------------------------------------------
 #'
-#' # You can have variables be more than one role. `add_role()` can be used
+#' # Variables can have more than one role. `add_role()` can be used
 #' # if the column already has at least one role:
 #' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
 #'   add_role(carbon, sulfur, new_role = "something") %>%
 #'   summary()
 #'
-#' # `udpate_role()` has an argument called `old_role` that is used when the
-#' # column currently has multiple roles.
+#' # `update_role()` has an argument called `old_role` that is required to
+#' # unambiguously update a role when the column currently has multiple roles.
 #' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
-#'   add_role(carbon, sulfur, new_role = "something") %>%
-#'   update_role(carbon, old_role = "something", new_role = "something else") %>%
+#'   add_role(carbon, new_role = "something") %>%
+#'   update_role(carbon, new_role = "something else", old_role = "something") %>%
 #'   summary()
 #'
 #' # `carbon` has two roles at the end, so the last `update_roles()` fails since
 #' # `old_role` was not given.
-#' # recipe(HHV ~ ., data = biomass) %>%
-#' #   update_role(sample, new_role = "id variable") %>%
-#' #   update_role(dataset, new_role = "splitting variable") %>%
-#' #   add_role(carbon, sulfur, new_role = "something") %>%
-#' #   update_role(carbon, new_role = "something else") %>%
-#' #   summary()
+#' \dontrun{
+#' recipe(HHV ~ ., data = biomass) %>%
+#'   add_role(carbon, sulfur, new_role = "something") %>%
+#'   update_role(carbon, new_role = "something else")
+#' }
 #'
 #' # ------------------------------------------------------------------------------
 #'
-#' # To remove a role, `remove_role()` can be used to affect a single role.
+#' # To remove a role, `remove_role()` can be used to remove a single role.
 #' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
-#'   add_role(carbon, sulfur, new_role = "something") %>%
+#'   add_role(carbon, new_role = "something") %>%
 #'   remove_role(carbon, old_role = "something") %>%
 #'   summary()
 #'
 #' # To remove all roles, call `remove_role()` multiple times to reset to `NA`
 #' recipe(HHV ~ ., data = biomass) %>%
-#'   update_role(sample, new_role = "id variable") %>%
-#'   update_role(dataset, new_role = "splitting variable") %>%
 #'   add_role(carbon, new_role = "something") %>%
 #'   remove_role(carbon, old_role = "something") %>%
 #'   remove_role(carbon, old_role = "predictor") %>%
