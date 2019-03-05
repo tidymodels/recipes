@@ -165,6 +165,15 @@ test_that('cannot add roles if the current one is `NA`', {
   expect_error(add_role(rec, sample, sulfur), "No role currently exists")
 })
 
+test_that("`new_role` cannot be `NA_character_`", {
+  rec <- recipe(HHV ~ ., data = biomass)
+
+  expect_error(
+    add_role(rec, sample, new_role = NA_character_),
+    "`new_role` must not be `NA`."
+  )
+})
+
 test_that('NA roles fail', {
 
   rec <- recipe(x = biomass)

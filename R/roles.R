@@ -317,6 +317,10 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
     stop(arg, " must be a character vector.", call. = FALSE)
   }
 
+  if (is.na(x)) {
+    stop(arg, " must not be `NA`.", call. = FALSE)
+  }
+
   invisible(NULL)
 }
 
