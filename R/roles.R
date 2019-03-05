@@ -288,17 +288,28 @@ role_rm_machine <- function(x, role, var) {
   if (!any(x$variable %in% var)) {
     return(x)
   }
+
   sel_role <- x$role == role
+
   if (sum(sel_role) == 0) {
-    warning("Column ", x$variable[1], " does not have role '", role, "'", call. = FALSE)
+    var <- glue::single_quote(x$variable[1])
+    role <- glue::single_quote(role)
+
+    warning(
+      glue::glue("Column, {var}, does not have role, {role}."),
+      call. = FALSE
+    )
+
     return(x)
-  } else {
-    if (nrow(x) == 1) {
-      x$role <- NA
-    } else {
-      x <- x[x$role != role,]
-    }
   }
+
+  if (nrow(x) == 1) {
+    x$role <- NA_character_
+  }
+  else {
+    x <- x[x$role != role,]
+  }
+
   x
 }
 

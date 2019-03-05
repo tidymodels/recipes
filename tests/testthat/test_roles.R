@@ -197,6 +197,11 @@ test_that('remove roles', {
     rec <- remove_role(rec, sample)
   )
 
+  expect_warning(
+    remove_role(rec, sample, old_role = "non-existant"),
+    "Column, 'sample', does not have role, 'non-existant'."
+  )
+
   rec <- remove_role(rec, sample, old_role = "role1")
 
   exp_res <- tibble(variable = colnames(biomass),
