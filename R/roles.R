@@ -309,21 +309,18 @@ role_rm_machine <- function(x, role, var) {
 single_chr <- function(x, prefix = "", null_ok = FALSE) {
   arg <- paste0("`", prefix, "role", "`")
 
-  if (null_ok) {
-    if (length(x) > 1L) {
-      stop(arg, " must have length 1 or be `NULL`.")
-    }
-    if (!is.null(x) & !is.character(x)) {
-      stop(arg, " must be a character vector.")
-    }
-  } else {
-    if (length(x) != 1L) {
-      stop(arg, " must have length 1.")
-    }
-    if (!is.character(x)) {
-      stop(arg, " must be a character vector.")
-    }
+  if (null_ok && is.null(x)) {
+    return(invisible(NULL))
   }
+
+  if (length(x) != 1L) {
+    stop(arg, " must have length 1.", call. = FALSE)
+  }
+
+  if (!is.character(x)) {
+    stop(arg, " must be a character vector.", call. = FALSE)
+  }
+
   invisible(NULL)
 }
 
