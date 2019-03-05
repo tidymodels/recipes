@@ -165,15 +165,6 @@ test_that('cannot add roles if the current one is `NA`', {
   expect_error(add_role(rec, sample, sulfur), "No role currently exists")
 })
 
-test_that("`new_role` cannot be `NA_character_`", {
-  rec <- recipe(HHV ~ ., data = biomass)
-
-  expect_error(
-    add_role(rec, sample, new_role = NA_character_),
-    "`new_role` must not be `NA`."
-  )
-})
-
 test_that("`update_role()` cannot be ambiguous", {
   rec <- recipe(HHV ~ ., data = biomass)
   rec <- add_role(rec, sample, new_role = "x")
@@ -184,15 +175,17 @@ test_that("`update_role()` cannot be ambiguous", {
   )
 })
 
-test_that('NA roles fail', {
-
+test_that("`new_role` cannot be `NA_character_`", {
   rec <- recipe(x = biomass)
-  # no existing role
+
   expect_error(
-    rec <- add_role(rec, sample, new_role = NA)
+    add_role(rec, sample, new_role = NA_character_),
+    "`new_role` must not be `NA`."
   )
+
   expect_error(
-    rec <- update_role(rec, sample, new_role = NA)
+    update_role(rec, sample, new_role = NA_character_),
+    "`new_role` must not be `NA`."
   )
 })
 
