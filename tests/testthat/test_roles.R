@@ -312,3 +312,67 @@ test_that("step_rm() removes ALL mention of variables with that role", {
 
   expect_false("carbon" %in% rec_prepped$variable)
 })
+
+# ------------------------------------------------------------------------------
+# Tests related to #296
+# https://github.com/tidymodels/recipes/issues/296
+
+test_that("Existing `NA` roles are not modified in prep() when new columns are generated", {
+
+  rec_dummy <- recipe(x = iris) %>%
+    update_role(Sepal.Length, new_role = "outcome") %>%
+    update_role(Species, new_role = "predictor") %>%
+    step_dummy(Species)
+
+  prepped_rec_dummy <- prep(rec_dummy, iris)
+
+  orig <- summary(rec_dummy)
+  new <- summary(prepped_rec_dummy)
+
+  # These should be identical except for the modified Species term
+  expect_equal(
+    filter(orig, !grepl("Species", variable)),
+    filter(new, !grepl("Species", variable))
+  )
+
+  expect_equal(
+    filter(new, grepl("Species", variable)),
+    tibble(
+      variable = c("Species_versicolor", "Species_virginica"),
+      type = rep("numeric", times = 2),
+      role = rep("predictor", times = 2),
+      source = rep("derived", times = 2)
+    )
+  )
+
+  # Juicing with all predictors should only give these two columns
+  expect_equal(
+    colnames(juice(prepped_rec_dummy, all_predictors())),
+    c("Species_versicolor", "Species_virginica")
+  )
+
+})
+
+
+test_that("Existing `NA` roles are not modified in prep() when multiple new columns are generated", {
+
+  rec <- recipe(x = iris) %>%
+    update_role(Sepal.Length, new_role = "outcome") %>%
+    update_role(Sepal.Width, new_role = "predictor") %>%
+    update_role(Species, new_role = "predictor") %>%
+    step_dummy(Species) %>%
+    step_bs(Sepal.Width)
+
+  prepped_rec <- prep(rec, iris)
+
+  orig <- summary(rec_dummy)
+  new <- summary(prepped_rec)
+
+  # These should be identical except for the
+  # modified Species and Sepal.Width terms
+  expect_equal(
+    filter(orig, !grepl("Species", variable), !grepl("Sepal.Width", variable)),
+    filter(new, !grepl("Species", variable), !grepl("Sepal.Width", variable))
+  )
+
+})
