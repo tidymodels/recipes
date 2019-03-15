@@ -410,20 +410,27 @@ prep.recipe <-
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
 
-        ## Update the roles and the term source
-        ## These next two steps needs to be smarter to find diffs
-        if (!is.na(x$steps[[i]]$role))
-          x$term_info$role[is.na(x$term_info$role)] <-
-          x$steps[[i]]$role
+        # Update the roles and the term source
+        if (!is.na(x$steps[[i]]$role)) {
 
-        x$term_info$source[is.na(x$term_info$source)] <- "derived"
+          new_vars <- setdiff(x$term_info$variable, running_info$variable)
+          pos_new_var <- x$term_info$variable %in% new_vars
+          pos_new_and_na_role <- pos_new_var & is.na(x$term_info$role)
+          pos_new_and_na_source <- pos_new_var  & is.na(x$term_info$source)
 
-        running_info <-
-          rbind(running_info,
-                x$term_info %>% mutate(number = i, skip = x$steps[[i]]$skip))
-      } else {
-        if (verbose)
-          cat(note, "[pre-trained]\n")
+          x$term_info$role[pos_new_and_na_role] <- x$steps[[i]]$role
+          x$term_info$source[pos_new_and_na_source] <- "derived"
+
+        }
+
+        running_info <- rbind(
+          running_info,
+          mutate(x$term_info, number = i, skip = x$steps[[i]]$skip)
+        )
+
+      }
+      else {
+        if (verbose) cat(note, "[pre-trained]\n")
       }
     }
 
