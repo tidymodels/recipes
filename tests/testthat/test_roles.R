@@ -1,9 +1,8 @@
+context("Changing roles")
+
 library(testthat)
 library(recipes)
 library(tibble)
-
-context("Changing roles")
-
 
 data(biomass)
 
@@ -365,7 +364,7 @@ test_that("Existing `NA` roles are not modified in prep() when multiple new colu
 
   prepped_rec <- prep(rec, iris)
 
-  orig <- summary(rec_dummy)
+  orig <- summary(rec)
   new <- summary(prepped_rec)
 
   # These should be identical except for the
