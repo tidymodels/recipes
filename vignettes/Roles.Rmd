@@ -1,0 +1,119 @@
+---
+title: "Roles in Recipes"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Roles in Recipes}
+output:
+  knitr:::html_vignette:
+    toc: yes
+---
+
+```{r ex_setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+  )
+options(digits = 3)
+library(recipes)
+```
+
+`recipes` can assign one or more roles to each column in the data. The roles are not restricted to a predefined set; they can be anything. For most conventional situations, they are typically "predictor" and/or "outcome". 
+
+## The Formula Method
+
+When a recipe is created using the formula interface, this defines the roles for all columns of the data set: 
+
+```{r formula-roles}
+library(recipes)
+
+recipe(Species ~ ., data = iris) %>% summary()
+recipe( ~ Species, data = iris) %>% summary()
+recipe(Sepal.Length + Sepal.Width ~ ., data = iris) %>% summary()
+```
+
+and so on. 
+
+These roles can be updated despite this initial assignment. The function `update_role` can modify a single existing role:
+
+```{r formula-update}
+recipe(HHV ~ ., data = biomass) %>% 
+  update_role(dataset, new_role = "dataset split variable") %>% 
+  update_role(sample, new_role = "sample ID") %>% 
+  summary()
+```
+
+If a variable has multiple existing roles (see below) the additional `old_role` argument can be used. 
+
+When you don't want a role for a column, `remove_role` can be used. 
+
+```{r formula-rm}
+recipe(HHV ~ ., data = biomass) %>% 
+  remove_role(sample, old_role = "predictor") %>% 
+  summary()
+```
+
+It represents the role as `NA` (but setting the role manually to `NA` won't work)
+
+```{r formula-rm-fail, error=TRUE}
+recipe(HHV ~ ., data = biomass) %>% 
+  update_role(sample, new_role = NA)
+```
+
+When there are cases when a column will be used in more than one context, `add_role` can append more roles:
+
+```{r formula-add}
+recipe(HHV ~ ., data = biomass) %>% 
+  update_role(dataset, new_role = "dataset split variable") %>% 
+  update_role(sample, new_role = "sample ID") %>% 
+  # Roles below from https://wordcounter.net/random-word-generator
+  add_role(sample, new_role = "jellyfish") %>% 
+  summary()
+```
+
+## The Non-Formula Interface
+
+You can start a recipe without any roles:
+
+```{r x-none}
+recipe(biomass) %>% 
+  summary()
+```
+
+and roles can be added as needed:
+
+```{r x-none-updated}
+recipe(biomass) %>% 
+  update_role(contains("gen"), new_role = "lunchroom") %>% 
+  update_role(sample, HHV, new_role = "snail") %>% 
+  summary()
+```
+
+## Role Inheritance
+
+All recipes steps have a `role` argument that might let you set the role of columns modified by the step. When a recipe modifies a column in-place, the role is not modified. For example, `?step_center` has the documentation:
+
+> `role`: Not used by this step since no new variables are created
+
+In other cases, the role are defaulted to a relevant value based the context. For example, `?step_dummy` has 
+
+> `role`: For model terms created by this step, what analysis role should they be assigned?. By default, the function assumes that the binary dummy variable columns created by the original variables will be used as predictors in a model.
+
+So, by default, they are predictors but don't have to be:
+
+```{r dummy}
+recipe( ~ ., data = iris) %>% 
+  step_dummy(Species) %>% 
+  prep() %>% 
+  juice(all_predictors()) %>% 
+  dplyr::select(starts_with("Species")) %>% 
+  names()
+
+# or something else
+recipe( ~ ., data = iris) %>% 
+  step_dummy(Species, role = "trousers") %>% 
+  prep() %>% 
+  juice(has_role("trousers")) %>% 
+  names()
+```
