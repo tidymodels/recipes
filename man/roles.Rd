@@ -4,11 +4,14 @@
 \alias{roles}
 \alias{add_role}
 \alias{update_role}
+\alias{remove_role}
 \title{Manually Alter Roles}
 \usage{
 add_role(recipe, ..., new_role = "predictor", new_type = NULL)
 
 update_role(recipe, ..., new_role = "predictor", old_role = NULL)
+
+remove_role(recipe, ..., old_role)
 }
 \arguments{
 \item{recipe}{An existing \code{\link[=recipe]{recipe()}}.}
@@ -23,9 +26,8 @@ be identified as. If left as \code{NULL}, the type is automatically identified
 as the \emph{first} type you see for that variable in \code{summary(recipe)}.}
 
 \item{old_role}{A character string for the specific role to update for the
-variables selected by \code{...}. If left as \code{NULL}, all roles for each selected
-variable are updated to \code{new_role}. This is useful if you have a
-variable with multiple roles, and you want to alter only one of them.}
+variables selected by \code{...}. \code{update_role()} accepts a \code{NULL} as long as the
+variables have only a single role.}
 }
 \value{
 An updated recipe object.
@@ -35,11 +37,14 @@ An updated recipe object.
 does not overwrite old roles, as a single variable can have multiple roles.
 
 \code{update_role()} alters an existing role in the recipe.
+
+\code{remove_role()} eliminates a single existing role in the recipe.
 }
 \details{
 With \code{add_role()}, if a variable is selected that already has the
 \code{new_role}, a warning is emitted and that variable is skipped so no
-duplicate roles are added.
+duplicate roles are added. If no role currently exists (e.g. the current
+role is \code{NA}), an error is thrown; \code{update_role()} should be used instead.
 
 Adding or updating roles is a useful way to group certain variables that
 don't fall in the standard \code{"predictor"} bucket. You can perform a step
@@ -47,32 +52,68 @@ on all of the variables that have a custom role with the selector
 \code{\link[=has_role]{has_role()}}.
 }
 \examples{
+library(recipes)
 data(biomass)
 
-# Create the recipe manually
-rec <- recipe(x = biomass)
-rec
-summary(rec)
+# Using the formula method, roles are created for any outcomes and predictors:
+recipe(HHV ~ ., data = biomass) \%>\%
+  summary()
 
-rec <- rec \%>\%
-  update_role(carbon, contains("gen"), sulfur, new_role = "predictor") \%>\%
+# However `sample` and `dataset` aren't predictors. Since they already have
+# roles, `update_role()` can be used to make changes:
+recipe(HHV ~ ., data = biomass) \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting variable") \%>\%
-  update_role(HHV, new_role = "outcome")
+  summary()
 
-rec
-summary(rec)
+# `update_role()` cannot set a role to NA, use `remove_role()` for that
+\dontrun{
+recipe(HHV ~ ., data = biomass) \%>\%
+  update_role(sample, new_role = NA_character_)
+}
 
-# Add a secondary role for carbon
-rec <- rec \%>\%
-  add_role(carbon, new_role = "carbon predictor")
+# ------------------------------------------------------------------------------
 
-summary(rec)
+# Variables can have more than one role. `add_role()` can be used
+# if the column already has at least one role:
+recipe(HHV ~ ., data = biomass) \%>\%
+  add_role(carbon, sulfur, new_role = "something") \%>\%
+  summary()
 
-# Now update only the "predictor" role of carbon to instead
-# be an additional outcome
-rec \%>\%
-  update_role(carbon, new_role = "outcome", old_role = "predictor") \%>\%
+# `update_role()` has an argument called `old_role` that is required to
+# unambiguously update a role when the column currently has multiple roles.
+recipe(HHV ~ ., data = biomass) \%>\%
+  add_role(carbon, new_role = "something") \%>\%
+  update_role(carbon, new_role = "something else", old_role = "something") \%>\%
+  summary()
+
+# `carbon` has two roles at the end, so the last `update_roles()` fails since
+# `old_role` was not given.
+\dontrun{
+recipe(HHV ~ ., data = biomass) \%>\%
+  add_role(carbon, sulfur, new_role = "something") \%>\%
+  update_role(carbon, new_role = "something else")
+}
+
+# ------------------------------------------------------------------------------
+
+# To remove a role, `remove_role()` can be used to remove a single role.
+recipe(HHV ~ ., data = biomass) \%>\%
+  add_role(carbon, new_role = "something") \%>\%
+  remove_role(carbon, old_role = "something") \%>\%
+  summary()
+
+# To remove all roles, call `remove_role()` multiple times to reset to `NA`
+recipe(HHV ~ ., data = biomass) \%>\%
+  add_role(carbon, new_role = "something") \%>\%
+  remove_role(carbon, old_role = "something") \%>\%
+  remove_role(carbon, old_role = "predictor") \%>\%
+  summary()
+
+# ------------------------------------------------------------------------------
+
+# If the formula method is not used, all columns have a missing role:
+recipe(biomass) \%>\%
   summary()
 
 }
