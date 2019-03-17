@@ -56,7 +56,7 @@ added to the sequence of existing steps (if any). For the
 the columns that will be affected and \code{holiday}.
 }
 \description{
-\code{step_ns} creates a \emph{specification} of a recipe step
+\code{step_bs} creates a \emph{specification} of a recipe step
 that will create new columns that are basis expansions of
 variables using B-splines.
 }

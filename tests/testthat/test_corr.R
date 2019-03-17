@@ -34,6 +34,39 @@ test_that('low filter', {
   expect_equal(filtering_trained$steps[[1]]$removals, numeric(0))
 })
 
+test_that('many missing values', {
+  dat2 <- dat
+  dat2$V4 <- NA_real_
+  rec <- recipe(~ ., data = dat2)
+  filtering <- rec %>%
+    step_corr(all_predictors(), threshold = .25)
+
+  filtering_trained <-
+    expect_warning(
+      prep(filtering, training = dat2, verbose = FALSE),
+      "1 columns were excluded from the filter"
+    )
+
+  expect_equal(filtering_trained$steps[[1]]$removals, paste0("V", 1:2))
+})
+
+test_that('occasional missing values', {
+  dat3 <- dat
+  dat3$V1[1] <- NA_real_
+  dat3$V4[10] <- NA_real_
+  rec <- recipe(~ ., data = dat3)
+  filtering <- rec %>%
+    step_corr(all_predictors(), threshold = .25, use = "everything")
+
+  filtering_trained <-
+    expect_warning(
+      prep(filtering, training = dat3, verbose = FALSE),
+      "Some columns were excluded from the filter"
+    )
+
+  expect_equal(filtering_trained$steps[[1]]$removals, "V2")
+})
+
 
 test_that('printing', {
   set.seed(1)
