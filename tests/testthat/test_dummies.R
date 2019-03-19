@@ -194,7 +194,12 @@ test_that('new levels', {
   )
 })
 
-
+test_that('tests for issue #301', {
+  rec <- recipe(~ Species, data = iris)
+  dummies <- rec %>% step_dummy(Species)
+  dummies <- prep(dummies, training = iris)
+  expect_equal(NULL, attr(dummies$steps[[1]]$levels$Species, ".Environment"))
+})
 
 
 
