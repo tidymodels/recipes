@@ -8,7 +8,9 @@
 
 * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued when this happens and no interaction terms will be created.
 
-* `step_corr` was made more fault tolerant for cases where the data contain a zero-variance column or columns with missing values. 
+* `step_corr` was made more fault tolerant for cases where the data contain a zero-variance column or columns with missing values.
+
+* Set the embedded environment to NULL in `prep.step_dummy` to reduce the file size of serialized recipe class objects when using `saveRDS`.
  
 ## Breaking Changes
 
