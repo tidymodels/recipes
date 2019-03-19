@@ -131,7 +131,9 @@ navbar:
       - text: "The Order of Steps"
         href: articles/Ordering.html  
       - text: "Dummy Variables and Interactions"
-        href: articles/Dummies.html        
+        href: articles/Dummies.html     
+      - text: "Column Roles"
+        href: articles/Roles.html            
       - text: "On Skipping Steps"
         href: articles/Skipping.html      
       - text: "Subsampling for Class Imbalances"
