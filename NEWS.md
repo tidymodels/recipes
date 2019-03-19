@@ -7,6 +7,8 @@
 * To provide infrastructure for finalizing varying parameters, an `update()` method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.
 
 * `step_interact` will no longer fail if an interaction contains an interaction using column that has been previously filtered from the data. A warning is issued when this happens and no interaction terms will be created.
+
+* `step_corr` was made more fault tolerant for cases where the data contain a zero-variance column or columns with missing values. 
  
 ## Breaking Changes
 
