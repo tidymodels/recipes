@@ -533,7 +533,7 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (is.null(new_data) || is.null(ncol(new_data))) {
     if (any(names(terms) == "newdata")) {
       warning("Please use `new_data` instead of `newdata` with `bake`. \nIn ",
-              "recipes versions >= 0.1.4, this will cause an error.",
+              "recipes versions >= 0.1.5, this will cause an error.",
               call. = FALSE)
       # If a single selector is passed in, it is now in `new_data`.
       if (!is.null(match.call()$new_data)) {
