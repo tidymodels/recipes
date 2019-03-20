@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Create Interaction Variables — step_interact" />
 
@@ -74,7 +76,7 @@ between two or more variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ between two or more variables." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -191,7 +196,7 @@ individual interaction.</p></td>
       <th>sep</th>
       <td><p>A character value used to delineate variables in an
 interaction (e.g. <code>var1_x_var2</code> instead of the more
-traditional <code><a href='https://www.rdocumentation.org/packages/base/topics/Colon'>var1:var2</a></code>).</p></td>
+traditional <code>var1:var2</code>).</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -199,7 +204,7 @@ traditional <code><a href='https://www.rdocumentation.org/packages/base/topics/C
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -237,9 +242,9 @@ interactions.</p>
 be a traditional R model formula but should contain no inline
 functions (e.g. <code>log</code>). For example, for predictors
 <code>A</code>, <code>B</code>, and <code>C</code>, a formula such as
-<code><a href='https://www.rdocumentation.org/packages/base/topics/tilde'>~A:B:C</a></code> can be used to make a three way interaction
+<code>~A:B:C</code> can be used to make a three way interaction
 between the variables. If the formula contains terms other than
-interactions (e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>(A+B+C)^3</a></code>) only the interaction terms
+interactions (e.g. <code>(A+B+C)^3</code>) only the interaction terms
 are retained for the design matrix.</p>
 <p>The separator between the variables defaults to "<code>_x_</code>" so
 that the three way interaction shown previously would generate a
@@ -251,10 +256,10 @@ example, suppose a factor column <code>X</code> gets converted to dummy
 variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href='step_dummy.html'>step_dummy()</a></code>. If
 you wanted an interaction with numeric column <code>z</code>, you could
 create a set of specific interaction effects (e.g.
-<code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>x_2:z + x_3:z</a></code> and so on) or you could use
-<code><a href='https://www.rdocumentation.org/packages/base/topics/Colon'>starts_with("z_"):z</a></code>. When <code><a href='prep.html'>prep()</a></code> evaluates this step,
-<code>starts_with("z_")</code> resolves to <code><a href='https://www.rdocumentation.org/packages/base/topics/Paren'>(x_2 + x_3 + x_4 + x_5 + x6)</a></code>
-so that the formula is now <code><a href='https://www.rdocumentation.org/packages/base/topics/Colon'>(x_2 + x_3 + x_4 + x_5 + x6):z</a></code> and
+<code>x_2:z + x_3:z</code> and so on) or you could use
+<code>starts_with("z_"):z</code>. When <code><a href='prep.html'>prep()</a></code> evaluates this step,
+<code>starts_with("z_")</code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x6)</code>
+so that the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x6):z</code> and
 all two-way interactions are created.</p>
     
 
@@ -280,10 +285,10 @@ all two-way interactions are created.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>dat_1</span>)</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
 #&gt; [4] "nitrogen"          "sulfur"            "HHV"              
 #&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>dat_2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'dat_2' not found</span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 2[39m
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 2</span><span>
 #&gt;   terms           id            
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m         
-#&gt; [38;5;250m1[39m carbon:hydrogen interact_tXXxK</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `$&lt;-.data.frame`(`*tmp*`, id, value = "interact_7fUgy"): replacement has 1 row, data has 0</span></div></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon:hydrogen interact_5lKMY</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `$&lt;-.data.frame`(`*tmp*`, id, value = "interact_0DreN"): replacement has 1 row, data has 0</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

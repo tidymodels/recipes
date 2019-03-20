@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Orthogonal Polynomial Basis Functions — step_poly" />
 
@@ -74,7 +76,7 @@ variables using orthogonal polynomials." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ variables using orthogonal polynomials." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -193,7 +198,7 @@ created once the step has been trained.</p></td>
       <th>options</th>
       <td><p>A list of options for <code><a href='https://www.rdocumentation.org/packages/stats/topics/poly'>stats::poly()</a></code>
 which should not include <code>x</code> or <code>simple</code>. Note that
-the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>raw = TRUE</a></code> will produce the regular polynomial
+the option <code>raw = TRUE</code> will produce the regular polynomial
 values (not orthogonalized).</p></td>
     </tr>
     <tr>
@@ -202,7 +207,7 @@ values (not orthogonalized).</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -252,25 +257,25 @@ for the new variables is <code>varname_poly_1</code> and so on.</p>
 <span class='no'>quadratic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>quadratic</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>expanded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>quadratic</span>, <span class='no'>biomass_te</span>)
-<span class='no'>expanded</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 80 x 8[39m
+<span class='no'>expanded</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 8</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_poly_1 carbon_poly_2 hydrogen_poly_1
-#&gt;     [3m[38;5;246m&lt;dbl&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m  [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m         [3m[38;5;246m&lt;dbl&gt;[39m[23m         [3m[38;5;246m&lt;dbl&gt;[39m[23m           [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m   47.2     0.3    0.22  18.3      -[31m0[39m[31m.[39m[31m00[39m[31m9[4m0[24m[4m3[24m[39m      -[31m0[39m[31m.[39m[31m0[39m[31m12[4m4[24m[39m          0.008[4m2[24m[4m6[24m
-#&gt; [38;5;250m 2[39m   48.1     2.85   0.34  17.6      -[31m0[39m[31m.[39m[31m0[39m[31m23[4m0[24m[39m        0.004[4m0[24m[4m3[24m         0.001[4m6[24m[4m0[24m
-#&gt; [38;5;250m 3[39m   49.1     2.4    0.3   17.2      -[31m0[39m[31m.[39m[31m0[39m[31m25[4m5[24m[39m        0.007[4m3[24m[4m4[24m         0.001[4m6[24m[4m0[24m
-#&gt; [38;5;250m 4[39m   37.3     1.8    0.5   18.9      -[31m0[39m[31m.[39m[31m00[39m[31m8[4m8[24m[4m0[24m[39m      -[31m0[39m[31m.[39m[31m0[39m[31m12[4m6[24m[39m          0.025[4m1[24m 
-#&gt; [38;5;250m 5[39m   42.8     0.2    0     20.5       0.001[4m8[24m[4m3[24m      -[31m0[39m[31m.[39m[31m0[39m[31m22[4m6[24m[39m          0.033[4m7[24m 
-#&gt; [38;5;250m 6[39m   41.7     0.7    0.2   18.5      -[31m0[39m[31m.[39m[31m0[39m[31m18[4m3[24m[39m       -[31m0[39m[31m.[39m[31m00[39m[31m1[4m9[24m[4m5[24m[39m         0.001[4m6[24m[4m0[24m
-#&gt; [38;5;250m 7[39m   54.1     1.19   0.51  15.1      -[31m0[39m[31m.[39m[31m0[39m[31m42[4m4[24m[39m        0.033[4m1[24m         -[31m0[39m[31m.[39m[31m00[39m[31m8[4m9[24m[4m7[24m[39m
-#&gt; [38;5;250m 8[39m   33.8     0.95   0.2   16.2      -[31m0[39m[31m.[39m[31m0[39m[31m28[4m2[24m[39m        0.011[4m1[24m         -[31m0[39m[31m.[39m[31m0[39m[31m31[4m3[24m[39m 
-#&gt; [38;5;250m 9[39m   31.1     0.14   4.9   11.1      -[31m0[39m[31m.[39m[31m0[39m[31m86[4m3[24m[39m        0.125          -[31m0[39m[31m.[39m[31m0[39m[31m41[4m5[24m[39m 
-#&gt; [38;5;250m10[39m   23.7     4.63   1.05  10.8      -[31m0[39m[31m.[39m[31m0[39m[31m92[4m6[24m[39m        0.142          -[31m0[39m[31m.[39m[31m0[39m[31m66[4m2[24m[39m 
-#&gt; [38;5;246m# ... with 70 more rows, and 1 more variable: hydrogen_poly_2 [3m[38;5;246m&lt;dbl&gt;[38;5;246m[23m[39m</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>quadratic</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>   47.2     0.3    0.22  18.3      -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>03</span><span>      -</span><span style='color: #BB0000;'>0.012</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>          0.008</span><span style='text-decoration: underline;'>26</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>   48.1     2.85   0.34  17.6      -</span><span style='color: #BB0000;'>0.023</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>        0.004</span><span style='text-decoration: underline;'>03</span><span>         0.001</span><span style='text-decoration: underline;'>60</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>   49.1     2.4    0.3   17.2      -</span><span style='color: #BB0000;'>0.025</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span>        0.007</span><span style='text-decoration: underline;'>34</span><span>         0.001</span><span style='text-decoration: underline;'>60</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>   37.3     1.8    0.5   18.9      -</span><span style='color: #BB0000;'>0.008</span><span style='color: #BB0000;text-decoration: underline;'>80</span><span>      -</span><span style='color: #BB0000;'>0.012</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>          0.025</span><span style='text-decoration: underline;'>1</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>   42.8     0.2    0     20.5       0.001</span><span style='text-decoration: underline;'>83</span><span>      -</span><span style='color: #BB0000;'>0.022</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>          0.033</span><span style='text-decoration: underline;'>7</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>   41.7     0.7    0.2   18.5      -</span><span style='color: #BB0000;'>0.018</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>       -</span><span style='color: #BB0000;'>0.001</span><span style='color: #BB0000;text-decoration: underline;'>95</span><span>         0.001</span><span style='text-decoration: underline;'>60</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>   54.1     1.19   0.51  15.1      -</span><span style='color: #BB0000;'>0.042</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>        0.033</span><span style='text-decoration: underline;'>1</span><span>         -</span><span style='color: #BB0000;'>0.008</span><span style='color: #BB0000;text-decoration: underline;'>97</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>   33.8     0.95   0.2   16.2      -</span><span style='color: #BB0000;'>0.028</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span>        0.011</span><span style='text-decoration: underline;'>1</span><span>         -</span><span style='color: #BB0000;'>0.031</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>   31.1     0.14   4.9   11.1      -</span><span style='color: #BB0000;'>0.086</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>        0.125          -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>   23.7     4.63   1.05  10.8      -</span><span style='color: #BB0000;'>0.092</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>        0.142          -</span><span style='color: #BB0000;'>0.066</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #949494;'># … with 70 more rows, and 1 more variable: hydrogen_poly_2 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>quadratic</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    degree id        
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     
-#&gt; [38;5;250m1[39m carbon        2 poly_bEKKR
-#&gt; [38;5;250m2[39m hydrogen      2 poly_bEKKR</div></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon        2 poly_onm0v
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen      2 poly_onm0v</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

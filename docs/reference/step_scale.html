@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Scaling Numeric Data — step_scale" />
 
@@ -74,7 +76,7 @@ deviation of one." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ deviation of one." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -197,7 +202,7 @@ values should be removed when computing the standard deviation.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -254,29 +259,29 @@ using these standard deviations.</p>
 #&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 80 x 6[39m
+#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 6</span><span>
 #&gt;    carbon hydrogen oxygen nitrogen sulfur   HHV
-#&gt;     [3m[38;5;246m&lt;dbl&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m  [3m[38;5;246m&lt;dbl&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m  [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m   4.45     4.74   47.2     0.3    0.22  18.3
-#&gt; [38;5;250m 2[39m   4.16     4.60   48.1     2.85   0.34  17.6
-#&gt; [38;5;250m 3[39m   4.10     4.60   49.1     2.4    0.3   17.2
-#&gt; [38;5;250m 4[39m   4.46     5.10   37.3     1.8    0.5   18.9
-#&gt; [38;5;250m 5[39m   4.68     5.28   42.8     0.2    0     20.5
-#&gt; [38;5;250m 6[39m   4.26     4.60   41.7     0.7    0.2   18.5
-#&gt; [38;5;250m 7[39m   3.74     4.37   54.1     1.19   0.51  15.1
-#&gt; [38;5;250m 8[39m   4.04     3.89   33.8     0.95   0.2   16.2
-#&gt; [38;5;250m 9[39m   2.81     3.68   31.1     0.14   4.9   11.1
-#&gt; [38;5;250m10[39m   2.67     3.15   23.7     4.63   1.05  10.8
-#&gt; [38;5;246m# ... with 70 more rows[39m</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>   4.45     4.74   47.2     0.3    0.22  18.3
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>   4.16     4.60   48.1     2.85   0.34  17.6
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>   4.10     4.60   49.1     2.4    0.3   17.2
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>   4.46     5.10   37.3     1.8    0.5   18.9
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>   4.68     5.28   42.8     0.2    0     20.5
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>   4.26     4.60   41.7     0.7    0.2   18.5
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>   3.74     4.37   54.1     1.19   0.51  15.1
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>   4.04     3.89   33.8     0.95   0.2   16.2
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>   2.81     3.68   31.1     0.14   4.9   11.1
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>   2.67     3.15   23.7     4.63   1.05  10.8
+#&gt; </span><span style='color: #949494;'># … with 70 more rows</span><span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    value id         
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m carbon      [31mNA[39m scale_AOmOQ
-#&gt; [38;5;250m2[39m hydrogen    [31mNA[39m scale_AOmOQ</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 2 x 3[39m
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon      </span><span style='color: #BB0000;'>NA</span><span> scale_qa4nB
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span> scale_qa4nB</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>scaled_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    value id         
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m      
-#&gt; [38;5;250m1[39m carbon   10.4  scale_AOmOQ
-#&gt; [38;5;250m2[39m hydrogen  1.20 scale_AOmOQ</div><div class='input'>
-</div></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon   10.4  scale_qa4nB
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen  1.20 scale_qa4nB</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

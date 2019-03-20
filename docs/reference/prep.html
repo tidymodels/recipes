@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Train a Data Recipe — prep" />
 
@@ -74,7 +76,7 @@ sets." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ sets." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -189,9 +194,9 @@ are executed.</p></td>
       <td><p>A logical: should the <em>preprocessed</em> training set be saved
 into the <code>template</code> slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
-the existing steps. Also, it is advisable to use <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>
-if any steps use the option <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = FALSE</a></code>. <strong>Note</strong> that this can make
-the final recipe size large. When <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>verbose = TRUE</a></code>, a message is written
+the existing steps. Also, it is advisable to use <code>retain = TRUE</code>
+if any steps use the option <code>skip = FALSE</code>. <strong>Note</strong> that this can make
+the final recipe size large. When <code>verbose = TRUE</code>, a message is written
 with the approximate object size in memory but may be an underestimate
 since it does not take environments into account.</p></td>
     </tr>
@@ -199,7 +204,7 @@ since it does not take environments into account.</p></td>
       <th>strings_as_factors</th>
       <td><p>A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
-<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>retain = TRUE</a></code>) as well as the results of <code>bake.recipe</code>.</p></td>
+<code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
     </tr>
     </table>
     
@@ -219,7 +224,7 @@ and statistics required by any operations.</p>
 <code>na.rm</code> option at the recipe-level or in <code>prep()</code>.</p>
 <p>Also, if a recipe has been trained using <code>prep()</code> and then steps
 are added, <code>prep()</code> will only update the new operations. If
-<code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>fresh = TRUE</a></code>, all of the operations will be (re)estimated.</p>
+<code>fresh = TRUE</code>, all of the operations will be (re)estimated.</p>
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.</p>

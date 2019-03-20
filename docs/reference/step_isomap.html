@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Isomap Embedding — step_isomap" />
 
@@ -74,7 +76,7 @@ dimensions." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ dimensions." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -223,7 +228,7 @@ resulting new variables. See notes below.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -262,8 +267,8 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with <code>prefix</code> and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if <code><a href='https://www.rdocumentation.org/packages/base/topics/Logic'>num_terms &lt; 10</a></code>, their names will be <code>Isomap1</code> -
-<code>Isomap9</code>. If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>num_terms = 101</a></code>, the names would be
+if <code>num_terms &lt; 10</code>, their names will be <code>Isomap1</code> -
+<code>Isomap9</code>. If <code>num_terms = 101</code>, the names would be
 <code>Isomap001</code> - <code>Isomap101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -310,14 +315,14 @@ https://github.com/gdkrmr</p>
 
   <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>im_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)
   <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>im_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: RSpectra</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: DONE</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2018-11-19 10:49:21: DONE</span></div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; [38;5;246m# A tibble: 5 x 2[39m
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: RSpectra</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:33: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: embedding</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: DONE</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: embedding</span></div><div class='output co'>#&gt; <span class='message'>2019-03-20 16:38:34: DONE</span></div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 2</span><span>
 #&gt;   terms    id          
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m       
-#&gt; [38;5;250m1[39m carbon   isomap_cSTG2
-#&gt; [38;5;250m2[39m hydrogen isomap_cSTG2
-#&gt; [38;5;250m3[39m oxygen   isomap_cSTG2
-#&gt; [38;5;250m4[39m nitrogen isomap_cSTG2
-#&gt; [38;5;250m5[39m sulfur   isomap_cSTG2</div></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon   isomap_Qw9rI
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen isomap_Qw9rI
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> oxygen   isomap_Qw9rI
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> nitrogen isomap_Qw9rI
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> sulfur   isomap_Qw9rI</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

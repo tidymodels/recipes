@@ -8,7 +8,7 @@
 <title>Basic Recipes • recipes</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
 <meta property="og:title" content="Basic Recipes">
 <meta property="og:description" content="">
@@ -40,7 +40,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -67,6 +67,9 @@
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -106,7 +109,7 @@
       <h1>Basic Recipes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Simple_Example.Rmd"><code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">vignettes/Simple_Example.Rmd</a></code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Simple_Example.Rmd"><code>vignettes/Simple_Example.Rmd</code></a></small>
       <div class="hidden name"><code>Simple_Example.Rmd</code></div>
 
     </div>
@@ -116,11 +119,11 @@
 <p>This document demonstrates some basic uses of recipes. First, some definitions are required:</p>
 <ul>
 <li>
-<strong>variables</strong> are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula <code><a href="https://www.rdocumentation.org/packages/base/topics/tilde">Y ~ A + B + A:B</a></code>, the variables are <code>A</code>, <code>B</code>, and <code>Y</code>.</li>
+<strong>variables</strong> are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula <code>Y ~ A + B + A:B</code>, the variables are <code>A</code>, <code>B</code>, and <code>Y</code>.</li>
 <li>
 <strong>roles</strong> define how variables will be used in the model. Examples are: <code>predictor</code> (independent variables), <code>response</code>, and <code>case weight</code>. This is meant to be open-ended and extensible.</li>
 <li>
-<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code><a href="https://www.rdocumentation.org/packages/base/topics/Colon">A:B</a></code>. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms</li>
+<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms</li>
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
@@ -141,7 +144,7 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000 </span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;     0.999     1.000     0.914     0.991     0.996     1.000     1.000</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;     1.000     1.000     0.919     0.988     0.996     1.000     1.000</span></a></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
@@ -246,7 +249,7 @@
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;    outcome          1</span></a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  predictor         13</span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; Training data contained 3341 data points and 309 incomplete rows. </span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; </span></a>
@@ -263,20 +266,20 @@
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">test_data</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; # A tibble: 1,113 x 23</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt;    Status Seniority   Time      Age Expenses   Income  Assets    Debt</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;    &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;  1 good      -0.987  0.938 -1.19       0.376  0.497   -0.243  -0.275 </span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  2 good      -0.987 -0.724 -1.01      -0.499 -0.447   -0.457  -0.275 </span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  3 good      -0.987  0.938 -0.464      1.76  -0.447    0.827  -0.275 </span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  4 good       1.36  -0.724 -0.00678    0.993  0.346   -0.157  -0.0739</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  5 bad       -0.740  0.938 -1.10      -0.499 -0.447   -0.457  -0.275 </span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  6 bad       -0.864  0.938  0.724      2.54  -0.384   -0.285   0.112 </span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good       2.23   0.938  1.27      -0.550  0.00644 -0.157  -0.275 </span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  8 good       1.36   0.938  0.541      0.993  0.472   -0.114  -0.275 </span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  9 bad       -0.616 -1.56  -1.29       0.993 -0.723   -0.0287 -0.275 </span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 good       2.97  -1.56   2.28      -0.550 -0.296    0.271  -0.275 </span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; # ... with 1,103 more rows, and 15 more variables: Amount &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; #   Price &lt;dbl&gt;, Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt;    Status Seniority   Time      Age Expenses   Income  Assets   Debt Amount</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;    &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;  1 bad      0.257   -0.706  0.826      1.75   0.718   -0.199  -0.273  2.05 </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  2 good     2.61     0.921  0.643      0.987 -0.221    0.386  -0.273  1.21 </span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  3 good     0.133   -2.33  -0.909     -1.05  -0.784   -0.449  -0.273 -1.76 </span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  4 good     0.00966  0.921 -0.635      0.987  0.705   -0.0316  1.86   0.995</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  5 good     0.875   -1.52   1.37      -1.05   2.34     0.929  -0.273  0.995</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  6 good     3.10    -1.52   2.84       0.479  0.718   -0.0316  1.43  -0.912</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good     2.24     0.921  1.28      -0.539  0.00436 -0.157  -0.273  0.677</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  8 bad     -0.979    0.108  0.00402   -1.05  -0.371   -0.265  -0.273  0.995</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  9 good     1.99     0.921  0.461      0.987 -0.0707  -0.115  -0.273 -0.276</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 bad     -0.979    0.921 -0.453     -0.539 -0.00815  0.136   2.28   0.465</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; # … with 1,103 more rows, and 14 more variables: Price &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; #   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt; #   Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt; #   Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt; #   Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;,</span></a>
