@@ -1,6 +1,6 @@
 # caret
 
-Version: 6.0-80
+Version: 6.0-81
 
 ## In both
 
@@ -13,103 +13,83 @@ Version: 6.0-80
         models   2.4Mb
     ```
 
-# embed
+# customsteps
 
-Version: 0.0.1
+Version: 0.7.1.0
 
-## Newly broken
+## In both
 
-*   checking tests ...
+*   checking dependencies in R code ... NOTE
     ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 4 SKIPPED: 10 FAILED: 10
-      1.  Error: factor encoded predictor (@test_mixed.R#12) 
-      2.  Error: character encoded predictor (@test_mixed.R#68) 
-      3.  Error: factor encoded predictor (@test_mixed.R#127) 
-      4.  Error: character encoded predictor (@test_mixed.R#183) 
-      5.  Error: printing (@test_mixed.R#259) 
-      6.  Error: factor encoded predictor (@test_no_pooling.R#12) 
-      7.  Error: character encoded predictor (@test_no_pooling.R#68) 
-      8.  Error: factor encoded predictor (@test_no_pooling.R#127) 
-      9.  Error: character encoded predictor (@test_no_pooling.R#183) 
-      10. Error: printing (@test_no_pooling.R#259) 
-      
-      Error: testthat unit tests failed
-      Execution halted
+    Namespaces in Imports field not imported from:
+      ‘rlang’ ‘tidyselect’
+      All declared Imports should be used.
     ```
 
-*   checking S3 generic/method consistency ... WARNING
-    ```
-    Warning: declared S3 method 'tidy.step_embed' not found
-    Warning: declared S3 method 'tidy.step_lencode_bayes' not found
-    Warning: declared S3 method 'tidy.step_lencode_glm' not found
-    Warning: declared S3 method 'tidy.step_lencode_mixed' not found
-    See section ‘Generic functions and methods’ in the ‘Writing R
-    Extensions’ manual.
-    ```
+# easyalluvial
 
-# healthcareai
-
-Version: 2.2.0
+Version: 0.1.8
 
 ## Newly broken
 
 *   checking examples ... ERROR
     ```
     ...
-    Running examples in ‘healthcareai-Ex.R’ failed
-    The error most likely occurred in:
+        filter, lag
     
-    > ### Name: evaluate
-    > ### Title: Get model performance metrics
-    > ### Aliases: evaluate evaluate.predicted_df evaluate.model_list
-    > 
-    > ### ** Examples
-    > 
-    > models <- machine_learn(pima_diabetes[1:40, ],
-    +                        patient_id,
-    +                        outcome = diabetes,
-    +                        models = c("XGB", "RF"),
-    +                        tune = FALSE,
-    +                        n_folds = 3)
-    Training new data prep recipe...
+    The following objects are masked from ‘package:base’:
     
-    Error in lapply(newdata[vars], function(x) { : 
-      argument "newdata" is missing, with no default
-    Calls: machine_learn ... <Anonymous> -> prep.recipe -> bake -> bake.step_missing -> lapply
+        intersect, setdiff, setequal, union
+    
+    > 
+    > data = as_tibble(mtcars)
+    > categoricals = c('cyl', 'vs', 'am', 'gear', 'carb')
+    > numericals = c('mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec')
+    > max_variables = 5
+    > 
+    > data = data %>%
+    +   mutate_at( vars(categoricals), as.factor )
+    > 
+    > 
+    > alluvial_wide( data = data
+    +                 , max_variables = max_variables
+    +                 , fill_by = 'first_variable' )
+    Error: No role currently exists for column(s): 'easyalluvialid'. Please use `update_role()` instead.
     Execution halted
     ```
 
 *   checking tests ...
     ```
      ERROR
-    Running the tests in ‘tests/testthat-5.R’ failed.
+    Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      5: bake(x$steps[[i]], new_data = training)
-      6: bake.step_missing(x$steps[[i]], new_data = training)
-      7: lapply(newdata[vars], function(x) {
-             levels(x) <- c(levels(x), "missing")
-             x
-         })
+      14: add_role(., easyalluvialid, new_role = "id variable")
+      15: stop(glue::glue("No role currently exists for column(s): {vars}. Please use ", "`update_role()` instead."), 
+             call. = FALSE)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 0 SKIPPED: 0 FAILED: 1
-      1. Error: the fundamentals work (@test-cran_only.R#4) 
+      OK: 6 SKIPPED: 9 FAILED: 6
+      1. Error: alluvial_long (@test_alluvial_long.R#94) 
+      2. Error: alluvial_wide (@test_alluvial_wide.R#17) 
+      3. Error: manip_bin_numerics (@test_manip.R#28) 
+      4. Error: manip_bin_numerics zero variance columns (@test_manip.R#84) 
+      5. Error: manip_bin_numerics with vector (@test_manip.R#96) 
+      6. Error: plot condensation (@test_plot_condensation.R#15) 
       
       Error: testthat unit tests failed
-      In addition: Warning message:
-      replacing previous import 'recipes::tidy' by 'broom::tidy' when loading 'healthcareai' 
       Execution halted
     ```
 
-*   checking whether package ‘healthcareai’ can be installed ... WARNING
+# MachineShop
+
+Version: 1.2.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
     ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘recipes::tidy’ by ‘broom::tidy’ when loading ‘healthcareai’
-    See ‘/Users/max/github/recipes/revdep/checks.noindex/healthcareai/new/healthcareai.Rcheck/00install.out’ for details.
+    Namespace in Imports field not imported from: ‘polspline’
+      All declared Imports should be used.
     ```
 
 # modelgrid
@@ -125,39 +105,19 @@ Version: 1.1.1.0
       All declared Imports should be used.
     ```
 
-# rsample
+# rbin
 
-Version: 0.0.2
+Version: 0.1.1
 
-## Newly broken
+## In both
 
-*   checking re-building of vignette outputs ... WARNING
+*   checking dependencies in R code ... NOTE
     ```
-    ...
-        intersect, setdiff, setequal, union
-    
-    
-    Attaching package: 'recipes'
-    
-    The following object is masked from 'package:rsample':
-    
-        prepper
-    
-    The following object is masked from 'package:broom':
-    
-        tidy
-    
-    The following object is masked from 'package:stats':
-    
-        step
-    
-    Quitting from lines 199-202 (Working_with_rsets.Rmd) 
-    Error: processing vignette 'Working_with_rsets.Rmd' failed with diagnostics:
-    no applicable method for 'tidy' applied to an object of class "c('rsplit', 'boot_split')"
-    Execution halted
+    Namespace in Imports field not imported from: ‘utils’
+      All declared Imports should be used.
     ```
 
-# tidymodels
+# textrecipes
 
 Version: 0.0.1
 
@@ -165,9 +125,20 @@ Version: 0.0.1
 
 *   checking dependencies in R code ... NOTE
     ```
+    Namespace in Imports field not imported from: ‘stringr’
+      All declared Imports should be used.
+    ```
+
+# tidymodels
+
+Version: 0.0.2
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
     Namespaces in Imports field not imported from:
-      ‘broom’ ‘ggplot2’ ‘infer’ ‘pillar’ ‘recipes’ ‘rsample’
-      ‘tidyposterior’ ‘tidypredict’ ‘tidytext’ ‘yardstick’
+      ‘broom’ ‘dials’ ‘parsnip’
       All declared Imports should be used.
     ```
 
