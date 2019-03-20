@@ -114,9 +114,9 @@ test_that("bake without prep", {
 
 
 test_that("bake without newdata", {
-  # This will be deprecated in versions >= 0.1.4.9000
+  # This will be deprecated in versions >= 0.1.5.9000
   expect_false(
-    package_version(packageVersion("recipes")) > package_version("0.1.4.9000"),
+    package_version(packageVersion("recipes")) > package_version("0.1.5.9000"),
     "deprecate allowing `newdata` instead of `new_data`"
   )
 
@@ -133,21 +133,21 @@ test_that("bake without newdata", {
 
   expect_warning(
     obs_1 <- bake(rec, newdata = biomass),
-    "0.1.4"
+    "0.1.5"
   )
   expect_equal(obs_1, exp_1)
   expect_equal(bake(rec, biomass), exp_1)
 
   expect_warning(
     obs_2 <- bake(rec, newdata = biomass, all_predictors()),
-    "0.1.4"
+    "0.1.5"
   )
   expect_equal(obs_2, exp_2)
   expect_equal(bake(rec, biomass, all_predictors()), exp_2)
 
   expect_warning(
     obs_3 <- bake(rec, newdata = biomass, all_predictors(), -all_nominal()),
-    "0.1.4"
+    "0.1.5"
   )
   expect_equal(obs_3, exp_3)
   expect_equal(bake(rec, biomass, all_predictors(), -all_nominal()), exp_3)
