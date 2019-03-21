@@ -1,0 +1,20 @@
+"0","library(purrr)"
+"2","
+Attaching package: ‘purrr’
+
+"
+"2","The following object is masked from ‘package:caret’:
+
+    lift
+
+"
+"0","cv_folds <- "
+"0","  cv_folds %>%"
+"0","  mutate(recipes = map(splits, prepper, recipe = imbal_rec, retain = TRUE))"
+"0","cv_folds$recipes[[1]]"
+"1","Data Recipe
+
+"
+"1","Inputs:
+
+"

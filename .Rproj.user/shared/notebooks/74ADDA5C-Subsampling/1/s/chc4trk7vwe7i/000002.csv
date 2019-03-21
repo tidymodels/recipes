@@ -1,0 +1,5 @@
+"0","ggplot(cv_folds, "
+"0","       aes(x = (sampled_roc + normal_roc)/2, "
+"0","           y = sampled_roc - normal_roc)) + "
+"0","  geom_point() + "
+"0","  geom_hline(yintercept = 0, col = ""green"")"

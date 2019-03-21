@@ -1,0 +1,11 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "/R",
+        "projectRelative" : true,
+        "query" : "recipes_hex_thumb.png",
+        "regex" : false
+    }
+}

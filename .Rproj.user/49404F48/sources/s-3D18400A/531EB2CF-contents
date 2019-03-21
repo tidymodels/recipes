@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^README.*
+^docs$
+^_pkgdown\.yml$
+contributors.md
+presentations
+^~/tmp/rec_pkg$
+^codecov\.yml$
+.github
+^revdep$

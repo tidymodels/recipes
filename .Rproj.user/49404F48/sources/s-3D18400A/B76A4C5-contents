@@ -1,0 +1,15 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^README.*
+^docs$
+^_pkgdown\.yml$
+contributors.md
+presentations
+^~/tmp/rec_pkg$
+recipes_hex_thumb.png
+recipes_hex.png
+^codecov\.yml$
+^pkgdown$
+.github
+^revdep$

@@ -1,0 +1,38 @@
+"0","library(yardstick)"
+"2","For binary classification, the first factor level is assumed to be the event.
+Set the global option `yardstick.event_first` to `FALSE` to change this.
+
+"
+"2","
+Attaching package: ‘yardstick’
+
+"
+"2","The following object is masked from ‘package:broom’:
+
+    tidy
+
+"
+"2","The following objects are masked from ‘package:caret’:
+
+    precision, recall
+
+"
+"0","cv_folds <- "
+"0","  cv_folds %>%"
+"0","  mutate("
+"0","    sampled_roc = "
+"0","      map_dfr(sampled_pred, roc_auc, Class, prob) %>% "
+"0","      pull("".estimate""),"
+"0","    "
+"0","    normal_roc =  "
+"0","      map_dfr(normal_pred,  roc_auc, Class, prob) %>% "
+"0","      pull("".estimate""),  "
+"0","    "
+"0","    sampled_J =   "
+"0","      map_dfr(sampled_pred, j_index, Class, pred) %>% "
+"0","      pull("".estimate""),"
+"0","    "
+"0","    normal_J =    "
+"0","      map_dfr(normal_pred,  j_index, Class, pred) %>% "
+"0","      pull("".estimate"")       "
+"0","  )"

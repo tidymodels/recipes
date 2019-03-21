@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+inst/doc
+docs
+
+*.history
+.DS_Store
+.Rbuildignore~
+revdep/checks.noindex
+revdep/library.noindex
+
