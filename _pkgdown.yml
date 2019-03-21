@@ -1,10 +1,14 @@
 template:
   package: tidytemplate
-
-# https://github.com/tidyverse/tidytemplate for css
+  params:
+    part_of: <a href="https://github.com/tidymodels">tidymodels</a>
+    footer: recipes is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
 
 development:
   mode: auto
+
+home:
+  strip_header: true
 
 figures:
   fig.width: 8
