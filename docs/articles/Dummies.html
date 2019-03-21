@@ -8,7 +8,7 @@
 <title>How are categorical predictors handled in <code>recipes</code>? • recipes</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
 <meta property="og:title" content="How are categorical predictors handled in &lt;code&gt;recipes&lt;/code&gt;?">
 <meta property="og:description" content="">
@@ -40,7 +40,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -67,6 +67,9 @@
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -106,7 +109,7 @@
       <h1>How are categorical predictors handled in <code>recipes</code>?</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Dummies.Rmd"><code><a href="https://www.rdocumentation.org/packages/base/topics/Arithmetic">vignettes/Dummies.Rmd</a></code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Dummies.Rmd"><code>vignettes/Dummies.Rmd</code></a></small>
       <div class="hidden name"><code>Dummies.Rmd</code></div>
 
     </div>
@@ -221,7 +224,7 @@
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 5 Species                    nominal predictor original</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 6 original                   nominal predictor original</span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span></a></code></pre></div>
-<p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code>*</code> between two variables would expand to <code><a href="https://www.rdocumentation.org/packages/base/topics/assignOps">a*b = a + b + a:b</a></code> so that the main effects are included. In <a href="https://tidymodels.github.io/recipes/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code>*</code>, but only the interactions are recorded as columns that needs to be created.</p>
+<p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code>*</code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://tidymodels.github.io/recipes/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code>*</code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/model.matrix">model.matrix</a></span>(<span class="op">~</span><span class="st"> </span>Species<span class="op">*</span>Sepal.Length, <span class="dt">data =</span> iris) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -280,7 +283,7 @@
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; Dummy variables from Species [trained]</span></a>
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sepal.Length [trained]</span></a></code></pre></div>
-<p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code><a href="https://www.rdocumentation.org/packages/base/topics/Colon">starts_with("x_"):starts_with("y_")</a></code>).</p>
+<p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>
 </div>
 <div id="warning" class="section level2">
 <h2 class="hasAnchor">

@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Discretize Numeric Variables — discretize" />
 
@@ -74,7 +76,7 @@ on a training set)." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ on a training set)." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -185,7 +190,7 @@ data.</p></td>
       <th>labels</th>
       <td><p>A character vector defining the factor levels
 that will be in the new factor (from smallest to largest). This
-should have length <code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>cuts+1</a></code> and should not include a level
+should have length <code>cuts+1</code> and should not include a level
 for missing (see <code>keep_na</code> below).</p></td>
     </tr>
     <tr>
@@ -230,15 +235,15 @@ vector.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>discretize</code> estimates the cut points from
-<code>x</code> using percentiles. For example, if <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>cuts = 3</a></code>, the
+<code>x</code> using percentiles. For example, if <code>cuts = 3</code>, the
 function estimates the quartiles of <code>x</code> and uses these as
-the cut points. If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>cuts = 2</a></code>, the bins are defined as
+the cut points. If <code>cuts = 2</code>, the bins are defined as
 being above or below the median of <code>x</code>.</p>
 <p>The <code>predict</code> method can then be used to turn numeric
 vectors into factor vectors.</p>
-<p>If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>keep_na = TRUE</a></code>, a suffix of "_missing" is used as a
+<p>If <code>keep_na = TRUE</code>, a suffix of "_missing" is used as a
 factor level (see the examples below).</p>
-<p>If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>infs = FALSE</a></code> and a new value is greater than the
+<p>If <code>infs = FALSE</code> and a new value is greater than the
 largest value of <code>x</code>, a missing value will result.</p>
     
 

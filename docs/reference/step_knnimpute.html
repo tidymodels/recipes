@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Imputation via K-Nearest Neighbors — step_knnimpute" />
 
@@ -74,7 +76,7 @@ neighbors." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ neighbors." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -214,7 +219,7 @@ for imputation. This is <code>NULL</code> until the step is trained by
     </tr>
     <tr>
       <th>K</th>
-      <td><p>The number of neighbors (this will be deprecated in factor of
+      <td><p>The number of neighbors (this will be deprecated in favor of
 <code>neighbors</code> in version 0.1.5). <code>neighbors</code> will override this option.</p></td>
     </tr>
     <tr>
@@ -223,7 +228,7 @@ for imputation. This is <code>NULL</code> until the step is trained by
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -293,41 +298,41 @@ similarity and some of its properties," Biometrics, 857-871.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>biomass_te_whole</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;   27.80   44.24   47.30   47.96   49.00   79.34 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(<span class='kw'>before</span> <span class='kw'>=</span> <span class='no'>biomass_te_whole</span>$<span class='no'>carbon</span>[<span class='no'>carb_missing</span>],
       <span class='kw'>after</span> <span class='kw'>=</span> <span class='no'>imputed</span>$<span class='no'>carbon</span>[<span class='no'>carb_missing</span>])</div><div class='output co'>#&gt;      before    after
-#&gt; [1,]  48.18 47.52333
-#&gt; [2,]  52.80 51.63000
-#&gt; [3,]  79.34 69.72000</div><div class='input'>
+#&gt; [1,]  46.83 47.43000
+#&gt; [2,]  47.80 47.53333
+#&gt; [3,]  46.40 46.21000</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>biomass_te_whole</span>$<span class='no'>nitrogen</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;   0.010   0.295   0.690   1.092   1.450   4.790 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(<span class='kw'>before</span> <span class='kw'>=</span> <span class='no'>biomass_te_whole</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>],
-      <span class='kw'>after</span> <span class='kw'>=</span> <span class='no'>imputed</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>])</div><div class='output co'>#&gt;      before     after
-#&gt; [1,]    1.2 1.2033333
-#&gt; [2,]    1.2 0.5666667
-#&gt; [3,]    1.4 0.7600000</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 1 x 4[39m
+      <span class='kw'>after</span> <span class='kw'>=</span> <span class='no'>imputed</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>])</div><div class='output co'>#&gt;      before      after
+#&gt; [1,]   1.24 0.59333333
+#&gt; [2,]   0.30 0.92333333
+#&gt; [3,]   0.06 0.04666667</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span><span>
 #&gt;   terms            predictors neighbors id             
-#&gt;   [3m[38;5;246m&lt;chr&gt;[39m[23m            [3m[38;5;246m&lt;chr&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m          
-#&gt; [38;5;250m1[39m all_predictors() [31mNA[39m                 3 knnimpute_RN6fZ</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [38;5;246m# A tibble: 20 x 4[39m
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>                 3 knnimpute_iyPXM</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 20 x 4</span><span>
 #&gt;    terms    predictors neighbors id             
-#&gt;    [3m[38;5;246m&lt;chr&gt;[39m[23m    [3m[38;5;246m&lt;chr&gt;[39m[23m          [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m          
-#&gt; [38;5;250m 1[39m carbon   hydrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m 2[39m carbon   oxygen             3 knnimpute_RN6fZ
-#&gt; [38;5;250m 3[39m carbon   nitrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m 4[39m carbon   sulfur             3 knnimpute_RN6fZ
-#&gt; [38;5;250m 5[39m hydrogen carbon             3 knnimpute_RN6fZ
-#&gt; [38;5;250m 6[39m hydrogen oxygen             3 knnimpute_RN6fZ
-#&gt; [38;5;250m 7[39m hydrogen nitrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m 8[39m hydrogen sulfur             3 knnimpute_RN6fZ
-#&gt; [38;5;250m 9[39m oxygen   carbon             3 knnimpute_RN6fZ
-#&gt; [38;5;250m10[39m oxygen   hydrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m11[39m oxygen   nitrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m12[39m oxygen   sulfur             3 knnimpute_RN6fZ
-#&gt; [38;5;250m13[39m nitrogen carbon             3 knnimpute_RN6fZ
-#&gt; [38;5;250m14[39m nitrogen hydrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m15[39m nitrogen oxygen             3 knnimpute_RN6fZ
-#&gt; [38;5;250m16[39m nitrogen sulfur             3 knnimpute_RN6fZ
-#&gt; [38;5;250m17[39m sulfur   carbon             3 knnimpute_RN6fZ
-#&gt; [38;5;250m18[39m sulfur   hydrogen           3 knnimpute_RN6fZ
-#&gt; [38;5;250m19[39m sulfur   oxygen             3 knnimpute_RN6fZ
-#&gt; [38;5;250m20[39m sulfur   nitrogen           3 knnimpute_RN6fZ</div></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> carbon   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> carbon   oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> carbon   nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> carbon   sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> hydrogen carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> hydrogen oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> hydrogen nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> hydrogen sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> oxygen   carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> oxygen   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> oxygen   nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> oxygen   sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> nitrogen carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> nitrogen hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> nitrogen oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> nitrogen sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> sulfur   carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>18</span><span> sulfur   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>19</span><span> sulfur   oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #BCBCBC;'>20</span><span> sulfur   nitrogen           3 knnimpute_iyPXM</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

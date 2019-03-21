@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Smithsonian Museums — Smithsonian" />
 
@@ -72,7 +74,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -99,6 +101,9 @@
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -161,29 +166,29 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Smithsonian</span>)
-<span class='no'>Smithsonian</span></div><div class='output co'>#&gt; [38;5;246m# A tibble: 20 x 3[39m
+<span class='no'>Smithsonian</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 20 x 3</span><span>
 #&gt;    name                                                    latitude longitude
-#&gt;    [3m[38;5;246m&lt;chr&gt;[39m[23m                                                      [3m[38;5;246m&lt;dbl&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m
-#&gt; [38;5;250m 1[39m Anacostia Community Museum                                  38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 2[39m Arthur M. Sackler Gallery                                   38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 3[39m Arts and Industries Building                                38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 4[39m Cooper Hewitt, Smithsonian Design Museum                    40.8     -[31m74[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 5[39m Freer Gallery of Art                                        38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 6[39m Hirshhorn Museum and Sculpture Garden                       38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 7[39m National Air and Space Museum                               38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m 8[39m Steven F. Udvar-Hazy Center                                 38.9     -[31m77[39m[31m.[39m[31m4[39m
-#&gt; [38;5;250m 9[39m National Museum of African American History and Culture     38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m10[39m National Museum of African Art                              38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m11[39m National Museum of American History                         38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m12[39m National Museum of the American Indian                      38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m13[39m George Gustav Heye Center                                   40.7     -[31m74[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m14[39m National Museum of Natural History                          38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m15[39m National Portrait Gallery                                   38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m16[39m National Postal Museum                                      38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m17[39m Renwick Gallery                                             38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m18[39m Smithsonian American Art Museum                             38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m19[39m Smithsonian Institution Building                            38.9     -[31m77[39m[31m.[39m[31m0[39m
-#&gt; [38;5;250m20[39m National Zoological Park                                    38.9     -[31m77[39m[31m.[39m[31m1[39m</div></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                                      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Anacostia Community Museum                                  38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Arthur M. Sackler Gallery                                   38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Arts and Industries Building                                38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Cooper Hewitt, Smithsonian Design Museum                    40.8     -</span><span style='color: #BB0000;'>74.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Freer Gallery of Art                                        38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Hirshhorn Museum and Sculpture Garden                       38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> National Air and Space Museum                               38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Steven F. Udvar-Hazy Center                                 38.9     -</span><span style='color: #BB0000;'>77.4</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> National Museum of African American History and Culture     38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> National Museum of African Art                              38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> National Museum of American History                         38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> National Museum of the American Indian                      38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> George Gustav Heye Center                                   40.7     -</span><span style='color: #BB0000;'>74.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> National Museum of Natural History                          38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> National Portrait Gallery                                   38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> National Postal Museum                                      38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> Renwick Gallery                                             38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>18</span><span> Smithsonian American Art Museum                             38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>19</span><span> Smithsonian Institution Building                            38.9     -</span><span style='color: #BB0000;'>77.0</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>20</span><span> National Zoological Park                                    38.9     -</span><span style='color: #BB0000;'>77.1</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

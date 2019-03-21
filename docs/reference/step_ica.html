@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="ICA Signal Extraction — step_ica" />
 
@@ -74,7 +76,7 @@ components." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@ components." />
     </li>
     <li>
       <a href="../articles/Dummies.html">Dummy Variables and Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/Roles.html">Column Roles</a>
     </li>
     <li>
       <a href="../articles/Skipping.html">On Skipping Steps</a>
@@ -221,7 +226,7 @@ resulting new variables. See notes below.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>skip = TRUE</a></code> as it may affect
+Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
     </tr>
     <tr>
@@ -263,8 +268,8 @@ will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
 will have names that begin with <code>prefix</code> and a sequence of
 numbers. The variable names are padded with zeros. For example,
-if <code><a href='https://www.rdocumentation.org/packages/base/topics/Logic'>num_comp &lt; 10</a></code>, their names will be <code>IC1</code> - <code>IC9</code>.
-If <code><a href='https://www.rdocumentation.org/packages/base/topics/assignOps'>num_comp = 101</a></code>, the names would be <code>IC001</code> -
+if <code>num_comp &lt; 10</code>, their names will be <code>IC1</code> - <code>IC9</code>.
+If <code>num_comp = 101</code>, the names would be <code>IC001</code> -
 <code>IC101</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -310,13 +315,13 @@ Networks</em>, 13(4-5), 411-430.</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    embed</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; [38;5;246m# A tibble: 4 x 4[39m
+#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 4</span><span>
 #&gt;    value component terms id       
-#&gt;    [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m    
-#&gt; [38;5;250m1[39m -[31m1[39m[31m.[39m[31m0[39m[31m4[39m  IC1       V1    ica_I5n9K
-#&gt; [38;5;250m2[39m -[31m0[39m[31m.[39m[31m773[39m IC1       V2    ica_I5n9K
-#&gt; [38;5;250m3[39m -[31m0[39m[31m.[39m[31m378[39m IC2       V1    ica_I5n9K
-#&gt; [38;5;250m4[39m  0.788 IC2       V2    ica_I5n9K</div></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> -</span><span style='color: #BB0000;'>1.04</span><span>  IC1       V1    ica_3zAWC
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> -</span><span style='color: #BB0000;'>0.773</span><span> IC1       V2    ica_3zAWC
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> -</span><span style='color: #BB0000;'>0.378</span><span> IC2       V1    ica_3zAWC
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  0.788 IC2       V2    ica_3zAWC</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
