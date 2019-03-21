@@ -11,7 +11,6 @@ output:
 ```{r setup, include = FALSE}
 options(digits = 3)
 library(pls)
-library(tidyverse)
 library(recipes)
 library(rsample)
 library(purrr)
@@ -72,6 +71,7 @@ The folds can be created using the [`rsample` package](https://tidymodels.github
 
 ```{r cv}
 library(rsample)
+library(purrr)
 set.seed(57343)
 folds <- vfold_cv(tecator, repeats = 10)
 
@@ -95,7 +95,6 @@ The function `get_var_explained` will do these computations and return a data fr
 
 ```{r var-explained}
 library(pls)
-library(tidyverse)
 
 get_var_explained <- function(recipe, ...) {
   
@@ -153,10 +152,11 @@ The plot below shows that, if the protein measurement is important, you might re
 
 
 ```{r plot, fig.width=6, fig.height=4.25,  out.width = '100%'}
+library(ggplot2)
+
 ggplot(variance_data, aes(x = components, y = proportion, col = source)) + 
   geom_line() + 
   geom_point() + 
   theme_bw() + 
   theme(legend.position = "top")
-
 ```

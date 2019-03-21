@@ -18,6 +18,10 @@ r_packages:
   - Matrix
   - ipred
   - RSpectra
+  # For Articles
+  - caret
+  - tidyposterior
+  - yardstick
 
 matrix:
   fast_finish: true
