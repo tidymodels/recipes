@@ -19,19 +19,23 @@ r_packages:
   - ipred
   - RSpectra
 
-
-r:
-- 3.1
-- 3.2
-- oldrel
-- release
-- devel
-
 matrix:
   fast_finish: true
+  include:
+  - r: devel
+  - r: release
+    after_success:
+    - Rscript -e 'covr::codecov()'
+    before_cache:
+    - Rscript -e 'remotes::install_cran("pkgdown")'
+    - Rscript -e 'remotes::install_github("tidyverse/tidytemplate")'
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      skip_cleanup: true
+  - r: oldrel
+  - r: 3.2
+  - r: 3.1
   allow_failures:
-    - r: 3.1
-    - r: 3.2
-
-after_success:
-  - Rscript -e 'covr::codecov()'
+  - r: 3.2
+  - r: 3.1
