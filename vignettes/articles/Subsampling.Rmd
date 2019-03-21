@@ -188,7 +188,7 @@ ggplot(cv_folds,
 
 Almost all of the differences area greater than zero. We can use `tidyposterior` to do a more formal analysis:
 
-```{r tpost, warning = FALSE, message=FALSE}
+```{r tpost, warning = FALSE, message=FALSE, eval=FALSE}
 library(tidyposterior)
 
 # Remove all columns except the resample info and the J indices,
@@ -201,12 +201,16 @@ j_mod <-
 
 A simple plot of the posterior distributions of the _J_ indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:
 
-```{r post-plot}
+```{r post-plot, eval=FALSE}
 j_mod %>%
-  tidyposterior:::tidy.perf_mod(seed = 234) %>%
+  tidy(seed = 234) %>%
   ggplot()
 ```
 
-
+```{r, echo=FALSE}
+# We fake the use of tidyposterior to avoid having to install
+# rstanarm on travis
+knitr::include_graphics("Subsampling-tidyposterior.png")
+```
 
 
