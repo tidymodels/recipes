@@ -8,6 +8,5 @@ contributors.md
 presentations
 ^~/tmp/rec_pkg$
 ^codecov\.yml$
-^pkgdown$
 .github
 ^revdep$
