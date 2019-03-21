@@ -1,5 +1,0 @@
-args <- quos(response = truth, predictor = estimate, levels = lvl, auc = TRUE)
-
-curv <- eval_tidy(call2("roc", !!! args, !!! options, .ns = "pROC"))
-
-as.numeric(curv$auc)
