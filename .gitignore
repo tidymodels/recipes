@@ -4,6 +4,7 @@
 .Ruserdata
 
 inst/doc
+docs
 
 *.history
 .DS_Store
