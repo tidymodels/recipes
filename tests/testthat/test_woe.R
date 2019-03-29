@@ -43,3 +43,25 @@ test_that("odds_offset works", {
   expect_false(all(is.finite(woe_table(c(0, 0, 0, 1), c("A", "A", "B", "B"), odds_offset = 0)$woe)))
 })
 
+
+#------------------------------------
+context("woe_dictionary")
+
+test_that("woe_dictionary returns a proper tibble", {
+  expect_equal(woe_dictionary(df, y) %>% class, c("tbl_df", "tbl", "data.frame"))
+  expect_equal(woe_dictionary(df, y) %>% dim, c(6, 8))
+  expect_identical(woe_dictionary(df, y) %>% names, c("variable", "predictor", "n_tot", "n_A", "n_B", "p_A", "p_B", "woe"))
+})
+
+test_that("woe_dictionary accepts numeric, logical and character predictor variables", {
+  expect_equal(dim(woe_dictionary(mutate(df,
+                                         x3 = rep(c(TRUE, FALSE), 10),
+                                         x4 = rep(c(20, 30), 10)), y)), c(10, 8))
+})
+
+test_that("woe_dictionary returns no messages nor warnings nor errors", {
+  expect_silent(woe_dictionary(df, y, x1))
+  expect_silent(woe_dictionary(df %>% mutate(x3 = rep(c(TRUE, FALSE), 10)), y, x3))
+})
+
+
