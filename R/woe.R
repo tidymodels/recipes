@@ -63,6 +63,7 @@
 #' tweaking an output returned from \code{woe_dictionary()}.
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
 #'
 #' @examples
 #'
@@ -166,6 +167,7 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 #' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
 #'
 #' @export
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
@@ -218,6 +220,7 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #'
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
 #'
 #' @importFrom rlang !!
 #' @export
@@ -258,15 +261,31 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #'
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
 #'
 #' @importFrom rlang !!
 #' @export
-add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_") {
+add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") {
   if(missing(.data)) stop('argument ".data" is missing, with no default')
   if(missing(outcome)) stop('argument "outcome" is missing, with no default')
 
   outcome <- rlang::enquo(outcome)
-  if(is.null(woe_dictionary)) woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
+  if(is.null(woe_dictionary)) {
+    woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
+  } else {
+    if(is.null(woe_dictionary$variable)) stop('column "variable" is missing in woe_dictionary.')
+    if(is.null(woe_dictionary$predictor)) stop('column "predictor" is missing in woe_dictionary.')
+    if(is.null(woe_dictionary$woe)) stop('column "woe" is missing in woe_dictionary.')
+  }
+
+  # warns if there is variable with more than 50 levels
+  level_counts <- table(woe_dictionary$variable)
+  purrr::walk2(
+    level_counts,
+    names(level_counts),
+    ~ if(.x > 50)
+      warning("Variable ", .y, " has ", .x, " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."))
+
 
   if(missing(...)) {
     dots_vars <- names(.data)
@@ -279,7 +298,7 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_")
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
-    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix, .y)))) %>% purrr::set_names(variable)) %$%
+    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))) %>% purrr::set_names(variable)) %$%
     purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(starts_with(prefix))) %>%
     dplyr::bind_cols(.data, .) %>%
     tibble::as_tibble()

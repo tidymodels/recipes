@@ -1,6 +1,9 @@
 library(tidyverse)
 library(magrittr)
 
+context("woe")
+
+data("credit_data")
 set.seed(1)
 df <- data.frame(x1 = sample(c("A", "B", "C"), size = 20, replace = TRUE) %>% factor,
                  x2 = sample(c("A", "B", "C"), size = 20, replace = TRUE)) %>%
@@ -8,44 +11,44 @@ df <- data.frame(x1 = sample(c("A", "B", "C"), size = 20, replace = TRUE) %>% fa
   mutate(y = if_else(y == 1, "A", "B"))
 
 #------------------------------------
-context("woe_table")
+# woe_table
 
 test_that("woe_table do not accept different length inputs", {
   expect_error(woe_table(rep(c(0, 1), 20), rep(letters[1:4], 5)))
 })
 
 test_that("woe_table accepts only outcome with 2 distinct categories", {
-  expect_error(woe_table(rep(c(0, 1, 2), 10), rep(letters[1:3], 10)))
-  expect_error(woe_table(rep(c(0), 30), rep(letters[1:3], 10)))
-  expect_error(woe_table(df$x1, df$x2))
+  expect_error(woe_table(rep(letters[1:3], 10), rep(c(0, 1, 2), 10)))
+  expect_error(woe_table(rep(letters[1:3], 10), rep(c(0), 30)))
+  expect_error(woe_table(df$x2, df$x1))
 })
 
 test_that("woe_table returns a proper tibble", {
-  expect_equal(dim(woe_table(df$y, df$x1)), c(3, 7))
-  expect_identical(names(woe_table(df$y, df$x1)), c("predictor", "n_tot", "n_A", "n_B", "p_A", "p_B", "woe"))
+  expect_equal(dim(woe_table(df$x1, df$y)), c(3, 7))
+  expect_identical(names(woe_table(df$x1, df$y)), c("predictor", "n_tot", "n_A", "n_B", "p_A", "p_B", "woe"))
 })
 
 test_that("logical outcome variables are treated properly", {
-  expect_equal(dim(woe_table(c(TRUE, FALSE, TRUE, FALSE), c("A", "A", "A", "B"))), c(2, 7))
+  expect_equal(dim(woe_table(c("A", "A", "A", "B"), c(TRUE, FALSE, TRUE, FALSE))), c(2, 7))
 })
 
 test_that("logical predictor variable are treated properly", {
-  expect_equal(class(woe_table(c("A", "A", "A", "B"), c(TRUE, FALSE, TRUE, FALSE))$predictor), "character")
+  expect_equal(class(woe_table(c(TRUE, FALSE, TRUE, FALSE), c("A", "A", "A", "B"))$predictor), "character")
 })
 
 test_that("woe_table ruturns no messages nor warnings", {
-  expect_silent(woe_table(c("A", "A", "A", "B"), c(TRUE, FALSE, TRUE, FALSE)))
-  expect_silent(woe_table(df$y, df$x1))
+  expect_silent(woe_table(c(TRUE, FALSE, TRUE, FALSE), c("A", "A", "A", "B")))
+  expect_silent(woe_table(df$x1, df$y))
 })
 
 test_that("odds_offset works", {
-  expect_true(all(is.finite(woe_table(c(0, 0, 0, 1), c("A", "A", "B", "B"), odds_offset = 1e-6)$woe)))
-  expect_false(all(is.finite(woe_table(c(0, 0, 0, 1), c("A", "A", "B", "B"), odds_offset = 0)$woe)))
+  expect_true(all(is.finite(woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)$woe)))
+  expect_false(all(is.finite(woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)$woe)))
 })
 
 
 #------------------------------------
-context("woe_dictionary")
+# woe_dictionary
 
 test_that("woe_dictionary returns a proper tibble", {
   expect_equal(woe_dictionary(df, y) %>% class, c("tbl_df", "tbl", "data.frame"))
@@ -66,7 +69,7 @@ test_that("woe_dictionary returns no messages nor warnings nor errors", {
 
 
 #------------------------------------
-context("add_woe")
+# add_woe
 
 test_that("add_woe returns a proper tibble", {
   expect_equal(add_woe(df, y) %>% class, c("tbl_df", "tbl", "data.frame"))
@@ -95,3 +98,47 @@ test_that("add_woe returns woe only for those variables that exists in both data
   expect_equal(names(add_woe(df, y, x1, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
 })
 
+test_that("add_woe do not accept woe_dictionary with unexpected layout", {
+  expect_error(add_woe(df, outcome = y, x1, woe_dictionary = iris))
+  expect_error(add_woe(df, outcome = y, x1, woe_dictionary = iris %>% mutate(variable = 1)))
+})
+
+test_that("add_woe warns user if the variable has too many levels", {
+  expect_warning(credit_data %>% add_woe(Status, Expenses))
+})
+#------------------------------------
+# step_woe
+
+test_that("step_woe", {
+
+  set.seed(342)
+  in_training <- sample(1:nrow(credit_data), 2000)
+
+  credit_tr <- credit_data[ in_training, ]
+  credit_te <- credit_data[-in_training, ]
+
+  rec <- recipe(Status ~ ., data = credit_tr) %>%
+    step_woe(Job, Home, outcome = Status)
+
+  woe_models <- prep(rec, training = credit_tr)
+
+  woe_dict <- credit_tr %>% woe_dictionary(Status, Job, Home)
+  expect_equal(woe_dict, woe_models$steps[[1]]$woe_dictionary)
+
+  bake_woe_output <- bake(woe_models, new_data = credit_te)
+  add_woe_output <- credit_te %>% add_woe(Status, Job, Home, woe_dictionary = woe_dict)  %>% select(-Job, -Home)
+
+  expect_equal(bake_woe_output, add_woe_output)
+
+  tidy_output <- tidy(woe_models, number = 1)
+  woe_dict_output <- woe_dictionary(credit_tr, Job, Home, outcome = Status)
+
+  expect_equal(tidy_output %>% select(-id), woe_dict_output)
+})
+
+test_that("printing", {
+  woe_extract <- recipe(Status ~ ., data = credit_tr) %>%
+    step_woe(Job, Home, outcome = Status)
+  expect_output(print(woe_extract))
+  expect_output(prep(woe_extract, training = credit_tr, verbose = TRUE))
+})
