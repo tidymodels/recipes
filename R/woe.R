@@ -179,7 +179,7 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 
   woe_tbl <- tibble::tibble(outcome, predictor) %>%
     dplyr::group_by(outcome, predictor) %>%
-    dplyr::summarise(n = n()) %>%
+    dplyr::summarise(n = dplyr::n()) %>%
     dplyr::group_by(predictor) %>%
     dplyr::mutate(n_tot = sum(n)) %>%
     dplyr::group_by(outcome) %>%
@@ -293,15 +293,26 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") 
     dots_vars <- names(.data %>% select(...))
   }
 
-  woe_dictionary %>%
+  output <- woe_dictionary %>%
     dplyr::filter(variable %in% dots_vars) %>%
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
-    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))) %>% purrr::set_names(variable)) %$%
-    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(starts_with(prefix))) %>%
+    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))) %>% purrr::set_names(variable))
+
+  output <- purrr::map2(
+    output$woe_table,
+    output$variable, ~ {
+      .data %>%
+        dplyr::select(!!.y) %>%
+        dplyr::mutate_all(as.character) %>%
+        dplyr::left_join(.x, by = .y) %>%
+        dplyr::select(starts_with(prefix))
+    }) %>%
     dplyr::bind_cols(.data, .) %>%
     tibble::as_tibble()
+
+  output
 }
 
 
