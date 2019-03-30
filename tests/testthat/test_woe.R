@@ -74,7 +74,7 @@ test_that("woe_dictionary returns no messages nor warnings nor errors", {
 test_that("add_woe returns a proper tibble", {
   expect_equal(add_woe(df, y) %>% class, c("tbl_df", "tbl", "data.frame"))
   expect_equal(add_woe(df, y) %>% dim, c(20, 5))
-  expect_identical(add_woe(df, y) %>% names, c("x1", "x2", "y", "x1_woe", "x2_woe"))
+  expect_identical(add_woe(df, y) %>% names, c("x1", "x2", "y", "woe_x1", "woe_x2"))
 })
 
 test_that("add_woe accepts only outcome with 2 distinct categories", {
@@ -93,9 +93,9 @@ test_that("add_woe accepts numeric, logical and character predictor variables", 
 
 test_that("add_woe returns woe only for those variables that exists in both data and dictionary", {
   expect_equal(names(add_woe(df, y, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y"))
-  expect_equal(names(add_woe(df, y, x1, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
-  expect_equal(names(add_woe(df, y, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
-  expect_equal(names(add_woe(df, y, x1, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
+  expect_equal(names(add_woe(df, y, x1, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
+  expect_equal(names(add_woe(df, y, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
+  expect_equal(names(add_woe(df, y, x1, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
 })
 
 test_that("add_woe do not accept woe_dictionary with unexpected layout", {
