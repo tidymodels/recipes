@@ -1,23 +1,164 @@
+
+#' WoE Transformation
+#'
+#' `step_woe` creates a *specification* of a
+#'  recipe step that will transform nominal data into its numerical
+#'  transformation based on weights of evidence against a binary outcome.
+#'
+#' @inheritParams step_center
+#' @inherit step_center return
+#' @param ... One or more selector functions to choose which
+#'  variables will be used to compute the components. See
+#'  [selections()] for more details. For the `tidy`
+#'  method, these are not currently used.
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the new woe components columns created by the original
+#'  variables will be used as predictors in a model.
+#' @param outcome The number of PCA components to retain as new
+#'  predictors. If `num_comp` is greater than the number of columns
+#'  or the number of possible components, a smaller value will be
+#'  used.
+#' @param woe_dictionary
+#' @param odds_offset Offset value to avoid -Inf/Inf from predictor
+#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
+#'  The default is 1e-6.
+#' @param prefix A character string that will be the prefix to the
+#'  resulting new variables. See notes below
+#' @return An updated version of `recipe` with the new step
+#'  added to the sequence of existing steps (if any). For the
+#'  `tidy` method, a tibble with the woe dictionary used to map
+#'  categories with woe values.
+#' @keywords datagen
+#' @concept preprocessing woe transformation_methods
+#' @export
+#' @details
+#' WoE is a transformation of a group of variables that produces
+#' a new set of features. These components are designed to transform
+#' nominal variables into numerical ones with the property that the
+#' order and magnitude reflects the association with a binary outcome.
+#' To apply it on numerical predictors, it is advisable to discretize
+#' the variables prior to running WoE. Here, each variable will be
+#' binarized to have woe associated later. This can achieved by using
+#' [step_discretize()].
+#'
+#' The argument `odds_offset` is an small quantity added to the
+#' proportions of 1's and 0's with the goal to avoid log(p/0) and/or
+#' log(0/p) results. The numerical woe versions will have names that
+#' begin with `woe_` followed by the respecttive original name of the
+#' variables.
+#'
+#' One can pass a custom `woe_dictionary` tibble to \code{step_woe()}.
+#' It must have the same structure of the output from
+#' \code{woe_dictionary()} (see examples). If not provided it will be
+#' created automatically. The role of this tibble is to store the map
+#' between the levels of nominal predictor to its woe values. You may
+#' want to tweak this object with the goal to fix the orders between
+#' the levels of one given predictor. One easy way to do this is by
+#' tweaking an output returned from \code{woe_dictionary()}.
+#'
+#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#'
+#' @examples
+#'
+#' data("credit_data")
+#'
+#' set.seed(111)
+#' in_training <- sample(1:nrow(credit_data), 2000)
+#'
+#' credit_tr <- credit_data[ in_training, ]
+#' credit_te <- credit_data[-in_training, ]
+#'
+#' rec <- recipe(Status ~ ., data = credit_tr) %>%
+#'   step_woe(Job, Home, outcome = Status)
+#'
+#' woe_models <- prep(rec, training = credit_tr)
+#'
+#' woe_te <- bake(woe_models, new_data = credit_te)
+#'
+#' head(woe_te)
+#' tidy(rec, number = 1)
+#' tidy(woe_models, number = 1)
+#'
+#' # Example of custom dictionary + tweaking
+#' # custom woe_dictionary
+#' woe_dict_custom <- credit_tr %>% woe_dictionary(Job, Home, outcome = Status)
+#' woe_dict_custom[4, "woe"] <- 1.23 #tweak
+#'
+#' #passing custom dict to step_woe()
+#' rec_custom <- recipe(Status ~ ., data = credit_tr) %>%
+#'   step_woe(Job, Home, outcome = Status, woe_dictionary = woe_dict_custom) %>%
+#'   prep
+#'
+#' rec_custom_baked <- bake(rec_custom, new_data = credit_te)
+#' rec_custom_baked %>% filter(Job_woe == 1.23) %>% head
+#'
+step_woe <- function(recipe,
+                     ...,
+                     role = "predictor",
+                     outcome,
+                     trained = FALSE,
+                     woe_dictionary = NULL,
+                     odds_offset = 1e-6,
+                     prefix = "woe",
+                     skip = FALSE,
+                     id = rand_id("woe")) {
+  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+
+  add_step(
+    recipe,
+    step_woe_new(
+      terms = ellipse_check(...),
+      role = role,
+      trained = trained,
+      outcome = enquo(outcome),
+      woe_dictionary = woe_dictionary,
+      odds_offset = odds_offset,
+      prefix = prefix,
+      skip = skip,
+      id = id
+    )
+  )
+}
+
+## Initializes a new object
+step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_offset, prefix, skip, id) {
+  step(
+    subclass = "woe",
+    terms = terms,
+    role = role,
+    trained = trained,
+    outcome = outcome,
+    woe_dictionary = woe_dictionary,
+    odds_offset = odds_offset,
+    prefix = prefix,
+    skip = skip,
+    id = id
+  )
+}
+
 #' Crosstable with woe between a (dicotomous) outcome and a predictor variable.
 #'
-#' Calculates some summaries and the WoE (Weight of Evidence) between a dicotomous outcome and a given predictor variable.
-#' Used to biuld the dictionary.
+#' Calculates some summaries and the WoE (Weight of Evidence) between a dicotomous
+#' outcome and a given predictor variable. Used to biuld the dictionary.
 #'
 #' @param predictor A atomic vector, usualy with few distinct values.
 #' @param outcome The dependent variable. A atomic vector with exactly 2 distinct values.
-#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor category with only one outcome class. Set to 0 to allow Inf/-Inf.
+#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
+#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'
-#' @return a tibble with counts, proportions and woe. Warning: woe can possibly be -Inf. Use 'odds_offset' param to avoid that.
+#' @return a tibble with counts, proportions and woe.
+#'  Warning: woe can possibly be -Inf. Use 'odds_offset' param to avoid that.
 #'
 #' @examples
 #'
 #' outc <- rep(c("A", "B"), 20)
 #' pred <- sample(c("X", "Y", "Z", "W"), size = 40, replace = TRUE)
-#' woe_table(outc, pred)
+#' woe_table(pred, outc)
 #'
 #' # offset avoid Inf/-Inf
-#' woe_table(c(0, 0, 0, 1), c("A", "A", "B", "B"), odds_offset = 1e-6)
-#' woe_table(c(0, 0, 0, 1), c("A", "A", "B", "B"), odds_offset = 0)
+#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)
+#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
 #'
 #' @export
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
