@@ -317,3 +317,23 @@ print.step_woe <- function(x, width = max(20, options()$width - 29), ...) {
   invisible(x)
 }
 
+#' @importFrom utils stack
+#' @rdname step_woe
+#' @param x A `step_woe` object.
+#' @export
+tidy.step_woe <- function(x, ...) {
+  if (is_trained(x)) {
+    res <- x$woe_dictionary
+  } else {
+    term_names <- sel2char(x$terms)
+    res <- tibble(variable = term_names,
+                  predictor = rlang::na_chr,
+                  ntot = rlang::na_int,
+                  n_0 = rlang::na_int,
+                  n_1 = rlang::na_int,
+                  p_0 = rlang::na_dbl,
+                  p_1 = rlang::na_dbl,
+                  woe = rlang::na_dbl)
+  }
+  res$id <- x$id
+  res
