@@ -222,6 +222,84 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 }
 
 
+#' Add WoE in a data.frame
+#'
+#' A tidyverse friendly way to plug WoE versions of a set of predictor variables against a
+#' given dicotomous outcome.
+#'
+#' @param .data A tbl. The data.frame to plug the new woe version columns.
+#' @param outcome unquoted name of the outcome variable.
+#' @param ... unquoted names of predictor variables, passed as you would pass variables to
+#'  \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
+#'  and \code{matches()}.
+#' @param woe_dictionary a tbl. If NULL the function will build a dictionary with those variables
+#'  passed to \code{...}. You can pass a custom dictionary too, see \link{\code{woe_dictionary()}}
+#'  for details.
+#'
+#' @return a tibble with the original columns of .data plus the woe columns wanted.
+#'
+#' @details You can pass a custom dictionary to \code{add_woe()}. It must have the exactly the same
+#'  structure of the output of \code{woe_dictionary()}. One easy way to do this is to tweak a output
+#'  returned from it.
+#'
+#' @examples
+#'
+#' mtcars %>% add_woe(am, cyl, gear:carb)
+#'
+#' @importFrom rlang !! enquo
+#' @export
+add_woe <- function(.data, outcome, ..., woe_dictionary = NULL) {
+  if(missing(.data)) stop('argument ".data" is missing, with no default')
+  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+
+  outcome <- enquo(outcome)
+  if(is.null(woe_dictionary)) woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
+
+  if(missing(...)) {
+    dots_vars <- names(.data)
+  } else {
+    dots_vars <- lazyeval::dots_capture(...) %>%
+      unlist %>%
+      as.character %>%
+      stringr::str_replace_all("~", "")
+  }
+
+  woe_dictionary %>%
+    dplyr::filter(variable %in% dots_vars) %>%
+    dplyr::select(variable, predictor, woe) %>%
+    dplyr::group_by(variable) %>%
+    tidyr::nest(.key = "woe_table") %>%
+    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(.y, "_woe")))) %>% purrr::set_names(variable)) %$%
+    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(ends_with("woe"))) %>%
+    dplyr::bind_cols(.data, .) %>%
+    tibble::as_tibble()
+}
+
+
+#' @export
+prep.step_woe <- function(x, training, info = NULL, ...) {
+  outcome_name <- rlang::quo_text(x$outcome)
+  col_names <- c(outcome_name, terms_select(x$terms, info = info))
+  check_type(training[, col_names], quant = FALSE)
+
+  if(is.null(x$woe_dictionary))
+    x$woe_dictionary <- woe_dictionary(
+      training[, col_names],
+      outcome = !!x$outcome
+    )
+
+  step_woe_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    outcome = x$outcome,
+    woe_dictionary = x$woe_dictionary,
+    odds_offset = x$odds_offset,
+    prefix = x$prefix,
+    skip = x$skip,
+    id = x$id
+  )
+}
 
 
 
