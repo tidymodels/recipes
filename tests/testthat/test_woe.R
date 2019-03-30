@@ -1,9 +1,18 @@
-library(tidyverse)
+library(testthat)
+library(dplyr)
 library(magrittr)
 
 context("woe")
 
 data("credit_data")
+
+set.seed(342)
+in_training <- sample(1:nrow(credit_data), 2000)
+
+credit_tr <- credit_data[ in_training, ]
+credit_te <- credit_data[-in_training, ]
+
+
 set.seed(1)
 df <- data.frame(x1 = sample(c("A", "B", "C"), size = 20, replace = TRUE) %>% factor,
                  x2 = sample(c("A", "B", "C"), size = 20, replace = TRUE)) %>%
@@ -110,12 +119,6 @@ test_that("add_woe warns user if the variable has too many levels", {
 # step_woe
 
 test_that("step_woe", {
-
-  set.seed(342)
-  in_training <- sample(1:nrow(credit_data), 2000)
-
-  credit_tr <- credit_data[ in_training, ]
-  credit_te <- credit_data[-in_training, ]
 
   rec <- recipe(Status ~ ., data = credit_tr) %>%
     step_woe(Job, Home, outcome = Status)
