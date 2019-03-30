@@ -308,14 +308,16 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") 
 #' @export
 prep.step_woe <- function(x, training, info = NULL, ...) {
   outcome_name <- rlang::quo_text(x$outcome)
-  col_names <- c(outcome_name, terms_select(x$terms, info = info))
+  col_names <- terms_select(x$terms, info = info)
+  col_names <- col_names[!(col_names %in% outcome_name)]
   check_type(training[, col_names], quant = FALSE)
 
-  if(is.null(x$woe_dictionary))
+  if(is.null(x$woe_dictionary)) {
     x$woe_dictionary <- woe_dictionary(
-      training[, col_names],
+      .data = training[, unique(c(outcome_name, col_names))],
       outcome = !!x$outcome
     )
+  }
 
   step_woe_new(
     terms = x$terms,
@@ -335,7 +337,12 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
 bake.step_woe <- function(object, new_data, ...) {
   woe_dict <- object$woe_dictionary
   woe_vars <- unique(woe_dict$variable)
-  new_data <- add_woe(new_data, object$outcome, woe_dictionary = woe_dict, prefix = object$prefix)
+  new_data <- add_woe(
+    .data = new_data,
+    outcome = object$outcome,
+    woe_dictionary = woe_dict,
+    prefix = object$prefix
+  )
   new_data <- new_data[, !(colnames(new_data) %in% woe_vars), drop = FALSE]
   as_tibble(new_data)
 }
