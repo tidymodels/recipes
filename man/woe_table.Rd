@@ -35,4 +35,6 @@ woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
 }
 \references{
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
+
+Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
 }

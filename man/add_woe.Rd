@@ -4,7 +4,7 @@
 \alias{add_woe}
 \title{Add WoE in a data.frame}
 \usage{
-add_woe(.data, outcome, ..., woe_dictionary = NULL)
+add_woe(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe")
 }
 \arguments{
 \item{.data}{A tbl. The data.frame to plug the new woe version columns.}
@@ -18,6 +18,8 @@ and \code{matches()}.}
 \item{woe_dictionary}{a tbl. If NULL the function will build a dictionary with those variables
 passed to \code{...}. You can pass a custom dictionary too, see \code{\link[=woe_dictionary]{woe_dictionary()}}
 for details.}
+
+\item{prefix}{A character string that will be the prefix to the resulting new variables.}
 }
 \value{
 a tibble with the original columns of .data plus the woe columns wanted.
@@ -39,4 +41,6 @@ mtcars \%>\% add_woe(am, cyl, gear:carb)
 }
 \references{
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
+
+Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
 }
