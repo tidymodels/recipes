@@ -120,8 +120,7 @@ test_that("add_woe warns user if the variable has too many levels", {
 
 test_that("step_woe", {
 
-  rec <- recipe(Status ~ ., data = credit_tr) %>%
-    step_woe(Job, Home, outcome = Status)
+  rec <- recipe(Status ~ ., data = credit_tr) %>% step_woe(Job, Home, outcome = Status)
 
   woe_models <- prep(rec, training = credit_tr)
 
@@ -131,12 +130,36 @@ test_that("step_woe", {
   bake_woe_output <- bake(woe_models, new_data = credit_te)
   add_woe_output <- credit_te %>% add_woe(Status, Job, Home, woe_dictionary = woe_dict)  %>% select(-Job, -Home)
 
+  #
   expect_equal(bake_woe_output, add_woe_output)
 
   tidy_output <- tidy(woe_models, number = 1)
   woe_dict_output <- woe_dictionary(credit_tr, Job, Home, outcome = Status)
 
+  #
   expect_equal(tidy_output %>% select(-id), woe_dict_output)
+
+  rec_all_nominal <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_nominal(), outcome = Status)
+
+  #
+  expect_output(prep(rec_all_nominal, training = credit_tr))
+
+
+  rec_all_numeric <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_predictors(), outcome = Status)
+
+  #
+  expect_error(prep(rec_all_numeric, training = credit_tr))
+
+  rec_discretize <- recipe(Status ~ ., data = credit_tr) %>% step_discretize(Price)
+  rec_discretize_woe <- rec_discretize %>%step_woe(Price, outcome = Status)
+
+  prep_discretize <- prep(rec_discretize, training = credit_tr)
+  prep_discretize_woe <- prep(rec_discretize_woe, training = credit_tr)
+
+  bake_discretize <- bake(prep_discretize, new_data = credit_te)
+  bake_discretize_woe <- bake(prep_discretize_woe, new_data = credit_te)
+
+  expect_equal(sort(as.character(unique(bake_discretize$Price))), sort(prep_discretize_woe$steps[[2]]$woe_dictionary$predictor))
 })
 
 test_that("printing", {
