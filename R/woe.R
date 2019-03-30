@@ -301,5 +301,14 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @importFrom tibble as_tibble
+#' @export
+bake.step_woe <- function(object, new_data, ...) {
+  woe_dict <- object$woe_dictionary
+  woe_vars <- unique(woe_dict$variable)
+  new_data <- add_woe(new_data, object$outcome, woe_dictionary = woe_dict)
+  new_data <- new_data[, !(colnames(new_data) %in% woe_vars), drop = FALSE]
+  as_tibble(new_data)
+}
 
 
