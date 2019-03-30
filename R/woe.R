@@ -1,4 +1,3 @@
-
 #' WoE Transformation
 #'
 #' `step_woe` creates a *specification* of a
@@ -15,11 +14,11 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new woe components columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param outcome The number of PCA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
-#' @param woe_dictionary
+#' @param outcome bare name of the binary outcome.
+#' @param woe_dictionary a tbl. A map of levels and woe values. It must
+#' have the same layout than the output returned from [woe_dictionary()].
+#' If `NULL`` the function will build a dictionary with those variables
+#' passed to \code{...}. See [woe_dictionary()] for details.
 #' @param odds_offset Offset value to avoid -Inf/Inf from predictor
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'  The default is 1e-6.
@@ -34,16 +33,22 @@
 #' @export
 #' @details
 #' WoE is a transformation of a group of variables that produces
-#' a new set of features. These components are designed to transform
-#' nominal variables into numerical ones with the property that the
-#' order and magnitude reflects the association with a binary outcome.
-#' To apply it on numerical predictors, it is advisable to discretize
-#' the variables prior to running WoE. Here, each variable will be
-#' binarized to have woe associated later. This can achieved by using
-#' [step_discretize()].
+#' a new set of features. The formula is
+#'
+#' \deqn{woe_c = log((P(X = c|Y = 1))/(P(X = c|Y = 0)))}
+#'
+#' where \eqn{c} goes from 1 to \eqn{C} levels of a given nominal
+#' predictor variable \eqn{X}.
+#'
+#' These components are designed to transform nominal variables into
+#' numerical ones with the property that the order and magnitude
+#' reflects the association with a binary outcome.  To apply it on
+#' numerical predictors, it is advisable to discretize the variables
+#' prior to running WoE. Here, each variable will be binarized to
+#' have woe associated later. This can achieved by using [step_discretize()].
 #'
 #' The argument `odds_offset` is an small quantity added to the
-#' proportions of 1's and 0's with the goal to avoid log(p/0) and/or
+#' proportions of 1's and 0's with the goal to avoid log(p/0) or
 #' log(0/p) results. The numerical woe versions will have names that
 #' begin with `woe_` followed by the respecttive original name of the
 #' variables.
@@ -137,9 +142,9 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
   )
 }
 
-#' Crosstable with woe between a (dicotomous) outcome and a predictor variable.
+#' Crosstable with woe between a binary outcome and a predictor variable.
 #'
-#' Calculates some summaries and the WoE (Weight of Evidence) between a dicotomous
+#' Calculates some summaries and the WoE (Weight of Evidence) between a binary
 #' outcome and a given predictor variable. Used to biuld the dictionary.
 #'
 #' @param predictor A atomic vector, usualy with few distinct values.
@@ -148,7 +153,7 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'
 #' @return a tibble with counts, proportions and woe.
-#'  Warning: woe can possibly be -Inf. Use 'odds_offset' param to avoid that.
+#'  Warning: woe can possibly be -Inf. Use 'odds_offset' arg to avoid that.
 #'
 #' @examples
 #'
@@ -159,6 +164,8 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 #' # offset avoid Inf/-Inf
 #' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)
 #' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
+#'
+#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #'
 #' @export
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
@@ -187,9 +194,9 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 }
 
 
-#' WoE dictionary of a set of predictor variables upon a given dicotomous outcome
+#' WoE dictionary of a set of predictor variables upon a given binary outcome
 #'
-#' Builds the woe dictionary of a set of predictor variables upon a given dicotomous outcome.
+#' Builds the woe dictionary of a set of predictor variables upon a given binary outcome.
 #' Convenient to make a woe version of the given set of predictor variables and also to allow
 #' one to tweak some woe values by hand.
 #'
@@ -202,13 +209,15 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #' @return a tibble with summaries and woe for every given predictor variable stacked up.
 #'
 #' @details You can pass a custom dictionary to \code{step_woe()}. It must have the exactly
-#' the same structure of the output of \code{woe_dictionary()}. One easy way to do this
+#' the same structure of the output of [woe_dictionary()]. One easy way to do this
 #' is by tweaking an output returned from it.
 #'
 #' @examples
 #'
 #' mtcars %>% woe_dictionary(am, cyl, gear:carb)
 #'
+#'
+#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #'
 #' @importFrom rlang !!
 #' @export
@@ -225,7 +234,7 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #' Add WoE in a data.frame
 #'
 #' A tidyverse friendly way to plug WoE versions of a set of predictor variables against a
-#' given dicotomous outcome.
+#' given binary outcome.
 #'
 #' @param .data A tbl. The data.frame to plug the new woe version columns.
 #' @param outcome unquoted name of the outcome variable.
@@ -233,26 +242,29 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #'  \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
 #'  and \code{matches()}.
 #' @param woe_dictionary a tbl. If NULL the function will build a dictionary with those variables
-#'  passed to \code{...}. You can pass a custom dictionary too, see \link{\code{woe_dictionary()}}
+#'  passed to \code{...}. You can pass a custom dictionary too, see [woe_dictionary()]
 #'  for details.
 #'
 #' @return a tibble with the original columns of .data plus the woe columns wanted.
 #'
-#' @details You can pass a custom dictionary to \code{add_woe()}. It must have the exactly the same
-#'  structure of the output of \code{woe_dictionary()}. One easy way to do this is to tweak a output
+#' @details You can pass a custom dictionary to [add_woe()]. It must have the exactly the same
+#'  structure of the output of [woe_dictionary()]. One easy way to do this is to tweak a output
 #'  returned from it.
 #'
 #' @examples
 #'
 #' mtcars %>% add_woe(am, cyl, gear:carb)
 #'
-#' @importFrom rlang !! enquo
+#'
+#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
+#'
 #' @export
+#' @importFrom rlang !!
 add_woe <- function(.data, outcome, ..., woe_dictionary = NULL) {
   if(missing(.data)) stop('argument ".data" is missing, with no default')
   if(missing(outcome)) stop('argument "outcome" is missing, with no default')
 
-  outcome <- enquo(outcome)
+  outcome <- rlang::enquo(outcome)
   if(is.null(woe_dictionary)) woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
 
   if(missing(...)) {
