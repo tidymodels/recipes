@@ -311,4 +311,9 @@ bake.step_woe <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+print.step_woe <- function(x, width = max(20, options()$width - 29), ...) {
+  cat("WoE version against outcome", rlang::quo_text(x$outcome), "for ")
+  printer(unique(x$woe_dictionary$variable), x$terms, x$trained, width = width)
+  invisible(x)
+}
 
