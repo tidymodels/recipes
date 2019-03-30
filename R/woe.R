@@ -260,7 +260,7 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #'
 #' @export
 #' @importFrom rlang !!
-add_woe <- function(.data, outcome, ..., woe_dictionary = NULL) {
+add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_") {
   if(missing(.data)) stop('argument ".data" is missing, with no default')
   if(missing(outcome)) stop('argument "outcome" is missing, with no default')
 
@@ -281,8 +281,8 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL) {
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
-    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(.y, "_woe")))) %>% purrr::set_names(variable)) %$%
-    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(ends_with("woe"))) %>%
+    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix, .y)))) %>% purrr::set_names(variable)) %$%
+    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(starts_with("woe"))) %>%
     dplyr::bind_cols(.data, .) %>%
     tibble::as_tibble()
 }
