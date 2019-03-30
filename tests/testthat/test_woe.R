@@ -142,7 +142,7 @@ test_that("step_woe", {
   rec_all_nominal <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_nominal(), outcome = Status)
 
   #
-  expect_output(prep(rec_all_nominal, training = credit_tr))
+  expect_silent(prep(rec_all_nominal, training = credit_tr))
 
 
   rec_all_numeric <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_predictors(), outcome = Status)
