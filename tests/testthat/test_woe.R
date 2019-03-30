@@ -92,10 +92,10 @@ test_that("add_woe accepts numeric, logical and character predictor variables", 
 })
 
 test_that("add_woe returns woe only for those variables that exists in both data and dictionary", {
-  expect_equal(names(add_woe(df, y, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y"))
-  expect_equal(names(add_woe(df, y, x1, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
-  expect_equal(names(add_woe(df, y, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
-  expect_equal(names(add_woe(df, y, x1, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
+  expect_equal(names(add_woe(df, y, x2, woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y"))
+  expect_equal(names(add_woe(df, y, x1, woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
+  expect_equal(names(add_woe(df, y, woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
+  expect_equal(names(add_woe(df, y, x1, x2, woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "woe_x1"))
 })
 
 test_that("add_woe do not accept woe_dictionary with unexpected layout", {

@@ -97,7 +97,7 @@
 #'   prep
 #'
 #' rec_custom_baked <- bake(rec_custom, new_data = credit_te)
-#' rec_custom_baked %>% filter(Job_woe == 1.23) %>% head
+#' rec_custom_baked %>% dplyr::filter(woe_Job == 1.23) %>% head
 #'
 step_woe <- function(recipe,
                      ...,
