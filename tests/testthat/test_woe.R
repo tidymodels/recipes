@@ -94,3 +94,4 @@ test_that("add_woe returns woe only for those variables that exists in both data
   expect_equal(names(add_woe(df, y, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
   expect_equal(names(add_woe(df, y, x1, x2, .woe_dictionary = woe_dictionary(df, y, x1))), c("x1", "x2", "y", "x1_woe"))
 })
+

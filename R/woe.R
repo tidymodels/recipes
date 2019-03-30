@@ -337,3 +337,4 @@ tidy.step_woe <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
