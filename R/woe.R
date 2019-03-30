@@ -244,6 +244,7 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #' @param woe_dictionary a tbl. If NULL the function will build a dictionary with those variables
 #'  passed to \code{...}. You can pass a custom dictionary too, see [woe_dictionary()]
 #'  for details.
+#' @param prefix A character string that will be the prefix to the resulting new variables.
 #'
 #' @return a tibble with the original columns of .data plus the woe columns wanted.
 #'
@@ -258,8 +259,8 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #'
-#' @export
 #' @importFrom rlang !!
+#' @export
 add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_") {
   if(missing(.data)) stop('argument ".data" is missing, with no default')
   if(missing(outcome)) stop('argument "outcome" is missing, with no default')
@@ -270,10 +271,7 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_")
   if(missing(...)) {
     dots_vars <- names(.data)
   } else {
-    dots_vars <- lazyeval::dots_capture(...) %>%
-      unlist %>%
-      as.character %>%
-      stringr::str_replace_all("~", "")
+    dots_vars <- names(.data %>% select(...))
   }
 
   woe_dictionary %>%
@@ -282,7 +280,7 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe_")
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
     dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix, .y)))) %>% purrr::set_names(variable)) %$%
-    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(starts_with("woe"))) %>%
+    purrr::map2(woe_table, variable, ~ dplyr::left_join(.data %>% dplyr::select(!!.y) %>% mutate_all(as.character), .x, by = .y) %>% dplyr::select(starts_with(prefix))) %>%
     dplyr::bind_cols(.data, .) %>%
     tibble::as_tibble()
 }
@@ -318,7 +316,7 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
 bake.step_woe <- function(object, new_data, ...) {
   woe_dict <- object$woe_dictionary
   woe_vars <- unique(woe_dict$variable)
-  new_data <- add_woe(new_data, object$outcome, woe_dictionary = woe_dict)
+  new_data <- add_woe(new_data, object$outcome, woe_dictionary = woe_dict, prefix = object$prefix)
   new_data <- new_data[, !(colnames(new_data) %in% woe_vars), drop = FALSE]
   as_tibble(new_data)
 }
