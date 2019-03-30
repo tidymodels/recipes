@@ -182,6 +182,7 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
       woe = eval(woe_expr),
       predictor = as.character(predictor)
     )
+
   return(woe_tbl)
 }
 
@@ -193,26 +194,30 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #' one to tweak some woe values by hand.
 #'
 #' @param .data A tbl. The data.frame where the variables come from.
-#' @param .outcome unquoted name of the outcome variable.
-#' @param ... unquoted names of predictor variables, passed as you would pass variables to \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()} and \code{matches()}.
-#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor category with only one outcome class. Set to 0 to allow Inf/-Inf.
+#' @param outcome bare name of the outcome variable with exactly 2 distinct values.
+#' @param ... bare names of predictor variables or selectors accepted by \code{dplyr::select()}.
+#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
+#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'
 #' @return a tibble with summaries and woe for every given predictor variable stacked up.
 #'
-#' @details You can pass a custom dictionary to \code{step_woe()}. It must have the exactly the same structure of the output of \code{woe_dictionary()}. One easy way to do this is by tweaking an output returned from it.
+#' @details You can pass a custom dictionary to \code{step_woe()}. It must have the exactly
+#' the same structure of the output of \code{woe_dictionary()}. One easy way to do this
+#' is by tweaking an output returned from it.
 #'
 #' @examples
 #'
 #' mtcars %>% woe_dictionary(am, cyl, gear:carb)
 #'
+#'
+#' @importFrom rlang !!
 #' @export
-woe_dictionary <- function(.data, .outcome, ..., odds_offset = 1e-6) {
-  .outcome <- enquo(.outcome)
-  .outcome_vector <- .data %>% dplyr::pull(!!.outcome)
-
+woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
+  outcome <- enquo(outcome)
+  outcome_vector <- .data %>% dplyr::pull(!!outcome)
   .data %>%
-    dplyr::select(..., -!!.outcome) %>%
-    purrr::map(woe_table, outcome = .outcome_vector, odds_offset = odds_offset) %>%
+    dplyr::select(..., -!!outcome) %>%
+    purrr::map(woe_table, outcome = outcome_vector, odds_offset = odds_offset) %>%
     dplyr::bind_rows(.id = "variable")
 }
 
