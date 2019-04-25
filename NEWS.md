@@ -1,4 +1,9 @@
-# recipes (development version)
+
+# `recipes` 0.1.6
+
+## Other Changes:
+
+ * `step_knnimpute` can now pass two options to the underlying knn code, including the number of threads ([#323](https://github.com/tidymodels/recipes/issues/323)). 
 
 # `recipes` 0.1.5
 
