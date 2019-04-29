@@ -81,3 +81,90 @@ test_that('issue 206 - NA values are kept when requesting matrix composition', {
   expect_equal(as.vector(res_sparse[,"x2"]), df$x2)
 
 })
+
+
+
+test_that('tibble_of_matrix format', {
+
+  n <- 1000
+  n_lag = 2
+  df <- tibble(x = runif(n),
+                   y = rnorm(n))
+
+  # test with juice
+  role_name <- 'lag_variable'
+  rec <- recipe(y~., data = df) %>%
+    step_lag(x, lag = 1:n_lag, role = role_name) %>%
+    prep() %>%
+    juice(composition = 'tibble_of_matrix')
+
+  expect_equal(ncol(rec), 3)
+  expect_equal(nrow(rec), n)
+  expect_equal(sort(names(rec)), sort(c(role_name, 'outcome', 'predictor')))
+  expect_equal(unique(sapply(rec, class)), 'matrix')
+  expect_equivalent(sort(sapply(rec, ncol)), sort(c(1,1,n_lag)))
+
+  # check for bloat
+  rec_size <- object.size(rec)
+  opt_size <- object.size(df$x) * (n_lag + 2) + object.size(tibble()) * 3
+  expect_true(as.numeric(opt_size) / as.numeric(rec_size) > 0.99)
+
+
+  # test with bake
+  role_name <- 'lag_variable'
+  rec <- recipe(y~., data = df) %>%
+    step_lag(x, lag = 0:2, role = role_name) %>%
+    prep() %>%
+    bake(df, composition = 'tibble_of_matrix')
+
+  expect_equal(ncol(rec), 3)
+  expect_equal(nrow(rec), n)
+  expect_equal(sort(names(rec)), sort(c(role_name, 'outcome', 'predictor')))
+  expect_equal(unique(sapply(rec, class)), 'matrix')
+
+
+
+  # test with juice
+  n <- 10
+  df <- tibble(y = rnorm(n),
+                   x = factor(letters[rep(1:5, 2)]))
+
+  rec <- recipe(y~., data = df) %>%
+    step_dummy(x, role = 'dummy') %>%
+    prep() %>%
+    juice(composition = 'tibble_of_matrix')
+
+  expect_equal(unique(sapply(rec, class)), 'matrix')
+  expect_equal(ncol(rec), 2)
+  expect_equal(nrow(rec), n)
+
+
+  # test with bake
+  rec <- recipe(y~., data = df) %>%
+    step_dummy(x, role = 'dummy') %>%
+    prep() %>%
+    bake(df, composition = 'tibble_of_matrix')
+
+  expect_equal(unique(sapply(rec, class)), 'matrix')
+  expect_equal(ncol(rec), 2)
+  expect_equal(nrow(rec), n)
+
+})
+
+test_that('bad convert_matrix args', {
+  dftib <- tibble(x = as.character(1:10),
+                  y = as.character(1:10))
+  expect_error(convert_matrix(dftib),
+               'Columns (`x`, `y`) are not numeric; cannot convert to matrix.',
+               fixed=TRUE)
+  dftib <- tibble(a = as.character(1:10),
+                  b = as.character(1:10),
+                  c = as.character(1:10),
+                  d = as.character(1:10),
+                  e = as.character(1:10))
+  expect_error(convert_matrix(dftib),
+               '5 columns are not numeric; cannot convert to matrix.',
+               fixed=TRUE)
+})
+
+
