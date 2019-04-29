@@ -37,7 +37,7 @@ convert_tibble_of_matrices <- function(x, term_info) {
   grps <- split(term_info$variable, term_info$role)
 
   as_tibble(lapply(grps, function(col_groups) {
-    as.matrix(select(x, col_groups))
+    convert_matrix(select(x, col_groups), sparse = FALSE)
   }))
 
 
