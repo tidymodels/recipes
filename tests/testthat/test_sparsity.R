@@ -83,13 +83,53 @@ test_that('issue 206 - NA values are kept when requesting matrix composition', {
 })
 
 
+test_that('data.frame_of_matrix format', {
+
+  # data.frame method
+  n <- 100
+  n_lag = 20
+  df <- data.frame(x = runif(n),
+                   y = rnorm(n))
+
+  # test with juice
+  role_name <- 'lag_variable'
+  rec <- recipe(y~., data = df) %>%
+    step_lag(x, lag = 1:n_lag, role = role_name) %>%
+    prep() %>%
+    juice(composition = 'data.frame_of_matrix')
+
+  expect_equal(ncol(rec), 3)
+  expect_equal(nrow(rec), n)
+  expect_equal(sort(names(rec)), sort(c(role_name, 'outcome', 'predictor')))
+  expect_equal(unique(sapply(rec, class)), 'AsIs')
+  expect_equivalent(sort(sapply(rec, ncol)), sort(c(1,1,n_lag)))
+
+  # check for bloat
+  rec_size <- object.size(rec)
+  opt_size <- object.size(df$x) * (n_lag + 2) + object.size(tibble()) * 3
+  expect_true(as.numeric(opt_size) / as.numeric(rec_size) > 0.95)
+
+  # test with bake
+  role_name <- 'lag_variable'
+  rec <- recipe(y~., data = df) %>%
+    step_lag(x, lag = 0:2, role = role_name) %>%
+    prep() %>%
+    bake(df, composition = 'data.frame_of_matrix')
+
+  expect_equal(ncol(rec), 3)
+  expect_equal(nrow(rec), n)
+  expect_equal(sort(names(rec)), sort(c(role_name, 'outcome', 'predictor')))
+  expect_equal(unique(sapply(rec, class)), 'AsIs')
+
+})
+
 
 test_that('tibble_of_matrix format', {
 
-  n <- 1000
-  n_lag = 2
+  n <- 100
+  n_lag = 10
   df <- tibble(x = runif(n),
-                   y = rnorm(n))
+               y = rnorm(n))
 
   # test with juice
   role_name <- 'lag_variable'
@@ -107,7 +147,7 @@ test_that('tibble_of_matrix format', {
   # check for bloat
   rec_size <- object.size(rec)
   opt_size <- object.size(df$x) * (n_lag + 2) + object.size(tibble()) * 3
-  expect_true(as.numeric(opt_size) / as.numeric(rec_size) > 0.99)
+  expect_true(as.numeric(opt_size) / as.numeric(rec_size) > 0.95)
 
 
   # test with bake
@@ -127,7 +167,7 @@ test_that('tibble_of_matrix format', {
   # test with juice
   n <- 10
   df <- tibble(y = rnorm(n),
-                   x = factor(letters[rep(1:5, 2)]))
+               x = factor(letters[rep(1:5, 2)]))
 
   rec <- recipe(y~., data = df) %>%
     step_dummy(x, role = 'dummy') %>%

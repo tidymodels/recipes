@@ -604,6 +604,8 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
     new_data <- base::as.data.frame(new_data)
   } else if (composition == 'tibble_of_matrix') {
     new_data <- convert_tibble_of_matrices(new_data, object$term_info)
+  } else if (composition == 'data.frame_of_matrix') {
+    new_data <- convert_df_of_matrices(new_data, object$term_info)
   }
 
   new_data
@@ -775,11 +777,13 @@ juice <- function(object, ..., composition = "tibble") {
     new_data <- base::as.data.frame(new_data)
   } else if (composition == 'tibble_of_matrix') {
     new_data <- convert_tibble_of_matrices(new_data, object$term_info)
+  } else if (composition == 'data.frame_of_matrix') {
+    new_data <- convert_df_of_matrices(new_data, object$term_info)
   }
 
   new_data
 }
 
-formats <- c("tibble", "dgCMatrix", "matrix", "data.frame", 'tibble_of_matrix')
+formats <- c("tibble", "dgCMatrix", "matrix", "data.frame", 'tibble_of_matrix', 'data.frame_of_matrix')
 
 utils::globalVariables(c("number"))

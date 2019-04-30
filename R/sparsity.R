@@ -32,14 +32,34 @@ convert_matrix <- function(x, sparse = TRUE) {
 }
 
 
+
+
+to_list_of_matrix <- function(col_group, x, is_df = FALSE) {
+
+  if (is_df) {
+    return(I(convert_matrix(select(x, col_group), sparse = FALSE)))
+  } else {
+    return(convert_matrix(select(x, col_group), sparse = FALSE))
+  }
+
+}
+
+
+
 convert_tibble_of_matrices <- function(x, term_info) {
 
-  grps <- split(term_info$variable, term_info$role)
+  role_group <- split(term_info$variable, term_info$role)
 
-  as_tibble(lapply(grps, function(col_groups) {
-    convert_matrix(select(x, col_groups), sparse = FALSE)
-  }))
+  as_tibble(lapply(role_group, to_list_of_matrix, x = x, is_df = FALSE))
 
+
+}
+
+convert_df_of_matrices <- function(x, term_info) {
+
+  role_group <- split(term_info$variable, term_info$role)
+
+  as.data.frame(lapply(role_group, to_list_of_matrix, x = x, is_df = TRUE))
 
 }
 
