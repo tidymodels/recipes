@@ -122,7 +122,7 @@ standardized
 ```
 
 
-If there are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
+If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
 
 ```{r trained}
 trained_rec <- prep(standardized, training = credit_train)
