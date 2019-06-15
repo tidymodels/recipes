@@ -312,7 +312,7 @@ peek_info <- function(col) {
 ## dplyr versions
 
 #' @import rlang
-cur_info_env <- child_env(env_parent(env))
+cur_info_env <- child_env(empty_env())
 
 set_current_info <- function(x) {
   old <- cur_info_env
