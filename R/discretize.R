@@ -267,13 +267,13 @@ step_discretize_new <-
     )
   }
 
-#' @importFrom rlang invoke
+#' @importFrom rlang exec
 bin_wrapper <- function(x, args) {
   bin_call <-
     quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
   args <- sub_args(discretize.numeric, args, "x")
   args$x <- x
-  rlang::invoke(discretize, .args = args)
+  rlang::exec(discretize, !!!args)
 }
 
 #' @export
