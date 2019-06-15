@@ -98,8 +98,10 @@ format_ch_vec <-
 
 format_selectors <- function(x, wdth = options()$width - 9, ...) {
   ## convert to character without the leading ~
-  x_items <- lapply(x, function(x)
-    as.character(x[-1]))
+  x_items <- lapply(x, function(x) {
+    as.character(get_expr(x))
+  })
+
   x_items <- unlist(x_items)
   format_ch_vec(x_items, width = wdth, sep = ", ")
 }
