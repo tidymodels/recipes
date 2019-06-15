@@ -254,31 +254,31 @@ values to new data sets using these medians</p>
 
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority Home Time Age Marital Records   Job Expenses Income
-#&gt; 30      bad         0 &lt;NA&gt;   48  37  single      no  &lt;NA&gt;       35     NA
-#&gt; 736     bad         1 priv   48  36  single     yes fixed       35    173
-#&gt; 1057    bad        24 priv   60  46 married      no fixed       60    165
+<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority  Home Time Age Marital Records     Job Expenses Income
+#&gt; 28     good        15 owner   36  43 married      no   fixed       75    251
+#&gt; 688    good         2  rent   60  32 married      no partime       87    115
+#&gt; 1002   good        21  rent   60  39 married      no   fixed      124    191
 #&gt;      Assets Debt Amount Price
-#&gt; 30       NA   NA   1500  1850
-#&gt; 736    7700    0   1000  2008
-#&gt; 1057   3500 1300   1400  1530</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
+#&gt; 28     4000    0   1800  2557
+#&gt; 688    2000    0   1250  1517
+#&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
 #&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
 #&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
-#&gt; 1 bad            0 &lt;NA&gt;     48    37 single  no      &lt;NA&gt;        35    125
-#&gt; 2 bad            1 priv     48    36 single  yes     fixed       35    173
-#&gt; 3 bad           24 priv     60    46 married no      fixed       60    165
+#&gt; 1 good          15 owner    36    43 married no      fixed       75    251
+#&gt; 2 good           2 rent     60    32 married no      part…       87    115
+#&gt; 3 good          21 rent     60    39 married no      fixed      124    191
 #&gt; # … with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   terms  model id                
 #&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;             
-#&gt; 1 Income    NA medianimpute_iNKND
-#&gt; 2 Assets    NA medianimpute_iNKND
-#&gt; 3 Debt      NA medianimpute_iNKND</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt; 1 Income    NA medianimpute_Hlm2y
+#&gt; 2 Assets    NA medianimpute_Hlm2y
+#&gt; 3 Debt      NA medianimpute_Hlm2y</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   terms  model id                
 #&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;             
-#&gt; 1 Income   125 medianimpute_iNKND
-#&gt; 2 Assets  3500 medianimpute_iNKND
-#&gt; 3 Debt       0 medianimpute_iNKND</div></pre>
+#&gt; 1 Income   125 medianimpute_Hlm2y
+#&gt; 2 Assets  3000 medianimpute_Hlm2y
+#&gt; 3 Debt       0 medianimpute_Hlm2y</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

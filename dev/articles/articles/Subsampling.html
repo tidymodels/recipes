@@ -193,24 +193,24 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># No subsampling</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">assess_res</span>(cv_folds<span class="op">$</span>splits[[<span class="dv">1</span>]]) <span class="op">%&gt;%</span><span class="st"> </span>head</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;    Class   pred     prob</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 1 Class2 Class2 2.36e-07</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 2 Class2 Class2 4.69e-06</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 3 Class2 Class2 2.21e-04</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 4 Class2 Class2 1.20e-03</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 5 Class1 Class2 2.78e-01</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 6 Class2 Class2 6.13e-11</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 1 Class2 Class2 7.89e-13</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 2 Class2 Class2 3.42e-09</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 3 Class2 Class2 7.55e-27</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 4 Class2 Class2 1.79e-05</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 5 Class2 Class2 4.00e-14</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 6 Class2 Class2 1.63e-09</span></a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># With downsampling:</span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="kw">assess_res</span>(cv_folds<span class="op">$</span>splits[[<span class="dv">1</span>]], cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]) <span class="op">%&gt;%</span><span class="st"> </span>head</a>
 <a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;   Class  pred           prob</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;   &lt;fct&gt;  &lt;fct&gt;         &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 1 Class2 Class2 0.00235     </span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; 2 Class2 Class2 0.0160      </span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; 3 Class2 Class2 0.0178      </span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; 4 Class2 Class2 0.0144      </span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; 5 Class1 Class1 0.999       </span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; 6 Class2 Class2 0.0000000319</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;   Class  pred       prob</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;   &lt;fct&gt;  &lt;fct&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 1 Class2 Class2 1.58e-11</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; 2 Class2 Class2 3.31e- 8</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; 3 Class2 Class2 2.59e-24</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; 4 Class2 Class2 5.60e- 4</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; 5 Class2 Class2 1.94e-12</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; 6 Class2 Class2 1.26e- 8</span></a></code></pre></div>
 <p>To measure model effectiveness, two metrics are used:</p>
 <ul>
 <li>The area under the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">ROC curve</a> is an overall assessment of performance across <em>all</em> cutoffs. Values near one indicate very good results while values near 0.05 would imply that the model is very poor.</li>
@@ -227,18 +227,18 @@
 <a class="sourceLine" id="cb7-7" data-line-number="7">cv_folds</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; #  10-fold cross-validation repeated 5 times using stratification </span></a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; # A tibble: 50 x 6</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;    splits        id      id2    recipes   sampled_pred    normal_pred      </span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  * &lt;list&gt;        &lt;chr&gt;   &lt;chr&gt;  &lt;list&gt;    &lt;list&gt;          &lt;list&gt;           </span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  1 &lt;split [900/… Repeat1 Fold01 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  2 &lt;split [900/… Repeat1 Fold02 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;  3 &lt;split [900/… Repeat1 Fold03 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;  4 &lt;split [900/… Repeat1 Fold04 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  5 &lt;split [900/… Repeat1 Fold05 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  6 &lt;split [900/… Repeat1 Fold06 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  7 &lt;split [900/… Repeat1 Fold07 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  8 &lt;split [900/… Repeat1 Fold08 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  9 &lt;split [900/… Repeat1 Fold09 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; 10 &lt;split [900/… Repeat1 Fold10 &lt;S3: rec… &lt;tibble [100 ×… &lt;data.frame [100…</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;    splits          id      id2    recipes sampled_pred     normal_pred     </span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  * &lt;list&gt;          &lt;chr&gt;   &lt;chr&gt;  &lt;list&gt;  &lt;list&gt;           &lt;list&gt;          </span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  1 &lt;split [900/10… Repeat1 Fold01 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  2 &lt;split [900/10… Repeat1 Fold02 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;  3 &lt;split [900/10… Repeat1 Fold03 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;  4 &lt;split [900/10… Repeat1 Fold04 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  5 &lt;split [900/10… Repeat1 Fold05 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  6 &lt;split [900/10… Repeat1 Fold06 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  7 &lt;split [900/10… Repeat1 Fold07 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  8 &lt;split [900/10… Repeat1 Fold08 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  9 &lt;split [900/10… Repeat1 Fold09 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; 10 &lt;split [900/10… Repeat1 Fold10 &lt;recip… &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; # … with 40 more rows</span></a></code></pre></div>
 <p>Now, the performance metrics are computed:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(yardstick)</a>

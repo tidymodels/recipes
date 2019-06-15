@@ -275,24 +275,24 @@ contained in the training set), the other category is assigned.</p>
 <span class='no'>collapsed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='no'>collapsed</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      
 #&gt;                       anything mostly anything strictly anything other values
-#&gt;   anything                3013               0                 0            0
-#&gt;   halal                      0               0                 0            5
-#&gt;   kosher                     0               0                 0            6
-#&gt;   mostly anything            0            8254                 0            0
-#&gt;   mostly halal               0               0                 0           27
-#&gt;   mostly kosher              0               0                 0           39
-#&gt;   mostly other               0               0                 0          517
-#&gt;   mostly vegan               0               0                 0          186
-#&gt;   mostly vegetarian          0               0                 0         1719
-#&gt;   other                      0               0                 0          162
-#&gt;   strictly anything          0               0              2497            0
+#&gt;   anything                3128               0                 0            0
+#&gt;   halal                      0               0                 0            4
+#&gt;   kosher                     0               0                 0            5
+#&gt;   mostly anything            0            8226                 0            0
+#&gt;   mostly halal               0               0                 0           23
+#&gt;   mostly kosher              0               0                 0           36
+#&gt;   mostly other               0               0                 0          509
+#&gt;   mostly vegan               0               0                 0          164
+#&gt;   mostly vegetarian          0               0                 0         1715
+#&gt;   other                      0               0                 0          172
+#&gt;   strictly anything          0               0              2562            0
 #&gt;   strictly halal             0               0                 0            7
-#&gt;   strictly kosher            0               0                 0           11
-#&gt;   strictly other             0               0                 0          223
-#&gt;   strictly vegan             0               0                 0          121
-#&gt;   strictly vegetarian        0               0                 0          437
-#&gt;   vegan                      0               0                 0           71
-#&gt;   vegetarian                 0               0                 0          336
+#&gt;   strictly kosher            0               0                 0            7
+#&gt;   strictly other             0               0                 0          209
+#&gt;   strictly vegan             0               0                 0          104
+#&gt;   strictly vegetarian        0               0                 0          442
+#&gt;   vegan                      0               0                 0           66
+#&gt;   vegetarian                 0               0                 0          331
 #&gt;   &lt;NA&gt;                       0               0                 0            0
 #&gt;                      
 #&gt;                        &lt;NA&gt;
@@ -314,15 +314,15 @@ contained in the training set), the other category is assigned.</p>
 #&gt;   strictly vegetarian     0
 #&gt;   vegan                   0
 #&gt;   vegetarian              0
-#&gt;   &lt;NA&gt;                12224</div><div class='input'>
+#&gt;   &lt;NA&gt;                12145</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 3
 #&gt;   terms    retained          id         
 #&gt;   &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;      
-#&gt; 1 diet     anything          other_yPgxt
-#&gt; 2 diet     mostly anything   other_yPgxt
-#&gt; 3 diet     strictly anything other_yPgxt
-#&gt; 4 location oakland           other_yPgxt
-#&gt; 5 location san francisco     other_yPgxt</div><div class='input'>
+#&gt; 1 diet     anything          other_ez6XT
+#&gt; 2 diet     mostly anything   other_ez6XT
+#&gt; 3 diet     strictly anything other_ez6XT
+#&gt; 4 location oakland           other_ez6XT
+#&gt; 5 location san francisco     other_ez6XT</div><div class='input'>
 <span class='co'># novel levels are also "othered"</span>
 <span class='no'>tahiti</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[<span class='fl'>1</span>,]
 <span class='no'>tahiti</span>$<span class='no'>location</span> <span class='kw'>&lt;-</span> <span class='st'>"a magical place"</span>
