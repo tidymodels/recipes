@@ -12,9 +12,6 @@ test_that('Correct values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("NMF")
 
-  library(dimRed)
-  library(NMF)
-
   # # make test cases
   # dat <- loadDataSet("Iris")
   # factorization <- embed(dat, "NNMF", seed = 2432, nrun = 3)
