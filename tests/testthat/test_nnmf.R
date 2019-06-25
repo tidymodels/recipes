@@ -1,13 +1,17 @@
 library(testthat)
 library(recipes)
+library(utils)
+
+R_ver <- as.character(getRversion())
 
 context("NNeg Matrix Fact")
 
 test_that('Correct values', {
   skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
   skip_if_not_installed("dimRed")
   skip_if_not_installed("NMF")
-  
+
   library(dimRed)
   library(NMF)
 
