@@ -168,8 +168,6 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
-#'
-#' @export
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
   outcome_original_labels <- unique(outcome)
 
