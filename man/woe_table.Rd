@@ -11,9 +11,9 @@ woe_table(predictor, outcome, Laplace = 1e-06)
 
 \item{outcome}{The dependent variable. A atomic vector with exactly 2 distinct values.}
 
-\item{Laplace}{Default to 1e-6. The \code{pseudocount} parameter of the Laplace Smoothing
-estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
-Set to 0 to allow Inf/-Inf.}
+\item{Laplace}{The \code{pseudocount} parameter of the Laplace Smoothing
+estimator. Default to 1e-6. Value to avoid -Inf/Inf from predictor category with only
+one outcome class. Set to 0 to allow Inf/-Inf.}
 }
 \value{
 a tibble with counts, proportions and woe.
@@ -38,4 +38,6 @@ woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
 Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
+
+Good, I. J. (1985), "Weight of evidence: A brief survey", \emph{Bayesian Statistics}, 2, pp.249-270.
 }

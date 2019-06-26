@@ -3,7 +3,7 @@
 \name{step_woe}
 \alias{step_woe}
 \alias{tidy.step_woe}
-\title{WoE Transformation}
+\title{Weight of evidence transformation}
 \usage{
 step_woe(recipe, ..., role = "predictor", outcome, trained = FALSE,
   dictionary = NULL, Laplace = 1e-06, prefix = "woe", skip = FALSE,
@@ -25,23 +25,23 @@ role should they be assigned?. By default, the function assumes
 that the new woe components columns created by the original
 variables will be used as predictors in a model.}
 
-\item{outcome}{bare name of the binary outcome.}
+\item{outcome}{The bare name of the binary outcome.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{dictionary}{a tbl. A map of levels and woe values. It must
+\item{dictionary}{A tbl. A map of levels and woe values. It must
 have the same layout than the output returned from \code{\link[=dictionary]{dictionary()}}.
 If `NULL`` the function will build a dictionary with those variables
 passed to \code{...}. See \code{\link[=dictionary]{dictionary()}} for details.}
 
-\item{Laplace}{value usually applied to avoid -Inf/Inf from predictor
-category with only one outcome class. Set to 0 to allow Inf/-Inf.
-The default is 1e-6. Also kwon as 'pseudocount' parameter of the
-Laplace smoothing technique.}
+\item{Laplace}{The Laplace smoothing parameter. A value usually
+applied to avoid -Inf/Inf from predictor category with only one
+outcome class. Set to 0 to allow Inf/-Inf. The default is 1e-6.
+Also kwon as 'pseudocount' parameter of the Laplace smoothing technique.}
 
 \item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below}
+resulting new variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -85,7 +85,7 @@ The argument \code{Laplace} is an small quantity added to the
 proportions of 1's and 0's with the goal to avoid log(p/0) or
 log(0/p) results. The numerical woe versions will have names that
 begin with \code{woe_} followed by the respecttive original name of the
-variables. See Chen & Goodman (1996).
+variables. See Good (1985).
 
 One can pass a custom \code{dictionary} tibble to \code{step_woe()}.
 It must have the same structure of the output from
@@ -136,7 +136,7 @@ Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
 Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
 
-SF Chen, J Goodman (1996). \emph{An empirical study of smoothing techniques for language modeling.} Proceedings of the 34th annual meeting on Association for Computational Linguistics.
+Good, I. J. (1985), "Weight of evidence: A brief survey", \emph{Bayesian Statistics}, 2, pp.249-270.
 }
 \concept{preprocessing woe transformation_methods}
 \keyword{datagen}
