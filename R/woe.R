@@ -14,17 +14,17 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new woe components columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param outcome bare name of the binary outcome.
-#' @param dictionary a tbl. A map of levels and woe values. It must
+#' @param outcome The bare name of the binary outcome.
+#' @param dictionary A tbl. A map of levels and woe values. It must
 #' have the same layout than the output returned from [dictionary()].
 #' If `NULL`` the function will build a dictionary with those variables
 #' passed to \code{...}. See [dictionary()] for details.
-#' @param Laplace value usually applied to avoid -Inf/Inf from predictor
+#' @param Laplace A value usually applied to avoid -Inf/Inf from predictor
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'  The default is 1e-6. Also kwon as 'pseudocount' parameter of the
 #'  Laplace smoothing technique.
 #' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below
+#'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with the woe dictionary used to map
@@ -152,9 +152,9 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, Laplace, pre
 #'
 #' @param predictor A atomic vector, usualy with few distinct values.
 #' @param outcome The dependent variable. A atomic vector with exactly 2 distinct values.
-#' @param Laplace Default to 1e-6. The `pseudocount` parameter of the Laplace Smoothing
-#' estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
-#' Set to 0 to allow Inf/-Inf.
+#' @param Laplace The `pseudocount` parameter of the Laplace Smoothing
+#' estimator. Default to 1e-6. Value to avoid -Inf/Inf from predictor category with only
+#' one outcome class. Set to 0 to allow Inf/-Inf.
 #'
 #' @return a tibble with counts, proportions and woe.
 #'  Warning: woe can possibly be -Inf. Use 'Laplace' arg to avoid that.
@@ -204,7 +204,7 @@ woe_table <- function(predictor, outcome, Laplace = 1e-6) {
 #' one to tweak some woe values by hand.
 #'
 #' @param .data A tbl. The data.frame where the variables come from.
-#' @param outcome bare name of the outcome variable with exactly 2 distinct values.
+#' @param outcome The bare name of the outcome variable with exactly 2 distinct values.
 #' @param ... bare names of predictor variables or selectors accepted by \code{dplyr::select()}.
 #' @param Laplace Default to 1e-6. The `pseudocount` parameter of the Laplace Smoothing
 #' estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
@@ -242,16 +242,15 @@ dictionary <- function(.data, outcome, ..., Laplace = 1e-6) {
 #' given binary outcome.
 #'
 #' @param .data A tbl. The data.frame to plug the new woe version columns.
-#' @param outcome unquoted name of the outcome variable.
-#' @param ... unquoted names of predictor variables, passed as you would pass variables to
+#' @param outcome The bare name of the outcome variable.
+#' @param ... Bare names of predictor variables, passed as you would pass variables to
 #'  \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
 #'  and \code{matches()}.
-#' @param dictionary a tbl. If NULL the function will build a dictionary with those variables
-#'  passed to \code{...}. You can pass a custom dictionary too, see [dictionary()]
-#'  for details.
+#' @param dictionary A tbl. If NULL the function will build a dictionary with those variables
+#'  passed to \code{...}. You can pass a custom dictionary too, see [dictionary()] for details.
 #' @param prefix A character string that will be the prefix to the resulting new variables.
 #'
-#' @return a tibble with the original columns of .data plus the woe columns wanted.
+#' @return A tibble with the original columns of .data plus the woe columns wanted.
 #'
 #' @details You can pass a custom dictionary to [add_woe()]. It must have the exactly the same
 #'  structure of the output of [dictionary()]. One easy way to do this is to tweak a output
