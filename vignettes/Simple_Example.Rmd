@@ -22,11 +22,11 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 
  * __variables__ are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula `Y ~ A + B + A:B`, the variables are `A`, `B`, and `Y`. 
  * __roles__ define how variables will be used in the model. Examples are: `predictor` (independent variables), `response`, and `case weight`. This is meant to be open-ended and extensible. 
- * __terms__ are columns in a design matrix such as `A`, `B`, and `A:B`. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have `predictor` roles would automatically be main effect terms  
+ * __terms__ are columns in a design matrix such as `A`, `B`, and `A:B`. These can be other derived entities that are grouped, such as a set of principal components or a set of columns, that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have `predictor` roles would automatically be main effect terms.
 
 ## An Example
 
-The packages contains a data set that used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable `Status` (the outcome). We will first separate the data into a training and test set:
+The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable `Status` (the outcome). We will first separate the data into a training and test set:
 
 ```{r data}
 library(recipes)
@@ -57,7 +57,7 @@ First, we will create a recipe object from the original data and then specify th
 
 Recipes can be created manually by sequentially adding roles to variables in a data set. 
 
-If the analysis only required **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
+If the analysis only requires **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
 
 ```{r first_rec}
 rec_obj <- recipe(Status ~ ., data = credit_train)
@@ -66,7 +66,7 @@ rec_obj
 
 The data contained in the `data` argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).  
 
-(Note that the formula method here is used to declare the variables and their roles and nothing else. If you use inline functions (e.g. `log`) it will complain. These types of operations can be added later.)
+(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. `log`) it will complain. These types of operations can be added later.)
 
 ## Preprocessing Steps
 
@@ -94,7 +94,7 @@ For our data, we can add an operation to impute the predictors. There are many w
 grep("impute$", ls("package:recipes"), value = TRUE)
 ```
 
-Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors then removes those that are numeric:
+Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors and then removes those that are numeric:
 
 ```{r dummy}
 imputed <- rec_obj %>%
@@ -122,7 +122,7 @@ standardized
 ```
 
 
-If there are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
+If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
 
 ```{r trained}
 trained_rec <- prep(standardized, training = credit_train)

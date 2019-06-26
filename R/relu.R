@@ -138,11 +138,11 @@ prep.step_relu <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom dplyr select_vars tbl_vars
-#' @importFrom rlang lang sym
+#' @importFrom rlang call2 sym
 #' @export
 bake.step_relu <- function(object, new_data, ...) {
   make_relu_call <- function(col) {
-    lang("relu", sym(col), object$shift, object$reverse, object$smooth)
+    call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
   exprs <- purrr::map(object$columns, make_relu_call)
   newname <- paste0(object$prefix, object$columns)
