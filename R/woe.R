@@ -417,3 +417,8 @@ tidy.step_woe <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+# ------------------------------------------------------------------------------
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("n", "p", "predictor", "summary_outcome", "value", "woe"))
