@@ -50,9 +50,9 @@ test_that("woe_table ruturns no messages nor warnings", {
   expect_silent(recipes:::woe_table(df$x1, df$y))
 })
 
-test_that("odds_offset works", {
-  expect_true(all(is.finite(recipes:::woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)$woe)))
-  expect_false(all(is.finite(recipes:::woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)$woe)))
+test_that("Laplace works", {
+  expect_true(all(is.finite(recipes:::woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 1e-6)$woe)))
+  expect_false(all(is.finite(recipes:::woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)$woe)))
 })
 
 

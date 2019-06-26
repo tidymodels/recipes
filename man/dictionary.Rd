@@ -4,7 +4,7 @@
 \alias{dictionary}
 \title{WoE dictionary of a set of predictor variables upon a given binary outcome}
 \usage{
-dictionary(.data, outcome, ..., odds_offset = 1e-06)
+dictionary(.data, outcome, ..., Laplace = 1e-06)
 }
 \arguments{
 \item{.data}{A tbl. The data.frame where the variables come from.}
@@ -13,8 +13,9 @@ dictionary(.data, outcome, ..., odds_offset = 1e-06)
 
 \item{...}{bare names of predictor variables or selectors accepted by \code{dplyr::select()}.}
 
-\item{odds_offset}{Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
-category with only one outcome class. Set to 0 to allow Inf/-Inf.}
+\item{Laplace}{Default to 1e-6. The \code{pseudocount} parameter of the Laplace Smoothing
+estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
+Set to 0 to allow Inf/-Inf.}
 }
 \value{
 a tibble with summaries and woe for every given predictor variable stacked up.

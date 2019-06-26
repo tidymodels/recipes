@@ -6,8 +6,8 @@
 \title{WoE Transformation}
 \usage{
 step_woe(recipe, ..., role = "predictor", outcome, trained = FALSE,
-  dictionary = NULL, odds_offset = 1e-06, prefix = "woe",
-  skip = FALSE, id = rand_id("woe"))
+  dictionary = NULL, Laplace = 1e-06, prefix = "woe", skip = FALSE,
+  id = rand_id("woe"))
 
 \method{tidy}{step_woe}(x, ...)
 }
@@ -35,9 +35,10 @@ have the same layout than the output returned from \code{\link[=dictionary]{dict
 If `NULL`` the function will build a dictionary with those variables
 passed to \code{...}. See \code{\link[=dictionary]{dictionary()}} for details.}
 
-\item{odds_offset}{Offset value to avoid -Inf/Inf from predictor
+\item{Laplace}{value usually applied to avoid -Inf/Inf from predictor
 category with only one outcome class. Set to 0 to allow Inf/-Inf.
-The default is 1e-6.}
+The default is 1e-6. Also kwon as 'pseudocount' parameter of the
+Laplace smoothing technique.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below}
@@ -80,11 +81,11 @@ numerical predictors, it is advisable to discretize the variables
 prior to running WoE. Here, each variable will be binarized to
 have woe associated later. This can achieved by using \code{\link[=step_discretize]{step_discretize()}}.
 
-The argument \code{odds_offset} is an small quantity added to the
+The argument \code{Laplace} is an small quantity added to the
 proportions of 1's and 0's with the goal to avoid log(p/0) or
 log(0/p) results. The numerical woe versions will have names that
 begin with \code{woe_} followed by the respecttive original name of the
-variables.
+variables. See Chen & Goodman (1996).
 
 One can pass a custom \code{dictionary} tibble to \code{step_woe()}.
 It must have the same structure of the output from
@@ -134,6 +135,8 @@ rec_custom_baked \%>\% dplyr::filter(woe_Job == 1.23) \%>\% head
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
 Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
+
+SF Chen, J Goodman (1996). \emph{An empirical study of smoothing techniques for language modeling.} Proceedings of the 34th annual meeting on Association for Computational Linguistics.
 }
 \concept{preprocessing woe transformation_methods}
 \keyword{datagen}

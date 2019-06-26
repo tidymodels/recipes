@@ -4,19 +4,20 @@
 \alias{woe_table}
 \title{Crosstable with woe between a binary outcome and a predictor variable.}
 \usage{
-woe_table(predictor, outcome, odds_offset = 1e-06)
+woe_table(predictor, outcome, Laplace = 1e-06)
 }
 \arguments{
 \item{predictor}{A atomic vector, usualy with few distinct values.}
 
 \item{outcome}{The dependent variable. A atomic vector with exactly 2 distinct values.}
 
-\item{odds_offset}{Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
-category with only one outcome class. Set to 0 to allow Inf/-Inf.}
+\item{Laplace}{Default to 1e-6. The \code{pseudocount} parameter of the Laplace Smoothing
+estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
+Set to 0 to allow Inf/-Inf.}
 }
 \value{
 a tibble with counts, proportions and woe.
-Warning: woe can possibly be -Inf. Use 'odds_offset' arg to avoid that.
+Warning: woe can possibly be -Inf. Use 'Laplace' arg to avoid that.
 }
 \description{
 Calculates some summaries and the WoE (Weight of Evidence) between a binary
@@ -29,8 +30,8 @@ pred <- sample(c("X", "Y", "Z", "W"), size = 40, replace = TRUE)
 woe_table(pred, outc)
 
 # offset avoid Inf/-Inf
-woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)
-woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
+woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 1e-6)
+woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
 
 }
 \references{

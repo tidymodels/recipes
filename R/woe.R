@@ -19,9 +19,10 @@
 #' have the same layout than the output returned from [dictionary()].
 #' If `NULL`` the function will build a dictionary with those variables
 #' passed to \code{...}. See [dictionary()] for details.
-#' @param odds_offset Offset value to avoid -Inf/Inf from predictor
+#' @param Laplace value usually applied to avoid -Inf/Inf from predictor
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
-#'  The default is 1e-6.
+#'  The default is 1e-6. Also kwon as 'pseudocount' parameter of the
+#'  Laplace smoothing technique.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below
 #' @return An updated version of `recipe` with the new step
@@ -47,11 +48,11 @@
 #' prior to running WoE. Here, each variable will be binarized to
 #' have woe associated later. This can achieved by using [step_discretize()].
 #'
-#' The argument `odds_offset` is an small quantity added to the
+#' The argument `Laplace` is an small quantity added to the
 #' proportions of 1's and 0's with the goal to avoid log(p/0) or
 #' log(0/p) results. The numerical woe versions will have names that
 #' begin with `woe_` followed by the respecttive original name of the
-#' variables.
+#' variables. See Chen & Goodman (1996).
 #'
 #' One can pass a custom `dictionary` tibble to \code{step_woe()}.
 #' It must have the same structure of the output from
@@ -64,6 +65,7 @@
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#' @references SF Chen, J Goodman (1996). *An empirical study of smoothing techniques for language modeling.* Proceedings of the 34th annual meeting on Association for Computational Linguistics.
 #'
 #' @examples
 #'
@@ -105,7 +107,7 @@ step_woe <- function(recipe,
                      outcome,
                      trained = FALSE,
                      dictionary = NULL,
-                     odds_offset = 1e-6,
+                     Laplace = 1e-6,
                      prefix = "woe",
                      skip = FALSE,
                      id = rand_id("woe")) {
@@ -119,7 +121,7 @@ step_woe <- function(recipe,
       trained = trained,
       outcome = enquo(outcome),
       dictionary = dictionary,
-      odds_offset = odds_offset,
+      Laplace = Laplace,
       prefix = prefix,
       skip = skip,
       id = id
@@ -128,7 +130,7 @@ step_woe <- function(recipe,
 }
 
 ## Initializes a new object
-step_woe_new <- function(terms, role, trained, outcome, dictionary, odds_offset, prefix, skip, id) {
+step_woe_new <- function(terms, role, trained, outcome, dictionary, Laplace, prefix, skip, id) {
   step(
     subclass = "woe",
     terms = terms,
@@ -136,7 +138,7 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, odds_offset,
     trained = trained,
     outcome = outcome,
     dictionary = dictionary,
-    odds_offset = odds_offset,
+    Laplace = Laplace,
     prefix = prefix,
     skip = skip,
     id = id
@@ -150,11 +152,12 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, odds_offset,
 #'
 #' @param predictor A atomic vector, usualy with few distinct values.
 #' @param outcome The dependent variable. A atomic vector with exactly 2 distinct values.
-#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
-#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
+#' @param Laplace Default to 1e-6. The `pseudocount` parameter of the Laplace Smoothing
+#' estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
+#' Set to 0 to allow Inf/-Inf.
 #'
 #' @return a tibble with counts, proportions and woe.
-#'  Warning: woe can possibly be -Inf. Use 'odds_offset' arg to avoid that.
+#'  Warning: woe can possibly be -Inf. Use 'Laplace' arg to avoid that.
 #'
 #' @examples
 #'
@@ -163,17 +166,17 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, odds_offset,
 #' woe_table(pred, outc)
 #'
 #' # offset avoid Inf/-Inf
-#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 1e-6)
-#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
+#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 1e-6)
+#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
-woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
+woe_table <- function(predictor, outcome, Laplace = 1e-6) {
   outcome_original_labels <- unique(outcome)
 
   if(length(outcome_original_labels) != 2) stop(sprintf("'outcome' must have exactly 2 categories (has %s)", length(outcome_original_labels)))
 
-  woe_expr <- parse(text = sprintf("log((p_%s + odds_offset)/(p_%s + odds_offset))", outcome_original_labels[1], outcome_original_labels[2]))
+  woe_expr <- parse(text = sprintf("log(((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace))/((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace)))", outcome_original_labels[1], outcome_original_labels[1], outcome_original_labels[2], outcome_original_labels[2]))
 
   woe_tbl <- tibble::tibble(outcome, predictor) %>%
     dplyr::group_by(outcome, predictor) %>%
@@ -203,8 +206,9 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #' @param .data A tbl. The data.frame where the variables come from.
 #' @param outcome bare name of the outcome variable with exactly 2 distinct values.
 #' @param ... bare names of predictor variables or selectors accepted by \code{dplyr::select()}.
-#' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
-#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
+#' @param Laplace Default to 1e-6. The `pseudocount` parameter of the Laplace Smoothing
+#' estimator. Value to avoid -Inf/Inf from predictor category with only one outcome class.
+#' Set to 0 to allow Inf/-Inf.
 #'
 #' @return a tibble with summaries and woe for every given predictor variable stacked up.
 #'
@@ -222,12 +226,12 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #'
 #' @importFrom rlang !!
 #' @export
-dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
+dictionary <- function(.data, outcome, ..., Laplace = 1e-6) {
   outcome <- enquo(outcome)
   outcome_vector <- .data %>% dplyr::pull(!!outcome)
   .data %>%
     dplyr::select(..., -!!outcome) %>%
-    purrr::map(woe_table, outcome = outcome_vector, odds_offset = odds_offset) %>%
+    purrr::map(woe_table, outcome = outcome_vector, Laplace = Laplace) %>%
     dplyr::bind_rows(.id = "variable")
 }
 
@@ -334,7 +338,7 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     outcome = x$outcome,
     dictionary = x$dictionary,
-    odds_offset = x$odds_offset,
+    Laplace = x$Laplace,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
