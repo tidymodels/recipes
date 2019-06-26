@@ -15,10 +15,10 @@
 #'  that the new woe components columns created by the original
 #'  variables will be used as predictors in a model.
 #' @param outcome bare name of the binary outcome.
-#' @param woe_dictionary a tbl. A map of levels and woe values. It must
-#' have the same layout than the output returned from [woe_dictionary()].
+#' @param dictionary a tbl. A map of levels and woe values. It must
+#' have the same layout than the output returned from [dictionary()].
 #' If `NULL`` the function will build a dictionary with those variables
-#' passed to \code{...}. See [woe_dictionary()] for details.
+#' passed to \code{...}. See [dictionary()] for details.
 #' @param odds_offset Offset value to avoid -Inf/Inf from predictor
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'  The default is 1e-6.
@@ -53,14 +53,14 @@
 #' begin with `woe_` followed by the respecttive original name of the
 #' variables.
 #'
-#' One can pass a custom `woe_dictionary` tibble to \code{step_woe()}.
+#' One can pass a custom `dictionary` tibble to \code{step_woe()}.
 #' It must have the same structure of the output from
-#' \code{woe_dictionary()} (see examples). If not provided it will be
+#' \code{dictionary()} (see examples). If not provided it will be
 #' created automatically. The role of this tibble is to store the map
 #' between the levels of nominal predictor to its woe values. You may
 #' want to tweak this object with the goal to fix the orders between
 #' the levels of one given predictor. One easy way to do this is by
-#' tweaking an output returned from \code{woe_dictionary()}.
+#' tweaking an output returned from \code{dictionary()}.
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
@@ -87,13 +87,13 @@
 #' tidy(woe_models, number = 1)
 #'
 #' # Example of custom dictionary + tweaking
-#' # custom woe_dictionary
-#' woe_dict_custom <- credit_tr %>% woe_dictionary(Job, Home, outcome = Status)
+#' # custom dictionary
+#' woe_dict_custom <- credit_tr %>% dictionary(Job, Home, outcome = Status)
 #' woe_dict_custom[4, "woe"] <- 1.23 #tweak
 #'
 #' #passing custom dict to step_woe()
 #' rec_custom <- recipe(Status ~ ., data = credit_tr) %>%
-#'   step_woe(Job, Home, outcome = Status, woe_dictionary = woe_dict_custom) %>%
+#'   step_woe(Job, Home, outcome = Status, dictionary = woe_dict_custom) %>%
 #'   prep
 #'
 #' rec_custom_baked <- bake(rec_custom, new_data = credit_te)
@@ -104,7 +104,7 @@ step_woe <- function(recipe,
                      role = "predictor",
                      outcome,
                      trained = FALSE,
-                     woe_dictionary = NULL,
+                     dictionary = NULL,
                      odds_offset = 1e-6,
                      prefix = "woe",
                      skip = FALSE,
@@ -118,7 +118,7 @@ step_woe <- function(recipe,
       role = role,
       trained = trained,
       outcome = enquo(outcome),
-      woe_dictionary = woe_dictionary,
+      dictionary = dictionary,
       odds_offset = odds_offset,
       prefix = prefix,
       skip = skip,
@@ -128,14 +128,14 @@ step_woe <- function(recipe,
 }
 
 ## Initializes a new object
-step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_offset, prefix, skip, id) {
+step_woe_new <- function(terms, role, trained, outcome, dictionary, odds_offset, prefix, skip, id) {
   step(
     subclass = "woe",
     terms = terms,
     role = role,
     trained = trained,
     outcome = outcome,
-    woe_dictionary = woe_dictionary,
+    dictionary = dictionary,
     odds_offset = odds_offset,
     prefix = prefix,
     skip = skip,
@@ -209,12 +209,12 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #' @return a tibble with summaries and woe for every given predictor variable stacked up.
 #'
 #' @details You can pass a custom dictionary to \code{step_woe()}. It must have the exactly
-#' the same structure of the output of [woe_dictionary()]. One easy way to do this
+#' the same structure of the output of [dictionary()]. One easy way to do this
 #' is by tweaking an output returned from it.
 #'
 #' @examples
 #'
-#' mtcars %>% woe_dictionary(am, cyl, gear:carb)
+#' mtcars %>% dictionary(am, cyl, gear:carb)
 #'
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
@@ -222,7 +222,7 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #'
 #' @importFrom rlang !!
 #' @export
-woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
+dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
   outcome <- enquo(outcome)
   outcome_vector <- .data %>% dplyr::pull(!!outcome)
   .data %>%
@@ -242,15 +242,15 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #' @param ... unquoted names of predictor variables, passed as you would pass variables to
 #'  \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
 #'  and \code{matches()}.
-#' @param woe_dictionary a tbl. If NULL the function will build a dictionary with those variables
-#'  passed to \code{...}. You can pass a custom dictionary too, see [woe_dictionary()]
+#' @param dictionary a tbl. If NULL the function will build a dictionary with those variables
+#'  passed to \code{...}. You can pass a custom dictionary too, see [dictionary()]
 #'  for details.
 #' @param prefix A character string that will be the prefix to the resulting new variables.
 #'
 #' @return a tibble with the original columns of .data plus the woe columns wanted.
 #'
 #' @details You can pass a custom dictionary to [add_woe()]. It must have the exactly the same
-#'  structure of the output of [woe_dictionary()]. One easy way to do this is to tweak a output
+#'  structure of the output of [dictionary()]. One easy way to do this is to tweak a output
 #'  returned from it.
 #'
 #' @examples
@@ -263,21 +263,21 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #'
 #' @importFrom rlang !!
 #' @export
-add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") {
+add_woe <- function(.data, outcome, ..., dictionary = NULL, prefix = "woe") {
   if(missing(.data)) stop('argument ".data" is missing, with no default')
   if(missing(outcome)) stop('argument "outcome" is missing, with no default')
 
   outcome <- rlang::enquo(outcome)
-  if(is.null(woe_dictionary)) {
-    woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
+  if(is.null(dictionary)) {
+    dictionary <- dictionary(.data, !!outcome, ...)
   } else {
-    if(is.null(woe_dictionary$variable)) stop('column "variable" is missing in woe_dictionary.')
-    if(is.null(woe_dictionary$predictor)) stop('column "predictor" is missing in woe_dictionary.')
-    if(is.null(woe_dictionary$woe)) stop('column "woe" is missing in woe_dictionary.')
+    if(is.null(dictionary$variable)) stop('column "variable" is missing in dictionary.')
+    if(is.null(dictionary$predictor)) stop('column "predictor" is missing in dictionary.')
+    if(is.null(dictionary$woe)) stop('column "woe" is missing in dictionary.')
   }
 
   # warns if there is variable with more than 50 levels
-  level_counts <- table(woe_dictionary$variable)
+  level_counts <- table(dictionary$variable)
   purrr::walk2(
     level_counts,
     names(level_counts),
@@ -291,7 +291,7 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") 
     dots_vars <- names(.data %>% select(...))
   }
 
-  output <- woe_dictionary %>%
+  output <- dictionary %>%
     dplyr::filter(variable %in% dots_vars) %>%
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
@@ -321,8 +321,8 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!(col_names %in% outcome_name)]
   check_type(training[, col_names], quant = FALSE)
 
-  if(is.null(x$woe_dictionary)) {
-    x$woe_dictionary <- woe_dictionary(
+  if(is.null(x$dictionary)) {
+    x$dictionary <- dictionary(
       .data = training[, unique(c(outcome_name, col_names))],
       outcome = !!x$outcome
     )
@@ -333,7 +333,7 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     outcome = x$outcome,
-    woe_dictionary = x$woe_dictionary,
+    dictionary = x$dictionary,
     odds_offset = x$odds_offset,
     prefix = x$prefix,
     skip = x$skip,
@@ -344,12 +344,12 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @export
 bake.step_woe <- function(object, new_data, ...) {
-  woe_dict <- object$woe_dictionary
-  woe_vars <- unique(woe_dict$variable)
+  dict <- object$dictionary
+  woe_vars <- unique(dict$variable)
   new_data <- add_woe(
     .data = new_data,
     outcome = object$outcome,
-    woe_dictionary = woe_dict,
+    dictionary = dict,
     prefix = object$prefix
   )
   new_data <- new_data[, !(colnames(new_data) %in% woe_vars), drop = FALSE]
@@ -358,7 +358,7 @@ bake.step_woe <- function(object, new_data, ...) {
 
 print.step_woe <- function(x, width = max(20, options()$width - 29), ...) {
   cat("WoE version against outcome", rlang::quo_text(x$outcome), "for ")
-  printer(unique(x$woe_dictionary$variable), x$terms, x$trained, width = width)
+  printer(unique(x$dictionary$variable), x$terms, x$trained, width = width)
   invisible(x)
 }
 
@@ -368,7 +368,7 @@ print.step_woe <- function(x, width = max(20, options()$width - 29), ...) {
 #' @export
 tidy.step_woe <- function(x, ...) {
   if (is_trained(x)) {
-    res <- x$woe_dictionary
+    res <- x$dictionary
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(variable = term_names,

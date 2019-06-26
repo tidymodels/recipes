@@ -4,7 +4,7 @@
 \alias{add_woe}
 \title{Add WoE in a data.frame}
 \usage{
-add_woe(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe")
+add_woe(.data, outcome, ..., dictionary = NULL, prefix = "woe")
 }
 \arguments{
 \item{.data}{A tbl. The data.frame to plug the new woe version columns.}
@@ -15,8 +15,8 @@ add_woe(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe")
 \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
 and \code{matches()}.}
 
-\item{woe_dictionary}{a tbl. If NULL the function will build a dictionary with those variables
-passed to \code{...}. You can pass a custom dictionary too, see \code{\link[=woe_dictionary]{woe_dictionary()}}
+\item{dictionary}{a tbl. If NULL the function will build a dictionary with those variables
+passed to \code{...}. You can pass a custom dictionary too, see \code{\link[=dictionary]{dictionary()}}
 for details.}
 
 \item{prefix}{A character string that will be the prefix to the resulting new variables.}
@@ -30,7 +30,7 @@ given binary outcome.
 }
 \details{
 You can pass a custom dictionary to \code{\link[=add_woe]{add_woe()}}. It must have the exactly the same
-structure of the output of \code{\link[=woe_dictionary]{woe_dictionary()}}. One easy way to do this is to tweak a output
+structure of the output of \code{\link[=dictionary]{dictionary()}}. One easy way to do this is to tweak a output
 returned from it.
 }
 \examples{
