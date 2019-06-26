@@ -20,10 +20,10 @@
 #'  used.
 #' @param num_run A positive integer for the number of computations runs used
 #'  to obtain a consensus projection.
-#' @param options A list of options to [NMF::nmf()] by way of
-#'  [dimRed::NNMF()]. **Note** that the arguments
+#' @param options A list of options to `nmf()` in the NMF package by way of
+#'  `dimRed::NNMF()`. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
-#' @param res The [dimRed::NNMF()] object is stored
+#' @param res The `dimRed::NNMF()` object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
@@ -51,22 +51,20 @@
 #'  `NNMF101`.
 #'
 #' @examples
-#' \donttest{
+#'
 #' data(biomass)
 #'
-#' if (require(dimRed) & require(NMF)) {
-#'   rec <- recipe(HHV ~ ., data = biomass) %>%
-#'     update_role(sample, new_role = "id var") %>%
-#'     update_role(dataset, new_role = "split variable") %>%
-#'     step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
-#'     prep(training = biomass, retain = TRUE)
+#' # rec <- recipe(HHV ~ ., data = biomass) %>%
+#' #   update_role(sample, new_role = "id var") %>%
+#' #   update_role(dataset, new_role = "split variable") %>%
+#' #   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
+#' #   prep(training = biomass, retain = TRUE)
+#' #
+#' # juice(rec)
+#' #
+#' # library(ggplot2)
+#' # ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 #'
-#'   juice(rec)
-#'
-#'   library(ggplot2)
-#'   ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
-#' }
-#' }
 #' @seealso [step_pca()], [step_ica()], [step_kpca()],
 #'   [step_isomap()], [recipe()], [prep.recipe()],
 #'   [bake.recipe()]
@@ -84,7 +82,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
-    recipes_pkg_check(c("dimRed", "NMF"))
+    recipes_pkg_check(nmf_pkg)
     add_step(
       recipe,
       step_nnmf_new(
@@ -102,6 +100,8 @@ step_nnmf <-
       )
     )
   }
+
+nmf_pkg <- c("dimRed", "NMF")
 
 step_nnmf_new <-
   function(terms, role, trained, num_comp, num_run,
@@ -138,7 +138,11 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
   opts$.method <- "NNMF"
 
-  suppressPackageStartupMessages(loadNamespace("NMF"))
+  for (i in nmf_pkg) {
+    suppressPackageStartupMessages(
+      loadNamespace(i)
+    )
+  }
 
  nnm <- do.call(dimRed::embed, opts)
 
