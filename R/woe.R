@@ -109,7 +109,9 @@ step_woe <- function(recipe,
                      prefix = "woe",
                      skip = FALSE,
                      id = rand_id("woe")) {
-  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+  if (missing(outcome)) {
+    stop('argument "outcome" is missing, with no default', call. = FALSE)
+  }
 
   add_step(
     recipe,
@@ -173,9 +175,20 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
   outcome_original_labels <- unique(outcome)
 
-  if(length(outcome_original_labels) != 2) stop(sprintf("'outcome' must have exactly 2 categories (has %s)", length(outcome_original_labels)))
+  if (length(outcome_original_labels) != 2) {
+    stop(sprintf("'outcome' must have exactly 2 categories (has %s)",
+                 length(outcome_original_labels)),
+         call. = FALSE)
+  }
 
-  woe_expr <- parse(text = sprintf("log((p_%s + odds_offset)/(p_%s + odds_offset))", outcome_original_labels[1], outcome_original_labels[2]))
+  woe_expr <-
+    parse(
+      text = sprintf(
+        "log((p_%s + odds_offset)/(p_%s + odds_offset))",
+        outcome_original_labels[1],
+        outcome_original_labels[2]
+      )
+    )
 
   woe_tbl <- tibble::tibble(outcome, predictor) %>%
     dplyr::group_by(outcome, predictor) %>%
@@ -266,16 +279,26 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #' @importFrom rlang !!
 #' @export
 add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") {
-  if(missing(.data)) stop('argument ".data" is missing, with no default')
-  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+  if (missing(.data)) {
+    stop('argument ".data" is missing, with no default', call. = FALSE)
+  }
+  if (missing(outcome)) {
+    stop('argument "outcome" is missing, with no default', call. = FALSE)
+  }
 
   outcome <- rlang::enquo(outcome)
-  if(is.null(woe_dictionary)) {
-    woe_dictionary <- woe_dictionary(.data, !!outcome, ...)
+  if (is.null(woe_dictionary)) {
+    woe_dictionary <- woe_dictionary(.data,!!outcome, ...)
   } else {
-    if(is.null(woe_dictionary$variable)) stop('column "variable" is missing in woe_dictionary.')
-    if(is.null(woe_dictionary$predictor)) stop('column "predictor" is missing in woe_dictionary.')
-    if(is.null(woe_dictionary$woe)) stop('column "woe" is missing in woe_dictionary.')
+    if (is.null(woe_dictionary$variable)) {
+      stop('column "variable" is missing in woe_dictionary.', call. = FALSE)
+    }
+    if (is.null(woe_dictionary$predictor)) {
+      stop('column "predictor" is missing in woe_dictionary.', call. = FALSE)
+    }
+    if (is.null(woe_dictionary$woe)) {
+      stop('column "woe" is missing in woe_dictionary.', call. = FALSE)
+    }
   }
 
   # warns if there is variable with more than 50 levels
@@ -284,21 +307,29 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") 
     level_counts,
     names(level_counts),
     ~ if(.x > 50)
-      warning("Variable ", .y, " has ", .x, " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."))
+      warning("Variable ", .y, " has ", .x,
+              " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."))
 
 
-  if(missing(...)) {
+  if (missing(...)) {
     dots_vars <- names(.data)
   } else {
     dots_vars <- names(.data %>% select(...))
   }
 
-  output <- woe_dictionary %>%
+  output <-
+    woe_dictionary %>%
     dplyr::filter(variable %in% dots_vars) %>%
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
-    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))) %>% purrr::set_names(variable))
+    dplyr::mutate(
+      woe_table =
+        purrr::map2(woe_table, variable,
+                    ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))
+        ) %>%
+        purrr::set_names(variable)
+    )
 
   output <- purrr::map2(
     output$woe_table,
@@ -322,8 +353,9 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   col_names <- col_names[!(col_names %in% outcome_name)]
   check_type(training[, col_names], quant = FALSE)
+  check_type(training[, outcome_name], quant = FALSE)
 
-  if(is.null(x$woe_dictionary)) {
+  if (is.null(x$woe_dictionary)) {
     x$woe_dictionary <- woe_dictionary(
       .data = training[, unique(c(outcome_name, col_names))],
       outcome = !!x$outcome
