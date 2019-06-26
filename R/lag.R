@@ -117,7 +117,7 @@ bake.step_lag <- function(object, new_data, ...) {
          call. = FALSE)
 
   make_call <- function(col, lag_val) {
-    lang(
+    call2(
       "lag",
       x = sym(col),
       n = lag_val,

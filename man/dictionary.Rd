@@ -2,14 +2,14 @@
 % Please edit documentation in R/woe.R
 \name{dictionary}
 \alias{dictionary}
-\title{WoE dictionary of a set of predictor variables upon a given binary outcome}
+\title{Weight of evidence dictionary}
 \usage{
 dictionary(.data, outcome, ..., Laplace = 1e-06)
 }
 \arguments{
 \item{.data}{A tbl. The data.frame where the variables come from.}
 
-\item{outcome}{bare name of the outcome variable with exactly 2 distinct values.}
+\item{outcome}{The bare name of the outcome variable with exactly 2 distinct values.}
 
 \item{...}{bare names of predictor variables or selectors accepted by \code{dplyr::select()}.}
 
@@ -40,4 +40,6 @@ mtcars \%>\% dictionary(am, cyl, gear:carb)
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
 Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
+
+Good, I. J. (1985), "Weight of evidence: A brief survey", \emph{Bayesian Statistics}, 2, pp.249-270.
 }

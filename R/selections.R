@@ -193,9 +193,20 @@ terms_select <- function(terms, info) {
   old_info <- set_current_info(nested_info)
   on.exit(set_current_info(old_info), add = TRUE)
 
-  sel <- with_handlers(tidyselect::vars_select(vars, !!! terms),
-                       tidyselect_empty = abort_selection
-  )
+  # `terms` might be a single call (like in step_interact()),
+  # or it could be a list of quosures.
+  # They have to be unquoted differently
+  if (is.call(terms)) {
+    sel <- with_handlers(
+      tidyselect::vars_select(vars, !! terms),
+      tidyselect_empty = abort_selection
+    )
+  } else {
+    sel <- with_handlers(
+      tidyselect::vars_select(vars, !!! terms),
+      tidyselect_empty = abort_selection
+    )
+  }
 
   unname(sel)
 }
@@ -312,7 +323,7 @@ peek_info <- function(col) {
 ## dplyr versions
 
 #' @import rlang
-cur_info_env <- child_env(env_parent(env))
+cur_info_env <- child_env(empty_env())
 
 set_current_info <- function(x) {
   old <- cur_info_env

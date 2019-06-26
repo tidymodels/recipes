@@ -1,4 +1,4 @@
-#' WoE Transformation
+#' Weight of evidence transformation
 #'
 #' `step_woe` creates a *specification* of a
 #'  recipe step that will transform nominal data into its numerical
@@ -19,10 +19,10 @@
 #' have the same layout than the output returned from [dictionary()].
 #' If `NULL`` the function will build a dictionary with those variables
 #' passed to \code{...}. See [dictionary()] for details.
-#' @param Laplace A value usually applied to avoid -Inf/Inf from predictor
-#'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
-#'  The default is 1e-6. Also kwon as 'pseudocount' parameter of the
-#'  Laplace smoothing technique.
+#' @param Laplace The Laplace smoothing parameter. A value usually
+#' applied to avoid -Inf/Inf from predictor category with only one
+#' outcome class. Set to 0 to allow Inf/-Inf. The default is 1e-6.
+#' Also kwon as 'pseudocount' parameter of the Laplace smoothing technique.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -52,7 +52,7 @@
 #' proportions of 1's and 0's with the goal to avoid log(p/0) or
 #' log(0/p) results. The numerical woe versions will have names that
 #' begin with `woe_` followed by the respecttive original name of the
-#' variables. See Chen & Goodman (1996).
+#' variables. See Good (1985).
 #'
 #' One can pass a custom `dictionary` tibble to \code{step_woe()}.
 #' It must have the same structure of the output from
@@ -64,8 +64,10 @@
 #' tweaking an output returned from \code{dictionary()}.
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
-#' @references SF Chen, J Goodman (1996). *An empirical study of smoothing techniques for language modeling.* Proceedings of the 34th annual meeting on Association for Computational Linguistics.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 #'
 #' @examples
 #'
@@ -111,7 +113,9 @@ step_woe <- function(recipe,
                      prefix = "woe",
                      skip = FALSE,
                      id = rand_id("woe")) {
-  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+  if (missing(outcome)) {
+    stop('argument "outcome" is missing, with no default', call. = FALSE)
+  }
 
   add_step(
     recipe,
@@ -170,15 +174,31 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, Laplace, pre
 #' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 woe_table <- function(predictor, outcome, Laplace = 1e-6) {
   outcome_original_labels <- unique(outcome)
 
-  if(length(outcome_original_labels) != 2) stop(sprintf("'outcome' must have exactly 2 categories (has %s)", length(outcome_original_labels)))
+  if (length(outcome_original_labels) != 2) {
+    stop(sprintf("'outcome' must have exactly 2 categories (has %s)",
+                 length(outcome_original_labels)),
+         call. = FALSE)
+  }
 
-  woe_expr <- parse(text = sprintf("log(((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace))/((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace)))", outcome_original_labels[1], outcome_original_labels[1], outcome_original_labels[2], outcome_original_labels[2]))
+  woe_expr <- parse(
+    text = sprintf(
+      "log(((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace))/((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace)))",
+      outcome_original_labels[1],
+      outcome_original_labels[1],
+      outcome_original_labels[2],
+      outcome_original_labels[2]
+    )
+  )
 
-  woe_tbl <- tibble::tibble(outcome, predictor) %>%
+  woe_tbl <-
+    tibble::tibble(outcome, predictor) %>%
     dplyr::group_by(outcome, predictor) %>%
     dplyr::summarise(n = dplyr::n()) %>%
     dplyr::group_by(predictor) %>%
@@ -197,7 +217,7 @@ woe_table <- function(predictor, outcome, Laplace = 1e-6) {
 }
 
 
-#' WoE dictionary of a set of predictor variables upon a given binary outcome
+#' Weight of evidence dictionary
 #'
 #' Builds the woe dictionary of a set of predictor variables upon a given binary outcome.
 #' Convenient to make a woe version of the given set of predictor variables and also to allow
@@ -222,7 +242,10 @@ woe_table <- function(predictor, outcome, Laplace = 1e-6) {
 #'
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 #'
 #' @importFrom rlang !!
 #' @export
@@ -236,7 +259,7 @@ dictionary <- function(.data, outcome, ..., Laplace = 1e-6) {
 }
 
 
-#' Add WoE in a data.frame
+#' Add WoE in a data frame
 #'
 #' A tidyverse friendly way to plug WoE versions of a set of predictor variables against a
 #' given binary outcome.
@@ -261,22 +284,30 @@ dictionary <- function(.data, outcome, ..., Laplace = 1e-6) {
 #' mtcars %>% add_woe(am, cyl, gear:carb)
 #'
 #'
-#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
 #'
 #' @importFrom rlang !!
 #' @export
 add_woe <- function(.data, outcome, ..., dictionary = NULL, prefix = "woe") {
-  if(missing(.data)) stop('argument ".data" is missing, with no default')
-  if(missing(outcome)) stop('argument "outcome" is missing, with no default')
+  if (missing(.data)) {
+    stop('argument ".data" is missing, with no default', call. = FALSE)
+  }
+  if (missing(outcome)) {
+    stop('argument "outcome" is missing, with no default', call. = FALSE)
+  }
 
   outcome <- rlang::enquo(outcome)
-  if(is.null(dictionary)) {
-    dictionary <- dictionary(.data, !!outcome, ...)
+  if (is.null(dictionary)) {
+    dictionary <- dictionary(.data,!!outcome, ...)
   } else {
-    if(is.null(dictionary$variable)) stop('column "variable" is missing in dictionary.')
-    if(is.null(dictionary$predictor)) stop('column "predictor" is missing in dictionary.')
-    if(is.null(dictionary$woe)) stop('column "woe" is missing in dictionary.')
+    if (is.null(dictionary$variable)) {
+      stop('column "variable" is missing in dictionary.', call. = FALSE)
+    }
+    if (is.null(dictionary$predictor)) {
+      stop('column "predictor" is missing in dictionary.', call. = FALSE)
+    }
+    if (is.null(dictionary$woe)) {
+      stop('column "woe" is missing in dictionary.', call. = FALSE)
+    }
   }
 
   # warns if there is variable with more than 50 levels
@@ -285,10 +316,12 @@ add_woe <- function(.data, outcome, ..., dictionary = NULL, prefix = "woe") {
     level_counts,
     names(level_counts),
     ~ if(.x > 50)
-      warning("Variable ", .y, " has ", .x, " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."))
+      warning("Variable ", .y, " has ", .x,
+              " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."),
+    call. = FALSE)
 
 
-  if(missing(...)) {
+  if (missing(...)) {
     dots_vars <- names(.data)
   } else {
     dots_vars <- names(.data %>% select(...))
@@ -299,7 +332,13 @@ add_woe <- function(.data, outcome, ..., dictionary = NULL, prefix = "woe") {
     dplyr::select(variable, predictor, woe) %>%
     dplyr::group_by(variable) %>%
     tidyr::nest(.key = "woe_table") %>%
-    dplyr::mutate(woe_table = purrr::map2(woe_table, variable, ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))) %>% purrr::set_names(variable))
+    dplyr::mutate(
+      woe_table =
+        purrr::map2(woe_table, variable,
+                    ~ purrr::set_names(.x, c(.y, paste0(prefix,"_", .y)))
+        ) %>%
+        purrr::set_names(variable)
+    )
 
   output <- purrr::map2(
     output$woe_table,
@@ -323,6 +362,7 @@ prep.step_woe <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   col_names <- col_names[!(col_names %in% outcome_name)]
   check_type(training[, col_names], quant = FALSE)
+  check_type(training[, outcome_name], quant = FALSE)
 
   if(is.null(x$dictionary)) {
     x$dictionary <- dictionary(
@@ -386,3 +426,8 @@ tidy.step_woe <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+# ------------------------------------------------------------------------------
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("n", "p", "predictor", "summary_outcome", "value", "woe"))

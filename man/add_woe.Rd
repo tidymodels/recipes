@@ -2,27 +2,26 @@
 % Please edit documentation in R/woe.R
 \name{add_woe}
 \alias{add_woe}
-\title{Add WoE in a data.frame}
+\title{Add WoE in a data frame}
 \usage{
 add_woe(.data, outcome, ..., dictionary = NULL, prefix = "woe")
 }
 \arguments{
 \item{.data}{A tbl. The data.frame to plug the new woe version columns.}
 
-\item{outcome}{unquoted name of the outcome variable.}
+\item{outcome}{The bare name of the outcome variable.}
 
-\item{...}{unquoted names of predictor variables, passed as you would pass variables to
+\item{...}{Bare names of predictor variables, passed as you would pass variables to
 \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
 and \code{matches()}.}
 
-\item{dictionary}{a tbl. If NULL the function will build a dictionary with those variables
-passed to \code{...}. You can pass a custom dictionary too, see \code{\link[=dictionary]{dictionary()}}
-for details.}
+\item{dictionary}{A tbl. If NULL the function will build a dictionary with those variables
+passed to \code{...}. You can pass a custom dictionary too, see \code{\link[=dictionary]{dictionary()}} for details.}
 
 \item{prefix}{A character string that will be the prefix to the resulting new variables.}
 }
 \value{
-a tibble with the original columns of .data plus the woe columns wanted.
+A tibble with the original columns of .data plus the woe columns wanted.
 }
 \description{
 A tidyverse friendly way to plug WoE versions of a set of predictor variables against a
@@ -38,9 +37,5 @@ returned from it.
 mtcars \%>\% add_woe(am, cyl, gear:carb)
 
 
-}
-\references{
-Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
-Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
 }

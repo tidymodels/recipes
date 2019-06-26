@@ -120,7 +120,9 @@ test_that("add_woe warns user if the variable has too many levels", {
 
 test_that("step_woe", {
 
-  rec <- recipe(Status ~ ., data = credit_tr) %>% step_woe(Job, Home, outcome = Status)
+  rec <-
+    recipe(Status ~ ., data = credit_tr) %>%
+    step_woe(Job, Home, outcome = Status)
 
   woe_models <- prep(rec, training = credit_tr)
 
@@ -128,7 +130,10 @@ test_that("step_woe", {
   expect_equal(woe_dict, woe_models$steps[[1]]$dictionary)
 
   bake_woe_output <- bake(woe_models, new_data = credit_te)
-  add_woe_output <- credit_te %>% add_woe(Status, Job, Home, dictionary = woe_dict)  %>% select(-Job, -Home)
+  add_woe_output <-
+    credit_te %>%
+    add_woe(Status, Job, Home, dictionary = woe_dict)  %>%
+    dplyr::select(-Job, -Home)
 
   #
   expect_equal(bake_woe_output, add_woe_output)
@@ -139,13 +144,15 @@ test_that("step_woe", {
   #
   expect_equal(tidy_output %>% select(-id), woe_dict_output)
 
-  rec_all_nominal <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_nominal(), outcome = Status)
+  rec_all_nominal <- recipe(Status ~ ., data = credit_tr) %>%
+    step_woe(all_nominal(), outcome = Status)
 
   #
   expect_output(prep(rec_all_nominal, training = credit_tr, verbose = TRUE))
 
 
-  rec_all_numeric <- recipe(Status ~ ., data = credit_tr) %>% step_woe(all_predictors(), outcome = Status)
+  rec_all_numeric <- recipe(Status ~ ., data = credit_tr) %>%
+    step_woe(all_predictors(), outcome = Status)
 
   #
   expect_error(prep(rec_all_numeric, training = credit_tr))
@@ -159,7 +166,8 @@ test_that("step_woe", {
   bake_discretize <- bake(prep_discretize, new_data = credit_te)
   bake_discretize_woe <- bake(prep_discretize_woe, new_data = credit_te)
 
-  expect_equal(sort(as.character(unique(bake_discretize$Price))), sort(prep_discretize_woe$steps[[2]]$dictionary$predictor))
+  expect_equal(sort(as.character(unique(bake_discretize$Price))),
+               sort(prep_discretize_woe$steps[[2]]$dictionary$predictor))
 })
 
 test_that("printing", {
@@ -168,3 +176,16 @@ test_that("printing", {
   expect_output(print(woe_extract))
   expect_output(prep(woe_extract, training = credit_tr, verbose = TRUE))
 })
+
+
+test_that("2-level factors", {
+  iris3 <- iris
+  iris3$group <- factor(rep(letters[1:5], each = 30))
+
+  expect_error(
+    recipe(Species ~ ., data = iris3) %>%
+    step_woe(group, outcome = Species) %>%
+    prep()
+  )
+})
+
