@@ -63,7 +63,10 @@
 #' tweaking an output returned from \code{woe_dictionary()}.
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 #'
 #' @examples
 #'
