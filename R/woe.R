@@ -1,4 +1,4 @@
-#' Weight of Evidence Transformation
+#' Weight of evidence transformation
 #'
 #' `step_woe` creates a *specification* of a
 #'  recipe step that will transform nominal data into its numerical
@@ -16,14 +16,14 @@
 #'  variables will be used as predictors in a model.
 #' @param outcome bare name of the binary outcome.
 #' @param woe_dictionary a tibble. A map of levels and woe values. It must
-#' have the same layout than the output returned from [woe_dictionary()].
-#' If `NULL`` the function will build a dictionary with those variables
-#' passed to \code{...}. See [woe_dictionary()] for details.
+#'  have the same layout than the output returned from [woe_dictionary()].
+#'  If `NULL`` the function will build a dictionary with those variables
+#'  passed to \code{...}. See [woe_dictionary()] for details.
 #' @param odds_offset Offset value to avoid -Inf/Inf from predictor
 #'  category with only one outcome class. Set to 0 to allow Inf/-Inf.
 #'  The default is 1e-6.
 #' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below
+#'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with the woe dictionary used to map
@@ -172,7 +172,10 @@ step_woe_new <- function(terms, role, trained, outcome, woe_dictionary, odds_off
 #' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), odds_offset = 0)
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 #'
 #' @export
 woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
@@ -193,7 +196,8 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
       )
     )
 
-  woe_tbl <- tibble::tibble(outcome, predictor) %>%
+  woe_tbl <-
+    tibble::tibble(outcome, predictor) %>%
     dplyr::group_by(outcome, predictor) %>%
     dplyr::summarise(n = dplyr::n()) %>%
     dplyr::group_by(predictor) %>%
@@ -212,13 +216,13 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 }
 
 
-#' WoE dictionary of a set of predictor variables upon a given binary outcome
+#' Weight of evidence dictionary
 #'
 #' Builds the woe dictionary of a set of predictor variables upon a given binary outcome.
 #' Convenient to make a woe version of the given set of predictor variables and also to allow
 #' one to tweak some woe values by hand.
 #'
-#' @param .data A tbl. The data.frame where the variables come from.
+#' @param .data A tibble. The data.frame where the variables come from.
 #' @param outcome bare name of the outcome variable with exactly 2 distinct values.
 #' @param ... bare names of predictor variables or selectors accepted by \code{dplyr::select()}.
 #' @param odds_offset Default to 1e-6. Offset value to avoid -Inf/Inf from predictor
@@ -236,7 +240,10 @@ woe_table <- function(predictor, outcome, odds_offset = 1e-6) {
 #'
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+#'
+#' Good, I. J. (1985), "Weight of evidence: A brief survey", _Bayesian Statistics_, 2, pp.249-270.
 #'
 #' @importFrom rlang !!
 #' @export
@@ -250,12 +257,12 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 }
 
 
-#' Add WoE in a data.frame
+#' Add WoE in a data frame
 #'
 #' A tidyverse friendly way to plug WoE versions of a set of predictor variables against a
 #' given binary outcome.
 #'
-#' @param .data A tbl. The data.frame to plug the new woe version columns.
+#' @param .data A tibble. The data.frame to plug the new woe version columns.
 #' @param outcome unquoted name of the outcome variable.
 #' @param ... unquoted names of predictor variables, passed as you would pass variables to
 #'  \code{dplyr::select()}. This means that you can use all the helpers like \code{starts_with()}
@@ -276,8 +283,7 @@ woe_dictionary <- function(.data, outcome, ..., odds_offset = 1e-6) {
 #' mtcars %>% add_woe(am, cyl, gear:carb)
 #'
 #'
-#' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
-#' @references Hastie, T., Tibshirani, R. and Friedman, J. (1986). *Elements of Statistical Learning*, Second Edition, Springer, 2009.
+
 #'
 #' @importFrom rlang !!
 #' @export
@@ -311,7 +317,8 @@ add_woe <- function(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe") 
     names(level_counts),
     ~ if(.x > 50)
       warning("Variable ", .y, " has ", .x,
-              " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."))
+              " unique values. Is this expected? In case of numeric variable, see ?step_discretize()."),
+    call. = FALSE)
 
 
   if (missing(...)) {

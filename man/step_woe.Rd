@@ -3,7 +3,7 @@
 \name{step_woe}
 \alias{step_woe}
 \alias{tidy.step_woe}
-\title{Weight of Evidence Transformation}
+\title{Weight of evidence transformation}
 \usage{
 step_woe(recipe, ..., role = "predictor", outcome, trained = FALSE,
   woe_dictionary = NULL, odds_offset = 1e-06, prefix = "woe",
@@ -40,7 +40,7 @@ category with only one outcome class. Set to 0 to allow Inf/-Inf.
 The default is 1e-6.}
 
 \item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below}
+resulting new variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

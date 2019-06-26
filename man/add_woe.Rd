@@ -2,12 +2,12 @@
 % Please edit documentation in R/woe.R
 \name{add_woe}
 \alias{add_woe}
-\title{Add WoE in a data.frame}
+\title{Add WoE in a data frame}
 \usage{
 add_woe(.data, outcome, ..., woe_dictionary = NULL, prefix = "woe")
 }
 \arguments{
-\item{.data}{A tbl. The data.frame to plug the new woe version columns.}
+\item{.data}{A tibble. The data.frame to plug the new woe version columns.}
 
 \item{outcome}{unquoted name of the outcome variable.}
 
@@ -38,9 +38,5 @@ returned from it.
 mtcars \%>\% add_woe(am, cyl, gear:carb)
 
 
-}
-\references{
-Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
-Hastie, T., Tibshirani, R. and Friedman, J. (1986). \emph{Elements of Statistical Learning}, Second Edition, Springer, 2009.
 }
