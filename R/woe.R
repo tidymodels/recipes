@@ -1,4 +1,4 @@
-#' WoE Transformation
+#' Weight of Evidence Transformation
 #'
 #' `step_woe` creates a *specification* of a
 #'  recipe step that will transform nominal data into its numerical
@@ -15,7 +15,7 @@
 #'  that the new woe components columns created by the original
 #'  variables will be used as predictors in a model.
 #' @param outcome bare name of the binary outcome.
-#' @param woe_dictionary a tbl. A map of levels and woe values. It must
+#' @param woe_dictionary a tibble. A map of levels and woe values. It must
 #' have the same layout than the output returned from [woe_dictionary()].
 #' If `NULL`` the function will build a dictionary with those variables
 #' passed to \code{...}. See [woe_dictionary()] for details.
@@ -50,7 +50,7 @@
 #' The argument `odds_offset` is an small quantity added to the
 #' proportions of 1's and 0's with the goal to avoid log(p/0) or
 #' log(0/p) results. The numerical woe versions will have names that
-#' begin with `woe_` followed by the respecttive original name of the
+#' begin with `woe_` followed by the respective original name of the
 #' variables.
 #'
 #' One can pass a custom `woe_dictionary` tibble to \code{step_woe()}.

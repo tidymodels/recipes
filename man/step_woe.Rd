@@ -3,7 +3,7 @@
 \name{step_woe}
 \alias{step_woe}
 \alias{tidy.step_woe}
-\title{WoE Transformation}
+\title{Weight of Evidence Transformation}
 \usage{
 step_woe(recipe, ..., role = "predictor", outcome, trained = FALSE,
   woe_dictionary = NULL, odds_offset = 1e-06, prefix = "woe",
@@ -30,7 +30,7 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{woe_dictionary}{a tbl. A map of levels and woe values. It must
+\item{woe_dictionary}{a tibble. A map of levels and woe values. It must
 have the same layout than the output returned from \code{\link[=woe_dictionary]{woe_dictionary()}}.
 If `NULL`` the function will build a dictionary with those variables
 passed to \code{...}. See \code{\link[=woe_dictionary]{woe_dictionary()}} for details.}
@@ -83,7 +83,7 @@ have woe associated later. This can achieved by using \code{\link[=step_discreti
 The argument \code{odds_offset} is an small quantity added to the
 proportions of 1's and 0's with the goal to avoid log(p/0) or
 log(0/p) results. The numerical woe versions will have names that
-begin with \code{woe_} followed by the respecttive original name of the
+begin with \code{woe_} followed by the respective original name of the
 variables.
 
 One can pass a custom \code{woe_dictionary} tibble to \code{step_woe()}.
