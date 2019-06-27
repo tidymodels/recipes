@@ -1,10 +1,12 @@
 #' Manually Alter Roles
 #'
 #' @description
-#' `add_role()` adds a _new_ role to an existing variable in the recipe. It
-#' does not overwrite old roles, as a single variable can have multiple roles.
+#' `update_role()` alters an existing role in the recipe or assigns an initial
+#' role to variables that do not yet have a declared role.
 #'
-#' `update_role()` alters an existing role in the recipe.
+#' `add_role()` adds an _additional_ role to variables that already have a role
+#' in the recipe. It does not overwrite old roles, as a single variable can have
+#' multiple roles.
 #'
 #' `remove_role()` eliminates a single existing role in the recipe.
 #' @param recipe An existing [recipe()].
@@ -26,10 +28,14 @@
 #'
 #' @details
 #'
-#' With `add_role()`, if a variable is selected that already has the
-#' `new_role`, a warning is emitted and that variable is skipped so no
-#' duplicate roles are added. If no role currently exists (e.g. the current
-#' role is `NA`), an error is thrown; `update_role()` should be used instead.
+#' `update_role()` should be used when a variable doesn't currently have a role
+#' in the recipe, or to replace an `old_role` with a `new_role`. `add_role()`
+#' only adds additional roles to variables that already have roles and will
+#' throw an error when the current role is missing (i.e. `NA`).
+#'
+#' When using `add_role()`, if a variable is selected that already has the
+#' `new_role`, a warning is emitted and that variable is skipped so no duplicate
+#' roles are added.
 #'
 #' Adding or updating roles is a useful way to group certain variables that
 #' don't fall in the standard `"predictor"` bucket. You can perform a step
