@@ -19,7 +19,7 @@ options(digits = 3)
 library(recipes)
 ```
 
-`recipes` can assign one or more roles to each column in the data. The roles are not restricted to a predefined set; they can be anything. For most conventional situations, they are typically "predictor" and/or "outcome".
+`recipes` can assign one or more roles to each column in the data. The roles are not restricted to a predefined set; they can be anything. For most conventional situations, they are typically "predictor" and/or "outcome". Additional roles enable targeted step operations on specific variables or groups of variables.
 
 ## The Formula Method
 
@@ -78,6 +78,17 @@ If a variable has multiple existing roles and you want to update one of them, th
 multi_role %>%
   update_role(sample, new_role = "flounder", old_role = "jellyfish") %>%
   summary()
+```
+
+Additional variable roles allow you to use `has_role()` in combination with other selection methods (see `?selections`) to target specific variables in subsequent processing steps. For example, in the following recipe, by adding the role `"nocenter"` to the `HHV` predictor, you can use `-has_role("nocenter")` to exclude `HHV` when centering `all_predictors()`.
+
+```{r}
+multi_role %>% 
+  add_role(HHV, new_role = "nocenter") %>% 
+  step_center(all_predictors(), -has_role("nocenter")) %>% 
+  prep(training = biomass, retain = TRUE) %>% 
+  juice() %>% 
+  head()
 ```
 
 ## The Non-Formula Interface

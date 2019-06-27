@@ -3,6 +3,7 @@
 language: R
 sudo: false
 cache: packages
+warnings_are_errors: false
 
 env:
   global:
@@ -11,7 +12,6 @@ env:
 bioc_packages: Biobase
 
 r_packages:
-  - NMF
   - RANN
   - fastICA
   - RcppRoll
@@ -43,10 +43,10 @@ matrix:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
       skip_cleanup: true
+  - r: 3.5
+  - r: 3.4
+  - r: 3.3
   - r: 3.2
-  - r: oldrel  
+
   allow_failures:
   - r: 3.2
-  - r: oldrel  
-
-#  oldrel fails due to a caret dependency
