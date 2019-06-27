@@ -22,6 +22,8 @@
 #'  predictor, it will be removed from the latter and not used to
 #'  impute itself.
 #' @param neighbors The number of neighbors.
+#' @param options A named list of options to pass to [gower::gower_topn()].
+#'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data
 #'  preprocessing done up to the point of this imputation step. This
 #'  is `NULL` until the step is trained by
@@ -29,8 +31,8 @@
 #' @param columns The column names that will be imputed and used
 #'  for imputation. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param K The number of neighbors (this will be deprecated in favor of 
-#'  `neighbors` in version 0.1.5). `neighbors` will override this option. 
+#' @param K The number of neighbors (this will be deprecated in favor of
+#'  `neighbors` in version 0.1.5). `neighbors` will override this option.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -99,16 +101,37 @@ step_knnimpute <-
            trained = FALSE,
            neighbors = 5,
            impute_with = imp_vars(all_predictors()),
+           options = list(nthread = 1, eps = 1e-08),
            ref_data = NULL,
            columns = NULL,
            K = NULL,
            skip = FALSE,
            id = rand_id("knnimpute")) {
-    if (is.null(impute_with))
+    if (is.null(impute_with)) {
       stop("Please list some variables in `impute_with`", call. = FALSE)
-    if (!is.null(K)) 
+    }
+    if (!is.null(K)) {
       message("The argument `K` is deprecated in factor of `neighbors`. ",
               "`K` will be removed in next version.", call. = FALSE)
+    }
+
+    if (!is.list(options))
+      stop("`options` should be a named list.", call. = FALSE)
+    opt_nms <- names(options)
+    if (length(options) > 0) {
+      if (any(!(opt_nms %in% c("eps", "nthread")))) {
+        stop("Availible options are 'eps', and 'nthread'.", call. = FALSE)
+      }
+      if (all(opt_nms != "nthread")) {
+        options$nthread <- 1
+      }
+      if (all(opt_nms != "eps")) {
+        options$eps <- 1e-08
+      }
+    } else {
+      options <- list(nthread = 1, eps = 1e-08)
+    }
+
     add_step(
       recipe,
       step_knnimpute_new(
@@ -118,6 +141,7 @@ step_knnimpute <-
         neighbors = neighbors,
         impute_with = impute_with,
         ref_data = ref_data,
+        options = options,
         columns = columns,
         K = K,
         skip = skip,
@@ -127,7 +151,8 @@ step_knnimpute <-
   }
 
 step_knnimpute_new <-
-  function(terms, role, trained, neighbors, impute_with, ref_data, columns, K, skip, id) {
+  function(terms, role, trained, neighbors, impute_with, ref_data, options,
+           columns, K, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -136,6 +161,7 @@ step_knnimpute_new <-
       neighbors = neighbors,
       impute_with = impute_with,
       ref_data = ref_data,
+      options = options,
       columns = columns,
       K = K,
       skip = skip,
@@ -161,6 +187,7 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     neighbors = x$neighbors,
     impute_with = x$impute_with,
     ref_data = training[, all_x_vars],
+    options = x$options,
     columns = var_lists,
     K = x$neighbors,
     skip = x$skip,
@@ -169,8 +196,14 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @importFrom gower gower_topn
-nn_index <- function(miss_data, ref_data, vars, K) {
-  gower_topn(ref_data[, vars], miss_data[, vars], n = K, nthread = 1)$index
+nn_index <- function(miss_data, ref_data, vars, K, opt) {
+  gower_topn(
+    ref_data[, vars],
+    miss_data[, vars],
+    n = K,
+    nthread = opt$nthread,
+    eps = opt$eps
+  )$index
 }
 
 nn_pred <- function(index, dat) {
@@ -206,7 +239,8 @@ bake.step_knnimpute <- function(object, new_data, ...) {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],
                            imp_data, preds,
-                           ifelse(!is.null(object$K), object$K, object$neighbors))
+                           ifelse(!is.null(object$K), object$K, object$neighbors),
+                           object$options)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
         new_data[missing_rows, imp_var] <- pred_vals

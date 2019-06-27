@@ -1,4 +1,9 @@
-# recipes (development version)
+
+# `recipes` 0.1.6
+
+## Other Changes:
+
+ * `step_knnimpute` can now pass two options to the underlying knn code, including the number of threads ([#323](https://github.com/tidymodels/recipes/issues/323)). 
 
 * Due to changes by CRAN, `step_nnmf` only works on versions of R >= 3.6.0 due to dependency issues. 
  

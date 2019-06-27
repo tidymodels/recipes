@@ -28,7 +28,7 @@ test_that('imputation values', {
     step_knnimpute(carbon,
                    nitrogen,
                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3, 
+                   neighbors = 3,
                    id = "")
 
   imp_exp_un <- tibble(
@@ -85,7 +85,7 @@ test_that('deprecated arg', {
       step_knnimpute(carbon,
                      nitrogen,
                      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                     K = 3, 
+                     K = 3,
                      id = "")
   )
 })
@@ -95,9 +95,65 @@ test_that('printing', {
     step_knnimpute(carbon,
                    nitrogen,
                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3, 
+                   neighbors = 3,
                    id = "")
   expect_output(print(discr_rec))
   expect_output(prep(discr_rec, training = biomass_tr, verbose = TRUE))
+})
+
+
+test_that('options', {
+  rec_1 <- rec %>%
+    step_knnimpute(carbon,
+                   nitrogen,
+                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                   neighbors = 3,
+                   options = list(),
+                   id = "")
+  expect_equal(rec_1$steps[[1]]$options, list(nthread = 1, eps = 1e-08))
+
+  rec_2 <- rec %>%
+    step_knnimpute(carbon,
+                   nitrogen,
+                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                   neighbors = 3,
+                   options = list(nthread = 10),
+                   id = "")
+  expect_equal(rec_2$steps[[1]]$options, list(nthread = 10, eps = 1e-08))
+
+  rec_3 <- rec %>%
+    step_knnimpute(carbon,
+                   nitrogen,
+                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                   neighbors = 3,
+                   options = list(eps = 10),
+                   id = "")
+  expect_equal(rec_3$steps[[1]]$options, list(eps = 10, nthread = 1))
+
+  dat_1 <-
+    tibble::tribble(
+      ~x,     ~y,
+      1e-20, -0.135,
+      0.371,  1.775,
+      -0.399,  0.068,
+      -0.086, -0.511,
+      -1.094, -0.342,
+      -1.096, -0.812,
+      0.012,  0.937,
+      -0.89, -0.579,
+      -1.128,   0.14,
+      -1.616,  0.619
+    )
+  dat_1$x[1] <- 10^(-20)
+
+  dat_2 <-
+    tibble::tribble(
+      ~x,    ~y,
+      -0.573, 0.922
+    )
+
+  ref_nn  <-  gower_topn(x = dat_2, y = dat_1, n = 2)$index
+  expect_warning(new_nn <- gower_topn(x = dat_2, y = dat_1, n = 2, eps = 2)$index)
+  expect_false(isTRUE(all.equal(ref_nn, new_nn)))
 })
 
