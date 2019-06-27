@@ -6,6 +6,10 @@
  * `step_knnimpute` can now pass two options to the underlying knn code, including the number of threads ([#323](https://github.com/tidymodels/recipes/issues/323)). 
 
 * Due to changes by CRAN, `step_nnmf` only works on versions of R >= 3.6.0 due to dependency issues. 
+
+## New Operations:
+
+* `step_normalize` centers and scales the data (if you are, like Max, too lazy to use two separate steps). 
  
 # `recipes` 0.1.5
 
