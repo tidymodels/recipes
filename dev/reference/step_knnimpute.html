@@ -159,7 +159,8 @@ neighbors.</p>
 
     <pre class="usage"><span class='fu'>step_knnimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>neighbors</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
-  <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>K</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-08</span>), <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>K</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>))
 
 <span class='co'># S3 method for step_knnimpute</span>
@@ -205,6 +206,11 @@ selectors (see <code><a href='selections.html'>selections()</a></code>). If a co
 included in both lists to be imputed and to be an imputation
 predictor, it will be removed from the latter and not used to
 impute itself.</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>A named list of options to pass to <code><a href='https://www.rdocumentation.org/packages/gower/topics/gower_topn'>gower::gower_topn()</a></code>.
+Available options are currently <code>nthread</code> and <code>eps</code>.</p></td>
     </tr>
     <tr>
       <th>ref_data</th>
