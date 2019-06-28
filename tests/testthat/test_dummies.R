@@ -232,3 +232,27 @@ test_that('printing', {
   expect_output(prep(dummy, training = okc_fac, verbose = TRUE))
 })
 
+
+test_that('no columns slected', {
+  zdat <- tibble(
+    y = c(1, 2, 3),
+    x = c("a", "a", "a"),
+    z = 3:1
+  )
+
+  rec <- recipe(y ~ ., data = zdat) %>%
+    step_zv(all_predictors()) %>%
+    step_dummy(all_nominal()) %>%
+    prep(training = zdat)
+
+  expect_null(rec$steps[[2]]$levels)
+
+  expect_equal(names(bake(rec, zdat)), c("y", "z"))
+
+  expect_output(print(rec), regexp = "since no columns were selected")
+
+  exp_tidy <- tibble(terms = rlang::na_chr, columns = rlang::na_chr,
+                     id = rec$steps[[2]]$id)
+  expect_equal(exp_tidy, tidy(rec, number = 2))
+})
+
