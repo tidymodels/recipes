@@ -275,7 +275,7 @@ of <code>NA</code> to these rows (see the example below).</p>
 #&gt; 6    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms   ordered id              
 #&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;           
-#&gt; 1 Species FALSE   num2factor_DL0bc</div><div class='input'>
+#&gt; 1 Species FALSE   num2factor_auqbV</div><div class='input'>
 <span class='co'># When novel values are exposed</span>
 <span class='no'>with_transform</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_num2factor</span>(<span class='no'>Species</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"val_"</span>, <span class='no'>x</span>))

@@ -155,6 +155,14 @@
 <li><p>Due to changes by CRAN, <code>step_nnmf</code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
 </ul>
 </div>
+<div id="new-operations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-operations" class="anchor"></a>New Operations:</h2>
+<ul>
+<li>
+<code>step_normalize</code> centers and scales the data (if you are, like Max, too lazy to use two separate steps).</li>
+</ul>
+</div>
 </div>
     <div id="recipes-0-1-5" class="section level1">
 <h1 class="page-header">
@@ -218,9 +226,9 @@
 <li><p>The <code>retain</code> option to <code>prep</code> is now defaulted to <code>TRUE</code>. If <code>verbose = TRUE</code>, the approximate size of the data set is printed. <a href="https://github.com/tidymodels/recipes/issues/207"><a href='https://github.com/tidymodels/recipes/issues/207'>#207</a></a></p></li>
 </ul>
 </div>
-<div id="new-operations" class="section level2">
+<div id="new-operations-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations" class="anchor"></a>New Operations:</h2>
+<a href="#new-operations-1" class="anchor"></a>New Operations:</h2>
 <ul>
 <li>
 <code>step_integer</code> converts data to ordered integers similar to <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a> <a href="https://github.com/tidymodels/recipes/issues/123"><a href='https://github.com/tidymodels/recipes/issues/123'>#123</a></a> and <a href="https://github.com/tidymodels/recipes/issues/185"><a href='https://github.com/tidymodels/recipes/issues/185'>#185</a></a>
@@ -261,9 +269,9 @@
     <div id="recipes-0-1-3" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-3" class="anchor"></a><small> 2018-06-16 </small><code>recipes</code> 0.1.3</h1>
-<div id="new-operations-1" class="section level2">
+<div id="new-operations-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-1" class="anchor"></a>New Operations:</h2>
+<a href="#new-operations-2" class="anchor"></a>New Operations:</h2>
 <ul>
 <li>
 <code>check_range</code> breaks <code>bake</code> if variable range in new data is outside the range that was learned from the train set (contributed by Edwin Thoen)</li>
@@ -319,9 +327,9 @@
 <li><p>Steps now have a <code>skip</code> option that will not apply preprocessing when <code>bake</code> is used. See the article <a href="https://tidymodels.github.io/recipes/articles/Skipping.html">on skipping steps</a> for more information.</p></li>
 </ul>
 </div>
-<div id="new-operations-2" class="section level2">
+<div id="new-operations-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-2" class="anchor"></a>New Operations:</h2>
+<a href="#new-operations-3" class="anchor"></a>New Operations:</h2>
 <ul>
 <li><p><code>check_missing</code> will validate that none of the specified variables contain missing data.</p></li>
 <li><p><code>detect_step</code> can be used to check if a recipe contains a particular preprocessing operation.</p></li>
