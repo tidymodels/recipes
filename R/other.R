@@ -43,6 +43,9 @@
 #'   thrown. If `other` is in the list of discarded levels, no error
 #'   occurs.
 #'
+#' If no pooling is done, novel factor levels are converted to missing. If
+#'  pooling is needed, they will be placed into the other category.
+#'
 #' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), the other category is assigned.
 #' @seealso [step_factor2string()], [step_string2factor()],
@@ -120,11 +123,17 @@ step_other_new <-
 #' @importFrom stats sd
 #' @export
 prep.step_other <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
-  objects <- lapply(training[, col_names],
-                    keep_levels,
-                    prop = x$threshold,
-                    other = x$other)
+  col_names <- terms_select(x$terms, info = info, empty_fun = passover)
+
+  if (length(col_names) > 0) {
+    objects <- lapply(training[, col_names],
+                      keep_levels,
+                      prop = x$threshold,
+                      other = x$other)
+  } else {
+    objects <- NULL
+  }
+
   step_other_new(
     terms = x$terms,
     role = x$role,
@@ -140,25 +149,27 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_other <- function(object, new_data, ...) {
-  for (i in names(object$objects)) {
-    if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(new_data[, i]))
-        as.character(getElement(new_data, i))
-      else
-        getElement(new_data, i)
+  if (!is.null(object$objects)) {
+    for (i in names(object$objects)) {
+      if (object$objects[[i]]$collapse) {
+        tmp <- if (!is.character(new_data[, i]))
+          as.character(getElement(new_data, i))
+        else
+          getElement(new_data, i)
 
-      tmp <- ifelse(
-        !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
-        object$objects[[i]]$other,
-        tmp
-      )
+        tmp <- ifelse(
+          !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
+          object$objects[[i]]$other,
+          tmp
+        )
 
-      # assign other factor levels other here too.
-      tmp <- factor(tmp,
-                    levels = c(object$objects[[i]]$keep,
-                               object$objects[[i]]$other))
+        # assign other factor levels other here too.
+        tmp <- factor(tmp,
+                      levels = c(object$objects[[i]]$keep,
+                                 object$objects[[i]]$other))
 
-      new_data[, i] <- tmp
+        new_data[, i] <- tmp
+      }
     }
   }
   if (!is_tibble(new_data))
@@ -168,8 +179,20 @@ bake.step_other <- function(object, new_data, ...) {
 
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Collapsing factor levels for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+
+    if (x$trained) {
+      collapsed <- map_lgl(x$objects, ~ .x$collapse)
+      collapsed <- names(collapsed)[collapsed]
+      if (length(collapsed) > 0) {
+        cat("Collapsing factor levels for ", sep = "")
+        printer(collapsed, x$terms, x$trained, width = width)
+      } else {
+        cat("No factor levels were collapsed\n")
+      }
+    } else {
+      cat("Collapsing factor levels for ", sep = "")
+      printer(names(x$objects), x$terms, x$trained, width = width)
+    }
     invisible(x)
   }
 
@@ -198,7 +221,7 @@ keep_levels <- function(x, prop = .1, other = "other") {
     )
 
   list(keep = orig[orig %in% keepers],
-       collapse = TRUE, # not needed but kept for old versions
+       collapse = length(dropped) > 0,
        other = other)
 }
 

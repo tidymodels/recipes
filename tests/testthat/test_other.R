@@ -155,7 +155,7 @@ test_that('novel levels', {
   df <- data.frame(
     y = c(1,0,1,1,0,0,0,1,1,1,0,0,1,0,1,0,0,0,1,0),
     x1 = c('A','B','B','B','B','A','A','A','B','A','A','B',
-           'A','C','C','B','A','B','C','A'),
+           'A','C','C','B','A','B','C','D'),
     stringsAsFactors = FALSE)
   training <- df[1:10,]
   testing <- df[11:20,]
@@ -170,8 +170,24 @@ test_that('novel levels', {
   novel_level <- prep(novel_level, training = training, retain = TRUE)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
-  expect_true(all(new_results$x1[testing$x1 == "C"] == "other"))
+  expect_true(all(is.na(new_results$x1[testing$x1 == "C"])))
   expect_true(!any(orig_results$x1 == "other"))
+
+  training <- df[1:14,]
+  testing <- df[15:20,]
+  training$y <- as.factor(training$y)
+  training$x1 <- as.factor(training$x1)
+  testing$y <- as.factor(testing$y)
+  testing$x1 <- as.factor(testing$x1)
+
+  novel_level <- recipe(y ~ ., data = training) %>%
+    step_other(x1, threshold = .1)
+
+  novel_level <- prep(novel_level, training = training, retain = TRUE)
+  new_results <- bake(novel_level, new_data = testing)
+  orig_results <- bake(novel_level, new_data = training)
+  expect_true(all(new_results$x1[testing$x1 == "D"] == "other"))
+  expect_true(any(new_results$x1 == "other"))
 })
 
 test_that("'other' already in use", {
