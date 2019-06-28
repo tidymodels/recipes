@@ -129,7 +129,7 @@ element_check <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
   funs <- funs[!(funs %in% c("~", "+", "-"))]
   # i.e. tidyselect::matches()
-  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr"))]
+  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
   if (!is.null(allowed)) {
     # when called from a step
     not_good <- funs[!(funs %in% allowed)]
