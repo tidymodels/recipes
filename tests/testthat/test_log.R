@@ -64,7 +64,7 @@ test_that('signed arg', {
     prep()
   rec2 <- recipe(ex_with_neg, ~x) %>%
     step_log(x, offset = 2, signed = TRUE)
-  expect_equal(bake(rec, ex_with_neg), data_frame(x = c(-2, 0, 0, 2)))
+  expect_equal(bake(rec, ex_with_neg), tibble(x = c(-2, 0, 0, 2)))
   expect_warning(prep(rec2),
                  "When signed is TRUE, offset will be ignored")
 })

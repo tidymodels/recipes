@@ -166,8 +166,8 @@ get_date_features <-
            ord = FALSE) {
     ## pre-allocate values
     res <- matrix(NA, nrow = length(dt), ncol = length(feats))
-    res <- as_tibble(res)
     colnames(res) <- feats
+    res <- as_tibble(res)
 
     if ("year" %in% feats)
       res[, grepl("year$", names(res))] <- year(dt)

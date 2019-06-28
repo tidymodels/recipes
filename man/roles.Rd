@@ -33,18 +33,24 @@ variables have only a single role.}
 An updated recipe object.
 }
 \description{
-\code{add_role()} adds a \emph{new} role to an existing variable in the recipe. It
-does not overwrite old roles, as a single variable can have multiple roles.
+\code{update_role()} alters an existing role in the recipe or assigns an initial
+role to variables that do not yet have a declared role.
 
-\code{update_role()} alters an existing role in the recipe.
+\code{add_role()} adds an \emph{additional} role to variables that already have a role
+in the recipe. It does not overwrite old roles, as a single variable can have
+multiple roles.
 
 \code{remove_role()} eliminates a single existing role in the recipe.
 }
 \details{
-With \code{add_role()}, if a variable is selected that already has the
-\code{new_role}, a warning is emitted and that variable is skipped so no
-duplicate roles are added. If no role currently exists (e.g. the current
-role is \code{NA}), an error is thrown; \code{update_role()} should be used instead.
+\code{update_role()} should be used when a variable doesn't currently have a role
+in the recipe, or to replace an \code{old_role} with a \code{new_role}. \code{add_role()}
+only adds additional roles to variables that already have roles and will
+throw an error when the current role is missing (i.e. \code{NA}).
+
+When using \code{add_role()}, if a variable is selected that already has the
+\code{new_role}, a warning is emitted and that variable is skipped so no duplicate
+roles are added.
 
 Adding or updating roles is a useful way to group certain variables that
 don't fall in the standard \code{"predictor"} bucket. You can perform a step

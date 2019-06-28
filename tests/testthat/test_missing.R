@@ -5,7 +5,7 @@ library(dplyr)
 context("Missing data checks")
 
 
-set_with_na <- data_frame(
+set_with_na <- tibble(
   a = c(1, 2, NA),
   b = c(1, 2, NA_real_),
   d = as.integer(c(1, 2, NA_integer_)),
@@ -46,8 +46,8 @@ test_that("check_missing works on multiple columns simultaneously" ,{
 })
 
 test_that("check_missing on a new set", {
-  no_na <- data_frame(a = 1:3)
-  na    <- data_frame(a = c(1, NA))
+  no_na <- tibble(a = 1:3)
+  na    <- tibble(a = c(1, NA))
   rp    <- recipe(no_na) %>% check_missing(a) %>% prep(no_na)
   expect_error(bake(rp, na),
                "The following columns contain missing values: `a`.")

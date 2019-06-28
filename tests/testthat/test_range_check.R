@@ -31,8 +31,8 @@ test_that("core function - workings", {
 })
 
 test_that("in recipe", {
-  train <- data_frame(x = c(0, 100), y = c(0, 50))
-  test  <- data_frame(x = c(-10, 110), y = c(-10, 60))
+  train <- tibble(x = c(0, 100), y = c(0, 50))
+  test  <- tibble(x = c(-10, 110), y = c(-10, 60))
   rec1  <- recipe(train) %>% check_range(x, y, slack_prop = 0.2) %>% prep()
   expect_error(bake(rec1, test), NA)
   expect_warning(bake(rec1, test), NA)
