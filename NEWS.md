@@ -7,6 +7,10 @@
 
 * Due to changes by CRAN, `step_nnmf` only works on versions of R >= 3.6.0 due to dependency issues. 
 
+* `step_dummy()` is now tolerant to cases where that step's selectors do not capture any columns. In this case, no dummy variables are created. ([#348](https://github.com/tidymodels/recipes/issues/348))
+
+* `step_dummy()` can now retain the original columns that are used to make the dummy variables. ([#328](https://github.com/tidymodels/recipes/issues/328)) 
+
 ## New Operations:
 
 * `step_normalize` centers and scales the data (if you are, like Max, too lazy to use two separate steps). 

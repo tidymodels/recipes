@@ -6,8 +6,8 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  one_hot = FALSE, naming = dummy_names, levels = NULL,
-  skip = FALSE, id = rand_id("dummy"))
+  one_hot = FALSE, preserve = FALSE, naming = dummy_names,
+  levels = NULL, skip = FALSE, id = rand_id("dummy"))
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -31,6 +31,9 @@ preprocessing have been estimated.}
 
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
+
+\item{preserve}{A sinlge logical; should the original column(s) be retained
+(in addition to the new dummy variables).}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
@@ -100,6 +103,10 @@ When data to be processed contains novel levels (i.e., not
 contained in the training set), a missing value is assigned to
 the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
+If no columns are selected (perhaps due to an earlier \code{step_zv()}), the
+\code{bake()} and \code{juice()} functions will return the data as-is (e.g. with no
+dummy variables).
+
 The \href{https://tidymodels.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
 }
@@ -120,7 +127,7 @@ grep("^diet", names(dummy_data), value = TRUE)
 # Obtain the full set of dummy variables using `one_hot` option
 rec \%>\%
   step_dummy(diet, one_hot = TRUE) \%>\%
-  prep(training = okc, retain = TRUE) \%>\%
+  prep(training = okc) \%>\%
   juice(starts_with("diet")) \%>\%
   names() \%>\%
   length()

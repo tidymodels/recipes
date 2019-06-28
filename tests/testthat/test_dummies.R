@@ -20,6 +20,10 @@ test_that('dummy variables with factor inputs', {
   dummy <- rec %>% step_dummy(diet, location, id = "")
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
   dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
+
+  expect_false(any(colnames(dummy_pred) == "diet"))
+  expect_false(any(colnames(dummy_pred) == "location"))
+
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
   rownames(dummy_pred) <- NULL
@@ -87,7 +91,7 @@ test_that('create all dummy variables', {
   rownames(dummy_pred) <- NULL
 
   exp_res <- NULL
-  for(pred in c("diet", "height", "location")) {
+  for (pred in c("diet", "height", "location")) {
     tmp <- model.matrix(as.formula(paste("~", pred, "+ 0")), data = okc_fac)
     colnames(tmp) <- gsub(paste0("^", pred), paste0(pred, "_"), colnames(tmp))
     exp_res <- bind_cols(exp_res, as_tibble(tmp))
@@ -232,3 +236,36 @@ test_that('printing', {
   expect_output(prep(dummy, training = okc_fac, verbose = TRUE))
 })
 
+
+test_that('no columns selected', {
+  zdat <- tibble(
+    y = c(1, 2, 3),
+    x = c("a", "a", "a"),
+    z = 3:1
+  )
+
+  rec <- recipe(y ~ ., data = zdat) %>%
+    step_zv(all_predictors()) %>%
+    step_dummy(all_nominal()) %>%
+    prep(training = zdat)
+
+  expect_null(rec$steps[[2]]$levels)
+
+  expect_equal(names(bake(rec, zdat)), c("y", "z"))
+
+  expect_output(print(rec), regexp = "since no columns were selected")
+
+  exp_tidy <- tibble(terms = rlang::na_chr, columns = rlang::na_chr,
+                     id = rec$steps[[2]]$id)
+  expect_equal(exp_tidy, tidy(rec, number = 2))
+})
+
+test_that('retained columns', {
+  rec <- recipe(age ~ location + diet, data = okc_fac)
+  dummy <- rec %>% step_dummy(diet, location, preserve = TRUE, id = "")
+  dummy_trained <- prep(dummy, training = okc_fac)
+  dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
+
+  expect_true(any(colnames(dummy_pred) == "diet"))
+  expect_true(any(colnames(dummy_pred) == "location"))
+})

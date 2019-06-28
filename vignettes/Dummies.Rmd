@@ -41,7 +41,8 @@ A [contrast function](https://en.wikipedia.org/wiki/Contrast_(statistics)) in R 
 The default approach is to create dummy variables using the "reference cell" parameterization. This means that, if there are _C_ levels of the factor, there will be _C_ - 1 dummy variables created and all but the first factor level are made into new columns:
 
 ```{r iris-ref-cell}
-ref_cell <- iris_rec %>% 
+ref_cell <- 
+  iris_rec %>% 
   step_dummy(Species) %>%
   prep(training = iris, retain = TRUE)
 summary(ref_cell)
@@ -72,7 +73,8 @@ go_helmert["unordered"] <- "contr.helmert"
 options(contrasts = go_helmert)
 
 # now make dummy variables with new parameterization
-helmert <- iris_rec %>% 
+helmert <- 
+  iris_rec %>% 
   step_dummy(Species) %>%
   prep(training = iris, retain = TRUE)
 summary(helmert)
@@ -85,13 +87,17 @@ options(contrasts = param)
 
 Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn't make sense. 
 
+If no columns are selected (perhaps due to an earlier `step_zv()`), the `bake()` and `juice()` functions will return the data as-is (e.g. with no dummy variables).  
+
+Finally, `step_dummy()` has an option called `preserve` that can be used to keep the original column that are being used to create the dummy variables. 
 
 ## Interactions with Dummy Variables
 
 Creating interactions with recipes requires the use of a model formula, such as
 
 ```{r iris-2int}
-iris_int <- iris_rec %>%
+iris_int <- 
+  iris_rec %>%
   step_interact( ~ Sepal.Width:Sepal.Length) %>%
   prep(training = iris, retain = TRUE)
 summary(iris_int)
@@ -125,7 +131,8 @@ Note only is this a pain, but it may not be obvious what dummy variables are ava
 The solution is to use a selector:
 
 ```{r iris-sel}
-iris_int <- iris_rec %>% 
+iris_int <- 
+  iris_rec %>% 
   step_dummy(Species) %>%
   step_interact( ~ starts_with("Species"):Sepal.Length) %>%
   prep(training = iris, retain = TRUE)
@@ -157,7 +164,8 @@ For interactions between multiple sets of dummy variables, the formula could inc
 Would it work if I didn't convert species to a factor and used the interactions step? 
 
 ```{r iris-dont}
-iris_int <- iris_rec %>% 
+iris_int <- 
+  iris_rec %>% 
   step_interact( ~ Species:Sepal.Length) %>%
   prep(training = iris, retain = TRUE)
 summary(iris_int)
@@ -189,7 +197,8 @@ The option is named that way since this is that the computer scientists call ["o
 This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:
 
 ```{r one-hot-two}
-hot_reference <- iris_rec %>% 
+hot_reference <- 
+  iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
   prep(training = iris, retain = TRUE) %>%
   juice(original, starts_with("Species")) %>%
@@ -200,7 +209,8 @@ hot_reference
 # from above
 options(contrasts = go_helmert)
 
-hot_helmert <- iris_rec %>% 
+hot_helmert <- 
+  iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
   prep(training = iris, retain = TRUE) %>%
   juice(original, starts_with("Species")) %>%

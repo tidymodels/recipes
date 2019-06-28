@@ -18,6 +18,8 @@
 #'  variables will be used as predictors in a model.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #' rather than C-1?
+#' @param preserve A sinlge logical; should the selected column(s) be retained
+#'  (in addition to the new dummy variables).
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
@@ -68,6 +70,10 @@
 #' contained in the training set), a missing value is assigned to
 #' the results. See [step_other()] for an alternative.
 #'
+#' If no columns are selected (perhaps due to an earlier `step_zv()`), the
+#'  `bake()` and `juice()` functions will return the data as-is (e.g. with no
+#'  dummy variables).
+#'
 #' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.
 #'
@@ -92,7 +98,7 @@
 #' # Obtain the full set of dummy variables using `one_hot` option
 #' rec %>%
 #'   step_dummy(diet, one_hot = TRUE) %>%
-#'   prep(training = okc, retain = TRUE) %>%
+#'   prep(training = okc) %>%
 #'   juice(starts_with("diet")) %>%
 #'   names() %>%
 #'   length()
@@ -112,6 +118,7 @@ step_dummy <-
            role = "predictor",
            trained = FALSE,
            one_hot = FALSE,
+           preserve = FALSE,
            naming = dummy_names,
            levels = NULL,
            skip = FALSE,
@@ -123,6 +130,7 @@ step_dummy <-
         role = role,
         trained = trained,
         one_hot = one_hot,
+        preserve = preserve,
         naming = naming,
         levels = levels,
         skip = skip,
@@ -132,13 +140,14 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, naming, levels, skip, id) {
+  function(terms, role, trained, one_hot, preserve, naming, levels, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,
       role = role,
       trained = trained,
       one_hot = one_hot,
+      preserve = preserve,
       naming = naming,
       levels = levels,
       skip = skip,
@@ -146,52 +155,61 @@ step_dummy_new <-
     )
   }
 
+no_dummies <- function(cmd) {
+  # cat("`step_dummy()` was not able to select any columns. ",
+  #     "No dummy variables will be created.\n")
+} # figure out how to return a warning without exiting
+
 #' @importFrom stats as.formula model.frame na.pass
 #' @importFrom dplyr bind_cols
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
-  fac_check <-
-    vapply(training[, col_names], is.factor, logical(1))
-  if (any(!fac_check))
-    warning(
-      "The following variables are not factor vectors and will be ignored: ",
-      paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
-      call. = FALSE
-    )
-  col_names <- col_names[fac_check]
-  if (length(col_names) == 0) {
-    stop("The `terms` argument in `step_dummy` did not select ",
-         "any factor columns.", call. = FALSE)
-  }
+  col_names <- terms_select(x$terms, info = info, empty_fun = no_dummies)
 
-
-  ## I hate doing this but currently we are going to have
-  ## to save the terms object from the original (= training)
-  ## data
-  levels <- vector(mode = "list", length = length(col_names))
-  names(levels) <- col_names
-  for (i in seq_along(col_names)) {
-    form_chr <- paste0("~", col_names[i])
-    if(x$one_hot) {
-      form_chr <- paste0(form_chr, "-1")
+  if (length(col_names) > 0) {
+    fac_check <- vapply(training[, col_names], is.factor, logical(1))
+    if (any(!fac_check))
+      warning(
+        "The following variables are not factor vectors and will be ignored: ",
+        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
+        call. = FALSE
+      )
+    col_names <- col_names[fac_check]
+    if (length(col_names) == 0) {
+      stop("The `terms` argument in `step_dummy` did not select ",
+           "any factor columns.", call. = FALSE)
     }
-    form <- as.formula(form_chr)
-    terms <- model.frame(form,
-                         data = training,
-                         xlev = x$levels[[i]],
-                         na.action = na.pass)
-    levels[[i]] <- attr(terms, "terms")
 
-    ## About factor levels here: once dummy variables are made,
-    ## the `stringsAsFactors` info saved in the recipe (under
-    ## recipe$levels will remove the original record of the
-    ## factor levels at the end of `prep.recipe` since it is
-    ## not a factor anymore. We'll save them here and reset them
-    ## in `bake.step_dummy` just prior to calling `model.matrix`
-    attr(levels[[i]], "values") <-
-      levels(getElement(training, col_names[i]))
-    attr(levels[[i]], ".Environment") <- NULL
+
+    ## I hate doing this but currently we are going to have
+    ## to save the terms object from the original (= training)
+    ## data
+    levels <- vector(mode = "list", length = length(col_names))
+    names(levels) <- col_names
+    for (i in seq_along(col_names)) {
+      form_chr <- paste0("~", col_names[i])
+      if (x$one_hot) {
+        form_chr <- paste0(form_chr, "-1")
+      }
+      form <- as.formula(form_chr)
+      terms <- model.frame(form,
+                           data = training,
+                           xlev = x$levels[[i]],
+                           na.action = na.pass)
+      levels[[i]] <- attr(terms, "terms")
+
+      ## About factor levels here: once dummy variables are made,
+      ## the `stringsAsFactors` info saved in the recipe (under
+      ## recipe$levels will remove the original record of the
+      ## factor levels at the end of `prep.recipe` since it is
+      ## not a factor anymore. We'll save them here and reset them
+      ## in `bake.step_dummy` just prior to calling `model.matrix`
+      attr(levels[[i]], "values") <-
+        levels(getElement(training, col_names[i]))
+      attr(levels[[i]], ".Environment") <- NULL
+    }
+  } else {
+    levels <- NULL
   }
 
   step_dummy_new(
@@ -199,6 +217,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     one_hot = x$one_hot,
+    preserve = x$preserve,
     naming = x$naming,
     levels = levels,
     skip = x$skip,
@@ -219,7 +238,12 @@ warn_new_levels <- function(dat, lvl) {
 
 #' @export
 bake.step_dummy <- function(object, new_data, ...) {
-  ## Maybe do this in C?
+
+  # If no terms were selected
+  if (length(object$levels) == 0) {
+    return(new_data)
+  }
+
   col_names <- names(object$levels)
 
   ## `na.action` cannot be passed to `model.matrix` but we
@@ -234,7 +258,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     orig_var <- names(object$levels)[i]
     fac_type <- attr(object$levels[[i]], "dataClasses")
 
-    if(!any(names(attributes(object$levels[[i]])) == "values"))
+    if (!any(names(attributes(object$levels[[i]])) == "values"))
       stop("Factor level values not recorded", call. = FALSE)
 
     warn_new_levels(
@@ -265,7 +289,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     options(na.action = old_opt)
     on.exit(expr = NULL)
 
-    if(!object$one_hot) {
+    if (!object$one_hot) {
       indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
     }
 
@@ -273,7 +297,9 @@ bake.step_dummy <- function(object, new_data, ...) {
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     new_data <- bind_cols(new_data, as_tibble(indicators))
-    new_data[, col_names[i]] <- NULL
+    if (!object$preserve) {
+      new_data[, col_names[i]] <- NULL
+    }
   }
   if (!is_tibble(new_data))
     new_data <- as_tibble(new_data)
@@ -283,8 +309,12 @@ bake.step_dummy <- function(object, new_data, ...) {
 print.step_dummy <-
   function(x, width = max(20, options()$width - 20), ...) {
     if (x$trained) {
-      cat("Dummy variables from ")
-      cat(format_ch_vec(names(x$levels), width = width))
+      if (length(x$levels) > 0) {
+        cat("Dummy variables from ")
+        cat(format_ch_vec(names(x$levels), width = width))
+      } else {
+        cat("Dummy variables were *not* created since no columns were selected.")
+      }
     } else {
       cat("Dummy variables from ", sep = "")
       cat(format_selectors(x$terms, wdth = width))
@@ -308,7 +338,11 @@ get_dummy_columns <- function(x) {
 #' @export
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
-    res <- purrr::map_dfr(x$levels, get_dummy_columns, .id = "terms")
+    if (length(x$levels) > 0) {
+      res <- purrr::map_dfr(x$levels, get_dummy_columns, .id = "terms")
+    } else {
+      res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
+    }
   } else {
     res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
   }

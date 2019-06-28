@@ -4,7 +4,7 @@
 \alias{terms_select}
 \title{Select Terms in a Step Function.}
 \usage{
-terms_select(terms, info)
+terms_select(terms, info, empty_fun = abort_selection)
 }
 \arguments{
 \item{terms}{A list of formulas whose right-hand side contains
@@ -14,6 +14,9 @@ quoted expressions. See \code{\link[rlang:quos]{rlang::quos()}} for examples.}
 and \code{source} that represent the current state of the data. The
 function \code{\link[=summary.recipe]{summary.recipe()}} can be used to get this information
 from a recipe.}
+
+\item{empty_fun}{A function to execute when no terms are selected by the
+step. The default function throws an error with a message.}
 }
 \value{
 A character string of column names or an error of there
