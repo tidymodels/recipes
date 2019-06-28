@@ -162,6 +162,8 @@ element_check <- function(x, allowed = selectors) {
 #'  from a recipe.
 #' @param terms A list of formulas whose right-hand side contains
 #'  quoted expressions. See [rlang::quos()] for examples.
+#' @param empty_fun A function to execute when no terms are selected by the
+#'  step. The default function throws an error with a message.
 #' @keywords datagen
 #' @concept preprocessing
 #' @return A character string of column names or an error of there
@@ -177,7 +179,7 @@ element_check <- function(x, allowed = selectors) {
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
-terms_select <- function(terms, info) {
+terms_select <- function(terms, info, empty_fun = abort_selection) {
   # unique in case a variable has multiple roles
   vars <- unique(info$variable)
 
@@ -199,12 +201,12 @@ terms_select <- function(terms, info) {
   if (is.call(terms)) {
     sel <- with_handlers(
       tidyselect::vars_select(vars, !! terms),
-      tidyselect_empty = abort_selection
+      tidyselect_empty = empty_fun
     )
   } else {
     sel <- with_handlers(
       tidyselect::vars_select(vars, !!! terms),
-      tidyselect_empty = abort_selection
+      tidyselect_empty = empty_fun
     )
   }
 
