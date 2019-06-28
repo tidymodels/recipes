@@ -18,6 +18,8 @@
 #'  variables will be used as predictors in a model.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #' rather than C-1?
+#' @param preserve A sinlge logical; should the selected column(s) be retained
+#'  (in addition to the new dummy variables).
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
@@ -96,7 +98,7 @@
 #' # Obtain the full set of dummy variables using `one_hot` option
 #' rec %>%
 #'   step_dummy(diet, one_hot = TRUE) %>%
-#'   prep(training = okc, retain = TRUE) %>%
+#'   prep(training = okc) %>%
 #'   juice(starts_with("diet")) %>%
 #'   names() %>%
 #'   length()
@@ -116,6 +118,7 @@ step_dummy <-
            role = "predictor",
            trained = FALSE,
            one_hot = FALSE,
+           preserve = FALSE,
            naming = dummy_names,
            levels = NULL,
            skip = FALSE,
@@ -127,6 +130,7 @@ step_dummy <-
         role = role,
         trained = trained,
         one_hot = one_hot,
+        preserve = preserve,
         naming = naming,
         levels = levels,
         skip = skip,
@@ -136,13 +140,14 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, naming, levels, skip, id) {
+  function(terms, role, trained, one_hot, preserve, naming, levels, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,
       role = role,
       trained = trained,
       one_hot = one_hot,
+      preserve = preserve,
       naming = naming,
       levels = levels,
       skip = skip,
@@ -212,6 +217,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     one_hot = x$one_hot,
+    preserve = x$preserve,
     naming = x$naming,
     levels = levels,
     skip = x$skip,
@@ -291,7 +297,9 @@ bake.step_dummy <- function(object, new_data, ...) {
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     new_data <- bind_cols(new_data, as_tibble(indicators))
-    new_data[, col_names[i]] <- NULL
+    if (!object$preserve) {
+      new_data[, col_names[i]] <- NULL
+    }
   }
   if (!is_tibble(new_data))
     new_data <- as_tibble(new_data)

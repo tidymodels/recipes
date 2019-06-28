@@ -6,8 +6,8 @@
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  one_hot = FALSE, naming = dummy_names, levels = NULL,
-  skip = FALSE, id = rand_id("dummy"))
+  one_hot = FALSE, preserve = FALSE, naming = dummy_names,
+  levels = NULL, skip = FALSE, id = rand_id("dummy"))
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -31,6 +31,9 @@ preprocessing have been estimated.}
 
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
+
+\item{preserve}{A sinlge logical; should the original column(s) be retained
+(in addition to the new dummy variables).}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
@@ -124,7 +127,7 @@ grep("^diet", names(dummy_data), value = TRUE)
 # Obtain the full set of dummy variables using `one_hot` option
 rec \%>\%
   step_dummy(diet, one_hot = TRUE) \%>\%
-  prep(training = okc, retain = TRUE) \%>\%
+  prep(training = okc) \%>\%
   juice(starts_with("diet")) \%>\%
   names() \%>\%
   length()

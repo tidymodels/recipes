@@ -89,6 +89,7 @@ Note that the column names do not reference a specific level of the species vari
 
 If no columns are selected (perhaps due to an earlier `step_zv()`), the `bake()` and `juice()` functions will return the data as-is (e.g. with no dummy variables).  
 
+Finally, `step_dummy()` has an option called `preserve` that can be used to keep the original column that are being used to create the dummy variables. 
 
 ## Interactions with Dummy Variables
 
