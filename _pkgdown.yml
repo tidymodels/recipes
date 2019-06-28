@@ -75,6 +75,7 @@ reference:
   - title: Step Functions - Normalization
     contents:
     - step_center
+    - step_normalize
     - step_range
     - step_scale
   - title: Step Functions - Multivariate Transformations

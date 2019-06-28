@@ -41,7 +41,7 @@ test_that('correct means and std devs', {
 
   expect_equal(tidy(standardized_trained, 1), cent_tibble_tr)
   expect_equal(
-    as.data.frame(tidy(standardized_trained, 2)), 
+    as.data.frame(tidy(standardized_trained, 2)),
     as.data.frame(scal_tibble_tr)
   )
 
@@ -63,7 +63,7 @@ test_that('training in stages', {
   in_stages <- center_first_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
   in_stages_trained <- prep(in_stages, retain = TRUE)
-  in_stages_retrained <- 
+  in_stages_retrained <-
     prep(in_stages, training = biomass, fresh = TRUE, retain = TRUE)
 
   expect_equal(at_once_trained, in_stages_trained)
@@ -95,3 +95,26 @@ test_that('printing', {
   expect_output(prep(standardized, training = biomass, verbose = TRUE))
 })
 
+test_that('correct means and std devs for step_norm', {
+  standardized <- rec %>%
+    step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "norm")
+
+  vrs <- c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur")
+  norm_tibble_un <-
+    tibble(terms = vrs,
+           value = rep(na_dbl, 5),
+           statistic = rep(na_chr, 5),
+           id = standardized$steps[[1]]$id)
+
+  expect_equal(tidy(standardized, 1), norm_tibble_un)
+
+  standardized_trained <- prep(standardized, training = biomass)
+
+  norm_tibble_tr <-
+    tibble(terms = c(vrs, vrs),
+           value = c(means, sds),
+           statistic = rep(c("mean", "sd"), each = 5),
+           id = standardized$steps[[1]]$id)
+
+  expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
+})
