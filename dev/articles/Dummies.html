@@ -141,29 +141,30 @@
 <a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; 6 original     nominal predictor original</span></a></code></pre></div>
 <p>A <a href="https://en.wikipedia.org/wiki/Contrast_(statistics)">contrast function</a> in R is a method for translating a column with categorical values into one or more numeric columns that take the place of the original. This can also be known as an encoding method or a parameterization function.</p>
 <p>The default approach is to create dummy variables using the “reference cell” parameterization. This means that, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created and all but the first factor level are made into new columns:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ref_cell &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(ref_cell)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;   variable           type    role      source  </span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;   &lt;chr&gt;              &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; 1 Sepal.Length       numeric predictor original</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 2 Sepal.Width        numeric predictor original</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 3 Petal.Length       numeric predictor original</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 4 Petal.Width        numeric predictor original</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 5 original           nominal predictor original</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 6 Species_versicolor numeric predictor derived </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 7 Species_virginica  numeric predictor derived</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># Get a row for each factor level</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="kw"><a href="../reference/juice.html">juice</a></span>(ref_cell, original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt;   original   Species_versicolor Species_virginica</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;   &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; 1 setosa                      0                 0</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 2 versicolor                  1                 0</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 3 virginica                   0                 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ref_cell &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(ref_cell)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;   variable           type    role      source  </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;   &lt;chr&gt;              &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 1 Sepal.Length       numeric predictor original</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 2 Sepal.Width        numeric predictor original</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 3 Petal.Length       numeric predictor original</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 4 Petal.Width        numeric predictor original</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 5 original           nominal predictor original</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 6 Species_versicolor numeric predictor derived </span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 7 Species_virginica  numeric predictor derived</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co"># Get a row for each factor level</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw"><a href="../reference/juice.html">juice</a></span>(ref_cell, original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;   original   Species_versicolor Species_virginica</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;   &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 1 setosa                      0                 0</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 2 versicolor                  1                 0</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 3 virginica                   0                 1</span></a></code></pre></div>
 <p>Note that the column that was used to make the new columns (<code>Species</code>) is no longer there. See the section below on obtaining the entire set of <em>C</em> columns.</p>
 <p>There are different types of contrasts that can be used for different types of factors. The defaults are:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">param &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption</a></span>(<span class="st">"contrasts"</span>)</a>
@@ -181,51 +182,55 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> go_helmert)</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># now make dummy variables with new parameterization</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">helmert &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(helmert)</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;   variable     type    role      source  </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 1 Sepal.Length numeric predictor original</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 2 Sepal.Width  numeric predictor original</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 3 Petal.Length numeric predictor original</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 4 Petal.Width  numeric predictor original</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 5 original     nominal predictor original</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 6 Species_X1   numeric predictor derived </span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 7 Species_X2   numeric predictor derived</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="kw"><a href="../reference/juice.html">juice</a></span>(helmert, original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;   original   Species_X1 Species_X2</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; 1 setosa             -1         -1</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; 2 versicolor          1         -1</span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; 3 virginica           0          2</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co"># Yuk; go back to the original method</span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> param)</a></code></pre></div>
+<a class="sourceLine" id="cb4-7" data-line-number="7">helmert &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(helmert)</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   variable     type    role      source  </span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 1 Sepal.Length numeric predictor original</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 2 Sepal.Width  numeric predictor original</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 3 Petal.Length numeric predictor original</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 4 Petal.Width  numeric predictor original</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 5 original     nominal predictor original</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 6 Species_X1   numeric predictor derived </span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 7 Species_X2   numeric predictor derived</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="kw"><a href="../reference/juice.html">juice</a></span>(helmert, original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   original   Species_X1 Species_X2</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt;   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; 1 setosa             -1         -1</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; 2 versicolor          1         -1</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; 3 virginica           0          2</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co"># Yuk; go back to the original method</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> param)</a></code></pre></div>
 <p>Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn’t make sense.</p>
+<p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code> functions will return the data as-is (e.g. with no dummy variables).</p>
+<p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>preserve</code> that can be used to keep the original column that are being used to create the dummy variables.</p>
 </div>
 <div id="interactions-with-dummy-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interactions-with-dummy-variables" class="anchor"></a>Interactions with Dummy Variables</h2>
 <p>Creating interactions with recipes requires the use of a model formula, such as</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris_int &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span>Sepal.Width<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;   variable                   type    role      source  </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;   &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 1 Sepal.Length               numeric predictor original</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 2 Sepal.Width                numeric predictor original</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 3 Petal.Length               numeric predictor original</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 4 Petal.Width                numeric predictor original</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 5 Species                    nominal predictor original</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 6 original                   nominal predictor original</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris_int &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span>Sepal.Width<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; # A tibble: 7 x 4</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;   variable                   type    role      source  </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;   &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 1 Sepal.Length               numeric predictor original</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 2 Sepal.Width                numeric predictor original</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 3 Petal.Length               numeric predictor original</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 4 Petal.Width                numeric predictor original</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 5 Species                    nominal predictor original</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 6 original                   nominal predictor original</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span></a></code></pre></div>
 <p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code>*</code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://tidymodels.github.io/recipes/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code>*</code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
@@ -249,23 +254,24 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">                   </span>Species_virginica<span class="op">:</span>Sepal.Length) </a></code></pre></div>
 <p>Note only is this a pain, but it may not be obvious what dummy variables are available (especially when <a href="https://tidymodels.github.io/recipes/reference/step_other.html"><code>step_other</code></a> is used).</p>
 <p>The solution is to use a selector:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">iris_int &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span><span class="kw">starts_with</span>(<span class="st">"Species"</span>)<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; # A tibble: 9 x 4</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;   variable                          type    role      source  </span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;   &lt;chr&gt;                             &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 1 Sepal.Length                      numeric predictor original</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; 2 Sepal.Width                       numeric predictor original</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 3 Petal.Length                      numeric predictor original</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 4 Petal.Width                       numeric predictor original</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 5 original                          nominal predictor original</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 6 Species_versicolor                numeric predictor derived </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 7 Species_virginica                 numeric predictor derived </span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 8 Species_versicolor_x_Sepal.Length numeric predictor derived </span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 9 Species_virginica_x_Sepal.Length  numeric predictor derived</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">iris_int &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span><span class="kw">starts_with</span>(<span class="st">"Species"</span>)<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; # A tibble: 9 x 4</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;   variable                          type    role      source  </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;   &lt;chr&gt;                             &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; 1 Sepal.Length                      numeric predictor original</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 2 Sepal.Width                       numeric predictor original</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 3 Petal.Length                      numeric predictor original</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 4 Petal.Width                       numeric predictor original</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 5 original                          nominal predictor original</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 6 Species_versicolor                numeric predictor derived </span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 7 Species_virginica                 numeric predictor derived </span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 8 Species_versicolor_x_Sepal.Length numeric predictor derived </span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 9 Species_virginica_x_Sepal.Length  numeric predictor derived</span></a></code></pre></div>
 <p>What happens here is that <code>starts_with("Species")</code> is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">starts_with</span>(<span class="st">"Species"</span>)</a></code></pre></div>
 <p>becomes</p>
@@ -291,25 +297,26 @@
 <h2 class="hasAnchor">
 <a href="#warning" class="anchor"></a>Warning!</h2>
 <p>Would it work if I didn’t convert species to a factor and used the interactions step?</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris_int &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span>Species<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; produced by `step_dummy`. Please convert all involved variables to dummy</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; variables first.</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;   variable                         type    role      source  </span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;   &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; 1 Sepal.Length                     numeric predictor original</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 2 Sepal.Width                      numeric predictor original</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; 3 Petal.Length                     numeric predictor original</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; 4 Petal.Width                      numeric predictor original</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; 5 Species                          nominal predictor original</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; 6 original                         nominal predictor original</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 7 Speciesversicolor_x_Sepal.Length numeric predictor derived </span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; 8 Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris_int &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span><span class="st"> </span>Species<span class="op">:</span>Sepal.Length) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; produced by `step_dummy`. Please convert all involved variables to dummy</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; variables first.</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(iris_int)</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;   variable                         type    role      source  </span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;   &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 1 Sepal.Length                     numeric predictor original</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; 2 Sepal.Width                      numeric predictor original</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; 3 Petal.Length                     numeric predictor original</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; 4 Petal.Width                      numeric predictor original</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; 5 Species                          nominal predictor original</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 6 original                         nominal predictor original</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; 7 Speciesversicolor_x_Sepal.Length numeric predictor derived </span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; 8 Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></a></code></pre></div>
 <p>The columns <code>Species</code> isn’t affected and a warning is issued. Basically, you only get half of what <code>model.matrix</code> does and that could really be problematic in subsequent steps.</p>
 </div>
 <div id="getting-all-of-the-indicator-variables" class="section level2">
@@ -332,36 +339,38 @@
 <p>The option is named that way since this is that the computer scientists call <a href="https://www.google.com/search?q=one-hot+encoding">“one-hot encoding”</a>.</p>
 <p><strong><em>Warning!</em></strong> (again)</p>
 <p>This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">hot_reference &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species, <span class="dt">one_hot =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/juice.html">juice</a></span>(original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">distinct</span>()</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">hot_reference</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; 1 setosa                  1                  0                 0</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; 2 versicolor              0                  1                 0</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; 3 virginica               0                  0                 1</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co"># from above</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> go_helmert)</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">hot_helmert &lt;-<span class="st"> </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species, <span class="dt">one_hot =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="../reference/juice.html">juice</a></span>(original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="st">  </span><span class="kw">distinct</span>()</a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24">hot_helmert</a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></a>
-<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">#&gt; 1 setosa                  1                  0                 0</span></a>
-<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">#&gt; 2 versicolor              0                  1                 0</span></a>
-<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="co">#&gt; 3 virginica               0                  0                 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">hot_reference &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species, <span class="dt">one_hot =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/juice.html">juice</a></span>(original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">distinct</span>()</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">hot_reference</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; 1 setosa                  1                  0                 0</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; 2 versicolor              0                  1                 0</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; 3 virginica               0                  0                 1</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co"># from above</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> go_helmert)</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">hot_helmert &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="st">  </span>iris_rec <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="../reference/step_dummy.html">step_dummy</a></span>(Species, <span class="dt">one_hot =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="st">  </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(<span class="dt">training =</span> iris, <span class="dt">retain =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="st">  </span><span class="kw"><a href="../reference/juice.html">juice</a></span>(original, <span class="kw">starts_with</span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="st">  </span><span class="kw">distinct</span>()</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26">hot_helmert</a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
+<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></a>
+<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="co">#&gt; 1 setosa                  1                  0                 0</span></a>
+<a class="sourceLine" id="cb14-31" data-line-number="31"><span class="co">#&gt; 2 versicolor              0                  1                 0</span></a>
+<a class="sourceLine" id="cb14-32" data-line-number="32"><span class="co">#&gt; 3 virginica               0                  0                 1</span></a></code></pre></div>
 <p>Since this contrast doesn’t make sense using all <em>C</em> columns, it reverts back to the default encoding.</p>
 </div>
 <div id="novel-levels" class="section level2">
