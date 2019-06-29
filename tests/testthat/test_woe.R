@@ -47,6 +47,8 @@ test_that("logical predictor variable are treated properly", {
 
 test_that("woe_table ruturns no messages nor warnings", {
   expect_silent(recipes:::woe_table(c(TRUE, FALSE, TRUE, FALSE), c("A", "A", "A", "B")))
+  expect_silent(recipes:::woe_table(c(TRUE, FALSE, TRUE, FALSE, NA), c("A", "A", "A", "B", "B")))
+  expect_silent(recipes:::woe_table(as.factor(c(TRUE, FALSE, TRUE, FALSE, NA)), c("A", "A", "A", "B", "B")))
   expect_silent(recipes:::woe_table(df$x1, df$y))
 })
 
@@ -142,7 +144,7 @@ test_that("step_woe", {
   woe_dict_output <- dictionary(credit_tr, Job, Home, outcome = Status)
 
   #
-  expect_equal(tidy_output %>% select(-id), woe_dict_output)
+  expect_equal(tidy_output %>% dplyr::select(-id), woe_dict_output)
 
   rec_all_nominal <- recipe(Status ~ ., data = credit_tr) %>%
     step_woe(all_nominal(), outcome = Status)
