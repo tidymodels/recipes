@@ -15,7 +15,7 @@
 #'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
-#' @param deg_free The degrees of freedom. 
+#' @param deg_free The degrees of freedom.
 #' @param degree The degree of the piecewise polynomial.
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
@@ -56,7 +56,7 @@ step_bs <-
            ...,
            role = "predictor",
            trained = FALSE,
-           deg_free = NULL, 
+           deg_free = NULL,
            degree = 3,
            objects = NULL,
            options = list(),
@@ -67,7 +67,7 @@ step_bs <-
       step_bs_new(
         terms = ellipse_check(...),
         trained = trained,
-        deg_free = deg_free, 
+        deg_free = deg_free,
         degree = degree,
         role = role,
         objects = objects,
@@ -117,7 +117,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
   opt <- x$options
   opt$df <- x$deg_free
-  opt$degree <- x$degree 
+  opt$degree <- x$degree
   obj <- lapply(training[, col_names], bs_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
@@ -173,9 +173,12 @@ print.step_bs <-
 #' @param x A `step_bs` object.
 #' @export
 tidy.step_bs <- function(x, ...) {
-  res <- simple_terms(x, ...)
-  res <- expand.grid(terms = res$terms,
-                     stringsAsFactors = FALSE)
+  if (is_trained(x)) {
+    cols <- tibble(terms = names(x$objects))
+  } else {
+    cols <- sel2char(x$terms)
+  }
+  res <- expand.grid(terms = cols, stringsAsFactors = FALSE)
   res$id <- x$id
   as_tibble(res)
 }
