@@ -114,5 +114,9 @@ test_that('namespaced selectors', {
     terms_select(info = info1, quos(dplyr::matches("e$"))),
     terms_select(info = info1, quos(matches("e$")))
   )
+  expect_equal(
+    terms_select(info = info1, quos(recipes::all_predictors())),
+    terms_select(info = info1, quos(all_predictors()))
+  )
 })
 
