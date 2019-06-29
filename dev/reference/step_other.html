@@ -246,6 +246,8 @@ except for the most frequent are collapsed to the <code>other</code> level.</p>
 <p>If the retained categories include the value of <code>other</code>, an error is
 thrown. If <code>other</code> is in the list of discarded levels, no error
 occurs.</p>
+<p>If no pooling is done, novel factor levels are converted to missing. If
+pooling is needed, they will be placed into the other category.</p>
 <p>When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.</p>
     

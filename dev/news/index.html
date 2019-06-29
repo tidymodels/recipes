@@ -147,15 +147,15 @@
     <div id="recipes-0-1-6" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-6" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.6</h1>
-<div id="other-changes" class="section level2">
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes:</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
 <ul>
-<li><p><code>step_knnimpute</code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
-<li><p>Due to changes by CRAN, <code>step_nnmf</code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> is now tolerant to cases where that step’s selectors do not capture any columns. In this case, no dummy variables are created. (<a href="https://github.com/tidymodels/recipes/issues/348"><a href='https://github.com/tidymodels/recipes/issues/348'>#348</a></a>)</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328"><a href='https://github.com/tidymodels/recipes/issues/328'>#328</a></a>)</p></li>
+<li>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</li>
 </ul>
+<blockquote>
+<p>“If no pooling is done the data are unmodified”.</p>
+</blockquote>
 </div>
 <div id="new-operations" class="section level2">
 <h2 class="hasAnchor">
@@ -163,6 +163,17 @@
 <ul>
 <li>
 <code>step_normalize</code> centers and scales the data (if you are, like Max, too lazy to use two separate steps).</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes:</h2>
+<ul>
+<li><p><code>step_knnimpute</code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
+<li><p>Due to changes by CRAN, <code>step_nnmf</code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
+<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> are now tolerant to cases where that step’s selectors do not capture any columns. In this case, no modifications to the data are made. (<a href="https://github.com/tidymodels/recipes/issues/290"><a href='https://github.com/tidymodels/recipes/issues/290'>#290</a></a>, <a href="https://github.com/tidymodels/recipes/issues/348"><a href='https://github.com/tidymodels/recipes/issues/348'>#348</a></a>)</p></li>
+<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328"><a href='https://github.com/tidymodels/recipes/issues/328'>#328</a></a>)</p></li>
+<li><p><code><a href="../reference/step_other.html">step_other()</a></code>’s print method only reports the variables with collapsed levels (as opposed to any column that was <em>tested</em> to see if it needed collapsing). (<a href="https://github.com/tidymodels/recipes/issues/338"><a href='https://github.com/tidymodels/recipes/issues/338'>#338</a></a>)</p></li>
 </ul>
 </div>
 </div>
@@ -181,9 +192,9 @@
 <li><p>Set the embedded environment to NULL in <code>prep.step_dummy</code> to reduce the file size of serialized recipe class objects when using <code>saveRDS</code>.</p></li>
 </ul>
 </div>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
 </ul>
@@ -199,9 +210,9 @@
     <div id="recipes-0-1-4" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-4" class="anchor"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>) and the general tidyverse naming conventions.
 <ul>
