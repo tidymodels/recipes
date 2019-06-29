@@ -187,6 +187,8 @@ woe_table <- function(predictor, outcome, Laplace = 1e-6) {
          call. = FALSE)
   }
 
+  if(is.factor(predictor)) predictor <- as.character(predictor)
+
   woe_expr <- parse(
     text = sprintf(
       "log(((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace))/((n_%s + Laplace)/(sum(n_%s) + 2 * Laplace)))",
