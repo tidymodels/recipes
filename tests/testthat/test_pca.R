@@ -119,7 +119,7 @@ test_that('No PCA comps', {
     names(juice(pca_extract_trained)),
     names(biomass_tr)[-(1:2)]
   )
-  expect_null(pca_extract_trained$steps[[1]]$res)
+  expect_true(all(is.na(pca_extract_trained$steps[[1]]$res$rotation)))
   expect_output(print(pca_extract_trained),
                 regexp = "No PCA components were extracted")
   expect_true(all(is.na(tidy(pca_extract_trained, 1)$value)))

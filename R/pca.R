@@ -191,7 +191,10 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     ## e.g. `sdev` etc.
 
   } else {
-    prc_obj <- NULL
+    # fake a roation matrix so that the resolved names can be used for tidy()
+    fake_matrix <- matrix(NA, nrow = length(col_names))
+    rownames(fake_matrix) <- col_names
+    prc_obj <- list(rotation = fake_matrix)
   }
 
   step_pca_new(
@@ -212,7 +215,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
-  if (!is.null(object$res)) {
+  if (!all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
     comps <- predict(object$res, newdata = new_data[, pca_vars])
     comps <- comps[, 1:object$num_comp, drop = FALSE]
@@ -226,7 +229,7 @@ bake.step_pca <- function(object, new_data, ...) {
 
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
-    if (is.null(x$res)) {
+    if (all(is.na(x$res$rotation))) {
       cat("No PCA components were extracted.\n")
     } else {
       cat("PCA extraction with ")
@@ -241,7 +244,7 @@ print.step_pca <-
 #' @param x A `step_pca` object.
 #' @export
 tidy.step_pca <- function(x, ...) {
-  if (!is_trained(x) || x$num_comp == 0) {
+  if (!is_trained(x)) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
                   value = na_dbl,
@@ -249,12 +252,17 @@ tidy.step_pca <- function(x, ...) {
   } else {
     rot <- as.data.frame(x$res$rotation)
     vars <- rownames(rot)
-    npc <- ncol(rot)
-    res <- utils::stack(rot)
-    colnames(res) <- c("value", "component")
-    res$component <- as.character(res$component)
-    res$terms <- rep(vars, npc)
-    res <- as_tibble(res)[, c("terms", "value", "component")]
+    if (x$num_comp > 0) {
+      npc <- ncol(rot)
+      res <- utils::stack(rot)
+      colnames(res) <- c("value", "component")
+      res$component <- as.character(res$component)
+      res$terms <- rep(vars, npc)
+      res <- as_tibble(res)[, c("terms", "value", "component")]
+    } else {
+      res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
+                            component = rlang::na_chr)
+    }
   }
   res$id <- x$id
   res
