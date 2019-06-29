@@ -1,20 +1,29 @@
 
 # `recipes` 0.1.6
 
+## Breaking Changes
+
+ * Previously, if `step_other()` did _not_ collapse any levels, it would still add an "other" level to the factor. This would lump new factor levels into "other" when data were baked (as `step_novel()` does). This no longer occurs since it was inconsistent with `?step_other`, which said that 
+
+ > "If no pooling is done the data are unmodified".
+
+## New Operations:
+
+* `step_normalize` centers and scales the data (if you are, like Max, too lazy to use two separate steps). 
+ 
 ## Other Changes:
 
  * `step_knnimpute` can now pass two options to the underlying knn code, including the number of threads ([#323](https://github.com/tidymodels/recipes/issues/323)). 
 
 * Due to changes by CRAN, `step_nnmf` only works on versions of R >= 3.6.0 due to dependency issues. 
 
-* `step_dummy()` is now tolerant to cases where that step's selectors do not capture any columns. In this case, no dummy variables are created. ([#348](https://github.com/tidymodels/recipes/issues/348))
+* `step_dummy()` and `step_other()` are now tolerant to cases where that step's selectors do not capture any columns. In this case, no modifications to the data are made. ([#290](https://github.com/tidymodels/recipes/issues/290), [#348](https://github.com/tidymodels/recipes/issues/348))
 
 * `step_dummy()` can now retain the original columns that are used to make the dummy variables. ([#328](https://github.com/tidymodels/recipes/issues/328)) 
 
-## New Operations:
+* `step_other()`'s print method only reports the variables with collapsed levels (as opposed to any column that was _tested_ to see if it needed collapsing). ([#338](https://github.com/tidymodels/recipes/issues/338)) 
 
-* `step_normalize` centers and scales the data (if you are, like Max, too lazy to use two separate steps). 
- 
+
 # `recipes` 0.1.5
 
 Small release driven by changes in `sample()` in the current r-devel. 

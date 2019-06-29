@@ -18,7 +18,7 @@
 #'  variables will be used as predictors in a model.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #' rather than C-1?
-#' @param preserve A sinlge logical; should the selected column(s) be retained
+#' @param preserve A single logical; should the selected column(s) be retained
 #'  (in addition to the new dummy variables).
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
@@ -155,7 +155,7 @@ step_dummy_new <-
     )
   }
 
-no_dummies <- function(cmd) {
+passover <- function(cmd) {
   # cat("`step_dummy()` was not able to select any columns. ",
   #     "No dummy variables will be created.\n")
 } # figure out how to return a warning without exiting
@@ -164,7 +164,7 @@ no_dummies <- function(cmd) {
 #' @importFrom dplyr bind_cols
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info, empty_fun = no_dummies)
+  col_names <- terms_select(x$terms, info = info, empty_fun = passover)
 
   if (length(col_names) > 0) {
     fac_check <- vapply(training[, col_names], is.factor, logical(1))

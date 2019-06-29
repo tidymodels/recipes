@@ -32,7 +32,7 @@ preprocessing have been estimated.}
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
 
-\item{preserve}{A sinlge logical; should the original column(s) be retained
+\item{preserve}{A single logical; should the selected column(s) be retained
 (in addition to the new dummy variables).}
 
 \item{naming}{A function that defines the naming convention for
