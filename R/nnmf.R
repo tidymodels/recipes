@@ -20,10 +20,10 @@
 #'  used.
 #' @param num_run A positive integer for the number of computations runs used
 #'  to obtain a consensus projection.
-#' @param options A list of options to `nmf()` in the NMF package by way of
-#'  `dimRed::NNMF()`. **Note** that the arguments
+#' @param options A list of options to `nmf()` in the NMF package by way of the
+#'  `NNMF()` function in the `dimRed` package. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
-#' @param res The `dimRed::NNMF()` object is stored
+#' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
