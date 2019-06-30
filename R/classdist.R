@@ -30,7 +30,8 @@
 #'  selectors or variables selected), `value` (the centroid of
 #'  the class), and `class`.
 #' @keywords datagen
-#' @concept preprocessing dimension_reduction
+#' @concept preprocessing
+#' @concept dimension_reduction
 #' @export
 #' @details `step_classdist` will create a new column for every
 #'  unique value of the `class` variable.

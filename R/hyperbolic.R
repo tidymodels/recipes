@@ -21,7 +21,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected), `inverse`, and `func`.
 #' @keywords datagen
-#' @concept preprocessing transformation_methods
+#' @concept preprocessing
+#' @concept transformation_methods
 #' @export
 #' @examples
 #' set.seed(313)

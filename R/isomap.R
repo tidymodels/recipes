@@ -33,7 +33,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @keywords datagen
-#' @concept preprocessing isomap projection_methods
+#' @concept preprocessing
+#' @concept isomap
+#' @concept projection_methods
 #' @export
 #' @details Isomap is a form of multidimensional scaling (MDS).
 #'  MDS methods try to find a reduced set of dimensions such that

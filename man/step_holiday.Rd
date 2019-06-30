@@ -80,6 +80,8 @@ holiday_values
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
 }
-\concept{preprocessing model_specification variable_encodings
+\concept{model_specification}
+\concept{preprocessing}
+\concept{variable_encodings
 dates}
 \keyword{datagen}

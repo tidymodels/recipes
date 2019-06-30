@@ -108,5 +108,7 @@ data(biomass)
 \code{\link[=step_isomap]{step_isomap()}}, \code{\link[=recipe]{recipe()}}, \code{\link[=prep.recipe]{prep.recipe()}},
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing nnmf projection_methods}
+\concept{nnmf}
+\concept{preprocessing}
+\concept{projection_methods}
 \keyword{datagen}

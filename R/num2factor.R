@@ -26,7 +26,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered`.
 #' @keywords datagen
-#' @concept preprocessing variable_encodings factors
+#' @concept preprocessing
+#' @concept variable_encodings
+#' @concept factors
 #' @export
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [step_dummy()]

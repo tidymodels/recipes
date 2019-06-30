@@ -25,7 +25,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `window` (the window size).
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details On the tails, the window is shifted towards the ends.
 #'  For example, for a 5-point window, the windows for the first

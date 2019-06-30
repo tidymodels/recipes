@@ -24,7 +24,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected), `min`, and `max`.
 #' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @concept preprocessing
+#' @concept normalization_methods
 #' @export
 #' @details When a new data point is outside of the ranges seen in
 #'  the training set, the new values are truncated at `min` or

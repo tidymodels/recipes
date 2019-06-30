@@ -117,5 +117,7 @@ tidy(pls_rec, number = 6)
 \code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing pls projection_methods}
+\concept{pls}
+\concept{preprocessing}
+\concept{projection_methods}
 \keyword{datagen}

@@ -19,7 +19,8 @@
 #'  selectors or variables selected) and `model` (the mode
 #'  value).
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details `step_modeimpute` estimates the variable modes
 #'  from the data used in the `training` argument of

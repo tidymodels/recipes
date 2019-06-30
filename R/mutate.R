@@ -23,7 +23,8 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #' @keywords datagen
-#' @concept preprocessing transformation_methods
+#' @concept preprocessing
+#' @concept transformation_methods
 #' @export
 #' @examples
 #' rec <-

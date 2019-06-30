@@ -25,7 +25,8 @@
 #'  `tidy` method, a tibble with columns `terms` which is
 #'  the interaction effects.
 #' @keywords datagen
-#' @concept preprocessing model_specification
+#' @concept preprocessing
+#' @concept model_specification
 #' @export
 #' @details `step_interact` can create interactions between
 #'  variables. It is primarily intended for **numeric data**;

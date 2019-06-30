@@ -23,7 +23,8 @@
 #'  selectors or variables selected) and `value` (the
 #'  lambda estimate).
 #' @keywords datagen
-#' @concept preprocessing transformation_methods
+#' @concept preprocessing
+#' @concept transformation_methods
 #' @export
 #' @details The Yeo-Johnson transformation is very similar to the
 #'  Box-Cox but does not require the input variables to be strictly

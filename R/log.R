@@ -23,7 +23,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected) and `base`.
 #' @keywords datagen
-#' @concept preprocessing transformation_methods
+#' @concept preprocessing
+#' @concept transformation_methods
 #' @export
 #' @examples
 #' set.seed(313)

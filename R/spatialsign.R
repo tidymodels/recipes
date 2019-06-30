@@ -21,7 +21,8 @@
 #'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
-#' @concept preprocessing projection_methods
+#' @concept preprocessing
+#' @concept projection_methods
 #' @export
 #' @details The spatial sign transformation projects the variables
 #'  onto a unit sphere and is related to global contrast

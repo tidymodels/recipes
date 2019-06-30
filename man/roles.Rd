@@ -123,5 +123,6 @@ recipe(biomass) \%>\%
   summary()
 
 }
-\concept{preprocessing model_specification}
+\concept{model_specification}
+\concept{preprocessing}
 \keyword{datagen}

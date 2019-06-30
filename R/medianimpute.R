@@ -19,7 +19,8 @@
 #'  selectors or variables selected) and `model` (the median
 #'  value).
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details `step_medianimpute` estimates the variable medians
 #'  from the data used in the `training` argument of

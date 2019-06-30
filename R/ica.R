@@ -36,7 +36,9 @@
 #'  selectors or variables selected), `value` (the loading),
 #'  and `component`.
 #' @keywords datagen
-#' @concept preprocessing ica projection_methods
+#' @concept preprocessing
+#' @concept ica
+#' @concept projection_methods
 #' @export
 #' @details Independent component analysis (ICA) is a
 #'  transformation of a group of variables that produces a new set

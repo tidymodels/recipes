@@ -42,7 +42,10 @@
 #'  (the selectors or variables selected), `value` (the feature
 #'  names), and `ordinal` (a logical).
 #' @keywords datagen
-#' @concept preprocessing model_specification variable_encodings dates
+#' @concept preprocessing
+#' @concept model_specification
+#' @concept variable_encodings
+#' @concept dates
 #' @export
 #' @details Unlike other steps, `step_date` does *not*
 #'  remove the original date variables. [step_rm()] can be

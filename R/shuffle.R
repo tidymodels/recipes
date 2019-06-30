@@ -20,7 +20,9 @@
 #'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be affected.
 #' @keywords datagen
-#' @concept preprocessing randomization permutation
+#' @concept preprocessing
+#' @concept randomization
+#' @concept permutation
 #' @export
 #' @examples
 #' integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)

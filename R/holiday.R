@@ -26,7 +26,9 @@
 #'  `tidy` method, a tibble with columns `terms` which is
 #'  the columns that will be affected and `holiday`.
 #' @keywords datagen
-#' @concept preprocessing model_specification variable_encodings
+#' @concept preprocessing
+#' @concept model_specification
+#' @concept variable_encodings
 #'  dates
 #' @export
 #' @details Unlike other steps, `step_holiday` does

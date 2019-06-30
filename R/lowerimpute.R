@@ -21,7 +21,8 @@
 #'  selectors or variables selected) and `value` for the estimated
 #'  threshold.
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details `step_lowerimpute` estimates the variable minimums
 #'  from the data used in the `training` argument of `prep.recipe`.

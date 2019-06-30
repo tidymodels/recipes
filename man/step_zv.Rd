@@ -78,5 +78,6 @@ tidy(filter_obj, number = 1)
 \code{\link[=recipe]{recipe()}}
 \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing variable_filters}
+\concept{preprocessing}
+\concept{variable_filters}
 \keyword{datagen}

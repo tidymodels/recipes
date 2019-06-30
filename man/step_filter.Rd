@@ -91,5 +91,6 @@ qq_rec <-
 
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing row_filters}
+\concept{preprocessing}
+\concept{row_filters}
 \keyword{datagen}

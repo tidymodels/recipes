@@ -39,7 +39,8 @@
 #'  selectors or variables for imputation), `predictors`
 #'  (those variables used to impute), and `neighbors`.
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details The step uses the training set to impute any other
 #'  data sets. The only distance function available is Gower's

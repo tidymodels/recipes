@@ -17,7 +17,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected).
 #' @keywords datagen
-#' @concept preprocessing ordinal_data
+#' @concept preprocessing
+#' @concept ordinal_data
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #' @examples

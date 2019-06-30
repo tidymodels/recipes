@@ -100,5 +100,6 @@ juice(nonlin_scores, everything())
 
 tidy(nonlin_scores, number = 2)
 }
-\concept{preprocessing ordinal_data}
+\concept{ordinal_data}
+\concept{preprocessing}
 \keyword{datagen}

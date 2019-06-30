@@ -23,7 +23,8 @@
 #'  selectors or variables selected) and `model` (the mean
 #'  value).
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details `step_meanimpute` estimates the variable means
 #'  from the data used in the `training` argument of

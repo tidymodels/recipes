@@ -21,7 +21,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected).
 #' @keywords datagen
-#' @concept preprocessing ordinal_data
+#' @concept preprocessing
+#' @concept ordinal_data
 #' @export
 #' @details Dummy variables from ordered factors with `C`
 #'  levels will create polynomial basis functions with `C-1`

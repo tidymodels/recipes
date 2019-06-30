@@ -22,7 +22,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered`.
 #' @keywords datagen
-#' @concept preprocessing variable_encodings factors
+#' @concept preprocessing
+#' @concept variable_encodings
+#' @concept factors
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same

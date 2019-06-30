@@ -81,5 +81,7 @@ with_dummies
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
 }
-\concept{preprocessing dummy_variables regular_expressions}
+\concept{dummy_variables}
+\concept{preprocessing}
+\concept{regular_expressions}
 \keyword{datagen}

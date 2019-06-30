@@ -98,5 +98,6 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
 
 juice(seven_pt)
 }
-\concept{preprocessing imputation}
+\concept{imputation}
+\concept{preprocessing}
 \keyword{datagen}

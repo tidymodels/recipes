@@ -85,5 +85,6 @@ table(credit_te$Home, imputed_te$Home, useNA = "always")
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
-\concept{preprocessing imputation}
+\concept{imputation}
+\concept{preprocessing}
 \keyword{datagen}

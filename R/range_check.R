@@ -34,7 +34,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `value` (the means).
 #' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @concept preprocessing
+#' @concept normalization_methods
 #' @export
 #' @details
 #'   The amount of slack that is allowed is determined by the

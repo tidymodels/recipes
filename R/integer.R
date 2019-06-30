@@ -28,7 +28,8 @@
 #'  variables selected) and `value` is a _list column_ with the
 #'  conversion key.
 #' @keywords datagen
-#' @concept preprocessing variable_encodings
+#' @concept preprocessing
+#' @concept variable_encodings
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),

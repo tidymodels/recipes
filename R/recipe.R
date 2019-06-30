@@ -6,7 +6,8 @@
 #' @aliases recipe recipe.default recipe.formula
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing model_specification
+#' @concept preprocessing
+#' @concept model_specification
 #' @export
 recipe <- function(x, ...)
   UseMethod("recipe")
@@ -272,7 +273,8 @@ form2args <- function(formula, data, ...) {
 #'   used).
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing model_specification
+#' @concept preprocessing
+#' @concept model_specification
 #' @export
 prep   <- function(x, ...)
   UseMethod("prep")
@@ -472,7 +474,8 @@ prep.recipe <-
 #' @aliases bake bake.recipe
 #' @author Max Kuhn
 #' @keywords datagen
-#' @concept preprocessing model_specification
+#' @concept preprocessing
+#' @concept model_specification
 #' @export
 bake <- function(object, ...)
   UseMethod("bake")

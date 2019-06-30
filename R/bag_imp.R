@@ -38,7 +38,8 @@
 #'  selectors or variables selected) and `model` (the bagged
 #'  tree object).
 #' @keywords datagen
-#' @concept preprocessing imputation
+#' @concept preprocessing
+#' @concept imputation
 #' @export
 #' @details For each variables requiring imputation, a bagged tree
 #'  is created where the outcome is the variable of interest and the
@@ -192,7 +193,7 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
     )
   opt <- x$options
   opt$nbagg <- x$trees
-  
+
   x$models <- lapply(
     var_lists,
     bag_wrap,

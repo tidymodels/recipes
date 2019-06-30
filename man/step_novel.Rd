@@ -94,5 +94,6 @@ tidy(rec, number = 1)
 \code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 }
-\concept{preprocessing factors}
+\concept{factors}
+\concept{preprocessing}
 \keyword{datagen}

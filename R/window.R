@@ -37,7 +37,8 @@
 #'  selectors or variables selected) and `statistic` (the
 #'  summary function name), and `size`.
 #' @keywords datagen
-#' @concept preprocessing moving_windows
+#' @concept preprocessing
+#' @concept moving_windows
 #' @export
 #' @details The calculations use a somewhat atypical method for
 #'  handling the beginning and end parts of the rolling statistics.

@@ -35,7 +35,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and the number of components.
 #' @keywords datagen
-#' @concept preprocessing nnmf projection_methods
+#' @concept preprocessing
+#' @concept nnmf
+#' @concept projection_methods
 #' @export
 #' @details Non-negative matrix factorization computes latent components that
 #'  have non-negative values and take into account that the original data

@@ -88,5 +88,7 @@ tidy(rec, number = 1)
 \seealso{
 \code{\link[=step_string2factor]{step_string2factor()}} \code{\link[=step_dummy]{step_dummy()}}
 }
-\concept{preprocessing variable_encodings factors}
+\concept{factors}
+\concept{preprocessing}
+\concept{variable_encodings}
 \keyword{datagen}

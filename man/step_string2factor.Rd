@@ -85,5 +85,7 @@ tidy(make_factor, number = 1)
 \code{\link[=step_factor2string]{step_factor2string()}} \code{\link[=step_dummy]{step_dummy()}} \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}
 }
-\concept{preprocessing variable_encodings factors}
+\concept{factors}
+\concept{preprocessing}
+\concept{variable_encodings}
 \keyword{datagen}

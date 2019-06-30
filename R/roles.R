@@ -43,7 +43,8 @@
 #' [has_role()].
 #'
 #' @keywords datagen
-#' @concept preprocessing model_specification
+#' @concept preprocessing
+#' @concept model_specification
 #' @examples
 #' library(recipes)
 #' data(biomass)

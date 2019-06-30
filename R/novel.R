@@ -22,7 +22,8 @@
 #'  columns that will be affected) and `value` (the factor
 #'  levels that is used for the new value)
 #' @keywords datagen
-#' @concept preprocessing factors
+#' @concept preprocessing
+#' @concept factors
 #' @export
 #' @details The selected variables are adjusted to have a new
 #'  level (given by `new_level`) that is placed in the last

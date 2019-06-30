@@ -146,6 +146,8 @@ tidy(dummies, number = 1)
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}
 }
-\concept{preprocessing dummy_variables model_specification
+\concept{dummy_variables}
+\concept{model_specification
 dummy_variables variable_encodings}
+\concept{preprocessing}
 \keyword{datagen}

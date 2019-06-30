@@ -142,5 +142,7 @@ https://github.com/gdkrmr
 \code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing isomap projection_methods}
+\concept{isomap}
+\concept{preprocessing}
+\concept{projection_methods}
 \keyword{datagen}
