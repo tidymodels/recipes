@@ -30,7 +30,8 @@
 #'  selectors or variables selected) and `value` (the means).
 #'
 #' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @concept preprocessing
+#' @concept normalization_methods
 #' @export
 #' @details Centering data means that the average of a variable is
 #'  subtracted from the data. `step_center` estimates the

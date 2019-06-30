@@ -36,7 +36,11 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @keywords datagen
-#' @concept preprocessing pca projection_methods kernel_methods
+#' @concept preprocessing
+#' @concept pca
+#' @concept projection_methods
+#' @concept kernel_methods
+#' @concept basis_expansion
 #' @export
 #' @details Kernel principal component analysis (kPCA) is an
 #'  extension a PCA analysis that conducts the calculations in a

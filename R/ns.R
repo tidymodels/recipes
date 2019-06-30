@@ -23,7 +23,8 @@
 #'  `tidy` method, a tibble with columns `terms` which is
 #'  the columns that will be affected and `holiday`.
 #' @keywords datagen
-#' @concept preprocessing basis_expansion
+#' @concept preprocessing
+#' @concept basis_expansion
 #' @export
 #' @details `step_ns` can new features from a single variable
 #'  that enable fitting routines to model this variable in a

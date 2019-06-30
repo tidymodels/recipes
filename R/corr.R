@@ -31,7 +31,8 @@
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 #'  original in `caret` package). Max Kuhn for the `step`
 #'  function.
-#' @concept preprocessing variable_filters
+#' @concept preprocessing
+#' @concept variable_filters
 #' @export
 #'
 #' @details This step attempts to remove variables to keep the

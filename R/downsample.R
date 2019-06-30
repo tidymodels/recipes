@@ -56,7 +56,8 @@
 #'  conducted outside of the training set.
 #'
 #' @keywords datagen
-#' @concept preprocessing subsampling
+#' @concept preprocessing
+#' @concept subsampling
 #' @export
 #' @examples
 #' data(okc)
@@ -166,7 +167,7 @@ bake.step_downsample <- function(object, new_data, ...) {
       }
     }
   )
-  
+
   as_tibble(new_data)
 }
 

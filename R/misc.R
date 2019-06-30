@@ -157,7 +157,8 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`,
 #' @keywords datagen
-#' @concept string_functions naming_functions
+#' @concept string_functions
+#' @concept naming_functions
 #' @examples
 #' names0(9, "x")
 #' names0(10, "x")

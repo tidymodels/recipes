@@ -19,7 +19,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected).
 #' @keywords datagen
-#' @concept preprocessing variable_encodings factors
+#' @concept preprocessing
+#' @concept variable_encodings
+#' @concept factors
 #' @export
 #' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default

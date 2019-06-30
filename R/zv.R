@@ -19,7 +19,8 @@
 #'  `tidy` method, a tibble with columns `terms` which
 #'  is the columns that will be removed.
 #' @keywords datagen
-#' @concept preprocessing variable_filters
+#' @concept preprocessing
+#' @concept variable_filters
 #' @export
 #'
 #' @examples

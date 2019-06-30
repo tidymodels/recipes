@@ -83,5 +83,7 @@ table(results$rocks, results$more_rocks)
 
 tidy(rec, number = 3)
 }
-\concept{preprocessing dummy_variables factors}
+\concept{dummy_variables}
+\concept{factors}
+\concept{preprocessing}
 \keyword{datagen}

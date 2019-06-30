@@ -88,5 +88,6 @@ tidy(norm_trans, number = 1)
 tidy(norm_obj, number = 1)
 
 }
-\concept{preprocessing normalization_methods}
+\concept{normalization_methods}
+\concept{preprocessing}
 \keyword{datagen}

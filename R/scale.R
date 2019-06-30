@@ -21,7 +21,8 @@
 #'  selectors or variables selected) and `value` (the
 #'  standard deviations).
 #' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @concept preprocessing
+#' @concept normalization_methods
 #' @export
 #' @details Scaling data means that the standard deviation of a
 #'  variable is divided out of the data. `step_scale` estimates

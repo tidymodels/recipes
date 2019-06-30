@@ -36,7 +36,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `class`.
 #' @keywords datagen
-#' @concept preprocessing dimension_reduction
+#' @concept preprocessing
+#' @concept dimension_reduction
 #' @export
 #' @details Data depth metrics attempt to measure how close data a
 #'  data point is to the center of its distribution. There are a

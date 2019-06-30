@@ -135,5 +135,7 @@ Networks}, 13(4-5), 411-430.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing ica projection_methods}
+\concept{ica}
+\concept{preprocessing}
+\concept{projection_methods}
 \keyword{datagen}

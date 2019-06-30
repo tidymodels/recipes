@@ -32,7 +32,9 @@
 #'  selectors or original variables selected) and `columns` (the
 #'  list of corresponding binary columns).
 #' @keywords datagen
-#' @concept preprocessing dummy_variables model_specification
+#' @concept preprocessing
+#' @concept dummy_variables
+#' @concept model_specification
 #'  dummy_variables variable_encodings
 #' @export
 #' @details `step_dummy` will create a set of binary dummy

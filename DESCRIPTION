@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.1.5.9000
+Version: 0.1.6
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
@@ -25,12 +25,11 @@ Imports:
     magrittr,
     Matrix,
     purrr (>= 0.2.3),
-    RcppRoll,
-    rlang (>=  0.3.0.1),
+    rlang (>= 0.4.0),
     stats,
     tibble,
     tidyr,
-    tidyselect (>= 0.1.1),
+    tidyselect (>= 0.2.5),
     timeDate,
     utils,
     withr
@@ -45,6 +44,7 @@ Suggests:
     knitr,
     pls,
     RANN,
+    RcppRoll,
     rmarkdown,
     rpart,
     rsample,

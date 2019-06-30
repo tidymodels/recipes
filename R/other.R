@@ -25,7 +25,8 @@
 #'  columns that will be affected) and `retained` (the factor
 #'  levels that were not pulled into "other")
 #' @keywords datagen
-#' @concept preprocessing factors
+#' @concept preprocessing
+#' @concept factors
 #' @export
 #' @details The overall proportion of the categories are computed. The "other"
 #'   category is used in place of any categorical levels whose individual

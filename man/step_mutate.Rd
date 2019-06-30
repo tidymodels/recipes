@@ -108,5 +108,6 @@ juice(qq_rec, contains("appro")) \%>\% slice(1:4)
 # The difference:
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing transformation_methods}
+\concept{preprocessing}
+\concept{transformation_methods}
 \keyword{datagen}

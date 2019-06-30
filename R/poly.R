@@ -25,7 +25,8 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  columns that will be affected) and `degree`.
 #' @keywords datagen
-#' @concept preprocessing basis_expansion
+#' @concept preprocessing
+#' @concept basis_expansion
 #' @export
 #' @details `step_poly` can new features from a single
 #'  variable that enable fitting routines to model this variable in
@@ -78,7 +79,7 @@ step_poly <-
     )
   }
 
-step_poly_new <- 
+step_poly_new <-
   function(terms, role, trained, objects, options, skip, id) {
     step(
       subclass = "poly",

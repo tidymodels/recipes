@@ -31,7 +31,9 @@
 #'  selectors or variables selected) and `result` (the
 #'  new column name).
 #' @keywords datagen
-#' @concept preprocessing dummy_variables regular_expressions
+#' @concept preprocessing
+#' @concept dummy_variables
+#' @concept regular_expressions
 #' @export
 #' @examples
 #' data(covers)
@@ -88,7 +90,7 @@ step_regex <- function(recipe,
   )
 }
 
-step_regex_new <- 
+step_regex_new <-
   function(terms, role, trained, pattern, options, result, input, skip, id) {
   step(
     subclass = "regex",

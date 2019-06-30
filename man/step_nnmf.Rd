@@ -37,11 +37,11 @@ used.}
 \item{num_run}{A positive integer for the number of computations runs used
 to obtain a consensus projection.}
 
-\item{options}{A list of options to \code{nmf()} in the NMF package by way of
-\code{dimRed::NNMF()}. \strong{Note} that the arguments
+\item{options}{A list of options to \code{nmf()} in the NMF package by way of the
+\code{NNMF()} function in the \code{dimRed} package. \strong{Note} that the arguments
 \code{data} and \code{ndim} should not be passed here.}
 
-\item{res}{The \code{dimRed::NNMF()} object is stored
+\item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
@@ -108,5 +108,7 @@ data(biomass)
 \code{\link[=step_isomap]{step_isomap()}}, \code{\link[=recipe]{recipe()}}, \code{\link[=prep.recipe]{prep.recipe()}},
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{preprocessing nnmf projection_methods}
+\concept{nnmf}
+\concept{preprocessing}
+\concept{projection_methods}
 \keyword{datagen}

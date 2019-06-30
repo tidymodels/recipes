@@ -43,7 +43,9 @@
 #'  selectors or variables selected), `value` (the
 #'  loading), and `component`.
 #' @keywords datagen
-#' @concept preprocessing pca projection_methods
+#' @concept preprocessing
+#' @concept pca
+#' @concept projection_methods
 #' @export
 #' @details
 #' Principal component analysis (PCA) is a transformation of a

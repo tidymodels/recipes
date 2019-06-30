@@ -1,8 +1,7 @@
-#' Simple Value Assignments for Novel Factor Levels
+#' Assign missing categories to "unknown"
 #'
-#' `step_novel` creates a *specification* of a recipe
-#'  step that will assign a previously unseen factor level to a
-#'  new value.
+#' `step_unknown` creates a *specification* of a recipe
+#'  step that will assign a missing value in a factor level to"unknown".
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
@@ -27,52 +26,44 @@
 #' @export
 #' @details The selected variables are adjusted to have a new
 #'  level (given by `new_level`) that is placed in the last
-#'  position. During preparation there will be no data points
-#'  associated with this new level since all of the data have been
-#'  seen.
+#'  position.
 #'
 #' Note that if the original columns are character, they will be
 #'  converted to factors by this step.
-#'
-#' Missing values will remain missing.
 #'
 #' If `new_level` is already in the data given to `prep`, an error
 #'  is thrown.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_other()]
+#'  [step_ordinalscore()], [step_unorder()], [step_other()], [step_novel()]
 #' @examples
 #' data(okc)
 #'
-#' okc_tr <- okc[1:30000,]
-#' okc_te <- okc[30001:30006,]
-#' okc_te$diet[3] <- "cannibalism"
-#' okc_te$diet[4] <- "vampirism"
+#' rec <-
+#'   recipe(~ diet + location, data = okc) %>%
+#'   step_unknown(diet, new_level = "unknown diet") %>%
+#'   step_unknown(location, new_level = "unknown location") %>%
+#'   prep()
 #'
-#' rec <- recipe(~ diet + location, data = okc_tr)
-#'
-#' rec <- rec %>%
-#'   step_novel(diet, location)
-#' rec <- prep(rec, training = okc_tr)
-#'
-#' processed <- bake(rec, okc_te)
-#' tibble(old = okc_te$diet, new = processed$diet)
+#' table(juice(rec)$diet, okc$diet, useNA = "always") %>%
+#'   as.data.frame() %>%
+#'   dplyr::filter(Freq > 0)
 #'
 #' tidy(rec, number = 1)
 
-step_novel <-
+step_unknown <-
   function(recipe,
            ...,
            role = NA,
            trained = FALSE,
-           new_level = "new",
+           new_level = "unknown",
            objects = NULL,
            skip = FALSE,
-           id = rand_id("novel")) {
+           id = rand_id("unknown")) {
     add_step(
       recipe,
-      step_novel_new(
+      step_unknown_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -84,10 +75,10 @@ step_novel <-
     )
   }
 
-step_novel_new <-
+step_unknown_new <-
   function(terms, role, trained, new_level, objects, skip, id) {
     step(
-      subclass = "novel",
+      subclass = "unknown",
       terms = terms,
       role = role,
       trained = trained,
@@ -98,25 +89,10 @@ step_novel_new <-
     )
   }
 
-get_existing_values <- function(x) {
-  if (is.character(x)) {
-    out <- unique(x)
-    attr(out, "is_ordered") <- FALSE
-  } else {
-    if (is.factor(x)) {
-      out <- levels(x)
-      attr(out, "is_ordered") <- is.ordered(x)
-    }
-    else
-      stop("Data should be either character or factor", call. = FALSE)
-  }
-  out
-}
-
 #' @importFrom purrr map_lgl
 #' @importFrom dplyr filter
 #' @export
-prep.step_novel <- function(x, training, info = NULL, ...) {
+prep.step_unknown <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   col_check <- dplyr::filter(info, variable %in% col_names)
   if (any(col_check$type != "nominal"))
@@ -134,12 +110,12 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check))
     stop(
-      "Columns already contain the new level: ",
+      "Columns already contain a level '", x$new_level, "': ",
       paste0(names(level_check)[level_check], collapse = ", "),
       call. = FALSE
     )
 
-  step_novel_new(
+  step_unknown_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -152,38 +128,34 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @importFrom tibble as_tibble is_tibble
 #' @export
-bake.step_novel <- function(object, new_data, ...) {
+bake.step_unknown <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
-    new_data[[i]] <- ifelse(
-      # Preserve NA values by adding them to the list of existing
-      # possible values
-      !(new_data[[i]] %in% c(object$object[[i]], NA)),
-      object$new_level,
-      as.character(new_data[[i]])
-    )
+    new_data[[i]] <-
+      ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
 
     new_data[[i]] <-
       factor(new_data[[i]],
              levels = c(object$object[[i]], object$new_level),
              ordered = attributes(object$object[[i]])$is_ordered)
   }
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
-print.step_novel <-
+print.step_unknown <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Novel factor level assignment for ", sep = "")
+    cat("Unknown factor level assignment for ", sep = "")
     printer(names(x$objects), x$terms, x$trained, width = width)
     invisible(x)
   }
 
-#' @rdname step_novel
-#' @param x A `step_novel` object.
+#' @rdname step_unknown
+#' @param x A `step_unknown` object.
 #' @importFrom purrr map
 #' @export
-tidy.step_novel <- function(x, ...) {
+tidy.step_unknown <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$objects),
                   value = rep(x$new_level, length(x$objects)))
@@ -195,6 +167,3 @@ tidy.step_novel <- function(x, ...) {
   res$id <- x$id
   res
 }
-
-#' @importFrom utils globalVariables
-utils::globalVariables("variable")

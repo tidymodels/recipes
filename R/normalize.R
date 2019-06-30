@@ -23,7 +23,8 @@
 #'  selectors or variables selected), `value` (the
 #'  standard deviations and means), and `statistic` for the type of value.
 #' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @concept preprocessing
+#' @concept normalization_methods
 #' @export
 #' @details Centering data means that the average of a variable is subtracted
 #'  from the data. Scaling data means that the standard deviation of a variable

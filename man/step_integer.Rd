@@ -102,5 +102,6 @@ tidy(rec, number = 1)
 \code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
 \code{\link[=step_novel]{step_novel()}}, \code{\link[=step_dummy]{step_dummy()}}
 }
-\concept{preprocessing variable_encodings}
+\concept{preprocessing}
+\concept{variable_encodings}
 \keyword{datagen}

@@ -36,7 +36,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected).
 #' @keywords datagen
-#' @concept preprocessing pls projection_methods
+#' @concept preprocessing
+#' @concept pls
+#' @concept projection_methods
 #' @export
 #' @details PLS is a supervised version of principal component
 #'  analysis that requires one or more numeric outcomes to compute

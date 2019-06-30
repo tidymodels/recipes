@@ -23,7 +23,8 @@
 #'  selectors or variables selected) and `value` (the
 #'  lambda estimate).
 #' @keywords datagen
-#' @concept preprocessing transformation_methods
+#' @concept preprocessing
+#' @concept transformation_methods
 #' @export
 #' @details The Box-Cox transformation, which requires a strictly
 #'  positive variable, can be used to rescale a variable to be more

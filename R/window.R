@@ -37,7 +37,8 @@
 #'  selectors or variables selected) and `statistic` (the
 #'  summary function name), and `size`.
 #' @keywords datagen
-#' @concept preprocessing moving_windows
+#' @concept preprocessing
+#' @concept moving_windows
 #' @export
 #' @details The calculations use a somewhat atypical method for
 #'  handling the beginning and end parts of the rolling statistics.
@@ -113,7 +114,7 @@ step_window <-
            names = NULL,
            skip = FALSE,
            id = rand_id("window")) {
-    if(!(statistic %in% roll_funs) | length(statistic) != 1)
+    if (!(statistic %in% roll_funs) | length(statistic) != 1)
       stop("`statistic` should be one of: ",
            paste0("'", roll_funs, "'", collapse = ", "),
            call. = FALSE)
@@ -178,8 +179,8 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     stop("The selected variables should be numeric")
 
-  if(!is.null(x$names)) {
-    if(length(x$names) != length(col_names))
+  if (!is.null(x$names)) {
+    if (length(x$names) != length(col_names))
       stop("There were ", length(col_names), " term(s) selected but ",
            length(x$names), " values for the new features ",
            "were passed to `names`.", call. = FALSE)
@@ -199,20 +200,13 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   )
 }
 
-# @importFrom RcppRoll roll_max roll_maxl roll_maxr
-# @importFrom RcppRoll roll_mean roll_meanl roll_meanr
-# @importFrom RcppRoll roll_median roll_medianl roll_medianr
-# @importFrom RcppRoll roll_min roll_minl roll_minr
-# @importFrom RcppRoll roll_prod roll_prodl roll_prodr
-# @importFrom RcppRoll roll_sd roll_sdl roll_sdr
-# @importFrom RcppRoll roll_sum roll_suml roll_sumr
-# @importFrom RcppRoll roll_var roll_varl roll_varr
 roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
+  recipes_pkg_check("RcppRoll")
 
   m <- length(x)
 
   gap <- floor(window / 2)
-  if(m - window <= 2)
+  if (m - window <= 2)
     stop("The window is too large.", call. = FALSE)
 
   ## stats for centered window

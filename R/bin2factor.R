@@ -29,7 +29,9 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #' @keywords datagen
-#' @concept preprocessing dummy_variables factors
+#' @concept preprocessing
+#' @concept dummy_variables
+#' @concept factors
 #' @export
 #' @examples
 #' data(covers)
