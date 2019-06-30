@@ -168,11 +168,15 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
-  kprc <- kprc@fun(
-    dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-    kprc@stdpars
-  )
+  if (x$num_comp > 0) {
+    kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
+    kprc <- kprc@fun(
+      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+      kprc@stdpars
+    )
+  } else {
+    kprc <- list(x_vars = col_names)
+  }
 
   step_kpca_new(
     terms = x$terms,
@@ -190,26 +194,32 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_kpca <- function(object, new_data, ...) {
-  pca_vars <- colnames(environment(object$res@apply)$indata)
-  comps <- object$res@apply(
-    dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
+  if (object$num_comp > 0) {
+    pca_vars <- colnames(environment(object$res@apply)$indata)
+    comps <- object$res@apply(
+      dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
     )@data
-  comps <- comps[, 1:object$num_comp, drop = FALSE]
-  comps <- check_name(comps, new_data, object)
-  new_data <- bind_cols(new_data, as_tibble(comps))
-  new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- check_name(comps, new_data, object)
+    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+  }
   as_tibble(new_data)
 }
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
-  if(x$trained) {
-    cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-    cat(format_ch_vec(colnames(x$res@org.data), width = width))
+  if (x$trained) {
+    if (x$num_comp == 0) {
+      cat("No kPCA components were extracted.\n")
+    } else {
+      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
+      cat(format_ch_vec(colnames(x$res@org.data), width = width))
+    }
   } else {
     cat("Kernel PCA extraction with ", sep = "")
     cat(format_selectors(x$terms, wdth = width))
   }
-  if(x$trained) cat(" [trained]\n") else cat("\n")
+  if (x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)
 }
 
@@ -219,7 +229,11 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 #' @export
 tidy.step_kpca <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$res@org.data))
+    if (x$num_comp > 0) {
+      res <- tibble(terms = colnames(x$res@org.data))
+    } else {
+      res <- tibble(terms = x$res$x_vars)
+    }
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

@@ -71,7 +71,7 @@ test_that('correct ICA values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
-  
+
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
 
@@ -113,7 +113,7 @@ test_that('correct ICA values', {
 
 
 test_that('deprecated arg', {
-  
+
   expect_message(
     rec %>%
       step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
@@ -125,4 +125,20 @@ test_that('printing', {
     step_ica(carbon, hydrogen, num_comp = 2)
   expect_output(print(ica_extract))
   expect_output(prep(ica_extract, training = biomass_tr, verbose = TRUE))
+})
+
+
+test_that('No ICA comps', {
+  ica_extract <- rec %>%
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
+
+  ica_extract_trained <- prep(ica_extract, training = biomass_tr)
+  expect_equal(
+    names(juice(ica_extract_trained)),
+    names(biomass_tr)[-(1:2)]
+  )
+  expect_true(all(names(ica_extract_trained$steps[[1]]$res) == "x_vars"))
+  expect_output(print(ica_extract_trained),
+                regexp = "No ICA components were extracted")
+  expect_true(all(is.na(tidy(ica_extract_trained, 1)$value)))
 })

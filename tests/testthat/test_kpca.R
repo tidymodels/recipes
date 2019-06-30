@@ -16,7 +16,7 @@ rec <- recipe(X1 ~ ., data = tr_dat)
 test_that('correct kernel PCA values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
-  
+
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6, id = "")
 
@@ -48,7 +48,7 @@ test_that('correct kernel PCA values', {
 test_that('deprecated arg', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
-  
+
   expect_message(
     rec %>%
       step_kpca(X2, X3, X4, X5, X6, num = 2)
@@ -58,10 +58,28 @@ test_that('deprecated arg', {
 test_that('printing', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
-  
+
   kpca_rec <- rec %>%
     step_kpca(X2, X3, X4, X5, X6)
   expect_output(print(kpca_rec))
   expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
 
+
+test_that('No kPCA comps', {
+  pca_extract <- rec %>%
+    step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
+    prep()
+
+  expect_equal(
+    names(juice(pca_extract)),
+    paste0("X", c(2:6, 1))
+  )
+  expect_true(inherits(pca_extract$steps[[1]]$res, "list"))
+  expect_output(print(pca_extract),
+                regexp = "No kPCA components were extracted")
+  expect_equal(
+    tidy(pca_extract, 1),
+    tibble::tibble(terms = paste0("X", 2:6), id = "")
+  )
+})
