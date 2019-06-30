@@ -10,3 +10,4 @@ presentations
 ^codecov\.yml$
 .github
 ^revdep$
+tests/testthat/NMF*

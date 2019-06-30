@@ -35,6 +35,7 @@ reference:
   - title: Step Functions - Imputation
     contents:
     - matches("impute")
+    - step_unknown
   - title: Step Functions - Individual Transformations
     contents:
     - step_BoxCox
@@ -68,6 +69,7 @@ reference:
     - step_other
     - step_regex
     - step_string2factor
+    - step_unknown
     - step_unorder
   - title: Step Functions - Interactions
     contents:
