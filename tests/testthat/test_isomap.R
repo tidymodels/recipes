@@ -71,3 +71,22 @@ test_that('printing', {
   expect_output(prep(im_rec, training = dat1, verbose = TRUE))
 })
 
+
+test_that('No ISOmap', {
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") %>%
+    prep()
+
+  expect_equal(
+    names(juice(im_rec)),
+    colnames(dat1)
+  )
+  expect_true(inherits(im_rec$steps[[1]]$res, "list"))
+  expect_output(print(im_rec),
+                regexp = "Isomap was not conducted")
+  expect_equal(
+    tidy(im_rec, 1),
+    tibble::tibble(terms = im_rec$steps[[1]]$res$x_vars, id = "")
+  )
+})
+

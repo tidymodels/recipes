@@ -23,6 +23,8 @@
 
 * `step_other()`'s print method only reports the variables with collapsed levels (as opposed to any column that was _tested_ to see if it needed collapsing). ([#338](https://github.com/tidymodels/recipes/issues/338)) 
 
+ * `step_pca()`, `step_kpca()`, `step_ica()`, `step_nnmf()`, `step_pls()`, and `step_isomap()` now accept zero components. In this case, the original data are returned. 
+
 
 # `recipes` 0.1.5
 

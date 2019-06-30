@@ -109,3 +109,18 @@ test_that('printing', {
   expect_output(prep(pca_extract, training = biomass_tr, verbose = TRUE))
 })
 
+
+test_that('No PCA comps', {
+  pca_extract <- rec %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr)
+  expect_equal(
+    names(juice(pca_extract_trained)),
+    names(biomass_tr)[-(1:2)]
+  )
+  expect_true(all(is.na(pca_extract_trained$steps[[1]]$res$rotation)))
+  expect_output(print(pca_extract_trained),
+                regexp = "No PCA components were extracted")
+  expect_true(all(is.na(tidy(pca_extract_trained, 1)$value)))
+})

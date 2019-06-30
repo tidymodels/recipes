@@ -164,29 +164,38 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  prc_call <-
-    expr(prcomp(
-      retx = FALSE,
-      center = FALSE,
-      scale. = FALSE,
-      tol = NULL
-    ))
-  if (length(x$options) > 0)
-    prc_call <- mod_call_args(prc_call, args = x$options)
-  prc_call$x <- expr(training[, col_names, drop = FALSE])
-  prc_obj <- eval(prc_call)
+  if (x$num_comp > 0) {
+    prc_call <-
+      expr(prcomp(
+        retx = FALSE,
+        center = FALSE,
+        scale. = FALSE,
+        tol = NULL
+      ))
+    if (length(x$options) > 0)
+      prc_call <- mod_call_args(prc_call, args = x$options)
 
-  x$num_comp <- min(x$num_comp, length(col_names))
-  if (!is.na(x$threshold)) {
-    total_var <- sum(prc_obj$sdev ^ 2)
-    num_comp <-
-      which.max(cumsum(prc_obj$sdev ^ 2 / total_var) >= x$threshold)
-    if (length(num_comp) == 0)
-      num_comp <- length(prc_obj$sdev)
-    x$num_comp <- num_comp
+    prc_call$x <- expr(training[, col_names, drop = FALSE])
+    prc_obj <- eval(prc_call)
+
+    x$num_comp <- min(x$num_comp, length(col_names))
+    if (!is.na(x$threshold)) {
+      total_var <- sum(prc_obj$sdev ^ 2)
+      num_comp <-
+        which.max(cumsum(prc_obj$sdev ^ 2 / total_var) >= x$threshold)
+      if (length(num_comp) == 0)
+        num_comp <- length(prc_obj$sdev)
+      x$num_comp <- num_comp
+    }
+    ## decide on removing prc elements that aren't used in new projections
+    ## e.g. `sdev` etc.
+
+  } else {
+    # fake a roation matrix so that the resolved names can be used for tidy()
+    fake_matrix <- matrix(NA, nrow = length(col_names))
+    rownames(fake_matrix) <- col_names
+    prc_obj <- list(rotation = fake_matrix)
   }
-  ## decide on removing prc elements that aren't used in new projections
-  ## e.g. `sdev` etc.
 
   step_pca_new(
     terms = x$terms,
@@ -206,20 +215,27 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 #' @importFrom tibble as_tibble
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
-  pca_vars <- rownames(object$res$rotation)
-  comps <- predict(object$res, newdata = new_data[, pca_vars])
-  comps <- comps[, 1:object$num_comp, drop = FALSE]
-  comps <- check_name(comps, new_data, object)
-  new_data <- bind_cols(new_data, as_tibble(comps))
-  new_data <-
-    new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+  if (!all(is.na(object$res$rotation))) {
+    pca_vars <- rownames(object$res$rotation)
+    comps <- predict(object$res, newdata = new_data[, pca_vars])
+    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- check_name(comps, new_data, object)
+    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <-
+      new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+  }
   as_tibble(new_data)
 }
 
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("PCA extraction with ")
-    printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
+    if (all(is.na(x$res$rotation))) {
+      cat("No PCA components were extracted.\n")
+    } else {
+      cat("PCA extraction with ")
+      printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
+    }
+
     invisible(x)
   }
 
@@ -228,20 +244,25 @@ print.step_pca <-
 #' @param x A `step_pca` object.
 #' @export
 tidy.step_pca <- function(x, ...) {
-  if (is_trained(x)) {
-    rot <- as.data.frame(x$res$rotation)
-    vars <- rownames(rot)
-    npc <- ncol(rot)
-    res <- utils::stack(rot)
-    colnames(res) <- c("value", "component")
-    res$component <- as.character(res$component)
-    res$terms <- rep(vars, npc)
-    res <- as_tibble(res)[, c("terms", "value", "component")]
-  } else {
+  if (!is_trained(x)) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
                   value = na_dbl,
                   component  = na_chr)
+  } else {
+    rot <- as.data.frame(x$res$rotation)
+    vars <- rownames(rot)
+    if (x$num_comp > 0) {
+      npc <- ncol(rot)
+      res <- utils::stack(rot)
+      colnames(res) <- c("value", "component")
+      res$component <- as.character(res$component)
+      res$terms <- rep(vars, npc)
+      res <- as_tibble(res)[, c("terms", "value", "component")]
+    } else {
+      res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
+                            component = rlang::na_chr)
+    }
   }
   res$id <- x$id
   res

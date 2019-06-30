@@ -128,23 +128,28 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  x$num_comp <- min(x$num_comp, length(col_names))
+  if (x$num_comp > 0) {
 
-  opts <- list(options = x$options)
-  opts$ndim <- x$num_comp
-  opts$nrun <- x$num_run
-  opts$seed <- x$seed
-  opts$.mute <- c("message", "output")
-  opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
-  opts$.method <- "NNMF"
+    x$num_comp <- min(x$num_comp, length(col_names))
 
-  for (i in nmf_pkg) {
-    suppressPackageStartupMessages(
-      loadNamespace(i)
-    )
+    opts <- list(options = x$options)
+    opts$ndim <- x$num_comp
+    opts$nrun <- x$num_run
+    opts$seed <- x$seed
+    opts$.mute <- c("message", "output")
+    opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
+    opts$.method <- "NNMF"
+
+    for (i in nmf_pkg) {
+      suppressPackageStartupMessages(
+        require(i, character.only = TRUE)
+      )
+    }
+
+    nnm <- do.call(dimRed::embed, opts)
+  } else {
+    nnm <- list(x_vars = col_names)
   }
-
- nnm <- do.call(dimRed::embed, opts)
 
   step_nnmf_new(
     terms = x$terms,
@@ -163,36 +168,45 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
-  nnmf_vars <- rownames(object$res@other.data$w)
-  comps <-
-    object$res@apply(
-      dimRed::dimRedData(
-        as.data.frame(new_data[, nnmf_vars, drop = FALSE])
-      )
-    )@data
-  comps <- comps[, 1:object$num_comp, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
-  new_data <- bind_cols(new_data, as_tibble(comps))
-  new_data <-
-    new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+  if (object$num_comp > 0) {
+    nnmf_vars <- rownames(object$res@other.data$w)
+    comps <-
+      object$res@apply(
+        dimRed::dimRedData(
+          as.data.frame(new_data[, nnmf_vars, drop = FALSE])
+        )
+      )@data
+    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    colnames(comps) <- names0(ncol(comps), object$prefix)
+    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <-
+      new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+  }
   as_tibble(new_data)
 }
 
 
-print.step_nnmf <-
-  function(x, width = max(20, options()$width - 29), ...) {
+print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
+  if (x$num_comp == 0) {
+    cat("Non-negative matrix factorization was not done.\n")
+  } else {
     cat("Non-negative matrix factorization for ")
     printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
-    invisible(x)
   }
+  invisible(x)
+}
 
 
 #' @rdname step_nnmf
 #' @param x A `step_nnmf` object.
 tidy.step_nnmf <- function(x, ...) {
   if (is_trained(x)) {
-    var_names <- colnames(x$res@other.data$H)
-    res <- tibble(terms = var_names, components  = x$num_comp)
+    if (x$num_comp > 0) {
+      var_names <- colnames(x$res@other.data$H)
+      res <- tibble(terms = var_names, components  = x$num_comp)
+    } else {
+      res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
+    }
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, components  = x$num_comp)

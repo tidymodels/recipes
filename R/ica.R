@@ -153,14 +153,18 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  x$num_comp <- min(x$num_comp, length(col_names))
+  if (x$num_comp > 0) {
+    x$num_comp <- min(x$num_comp, length(col_names))
 
-  indc <- dimRed::FastICA(stdpars = x$options)
-  indc <-
-    indc@fun(
-      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-      list(ndim = x$num_comp)
+    indc <- dimRed::FastICA(stdpars = x$options)
+    indc <-
+      indc@fun(
+        dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+        list(ndim = x$num_comp)
       )
+  } else {
+    indc <- list(x_vars = col_names)
+  }
 
   step_ica_new(
     terms = x$terms,
@@ -178,26 +182,33 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
-  ica_vars <- colnames(environment(object$res@apply)$indata)
-  comps <-
-    object$res@apply(
-      dimRed::dimRedData(
-        as.data.frame(new_data[, ica_vars, drop = FALSE])
+  if (object$num_comp > 0) {
+    ica_vars <- colnames(environment(object$res@apply)$indata)
+    comps <-
+      object$res@apply(
+        dimRed::dimRedData(
+          as.data.frame(new_data[, ica_vars, drop = FALSE])
         )
       )@data
-  comps <- comps[, 1:object$num_comp, drop = FALSE]
-  colnames(comps) <- names0(ncol(comps), object$prefix)
-  new_data <- bind_cols(new_data, as_tibble(comps))
-  new_data <-
-    new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    colnames(comps) <- names0(ncol(comps), object$prefix)
+    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <-
+      new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+  }
   as_tibble(new_data)
 }
 
 
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("ICA extraction with ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
+    if (x$num_comp == 0) {
+      cat("No ICA components were extracted.\n")
+    } else {
+      cat("ICA extraction with ")
+      printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
+    }
+
     invisible(x)
   }
 
@@ -208,16 +219,20 @@ print.step_ica <-
 #' @export
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
-    rot <- dimRed::getRotationMatrix(x$res)
-    colnames(rot) <- names0(ncol(rot), x$prefix)
-    rot <- as.data.frame(rot)
-    vars <- colnames(x$res@org.data)
-    npc <- ncol(rot)
-    res <- utils::stack(rot)
-    colnames(res) <- c("value", "component")
-    res$component <- as.character(res$component)
-    res$terms <- rep(vars, npc)
-    res <- as_tibble(res)
+    if (x$num_comp > 0) {
+      rot <- dimRed::getRotationMatrix(x$res)
+      colnames(rot) <- names0(ncol(rot), x$prefix)
+      rot <- as.data.frame(rot)
+      vars <- colnames(x$res@org.data)
+      npc <- ncol(rot)
+      res <- utils::stack(rot)
+      colnames(res) <- c("value", "component")
+      res$component <- as.character(res$component)
+      res$terms <- rep(vars, npc)
+      res <- as_tibble(res)
+    } else {
+      res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
+    }
   } else {
     term_names <- sel2char(x$terms)
     comp_names <- names0(x$num_comp, x$prefix)

@@ -77,3 +77,21 @@ test_that('Correct values', {
   expect_equal(exp_pred, rec_res)
 
 })
+
+
+test_that('No NNF', {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_nnmf(all_predictors(), seed = 2432, num_comp = 0) %>%
+    prep()
+
+  expect_equal(
+    names(juice(rec)),
+    names(iris)
+  )
+  expect_true(inherits(rec$steps[[1]]$res, "list"))
+  expect_output(print(rec),
+                regexp = "factorization was not done")
+  expect_true(all(is.na(tidy(rec, 1)$value)))
+})
+
+

@@ -4,6 +4,11 @@ library(dplyr)
 
 context("PLS")
 
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
 
 example_data <- npk
 example_data$block <- NULL
@@ -18,10 +23,10 @@ test_that('default values - multivariate', {
   default_mult_rec <- recipe(yield + y2 ~ ., data = tr_data) %>%
     step_pls(all_predictors(), outcome = vars(starts_with("y")), id = "")
 
-  default_mult_ty_un <- 
+  default_mult_ty_un <-
     tibble(
       terms = "all_predictors()",
-      value = NA_real_, 
+      value = NA_real_,
       component = NA_character_,
       id = ""
     )
@@ -259,5 +264,21 @@ test_that('printing', {
     )
   expect_output(print(nondefault_uni_rec))
   expect_output(prep(nondefault_uni_rec, training = tr_data, verbose = TRUE))
+})
+
+
+test_that('No PLS comps', {
+  pls_extract <- rec %>%
+    step_pls(carbon, hydrogen, oxygen, nitrogen, sulfur, outcome = "HHV", num_comp = 0)
+
+  pls_extract_trained <- prep(pls_extract, training = biomass_tr)
+  expect_equal(
+    names(juice(pls_extract_trained)),
+    names(biomass_tr)[-(1:2)]
+  )
+  expect_true(all(is.na(pls_extract_trained$steps[[1]]$res$projection)))
+  expect_output(print(pls_extract_trained),
+                regexp = "No PLS components were extracted")
+  expect_true(all(is.na(tidy(pls_extract_trained, 1)$value)))
 })
 

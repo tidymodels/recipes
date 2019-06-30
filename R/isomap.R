@@ -162,17 +162,21 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  x$num_terms <- min(x$num_terms, ncol(training))
-  x$neighbors <- min(x$neighbors, nrow(training))
+  if (x$num_terms > 0) {
+    x$num_terms <- min(x$num_terms, ncol(training))
+    x$neighbors <- min(x$neighbors, nrow(training))
 
-  imap <-
-    dimRed::embed(
-      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-      "Isomap",
-      knn = x$neighbors,
-      ndim = x$num_terms,
-      .mute = x$options$.mute
-    )
+    imap <-
+      dimRed::embed(
+        dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+        "Isomap",
+        knn = x$neighbors,
+        ndim = x$num_terms,
+        .mute = x$options$.mute
+      )
+  } else {
+    imap <- list(x_vars = col_names)
+  }
 
   step_isomap_new(
     terms = x$terms,
@@ -191,26 +195,31 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
-  isomap_vars <- colnames(environment(object$res@apply)$indata)
-  comps <-
-    object$res@apply(
-      dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
+  if (object$num_terms > 0) {
+    isomap_vars <- colnames(environment(object$res@apply)$indata)
+    comps <-
+      object$res@apply(
+        dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
       )@data
-  comps <- comps[, 1:object$num_terms, drop = FALSE]
-  comps <- check_name(comps, new_data, object)
-  new_data <- bind_cols(new_data, as_tibble(comps))
-  new_data <-
-    new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
+    comps <- comps[, 1:object$num_terms, drop = FALSE]
+    comps <- check_name(comps, new_data, object)
+    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <-
+      new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
+    if (!is_tibble(new_data))
+      new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
 
-print.step_isomap <-
-  function(x, width = max(20, options()$width - 35), ...) {
+print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
+  if (x$num_terms == 0) {
+    cat("Isomap was not conducted.\n")
+  } else {
     cat("Isomap approximation with ")
     printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
+  }
     invisible(x)
   }
 
@@ -220,7 +229,11 @@ print.step_isomap <-
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$res@org.data))
+    if (x$num_terms > 0) {
+      res <- tibble(terms = colnames(x$res@org.data))
+    } else {
+      res <- tibble(terms = x$res$x_vars)
+    }
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
