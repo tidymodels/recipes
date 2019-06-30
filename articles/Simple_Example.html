@@ -41,7 +41,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
         </div>
       </div>
     </div>
@@ -124,12 +124,12 @@
 <li>
 <strong>roles</strong> define how variables will be used in the model. Examples are: <code>predictor</code> (independent variables), <code>response</code>, and <code>case weight</code>. This is meant to be open-ended and extensible.</li>
 <li>
-<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped such a a set of principal components or a set of columns that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms</li>
+<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped, such as a set of principal components or a set of columns, that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms.</li>
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-example" class="anchor"></a>An Example</h2>
-<p>The packages contains a data set that used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
+<p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
@@ -145,7 +145,7 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000 </span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;     0.999     1.000     0.914     0.991     0.996     1.000     1.000</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;     1.000     1.000     0.919     0.988     0.996     1.000     1.000</span></a></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
@@ -154,7 +154,7 @@
 <a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
 <p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
-<p>If the analysis only required <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
+<p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">rec_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Status <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> credit_train)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">rec_obj</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Data Recipe</span></a>
@@ -165,7 +165,7 @@
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;    outcome          1</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  predictor         13</span></a></code></pre></div>
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
-<p>(Note that the formula method here is used to declare the variables and their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
+<p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
 <div id="preprocessing-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -188,7 +188,7 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "step_bagimpute"    "step_knnimpute"    "step_lowerimpute" </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [4] "step_meanimpute"   "step_medianimpute" "step_modeimpute"  </span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [7] "step_rollimpute"</span></a></code></pre></div>
-<p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors then removes those that are numeric:</p>
+<p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">imputed &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_knnimpute.html">step_knnimpute</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) </a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">imputed</a>
@@ -202,7 +202,7 @@
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors()</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code>step_dummy</code>. To do this, the step selects all predictors then removes those that are numeric:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">ind_vars &lt;-<span class="st"> </span>imputed <span class="op">%&gt;%</span></a>
@@ -218,8 +218,8 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors()</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span></a></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">standardized &lt;-<span class="st"> </span>ind_vars <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_center.html">step_center</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>())  <span class="op">%&gt;%</span></a>
@@ -235,11 +235,11 @@
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors()</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; Centering for all_predictors()</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Scaling for all_predictors()</span></a></code></pre></div>
-<p>If there are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; Centering for all_predictors</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Scaling for all_predictors</span></a></code></pre></div>
+<p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(standardized, <span class="dt">training =</span> credit_train)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">trained_rec</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; Data Recipe</span></a>
@@ -250,7 +250,7 @@
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;    outcome          1</span></a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  predictor         13</span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; Training data contained 3341 data points and 309 incomplete rows. </span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; </span></a>
@@ -267,20 +267,20 @@
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">test_data</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; # A tibble: 1,113 x 23</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt;    Status Seniority   Time      Age Expenses   Income  Assets    Debt</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;    &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;  1 good      -0.987  0.938 -1.19       0.376  0.497   -0.243  -0.275 </span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  2 good      -0.987 -0.724 -1.01      -0.499 -0.447   -0.457  -0.275 </span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  3 good      -0.987  0.938 -0.464      1.76  -0.447    0.827  -0.275 </span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  4 good       1.36  -0.724 -0.00678    0.993  0.346   -0.157  -0.0739</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  5 bad       -0.740  0.938 -1.10      -0.499 -0.447   -0.457  -0.275 </span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  6 bad       -0.864  0.938  0.724      2.54  -0.384   -0.285   0.112 </span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good       2.23   0.938  1.27      -0.550  0.00644 -0.157  -0.275 </span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  8 good       1.36   0.938  0.541      0.993  0.472   -0.114  -0.275 </span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  9 bad       -0.616 -1.56  -1.29       0.993 -0.723   -0.0287 -0.275 </span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 good       2.97  -1.56   2.28      -0.550 -0.296    0.271  -0.275 </span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; # … with 1,103 more rows, and 15 more variables: Amount &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; #   Price &lt;dbl&gt;, Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt;    Status Seniority   Time      Age Expenses   Income  Assets   Debt Amount</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;    &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;  1 bad      0.257   -0.706  0.826      1.75   0.718   -0.199  -0.273  2.05 </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  2 good     2.61     0.921  0.643      0.987 -0.221    0.386  -0.273  1.21 </span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  3 good     0.133   -2.33  -0.909     -1.05  -0.784   -0.449  -0.273 -1.76 </span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  4 good     0.00966  0.921 -0.635      0.987  0.705   -0.0316  1.86   0.995</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  5 good     0.875   -1.52   1.37      -1.05   2.34     0.929  -0.273  0.995</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  6 good     3.10    -1.52   2.84       0.479  0.718   -0.0316  1.43  -0.912</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good     2.24     0.921  1.28      -0.539  0.00436 -0.157  -0.273  0.677</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  8 bad     -0.979    0.108  0.00402   -1.05  -0.371   -0.265  -0.273  0.995</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  9 good     1.99     0.921  0.461      0.987 -0.0707  -0.115  -0.273 -0.276</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 bad     -0.979    0.921 -0.453     -0.539 -0.00815  0.136   2.28   0.465</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; # … with 1,103 more rows, and 14 more variables: Price &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; #   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt; #   Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt; #   Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt; #   Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;,</span></a>
@@ -313,16 +313,16 @@
 #&gt; [31] "step_log"           "step_logit"         "step_lowerimpute"  
 #&gt; [34] "step_meanimpute"    "step_medianimpute"  "step_modeimpute"   
 #&gt; [37] "step_mutate"        "step_naomit"        "step_nnmf"         
-#&gt; [40] "step_novel"         "step_ns"            "step_num2factor"   
-#&gt; [43] "step_nzv"           "step_ordinalscore"  "step_other"        
-#&gt; [46] "step_pca"           "step_pls"           "step_poly"         
-#&gt; [49] "step_profile"       "step_range"         "step_ratio"        
-#&gt; [52] "step_regex"         "step_relu"          "step_rm"           
-#&gt; [55] "step_rollimpute"    "step_sample"        "step_scale"        
-#&gt; [58] "step_shuffle"       "step_slice"         "step_spatialsign"  
-#&gt; [61] "step_sqrt"          "step_string2factor" "step_unorder"      
-#&gt; [64] "step_upsample"      "step_window"        "step_YeoJohnson"   
-#&gt; [67] "step_zv"</code></pre>
+#&gt; [40] "step_normalize"     "step_novel"         "step_ns"           
+#&gt; [43] "step_num2factor"    "step_nzv"           "step_ordinalscore" 
+#&gt; [46] "step_other"         "step_pca"           "step_pls"          
+#&gt; [49] "step_poly"          "step_profile"       "step_range"        
+#&gt; [52] "step_ratio"         "step_regex"         "step_relu"         
+#&gt; [55] "step_rm"            "step_rollimpute"    "step_sample"       
+#&gt; [58] "step_scale"         "step_shuffle"       "step_slice"        
+#&gt; [61] "step_spatialsign"   "step_sqrt"          "step_string2factor"
+#&gt; [64] "step_unknown"       "step_unorder"       "step_upsample"     
+#&gt; [67] "step_window"        "step_YeoJohnson"    "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">

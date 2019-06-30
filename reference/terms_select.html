@@ -77,7 +77,7 @@ useful when creating custom steps." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
         </div>
       </div>
     </div>
@@ -155,7 +155,7 @@ useful when creating custom steps.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>terms_select</span>(<span class='no'>terms</span>, <span class='no'>info</span>)</pre>
+    <pre class="usage"><span class='fu'>terms_select</span>(<span class='no'>terms</span>, <span class='no'>info</span>, <span class='kw'>empty_fun</span> <span class='kw'>=</span> <span class='no'>abort_selection</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,6 +171,11 @@ quoted expressions. See <code><a href='https://rlang.r-lib.org/reference/quotati
 and <code>source</code> that represent the current state of the data. The
 function <code><a href='summary.recipe.html'>summary.recipe()</a></code> can be used to get this information
 from a recipe.</p></td>
+    </tr>
+    <tr>
+      <th>empty_fun</th>
+      <td><p>A function to execute when no terms are selected by the
+step. The default function throws an error with a message.</p></td>
     </tr>
     </table>
     

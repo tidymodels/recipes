@@ -33,9 +33,11 @@
 
 <meta property="og:title" content="Manually Alter Roles — roles" />
 
-<meta property="og:description" content="add_role() adds a new role to an existing variable in the recipe. It
-does not overwrite old roles, as a single variable can have multiple roles.
-update_role() alters an existing role in the recipe.
+<meta property="og:description" content="update_role() alters an existing role in the recipe or assigns an initial
+role to variables that do not yet have a declared role.
+add_role() adds an additional role to variables that already have a role
+in the recipe. It does not overwrite old roles, as a single variable can have
+multiple roles.
 remove_role() eliminates a single existing role in the recipe." />
 
 <meta property="og:image" content="/logo.png" />
@@ -79,7 +81,7 @@ remove_role() eliminates a single existing role in the recipe." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
         </div>
       </div>
     </div>
@@ -152,9 +154,11 @@ remove_role() eliminates a single existing role in the recipe." />
 
     <div class="ref-description">
     
-    <p><code>add_role()</code> adds a <em>new</em> role to an existing variable in the recipe. It
-does not overwrite old roles, as a single variable can have multiple roles.</p>
-<p><code>update_role()</code> alters an existing role in the recipe.</p>
+    <p><code>update_role()</code> alters an existing role in the recipe or assigns an initial
+role to variables that do not yet have a declared role.</p>
+<p><code>add_role()</code> adds an <em>additional</em> role to variables that already have a role
+in the recipe. It does not overwrite old roles, as a single variable can have
+multiple roles.</p>
 <p><code>remove_role()</code> eliminates a single existing role in the recipe.</p>
     
     </div>
@@ -201,10 +205,13 @@ variables have only a single role.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>With <code>add_role()</code>, if a variable is selected that already has the
-<code>new_role</code>, a warning is emitted and that variable is skipped so no
-duplicate roles are added. If no role currently exists (e.g. the current
-role is <code>NA</code>), an error is thrown; <code>update_role()</code> should be used instead.</p>
+    <p><code>update_role()</code> should be used when a variable doesn't currently have a role
+in the recipe, or to replace an <code>old_role</code> with a <code>new_role</code>. <code>add_role()</code>
+only adds additional roles to variables that already have roles and will
+throw an error when the current role is missing (i.e. <code>NA</code>).</p>
+<p>When using <code>add_role()</code>, if a variable is selected that already has the
+<code>new_role</code>, a warning is emitted and that variable is skipped so no duplicate
+roles are added.</p>
 <p>Adding or updating roles is a useful way to group certain variables that
 don't fall in the standard <code>"predictor"</code> bucket. You can perform a step
 on all of the variables that have a custom role with the selector
