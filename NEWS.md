@@ -5,6 +5,8 @@ Release driven by changes in `rlang`.
 
 ## Breaking Changes
 
+ * Since 2018, a warning has been issued when the wrong argument was used in `bake(recipe, newdata)`. The depredation period is over and `new_data` is officially required.  
+
  * Previously, if `step_other()` did _not_ collapse any levels, it would still add an "other" level to the factor. This would lump new factor levels into "other" when data were baked (as `step_novel()` does). This no longer occurs since it was inconsistent with `?step_other`, which said that 
 
  > "If no pooling is done the data are unmodified".
@@ -27,7 +29,7 @@ Release driven by changes in `rlang`.
 * `step_other()`'s print method only reports the variables with collapsed levels (as opposed to any column that was _tested_ to see if it needed collapsing). ([#338](https://github.com/tidymodels/recipes/issues/338)) 
 
  * `step_pca()`, `step_kpca()`, `step_ica()`, `step_nnmf()`, `step_pls()`, and `step_isomap()` now accept zero components. In this case, the original data are returned. 
-
+ 
 
 # `recipes` 0.1.5
 
