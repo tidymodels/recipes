@@ -147,7 +147,7 @@ tidy(dummies, number = 1)
 \code{\link[=step_novel]{step_novel()}}
 }
 \concept{dummy_variables}
-\concept{model_specification
-dummy_variables variable_encodings}
+\concept{model_specification}
 \concept{preprocessing}
+\concept{variable_encodings}
 \keyword{datagen}

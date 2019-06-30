@@ -29,7 +29,7 @@
 #' @concept preprocessing
 #' @concept model_specification
 #' @concept variable_encodings
-#'  dates
+#' @concept dates
 #' @export
 #' @details Unlike other steps, `step_holiday` does
 #'  *not* remove the original date variables.

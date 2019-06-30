@@ -35,7 +35,8 @@
 #' @concept preprocessing
 #' @concept dummy_variables
 #' @concept model_specification
-#'  dummy_variables variable_encodings
+#' @concept dummy_variables
+#' @concept variable_encodings
 #' @export
 #' @details `step_dummy` will create a set of binary dummy
 #'  variables from a factor variable. For example, if an unordered
