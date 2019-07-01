@@ -1,4 +1,4 @@
-#' Centering Numeric Data
+#' Centering numeric data
 #'
 #' `step_center` creates a *specification* of a recipe
 #'  step that will normalize numeric data to have a mean of zero.

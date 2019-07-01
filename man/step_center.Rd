@@ -3,7 +3,7 @@
 \name{step_center}
 \alias{step_center}
 \alias{tidy.step_center}
-\title{Centering Numeric Data}
+\title{Centering numeric data}
 \usage{
 step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
   na_rm = TRUE, skip = FALSE, id = rand_id("center"))
