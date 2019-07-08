@@ -18,6 +18,9 @@ Release driven by changes in `rlang`.
  
 ## Other Changes:
 
+* If `threshold` argument of `step_other` is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the "other" category. [#289](https://github.com/tidymodels/recipes/issues/289)
+
+
  * `step_knnimpute()` can now pass two options to the underlying knn code, including the number of threads ([#323](https://github.com/tidymodels/recipes/issues/323)). 
 
 * Due to changes by CRAN, `step_nnmf()` only works on versions of R >= 3.6.0 due to dependency issues. 
