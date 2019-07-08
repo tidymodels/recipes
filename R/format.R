@@ -1,6 +1,10 @@
 ## ancillary step functions
 
 ## then 9 is to keep space for "[trained]"
+#' @param x
+#' @param sep
+#' @param width
+#' @return
 #' @export
 format_ch_vec <-
   function(x,
@@ -20,6 +24,9 @@ format_ch_vec <-
     paste0(x, collapse = sep)
   }
 
+#' @param x
+#' @param width
+#' @return
 #' @export
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
