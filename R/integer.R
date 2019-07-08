@@ -179,7 +179,7 @@ print.step_integer <-
       cat(format_ch_vec(names(x$key), width = width))
     } else {
       cat("Integer encoding for ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

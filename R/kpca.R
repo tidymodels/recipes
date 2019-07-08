@@ -221,7 +221,7 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
     }
   } else {
     cat("Kernel PCA extraction with ", sep = "")
-    cat(format_selectors(x$terms, wdth = width))
+    cat(format_selectors(x$terms, width = width))
   }
   if (x$trained) cat(" [trained]\n") else cat("\n")
   invisible(x)

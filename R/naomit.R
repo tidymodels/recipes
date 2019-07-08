@@ -36,7 +36,7 @@
 #'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE, 
+step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
                         columns = NULL, skip = FALSE,
                         id = rand_id("naomit")) {
   add_step(
@@ -84,7 +84,7 @@ bake.step_naomit <- function(object, new_data, ...) {
 print.step_naomit <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Removing rows with NA values in ", sep = "")
-    cat(format_selectors(x$terms, wdth = width))
+    cat(format_selectors(x$terms, width = width))
     cat("\n")
     invisible(x)
   }

@@ -100,7 +100,7 @@ print.step_rm <-
         cat("No variables were removed")
     } else {
       cat("Delete terms ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

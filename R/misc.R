@@ -354,7 +354,7 @@ printer <- function(tr_obj = NULL,
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
   } else
-    txt <- format_selectors(untr_obj, wdth = width)
+    txt <- format_selectors(untr_obj, width = width)
   if (nchar(txt) == 0)
     txt <- "<none>"
   cat(txt)

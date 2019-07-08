@@ -149,7 +149,7 @@ print.step_nzv <-
         cat("Sparse, unbalanced variable filter removed no terms")
     } else {
       cat("Sparse, unbalanced variable filter on ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")
