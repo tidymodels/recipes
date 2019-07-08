@@ -1,3 +1,11 @@
+# `recipes` 0.1.7(?)
+`format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
+
+
+## Breaking Changes
+`format_selector()`'s `wdth` argument has been renamed to `width` 
+([#250](https://github.com/tidymodels/recipes/issues/250)).
+
 
 # `recipes` 0.1.6
 
