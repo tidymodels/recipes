@@ -24,3 +24,6 @@ around \code{prep} that can be used to do
 this. See the vignette on "Recipes and rsample" for an
 example.
 }
+\details{
+\code{prepper()} sets the underlying \code{prep()} argument \code{fresh} to \code{TRUE}.
+}

@@ -9,11 +9,15 @@
 #'  around `prep` that can be used to do
 #'  this. See the vignette on "Recipes and rsample" for an
 #'  example.
+#'
+#' @details
+#' `prepper()` sets the underlying `prep()` argument `fresh` to `TRUE`.
+#'
 #' @param split_obj An `rplit` object
 #' @param recipe An untrained `recipe` object.
 #' @param ... Arguments to pass to `prep` such as `verbose` or `retain`.
 #' @export
 prepper <- function(split_obj, recipe, ...) {
-  prep(recipe, training = rsample::analysis(split_obj), ...)
+  prep(recipe, training = rsample::analysis(split_obj), fresh = TRUE, ...)
 }
 # alternate names: chef? dr_prepper?
