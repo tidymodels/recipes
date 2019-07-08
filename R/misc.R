@@ -78,6 +78,7 @@ get_rhs_terms <- function(x) x
 ## ancillary step functions
 
 ## then 9 is to keep space for "[trained]"
+#' @export
 format_ch_vec <-
   function(x,
            sep = ", ",
@@ -96,14 +97,15 @@ format_ch_vec <-
     paste0(x, collapse = sep)
   }
 
-format_selectors <- function(x, wdth = options()$width - 9, ...) {
+#' @export
+format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
   x_items <- lapply(x, function(x) {
     as.character(get_expr(x))
   })
 
   x_items <- unlist(x_items)
-  format_ch_vec(x_items, width = wdth, sep = ", ")
+  format_ch_vec(x_items, width = width, sep = ", ")
 }
 
 terms.recipe <- function(x, ...)
