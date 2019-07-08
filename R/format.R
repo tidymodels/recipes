@@ -27,6 +27,9 @@ format_ch_vec <-
 #' @param x
 #' @param width
 #' @return
+#### Unclear on if adding this @importFrom is the right call. rlang package is
+#### imported, but other rlang functions are also explicitly imported elsewhere.
+#' @importFrom rlang get_expr
 #' @export
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
