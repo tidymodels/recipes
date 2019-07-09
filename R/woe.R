@@ -163,15 +163,6 @@ step_woe_new <- function(terms, role, trained, outcome, dictionary, Laplace, pre
 #' @return a tibble with counts, proportions and woe.
 #'  Warning: woe can possibly be -Inf. Use 'Laplace' arg to avoid that.
 #'
-#' @examples
-#'
-#' outc <- rep(c("A", "B"), 20)
-#' pred <- sample(c("X", "Y", "Z", "W"), size = 40, replace = TRUE)
-#' woe_table(pred, outc)
-#'
-#' # offset avoid Inf/-Inf
-#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 1e-6)
-#' woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
 #'
 #' @references Kullback, S. (1959). *Information Theory and Statistics.* Wiley, New York.
 #'

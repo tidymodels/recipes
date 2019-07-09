@@ -23,17 +23,6 @@ Warning: woe can possibly be -Inf. Use 'Laplace' arg to avoid that.
 Calculates some summaries and the WoE (Weight of Evidence) between a binary
 outcome and a given predictor variable. Used to biuld the dictionary.
 }
-\examples{
-
-outc <- rep(c("A", "B"), 20)
-pred <- sample(c("X", "Y", "Z", "W"), size = 40, replace = TRUE)
-woe_table(pred, outc)
-
-# offset avoid Inf/-Inf
-woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 1e-6)
-woe_table(c("A", "A", "B", "B"), c(0, 0, 0, 1), Laplace = 0)
-
-}
 \references{
 Kullback, S. (1959). \emph{Information Theory and Statistics.} Wiley, New York.
 
