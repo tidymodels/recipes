@@ -1,3 +1,6 @@
+# `recipes` 0.1.7
+
+* `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
 
 # `recipes` 0.1.6
 
