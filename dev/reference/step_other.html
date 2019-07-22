@@ -78,7 +78,7 @@ into an &quot;other&quot; category." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.5.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.6.9000</span>
         </div>
       </div>
     </div>
@@ -191,9 +191,11 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A single numeric value between 0 (inclusive)
-and 1 for pooling. Factor levels whose rate of occurrence in
-the training set are below <code>threshold</code> will be "othered".</p></td>
+      <td><p>A numeric value between 0 and 1 or an integer greater or
+equal to one.  If it's less than one then factor levels whose rate of
+occurrence in the training set are below <code>threshold</code> will be "othered". If
+it's greater or equal to one then it's treated as a frequency and factor
+levels that occur less then <code>threshold</code> times will be "othered".</p></td>
     </tr>
     <tr>
       <th>other</th>
@@ -234,9 +236,10 @@ levels that were not pulled into "other")</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The overall proportion of the categories are computed. The "other"
-category is used in place of any categorical levels whose individual
-proportion in the training set is less than <code>threshold</code>.</p>
+    <p>The overall proportion (or total counts) of the categories are
+computed. The "other" category is used in place of any categorical levels
+whose individual proportion (or frequency) in the training set is less than
+<code>threshold</code>.</p>
 <p>If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of <code>strings_as_factors</code> in
 <code><a href='prep.html'>prep.recipe()</a></code>). Otherwise, a factor is always returned with
@@ -331,7 +334,26 @@ contained in the training set), the other category is assigned.</p>
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>tahiti</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   diet              location    
 #&gt;   &lt;fct&gt;             &lt;fct&gt;       
-#&gt; 1 strictly anything other values</div></pre>
+#&gt; 1 strictly anything other values</div><div class='input'>
+<span class='co'># threshold as a frequency</span>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2000</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 3
+#&gt;   terms    retained          id         
+#&gt;   &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;      
+#&gt; 1 diet     anything          other_p2QWY
+#&gt; 2 diet     mostly anything   other_p2QWY
+#&gt; 3 diet     strictly anything other_p2QWY
+#&gt; 4 location berkeley          other_p2QWY
+#&gt; 5 location oakland           other_p2QWY
+#&gt; 6 location san francisco     other_p2QWY</div><div class='input'># compare it to
+# okc_tr %>% count(diet, sort = TRUE) %>% top_n(4)
+# okc_tr %>% count(location, sort = TRUE) %>% top_n(3)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

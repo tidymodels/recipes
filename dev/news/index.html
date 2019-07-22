@@ -74,7 +74,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.5.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.6.9000</span>
         </div>
       </div>
     </div>
@@ -144,14 +144,27 @@
       <small>Source: <a href='https://github.com/tidymodels/recipes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="recipes-0-1-6-9000" class="section level1">
+<h1 class="page-header">
+<a href="#recipes-0-1-6-9000" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.6.9000</h1>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes:</h2>
+<ul>
+<li>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298"><a href='https://github.com/tidymodels/recipes/issues/298'>#298</a></a>). This will also occur when the selectors select no columns.</li>
+</ul>
+</div>
+</div>
     <div id="recipes-0-1-6" class="section level1">
 <h1 class="page-header">
-<a href="#recipes-0-1-6" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.6</h1>
+<a href="#recipes-0-1-6" class="anchor"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
+<p>Release driven by changes in <code>rlang</code>.</p>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
 <ul>
-<li>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</li>
+<li><p>Since 2018, a warning has been issued when the wrong argument was used in <code><a href="../reference/bake.html">bake(recipe, newdata)</a></code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
+<li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
 </ul>
 <blockquote>
 <p>“If no pooling is done the data are unmodified”.</p>
@@ -162,15 +175,18 @@
 <a href="#new-operations" class="anchor"></a>New Operations:</h2>
 <ul>
 <li>
-<code>step_normalize</code> centers and scales the data (if you are, like Max, too lazy to use two separate steps).</li>
+<code><a href="../reference/step_normalize.html">step_normalize()</a></code> centers and scales the data (if you are, like Max, too lazy to use two separate steps).</li>
+<li>
+<code><a href="../reference/step_unknown.html">step_unknown()</a></code> will convert missing data in categorical columns to “unknown” and update factor levels.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes:</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes:</h2>
 <ul>
-<li><p><code>step_knnimpute</code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
-<li><p>Due to changes by CRAN, <code>step_nnmf</code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
+<li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289"><a href='https://github.com/tidymodels/recipes/issues/289'>#289</a></a></p></li>
+<li><p><code><a href="../reference/step_knnimpute.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
+<li><p>Due to changes by CRAN, <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> are now tolerant to cases where that step’s selectors do not capture any columns. In this case, no modifications to the data are made. (<a href="https://github.com/tidymodels/recipes/issues/290"><a href='https://github.com/tidymodels/recipes/issues/290'>#290</a></a>, <a href="https://github.com/tidymodels/recipes/issues/348"><a href='https://github.com/tidymodels/recipes/issues/348'>#348</a></a>)</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328"><a href='https://github.com/tidymodels/recipes/issues/328'>#328</a></a>)</p></li>
 <li><p><code><a href="../reference/step_other.html">step_other()</a></code>’s print method only reports the variables with collapsed levels (as opposed to any column that was <em>tested</em> to see if it needed collapsing). (<a href="https://github.com/tidymodels/recipes/issues/338"><a href='https://github.com/tidymodels/recipes/issues/338'>#338</a></a>)</p></li>
@@ -182,9 +198,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-1-5" class="anchor"></a><small> 2019-03-21 </small><code>recipes</code> 0.1.5</h1>
 <p>Small release driven by changes in <code><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample()</a></code> in the current r-devel.</p>
-<div id="other-changes-1" class="section level2">
+<div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes:</h2>
+<a href="#other-changes-2" class="anchor"></a>Other Changes:</h2>
 <ul>
 <li><p>A new vignette discussing roles has been added.</p></li>
 <li><p>To provide infrastructure for finalizing varying parameters, an <code><a href="https://www.rdocumentation.org/packages/stats/topics/update">update()</a></code> method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.</p></li>
@@ -255,9 +271,9 @@
 <code>step_nnmf</code> computes the non-negative matrix factorization for data.</li>
 </ul>
 </div>
-<div id="other-changes-2" class="section level2">
+<div id="other-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-2" class="anchor"></a>Other Changes:</h2>
+<a href="#other-changes-3" class="anchor"></a>Other Changes:</h2>
 <ul>
 <li>The <code>rsample</code> function <code>prepper</code> was moved to <code>recipes</code> <a href="https://github.com/tidymodels/rsample/issues/48">(issue)</a>.</li>
 <li>A number of packages were moved from “Imports” to “Suggests” to reduce the install footprint. A function was added to prompt the user to install the needed packages when the relevant steps are invoked.</li>
@@ -295,9 +311,9 @@
 <li><p><code>step_pls</code> can conduct supervised feature extraction for predictors.</p></li>
 </ul>
 </div>
-<div id="other-changes-3" class="section level2">
+<div id="other-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-3" class="anchor"></a>Other Changes:</h2>
+<a href="#other-changes-4" class="anchor"></a>Other Changes:</h2>
 <ul>
 <li><p><code>step_log</code> gained an <code>offset</code> argument.</p></li>
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
@@ -355,9 +371,9 @@
 <li><p><code>step_lag</code> allows for the creation of lagged predictor columns.</p></li>
 </ul>
 </div>
-<div id="other-changes-4" class="section level2">
+<div id="other-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-4" class="anchor"></a>Other Changes:</h2>
+<a href="#other-changes-5" class="anchor"></a>Other Changes:</h2>
 <ul>
 <li>
 <code>step_spatialsign</code> now has the option of removing missing data prior to computing the norm.</li>
@@ -432,9 +448,9 @@
 <code>step_regex</code> applies a regular expression to a character or factor vector to create dummy variables.</li>
 </ul>
 </div>
-<div id="other-changes-5" class="section level2">
+<div id="other-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-5" class="anchor"></a>Other changes:</h2>
+<a href="#other-changes-6" class="anchor"></a>Other changes:</h2>
 <ul>
 <li>
 <code>step_dummy</code> and <code>step_interact</code> do a better job of respecting missing values in the data set.</li>
@@ -457,6 +473,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#recipes-0-1-6-9000">0.1.6.9000</a></li>
         <li><a href="#recipes-0-1-6">0.1.6</a></li>
         <li><a href="#recipes-0-1-5">0.1.5</a></li>
         <li><a href="#recipes-0-1-4">0.1.4</a></li>

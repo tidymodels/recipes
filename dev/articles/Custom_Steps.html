@@ -42,7 +42,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.5.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.6.9000</span>
         </div>
       </div>
     </div>
@@ -142,8 +142,8 @@
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; [55] "step_rm"            "step_rollimpute"    "step_sample"       </span></a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; [58] "step_scale"         "step_shuffle"       "step_slice"        </span></a>
 <a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; [61] "step_spatialsign"   "step_sqrt"          "step_string2factor"</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; [64] "step_unorder"       "step_upsample"      "step_window"       </span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; [67] "step_YeoJohnson"    "step_zv"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; [64] "step_unknown"       "step_unorder"       "step_upsample"     </span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; [67] "step_window"        "step_YeoJohnson"    "step_zv"</span></a></code></pre></div>
 <p>You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/tidymodels/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/tidymodels/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
 <p>For checks, the process is very similar. Notes on this are given at the end of this document.</p>
 <div id="a-new-step-definition" class="section level1">
