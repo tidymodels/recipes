@@ -144,22 +144,21 @@
       <small>Source: <a href='https://github.com/tidymodels/recipes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="recipes-0-1-7" class="section level1">
-<h1 class="page-header">
-<a href="#recipes-0-1-7" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.7</h1>
-<ul>
-<li>
-<code>check_new_values</code> breaks <code>bake</code> if variable containes values that were not observed in the train set (contributed by Edwin Thoen)</li>
-</ul>
-</div>
     <div id="recipes-0-1-6-9000" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-6-9000" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.6.9000</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<p><code>format_selector()</code>’s <code>wdth</code> argument has been renamed to <code>width</code> (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p>
+</div>
 <div id="other-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other Changes:</h2>
 <ul>
-<li>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298"><a href='https://github.com/tidymodels/recipes/issues/298'>#298</a></a>). This will also occur when the selectors select no columns.</li>
+<li><p><code>format_ch_vec()</code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p></li>
+<li><p><code>check_new_values</code> breaks <code>bake</code> if variable containes values that were not observed in the train set (contributed by Edwin Thoen)</p></li>
+<li><p>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298"><a href='https://github.com/tidymodels/recipes/issues/298'>#298</a></a>). This will also occur when the selectors select no columns.</p></li>
 </ul>
 </div>
 </div>
@@ -167,9 +166,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-1-6" class="anchor"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
 <p>Release driven by changes in <code>rlang</code>.</p>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li><p>Since 2018, a warning has been issued when the wrong argument was used in <code><a href="../reference/bake.html">bake(recipe, newdata)</a></code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
 <li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
@@ -217,9 +216,9 @@
 <li><p>Set the embedded environment to NULL in <code>prep.step_dummy</code> to reduce the file size of serialized recipe class objects when using <code>saveRDS</code>.</p></li>
 </ul>
 </div>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
 </ul>
@@ -235,9 +234,9 @@
     <div id="recipes-0-1-4" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-4" class="anchor"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>) and the general tidyverse naming conventions.
 <ul>
@@ -481,7 +480,6 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#recipes-0-1-7">0.1.7</a></li>
         <li><a href="#recipes-0-1-6-9000">0.1.6.9000</a></li>
         <li><a href="#recipes-0-1-6">0.1.6</a></li>
         <li><a href="#recipes-0-1-5">0.1.5</a></li>
