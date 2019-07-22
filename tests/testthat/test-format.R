@@ -1,4 +1,4 @@
-max_width <- width = options()$width - 9
+max_width <- options()$width - 9
 
 test_that("format_ch_vec handles short vectors", {
   expect_equal(format_ch_vec(as.character(1:3)), "1, 2, 3")
