@@ -138,32 +138,36 @@
 </ul>
 <p>Here is a simple recipe:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">imbal_rec &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> imbal_data) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../../reference/step_downsample.html">step_downsample</a></span>(Class)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">imbal_rec &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> imbal_data) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../../reference/step_downsample.html">step_downsample</a></span>(Class)</a></code></pre></div>
 <p>Basic cross-validation is used to resample the model:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">5732</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">cv_folds &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/vfold_cv">vfold_cv</a></span>(imbal_data, <span class="dt">strata =</span> <span class="st">"Class"</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Warning: package 'rsample' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">5732</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">cv_folds &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/vfold_cv">vfold_cv</a></span>(imbal_data, <span class="dt">strata =</span> <span class="st">"Class"</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
 <p>An additional column is added to the data that contains the trained recipes for each resample:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Data Recipe</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; Inputs:</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;       role #variables</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;    outcome          1</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  predictor         15</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Training data contained 900 data points and no missing data.</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; Operations:</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; Down-sampling based on Class [trained]</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Warning: package 'purrr' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">cv_folds &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Data Recipe</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Inputs:</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;       role #variables</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;    outcome          1</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  predictor         15</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Training data contained 900 data points and no missing data.</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; Operations:</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; Down-sampling based on Class [trained]</span></a></code></pre></div>
 <p>The model that will be used to demonstrate subsampling is <a href="https://en.wikipedia.org/wiki/Quadratic_classifier#Quadratic_discriminant_analysis">quadratic discriminant analysis</a> via the <code>MASS</code> package. A function will be used to train the model and to produce class probabilities as well as hard class predictions using the default 50% cutoff. When a recipe is passed to the function, down-sampling will be applied. If no recipe is given, the data are used to fit the model as-is:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(MASS)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>

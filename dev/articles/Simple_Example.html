@@ -132,15 +132,18 @@
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"credit_data"</span>)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">55</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; Warning: package 'rsample' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.6.1</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"credit_data"</span>)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">55</span>)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
 <p>Note that there are some missing values in these data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(credit_train, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x)), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">numeric</a></span>(<span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></a>
@@ -333,8 +336,8 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">trained_rec &lt;-<span class="st"> </span>trained_rec <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/check_missing.html">check_missing</a></span>(<span class="kw">contains</span>(<span class="st">"Marital"</span>))</a></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
-<pre><code>#&gt; [1] "check_cols"    "check_missing" "check_name"    "check_range"  
-#&gt; [5] "check_type"</code></pre>
+<pre><code>#&gt; [1] "check_cols"       "check_missing"    "check_name"      
+#&gt; [4] "check_new_values" "check_range"      "check_type"</code></pre>
 </div>
   </div>
 
