@@ -203,3 +203,59 @@ test_that('printing', {
   expect_output(prep(rec, training = okc_tr, verbose = TRUE))
 })
 
+test_that(
+  desc = "if threshold argument is an integer greater than one
+          then it's treated as a frequency",
+  code = {
+    others <- rec %>% step_other(diet, location, threshold = 3000, other = "another", id = "")
+
+    tidy_exp_un <- tibble(
+      terms = c("diet", "location"),
+      retained = rep(NA_character_, 2),
+      id = ""
+    )
+
+    expect_equal(tidy_exp_un, tidy(others, number = 1))
+
+    others <- prep(others, training = okc_tr)
+
+    tidy_exp_tr <- tibble(
+      terms = rep(c("diet", "location"), c(4, 3)),
+      retained = c(
+        "anything", "mostly anything", "mostly vegetarian",
+        "strictly anything", "berkeley",
+        "oakland", "san francisco"),
+      id = ""
+    )
+    expect_equal(tidy_exp_tr, tidy(others, number = 1))
+  }
+)
+
+test_that(
+  desc = "if the threshold argument is greather than one then it should be
+          an integer(ish)",
+  code = {
+    expect_error(rec %>% step_other(diet, location, threshold = 3.14))
+  }
+)
+
+test_that(
+  desc = "if threshold is equal to 1 then the function removes every factor
+          level that is not present in the data",
+  code = {
+    fake_data <- data.frame(
+      test_factor = factor(c("A", "B"), levels = c("A", "B", "C"))
+    )
+
+    rec <- recipe(~ test_factor, data = fake_data)
+    others <- rec %>% step_other(test_factor, threshold = 1, id = "") %>% prep()
+
+    tidy_exp_tr <- tibble(
+      terms = rep("test_factor", 2),
+      retained = c("A", "B"),
+      id = ""
+    )
+    expect_equal(tidy_exp_tr, tidy(others, number = 1))
+  }
+)
+

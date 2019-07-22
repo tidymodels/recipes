@@ -12,9 +12,11 @@
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param threshold A single numeric value between 0 (inclusive)
-#'  and 1 for pooling. Factor levels whose rate of occurrence in
-#'  the training set are below `threshold` will be "othered".
+#' @param threshold A numeric value between 0 and 1 or an integer greater or
+#'  equal to one.  If it's less than one then factor levels whose rate of
+#'  occurrence in the training set are below `threshold` will be "othered". If
+#'  it's greater or equal to one then it's treated as a frequency and factor
+#'  levels that occur less then `threshold` times will be "othered".
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
@@ -28,9 +30,10 @@
 #' @concept preprocessing
 #' @concept factors
 #' @export
-#' @details The overall proportion of the categories are computed. The "other"
-#'   category is used in place of any categorical levels whose individual
-#'   proportion in the training set is less than `threshold`.
+#' @details The overall proportion (or total counts) of the categories are
+#'  computed. The "other" category is used in place of any categorical levels
+#'  whose individual proportion (or frequency) in the training set is less than
+#'  `threshold`.
 #'
 #' If no pooling is done the data are unmodified (although character data may
 #'   be changed to factors based on the value of `strings_as_factors` in
@@ -77,6 +80,19 @@
 #' tahiti <- okc[1,]
 #' tahiti$location <- "a magical place"
 #' bake(rec, tahiti)
+#'
+#' # threshold as a frequency
+#' rec <- recipe(~ diet + location, data = okc_tr)
+#'
+#' rec <- rec %>%
+#'   step_other(diet, location, threshold = 2000, other = "other values")
+#' rec <- prep(rec, training = okc_tr)
+#'
+#' tidy(rec, number = 1)
+#' # compare it to
+#' # okc_tr %>% count(diet, sort = TRUE) %>% top_n(4)
+#' # okc_tr %>% count(location, sort = TRUE) %>% top_n(3)
+
 step_other <-
   function(recipe,
            ...,
@@ -89,8 +105,8 @@ step_other <-
            id = rand_id("other")) {
     if (threshold <= 0)
       stop("`threshold` should be greater than zero", call. = FALSE)
-    if (threshold >= 1)
-      stop("`threshold` should be less than one", call. = FALSE)
+    if (threshold >= 1 && !is_integerish(threshold))
+      stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
     add_step(
       recipe,
       step_other_new(
@@ -129,7 +145,7 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   if (length(col_names) > 0) {
     objects <- lapply(training[, col_names],
                       keep_levels,
-                      prop = x$threshold,
+                      threshold = x$threshold,
                       other = x$other)
   } else {
     objects <- NULL
@@ -197,12 +213,17 @@ print.step_other <-
     invisible(x)
   }
 
-keep_levels <- function(x, prop = .1, other = "other") {
+keep_levels <- function(x, threshold = .1, other = "other") {
   if (!is.factor(x))
     x <- factor(x)
-  xtab <-
-    sort(table(x, useNA = "no"), decreasing = TRUE) / sum(!is.na(x))
-  dropped <- which(xtab < prop)
+
+  xtab <- sort(table(x, useNA = "no"), decreasing = TRUE)
+
+  if (threshold < 1) {
+    xtab <- xtab / sum(!is.na(x))
+  }
+
+  dropped <- which(xtab < threshold)
   orig <- levels(x)
 
   if (length(dropped) > 0)
