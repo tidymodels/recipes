@@ -49,7 +49,7 @@ Suggests:
     rpart,
     rsample,
     RSpectra,
-    testthat
+    testthat (>= 2.1.0)
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8

@@ -129,7 +129,7 @@ print.step_lincomb <-
         cat("Linear combination filter removed no terms")
     } else {
       cat("Linear combination filter on ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

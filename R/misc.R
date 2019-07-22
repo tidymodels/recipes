@@ -75,36 +75,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 get_lhs_terms <- function(x) x
 get_rhs_terms <- function(x) x
 
-## ancillary step functions
 
-## then 9 is to keep space for "[trained]"
-format_ch_vec <-
-  function(x,
-           sep = ", ",
-           width = options()$width - 9) {
-    widths <- nchar(x)
-    sep_wd <- nchar(sep)
-    adj_wd <- widths + sep_wd
-    if (sum(adj_wd) >= width) {
-      keepers <- max(which(cumsum(adj_wd) < width)) - 1
-      if (length(keepers) == 0 || keepers < 1) {
-        x <- paste(length(x), "items")
-      } else {
-        x <- c(x[1:keepers], "...")
-      }
-    }
-    paste0(x, collapse = sep)
-  }
-
-format_selectors <- function(x, wdth = options()$width - 9, ...) {
-  ## convert to character without the leading ~
-  x_items <- lapply(x, function(x) {
-    as.character(get_expr(x))
-  })
-
-  x_items <- unlist(x_items)
-  format_ch_vec(x_items, width = wdth, sep = ", ")
-}
 
 terms.recipe <- function(x, ...)
   x$term_info
@@ -352,7 +323,7 @@ printer <- function(tr_obj = NULL,
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
   } else
-    txt <- format_selectors(untr_obj, wdth = width)
+    txt <- format_selectors(untr_obj, width = width)
   if (nchar(txt) == 0)
     txt <- "<none>"
   cat(txt)

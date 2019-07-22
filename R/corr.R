@@ -160,7 +160,7 @@ print.step_corr <-
         cat("Correlation filter removed no terms")
     } else {
       cat("Correlation filter on ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

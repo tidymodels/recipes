@@ -320,7 +320,7 @@ print.step_dummy <-
       }
     } else {
       cat("Dummy variables from ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

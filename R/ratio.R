@@ -153,7 +153,7 @@ print.step_ratio <-
       vars <- c(unique(x$columns$top), unique(x$columns$bottom))
       cat(format_ch_vec(vars, width = width))
     } else
-      cat(format_selectors(c(x$terms, x$denom), wdth = width))
+      cat(format_selectors(c(x$terms, x$denom), width = width))
     if (x$trained)
       cat(" [trained]\n")
     else
