@@ -121,3 +121,14 @@ test_that("bake without newdata", {
 
   expect_error(bake(rec, newdata = biomass))
 })
+
+
+test_that("no outcomes", {
+  rec <-  recipe(~ ., data = biomass) %>%
+    step_center(all_numeric()) %>%
+    step_scale(all_numeric()) %>%
+    prep(training = biomass, retain = TRUE)
+
+  expect_equal(juice(rec, all_outcomes()), tibble::tibble())
+  expect_equal(bake(rec, new_data = head(biomass), all_outcomes()), tibble::tibble())
+})

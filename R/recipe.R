@@ -520,17 +520,22 @@ bake <- function(object, ...)
 #' @importFrom utils object.size
 #' @export
 bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
-  if (!fully_trained(object))
+  if (!fully_trained(object)) {
     stop("At least one step has not been trained. Please ",
          "run `prep`.",
          call. = FALSE)
+  }
 
-  if (!any(composition == formats))
+  if (!any(composition == formats)) {
     stop("`composition` should be one of: ",
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
+  }
 
   terms <- quos(...)
+  if (is_empty(terms)) {
+    terms <- quos(everything())
+  }
 
   # In case someone used the deprecated `newdata`:
   if (is.null(new_data) || is.null(ncol(new_data))) {
@@ -542,45 +547,54 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
     }
   }
 
-  if (!is_tibble(new_data)) new_data <- as_tibble(new_data)
+  if (!is_tibble(new_data)) {
+    new_data <- as_tibble(new_data)
+  }
 
   check_nominal_type(new_data, object$orig_lvls)
-
-
-  if (is_empty(terms))
-    terms <- quos(everything())
 
   # Determine return variables. The context (ie. `info`) can
   # change depending on whether a skip step was used. If so, we
   # use an alternate info tibble that has all possible terms
   # in it.
   has_skip <- vapply(object$steps, function(x) x$skip, logical(1))
+
   if (any(has_skip)) {
-    keepers <- terms_select(terms = terms, info = object$last_term_info)
+    keepers <-
+      terms_select(terms = terms,
+                   info = object$last_term_info,
+                   empty_fun = passover)
   } else {
-    keepers <- terms_select(terms = terms, info = object$term_info)
+    keepers <-
+      terms_select(terms = terms,
+                   info = object$term_info,
+                   empty_fun = passover)
   }
 
-  for (i in seq(along = object$steps)) {
-    if (!is_skipable(object$steps[[i]])) {
-      new_data <- bake(object$steps[[i]], new_data = new_data)
-      if (!is_tibble(new_data))
-        new_data <- as_tibble(new_data)
+  if (length(keepers) > 0) {
+    for (i in seq(along = object$steps)) {
+      if (!is_skipable(object$steps[[i]])) {
+        new_data <- bake(object$steps[[i]], new_data = new_data)
+        if (!is_tibble(new_data))
+          new_data <- as_tibble(new_data)
+      }
     }
-  }
 
-  new_data <- new_data[, names(new_data) %in% keepers]
-  ## The levels are not null when no nominal data are present or
-  ## if strings_as_factors = FALSE in `prep`
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[keepers]
-    check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
-      new_data <- strings2factors(new_data, var_levels)
+    new_data <- new_data[, names(new_data) %in% keepers]
+    ## The levels are not null when no nominal data are present or
+    ## if strings_as_factors = FALSE in `prep`
+    if (!is.null(object$levels)) {
+      var_levels <- object$levels
+      var_levels <- var_levels[keepers]
+      check_values <-
+        vapply(var_levels, function(x)
+          (!all(is.na(x))), c(all = TRUE))
+      var_levels <- var_levels[check_values]
+      if (length(var_levels) > 0)
+        new_data <- strings2factors(new_data, var_levels)
+    }
+  } else {
+    new_data <- tibble()
   }
 
   if (composition == "dgCMatrix") {
@@ -719,37 +733,48 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
-  if (!fully_trained(object))
+  if (!fully_trained(object)) {
     stop("At least one step has not been trained. Please ",
          "run `prep`.",
          call. = FALSE)
+  }
 
-  if(!isTRUE(object$retained))
+  if (!isTRUE(object$retained)) {
     stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
          call. = FALSE)
+  }
 
-  if (!any(composition == formats))
+  if (!any(composition == formats)) {
     stop("`composition` should be one of: ",
          paste0("'", formats, "'", collapse = ","),
          call. = FALSE)
+  }
 
   terms <- quos(...)
-  if (is_empty(terms))
+  if (is_empty(terms)) {
     terms <- quos(everything())
-  keepers <- terms_select(terms = terms, info = object$term_info)
+  }
+  keepers <-
+    terms_select(terms = terms,
+                 info = object$term_info,
+                 empty_fun = passover)
 
-  new_data <- object$template[, names(object$template) %in% keepers]
+  if (length(keepers) > 0) {
+    new_data <- object$template[, names(object$template) %in% keepers]
 
-  ## Since most models require factors, do the conversion from character
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[keepers]
-    check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
-      new_data <- strings2factors(new_data, var_levels)
+    ## Since most models require factors, do the conversion from character
+    if (!is.null(object$levels)) {
+      var_levels <- object$levels
+      var_levels <- var_levels[keepers]
+      check_values <-
+        vapply(var_levels, function(x)
+          (!all(is.na(x))), c(all = TRUE))
+      var_levels <- var_levels[check_values]
+      if (length(var_levels) > 0)
+        new_data <- strings2factors(new_data, var_levels)
+    }
+  } else {
+    new_data <- tibble()
   }
 
   if (composition == "dgCMatrix") {
