@@ -1,13 +1,17 @@
-# `recipes` 0.1.7
+#  `recipes` 0.1.6.9000
 
-* `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
+## Breaking Changes
+`format_selector()`'s `wdth` argument has been renamed to `width` 
+([#250](https://github.com/tidymodels/recipes/issues/250)).
 
-# `recipes` 0.1.6.9000
-
- 
 ## Other Changes:
 
+ * `format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
+
+ * `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
+ 
  * When no outcomes are in the recipe, using `juice(object, all_outcomes()` and `bake(object, new_data, all_outcomes()` will return a tibble with zero rows and zero columns (instead of failing). ([#298](https://github.com/tidymodels/recipes/issues/298)). This will also occur when the selectors select no columns. 
+
 
 # `recipes` 0.1.6
 

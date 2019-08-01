@@ -118,7 +118,7 @@ print.step_zv <-
         cat("Zero variance filter removed no terms")
     } else {
       cat("Zero variance filter on ", sep = "")
-      cat(format_selectors(x$terms, wdth = width))
+      cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
       cat(" [trained]\n")

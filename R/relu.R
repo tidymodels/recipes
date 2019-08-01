@@ -154,7 +154,7 @@ bake.step_relu <- function(object, new_data, ...) {
 print.step_relu <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Adding relu transform for ", sep = "")
-    cat(format_selectors(x$terms, wdth = width))
+    cat(format_selectors(x$terms, width = width))
     if (x$trained)
       cat(" [trained]\n")
     else
