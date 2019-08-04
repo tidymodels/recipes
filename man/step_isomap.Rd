@@ -108,8 +108,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 im_trans <- rec \%>\%
   step_YeoJohnson(all_predictors()) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   step_isomap(all_predictors(),
               neighbors = 100,
               num_terms = 2)

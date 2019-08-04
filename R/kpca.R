@@ -26,9 +26,6 @@
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
-#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -94,8 +91,7 @@
 #'
 #' kpca_trans <- rec %>%
 #'   step_YeoJohnson(all_predictors()) %>%
-#'   step_center(all_predictors()) %>%
-#'   step_scale(all_predictors()) %>%
+#'   step_normalize(all_predictors()) %>%
 #'   step_kpca(all_predictors())
 #'
 #' if (require(dimRed) & require(kernlab)) {
@@ -123,15 +119,17 @@ step_kpca <-
            res = NULL,
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
-           num = NULL,
            prefix = "kPC",
            skip = FALSE,
            id = rand_id("kpca")) {
 
     recipes_pkg_check(c("dimRed", "kernlab"))
-    if (!is.null(num))
-      message("The argument `num` is deprecated in factor of `num_comp`. ",
-              "`num` will be removed in next version.", call. = FALSE)
+    message(
+      paste(
+        "`step_kpca()` is deprecated in favor of either `step_kpca_rbf()`",
+        "or `step_kpca_poly()`. It will be removed in future versions."
+      )
+    )
 
     add_step(
       recipe,
@@ -141,7 +139,6 @@ step_kpca <-
         trained = trained,
         num_comp = num_comp,
         res = res,
-        num = num,
         options = options,
         prefix = prefix,
         skip = skip,
@@ -151,7 +148,7 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms, role, trained, num_comp, res, options, prefix, num, skip, id) {
+  function(terms, role, trained, num_comp, res, options, prefix, skip, id) {
     step(
       subclass = "kpca",
       terms = terms,
@@ -161,7 +158,6 @@ step_kpca_new <-
       res = res,
       options = options,
       prefix = prefix,
-      num = num,
       skip = skip,
       id = id
     )
@@ -190,7 +186,6 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = kprc,
     prefix = x$prefix,
-    num = x$num_comp,
     skip = x$skip,
     id = x$id
   )

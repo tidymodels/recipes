@@ -97,8 +97,7 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 
 pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
   step_rm(sample, dataset) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   # If the outcome(s) need standardization, do it in separate
   # steps with skip = FALSE so that new data where the
   # outcome is missing can be processed.
