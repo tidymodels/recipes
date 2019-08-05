@@ -46,7 +46,7 @@ test_that('basic usage', {
 
 test_that('ratio value', {
   rec2 <- rec %>%
-    step_downsample(tidyselect::matches("Species$"), ratio = 2)
+    step_downsample(tidyselect::matches("Species$"), under_ratio = 2)
 
   rec2_p <- prep(rec2, training = iris2, retain = TRUE)
 
@@ -119,3 +119,19 @@ test_that('`seed` produces identical sampling', {
   expect_equal(petal_width_1, petal_width_2)
   expect_false(identical(petal_width_1, petal_width_3))
 })
+
+
+test_that('ratio deprecation', {
+
+  expect_message(
+    new_rec <-
+      rec %>%
+      step_downsample(tidyselect::matches("Species$"), ratio = 2),
+    "argument is now deprecated"
+  )
+  expect_equal(new_rec$steps[[1]]$under_ratio, 2)
+})
+
+
+
+

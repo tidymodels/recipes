@@ -5,9 +5,9 @@
 \alias{tidy.step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
-step_nzv(recipe, ..., role = NA, trained = FALSE,
-  options = list(freq_cut = 95/5, unique_cut = 10), removals = NULL,
-  skip = FALSE, id = rand_id("nzv"))
+step_nzv(recipe, ..., role = NA, trained = FALSE, freq_cut = 95/5,
+  unique_cut = 10, options = list(freq_cut = 95/5, unique_cut = 10),
+  removals = NULL, skip = FALSE, id = rand_id("nzv"))
 
 \method{tidy}{step_nzv}(x, ...)
 }
@@ -25,6 +25,9 @@ created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
+
+\item{freq_cut, unique_cut}{Numeric parameters for the filtering process. See
+the Details section below.}
 
 \item{options}{A list of options for the filter (see Details
 below).}

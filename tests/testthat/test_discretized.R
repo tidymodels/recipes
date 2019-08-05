@@ -84,3 +84,34 @@ test_that('printing and tidys', {
   expect_equal(tidy(rec_trained, 1), tidy_exp_tr)
 
 })
+
+
+test_that('bad args', {
+
+  expect_error(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, num_breaks = 1) %>%
+      prep()
+  )
+  expect_warning(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, num_breaks = 100) %>%
+      prep()
+  )
+  expect_warning(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, options = list(prefix = "@$")) %>%
+      prep()
+  )
+})
+
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_tr) %>%
+    step_discretize(x1, id = "")
+  expect_output(print(rec))
+  expect_output(prep(rec, training = ex_tr, verbose = TRUE))
+})
+
+
