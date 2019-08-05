@@ -16,7 +16,8 @@
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
 #' @param deg_free The degrees of freedom.
-#' @param degree The degree of the piecewise polynomial.
+#' @param spline_degree The degree of the piecewise polynomial.
+#' @param degree Deprecated in favor of `spline_degree`.
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
 #' @return An updated version of `recipe` with the new step
@@ -58,17 +59,32 @@ step_bs <-
            role = "predictor",
            trained = FALSE,
            deg_free = NULL,
-           degree = 3,
+           spline_degree = 3,
+           degree = NA,
            objects = NULL,
            options = list(),
            skip = FALSE,
            id = rand_id("bs")) {
+
+    if (is.na(degree) || all(spline_degree != degree)) {
+      message(
+        paste(
+          "The `degree` argument is now deprecated in favor of `spline_degree`.",
+          "`degree` will be removed in a subsequent version."
+        )
+      )
+      if (!is.na(degree)) {
+        spline_degree <- degree
+      }
+    }
+
     add_step(
       recipe,
       step_bs_new(
         terms = ellipse_check(...),
         trained = trained,
         deg_free = deg_free,
+        spline_degree = spline_degree,
         degree = degree,
         role = role,
         objects = objects,
@@ -80,13 +96,14 @@ step_bs <-
   }
 
 step_bs_new <-
-  function(terms, role, trained, deg_free, degree, objects, options, skip, id) {
+  function(terms, role, trained, deg_free, spline_degree, degree, objects, options, skip, id) {
     step(
       subclass = "bs",
       terms = terms,
       role = role,
       trained = trained,
       deg_free = deg_free,
+      spline_degree = spline_degree,
       degree = degree,
       objects = objects,
       options = options,
@@ -118,7 +135,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
   opt <- x$options
   opt$df <- x$deg_free
-  opt$degree <- x$degree
+  opt$degree <- x$spline_degree
   obj <- lapply(training[, col_names], bs_wrapper, opt)
   for (i in seq(along = col_names))
     attr(obj[[i]], "var") <- col_names[i]
@@ -127,6 +144,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     deg_free = x$deg_free,
+    spline_degree = x$spline_degree,
     degree = x$degree,
     objects = obj,
     options = x$options,
