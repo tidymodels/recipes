@@ -126,8 +126,8 @@ if (require(dimRed) & require(kernlab)) {
   plot(kpca_te$kPC1, kpca_te$kPC2,
        xlim = rng, ylim = rng)
 
-  tidy(kpca_trans, number = 4)
-  tidy(kpca_estimates, number = 4)
+  tidy(kpca_trans, number = 3)
+  tidy(kpca_estimates, number = 3)
 }
 }
 \references{

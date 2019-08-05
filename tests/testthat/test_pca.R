@@ -95,13 +95,6 @@ test_that('Reduced rotation size', {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
-test_that('deprecated arg', {
-  expect_message(
-    rec %>%
-      step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
-  )
-})
-
 test_that('printing', {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)

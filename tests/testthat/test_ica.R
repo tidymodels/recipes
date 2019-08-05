@@ -112,14 +112,6 @@ test_that('correct ICA values', {
 })
 
 
-test_that('deprecated arg', {
-
-  expect_message(
-    rec %>%
-      step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
-  )
-})
-
 test_that('printing', {
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num_comp = 2)

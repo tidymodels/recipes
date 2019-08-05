@@ -78,18 +78,6 @@ test_that('imputation values', {
 
 })
 
-
-test_that('deprecated arg', {
-  expect_message(
-    discr_rec <- rec %>%
-      step_knnimpute(carbon,
-                     nitrogen,
-                     impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                     K = 3,
-                     id = "")
-  )
-})
-
 test_that('printing', {
   discr_rec <- rec %>%
     step_knnimpute(carbon,

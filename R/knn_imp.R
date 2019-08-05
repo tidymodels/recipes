@@ -31,8 +31,6 @@
 #' @param columns The column names that will be imputed and used
 #'  for imputation. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param K The number of neighbors (this will be deprecated in favor of
-#'  `neighbors` in version 0.1.5). `neighbors` will override this option.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -105,15 +103,10 @@ step_knnimpute <-
            options = list(nthread = 1, eps = 1e-08),
            ref_data = NULL,
            columns = NULL,
-           K = NULL,
            skip = FALSE,
            id = rand_id("knnimpute")) {
     if (is.null(impute_with)) {
       stop("Please list some variables in `impute_with`", call. = FALSE)
-    }
-    if (!is.null(K)) {
-      message("The argument `K` is deprecated in factor of `neighbors`. ",
-              "`K` will be removed in next version.", call. = FALSE)
     }
 
     if (!is.list(options))
@@ -144,7 +137,6 @@ step_knnimpute <-
         ref_data = ref_data,
         options = options,
         columns = columns,
-        K = K,
         skip = skip,
         id = id
       )
@@ -153,7 +145,7 @@ step_knnimpute <-
 
 step_knnimpute_new <-
   function(terms, role, trained, neighbors, impute_with, ref_data, options,
-           columns, K, skip, id) {
+           columns, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -164,7 +156,6 @@ step_knnimpute_new <-
       ref_data = ref_data,
       options = options,
       columns = columns,
-      K = K,
       skip = skip,
       id = id
     )
@@ -190,7 +181,6 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     ref_data = training[, all_x_vars],
     options = x$options,
     columns = var_lists,
-    K = x$neighbors,
     skip = x$skip,
     id = x$id
   )
@@ -240,7 +230,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],
                            imp_data, preds,
-                           ifelse(!is.null(object$K), object$K, object$neighbors),
+                           object$neighbors,
                            object$options)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])

@@ -25,9 +25,6 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
-#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -106,16 +103,13 @@ step_ica <-
            num_comp  = 5,
            options = list(),
            res = NULL,
-           num = NULL,
            prefix = "IC",
            skip = FALSE,
            id = rand_id("ica")) {
 
 
     recipes_pkg_check(c("dimRed", "fastICA"))
-    if (!is.null(num))
-      message("The argument `num` is deprecated in factor of `num_comp`. ",
-              "`num` will be removed in next version.", call. = FALSE)
+
     add_step(
       recipe,
       step_ica_new(
@@ -125,7 +119,6 @@ step_ica <-
         num_comp = num_comp,
         options = options,
         res = res,
-        num = num,
         prefix = prefix,
         skip = skip,
         id = id
@@ -134,7 +127,7 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, res, num, prefix, skip, id) {
+  function(terms, role, trained, num_comp, options, res, prefix, skip, id) {
     step(
       subclass = "ica",
       terms = terms,
@@ -143,7 +136,6 @@ step_ica_new <-
       num_comp = num_comp,
       options = options,
       res = res,
-      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -175,7 +167,6 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     options = x$options,
     res = indc,
-    num = x$num_comp,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id

@@ -20,9 +20,6 @@
 #'  used.
 #' @param neighbors The number of neighbors.
 #' @param options A list of options to [dimRed::Isomap()].
-#' @param num The number of isomap dimensions (this will be deprecated
-#'  in factor of  `num_terms` in version 0.1.5). `num_terms` will
-#'  override this option.
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
@@ -82,9 +79,7 @@
 #' im_trans <- rec %>%
 #'   step_YeoJohnson(all_predictors()) %>%
 #'   step_normalize(all_predictors()) %>%
-#'   step_isomap(all_predictors(),
-#'               neighbors = 100,
-#'               num_terms = 2)
+#'   step_isomap(all_predictors(), neighbors = 100, num_terms = 2)
 #'
 #' if (require(dimRed) & require(RSpectra)) {
 #'   im_estimates <- prep(im_trans, training = biomass_tr)
@@ -95,8 +90,8 @@
 #'   plot(im_te$Isomap1, im_te$Isomap2,
 #'        xlim = rng, ylim = rng)
 #'
-#'   tidy(im_trans, number = 4)
-#'   tidy(im_estimates, number = 4)
+#'   tidy(im_trans, number = 3)
+#'   tidy(im_estimates, number = 3)
 #' }
 #' }
 #' @seealso [step_pca()] [step_kpca()]
@@ -112,15 +107,12 @@ step_isomap <-
            neighbors = 50,
            options = list(.mute = c("message", "output")),
            res = NULL,
-           num = NULL,
            prefix = "Isomap",
            skip = FALSE,
            id = rand_id("isomap")) {
 
     recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
-    if (!is.null(num))
-      message("The argument `num` is deprecated in factor of `num_terms`. ",
-              "`num` will be removed in next version.", call. = FALSE)
+
     add_step(
       recipe,
       step_isomap_new(
@@ -131,7 +123,6 @@ step_isomap <-
         neighbors = neighbors,
         options = options,
         res = res,
-        num = num,
         prefix = prefix,
         skip = skip,
         id = id
@@ -140,7 +131,7 @@ step_isomap <-
   }
 
 step_isomap_new <-
-  function(terms, role, trained, num_terms, neighbors, options, res, num,
+  function(terms, role, trained, num_terms, neighbors, options, res,
            prefix, skip, id) {
     step(
       subclass = "isomap",
@@ -151,7 +142,6 @@ step_isomap_new <-
       neighbors = neighbors,
       options = options,
       res = res,
-      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -187,7 +177,6 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     neighbors = x$neighbors,
     options = x$options,
     res = imap,
-    num = x$num_terms,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
