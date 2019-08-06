@@ -111,8 +111,12 @@ step_pca <- function(recipe,
                      prefix = "PC",
                      skip = FALSE,
                      id = rand_id("pca")) {
-  if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
-    stop("`threshold` should be on (0, 1].", call. = FALSE)
+
+  if (!is_varying(threshold)) {
+    if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
+      stop("`threshold` should be on (0, 1].", call. = FALSE)
+    }
+  }
 
   add_step(
     recipe,

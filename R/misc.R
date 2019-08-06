@@ -572,6 +572,21 @@ check_nominal_type <- function(x, lvl) {
 }
 
 # ------------------------------------------------------------------------------
+# From parsnip, keep synced
+
+is_varying <- function(x) {
+  if (is.null(x)) {
+    res <- FALSE
+  } else {
+    res <- if (is_quosure(x))
+      isTRUE(all.equal(x[[-1]], quote(varying())))
+    else
+      isTRUE(all.equal(x, quote(varying())))
+  }
+  res
+}
+
+# ------------------------------------------------------------------------------
 
 #' @importFrom utils globalVariables
 utils::globalVariables(c("type", "new_type"))

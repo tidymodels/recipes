@@ -76,9 +76,12 @@ step_rollimpute <-
            skip = FALSE,
            id = rand_id("rollimpute")) {
 
-    if (window < 3 | window %% 2 != 1)
-      stop("`window` should be an odd integer >= 3", call. = FALSE)
-    window <- as.integer(floor(window))
+    if (!is_varying(window)) {
+      if (window < 3 | window %% 2 != 1) {
+        stop("`window` should be an odd integer >= 3", call. = FALSE)
+      }
+      window <- as.integer(floor(window))
+    }
 
     add_step(
       recipe,
