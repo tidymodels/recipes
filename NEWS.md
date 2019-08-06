@@ -14,7 +14,7 @@
 
  * As alternatives to `step_kpca()`, two separate steps were added called `step_kpca_rbf()` and `step_kpca_poly()`. The use of `step_kpca()` will print a deprecation message that it will be going away.
 
- * `step_nzv()` had its arguments promoted out of the `options` argument. `options` can be used in the short term but is deprecated.
+ * `step_nzv()` and `step_poly()` had arguments promoted out of their `options` slot. `options` can be used in the short term but is deprecated.
 
  * `step_downsample()` will replace the `ratio` argument with `under_ratio` and `step_upsample()` will replace it with `over_ratio`. `ratio` still works (for now) but issues a deprecation message.
 

@@ -16,7 +16,7 @@ test_that('correct basis functions', {
     step_poly(carbon, hydrogen, id = "")
 
   exp_tidy_un <- tibble(terms = c("carbon", "hydrogen"),
-                        degree = rep(2, 2),
+                        degree = rep(2L, 2),
                         id = "")
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
