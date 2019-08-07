@@ -13,7 +13,7 @@ ex_dat <-
 test_that("grouped data frames work", {
   n <- 20
   rec <- recipe(~., data = ex_dat) %>%
-    step_poly(x2, poly_degree = 2)
+    step_poly(x2, degree = 2)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, new_data = ex_dat)

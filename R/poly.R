@@ -16,7 +16,7 @@
 #'  used as predictors in a model.
 #' @param objects A list of [stats::poly()] objects
 #'  created once the step has been trained.
-#' @param poly_degree The polynomial degree (an integer).
+#' @param degree The polynomial degree (an integer).
 #' @param options A list of options for [stats::poly()]
 #'  which should not include `x`, `degree`, or `simple`. Note that
 #'  the option `raw = TRUE` will produce the regular polynomial
@@ -63,20 +63,20 @@ step_poly <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           poly_degree = 2,
+           degree = 2,
            options = list(),
         skip = FALSE,
         id = rand_id("poly")) {
 
-    if (!is_varying(poly_degree)) {
-      poly_degree <- as.integer(poly_degree)
+    if (!is_varying(degree)) {
+      degree <- as.integer(degree)
     }
 
     if (any(names(options == "degree"))) {
-      poly_degree <- options$degree
+      degree <- options$degree
       message(
         paste(
-          "The `poly_degree` argument is now a main argument instead of being",
+          "The `degree` argument is now a main argument instead of being",
           "within `options`."
         )
       )
@@ -89,7 +89,7 @@ step_poly <-
         trained = trained,
         role = role,
         objects = objects,
-        poly_degree = poly_degree,
+        degree = degree,
         options = options,
         skip = skip,
         id = id
@@ -98,14 +98,14 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, poly_degree, options, skip, id) {
+  function(terms, role, trained, objects, degree, options, skip, id) {
     step(
       subclass = "poly",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
-      poly_degree = poly_degree,
+      degree = degree,
       options = options,
       skip = skip,
       id = id
@@ -133,7 +133,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   opts <- x$options
-  opts$degree <- x$poly_degree
+  opts$degree <- x$degree
   obj <- lapply(training[, col_names], poly_wrapper, opts)
   for (i in seq(along = col_names)) {
     attr(obj[[i]], "var") <- col_names[i]
@@ -144,7 +144,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
-    poly_degree = x$poly_degree,
+    degree = x$degree,
     options = x$options,
     skip = x$skip,
     id = x$id
@@ -191,10 +191,10 @@ print.step_poly <-
 #' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$objects), degree = x$poly_degree)
+    res <- tibble(terms = names(x$objects), degree = x$degree)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, degree = x$poly_degree)
+    res <- tibble(terms = term_names, degree = x$degree)
   }
   res$id <- x$id
   res

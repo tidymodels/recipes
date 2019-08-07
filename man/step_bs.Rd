@@ -6,8 +6,8 @@
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(recipe, ..., role = "predictor", trained = FALSE,
-  deg_free = NULL, spline_degree = 3, degree = NA, objects = NULL,
-  options = list(), skip = FALSE, id = rand_id("bs"))
+  deg_free = NULL, degree = 3, objects = NULL, options = list(),
+  skip = FALSE, id = rand_id("bs"))
 
 \method{tidy}{step_bs}(x, ...)
 }
@@ -30,9 +30,7 @@ preprocessing have been estimated.}
 
 \item{deg_free}{The degrees of freedom.}
 
-\item{spline_degree}{The degree of the piecewise polynomial.}
-
-\item{degree}{Deprecated in favor of \code{spline_degree}.}
+\item{degree}{Degree of polynomial spline (integer).}
 
 \item{objects}{A list of \code{\link[splines:bs]{splines::bs()}} objects
 created once the step has been trained.}

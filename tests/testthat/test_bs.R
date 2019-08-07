@@ -13,7 +13,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 test_that('correct basis functions', {
   with_bs <- rec %>%
-    step_bs(carbon, hydrogen, deg_free = 5, spline_degree = 2)
+    step_bs(carbon, hydrogen, deg_free = 5, degree = 2)
 
   with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
 
@@ -56,18 +56,6 @@ test_that('printing', {
   with_bs <- rec %>%  step_bs(carbon, hydrogen)
   expect_output(print(with_bs))
   expect_output(prep(with_bs, training = biomass_tr, verbose = TRUE))
-})
-
-
-
-test_that('degree deprecation', {
-
-  expect_message(
-    new_rec <-
-      with_bs <- rec %>%
-      step_bs(carbon, hydrogen, deg_free = 5, spline_degree = 2),
-    "argument is now deprecated"
-  )
 })
 
 
