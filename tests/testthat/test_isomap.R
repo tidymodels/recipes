@@ -65,6 +65,13 @@ test_that('printing', {
 
 
 test_that('No ISOmap', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") %>%
     prep()
@@ -84,6 +91,13 @@ test_that('No ISOmap', {
 
 
 test_that('ISOmap fails gracefully', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
   expect_error(
     recipe(Sepal.Length ~ ., data = iris) %>%
       step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%

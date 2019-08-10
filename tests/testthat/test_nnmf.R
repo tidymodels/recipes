@@ -80,6 +80,11 @@ test_that('Correct values', {
 
 
 test_that('No NNF', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
   rec <- recipe(Species ~ ., data = iris) %>%
     step_nnmf(all_predictors(), seed = 2432, num_comp = 0) %>%
     prep()
