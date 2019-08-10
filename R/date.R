@@ -92,7 +92,7 @@ step_date <-
       "quarter",
       "dow",
       "month")
-  if (!is_varying(features)) {
+  if (!is_tune(features) & !is_varying(features)) {
     if (!all(features %in% feat)) {
       stop("Possible values of `features` should include: ",
            paste0("'", feat, "'", collapse = ", "))

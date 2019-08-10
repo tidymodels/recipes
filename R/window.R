@@ -120,7 +120,7 @@ step_window <-
            call. = FALSE)
 
     ## ensure size is odd, integer, and not too small
-    if (!is_varying(size)) {
+    if (!is_tune(size) & !is_varying(size)) {
       if (is.na(size) | is.null(size)) {
         stop("`size` needs a value.", call. = FALSE)
       }

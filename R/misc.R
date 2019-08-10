@@ -586,6 +586,20 @@ is_varying <- function(x) {
   res
 }
 
+# from tune package
+is_tune <- function(x) {
+  if (is.call(x)) {
+    if (rlang::call_name(x) == "tune") {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  } else {
+    return(FALSE)
+  }
+  FALSE
+}
+
 # ------------------------------------------------------------------------------
 
 #' @importFrom utils globalVariables

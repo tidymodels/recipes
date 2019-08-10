@@ -103,7 +103,7 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (!is_varying(threshold)) {
+    if (!is_tune(threshold) & !is_varying(threshold)) {
       if (threshold <= 0) {
         stop("`threshold` should be greater than zero", call. = FALSE)
       }

@@ -60,7 +60,7 @@ step_holiday <-
     id = rand_id("holiday")
   ) {
 
-    if (!is_varying(holidays)) {
+    if (!is_tune(holidays) & !is_varying(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days))
         stop("Invalid `holidays` value. See timeDate::listHolidays",

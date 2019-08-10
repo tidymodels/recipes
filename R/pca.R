@@ -112,7 +112,7 @@ step_pca <- function(recipe,
                      skip = FALSE,
                      id = rand_id("pca")) {
 
-  if (!is_varying(threshold)) {
+  if (!is_tune(threshold) & !is_varying(threshold)) {
     if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
       stop("`threshold` should be on (0, 1].", call. = FALSE)
     }

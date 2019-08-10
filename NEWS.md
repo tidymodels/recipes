@@ -6,6 +6,8 @@
 
 ## Other Changes:
 
+ * The use of `varying()` will be deprecated in favor of an upcoming function `tune()`. No changes are need in this version, but subsequent versions will work with `tune()`.
+
  * `format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
  * `check_new_values` breaks `bake` if variable contains values that were not observed in the train set (contributed by Edwin Thoen)

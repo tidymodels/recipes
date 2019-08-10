@@ -63,12 +63,12 @@ step_sample <- function(
     warning("Selectors are not used for this step.", call. = FALSE)
   }
 
-  if (!is_varying(size)) {
+  if (!is_tune(size) & !is_varying(size)) {
     if (!is.null(size) & (!is.numeric(size) || size < 0)) {
       stop("`size` should be a positive number or NULL.", call. = FALSE)
     }
   }
-  if (!is_varying(replace)) {
+  if (!is_tune(replace) & !is_varying(replace)) {
     if (!is.logical(replace)) {
       stop("`replace` should be a single logical.", call. = FALSE)
     }

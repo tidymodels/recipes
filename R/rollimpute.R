@@ -76,7 +76,7 @@ step_rollimpute <-
            skip = FALSE,
            id = rand_id("rollimpute")) {
 
-    if (!is_varying(window)) {
+    if (!is_tune(window) & !is_varying(window)) {
       if (window < 3 | window %% 2 != 1) {
         stop("`window` should be an odd integer >= 3", call. = FALSE)
       }
