@@ -152,10 +152,16 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
     indc <- dimRed::FastICA(stdpars = x$options)
     indc <-
-      indc@fun(
-        dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-        list(ndim = x$num_comp)
+      try(
+        indc@fun(
+          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          list(ndim = x$num_comp)
+        ),
+        silent = TRUE
       )
+    if (inherits(indc, "try-error")) {
+      stop("`step_ica` failed with error:\n", as.character(indc), call. = FALSE)
+    }
   } else {
     indc <- list(x_vars = col_names)
   }

@@ -170,10 +170,17 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 
   if (x$num_comp > 0) {
     kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
-    kprc <- kprc@fun(
-      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-      kprc@stdpars
-    )
+    kprc <-
+      try(
+        kprc@fun(
+          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          kprc@stdpars
+        ),
+        silent = TRUE
+      )
+    if (inherits(kprc, "try-error")) {
+      stop("`step_kpca` failed with error:\n", as.character(kprc), call. = FALSE)
+    }
   } else {
     kprc <- list(x_vars = col_names)
   }

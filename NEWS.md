@@ -22,6 +22,8 @@
 
  * `step_discretize()` has arguments moved out of `options` too; the main arguments are now `num_breaks` (instead of `cuts`) and `min_unique`. Again, deprecation messages are issued with the old argument structure. 
 
+ * Models using the `dimRed` package (`step_kpca()`, `step_isomap()`, and `step_nnmf()`) would silently fail if the projection method failed. An error is issued now. 
+
 # `recipes` 0.1.6
 
 Release driven by changes in `rlang`. 

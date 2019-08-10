@@ -167,10 +167,17 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
           )
         )
       )
-    kprc <- kprc@fun(
-      dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-      kprc@stdpars
-    )
+    kprc <-
+      try(
+        kprc@fun(
+          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          kprc@stdpars
+        ),
+        silent = TRUE
+      )
+    if (inherits(kprc, "try-error")) {
+      stop("`step_kpca_poly` failed with error:\n", as.character(kprc), call. = FALSE)
+    }
   } else {
     kprc <- list(x_vars = col_names)
   }

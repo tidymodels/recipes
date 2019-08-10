@@ -82,3 +82,16 @@ test_that('No ISOmap', {
   )
 })
 
+
+test_that('ISOmap fails gracefully', {
+  expect_error(
+    recipe(Sepal.Length ~ ., data = iris) %>%
+      step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
+      step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
+      step_other(Species, threshold = .000000001) %>%
+      step_isomap(all_predictors(), -Species, num_terms = 1, neighbors = 1) %>%
+      prep(),
+    "eigen decomposition failed"
+  )
+})
+

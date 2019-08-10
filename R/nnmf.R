@@ -148,7 +148,10 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
       )
     }
 
-    nnm <- do.call(dimRed::embed, opts)
+    nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
+    if (inherits(nnm, "try-error")) {
+      stop("`step_nnmf` failed with error:\n", as.character(nnm), call. = FALSE)
+    }
   } else {
     nnm <- list(x_vars = col_names)
   }

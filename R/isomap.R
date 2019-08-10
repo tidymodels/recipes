@@ -157,16 +157,22 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     x$num_terms <- min(x$num_terms, ncol(training))
     x$neighbors <- min(x$neighbors, nrow(training))
 
-    imap <-
-      dimRed::embed(
-        dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-        "Isomap",
-        knn = x$neighbors,
-        ndim = x$num_terms,
-        .mute = x$options$.mute
-      )
+    iso_map <-
+      try(
+        dimRed::embed(
+          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          "Isomap",
+          knn = x$neighbors,
+          ndim = x$num_terms,
+          .mute = x$options$.mute
+        ),
+        silent = TRUE)
+    if (inherits(iso_map, "try-error")) {
+      stop("`step_isomap` failed with error:\n", as.character(iso_map), call. = FALSE)
+    }
+
   } else {
-    imap <- list(x_vars = col_names)
+    iso_map <- list(x_vars = col_names)
   }
 
   step_isomap_new(
@@ -176,7 +182,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     num_terms = x$num_terms,
     neighbors = x$neighbors,
     options = x$options,
-    res = imap,
+    res = iso_map,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
