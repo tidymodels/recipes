@@ -194,7 +194,7 @@ tunable.step_bs <- function(x, ...) {
     name = c("deg_free", "degree"),
     call_info = list(
       list(pkg = "dials", fun = "deg_free"),
-      list(pkg = "dials", fun = "degree")
+      list(pkg = "dials", fun = "degree_int")
     ),
     source = "recipe",
     component = "step_bs",
