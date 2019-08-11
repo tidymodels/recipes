@@ -199,3 +199,19 @@ tidy.step_rollimpute <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_rollimpute <- function(x, ...) {
+  tibble::tibble(
+    name = c("statistic", "window"),
+    call_info = list(
+      list(pkg = "dials", fun = "location_stat"),
+      list(pkg = "dials", fun = "window")
+    ),
+    source = "recipe",
+    component = "step_rollimpute",
+    component_id = x$id
+  )
+}

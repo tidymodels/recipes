@@ -134,4 +134,19 @@ test_that('ratio deprecation', {
 
 
 
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_downsample(all_predictors(), under_ratio = 1)
+  rec_param <- tunable.step_downsample(rec$steps[[1]])
+  expect_equal(rec_param$name, c("under_ratio"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})
+
 

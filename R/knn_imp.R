@@ -275,3 +275,15 @@ tidy.step_knnimpute <- function(x, ...) {
   res
 }
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_knnimpute <- function(x, ...) {
+  tibble::tibble(
+    name = "neighbors",
+    call_info = list(list(pkg = "dials", fun = "neighbors")),
+    source = "recipe",
+    component = "step_knnimpute",
+    component_id = x$id
+  )
+}

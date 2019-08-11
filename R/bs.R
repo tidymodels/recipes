@@ -184,3 +184,20 @@ tidy.step_bs <- function(x, ...) {
   res$id <- x$id
   as_tibble(res)
 }
+
+# ------------------------------------------------------------------------------
+
+#' @rdname tunable.step
+#' @export
+tunable.step_bs <- function(x, ...) {
+  tibble::tibble(
+    name = c("deg_free", "degree"),
+    call_info = list(
+      list(pkg = "dials", fun = "deg_free"),
+      list(pkg = "dials", fun = "degree")
+    ),
+    source = "recipe",
+    component = "step_bs",
+    component_id = x$id
+  )
+}

@@ -80,7 +80,7 @@ step_downsample <-
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1), id = rand_id("downsample")) {
 
-    if (is.na(ratio) || all(under_ratio != ratio)) {
+    if (!is.na(ratio) & all(under_ratio != ratio)) {
       message(
         paste(
           "The `ratio` argument is now deprecated in favor of `under_ratio`.",
@@ -208,4 +208,21 @@ tidy.step_downsample <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+# ------------------------------------------------------------------------------
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_downsample <- function(x, ...) {
+  tibble::tibble(
+    name = "under_ratio",
+    call_info = list(
+      list(pkg = "dials", fun = "under_ratio")
+    ),
+    source = "recipe",
+    component = "step_downsample",
+    component_id = x$id
+  )
 }

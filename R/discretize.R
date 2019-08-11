@@ -361,3 +361,19 @@ tidy.step_discretize <- function(x, ...) {
   res
 }
 
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_discretize <- function(x, ...) {
+  tibble::tibble(
+    name = c("min_unique", "num_breaks"),
+    call_info = list(
+      list(pkg = "dials", fun = "min_unique"),
+      list(pkg = "dials", fun = "num_breaks")
+    ),
+    source = "recipe",
+    component = "step_discretize",
+    component_id = x$id
+  )
+}

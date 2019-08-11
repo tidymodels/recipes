@@ -199,3 +199,18 @@ tidy.step_poly <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_poly <- function(x, ...) {
+  tibble::tibble(
+    name = c("degree"),
+    call_info = list(
+      list(pkg = "dials", fun = "degree_int")
+    ),
+    source = "recipe",
+    component = "step_poly",
+    component_id = x$id
+  )
+}

@@ -229,3 +229,16 @@ tidy.step_pls <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_pls <- function(x, ...) {
+  tibble::tibble(
+    name = "num_comp",
+    call_info = list(list(pkg = "dials", fun = "num_comp")),
+    source = "recipe",
+    component = "step_pls",
+    component_id = x$id
+  )
+}

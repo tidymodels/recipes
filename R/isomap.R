@@ -237,3 +237,20 @@ tidy.step_isomap <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_isomap <- function(x, ...) {
+  tibble::tibble(
+    name = c("num_terms", "neighbors"),
+    call_info = list(
+      list(pkg = "dials", fun = "num_terms"),
+      list(pkg = "dials", fun = "neighbors")
+    ),
+    source = "recipe",
+    component = "step_isomap",
+    component_id = x$id
+  )
+}

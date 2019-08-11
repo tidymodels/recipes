@@ -24,6 +24,9 @@
 
  * Models using the `dimRed` package (`step_kpca()`, `step_isomap()`, and `step_nnmf()`) would silently fail if the projection method failed. An error is issued now. 
 
+ * Methods were added for a future generic called `tunable()`. This outlines which parameters in a step can/could be tuned. 
+
+
 # `recipes` 0.1.6
 
 Release driven by changes in `rlang`. 

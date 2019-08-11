@@ -262,3 +262,17 @@ tidy.step_pca <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_pca <- function(x, ...) {
+  tibble::tibble(
+    name = "num_comp",
+    call_info = list(list(pkg = "dials", fun = "num_comp")),
+    source = "recipe",
+    component = "step_pca",
+    component_id = x$id
+  )
+}

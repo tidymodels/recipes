@@ -220,3 +220,18 @@ nzv <- function(x,
 #' @export
 tidy.step_nzv <- tidy_filter
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_nzv <- function(x, ...) {
+  tibble::tibble(
+    name = c("freq_cut", "unique_cut"),
+    call_info = list(
+      list(pkg = "dials", fun = "freq_cut"),
+      list(pkg = "dials", fun = "unique_cut")
+    ),
+    source = "recipe",
+    component = "step_nzv",
+    component_id = x$id
+  )
+}

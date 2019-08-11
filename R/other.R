@@ -270,3 +270,19 @@ tidy.step_other <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_other <- function(x, ...) {
+  tibble::tibble(
+    name = "threshold",
+    call_info = list(
+      list(pkg = "dials", fun = "threshold")
+    ),
+    source = "recipe",
+    component = "step_other",
+    component_id = x$id
+  )
+}
+

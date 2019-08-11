@@ -89,7 +89,7 @@ step_upsample <-
            seed = sample.int(10^5, 1),
            id = rand_id("upsample")) {
 
-    if (is.na(ratio) || all(over_ratio != ratio)) {
+    if (!is.na(ratio) & all(over_ratio != ratio)) {
       message(
         paste(
           "The `ratio` argument is now deprecated in favor of `over_ratio`.",
@@ -218,3 +218,20 @@ tidy.step_upsample <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_upsample <- function(x, ...) {
+  tibble::tibble(
+    name = c("over_ratio"),
+    call_info = list(
+      list(pkg = "dials", fun = "over_ratio")
+    ),
+    source = "recipe",
+    component = "step_upsample",
+    component_id = x$id
+  )
+}
+

@@ -238,3 +238,18 @@ tidy.step_kpca_rbf <- function(x, ...) {
   res
 }
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_kpca_rbf <- function(x, ...) {
+  tibble::tibble(
+    name = c("num_comp", "sigma"),
+    call_info = list(
+      list(pkg = "dials", fun = "num_comp"),
+      list(pkg = "dials", fun = "rbf_sigma")
+    ),
+    source = "recipe",
+    component = "step_kpca_rbf",
+    component_id = x$id
+  )
+}

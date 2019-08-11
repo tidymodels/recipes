@@ -246,3 +246,15 @@ tidy.step_ica <- function(x, ...) {
   res
 }
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_ica <- function(x, ...) {
+  tibble::tibble(
+    name = "num_comp",
+    call_info = list(list(pkg = "dials", fun = "num_comp")),
+    source = "recipe",
+    component = "step_ica",
+    component_id = x$id
+  )
+}

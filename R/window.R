@@ -278,3 +278,20 @@ tidy.step_window <- function(x, ...) {
   out$id <- x$id
   out
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_window <- function(x, ...) {
+  tibble::tibble(
+    name = c("statistic", "window"),
+    call_info = list(
+      list(pkg = "dials", fun = "summary_stat"),
+      list(pkg = "dials", fun = "window")
+    ),
+    source = "recipe",
+    component = "step_window",
+    component_id = x$id
+  )
+}
+
