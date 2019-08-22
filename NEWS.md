@@ -6,6 +6,8 @@
 
 ## Other Changes:
 
+ * `check_class` breaks `bake` if variable is of a different class than that was either specified by the user or learned in `prep` on the train set(contributed by Edwin Thoen)
+
  * `format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
  * `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
@@ -147,7 +149,7 @@ Small release driven by changes in `sample()` in the current r-devel.
  * `step_bin2factor` now has an option to choose [how the values are translated to the levels](https://github.com/tidymodels/recipes/issues/142) (contributed by Michael Levy).
  * `bake` and `juice` can now export basic data frames. 
  * The `okc` data were updated with two additional columns. 
-
+ 
 ## Bug Fixes: 
   
  * [issue 125](https://github.com/tidymodels/recipes/issues/125) that prevented several steps from working with **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
