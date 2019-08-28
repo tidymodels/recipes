@@ -278,7 +278,7 @@ tunable.step_other <- function(x, ...) {
   tibble::tibble(
     name = "threshold",
     call_info = list(
-      list(pkg = "dials", fun = "threshold")
+      list(pkg = "dials", fun = "threshold", range = c(0, 0.1))
     ),
     source = "recipe",
     component = "step_other",

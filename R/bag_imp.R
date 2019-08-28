@@ -280,7 +280,7 @@ tidy.step_bagimpute <- function(x, ...) {
 tunable.step_bagimpute <- function(x, ...) {
   tibble::tibble(
     name = "trees",
-    call_info = list(list(pkg = "dials", fun = "trees")),
+    call_info = list(list(pkg = "dials", fun = "trees", range = c(5, 25))),
     source = "recipe",
     component = "step_bagimpute",
     component_id = x$id

@@ -228,8 +228,8 @@ tunable.step_nnmf <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "num_run"),
     call_info = list(
-      list(pkg = "dials", fun = "num_comp"),
-      list(pkg = "dials", fun = "num_run")
+      list(pkg = "dials", fun = "num_comp", range = c(1, 4)),
+      list(pkg = "dials", fun = "num_run", range = c(1, 10))
     ),
     source = "recipe",
     component = "step_nnmf",
