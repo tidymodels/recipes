@@ -16,7 +16,7 @@
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
 #' @param deg_free The degrees of freedom.
-#' @param degree The degree of the piecewise polynomial.
+#' @param degree Degree of polynomial spline (integer).
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
 #' @return An updated version of `recipe` with the new step
@@ -63,6 +63,7 @@ step_bs <-
            options = list(),
            skip = FALSE,
            id = rand_id("bs")) {
+
     add_step(
       recipe,
       step_bs_new(
@@ -182,4 +183,21 @@ tidy.step_bs <- function(x, ...) {
   res <- expand.grid(terms = cols, stringsAsFactors = FALSE)
   res$id <- x$id
   as_tibble(res)
+}
+
+# ------------------------------------------------------------------------------
+
+#' @rdname tunable.step
+#' @export
+tunable.step_bs <- function(x, ...) {
+  tibble::tibble(
+    name = c("deg_free", "degree"),
+    call_info = list(
+      list(pkg = "dials", fun = "deg_free", range = c(3, 15)),
+      list(pkg = "dials", fun = "degree_int", range = c(1, 2))
+    ),
+    source = "recipe",
+    component = "step_bs",
+    component_id = x$id
+  )
 }

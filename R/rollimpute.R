@@ -76,9 +76,12 @@ step_rollimpute <-
            skip = FALSE,
            id = rand_id("rollimpute")) {
 
-    if (window < 3 | window %% 2 != 1)
-      stop("`window` should be an odd integer >= 3", call. = FALSE)
-    window <- as.integer(floor(window))
+    if (!is_tune(window) & !is_varying(window)) {
+      if (window < 3 | window %% 2 != 1) {
+        stop("`window` should be an odd integer >= 3", call. = FALSE)
+      }
+      window <- as.integer(floor(window))
+    }
 
     add_step(
       recipe,
@@ -195,4 +198,20 @@ tidy.step_rollimpute <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_rollimpute <- function(x, ...) {
+  tibble::tibble(
+    name = c("statistic", "window"),
+    call_info = list(
+      list(pkg = "dials", fun = "location_stat"),
+      list(pkg = "dials", fun = "window")
+    ),
+    source = "recipe",
+    component = "step_rollimpute",
+    component_id = x$id
+  )
 }

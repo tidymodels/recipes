@@ -147,3 +147,19 @@ tidy.step_meanimpute <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_meanimpute <- function(x, ...) {
+  tibble::tibble(
+    name = "trim",
+    call_info = list(
+      list(pkg = "dials", fun = "trim_amount")
+    ),
+    source = "recipe",
+    component = "step_meanimpute",
+    component_id = x$id
+  )
+}
+

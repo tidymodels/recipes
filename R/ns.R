@@ -176,3 +176,19 @@ tidy.step_ns <- function(x, ...) {
   res$id <- x$id
   as_tibble(res)
 }
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_ns <- function(x, ...) {
+  tibble::tibble(
+    name = c("deg_free"),
+    call_info = list(
+      list(pkg = "dials", fun = "deg_free", range = c(3, 15))
+    ),
+    source = "recipe",
+    component = "step_ns",
+    component_id = x$id
+  )
+}

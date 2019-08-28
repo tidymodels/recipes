@@ -8,8 +8,7 @@
 step_knnimpute(recipe, ..., role = NA, trained = FALSE,
   neighbors = 5, impute_with = imp_vars(all_predictors()),
   options = list(nthread = 1, eps = 1e-08), ref_data = NULL,
-  columns = NULL, K = NULL, skip = FALSE,
-  id = rand_id("knnimpute"))
+  columns = NULL, skip = FALSE, id = rand_id("knnimpute"))
 
 \method{tidy}{step_knnimpute}(x, ...)
 }
@@ -51,9 +50,6 @@ is \code{NULL} until the step is trained by
 \item{columns}{The column names that will be imputed and used
 for imputation. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{K}{The number of neighbors (this will be deprecated in favor of
-\code{neighbors} in version 0.1.5). \code{neighbors} will override this option.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

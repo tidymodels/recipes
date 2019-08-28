@@ -111,3 +111,18 @@ test_that('printing', {
   expect_output(prep(seven_pt, training = example_data, verbose = TRUE))
 })
 
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_rollimpute(all_predictors(), outcome = "Species")
+  rec_param <- tunable.step_rollimpute(rec$steps[[1]])
+  expect_equal(rec_param$name, c("statistic", "window"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})
