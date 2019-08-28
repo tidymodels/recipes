@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="Impute Numeric Data Using the Median — step_medianimpute" />
-
 <meta property="og:description" content="step_medianimpute creates a specification of a
 recipe step that will substitute missing values of numeric
 variables by the training set median of those variables." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,11 +149,9 @@ variables by the training set median of those variables." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_medianimpute</code> creates a <em>specification</em> of a
 recipe step that will substitute missing values of numeric
 variables by the training set median of those variables.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_medianimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -162,7 +159,7 @@ variables by the training set median of those variables.</p>
 
 <span class='co'># S3 method for step_medianimpute</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -211,7 +208,7 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_medianimpute</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
@@ -219,14 +216,12 @@ added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> (the
 selectors or variables selected) and <code>model</code> (the median
 value).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_medianimpute</code> estimates the variable medians
 from the data used in the <code>training</code> argument of
 <code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
 values to new data sets using these medians</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"credit_data"</span>)
@@ -284,11 +279,8 @@ values to new data sets using these medians</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

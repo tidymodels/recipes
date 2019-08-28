@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="Up-Sample a Data Set Based on a Factor Variable — step_upsample" />
-
 <meta property="og:description" content="step_upsample creates a specification of a recipe step that
 will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,20 +149,18 @@ levels in a specific factor level equal." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_upsample</code> creates a <em>specification</em> of a recipe step that
 will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>step_upsample</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>5</span>,
-  <span class='fl'>1</span>), <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"upsample"</span>))
+    <pre class="usage"><span class='fu'>step_upsample</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ratio</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>5</span>, <span class='fl'>1</span>), <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"upsample"</span>))
 
 <span class='co'># S3 method for step_upsample</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -181,13 +178,17 @@ factor variable</em>. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
     <tr>
-      <th>ratio</th>
+      <th>over_ratio</th>
       <td><p>A numeric value for the ratio of the
 majority-to-minority frequencies. The default value (1) means
 that all other levels are sampled up to have the same
 frequency as the most occurring level. A value of 0.5 would mean
 that the minority levels will have (at most) (approximately)
 half as many rows than the majority level.</p></td>
+    </tr>
+    <tr>
+      <th>ratio</th>
+      <td><p>Deprecated argument; same as <code>over_ratio</code>.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -231,14 +232,13 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_upsample</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> which is
 the variable used to sample.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Up-sampling is intended to be performed on the <em>training</em> set
@@ -258,7 +258,6 @@ and <code><a href='bake.html'>bake()</a></code>.</p>
 <p>When used in modeling, users should strongly consider using the
 option <code>skip = TRUE</code> so that the extra sampling is <em>not</em>
 conducted outside of the training set.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>okc</span>)
@@ -279,7 +278,7 @@ conducted outside of the training set.</p>
 <span class='no'>up_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># Bring the minority levels up to about 200 each</span>
   <span class='co'># 200/16562 is approx 0.0121</span>
-  <span class='fu'>step_upsample</span>(<span class='no'>diet</span>, <span class='kw'>ratio</span> <span class='kw'>=</span> <span class='fl'>0.0121</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_upsample</span>(<span class='no'>diet</span>, <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>0.0121</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>up_rec</span>)$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
@@ -320,11 +319,8 @@ conducted outside of the training set.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -32,14 +32,13 @@
 
 
 <meta property="og:title" content="Extract Finalized Training Set — juice" />
-
 <meta property="og:description" content="As steps are estimated by prep, these operations are
 applied to the training set. Rather than running bake
 to duplicate this processing, this function will return
 variables from the processed training set." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -151,16 +150,14 @@ variables from the processed training set." />
     </div>
 
     <div class="ref-description">
-    
     <p>As steps are estimated by <code>prep</code>, these operations are
 applied to the training set. Rather than running <code>bake</code>
 to duplicate this processing, this function will return
 variables from the processed training set.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>juice</span>(<span class='no'>object</span>, <span class='no'>...</span>, <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -186,7 +183,7 @@ called <strong>after</strong> any selectors and the selectors should only
 resolve to numeric columns (otherwise an error is thrown).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When preparing a recipe, if the training data set is
@@ -195,11 +192,9 @@ recipe to get the preprocessed training set.</p>
 <p><code>juice</code> will return the results of a recipes where <em>all steps</em>
 have been applied to the data, irrespective of the value of
 the step's <code>skip</code> argument.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
@@ -211,8 +206,7 @@ the step's <code>skip</code> argument.</p>
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -226,11 +220,8 @@ the step's <code>skip</code> argument.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="NNMF Signal Extraction — step_nnmf" />
-
 <meta property="og:description" content="step_nnmf creates a specification of a recipe step
 that will convert numeric data into one or more non-negative
 components." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,11 +149,9 @@ components." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_nnmf</code> creates a <em>specification</em> of a recipe step
 that will convert numeric data into one or more non-negative
 components.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_nnmf</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -164,7 +161,7 @@ components.</p>
 
 <span class='co'># S3 method for step_nnmf</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -244,14 +241,13 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_nnmf</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> (the
 selectors or variables selected) and the number of components.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Non-negative matrix factorization computes latent components that
@@ -265,13 +261,11 @@ numbers. The variable names are padded with zeros. For example,
 if <code>num &lt; 10</code>, their names will be <code>NNMF1</code> - <code>NNMF9</code>.
 If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 <code>NNMF101</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code>, <code><a href='step_ica.html'>step_ica()</a></code>, <code><a href='step_kpca.html'>step_kpca()</a></code>,
 <code><a href='step_isomap.html'>step_isomap()</a></code>, <code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep.recipe()</a></code>,
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -292,13 +286,9 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

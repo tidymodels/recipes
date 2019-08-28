@@ -32,7 +32,6 @@
 
 
 <meta property="og:title" content="Methods for Select Variables in Step Functions — selections" />
-
 <meta property="og:description" content="When selecting variables or model terms in step
 functions, dplyr-like tools are used. The selector functions
 can choose variables based on their name, current role, data
@@ -43,7 +42,6 @@ stated in the step function, this might be similar to:
   recipe( ~ ., data = USArrests) %&amp;gt;%
     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 " />
-
 <meta property="og:description" content="The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
 to step_pca().
@@ -60,7 +58,6 @@ A leading exclusion in these arguments (e.g. -Murder)
 has the effect of adding all variables to the list except the
 excluded variable(s).
 " />
-
 <meta property="og:description" content="Also, select helpers from the tidyselect package can also be used:
 tidyselect::starts_with(), tidyselect::ends_with(),
 tidyselect::contains(), tidyselect::matches(),
@@ -71,7 +68,6 @@ For example:
   recipe(Species ~ ., data = iris) %&amp;gt;%
     step_center(starts_with(&quot;Sepal&quot;), -contains(&quot;Width&quot;))
 " />
-
 <meta property="og:description" content="would only select Sepal.Length
 Inline functions that specify computations, such as
 log(x), should not be used in selectors and will produce an
@@ -94,7 +90,6 @@ variables using their names:
   recipe(HHV ~ ., data = biomass) %&amp;gt;%
     step_center(all_numeric(), -all_outcomes())
 " />
-
 <meta property="og:description" content="This results in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.
 If a role for a variable has not been defined, it will never be
@@ -116,9 +111,9 @@ all_predictors(), and all_outcomes()
 By type: has_type(), all_numeric(),
 and all_nominal()
 " />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -230,7 +225,6 @@ and all_nominal()
     </div>
 
     <div class="ref-description">
-    
     <p>When selecting variables or model terms in <code>step</code>
 functions, <code>dplyr</code>-like tools are used. The <em>selector</em> functions
 can choose variables based on their name, current role, data
@@ -241,7 +235,6 @@ stated in the step function, this might be similar to:</p>
   recipe( ~ ., data = USArrests) %&gt;%
     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 </pre>
-
     <p>The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
 to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
@@ -258,7 +251,6 @@ processed in order.</p></li>
 has the effect of adding all variables to the list except the
 excluded variable(s).</p></li>
 </ol>
-
     <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::starts_with()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::ends_with()</a></code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::contains()</a></code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>tidyselect::matches()</a></code>,
@@ -269,7 +261,6 @@ For example:</p>
   recipe(Species ~ ., data = iris) %&gt;%
     step_center(starts_with("Sepal"), -contains("Width"))
 </pre>
-
     <p>would only select <code>Sepal.Length</code></p>
 <p><strong>Inline</strong> functions that specify computations, such as
 <code><a href='https://www.rdocumentation.org/packages/base/topics/Log'>log(x)</a></code>, should not be used in selectors and will produce an
@@ -292,7 +283,6 @@ variables using their names:</p>
   recipe(HHV ~ ., data = biomass) %&gt;%
     step_center(all_numeric(), -all_outcomes())
 </pre>
-
     <p>This results in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.</p>
 <p>If a role for a variable has not been defined, it will never be
@@ -314,16 +304,16 @@ previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
 <li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,
 and <code><a href='has_role.html'>all_nominal()</a></code></p></li>
 </ul>
-    
     </div>
 
-        
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+    </ul>
 
   </div>
 </div>

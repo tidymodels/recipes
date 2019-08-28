@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="Train a Data Recipe — prep" />
-
 <meta property="og:description" content="For a recipe with at least one preprocessing operation, estimate the required
 parameters from a training set that can be later applied to other data
 sets." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,11 +149,9 @@ sets." />
     </div>
 
     <div class="ref-description">
-    
     <p>For a recipe with at least one preprocessing operation, estimate the required
 parameters from a training set that can be later applied to other data
 sets.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>prep</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -162,7 +159,7 @@ sets.</p>
 <span class='co'># S3 method for recipe</span>
 <span class='fu'>prep</span>(<span class='no'>x</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fresh</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -209,14 +206,13 @@ factors? This affects the preprocessed training set (when
 <code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A recipe whose step objects have been updated with the required
 quantities (e.g. parameter estimates, model objects, etc). Also, the
 <code>term_info</code> object is likely to be modified as the operations are
 executed.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Given a data set, this function estimates the required quantities
@@ -230,18 +226,15 @@ are added, <code>prep()</code> will only update the new operations. If
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
     <h2>Author</h2>
     <p>Max Kuhn</p>

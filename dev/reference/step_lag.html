@@ -32,16 +32,15 @@
 
 
 <meta property="og:title" content="Create a lagged predictor — step_lag" />
-
 <meta property="og:description" content="step_lag creates a specification of a recipe step that
 will add new columns of lagged data. Lagged data will
 by default include NA values where the lag was induced.
 These can be removed with step_naomit(), or you may
 specify an alternative filler value with the default
 argument." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -153,20 +152,18 @@ argument." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_lag</code> creates a <em>specification</em> of a recipe step that
 will add new columns of lagged data. Lagged data will
 by default include NA values where the lag was induced.
 These can be removed with <code><a href='step_naomit.html'>step_naomit()</a></code>, or you may
 specify an alternative filler value with the <code>default</code>
 argument.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_lag</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lag</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"lag_"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"lag"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -222,21 +219,18 @@ the computations for subsequent operations</p></td>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the
 new step added to the sequence of existing steps (if any).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The step assumes that the data are already <em>in the proper sequential
 order</em> for lagging.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code> <code><a href='step_naomit.html'>step_naomit()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
@@ -251,31 +245,27 @@ order</em> for lagging.</p>
   <span class='fu'>step_lag</span>(<span class='no'>index</span>, <span class='no'>day</span>, <span class='kw'>lag</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>df</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 7
-#&gt;          x index day        lag_2_index lag_2_day  lag_3_index lag_3_day 
-#&gt;      &lt;dbl&gt; &lt;int&gt; &lt;date&gt;           &lt;int&gt; &lt;date&gt;           &lt;int&gt; &lt;date&gt;    
-#&gt;  1 0.585       1 1999-01-01          NA NA                  NA NA        
-#&gt;  2 0.149       2 1999-01-02          NA NA                  NA NA        
-#&gt;  3 0.188       3 1999-01-03           1 1999-01-01          NA NA        
-#&gt;  4 0.00350     4 1999-01-04           2 1999-01-02           1 1999-01-01
-#&gt;  5 0.180       5 1999-01-05           3 1999-01-03           2 1999-01-02
-#&gt;  6 0.620       6 1999-01-06           4 1999-01-04           3 1999-01-03
-#&gt;  7 0.830       7 1999-01-07           5 1999-01-05           4 1999-01-04
-#&gt;  8 0.962       8 1999-01-08           6 1999-01-06           5 1999-01-05
-#&gt;  9 0.0543      9 1999-01-09           7 1999-01-07           6 1999-01-06
-#&gt; 10 0.879      10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'>
+#&gt;        x index day        lag_2_index lag_2_day  lag_3_index lag_3_day 
+#&gt;    &lt;dbl&gt; &lt;int&gt; &lt;date&gt;           &lt;int&gt; &lt;date&gt;           &lt;int&gt; &lt;date&gt;    
+#&gt;  1 0.262     1 1999-01-01          NA NA                  NA NA        
+#&gt;  2 0.701     2 1999-01-02          NA NA                  NA NA        
+#&gt;  3 0.410     3 1999-01-03           1 1999-01-01          NA NA        
+#&gt;  4 0.419     4 1999-01-04           2 1999-01-02           1 1999-01-01
+#&gt;  5 0.325     5 1999-01-05           3 1999-01-03           2 1999-01-02
+#&gt;  6 0.734     6 1999-01-06           4 1999-01-04           3 1999-01-03
+#&gt;  7 0.453     7 1999-01-07           5 1999-01-05           4 1999-01-04
+#&gt;  8 0.628     8 1999-01-08           6 1999-01-06           5 1999-01-05
+#&gt;  9 0.620     9 1999-01-09           7 1999-01-07           6 1999-01-06
+#&gt; 10 0.515    10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

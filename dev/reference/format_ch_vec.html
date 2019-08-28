@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check to see if a recipe is trained/prepared — fully_trained • recipes</title>
+<title>Helpers for printing step functions — format_ch_vec • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,8 +31,8 @@
 
 
 
-<meta property="og:title" content="Check to see if a recipe is trained/prepared — fully_trained" />
-<meta property="og:description" content="Check to see if a recipe is trained/prepared" />
+<meta property="og:title" content="Helpers for printing step functions — format_ch_vec" />
+<meta property="og:description" content="Helpers for printing step functions" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -141,45 +141,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check to see if a recipe is trained/prepared</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/misc.R'><code>R/misc.R</code></a></small>
-    <div class="hidden name"><code>fully_trained.Rd</code></div>
+    <h1>Helpers for printing step functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/format.R'><code>R/format.R</code></a></small>
+    <div class="hidden name"><code>format_ch_vec.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check to see if a recipe is trained/prepared</p>
+    <p>Helpers for printing step functions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fully_trained</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>format_ch_vec</span>(<span class='no'>x</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>", "</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>()$<span class='no'>width</span> - <span class='fl'>9</span>)
+
+<span class='fu'>format_selectors</span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>()$<span class='no'>width</span> - <span class='fl'>9</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A recipe</p></td>
+      <td><p>A vector of objects.</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>A character string for separating values.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>An integer for when to split the output over lines.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical which is true if all of the recipe steps have been run
-through <code>prep</code>. If no steps have been added to the recipe, <code>TRUE</code> is
-returned.</p>
+    <p>A character string</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>())
-
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='no'>fully_trained</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span> <span class='no'>fully_trained</span></div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

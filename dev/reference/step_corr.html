@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="High Correlation Filter — step_corr" />
-
 <meta property="og:description" content="step_corr creates a specification of a recipe
 step that will potentially remove variables that have large
 absolute correlations with other variables." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,11 +149,9 @@ absolute correlations with other variables." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_corr</code> creates a <em>specification</em> of a recipe
 step that will potentially remove variables that have large
 absolute correlations with other variables.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_corr</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
@@ -163,7 +160,7 @@ absolute correlations with other variables.</p>
 
 <span class='co'># S3 method for step_corr</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -230,14 +227,13 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_corr</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> which
 is the columns that will be removed.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This step attempts to remove variables to keep the
@@ -247,12 +243,10 @@ largest absolute correlation between the variables less than
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of <code>use</code>
 is chosen), some columns will also be excluded from the filter.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_nzv.html'>step_nzv()</a></code> <code><a href='recipe.html'>recipe()</a></code>
 <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
@@ -298,13 +292,9 @@ is chosen), some columns will also be excluded from the filter.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

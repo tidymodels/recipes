@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Centering numeric data — step_center • recipes</title>
+<title>Radial Basis Function Kernel PCA Signal Extraction — step_kpca_rbf • recipes</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,9 +31,10 @@
 
 
 
-<meta property="og:title" content="Centering numeric data — step_center" />
-<meta property="og:description" content="step_center creates a specification of a recipe
-step that will normalize numeric data to have a mean of zero." />
+<meta property="og:title" content="Radial Basis Function Kernel PCA Signal Extraction — step_kpca_rbf" />
+<meta property="og:description" content="step_kpca_rbf a specification of a recipe step that
+will convert numeric data into one or more principal components
+using a radial basis function kernel basis expansion." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -142,20 +143,22 @@ step that will normalize numeric data to have a mean of zero." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Centering numeric data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/center.R'><code>R/center.R</code></a></small>
-    <div class="hidden name"><code>step_center.Rd</code></div>
+    <h1>Radial Basis Function Kernel PCA Signal Extraction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/kpca_rbf.R'><code>R/kpca_rbf.R</code></a></small>
+    <div class="hidden name"><code>step_kpca_rbf.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>step_center</code> creates a <em>specification</em> of a recipe
-step that will normalize numeric data to have a mean of zero.</p>
+    <p><code>step_kpca_rbf</code> a <em>specification</em> of a recipe step that
+will convert numeric data into one or more principal components
+using a radial basis function kernel basis expansion.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_center</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"center"</span>))
+    <pre class="usage"><span class='fu'>step_kpca_rbf</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"kPC"</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"kpca_rbf"</span>))
 
-<span class='co'># S3 method for step_center</span>
+<span class='co'># S3 method for step_kpca_rbf</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,14 +172,16 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+variables will be used to compute the components. See
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
+      <td><p>For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the new principal component columns created by the original
+variables will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -184,14 +189,26 @@ created.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
-      <th>means</th>
-      <td><p>A named numeric vector of means. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <th>num_comp</th>
+      <td><p>The number of PCA components to retain as new
+predictors. If <code>num_comp</code> is greater than the number of columns
+or the number of possible components, a smaller value will be
+used.</p></td>
     </tr>
     <tr>
-      <th>na_rm</th>
-      <td><p>A logical value indicating whether <code>NA</code>
-values should be removed during computations.</p></td>
+      <th>res</th>
+      <td><p>An S4 <code><a href='https://www.rdocumentation.org/packages/kernlab/topics/kpca'>kernlab::kpca()</a></code> object is stored
+here once this preprocessing step has be trained by
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>sigma</th>
+      <td><p>A numeric value for the radial basis function parameter.</p></td>
+    </tr>
+    <tr>
+      <th>prefix</th>
+      <td><p>A character string that will be the prefix to the
+resulting new variables. See notes below.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -208,7 +225,7 @@ the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_center</code> object.</p></td>
+      <td><p>A <code>step_kpca_rbf</code> object</p></td>
     </tr>
     </table>
 
@@ -217,17 +234,43 @@ the computations for subsequent operations</p></td>
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the means).</p>
+selectors or variables selected).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Centering data means that the average of a variable is
-subtracted from the data. <code>step_center</code> estimates the
-variable means from the data used in the <code>training</code>
-argument of <code>prep.recipe</code>. <code>bake.recipe</code> then applies
-the centering to new data sets using these means.</p>
+    <p>Kernel principal component analysis (kPCA) is an
+extension a PCA analysis that conducts the calculations in a
+broader dimensionality defined by a kernel function. For
+example, if a quadratic kernel function were used, each variable
+would be represented by its original values as well as its
+square. This nonlinear mapping is used during the PCA analysis
+and can potentially help find better representations of the
+original data.</p>
+<p>This step requires the <span class="pkg">dimRed</span> and <span class="pkg">kernlab</span> packages.
+If not installed, the step will stop with a note about installing
+these packages.</p>
+<p>As with ordinary PCA, it is important to standardized the
+variables prior to running PCA (<code>step_center</code> and
+<code>step_scale</code> can be used for this purpose).</p>
+<p>The argument <code>num_comp</code> controls the number of components that
+will be retained (the original variables that are used to derive
+the components are removed from the data). The new components
+will have names that begin with <code>prefix</code> and a sequence of
+numbers. The variable names are padded with zeros. For example,
+if <code>num_comp &lt; 10</code>, their names will be <code>kPC1</code> -
+<code>kPC9</code>. If <code>num_comp = 101</code>, the names would be
+<code>kPC001</code> - <code>kPC101</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Scholkopf, B., Smola, A., and Muller, K. (1997).
+Kernel principal component analysis. <em>Lecture Notes in
+Computer Science</em>, 1327, 583-588.</p>
+<p>Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
+kernlab - An S4 package for kernel methods in R. <em>Journal
+of Statistical Software</em>, 11(1), 1-20.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
+    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_ica.html'>step_ica()</a></code>
+<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -239,48 +282,30 @@ the centering to new data sets using these means.</p>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='no'>center_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_center</span>(<span class='no'>carbon</span>, <span class='fu'>contains</span>(<span class='st'>"gen"</span>), -<span class='no'>hydrogen</span>)
+<span class='no'>kpca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_kpca_rbf</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='no'>center_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>center_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>dimRed</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>kernlab</span>)) {
+  <span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>center_obj</span>, <span class='no'>biomass_te</span>)
+  <span class='no'>kpca_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>kpca_estimates</span>, <span class='no'>biomass_te</span>)
 
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
-#&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
-#&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
-#&gt; 31  46.40     6.10  37.30     1.80   0.50 18.851
-#&gt; 36  48.76     6.32  42.77     0.20   0.00 20.547
-#&gt; 41  44.30     5.50  41.70     0.70   0.20 18.467
-#&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
-#&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
-#&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
-#&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1  -2.00      5.67   8.68   -0.775   0.22  18.3
-#&gt;  2  -5.10      5.5    9.54    1.78    0.34  17.6
-#&gt;  3  -5.65      5.5   10.6     1.33    0.3   17.2
-#&gt;  4  -1.95      6.1   -1.22    0.725   0.5   18.9
-#&gt;  5   0.406     6.32   4.25   -0.875   0     20.5
-#&gt;  6  -4.05      5.5    3.18   -0.375   0.2   18.5
-#&gt;  7  -9.41      5.23  15.6     0.115   0.51  15.1
-#&gt;  8  -6.25      4.66  -4.72   -0.125   0.2   16.2
-#&gt;  9 -19.2       4.4   -7.42   -0.935   4.9   11.1
-#&gt; 10 -20.6       3.77 -14.8     3.56    1.05  10.8
-#&gt; # … with 70 more rows</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
-#&gt;   terms               value id          
-#&gt;   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 carbon                 NA center_sTX3T
-#&gt; 2 "contains(\"gen\")"    NA center_sTX3T
-#&gt; 3 -hydrogen              NA center_sTX3T</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
-#&gt;   terms    value id          
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 carbon   48.4  center_sTX3T
-#&gt; 2 oxygen   38.5  center_sTX3T
-#&gt; 3 nitrogen  1.07 center_sTX3T</div></pre>
+  <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/extendrange'>extendrange</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>))
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dimRed/topics/plot'>plot</a></span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>,
+       <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)
+
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>kpca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+}</div><div class='output co'>#&gt; <span class='message'>2019-08-28 23:36:41: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2019-08-28 23:36:41: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2019-08-28 23:36:41: DONE</span></div><div class='img'><img src='step_kpca_rbf-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; # A tibble: 5 x 2
+#&gt;   terms    id            
+#&gt;   &lt;chr&gt;    &lt;chr&gt;         
+#&gt; 1 carbon   kpca_rbf_68zye
+#&gt; 2 hydrogen kpca_rbf_68zye
+#&gt; 3 oxygen   kpca_rbf_68zye
+#&gt; 4 nitrogen kpca_rbf_68zye
+#&gt; 5 sulfur   kpca_rbf_68zye</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -288,6 +313,7 @@ the centering to new data sets using these means.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

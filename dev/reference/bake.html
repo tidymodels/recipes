@@ -32,12 +32,11 @@
 
 
 <meta property="og:title" content="Apply a Trained Data Recipe — bake" />
-
 <meta property="og:description" content="For a recipe with at least one preprocessing operations that has been trained by
 prep.recipe(), apply the computations to new data." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -149,10 +148,8 @@ prep.recipe(), apply the computations to new data." />
     </div>
 
     <div class="ref-description">
-    
     <p>For a recipe with at least one preprocessing operations that has been trained by
 <code><a href='prep.html'>prep.recipe()</a></code>, apply the computations to new data.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -160,7 +157,7 @@ prep.recipe(), apply the computations to new data." />
 <span class='co'># S3 method for recipe</span>
 <span class='fu'>bake</span>(<span class='no'>object</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>,
   <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -191,12 +188,11 @@ called <strong>after</strong> any selectors and the selectors should only
 resolve to numeric columns (otherwise an error is thrown).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in <code>new_data</code>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>bake()</code> takes a trained recipe and applies the
@@ -209,24 +205,19 @@ option set, <code><a href='juice.html'>juice()</a></code> can be used instead of
 <p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
 data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
 of the steps applied.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='juice.html'>juice()</a></code>, <code><a href='prep.html'>prep()</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
     <h2>Author</h2>
     <p>Max Kuhn</p>

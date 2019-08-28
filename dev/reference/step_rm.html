@@ -32,12 +32,11 @@
 
 
 <meta property="og:title" content="General Variable Filter — step_rm" />
-
 <meta property="og:description" content="step_rm creates a specification of a recipe step
 that will remove variables based on their name, type, or role." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -149,10 +148,8 @@ that will remove variables based on their name, type, or role." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_rm</code> creates a <em>specification</em> of a recipe step
 that will remove variables based on their name, type, or role.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_rm</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -160,7 +157,7 @@ that will remove variables based on their name, type, or role.</p>
 
 <span class='co'># S3 method for step_rm</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -210,14 +207,13 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_rm</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> which
 is the columns that will be removed.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
@@ -252,17 +248,15 @@ is the columns that will be removed.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>smaller_set</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 2
 #&gt;   terms    id      
 #&gt;   &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1 hydrogen rm_uklbz
-#&gt; 2 oxygen   rm_uklbz
-#&gt; 3 nitrogen rm_uklbz</div></pre>
+#&gt; 1 hydrogen rm_9T2b4
+#&gt; 2 oxygen   rm_9T2b4
+#&gt; 3 nitrogen rm_9T2b4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

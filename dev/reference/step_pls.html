@@ -32,12 +32,11 @@
 
 
 <meta property="og:title" content="Partial Least Squares Feature Extraction — step_pls" />
-
 <meta property="og:description" content="step_pls creates a specification of a recipe step that will
 convert numeric data into one or more new dimensions." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -149,19 +148,17 @@ convert numeric data into one or more new dimensions." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_pls</code> creates a <em>specification</em> of a recipe step that will
 convert numeric data into one or more new dimensions.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_pls</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PLS"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>))
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PLS"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>))
 
 <span class='co'># S3 method for step_pls</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -215,12 +212,6 @@ here once this preprocessing step has be trained by
 <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>num</th>
-      <td><p>The number of components to retain (this will be
-deprecated in factor of <code>num_comp</code> in version 0.1.5). <code>num_comp</code>
-will override this option.</p></td>
-    </tr>
-    <tr>
       <th>prefix</th>
       <td><p>A character string that will be the prefix to the
 resulting new variables. See notes below.</p></td>
@@ -243,14 +234,13 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_pls</code> object</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> (the
 selectors or variables selected).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>PLS is a supervised version of principal component
@@ -265,13 +255,11 @@ components are removed from the data). The new components will
 have names that begin with <code>prefix</code> and a sequence of numbers.
 The variable names are padded with zeros. For example, if <code>num_comp &lt; 10</code>, their names will be <code>PLS1</code> - <code>PLS9</code>. If <code>num_comp = 101</code>, the
 names would be <code>PLS001</code> - <code>PLS101</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
 <code><a href='step_ica.html'>step_ica()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>biomass</span>)
@@ -281,42 +269,36 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 
 <span class='no'>pls_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_rm.html'>step_rm</a></span>(<span class='no'>sample</span>, <span class='no'>dataset</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='co'># If the outcome(s) need standardization, do it in separate</span>
   <span class='co'># steps with skip = FALSE so that new data where the</span>
   <span class='co'># outcome is missing can be processed.</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>(), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>(), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>(), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>)
 
 <span class='no'>pls_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>pls_test_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>[, -<span class='fl'>8</span>])
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt;       terms      value component        id
-#&gt; 1    carbon  0.8281346      PLS1 pls_onm0v
-#&gt; 2  hydrogen -0.2069634      PLS1 pls_onm0v
-#&gt; 3    oxygen -0.4924124      PLS1 pls_onm0v
-#&gt; 4  nitrogen -0.1226340      PLS1 pls_onm0v
-#&gt; 5    sulfur  0.1176868      PLS1 pls_onm0v
-#&gt; 6    carbon  0.7184695      PLS2 pls_onm0v
-#&gt; 7  hydrogen  0.6429989      PLS2 pls_onm0v
-#&gt; 8    oxygen  0.2991768      PLS2 pls_onm0v
-#&gt; 9  nitrogen -0.1727191      PLS2 pls_onm0v
-#&gt; 10   sulfur -0.2173418      PLS2 pls_onm0v</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt;       terms      value component        id
+#&gt; 1    carbon  0.8281346      PLS1 pls_b2dDc
+#&gt; 2  hydrogen -0.2069634      PLS1 pls_b2dDc
+#&gt; 3    oxygen -0.4924124      PLS1 pls_b2dDc
+#&gt; 4  nitrogen -0.1226340      PLS1 pls_b2dDc
+#&gt; 5    sulfur  0.1176868      PLS1 pls_b2dDc
+#&gt; 6    carbon  0.7184695      PLS2 pls_b2dDc
+#&gt; 7  hydrogen  0.6429989      PLS2 pls_b2dDc
+#&gt; 8    oxygen  0.2991768      PLS2 pls_b2dDc
+#&gt; 9  nitrogen -0.1727191      PLS2 pls_b2dDc
+#&gt; 10   sulfur -0.2173418      PLS2 pls_b2dDc</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

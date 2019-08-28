@@ -32,15 +32,14 @@
 
 
 <meta property="og:title" content="Naming Tools — names0" />
-
 <meta property="og:description" content="names0 creates a series of num names with a common prefix.
 The names are numbered with leading zeros (e.g.
 prefix01-prefix10 instead of prefix1-prefix10).
 dummy_names can be used for renaming unordered and ordered
 dummy variables (in step_dummy())." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -152,19 +151,17 @@ dummy variables (in step_dummy())." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>names0</code> creates a series of <code>num</code> names with a common prefix.
 The names are numbered with leading zeros (e.g.
 <code>prefix01</code>-<code>prefix10</code> instead of <code>prefix1</code>-<code>prefix10</code>).
 <code>dummy_names</code> can be used for renaming unordered and ordered
 dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>names0</span>(<span class='no'>num</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"x"</span>)
 
 <span class='fu'>dummy_names</span>(<span class='no'>var</span>, <span class='no'>lvl</span>, <span class='kw'>ordinal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,13 +194,12 @@ example below).</p></td>
 levels.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>names0</code> returns a character string of length <code>num</code> and
 <code>dummy_names</code> generates a character vector the same length as
 <code>lvl</code>,</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>names0</span>(<span class='fl'>9</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt; [1] "x1" "x2" "x3" "x4" "x5" "x6" "x7" "x8" "x9"</div><div class='input'><span class='fu'>names0</span>(<span class='fl'>10</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;  [1] "x01" "x02" "x03" "x04" "x05" "x06" "x07" "x08" "x09" "x10"</div><div class='input'>
@@ -219,9 +215,7 @@ levels.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

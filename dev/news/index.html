@@ -32,9 +32,9 @@
 
 
 <meta property="og:title" content="Changelog" />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -156,9 +156,16 @@
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other Changes:</h2>
 <ul>
-<li><p><code>format_ch_vec()</code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p></li>
-<li><p><code>check_new_values</code> breaks <code>bake</code> if variable containes values that were not observed in the train set (contributed by Edwin Thoen)</p></li>
+<li><p>The use of <code>varying()</code> will be deprecated in favor of an upcoming function <code>tune()</code>. No changes are need in this version, but subsequent versions will work with <code>tune()</code>.</p></li>
+<li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p></li>
+<li><p><code>check_new_values</code> breaks <code>bake</code> if variable contains values that were not observed in the train set (contributed by Edwin Thoen)</p></li>
 <li><p>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298"><a href='https://github.com/tidymodels/recipes/issues/298'>#298</a></a>). This will also occur when the selectors select no columns.</p></li>
+<li><p>As alternatives to <code><a href="../reference/step_kpca.html">step_kpca()</a></code>, two separate steps were added called <code><a href="../reference/step_kpca_rbf.html">step_kpca_rbf()</a></code> and <code><a href="../reference/step_kpca_poly.html">step_kpca_poly()</a></code>. The use of <code><a href="../reference/step_kpca.html">step_kpca()</a></code> will print a deprecation message that it will be going away.</p></li>
+<li><p><code><a href="../reference/step_nzv.html">step_nzv()</a></code> and <code><a href="../reference/step_poly.html">step_poly()</a></code> had arguments promoted out of their <code>options</code> slot. <code>options</code> can be used in the short term but is deprecated.</p></li>
+<li><p><code><a href="../reference/step_downsample.html">step_downsample()</a></code> will replace the <code>ratio</code> argument with <code>under_ratio</code> and <code><a href="../reference/step_upsample.html">step_upsample()</a></code> will replace it with <code>over_ratio</code>. <code>ratio</code> still works (for now) but issues a deprecation message.</p></li>
+<li><p><code><a href="../reference/step_discretize.html">step_discretize()</a></code> has arguments moved out of <code>options</code> too; the main arguments are now <code>num_breaks</code> (instead of <code>cuts</code>) and <code>min_unique</code>. Again, deprecation messages are issued with the old argument structure.</p></li>
+<li><p>Models using the <code>dimRed</code> package (<code><a href="../reference/step_kpca.html">step_kpca()</a></code>, <code><a href="../reference/step_isomap.html">step_isomap()</a></code>, and <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code>) would silently fail if the projection method failed. An error is issued now.</p></li>
+<li><p>Methods were added for a future generic called <code>tunable()</code>. This outlines which parameters in a step can/could be tuned.</p></li>
 </ul>
 </div>
 </div>

@@ -132,18 +132,15 @@
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.6.1</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; Warning: package 'rsample' was built under R version 3.6.1</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.6.1</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"credit_data"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rsample)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"credit_data"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">55</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">55</span>)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">train_test_split &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">initial_split</a></span>(credit_data)</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
+<a class="sourceLine" id="cb1-9" data-line-number="9">credit_train &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">training</a></span>(train_test_split)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">credit_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rsample/topics/initial_split">testing</a></span>(train_test_split)</a></code></pre></div>
 <p>Note that there are some missing values in these data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(credit_train, <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(x)), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">numeric</a></span>(<span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></a>
@@ -189,9 +186,12 @@
 <p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">"impute$"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ls">ls</a></span>(<span class="st">"package:recipes"</span>), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "step_bagimpute"    "step_knnimpute"    "step_lowerimpute" </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [4] "step_meanimpute"   "step_medianimpute" "step_modeimpute"  </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [7] "step_rollimpute"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1] "step_bagimpute"          "step_knnimpute"         </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  [3] "step_lowerimpute"        "step_meanimpute"        </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  [5] "step_medianimpute"       "step_modeimpute"        </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;  [7] "step_rollimpute"         "tunable.step_bagimpute" </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;  [9] "tunable.step_knnimpute"  "tunable.step_meanimpute"</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; [11] "tunable.step_rollimpute"</span></a></code></pre></div>
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">imputed &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/step_knnimpute.html">step_knnimpute</a></span>(<span class="kw"><a href="../reference/has_role.html">all_predictors</a></span>()) </a>
@@ -206,7 +206,7 @@
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span></a></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code>step_dummy</code>. To do this, the step selects all predictors then removes those that are numeric:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">ind_vars &lt;-<span class="st"> </span>imputed <span class="op">%&gt;%</span></a>
@@ -222,7 +222,7 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span></a>
 <a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span></a></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">standardized &lt;-<span class="st"> </span>ind_vars <span class="op">%&gt;%</span></a>
@@ -239,7 +239,7 @@
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5-nearest neighbor imputation for all_predictors</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; Centering for all_predictors</span></a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Scaling for all_predictors</span></a></code></pre></div>
@@ -258,7 +258,7 @@
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; 5-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span></a>
 <a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span></a>
 <a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, ... [trained]</span></a>
 <a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, ... [trained]</span></a></code></pre></div>
@@ -313,20 +313,21 @@
 #&gt; [19] "step_hyperbolic"    "step_ica"           "step_integer"      
 #&gt; [22] "step_interact"      "step_intercept"     "step_inverse"      
 #&gt; [25] "step_invlogit"      "step_isomap"        "step_knnimpute"    
-#&gt; [28] "step_kpca"          "step_lag"           "step_lincomb"      
-#&gt; [31] "step_log"           "step_logit"         "step_lowerimpute"  
-#&gt; [34] "step_meanimpute"    "step_medianimpute"  "step_modeimpute"   
-#&gt; [37] "step_mutate"        "step_naomit"        "step_nnmf"         
-#&gt; [40] "step_normalize"     "step_novel"         "step_ns"           
-#&gt; [43] "step_num2factor"    "step_nzv"           "step_ordinalscore" 
-#&gt; [46] "step_other"         "step_pca"           "step_pls"          
-#&gt; [49] "step_poly"          "step_profile"       "step_range"        
-#&gt; [52] "step_ratio"         "step_regex"         "step_relu"         
-#&gt; [55] "step_rm"            "step_rollimpute"    "step_sample"       
-#&gt; [58] "step_scale"         "step_shuffle"       "step_slice"        
-#&gt; [61] "step_spatialsign"   "step_sqrt"          "step_string2factor"
-#&gt; [64] "step_unknown"       "step_unorder"       "step_upsample"     
-#&gt; [67] "step_window"        "step_YeoJohnson"    "step_zv"</code></pre>
+#&gt; [28] "step_kpca"          "step_kpca_poly"     "step_kpca_rbf"     
+#&gt; [31] "step_lag"           "step_lincomb"       "step_log"          
+#&gt; [34] "step_logit"         "step_lowerimpute"   "step_meanimpute"   
+#&gt; [37] "step_medianimpute"  "step_modeimpute"    "step_mutate"       
+#&gt; [40] "step_naomit"        "step_nnmf"          "step_normalize"    
+#&gt; [43] "step_novel"         "step_ns"            "step_num2factor"   
+#&gt; [46] "step_nzv"           "step_ordinalscore"  "step_other"        
+#&gt; [49] "step_pca"           "step_pls"           "step_poly"         
+#&gt; [52] "step_profile"       "step_range"         "step_ratio"        
+#&gt; [55] "step_regex"         "step_relu"          "step_rm"           
+#&gt; [58] "step_rollimpute"    "step_sample"        "step_scale"        
+#&gt; [61] "step_shuffle"       "step_slice"         "step_spatialsign"  
+#&gt; [64] "step_sqrt"          "step_string2factor" "step_unknown"      
+#&gt; [67] "step_unorder"       "step_upsample"      "step_window"       
+#&gt; [70] "step_YeoJohnson"    "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">
@@ -342,6 +343,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>

@@ -32,13 +32,12 @@
 
 
 <meta property="og:title" content="Box-Cox Transformation for Non-Negative Data — step_BoxCox" />
-
 <meta property="og:description" content="step_BoxCox creates a specification of a recipe
 step that will transform data using a simple Box-Cox
 transformation." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
@@ -150,11 +149,9 @@ transformation." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>step_BoxCox</code> creates a <em>specification</em> of a recipe
 step that will transform data using a simple Box-Cox
 transformation.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>step_BoxCox</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -163,7 +160,7 @@ transformation.</p>
 
 <span class='co'># S3 method for step_BoxCox</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -222,7 +219,7 @@ the computations for subsequent operations</p></td>
       <td><p>A <code>step_BoxCox</code> object.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
@@ -230,7 +227,6 @@ added to the sequence of existing steps (if any). For the
 <code>tidy</code> method, a tibble with columns <code>terms</code> (the
 selectors or variables selected) and <code>value</code> (the
 lambda estimate).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Box-Cox transformation, which requires a strictly
@@ -248,17 +244,14 @@ variable distributions more symmetric.</p>
 <p>If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 <code>NA</code> is used and no transformation is applied.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Sakia, R. M. (1992). The Box-Cox transformation technique:
 A review. <em>The Statistician</em>, 169-178..</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_YeoJohnson.html'>step_YeoJohnson()</a></code> <code><a href='recipe.html'>recipe()</a></code>
 <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -274,31 +267,26 @@ A review. <em>The Statistician</em>, 169-178..</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms         value id          
 #&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 all_numeric()    NA BoxCox_Fe2kG</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt; 1 all_numeric()    NA BoxCox_1neMY</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/generics/topics/tidy'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
 #&gt;   terms          value id          
 #&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 Population  0.000966 BoxCox_Fe2kG
-#&gt; 2 Income      0.524    BoxCox_Fe2kG
-#&gt; 3 Illiteracy -0.379    BoxCox_Fe2kG
-#&gt; 4 Life Exp    4.59     BoxCox_Fe2kG
-#&gt; 5 Murder      0.606    BoxCox_Fe2kG
-#&gt; 6 HS Grad     1.92     BoxCox_Fe2kG
-#&gt; 7 Area        0.250    BoxCox_Fe2kG</div><div class='input'>
+#&gt; 1 Population  0.000966 BoxCox_1neMY
+#&gt; 2 Income      0.524    BoxCox_1neMY
+#&gt; 3 Illiteracy -0.379    BoxCox_1neMY
+#&gt; 4 Life Exp    4.59     BoxCox_1neMY
+#&gt; 5 Murder      0.606    BoxCox_1neMY
+#&gt; 6 HS Grad     1.92     BoxCox_1neMY
+#&gt; 7 Area        0.250    BoxCox_1neMY</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
