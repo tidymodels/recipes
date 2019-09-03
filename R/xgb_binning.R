@@ -185,6 +185,8 @@ prep.step_xgb_binning <- function(x,
                                   ...) {
 
   col_names <- terms_select(terms = x$terms, info = info)
+  check_type(training[, col_names])
+
   rules <- vector("list", length(col_names))
 
   for(i in seq_along(col_names)){
