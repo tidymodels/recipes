@@ -221,8 +221,9 @@ bake.step_xgb_binning <- function(object,
   for(i in seq_along(vars)){
 
     var <- names(vars)[[i]]
+    binned_data <- new_data
 
-    new_data[, var] <- cut(
+    binned_data[, var] <- cut(
       new_data[[var]],
       breaks = c(
         -Inf,
@@ -234,7 +235,9 @@ bake.step_xgb_binning <- function(object,
       dig.lab = 4
     )
 
-    names(new_data)[names(new_data) == var] <- paste0(object$prefix, "_", var)
+    names(binned_data)[names(binned_data) == var] <- paste0(object$prefix, "_", var)
+    check_name(binned_data, new_data, object)
+    new_data <- binned_data
   }
   as_tibble(new_data)
 }
@@ -245,4 +248,3 @@ print.step_xgb_binning <-
     printer(names(x$rules), x$terms, x$trained, width = width)
     invisible(x)
   }
-
