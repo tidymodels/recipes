@@ -23,10 +23,13 @@
 #' @concept discretization
 #' @concept factors
 #' @export
-#' @details XgBoost is a supervised version of principal component
-#'  analysis that requires one or more numeric outcomes to compute
-#'  the new features. It is advised to impute missing values before
-#'  this step.
+#' @details step_xgb_binning creates non-uniform bins from numerical
+#'  variables by utilizing the information about the outcome
+#'  variable and applying the xgboost model. It is advised to impute
+#'  missing values before this step. This step is intented to be
+#'  used particularly with linear models because thanks to creating
+#'  non-uniform bins it becomes easier to learn non-linear patterns
+#'  from the data.
 #'
 #' This step requires the \pkg{xgboost} package. If not installed, the
 #'  step will stop with a note about installing the package.
