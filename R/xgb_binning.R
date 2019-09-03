@@ -237,4 +237,10 @@ bake.step_xgb_binning <- function(object,
   as_tibble(new_data)
 }
 
+print.step_xgb_binning <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    cat("Discretizing variables using XgBoost ")
+    printer(names(x$rules), x$terms, x$trained, width = width)
+    invisible(x)
+  }
 
