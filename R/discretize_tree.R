@@ -103,7 +103,7 @@ step_discretize_tree_new <-
     )
   }
 
-run_xgboost <- function(.train, .test, .max_bin){
+run_xgboost <- function(.train, .test, .max_bin, .objective){
   xgboost::xgb.train(
     params = list(
       eta = 0.3,
@@ -119,39 +119,61 @@ run_xgboost <- function(.train, .test, .max_bin){
     ),
     tree_method = "hist",
     early_stopping_rounds = 10,
-    objective = "binary:logistic",
-    eval_metric = "auc",
-    verbose = 0
+    objective = .objective,
+    verbose = 0,
+    nthread = 1
   )
 }
 
-xgb_binning <- function(df, target, variable){
+xgb_binning <- function(df, outcome, predictor, num_breaks){
 
-  levels <- sort(unique(df[[target]]))
+  ###
+  data(credit_data)
+  library(rsample)
 
-  if(length(levels) != 2){
-    stop("Target variable does not have exactly two levels.", call. = FALSE)
-  }
+  split <- initial_split(credit_data, strata = "Status")
+
+  credit_data_tr <- training(split)
+  credit_data_te <- testing(split)
+
+  df <- credit_data_tr
+  outcome <- "Status"
+  predictor <- "Seniority"
+  num_breaks <- 20
+  ###
+
+  # Checking the number of levels of the outcome
+  levels <- sort(unique(df[[outcome]]))
 
   if(any(is.na((levels)))){
-    stop("Target variable contains missing values.", call. = FALSE)
+    stop("Outcome variable contains missing values.", call. = FALSE)
   }
 
-  split <- rsample::initial_split(df, prop = 0.8, strata = target)
+  # Defining the objective function
+  objective <- if (length(levels) == 2){
+    "binary:logistic"
+  } else if (class(df[[outcome]]) %in% c("double", "integer")){
+    "reg:squarederror"
+  } else {
+    stop("Outcome variable needs to have two levels (binary classification)
+         or be a double/ integer (regression)", call. = FALSE)
+  }
+
+  split <- rsample::initial_split(df, prop = 0.8, strata = outcome)
   train <- rsample::training(split)
   test  <- rsample::testing(split)
 
   xgb_train <- xgboost::xgb.DMatrix(
-    data = as.matrix(train[, variable]),
-    label = ifelse(train[[target]] == levels[[1]], 0, 1)
+    data = as.matrix(train[, predictor]),
+    label = ifelse(train[[outcome]] == levels[[1]], 0, 1)
   )
 
   xgb_test <- xgboost::xgb.DMatrix(
-    data = as.matrix(test[, variable]),
-    label = ifelse(test[[target]] == levels[[1]], 0, 1)
+    data = as.matrix(test[, predictor]),
+    label = ifelse(test[[outcome]] == levels[[1]], 0, 1)
   )
 
-  xgb_runs <- purrr::map(c(10, 20, 50), function(x) run_xgboost(xgb_train, xgb_test, x))
+  xgb_mdl <- withr:::with_seed(sample.int(10^6, 1), run_xgboost(xgb_train, xgb_test, num_breaks, objective))
 
   xgb_runs_results <- rbind(
     xgb_runs[[1]]$evaluation_log[xgb_runs[[1]]$best_iteration, ],
