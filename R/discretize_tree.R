@@ -1,6 +1,6 @@
 #' Discretize numeric variables with XgBoost
 #'
-#' `step_xgb_binning` creates a *specification* of a recipe
+#' `step_discretize_tree` creates a *specification* of a recipe
 #'  step that will discretize numeric data (e.g. integeres or doubles)
 #'  into bins in a supervised way using an XgBoost model.
 #'
@@ -23,7 +23,7 @@
 #' @concept discretization
 #' @concept factors
 #' @export
-#' @details step_xgb_binning creates non-uniform bins from numerical
+#' @details step_discretize_tree creates non-uniform bins from numerical
 #'  variables by utilizing the information about the outcome
 #'  variable and applying the xgboost model. It is advised to impute
 #'  missing values before this step. This step is intented to be
@@ -49,7 +49,7 @@
 #'
 #' xgb_rec <- recipe(Status ~ ., data = credit_data_tr) %>%
 #'   step_medianimpute(all_numeric()) %>%
-#'   step_xgb_binning(all_numeric(), outcome = "Status")
+#'   step_discretize_tree(all_numeric(), outcome = "Status")
 #'
 #' xgb_rec <- prep(xgb_rec, training = credit_data_tr, retain = TRUE)
 #'
@@ -57,7 +57,7 @@
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 #'
 
-step_xgb_binning <-
+step_discretize_tree <-
   function(recipe,
            ...,
            role = NA,
@@ -74,7 +74,7 @@ step_xgb_binning <-
 
     add_step(
       recipe,
-      step_xgb_binning_new(
+      step_discretize_tree_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -87,7 +87,7 @@ step_xgb_binning <-
     )
   }
 
-step_xgb_binning_new <-
+step_discretize_tree_new <-
   function(terms, role, trained, outcome, rules,
            prefix, skip, id) {
     step(
@@ -179,7 +179,7 @@ xgb_binning <- function(df, target, variable){
 }
 
 #' @export
-prep.step_xgb_binning <- function(x,
+prep.step_discretize_tree <- function(x,
                                   training,
                                   info = NULL,
                                   ...) {
@@ -199,7 +199,7 @@ prep.step_xgb_binning <- function(x,
 
   names(rules) <- col_names
 
-  step_xgb_binning_new(
+  step_discretize_tree_new(
     terms   = x$terms,
     role    = x$role,
     trained = TRUE,
@@ -212,7 +212,7 @@ prep.step_xgb_binning <- function(x,
 }
 
 #' @export
-bake.step_xgb_binning <- function(object,
+bake.step_discretize_tree <- function(object,
                                   new_data,
                                   ...) {
 
@@ -242,7 +242,7 @@ bake.step_xgb_binning <- function(object,
   as_tibble(new_data)
 }
 
-print.step_xgb_binning <-
+print.step_discretize_tree <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Discretizing variables using XgBoost ")
     printer(names(x$rules), x$terms, x$trained, width = width)
