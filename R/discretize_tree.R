@@ -175,26 +175,9 @@ xgb_binning <- function(df, outcome, predictor, num_breaks){
 
   xgb_mdl <- withr:::with_seed(sample.int(10^6, 1), run_xgboost(xgb_train, xgb_test, num_breaks, objective))
 
-  xgb_runs_results <- rbind(
-    xgb_runs[[1]]$evaluation_log[xgb_runs[[1]]$best_iteration, ],
-    xgb_runs[[2]]$evaluation_log[xgb_runs[[2]]$best_iteration, ],
-    xgb_runs[[3]]$evaluation_log[xgb_runs[[3]]$best_iteration, ]
-  ) %>%
-  cbind(model = c("mdl_max_bin_10", "mdl_max_bin_20", "mdl_max_bin_50"))
-
-  xgb_best <- xgb_runs_results$model[which.max(xgb_runs_results$test_auc)]
-
-  xgb_selected <- if (xgb_best == "mdl_max_bin_50") {
-    xgb_runs[[3]]
-  } else if (xgb_best == "mdl_max_bin_20") {
-    xgb_runs[[2]]
-  } else {
-    xgb_runs[[1]]
-  }
-
   xgboost::xgb.model.dt.tree(
-    model = xgb_selected,
-    trees = xgb_selected$best_iteration,
+    model = xgb_mdl,
+    trees = xgb_mdl$best_iteration,
     use_int_id = TRUE
   )
 
