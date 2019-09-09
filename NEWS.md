@@ -1,10 +1,13 @@
-#  `recipes` 0.1.6.9000
+#  `recipes` 0.1.7
 
 ## Breaking Changes
+
 `format_selector()`'s `wdth` argument has been renamed to `width` 
 ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
 ## Other Changes:
+
+ * This release was triggered by the changes in `tidyr` (v 1.0.0). 
 
  * The use of `varying()` will be deprecated in favor of an upcoming function `tune()`. No changes are need in this version, but subsequent versions will work with `tune()`.
 

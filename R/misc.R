@@ -600,6 +600,12 @@ is_tune <- function(x) {
   FALSE
 }
 
+# ------------------------------------------------------------------------------
+
+#' @importFrom utils packageVersion
+tidyr_new_interface <- function() {
+  utils::packageVersion("tidyr") > "0.8.99"
+}
 
 # ------------------------------------------------------------------------------
 
