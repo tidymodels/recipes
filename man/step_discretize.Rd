@@ -6,8 +6,8 @@
 \title{Discretize Numeric Variables}
 \usage{
 step_discretize(recipe, ..., role = NA, trained = FALSE,
-  objects = NULL, options = list(), skip = FALSE,
-  id = rand_id("discretize"))
+  num_breaks = 4, min_unique = 10, objects = NULL,
+  options = list(), skip = FALSE, id = rand_id("discretize"))
 
 \method{tidy}{step_discretize}(x, ...)
 }
@@ -26,6 +26,14 @@ created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
+
+\item{num_breaks}{An integer defining how many cuts to make of the
+data.}
+
+\item{min_unique}{An integer defining a sample size line of
+dignity for the binning. If (the number of unique
+values)\code{/(cuts+1)} is less than \code{min_unique}, no
+discretization takes place.}
 
 \item{objects}{The \code{\link[=discretize]{discretize()}} objects are stored
 here once the recipe has be trained by

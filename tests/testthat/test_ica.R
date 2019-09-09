@@ -112,14 +112,6 @@ test_that('correct ICA values', {
 })
 
 
-test_that('deprecated arg', {
-
-  expect_message(
-    rec %>%
-      step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num = 2)
-  )
-})
-
 test_that('printing', {
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num_comp = 2)
@@ -141,4 +133,21 @@ test_that('No ICA comps', {
   expect_output(print(ica_extract_trained),
                 regexp = "No ICA components were extracted")
   expect_true(all(is.na(tidy(ica_extract_trained, 1)$value)))
+})
+
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_ica(all_predictors())
+  rec_param <- tunable.step_ica(rec$steps[[1]])
+  expect_equal(rec_param$name, c("num_comp"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
 })

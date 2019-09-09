@@ -49,14 +49,6 @@ test_that('correct Isomap values', {
 })
 
 
-test_that('deprecated arg', {
-  skip_if_not_installed("dimRed")
-  expect_message(
-    rec %>%
-      step_isomap(x1, x2, x3, num = 3, id = "")
-  )
-})
-
 test_that('printing', {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
@@ -73,6 +65,13 @@ test_that('printing', {
 
 
 test_that('No ISOmap', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") %>%
     prep()
@@ -90,3 +89,38 @@ test_that('No ISOmap', {
   )
 })
 
+
+test_that('ISOmap fails gracefully', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  expect_error(
+    recipe(Sepal.Length ~ ., data = iris) %>%
+      step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
+      step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
+      step_other(Species, threshold = .000000001) %>%
+      step_isomap(all_predictors(), -Species, num_terms = 1, neighbors = 1) %>%
+      prep(),
+    "eigen decomposition failed"
+  )
+})
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_isomap(all_predictors())
+  rec_param <- tunable.step_isomap(rec$steps[[1]])
+  expect_equal(rec_param$name, c("num_terms", "neighbors"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})

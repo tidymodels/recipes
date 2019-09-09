@@ -80,6 +80,11 @@ test_that('Correct values', {
 
 
 test_that('No NNF', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
   rec <- recipe(Species ~ ., data = iris) %>%
     step_nnmf(all_predictors(), seed = 2432, num_comp = 0) %>%
     prep()
@@ -94,4 +99,19 @@ test_that('No NNF', {
   expect_true(all(is.na(tidy(rec, 1)$value)))
 })
 
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_nnmf(all_predictors())
+  rec_param <- tunable.step_nnmf(rec$steps[[1]])
+  expect_equal(rec_param$name, c("num_comp", "num_run"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})
 

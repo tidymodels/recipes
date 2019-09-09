@@ -6,7 +6,7 @@
 \title{Orthogonal Polynomial Basis Functions}
 \usage{
 step_poly(recipe, ..., role = "predictor", trained = FALSE,
-  objects = NULL, options = list(degree = 2), skip = FALSE,
+  objects = NULL, degree = 2, options = list(), skip = FALSE,
   id = rand_id("poly"))
 
 \method{tidy}{step_poly}(x, ...)
@@ -31,8 +31,10 @@ preprocessing have been estimated.}
 \item{objects}{A list of \code{\link[stats:poly]{stats::poly()}} objects
 created once the step has been trained.}
 
+\item{degree}{The polynomial degree (an integer).}
+
 \item{options}{A list of options for \code{\link[stats:poly]{stats::poly()}}
-which should not include \code{x} or \code{simple}. Note that
+which should not include \code{x}, \code{degree}, or \code{simple}. Note that
 the option \code{raw = TRUE} will produce the regular polynomial
 values (not orthogonalized).}
 

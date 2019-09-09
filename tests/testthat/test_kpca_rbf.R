@@ -2,7 +2,7 @@ library(testthat)
 library(kernlab)
 library(recipes)
 
-context("Kernel PCA")
+context("RBF Kernel PCA")
 
 
 set.seed(131)
@@ -18,7 +18,7 @@ test_that('correct kernel PCA values', {
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "")
+    step_kpca_rbf(X2, X3, X4, X5, X6, id = "")
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
@@ -26,8 +26,8 @@ test_that('correct kernel PCA values', {
   pca_pred <- as.matrix(pca_pred)
 
   pca_exp <- kpca(as.matrix(tr_dat[, -1]),
-                  kernel = kpca_rec$steps[[1]]$options$kernel,
-                  kpar = kpca_rec$steps[[1]]$options$kpar)
+                  kernel = "rbfdot",
+                  kpar = list(sigma = 0.2))
 
   pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num_comp]
   colnames(pca_pred_exp) <- paste0("kPC", 1:kpca_trained$steps[[1]]$num_comp)
@@ -44,13 +44,12 @@ test_that('correct kernel PCA values', {
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)
 })
 
-
 test_that('printing', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6)
+    step_kpca_rbf(X2, X3, X4, X5, X6)
   expect_output(print(kpca_rec))
   expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
@@ -58,7 +57,7 @@ test_that('printing', {
 
 test_that('No kPCA comps', {
   pca_extract <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
+    step_kpca_rbf(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
     prep()
 
   expect_equal(
@@ -73,3 +72,20 @@ test_that('No kPCA comps', {
     tibble::tibble(terms = paste0("X", 2:6), id = "")
   )
 })
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_kpca_rbf(all_predictors())
+  rec_param <- tunable.step_kpca_rbf(rec$steps[[1]])
+  expect_equal(rec_param$name, c("num_comp", "sigma"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})
+

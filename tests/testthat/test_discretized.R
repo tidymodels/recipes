@@ -84,3 +84,49 @@ test_that('printing and tidys', {
   expect_equal(tidy(rec_trained, 1), tidy_exp_tr)
 
 })
+
+
+test_that('bad args', {
+
+  expect_error(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, num_breaks = 1) %>%
+      prep()
+  )
+  expect_warning(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, num_breaks = 100) %>%
+      prep()
+  )
+  expect_warning(
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, options = list(prefix = "@$")) %>%
+      prep()
+  )
+})
+
+
+
+test_that('printing', {
+  rec <- recipe(~., data = ex_tr) %>%
+    step_discretize(x1, id = "")
+  expect_output(print(rec))
+  expect_output(prep(rec, training = ex_tr, verbose = TRUE))
+})
+
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_discretize(all_predictors())
+  rec_param <- tunable.step_discretize(rec$steps[[1]])
+  expect_equal(rec_param$name, c("min_unique", "num_breaks"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})

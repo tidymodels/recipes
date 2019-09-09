@@ -7,7 +7,7 @@
 \usage{
 step_pls(recipe, ..., role = "predictor", trained = FALSE,
   num_comp = 2, outcome = NULL, options = NULL, res = NULL,
-  num = NULL, prefix = "PLS", skip = FALSE, id = rand_id("pls"))
+  prefix = "PLS", skip = FALSE, id = rand_id("pls"))
 
 \method{tidy}{step_pls}(x, ...)
 }
@@ -44,10 +44,6 @@ separated by commas or different selectors (see \code{\link[=selections]{selecti
 \item{res}{The \code{\link[pls:plsr]{pls::plsr()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{num}{The number of components to retain (this will be
-deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
-will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -97,20 +93,18 @@ biomass_te <- biomass[biomass$dataset == "Testing",]
 
 pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
   step_rm(sample, dataset) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   # If the outcome(s) need standardization, do it in separate
   # steps with skip = FALSE so that new data where the
   # outcome is missing can be processed.
-  step_center(all_outcomes(), skip = TRUE) \%>\%
-  step_scale(all_outcomes(), skip = TRUE) \%>\%
+  step_normalize(all_outcomes(), skip = TRUE) \%>\%
   step_pls(all_predictors(), outcome = "HHV")
 
 pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 
 pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 
-tidy(pls_rec, number = 6)
+tidy(pls_rec, number = 4)
 }
 \seealso{
 \code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}

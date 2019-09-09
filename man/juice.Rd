@@ -47,8 +47,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 sp_signed <- rec \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   step_spatialsign(all_predictors())
 
 sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)

@@ -7,7 +7,7 @@
 \usage{
 step_pca(recipe, ..., role = "predictor", trained = FALSE,
   num_comp = 5, threshold = NA, options = list(), res = NULL,
-  num = NULL, prefix = "PC", skip = FALSE, id = rand_id("pca"))
+  prefix = "PC", skip = FALSE, id = rand_id("pca"))
 
 \method{tidy}{step_pca}(x, ...)
 }
@@ -47,10 +47,6 @@ given to \code{num_comp}.}
 \item{res}{The \code{\link[stats:prcomp.default]{stats::prcomp.default()}} object is
 stored here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{num}{The number of components to retain (this will be
-deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
-will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below}

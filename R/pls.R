@@ -26,9 +26,6 @@
 #' @param res The [pls::plsr()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
-#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -64,20 +61,18 @@
 #'
 #' pls_rec <- recipe(HHV ~ ., data = biomass_tr) %>%
 #'   step_rm(sample, dataset) %>%
-#'   step_center(all_predictors()) %>%
-#'   step_scale(all_predictors()) %>%
+#'   step_normalize(all_predictors()) %>%
 #'   # If the outcome(s) need standardization, do it in separate
 #'   # steps with skip = FALSE so that new data where the
 #'   # outcome is missing can be processed.
-#'   step_center(all_outcomes(), skip = TRUE) %>%
-#'   step_scale(all_outcomes(), skip = TRUE) %>%
+#'   step_normalize(all_outcomes(), skip = TRUE) %>%
 #'   step_pls(all_predictors(), outcome = "HHV")
 #'
 #' pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
 #'
 #' pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 #'
-#' tidy(pls_rec, number = 6)
+#' tidy(pls_rec, number = 4)
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -91,15 +86,12 @@ step_pls <-
            outcome = NULL,
            options = NULL,
            res = NULL,
-           num = NULL,
            prefix = "PLS",
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
-    if (!is.null(num))
-      message("The argument `num` is deprecated in factor of `num_comp`. ",
-              "`num` will be removed in next version.", call. = FALSE)
+
     recipes_pkg_check("pls")
 
     add_step(
@@ -112,7 +104,6 @@ step_pls <-
         outcome = outcome,
         options = options,
         res = res,
-        num = num,
         prefix = prefix,
         skip = skip,
         id = id
@@ -121,7 +112,7 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms, role, trained, num_comp, outcome, options, res, num,
+  function(terms, role, trained, num_comp, outcome, options, res,
            prefix, skip, id) {
     step(
       subclass = "pls",
@@ -132,7 +123,6 @@ step_pls_new <-
       outcome = outcome,
       options = options,
       res = res,
-      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -176,7 +166,6 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     outcome = x$outcome,
     options = x$options,
     res = res,
-    num = x$num_comp,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
@@ -239,4 +228,17 @@ tidy.step_pls <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_pls <- function(x, ...) {
+  tibble::tibble(
+    name = "num_comp",
+    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1, 4))),
+    source = "recipe",
+    component = "step_pls",
+    component_id = x$id
+  )
 }

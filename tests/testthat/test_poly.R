@@ -16,7 +16,7 @@ test_that('correct basis functions', {
     step_poly(carbon, hydrogen, id = "")
 
   exp_tidy_un <- tibble(terms = c("carbon", "hydrogen"),
-                        degree = rep(2, 2),
+                        degree = rep(2L, 2),
                         id = "")
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
@@ -67,3 +67,18 @@ test_that('printing', {
   expect_output(prep(with_poly, training = biomass_tr, verbose = TRUE))
 })
 
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_poly(all_predictors())
+  rec_param <- tunable.step_poly(rec$steps[[1]])
+  expect_equal(rec_param$name, c("degree"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})

@@ -103,10 +103,14 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (threshold <= 0)
-      stop("`threshold` should be greater than zero", call. = FALSE)
-    if (threshold >= 1 && !is_integerish(threshold))
-      stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
+    if (!is_tune(threshold) & !is_varying(threshold)) {
+      if (threshold <= 0) {
+        stop("`threshold` should be greater than zero", call. = FALSE)
+      }
+      if (threshold >= 1 && !is_integerish(threshold)) {
+        stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
+      }
+    }
     add_step(
       recipe,
       step_other_new(
@@ -266,3 +270,19 @@ tidy.step_other <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_other <- function(x, ...) {
+  tibble::tibble(
+    name = "threshold",
+    call_info = list(
+      list(pkg = "dials", fun = "threshold", range = c(0, 0.1))
+    ),
+    source = "recipe",
+    component = "step_other",
+    component_id = x$id
+  )
+}
+

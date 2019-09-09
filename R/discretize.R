@@ -213,6 +213,12 @@ print.discretize <-
 #' @inheritParams step_center
 #' @param role Not used by this step since no new variables are
 #'  created.
+#' @param num_breaks An integer defining how many cuts to make of the
+#'  data.
+#' @param min_unique An integer defining a sample size line of
+#'  dignity for the binning. If (the number of unique
+#'  values)`/(cuts+1)` is less than `min_unique`, no
+#'  discretization takes place.
 #' @param objects The [discretize()] objects are stored
 #'  here once the recipe has be trained by
 #'  [prep.recipe()].
@@ -237,16 +243,26 @@ step_discretize <- function(recipe,
                             ...,
                             role = NA,
                             trained = FALSE,
+                            num_breaks = 4,
+                            min_unique = 10,
                             objects = NULL,
                             options = list(),
                             skip = FALSE,
                             id = rand_id("discretize")) {
+
+  if (any(names(options) %in% c("cuts", "min_unique"))) {
+    num_breaks <- options$cuts
+    min_unique <- options$min_unique
+  }
+
   add_step(
     recipe,
     step_discretize_new(
       terms = ellipse_check(...),
       trained = trained,
       role = role,
+      num_breaks = num_breaks,
+      min_unique = min_unique,
       objects = objects,
       options = options,
       skip = skip,
@@ -256,12 +272,14 @@ step_discretize <- function(recipe,
 }
 
 step_discretize_new <-
-  function(terms, role, trained, objects, options, skip, id) {
+  function(terms, role, trained, objects, num_breaks, min_unique, options, skip, id) {
     step(
       subclass = "discretize",
       terms = terms,
       role = role,
       trained = trained,
+      num_breaks = num_breaks,
+      min_unique = min_unique,
       objects = objects,
       options = options,
       skip = skip,
@@ -283,11 +301,13 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  if (length(col_names) > 1 &
-      any(names(x$options) %in% c("prefix", "labels"))) {
+  if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     warning("Note that the options `prefix` and `labels`",
             "will be applied to all variables")
   }
+
+  x$options$cuts <- x$num_breaks
+  x$options$min_unique <- x$min_unique
 
   obj <- lapply(training[, col_names], bin_wrapper, x$options)
   step_discretize_new(
@@ -295,6 +315,8 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     objects = obj,
+    num_breaks = x$num_breaks,
+    min_unique = x$min_unique,
     options = x$options,
     skip = x$skip,
     id = x$id
@@ -339,3 +361,19 @@ tidy.step_discretize <- function(x, ...) {
   res
 }
 
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_discretize <- function(x, ...) {
+  tibble::tibble(
+    name = c("min_unique", "num_breaks"),
+    call_info = list(
+      list(pkg = "dials", fun = "min_unique"),
+      list(pkg = "dials", fun = "num_breaks")
+    ),
+    source = "recipe",
+    component = "step_discretize",
+    component_id = x$id
+  )
+}

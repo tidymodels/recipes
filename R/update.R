@@ -7,9 +7,6 @@
 #' conflicting information can arise between the data returned from [juice()]
 #' and the information in the step.
 #'
-#' This function is mainly useful for finalizing _varying parameters_, but
-#' it can also be used on non-varying parameters as well (as seen in the
-#' example below).
 #'
 #' @param object A recipe `step`.
 #' @param ... Key-value pairs where the keys match up with names of elements
