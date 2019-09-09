@@ -191,7 +191,7 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
   lapply(terms, element_check)
 
   # Set current_info so available to helpers
-  nested_info <- tidyr::nest(info, -variable)
+  nested_info <- tidyr::nest(info, data = -variable)
   old_info <- set_current_info(nested_info)
   on.exit(set_current_info(old_info), add = TRUE)
 
