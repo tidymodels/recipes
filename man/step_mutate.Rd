@@ -3,12 +3,15 @@
 \name{step_mutate}
 \alias{step_mutate}
 \alias{tidy.step_mutate}
+\alias{tidy.step_mutate_at}
 \title{Add new variables using \code{mutate}}
 \usage{
 step_mutate(recipe, ..., role = "predictor", trained = FALSE,
   inputs = NULL, skip = FALSE, id = rand_id("mutate"))
 
 \method{tidy}{step_mutate}(x, ...)
+
+\method{tidy}{step_mutate_at}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
