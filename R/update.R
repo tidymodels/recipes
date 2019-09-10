@@ -52,8 +52,7 @@ update.step <- function(object, ...) {
   # Replace the appropriate values in object with the changes
   object <- update_fields(object, changes)
 
-  # Call step() to construct a new step
-  # to ensure all new changes are validated
+  # Call step() to construct a new step to ensure all new changes are validated
   reconstruct_step(object)
 
 }
