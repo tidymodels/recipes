@@ -151,6 +151,3 @@ tidy.step_lowerimpute <- function(x, ...) {
   res$id <- x$id
   res
 }
-
-#' @importFrom stats runif
-utils::globalVariables(c("estimate"))

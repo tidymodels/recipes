@@ -112,8 +112,6 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
   )
 }
 
-
-#' @importFrom purrr map_df
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
   new_data[, object$columns] <-

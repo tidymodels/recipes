@@ -110,7 +110,6 @@ prep.step_slice <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr slice
 #' @export
 bake.step_slice <- function(object, new_data, ...) {
   dplyr::slice(new_data, !!!object$inputs)
@@ -128,9 +127,6 @@ print.step_slice <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr quo_text
-#' @importFrom purrr map map_chr
-#' @importFrom dplyr tibble
 #' @rdname step_slice
 #' @param x A `step_slice` object
 #' @export

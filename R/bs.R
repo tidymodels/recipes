@@ -96,7 +96,6 @@ step_bs_new <-
     )
   }
 
-#' @importFrom splines bs
 bs_wrapper <- function(x, args) {
   if (!("Boundary.knots" %in% names(args)))
     args$Boundary.knots <- range(x)
@@ -136,8 +135,6 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
-#' @importFrom stats predict
 #' @export
 bake.step_bs <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.

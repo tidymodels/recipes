@@ -94,8 +94,6 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats binomial
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))

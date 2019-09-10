@@ -89,8 +89,6 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats binomial
 #' @export
 bake.step_invlogit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))

@@ -143,7 +143,7 @@ step_profile <- function(recipe,
   )
 }
 
-step_profile_new <- 
+step_profile_new <-
   function(terms, profile, pct, index, grid, columns, role, trained, skip, id) {
     step(
       subclass = "profile",
@@ -221,7 +221,6 @@ print.step_profile <-
 
 #' @rdname step_profile
 #' @param x A `step_profile` object.
-#' @importFrom dplyr bind_rows
 #' @export
 tidy.step_profile <- function(x, ...) {
   if (is_trained(x)) {
@@ -277,7 +276,7 @@ fixed.character <- function(x, pct, index, ...) {
   x <- sort(unique(x))
   x[min(index, length(x))]
 }
-#' @importFrom stats median quantile
+
 #' @export
 #' @rdname fixed
 fixed.Date <- function(x, pct, index, ...) {

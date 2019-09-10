@@ -2,7 +2,6 @@ filter_terms <- function(x, ...)
   UseMethod("filter_terms")
 
 ## Buckets variables into discrete, mutally exclusive types
-#' @importFrom tibble tibble
 get_types <- function(x) {
   var_types <-
     c(
@@ -41,7 +40,6 @@ get_types <- function(x) {
 is_formula <- function(x)
   isTRUE(inherits(x, "formula"))
 
-#' @importFrom rlang f_lhs
 get_lhs_vars <- function(formula, data) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
@@ -51,13 +49,13 @@ get_lhs_vars <- function(formula, data) {
   get_rhs_vars(new_formula, data)
 }
 
-#' @importFrom rlang f_rhs
-#' @importFrom stats model.frame
 get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
-  if (!is_formula(formula))
+  if (!is_formula(formula)) {
     formula <- as.formula(formula)
-  if(no_lhs)
+  }
+  if (no_lhs) {
     formula <- as.formula(paste("~", deparse(f_rhs(formula))))
+  }
 
   ## This will need a lot of work to account for cases with `.`
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
@@ -224,7 +222,6 @@ strings2factors <- function(x, info) {
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
-#' @importFrom purrr map_dfc
 n_complete_rows <- function(x) {
   list_cols <- purrr::map_lgl(x, is.list)
   list_cols <- names(list_cols)[list_cols]
@@ -265,7 +262,7 @@ train_info <- function(x) {
 ## and merges them. Special attention is paid to cases where the
 ## _type_ of data is changed for a common column in the data.
 
-#' @importFrom dplyr right_join mutate rename select
+
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
   # the original value
@@ -283,7 +280,6 @@ merge_term_info <- function(.new, .old) {
 #'
 #' @param ... Arguments pass in from a call to `step`
 #' @return If not empty, a list of quosures. If empty, an error is thrown.
-#' @importFrom rlang quos is_empty
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
@@ -295,11 +291,6 @@ ellipse_check <- function(...) {
          call. = FALSE)
   terms
 }
-
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
 
 #' Printing Workhorse Function
 #'
@@ -450,14 +441,12 @@ is_trained <- function(x)
 #' @param x A list of selectors
 #' @return A character vector
 #' @export
-#' @importFrom purrr map_chr
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
   map_chr(x, to_character)
 }
 
-#' @importFrom rlang is_quosure quo_text as_character
 to_character <- function(x) {
   if (rlang::is_quosure(x)) {
     res <- rlang::quo_text(x)
@@ -602,13 +591,7 @@ is_tune <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-#' @importFrom utils packageVersion
 tidyr_new_interface <- function() {
   utils::packageVersion("tidyr") > "0.8.99"
 }
-
-# ------------------------------------------------------------------------------
-
-#' @importFrom utils globalVariables
-utils::globalVariables(c("type", "new_type"))
 

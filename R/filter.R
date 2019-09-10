@@ -109,7 +109,6 @@ prep.step_filter <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr filter
 #' @export
 bake.step_filter <- function(object, new_data, ...) {
   dplyr::filter(new_data, !!!object$inputs)
@@ -127,9 +126,6 @@ print.step_filter <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr quo_text
-#' @importFrom purrr map map_chr
-#' @importFrom dplyr tibble
 #' @rdname step_filter
 #' @param x A `step_filter` object
 #' @export

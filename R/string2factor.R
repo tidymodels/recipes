@@ -143,7 +143,6 @@ make_factor <- function(x, lvl, ord) {
   factor(x, levels = lvl, ordered = ord)
 }
 
-#' @importFrom purrr map2_df map_df
 #' @export
 bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)

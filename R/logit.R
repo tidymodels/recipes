@@ -91,8 +91,6 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats binomial
 #' @export
 bake.step_logit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))

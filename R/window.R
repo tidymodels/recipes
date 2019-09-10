@@ -232,7 +232,6 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
   x2
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_window <- function(object, new_data, ...) {
   for (i in seq(along = object$columns)) {
