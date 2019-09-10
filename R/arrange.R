@@ -113,7 +113,6 @@ prep.step_arrange <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr arrange
 #' @export
 bake.step_arrange <- function(object, new_data, ...) {
   dplyr::arrange(new_data, !!!object$inputs)
@@ -131,9 +130,6 @@ print.step_arrange <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr quo_text
-#' @importFrom purrr map map_chr
-#' @importFrom dplyr tibble
 #' @rdname step_arrange
 #' @param x A `step_arrange` object
 #' @export

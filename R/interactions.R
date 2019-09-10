@@ -244,7 +244,6 @@ make_new_formula <- function(x) {
 }
 
 
-#' @importFrom stats model.matrix
 
 ## Given a standard model formula and some data, get the
 ## term expansion (without `.`s). This returns the factor
@@ -277,8 +276,6 @@ get_term_names <- function(form, vnames) {
   nms
 }
 
-#' @importFrom stats terms
-
 ## For a given data set and a list of formulas, generate the
 ## standard R `terms` objects
 make_small_terms <- function(forms, dat) {
@@ -307,7 +304,6 @@ int_name <- function(x) {
 }
 
 
-#' @importFrom rlang na_dbl
 #' @rdname step_interact
 #' @param x A `step_interact` object
 #' @export
@@ -361,8 +357,6 @@ replace_selectors <- function(x, elem, value) {
 
 plus_call <- function(x, y) call("+", x, y)
 
-#' @importFrom rlang syms !!
-#' @importFrom purrr reduce
 vec_2_expr <- function(x) {
   x <- rlang::syms(x)
   res <- purrr::reduce(x, plus_call)

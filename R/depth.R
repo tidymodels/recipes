@@ -126,7 +126,6 @@ step_depth_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
@@ -149,7 +148,6 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom rlang call2
 get_depth <- function(tr_dat, new_dat, metric, opts) {
   if (!is.matrix(new_dat))
     new_dat <- as.matrix(new_dat)
@@ -159,9 +157,6 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
   eval(dd_call)
 }
 
-
-
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])

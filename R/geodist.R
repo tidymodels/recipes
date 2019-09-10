@@ -43,7 +43,6 @@
 #'   arrange(geo_dist)
 #'
 #' tidy(near_station, number = 1)
-#' @importFrom stats cov
 step_geodist <- function(recipe,
                          lat = NULL,
                          lon = NULL,
@@ -102,7 +101,7 @@ step_geodist_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
+
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- terms_select(x$lon, info = info)
@@ -136,7 +135,6 @@ geo_dist_calc <- function(x, a, b)
   apply(x, 1, function(x, a, b) sqrt((x[1] - a) ^ 2 + (x[2] - b) ^ 2),
         a = a, b = b)
 
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
   dist_vals <-
@@ -161,7 +159,6 @@ print.step_geodist <-
 
 #' @rdname step_geodist
 #' @param x A `step_geodist` object.
-#' @importFrom dplyr bind_rows
 #' @export
 tidy.step_geodist <- function(x, ...) {
   if (is_trained(x)) {

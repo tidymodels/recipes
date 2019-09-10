@@ -159,7 +159,6 @@ bc_trans <- function(x, lambda, eps = .001) {
 
 ## helper for the log-likelihood calc
 
-#' @importFrom stats var
 ll_bc <- function(lambda, y, gm, eps = .001) {
   n <- length(y)
   gm0 <- gm ^ (lambda - 1)
@@ -171,7 +170,7 @@ ll_bc <- function(lambda, y, gm, eps = .001) {
   - .5 * n * log(var_z)
 }
 
-#' @importFrom stats complete.cases
+
 ## eliminates missing data and returns -llh
 bc_obj <- function(lam, dat) {
   dat <- dat[complete.cases(dat)]
@@ -179,7 +178,7 @@ bc_obj <- function(lam, dat) {
   ll_bc(lambda = lam, y = dat, gm = geo_mean)
 }
 
-#' @importFrom stats optimize
+
 ## estimates the values
 estimate_bc <- function(dat,
                         limits = c(-5, 5),

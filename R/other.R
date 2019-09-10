@@ -141,7 +141,6 @@ step_other_new <-
     )
   }
 
-#' @importFrom stats sd
 #' @export
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info, empty_fun = passover)
@@ -167,7 +166,6 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_other <- function(object, new_data, ...) {
   if (!is.null(object$objects)) {
@@ -254,7 +252,6 @@ keep_levels <- function(x, threshold = .1, other = "other") {
 
 #' @rdname step_other
 #' @param x A `step_other` object.
-#' @importFrom purrr map
 #' @export
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {

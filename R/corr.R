@@ -170,7 +170,6 @@ print.step_corr <-
   }
 
 
-#' @importFrom stats cor
 corr_filter <-
   function(x,
            cutoff = .90,

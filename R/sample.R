@@ -118,7 +118,7 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr sample_n sample_frac
+
 #' @export
 bake.step_sample <- function(object, new_data, ...) {
   if (object$size >= 1) {
@@ -146,9 +146,7 @@ print.step_sample <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr quo_text
-#' @importFrom purrr map map_chr
-#' @importFrom dplyr tibble
+
 #' @rdname step_sample
 #' @param x A `step_sample` object
 #' @export

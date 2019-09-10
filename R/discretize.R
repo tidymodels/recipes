@@ -81,8 +81,6 @@ discretize.default <- function(x, ...)
 #' binned_te <- bake(rec, biomass_te)
 #' table(binned_te$carbon)
 
-#' @importFrom stats quantile
-
 discretize.numeric <-
   function(x,
            cuts = 4,
@@ -151,7 +149,6 @@ discretize.numeric <-
   }
 
 #' @rdname discretize
-#' @importFrom stats predict
 #' @param object An object of class `discretize`.
 #' @param new_data A new numeric object to be binned.
 #' @export
@@ -287,7 +284,6 @@ step_discretize_new <-
     )
   }
 
-#' @importFrom rlang exec
 bin_wrapper <- function(x, args) {
   bin_call <-
     quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
@@ -323,8 +319,6 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats predict
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
   for (i in names(object$objects))
@@ -340,8 +334,6 @@ print.step_discretize <-
     invisible(x)
   }
 
-
-#' @importFrom rlang na_dbl
 #' @rdname step_discretize
 #' @param x A `step_discretize` object
 #' @export

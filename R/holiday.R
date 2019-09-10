@@ -95,7 +95,6 @@ step_holiday_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
 #' @export
 prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -125,7 +124,6 @@ is_holiday <- function(hol, dt) {
   out
 }
 
-#' @importFrom lubridate year is.Date
 get_holiday_features <- function(dt, hdays) {
   if (!is.Date(dt))
     dt <- as.Date(dt)
@@ -136,7 +134,6 @@ get_holiday_features <- function(dt, hdays) {
   as_tibble(hfeat)
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
   new_cols <-

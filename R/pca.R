@@ -153,8 +153,6 @@ step_pca_new <-
     )
   }
 
-#' @importFrom stats prcomp
-#' @importFrom rlang expr
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -207,7 +205,6 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
   if (!all(is.na(object$res$rotation))) {
@@ -234,7 +231,6 @@ print.step_pca <-
     invisible(x)
   }
 
-#' @importFrom utils stack
 #' @rdname step_pca
 #' @param x A `step_pca` object.
 #' @export
