@@ -7,7 +7,7 @@
 #' @importFrom tibble as_tibble add_column is_tibble tibble
 #' @importFrom dplyr filter group_by count ungroup do select_vars tbl_vars mutate
 #' @importFrom dplyr tibble bind_rows slice right_join rename select full_join
-#' @importFrom dplyr arrange desc bind_cols sample_n sample_frac
+#' @importFrom dplyr arrange desc bind_cols sample_n sample_frac mutate_at
 #' @importFrom Matrix Matrix
 #' @importFrom rlang quos call2 sym quo_get_expr quo_text expr f_lhs f_rhs
 #' @importFrom rlang is_empty is_quosure as_character na_dbl syms !! names2
