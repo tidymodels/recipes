@@ -1,5 +1,8 @@
 #  `recipes` 0.1.7
 
+Release driven by changes in `tidyr` (v 1.0.0). 
+
+
 ## Breaking Changes
 
 `format_selector()`'s `wdth` argument has been renamed to `width` 
@@ -10,8 +13,6 @@
  * `step_mutate_at()`, `step_rename()`, and `step_rename_at()` were added. 
 
 ## Other Changes
-
- * This release was triggered by the changes in `tidyr` (v 1.0.0). 
 
  * The use of `varying()` will be deprecated in favor of an upcoming function `tune()`. No changes are need in this version, but subsequent versions will work with `tune()`.
 
