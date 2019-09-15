@@ -143,7 +143,7 @@ get_window_ind <- function(i, n, k) {
   if (i + sides > n)
     return((n - k + 1):n)
 }
-#' @importFrom purrr map map_dbl map_lgl
+
 get_rolling_ind <- function(inds, n, k)
   map(inds, get_window_ind, n = n, k = k)
 window_est <- function(inds, x, statfun) {

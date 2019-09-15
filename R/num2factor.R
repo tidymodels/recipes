@@ -134,7 +134,7 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
 make_factor_num <- function (x, lvl, ord, foo)
   factor(foo(x), levels = lvl, ordered = ord)
 
-#' @importFrom purrr map2_df map_df
+
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)

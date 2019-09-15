@@ -93,7 +93,6 @@ step_normalize_new <-
     )
   }
 
-#' @importFrom stats sd
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)

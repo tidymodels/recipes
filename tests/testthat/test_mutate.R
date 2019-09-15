@@ -94,3 +94,90 @@ test_that('printing', {
   expect_output(prep(rec, training = iris, verbose = TRUE))
 })
 
+# ------------------------------------------------------------------------------
+
+context("dplyr mutate_at steps")
+
+# ------------------------------------------------------------------------------
+
+test_that('basic usage', {
+  rec <-
+    iris_rec %>%
+    step_mutate_at(contains("Length"), fn = log)
+
+  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+
+  dplyr_train <-
+    iris %>%
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(
+      Sepal.Length = log(Sepal.Length),
+      Petal.Length = log(Petal.Length)
+    )
+
+  rec_train <- juice(prepped)
+  expect_equal(dplyr_train, rec_train)
+
+  dplyr_test <-
+    iris %>%
+    as_tibble() %>%
+    slice(76:150) %>%
+    mutate(
+      Sepal.Length = log(Sepal.Length),
+      Petal.Length = log(Petal.Length)
+    )
+  rec_test <- bake(prepped, iris %>% slice(76:150))
+  expect_equal(dplyr_test, rec_test)
+})
+
+test_that('mulitple functions', {
+  rec <-
+    iris_rec %>%
+    step_mutate_at(contains("Length"), fn = list(a = log, b = sqrt))
+
+  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+
+  dplyr_train <-
+    iris %>%
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(
+      Sepal.Length_a = log(Sepal.Length),
+      Petal.Length_a = log(Petal.Length),
+      Sepal.Length_b = sqrt(Sepal.Length),
+      Petal.Length_b = sqrt(Petal.Length)
+    )
+
+  rec_train <- juice(prepped)
+  expect_equal(dplyr_train, rec_train)
+
+  dplyr_test <-
+    iris %>%
+    as_tibble() %>%
+    slice(76:150) %>%
+    mutate(
+      Sepal.Length_a = log(Sepal.Length),
+      Petal.Length_a = log(Petal.Length),
+      Sepal.Length_b = sqrt(Sepal.Length),
+      Petal.Length_b = sqrt(Petal.Length)
+    )
+  rec_test <- bake(prepped, iris %>% slice(76:150))
+  expect_equal(dplyr_test, rec_test)
+})
+
+
+test_that('no input', {
+  expect_error(
+    iris_rec %>%
+      step_mutate_at() %>%
+      prep(training = iris, retain = TRUE) %>%
+      juice(composition = "data.frame")
+  )
+})
+
+test_that('printing', {
+  rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
+  expect_output(print(rec))
+  expect_output(prep(rec, training = iris, verbose = TRUE))
+})

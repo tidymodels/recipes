@@ -124,7 +124,6 @@ step_nnmf_new <-
     )
   }
 
-#' @importFrom withr with_seed
 #' @export
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)

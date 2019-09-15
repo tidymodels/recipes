@@ -211,8 +211,6 @@ print.step_ica <-
     invisible(x)
   }
 
-
-#' @importFrom utils stack
 #' @rdname step_ica
 #' @param x A `step_ica` object.
 #' @export

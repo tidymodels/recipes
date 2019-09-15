@@ -104,7 +104,6 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
   for (i in seq_along(object$columns))

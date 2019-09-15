@@ -134,7 +134,6 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom rlang expr
 bake.step_count <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(

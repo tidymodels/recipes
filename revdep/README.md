@@ -10,20 +10,13 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/New_York             |
-|date     |2019-06-30                   |
+|date     |2019-09-13                   |
 
 # Dependencies
 
-|package  |old   |new         |Δ  |
-|:--------|:-----|:-----------|:--|
-|recipes  |0.1.5 |0.1.6       |*  |
-|dplyr    |NA    |0.8.2       |*  |
-|gower    |NA    |0.2.1       |*  |
-|ipred    |NA    |0.9-9       |*  |
-|numDeriv |NA    |2016.8-1.1  |*  |
-|pillar   |NA    |1.4.2       |*  |
-|rlang    |NA    |0.4.0.9000  |*  |
-|vctrs    |NA    |0.1.99.9000 |*  |
+|package |old   |new   |Δ  |
+|:-------|:-----|:-----|:--|
+|recipes |0.1.6 |0.1.7 |*  |
 
 # Revdeps
 
