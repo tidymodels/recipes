@@ -1,16 +1,38 @@
-#  `recipes` 0.1.6.9000
+#  `recipes` 0.1.7
+
+Release driven by changes in `tidyr` (v 1.0.0). 
+
 
 ## Breaking Changes
+
 `format_selector()`'s `wdth` argument has been renamed to `width` 
 ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
-## Other Changes:
+## New Operations
+
+ * `step_mutate_at()`, `step_rename()`, and `step_rename_at()` were added. 
+
+## Other Changes
+
+ * The use of `varying()` will be deprecated in favor of an upcoming function `tune()`. No changes are need in this version, but subsequent versions will work with `tune()`.
 
  * `format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
- * `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
+ * `check_new_values` breaks `bake` if variable contains values that were not observed in the train set (contributed by Edwin Thoen)
  
  * When no outcomes are in the recipe, using `juice(object, all_outcomes()` and `bake(object, new_data, all_outcomes()` will return a tibble with zero rows and zero columns (instead of failing). ([#298](https://github.com/tidymodels/recipes/issues/298)). This will also occur when the selectors select no columns. 
+
+ * As alternatives to `step_kpca()`, two separate steps were added called `step_kpca_rbf()` and `step_kpca_poly()`. The use of `step_kpca()` will print a deprecation message that it will be going away.
+
+ * `step_nzv()` and `step_poly()` had arguments promoted out of their `options` slot. `options` can be used in the short term but is deprecated.
+
+ * `step_downsample()` will replace the `ratio` argument with `under_ratio` and `step_upsample()` will replace it with `over_ratio`. `ratio` still works (for now) but issues a deprecation message.
+
+ * `step_discretize()` has arguments moved out of `options` too; the main arguments are now `num_breaks` (instead of `cuts`) and `min_unique`. Again, deprecation messages are issued with the old argument structure. 
+
+ * Models using the `dimRed` package (`step_kpca()`, `step_isomap()`, and `step_nnmf()`) would silently fail if the projection method failed. An error is issued now. 
+
+ * Methods were added for a future generic called `tunable()`. This outlines which parameters in a step can/could be tuned. 
 
 
 # `recipes` 0.1.6
@@ -25,12 +47,12 @@ Release driven by changes in `rlang`.
 
  > "If no pooling is done the data are unmodified".
 
-## New Operations:
+## New Operations
 
 * `step_normalize()` centers and scales the data (if you are, like Max, too lazy to use two separate steps). 
 * `step_unknown()` will convert missing data in categorical columns to "unknown" and update factor levels. 
  
-## Other Changes:
+## Other Changes
 
 * If `threshold` argument of `step_other` is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the "other" category. [#289](https://github.com/tidymodels/recipes/issues/289)
 
@@ -52,7 +74,7 @@ Release driven by changes in `rlang`.
 
 Small release driven by changes in `sample()` in the current r-devel. 
 
-## Other Changes:
+## Other Changes
 
 * A new vignette discussing roles has been added.
 
@@ -94,7 +116,7 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 
 
-## New Operations:
+## New Operations
 
  * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
  * `step_geodist` can be used to calculate the distance between geocodes and a single reference location. 
@@ -102,7 +124,7 @@ Small release driven by changes in `sample()` in the current r-devel.
  * `step_nnmf` computes the non-negative matrix factorization for data. 
 
 
-## Other Changes:
+## Other Changes
 
  * The `rsample` function `prepper` was moved to `recipes` [(issue)](https://github.com/tidymodels/rsample/issues/48).
  * A number of packages were moved from "Imports" to "Suggests" to reduce the install footprint. A function was added to prompt the user to install the needed packages when the relevant steps are invoked. 
@@ -117,7 +139,7 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 # `recipes` 0.1.3
 
-## New Operations:
+## New Operations
 
 * `check_range` breaks `bake` if variable range in new data is outside the range that was learned from the train set (contributed by Edwin Thoen)
 * `step_lag` can lag variables in the data set (contributed by Alex Hayes).
@@ -128,7 +150,7 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 * `step_pls` can conduct supervised feature extraction for predictors. 
 
-## Other Changes:
+## Other Changes
 
  * `step_log` gained an `offset` argument. 
 
@@ -148,7 +170,7 @@ Small release driven by changes in `sample()` in the current r-devel.
  * `bake` and `juice` can now export basic data frames. 
  * The `okc` data were updated with two additional columns. 
 
-## Bug Fixes: 
+## Bug Fixes
   
  * [issue 125](https://github.com/tidymodels/recipes/issues/125) that prevented several steps from working with **dplyr** grouped data frames. (contributed by Jeffrey Arnold)
  
@@ -156,14 +178,14 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 # `recipes` 0.1.2
 
-## General Changes:
+## General Changes
 
 * Edwin Thoen suggested [adding validation checks](https://github.com/tidymodels/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/tidymodels/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
 
 * Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://tidymodels.github.io/recipes/articles/Skipping.html) for more information. 
 
 
-## New Operations:
+## New Operations
 
  * `check_missing` will validate that none of the specified variables contain missing data. 
  
@@ -181,7 +203,7 @@ Small release driven by changes in `sample()` in the current r-devel.
  
  * `step_lag` allows for the creation of lagged predictor columns.
 
-## Other Changes:
+## Other Changes
 
 * `step_spatialsign` now has the option of removing missing data prior to computing the norm.
 
@@ -219,13 +241,13 @@ First CRAN release.
 
 # `recipes` 0.0.1.9002
 
-## New steps:
+## New steps
 
   * `step_lincomb` removes variables involved in linear combinations to resolve them. 
   * A step for converting binary variables to factors (`step_bin2factor`)
   *  `step_regex` applies a regular expression to a character or factor vector to create dummy variables. 
 
-## Other changes: 
+## Other changes 
 
 * `step_dummy` and `step_interact` do a better job of respecting missing values in the data set. 
 
