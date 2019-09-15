@@ -78,18 +78,6 @@ test_that('imputation values', {
 
 })
 
-
-test_that('deprecated arg', {
-  expect_message(
-    discr_rec <- rec %>%
-      step_knnimpute(carbon,
-                     nitrogen,
-                     impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                     K = 3,
-                     id = "")
-  )
-})
-
 test_that('printing', {
   discr_rec <- rec %>%
     step_knnimpute(carbon,
@@ -157,3 +145,19 @@ test_that('options', {
   expect_false(isTRUE(all.equal(ref_nn, new_nn)))
 })
 
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_knnimpute(all_predictors())
+  rec_param <- tunable.step_knnimpute(rec$steps[[1]])
+  expect_equal(rec_param$name, c("neighbors"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})

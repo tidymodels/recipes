@@ -30,7 +30,7 @@ preprocessing have been estimated.}
 
 \item{deg_free}{The degrees of freedom.}
 
-\item{degree}{The degree of the piecewise polynomial.}
+\item{degree}{Degree of polynomial spline (integer).}
 
 \item{objects}{A list of \code{\link[splines:bs]{splines::bs()}} objects
 created once the step has been trained.}

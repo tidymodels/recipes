@@ -7,8 +7,8 @@
 \usage{
 step_isomap(recipe, ..., role = "predictor", trained = FALSE,
   num_terms = 5, neighbors = 50, options = list(.mute = c("message",
-  "output")), res = NULL, num = NULL, prefix = "Isomap",
-  skip = FALSE, id = rand_id("isomap"))
+  "output")), res = NULL, prefix = "Isomap", skip = FALSE,
+  id = rand_id("isomap"))
 
 \method{tidy}{step_isomap}(x, ...)
 }
@@ -41,10 +41,6 @@ used.}
 \item{res}{The \code{\link[dimRed:Isomap]{dimRed::Isomap()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{num}{The number of isomap dimensions (this will be deprecated
-in factor of  \code{num_terms} in version 0.1.5). \code{num_terms} will
-override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -108,11 +104,8 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 im_trans <- rec \%>\%
   step_YeoJohnson(all_predictors()) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
-  step_isomap(all_predictors(),
-              neighbors = 100,
-              num_terms = 2)
+  step_normalize(all_predictors()) \%>\%
+  step_isomap(all_predictors(), neighbors = 100, num_terms = 2)
 
 if (require(dimRed) & require(RSpectra)) {
   im_estimates <- prep(im_trans, training = biomass_tr)
@@ -123,8 +116,8 @@ if (require(dimRed) & require(RSpectra)) {
   plot(im_te$Isomap1, im_te$Isomap2,
        xlim = rng, ylim = rng)
 
-  tidy(im_trans, number = 4)
-  tidy(im_estimates, number = 4)
+  tidy(im_trans, number = 3)
+  tidy(im_estimates, number = 3)
 }
 }
 }

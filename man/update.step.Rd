@@ -4,7 +4,7 @@
 \alias{update.step}
 \title{Update a recipe step}
 \usage{
-\method{update}{step}(object, ...)
+update.step(object, ...)
 }
 \arguments{
 \item{object}{A recipe \code{step}.}
@@ -20,10 +20,6 @@ will replace the elements of the same name in the actual step.
 For a step to be updated, it must not already have been trained. Otherwise,
 conflicting information can arise between the data returned from \code{\link[=juice]{juice()}}
 and the information in the step.
-
-This function is mainly useful for finalizing \emph{varying parameters}, but
-it can also be used on non-varying parameters as well (as seen in the
-example below).
 }
 \examples{
 data(biomass)

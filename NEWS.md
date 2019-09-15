@@ -6,11 +6,27 @@
 
 ## Other Changes:
 
+ * `check_class` breaks `bake` if variable is of a different class than that was either specified by the user or learned in `prep` on the train set(contributed by Edwin Thoen)
+
+ * The use of `varying()` will be deprecated in favor of an upcoming function `tune()`. No changes are need in this version, but subsequent versions will work with `tune()`.
+
  * `format_ch_vec()` and `format_selector()` are now exported ([#250](https://github.com/tidymodels/recipes/issues/250)).
 
- * `check_new_values` breaks `bake` if variable containes values that were not observed in the train set (contributed by Edwin Thoen)
+ * `check_new_values` breaks `bake` if variable contains values that were not observed in the train set (contributed by Edwin Thoen)
  
  * When no outcomes are in the recipe, using `juice(object, all_outcomes()` and `bake(object, new_data, all_outcomes()` will return a tibble with zero rows and zero columns (instead of failing). ([#298](https://github.com/tidymodels/recipes/issues/298)). This will also occur when the selectors select no columns. 
+
+ * As alternatives to `step_kpca()`, two separate steps were added called `step_kpca_rbf()` and `step_kpca_poly()`. The use of `step_kpca()` will print a deprecation message that it will be going away.
+
+ * `step_nzv()` and `step_poly()` had arguments promoted out of their `options` slot. `options` can be used in the short term but is deprecated.
+
+ * `step_downsample()` will replace the `ratio` argument with `under_ratio` and `step_upsample()` will replace it with `over_ratio`. `ratio` still works (for now) but issues a deprecation message.
+
+ * `step_discretize()` has arguments moved out of `options` too; the main arguments are now `num_breaks` (instead of `cuts`) and `min_unique`. Again, deprecation messages are issued with the old argument structure. 
+
+ * Models using the `dimRed` package (`step_kpca()`, `step_isomap()`, and `step_nnmf()`) would silently fail if the projection method failed. An error is issued now. 
+
+ * Methods were added for a future generic called `tunable()`. This outlines which parameters in a step can/could be tuned. 
 
 
 # `recipes` 0.1.6
@@ -147,7 +163,7 @@ Small release driven by changes in `sample()` in the current r-devel.
  * `step_bin2factor` now has an option to choose [how the values are translated to the levels](https://github.com/tidymodels/recipes/issues/142) (contributed by Michael Levy).
  * `bake` and `juice` can now export basic data frames. 
  * The `okc` data were updated with two additional columns. 
-
+ 
 ## Bug Fixes: 
   
  * [issue 125](https://github.com/tidymodels/recipes/issues/125) that prevented several steps from working with **dplyr** grouped data frames. (contributed by Jeffrey Arnold)

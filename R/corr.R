@@ -236,3 +236,21 @@ tidy_filter <- function(x, ...) {
 #' @param x A `step_corr` object.
 #' @export
 tidy.step_corr <- tidy_filter
+
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_corr <- function(x, ...) {
+  tibble::tibble(
+    name = "threshold",
+    call_info = list(
+      list(pkg = "dials", fun = "threshold")
+    ),
+    source = "recipe",
+    component = "step_corr",
+    component_id = x$id
+  )
+}
+

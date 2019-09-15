@@ -59,10 +59,13 @@ step_holiday <-
     skip = FALSE,
     id = rand_id("holiday")
   ) {
-  all_days <- listHolidays()
-  if (!all(holidays %in% all_days))
-    stop("Invalid `holidays` value. See timeDate::listHolidays",
-         call. = FALSE)
+
+    if (!is_tune(holidays) & !is_varying(holidays)) {
+      all_days <- listHolidays()
+      if (!all(holidays %in% all_days))
+        stop("Invalid `holidays` value. See timeDate::listHolidays",
+             call. = FALSE)
+    }
 
   add_step(
     recipe,

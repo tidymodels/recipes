@@ -5,9 +5,9 @@
 \alias{tidy.step_downsample}
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
-step_downsample(recipe, ..., ratio = 1, role = NA, trained = FALSE,
-  column = NULL, target = NA, skip = TRUE, seed = sample.int(10^5,
-  1), id = rand_id("downsample"))
+step_downsample(recipe, ..., under_ratio = 1, ratio = NA, role = NA,
+  trained = FALSE, column = NULL, target = NA, skip = TRUE,
+  seed = sample.int(10^5, 1), id = rand_id("downsample"))
 
 \method{tidy}{step_downsample}(x, ...)
 }
@@ -21,12 +21,14 @@ for more details. The selection should result in \emph{single
 factor variable}. For the \code{tidy} method, these are not
 currently used.}
 
-\item{ratio}{A numeric value for the ratio of the
+\item{under_ratio}{A numeric value for the ratio of the
 minority-to-majority frequencies. The default value (1) means
 that all other levels are sampled down to have the same
 frequency as the least occurring level. A value of 2 would mean
 that the majority levels will have (at most) (approximately)
 twice as many rows than the minority level.}
+
+\item{ratio}{Depracated argument; same as \code{under_ratio}}
 
 \item{role}{Not used by this step since no new variables are
 created.}

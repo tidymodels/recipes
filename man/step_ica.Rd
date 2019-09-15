@@ -6,8 +6,8 @@
 \title{ICA Signal Extraction}
 \usage{
 step_ica(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 5, options = list(), res = NULL, num = NULL,
-  prefix = "IC", skip = FALSE, id = rand_id("ica"))
+  num_comp = 5, options = list(), res = NULL, prefix = "IC",
+  skip = FALSE, id = rand_id("ica"))
 
 \method{tidy}{step_ica}(x, ...)
 }
@@ -41,10 +41,6 @@ not be passed here.}
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
-
-\item{num}{The number of components to retain (this will be
-deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
-will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}

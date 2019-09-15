@@ -36,8 +36,8 @@ test_that('nzv filtering', {
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
   removed <- vars[
-    pct_uni <= filtering_trained$steps[[1]]$options$unique_cut &
-      f_ratio >= filtering_trained$steps[[1]]$options$freq_cut]
+    pct_uni <= filtering_trained$steps[[1]]$unique_cut &
+      f_ratio >= filtering_trained$steps[[1]]$freq_cut]
 
   exp_tidy_tr <- tibble(terms = removed, id = "")
   expect_equal(exp_tidy_tr, tidy(filtering_trained, number = 1))
@@ -47,15 +47,18 @@ test_that('nzv filtering', {
 
 test_that('altered options', {
   rec <- recipe(y ~ ., data = dat)
-  filtering <- rec %>%
-    step_nzv(x1, x2, x3, x4,
-             options = list(freq_cut = 50, unique_cut = 10))
+
+  expect_message(
+    filtering <- rec %>%
+      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10)),
+    "deprecated in favor of"
+  )
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
   removed <- vars[
-    pct_uni <= filtering_trained$steps[[1]]$options$unique_cut &
-      f_ratio >= filtering_trained$steps[[1]]$options$freq_cut]
+    pct_uni <= filtering_trained$steps[[1]]$unique_cut &
+      f_ratio >= filtering_trained$steps[[1]]$freq_cut]
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
@@ -66,4 +69,20 @@ test_that('printing', {
     step_nzv(x1, x2, x3, x4)
   expect_output(print(rec))
   expect_output(prep(rec, training = dat, verbose = TRUE))
+})
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_nzv(all_predictors())
+  rec_param <- tunable.step_nzv(rec$steps[[1]])
+  expect_equal(rec_param$name, c("freq_cut", "unique_cut"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
 })
