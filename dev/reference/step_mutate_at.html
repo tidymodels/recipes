@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if all Columns are Present — check_cols • recipes</title>
+<title>Mutate multiple columns — step_mutate_at • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,10 +41,9 @@
 
 
 
-<meta property="og:title" content="Check if all Columns are Present — check_cols" />
-<meta property="og:description" content="check_cols creates a specification of a recipe
-step that will check if all the columns of the training frame are
-present in the new data." />
+<meta property="og:title" content="Mutate multiple columns — step_mutate_at" />
+<meta property="og:description" content="step_mutate_at creates a specification of a recipe step that will modify
+the selected variables using a common function." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -148,91 +147,122 @@ present in the new data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if all Columns are Present</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/colcheck.R'><code>R/colcheck.R</code></a></small>
-    <div class="hidden name"><code>check_cols.Rd</code></div>
+    <h1>Mutate multiple columns</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/mutate_at.R'><code>R/mutate_at.R</code></a></small>
+    <div class="hidden name"><code>step_mutate_at.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>check_cols</code> creates a <em>specification</em> of a recipe
-step that will check if all the columns of the training frame are
-present in the new data.</p>
+    <p><code>step_mutate_at</code> creates a <em>specification</em> of a recipe step that will modify
+the selected variables using a common function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_cols</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"cols"</span>))
-
-<span class='co'># S3 method for check_cols</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>step_mutate_at</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>fn</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>inputs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"mutate_at"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The check will be added to the
+      <td><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are checked in the check See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
     <tr>
+      <th>fn</th>
+      <td><p>A function fun, a quosure style lambda `~ fun(.)`` or a list of
+either form. (see <code><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>dplyr::mutate_at()</a></code>). <strong>Note that this argument must be
+named</strong>.</p></td>
+    </tr>
+    <tr>
       <th>role</th>
-      <td><p>Not used by this check since no new variables are
-created.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the function assumes that the new dimension
+columns created by the original variables will be used as predictors in a
+model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
+    </tr>
+    <tr>
+      <th>inputs</th>
+      <td><p>A vector of column names populated by <code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>A logical. Should the check be skipped when the
+      <td><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>check_cols</code> object.</p></td>
-    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This check will break the <code>bake</code> function if any of the checked
-columns does contain <code>NA</code> values. If the check passes, nothing is changed
-to the data.</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
+columns <code>terms</code> which contains the columns being transformed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
-
-<span class='no'>biomass_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='step_rm.html'>step_rm</a></span>(<span class='no'>sample</span>, <span class='no'>dataset</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'>check_cols</span>(<span class='fu'>contains</span>(<span class='st'>"gen"</span>)) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>biomass_rec</span>, <span class='no'>biomass</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"carbon"</span>, <span class='st'>"HHV"</span>)])
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_mutate_at</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"Length"</span>), <span class='kw'>fn</span> <span class='kw'>=</span> ~ <span class='fl'>1</span>/<span class='no'>.</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 5
+#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+#&gt;  1        0.196         3.5        0.714         0.2 setosa 
+#&gt;  2        0.204         3          0.714         0.2 setosa 
+#&gt;  3        0.213         3.2        0.769         0.2 setosa 
+#&gt;  4        0.217         3.1        0.667         0.2 setosa 
+#&gt;  5        0.2           3.6        0.714         0.2 setosa 
+#&gt;  6        0.185         3.9        0.588         0.4 setosa 
+#&gt;  7        0.217         3.4        0.714         0.3 setosa 
+#&gt;  8        0.2           3.4        0.667         0.2 setosa 
+#&gt;  9        0.227         2.9        0.714         0.2 setosa 
+#&gt; 10        0.204         3.1        0.667         0.1 setosa </div><div class='input'>
+<span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
+  <span class='co'># leads to more columns being created.</span>
+  <span class='fu'>step_mutate_at</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"Length"</span>), <span class='kw'>fn</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>log</span> <span class='kw'>=</span> <span class='no'>log</span>, <span class='kw'>sqrt</span> <span class='kw'>=</span> <span class='no'>sqrt</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 9
+#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Length_log
+#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt;
+#&gt;  1          5.1         3.5          1.4         0.2 setosa              1.63
+#&gt;  2          4.9         3            1.4         0.2 setosa              1.59
+#&gt;  3          4.7         3.2          1.3         0.2 setosa              1.55
+#&gt;  4          4.6         3.1          1.5         0.2 setosa              1.53
+#&gt;  5          5           3.6          1.4         0.2 setosa              1.61
+#&gt;  6          5.4         3.9          1.7         0.4 setosa              1.69
+#&gt;  7          4.6         3.4          1.4         0.3 setosa              1.53
+#&gt;  8          5           3.4          1.5         0.2 setosa              1.61
+#&gt;  9          4.4         2.9          1.4         0.2 setosa              1.48
+#&gt; 10          4.9         3.1          1.5         0.1 setosa              1.59
+#&gt; # … with 3 more variables: Petal.Length_log &lt;dbl&gt;, Sepal.Length_sqrt &lt;dbl&gt;,
+#&gt; #   Petal.Length_sqrt &lt;dbl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
