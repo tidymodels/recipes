@@ -4,7 +4,7 @@
 \alias{update.step}
 \title{Update a recipe step}
 \usage{
-update.step(object, ...)
+\method{update}{step}(object, ...)
 }
 \arguments{
 \item{object}{A recipe \code{step}.}

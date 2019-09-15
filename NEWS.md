@@ -1,3 +1,7 @@
+#  `recipes` 0.1.7.9000
+
+* `check_class` checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)
+
 #  `recipes` 0.1.7
 
 Release driven by changes in `tidyr` (v 1.0.0). 
