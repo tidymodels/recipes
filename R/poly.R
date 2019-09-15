@@ -126,7 +126,7 @@ poly_wrapper <- function(x, args) {
   out
 }
 
-#' @importFrom stats poly
+
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -151,8 +151,6 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
-#' @importFrom stats predict
 #' @export
 bake.step_poly <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.

@@ -132,7 +132,6 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom rlang expr
 bake.step_regex <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(

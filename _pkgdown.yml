@@ -87,7 +87,9 @@ reference:
     - step_geodist
     - step_ica
     - step_isomap
-    - step_kpca
+    - step_kpca_poly
+    - step_kpca_rbf
+    - step_mutate_at
     - step_nnmf
     - step_pca
     - step_pls
@@ -116,13 +118,15 @@ reference:
     contents:
     - step_intercept
     - step_profile
+    - step_rename
+    - step_rename_at
     - step_window
   - title: Check Functions
     contents:
     - matches("^check_")
   - title: Example Datasets
     contents:
-    - matches("(okc)|(biomass)|(credit)|(covers)")
+    - matches("(okc)|(biomass)|(credit)|(covers)||(Smithsonian)")
 
 navbar:
   left:

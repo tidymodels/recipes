@@ -171,9 +171,6 @@ supsamp <- function(x, num) {
   out
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom purrr map_dfr
-#' @importFrom withr with_seed
 #' @export
 bake.step_upsample <- function(object, new_data, ...) {
   if (any(is.na(new_data[[object$column]])))

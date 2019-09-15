@@ -11,4 +11,3 @@ presentations
 .github
 ^revdep$
 tests/testthat/NMF*
-^\.httr-oauth$

@@ -86,9 +86,6 @@ recipe.default <- function(x, ...)
 #'   data set to save time and memory.
 #'
 #' @export
-#' @importFrom tibble as_tibble is_tibble tibble
-#' @importFrom dplyr full_join
-#' @importFrom stats predict
 #' @examples
 #'
 #' ###############################################
@@ -228,10 +225,6 @@ recipe.matrix <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 
-
-#' @importFrom stats as.formula
-#' @importFrom tibble as_tibble is_tibble
-
 form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
@@ -321,8 +314,6 @@ prep   <- function(x, ...)
 #'   data, the step for scaling is given the centered data.
 #'
 #' @rdname prep
-#' @importFrom tibble as_tibble is_tibble tibble
-#' @importFrom purrr map_lgl
 #' @export
 prep.recipe <-
   function(x,
@@ -512,10 +503,6 @@ bake <- function(object, ...)
 #'   of the steps applied.
 #' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
-#' @importFrom tibble as_tibble
-#' @importFrom dplyr filter group_by arrange desc
-#' @importFrom tidyselect everything
-#' @importFrom utils object.size
 #' @export
 bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object)) {

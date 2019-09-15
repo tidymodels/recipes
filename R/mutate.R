@@ -126,7 +126,6 @@ prep.step_mutate <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr mutate
 #' @export
 bake.step_mutate <- function(object, new_data, ...) {
   dplyr::mutate(new_data, !!!object$inputs)
@@ -145,9 +144,6 @@ print.step_mutate <-
     invisible(x)
   }
 
-#' @importFrom rlang quo_get_expr quo_text
-#' @importFrom purrr map map_chr
-#' @importFrom dplyr tibble
 #' @rdname step_mutate
 #' @param x A `step_mutate` object
 #' @export

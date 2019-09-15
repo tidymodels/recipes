@@ -186,7 +186,6 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom gower gower_topn
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
     ref_data[, vars],
@@ -208,8 +207,7 @@ nn_pred <- function(index, dat) {
   est
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats predict complete.cases
+
 #' @export
 bake.step_knnimpute <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
@@ -251,7 +249,6 @@ print.step_knnimpute <-
     invisible(x)
   }
 
-#' @importFrom purrr map_df
 #' @rdname step_knnimpute
 #' @param x A `step_knnimpute` object.
 #' @export

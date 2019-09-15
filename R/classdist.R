@@ -61,7 +61,6 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
-#' @importFrom stats cov
 step_classdist <- function(recipe,
                            ...,
                            class,
@@ -121,8 +120,6 @@ get_both <- function(x, mfun = mean, cfun = cov) {
        scale = cfun(x))
 }
 
-
-#' @importFrom stats as.formula model.frame
 #' @export
 prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
@@ -159,8 +156,6 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   )
 }
 
-
-#' @importFrom stats mahalanobis
 mah_by_class <- function(param, x)
   mahalanobis(x, param$center, param$scale)
 
@@ -168,7 +163,6 @@ mah_pooled <- function(means, x, cov_mat)
   mahalanobis(x, means, cov_mat)
 
 
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_classdist <- function(object, new_data, ...) {
   if (object$pool) {
@@ -217,7 +211,6 @@ get_centroid <- function(x) {
 
 #' @rdname step_classdist
 #' @param x A `step_classdist` object.
-#' @importFrom dplyr bind_rows
 #' @export
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {
