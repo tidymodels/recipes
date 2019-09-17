@@ -6,7 +6,7 @@ resources:
     - repository: r-azure-pipelines
       type: github
       name: r-lib/r-azure-pipelines
-      endpoint: r-lib
+      endpoint: tidymodels
 
 jobs:
   - template: azure-tidyverse.yml@r-azure-pipelines
