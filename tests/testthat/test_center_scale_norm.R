@@ -49,6 +49,29 @@ test_that('correct means and std devs', {
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
 })
 
+test_that('scale by factor of 1 or 2', {
+  standardized <- rec %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale", factor = 2)
+
+  standardized_trained <- prep(standardized, training = biomass)
+
+  scal_tibble_tr <-
+    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+           value = sds*2,
+           id = standardized$steps[[1]]$id)
+
+  expect_equal(tidy(standardized_trained, 1), scal_tibble_tr)
+
+  expect_equal(standardized_trained$steps[[1]]$sds, 2*sds)
+
+  expect_warning(
+    not_recommended_standardized_input <- rec %>%
+      step_scale(carbon, id = "scale", factor = 3) %>%
+      prep(training = biomass)
+  )
+
+})
+
 test_that('training in stages', {
   at_once <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
