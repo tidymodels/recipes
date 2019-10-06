@@ -11,7 +11,14 @@
 #' @param role Defaults to `"predictor"`.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated.
-#' @param outcome A character string to indicate the outcome variable to train XbBoost models.
+#' @param outcome A call to `vars` to specify which variable is
+#'  used as the outcome to train XbBoost models in order to discretize explanatory variables.
+#' @param learn_rate The rate at which the boosting algorithm adapts from iteration-to-iteration.
+#' Corresponds to 'eta' in the \pkg{xgboost} package. Defaults to 0.3.
+#' @param num_breaks The maximum number of discrete bins to bucket continuous features.
+#' Corresponds to 'max_bin' in the \pkg{xgboost} package. Defaults to 10.
+#' @param tree_depth The maximum depth of the tree (i.e. number of splits).
+#' Corresponds to 'max_depth' in the \pkg{xgboost} package. Defaults to 1.
 #' @param rules The splitting rules of the best XgBoost tree to retain for each variable.
 #' @param prefix A character string that will be the prefix to the resulting new variables.
 #' Defaults to "xgb_bin".
@@ -30,6 +37,16 @@
 #'  used particularly with linear models because thanks to creating
 #'  non-uniform bins it becomes easier to learn non-linear patterns
 #'  from the data.
+#'
+#'  The best selection of buckets for each variable is selected using
+#'  an internal early stopping scheme implemented in the \pkg{xgboost}
+#'  package, which makes this discretization method prone to overfitting.
+#'
+#' The pre-defined values of the underlying xgboost learns should give
+#' good and reasonably complex results. However, if one wishes to tune them
+#' the recommended path would be to first start with changing the value
+#' of 'num_breaks' to e.g.: 20 or 30. If that doesn't give satisfactory results
+#' one could experiment with increasing the 'tree_depth' parameter.
 #'
 #' This step requires the \pkg{xgboost} package. If not installed, the
 #'  step will stop with a note about installing the package.
@@ -63,10 +80,13 @@ step_discretize_tree <-
            role = NA,
            trained = FALSE,
            outcome = NULL,
+           learn_rate = 0.3,
+           num_breaks = 10,
+           tree_depth = 1,
            rules = NULL,
-           prefix = "xgb_bin",
+           prefix = "bin_tree",
            skip = FALSE,
-           id = rand_id("xgb_binning")) {
+           id = rand_id("discretize_tree")) {
     if (is.null(outcome))
       stop("`outcome` should select at least one column.", call. = FALSE)
 
@@ -79,6 +99,9 @@ step_discretize_tree <-
         role = role,
         trained = trained,
         outcome = outcome,
+        learn_rate = learn_rate,
+        num_breaks = num_breaks,
+        tree_depth = tree_depth,
         rules = rules,
         prefix = prefix,
         skip = skip,
@@ -88,14 +111,17 @@ step_discretize_tree <-
   }
 
 step_discretize_tree_new <-
-  function(terms, role, trained, outcome, rules,
-           prefix, skip, id) {
+  function(terms, role, trained, outcome, learn_rate, num_breaks,
+           tree_depth, rules, prefix, skip, id) {
     step(
-      subclass = "xgb_binning",
+      subclass = "discretize_tree",
       terms = terms,
       role = role,
       trained = trained,
       outcome = outcome,
+      learn_rate = learn_rate,
+      num_breaks = num_breaks,
+      tree_depth = tree_depth,
       rules = rules,
       prefix = prefix,
       skip = skip,
@@ -103,12 +129,12 @@ step_discretize_tree_new <-
     )
   }
 
-run_xgboost <- function(.train, .test, .max_bin, .objective){
+run_xgboost <- function(.train, .test, .learn_rate, .num_breaks, .tree_depth, .objective){
   xgboost::xgb.train(
     params = list(
-      eta = 0.3,
-      max_bin = .max_bin,
-      max_depth = 1,
+      eta = .learn_rate,
+      max_bin = .num_breaks,
+      max_depth = .tree_depth,
       min_child_weight = 5
     ),
     nrounds = 100,
@@ -125,21 +151,21 @@ run_xgboost <- function(.train, .test, .max_bin, .objective){
   )
 }
 
-xgb_binning <- function(df, outcome, predictor, num_breaks){
+xgb_binning <- function(df, outcome, predictor, learn_rate, num_breaks, tree_depth){
 
-  ###
-  data(credit_data)
-  library(rsample)
-
-  split <- initial_split(credit_data, strata = "Status")
-
-  credit_data_tr <- training(split)
-  credit_data_te <- testing(split)
-
-  df <- credit_data_tr
-  outcome <- "Status"
-  predictor <- "Seniority"
-  num_breaks <- 20
+  ### LOCAL TESTING ###
+  # data(credit_data)
+  # library(rsample)
+  #
+  # split <- initial_split(credit_data, strata = "Status")
+  #
+  # credit_data_tr <- training(split)
+  # credit_data_te <- testing(split)
+  #
+  # df <- credit_data_tr
+  # outcome <- "Status"
+  # predictor <- "Seniority"
+  # num_breaks <- 20
   ###
 
   # Checking the number of levels of the outcome
@@ -173,13 +199,18 @@ xgb_binning <- function(df, outcome, predictor, num_breaks){
     label = ifelse(test[[outcome]] == levels[[1]], 0, 1)
   )
 
-  xgb_mdl <- withr:::with_seed(sample.int(10^6, 1), run_xgboost(xgb_train, xgb_test, num_breaks, objective))
+  xgb_mdl <- withr:::with_seed(
+    sample.int(10^6, 1),
+    run_xgboost(xgb_train, xgb_test, learn_rate, num_breaks, tree_depth, objective)
+    )
 
-  xgboost::xgb.model.dt.tree(
+  xgb_split <- xgboost::xgb.model.dt.tree(
     model = xgb_mdl,
     trees = xgb_mdl$best_iteration,
     use_int_id = TRUE
-  )
+    ) %>%
+    as_tibble() %>%
+    select(Node, Feature, Split, Yes, No, Missing)
 
 }
 
@@ -194,25 +225,31 @@ prep.step_discretize_tree <- function(x,
 
   rules <- vector("list", length(col_names))
 
+  y_name <- terms_select(terms = x$outcome, info = info)
+
   for(i in seq_along(col_names)){
-    if(col_names[[i]] == x$outcome){
+
+    if(col_names[[i]] == y_name){
       next
     } else {
-      rules[[i]] <- xgb_binning(training, x$outcome, col_names[[i]])
+      rules[[i]] <- xgb_binning(training, y_name, col_names[[i]], x$learn_rate, x$num_breaks, x$tree_depth)
     }
   }
 
   names(rules) <- col_names
 
   step_discretize_tree_new(
-    terms   = x$terms,
-    role    = x$role,
+    terms = x$terms,
+    role = x$role,
     trained = TRUE,
     outcome = x$outcome,
-    rules   = rules,
+    learn_rate = x$learn_rate,
+    num_breaks = x$num_breaks,
+    tree_depth = x$tree_depth,
+    rules = rules,
     prefix  = x$prefix,
-    skip    = x$skip,
-    id      = x$id
+    skip = x$skip,
+    id = x$id
   )
 }
 
