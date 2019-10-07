@@ -566,6 +566,9 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
     }
 
     new_data <- new_data[, names(new_data) %in% keepers]
+    columns_sorted <- match(keepers, names(new_data))
+    columns_sorted <- columns_sorted[!is.na(columns_sorted)]
+    new_data <- new_data[, columns_sorted]
     ## The levels are not null when no nominal data are present or
     ## if strings_as_factors = FALSE in `prep`
     if (!is.null(object$levels)) {

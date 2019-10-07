@@ -251,7 +251,7 @@ test_that('no columns selected', {
 
   expect_null(rec$steps[[2]]$levels)
 
-  expect_equal(names(bake(rec, zdat)), c("y", "z"))
+  expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
   expect_output(print(rec), regexp = "since no columns were selected")
 
