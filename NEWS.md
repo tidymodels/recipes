@@ -1,3 +1,10 @@
+#  `recipes` 0.1.7.9000
+
+## Other Changes
+
+ * Code was added to explicitly register `tunable` methods when `recipes` is loaded. This is required because of changes occurring in R 4.0. 
+ 
+
 #  `recipes` 0.1.7
 
 Release driven by changes in `tidyr` (v 1.0.0). 
