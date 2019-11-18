@@ -758,7 +758,7 @@ juice <- function(object, ..., composition = "tibble") {
         new_data <- strings2factors(new_data, var_levels)
     }
   } else {
-    new_data <- tibble()
+    new_data <- tibble(.rows = nrow(object$template))
   }
 
   if (composition == "dgCMatrix") {
