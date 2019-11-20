@@ -2,6 +2,8 @@
 
 ## Other Changes
 
+ * When using a selector that returns no columns, `juice()` and `bake()` will now return a tibble with as many rows as the original template data or the `new_data` respectively. This is more consistent with how selectors work in dplyr ([#411](https://github.com/tidymodels/recipes/issues/411)).
+ 
  * Code was added to explicitly register `tunable` methods when `recipes` is loaded. This is required because of changes occurring in R 4.0. 
  
 
