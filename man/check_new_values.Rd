@@ -4,9 +4,17 @@
 \alias{check_new_values}
 \title{Check for Missing Values}
 \usage{
-check_new_values(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, ignore_NA = TRUE, values = NULL, skip = FALSE,
-  id = rand_id("new_values"))
+check_new_values(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  ignore_NA = TRUE,
+  values = NULL,
+  skip = FALSE,
+  id = rand_id("new_values")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The check will be added to the

@@ -11,9 +11,16 @@ discretize(x, ...)
 
 \method{discretize}{default}(x, ...)
 
-\method{discretize}{numeric}(x, cuts = 4, labels = NULL,
-  prefix = "bin", keep_na = TRUE, infs = TRUE, min_unique = 10,
-  ...)
+\method{discretize}{numeric}(
+  x,
+  cuts = 4,
+  labels = NULL,
+  prefix = "bin",
+  keep_na = TRUE,
+  infs = TRUE,
+  min_unique = 10,
+  ...
+)
 
 \method{predict}{discretize}(object, new_data, ...)
 }
@@ -44,7 +51,7 @@ largest cut point should be infinite.}
 
 \item{min_unique}{An integer defining a sample size line of
 dignity for the binning. If (the number of unique
-values)\code{/(cuts+1)} is less than \code{min_unique}, no
+values)\verb{/(cuts+1)} is less than \code{min_unique}, no
 discretization takes place.}
 
 \item{object}{An object of class \code{discretize}.}

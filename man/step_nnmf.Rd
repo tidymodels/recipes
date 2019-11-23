@@ -5,10 +5,20 @@
 \alias{tidy.step_nnmf}
 \title{NNMF Signal Extraction}
 \usage{
-step_nnmf(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 2, num_run = 30, options = list(), res = NULL,
-  prefix = "NNMF", seed = sample.int(10^5, 1), skip = FALSE,
-  id = rand_id("nnmf"))
+step_nnmf(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 2,
+  num_run = 30,
+  options = list(),
+  res = NULL,
+  prefix = "NNMF",
+  seed = sample.int(10^5, 1),
+  skip = FALSE,
+  id = rand_id("nnmf")
+)
 
 \method{tidy}{step_nnmf}(x, ...)
 }

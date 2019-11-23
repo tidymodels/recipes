@@ -5,9 +5,19 @@
 \alias{tidy.step_pls}
 \title{Partial Least Squares Feature Extraction}
 \usage{
-step_pls(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 2, outcome = NULL, options = NULL, res = NULL,
-  prefix = "PLS", skip = FALSE, id = rand_id("pls"))
+step_pls(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 2,
+  outcome = NULL,
+  options = NULL,
+  res = NULL,
+  prefix = "PLS",
+  skip = FALSE,
+  id = rand_id("pls")
+)
 
 \method{tidy}{step_pls}(x, ...)
 }

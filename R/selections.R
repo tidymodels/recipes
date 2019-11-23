@@ -278,21 +278,18 @@ has_role <- function(match = "predictor") {
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_predictors <- function() {
   has_role("predictor")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_outcomes <- function() {
   has_role("outcome")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
   lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
@@ -301,14 +298,12 @@ has_type <- function(match = "numeric") {
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_numeric <- function() {
   has_type("numeric")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_nominal <- function() {
   has_type("nominal")
 }

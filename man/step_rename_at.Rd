@@ -4,8 +4,16 @@
 \alias{step_rename_at}
 \title{Rename multiple columns}
 \usage{
-step_rename_at(recipe, ..., fn, role = "predictor", trained = FALSE,
-  inputs = NULL, skip = FALSE, id = rand_id("rename_at"))
+step_rename_at(
+  recipe,
+  ...,
+  fn,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("rename_at")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -51,7 +59,7 @@ the selected variables using a common function.
 \examples{
 library(dplyr)
 recipe(~ ., data = iris) \%>\%
-  step_rename_at(everything(), fn = ~ gsub("\\\\.", "_", .)) \%>\%
+  step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) \%>\%
   prep() \%>\%
   juice() \%>\%
   slice(1:10)

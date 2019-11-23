@@ -4,9 +4,18 @@
 \alias{step_lag}
 \title{Create a lagged predictor}
 \usage{
-step_lag(recipe, ..., role = "predictor", trained = FALSE, lag = 1,
-  prefix = "lag_", default = NA, columns = NULL, skip = FALSE,
-  id = rand_id("lag"))
+step_lag(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  lag = 1,
+  prefix = "lag_",
+  default = NA,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("lag")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of

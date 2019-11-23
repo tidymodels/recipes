@@ -5,8 +5,15 @@
 \alias{tidy.step_invlogit}
 \title{Inverse Logit Transformation}
 \usage{
-step_invlogit(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, skip = FALSE, id = rand_id("invlogit"))
+step_invlogit(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("invlogit")
+)
 
 \method{tidy}{step_invlogit}(x, ...)
 }

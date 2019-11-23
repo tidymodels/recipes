@@ -5,9 +5,17 @@
 \alias{tidy.step_BoxCox}
 \title{Box-Cox Transformation for Non-Negative Data}
 \usage{
-step_BoxCox(recipe, ..., role = NA, trained = FALSE, lambdas = NULL,
-  limits = c(-5, 5), num_unique = 5, skip = FALSE,
-  id = rand_id("BoxCox"))
+step_BoxCox(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  lambdas = NULL,
+  limits = c(-5, 5),
+  num_unique = 5,
+  skip = FALSE,
+  id = rand_id("BoxCox")
+)
 
 \method{tidy}{step_BoxCox}(x, ...)
 }
