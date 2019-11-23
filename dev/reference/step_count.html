@@ -167,10 +167,19 @@ step that will create a variable that counts instances of a
 regular expression pattern in text.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_count</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></span>(<span class='no'>pattern</span>), <span class='kw'>input</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"count"</span>))
+    <pre class="usage"><span class='fu'>step_count</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"."</span>,
+  <span class='kw'>normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></span>(<span class='no'>pattern</span>),
+  <span class='kw'>input</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"count"</span>)
+)
 
 <span class='co'># S3 method for step_count</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

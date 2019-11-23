@@ -167,8 +167,16 @@ step that will normalize numeric data to have a standard
 deviation of one.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_scale</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>))
+    <pre class="usage"><span class='fu'>step_scale</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>)
+)
 
 <span class='co'># S3 method for step_scale</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

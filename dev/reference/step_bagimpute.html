@@ -167,11 +167,19 @@ recipe step that will create bagged tree models to impute
 missing data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_bagimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()), <span class='kw'>trees</span> <span class='kw'>=</span> <span class='fl'>25</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>4</span>, <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>))
+    <pre class="usage"><span class='fu'>step_bagimpute</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
+  <span class='kw'>trees</span> <span class='kw'>=</span> <span class='fl'>25</span>,
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>4</span>, <span class='fl'>1</span>),
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>)
+)
 
 <span class='fu'>imp_vars</span>(<span class='no'>...</span>)
 

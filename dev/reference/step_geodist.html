@@ -167,10 +167,20 @@ recipe step that will calculate the distance between
 points on a map to a reference location.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_geodist</span>(<span class='no'>recipe</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ref_lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ref_lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"geo_dist"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"geodist"</span>))
+    <pre class="usage"><span class='fu'>step_geodist</span>(
+  <span class='no'>recipe</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ref_lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ref_lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"geo_dist"</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"geodist"</span>)
+)
 
 <span class='co'># S3 method for step_geodist</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

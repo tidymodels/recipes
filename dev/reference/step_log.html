@@ -165,9 +165,18 @@ that will log transform data." />
 that will log transform data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_log</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fl'>1</span>),
-  <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>signed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"log"</span>))
+    <pre class="usage"><span class='fu'>step_log</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fl'>1</span>),
+  <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>signed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"log"</span>)
+)
 
 <span class='co'># S3 method for step_log</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

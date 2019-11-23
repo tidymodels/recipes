@@ -167,10 +167,17 @@ step that will create one or more ratios out of numeric
 variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_ratio</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(), <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>numer</span>, <span class='no'>denom</span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ratio"</span>))
+    <pre class="usage"><span class='fu'>step_ratio</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>denom</span> <span class='kw'>=</span> <span class='fu'>denom_vars</span>(),
+  <span class='kw'>naming</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>numer</span>, <span class='no'>denom</span>) <span class='fu'><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>numer</span>, <span class='no'>denom</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_o_"</span>)),
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ratio"</span>)
+)
 
 <span class='fu'>denom_vars</span>(<span class='no'>...</span>)
 

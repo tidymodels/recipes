@@ -167,9 +167,16 @@ step that will create new columns that are interaction terms
 between two or more variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_interact</span>(<span class='no'>recipe</span>, <span class='no'>terms</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>))
+    <pre class="usage"><span class='fu'>step_interact</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>terms</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>)
+)
 
 <span class='co'># S3 method for step_interact</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

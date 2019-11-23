@@ -173,9 +173,16 @@ on a training set).</p>
 <span class='fu'>discretize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>discretize</span>(<span class='no'>x</span>, <span class='kw'>cuts</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"bin"</span>, <span class='kw'>keep_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>infs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_unique</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='no'>...</span>)
+<span class='fu'>discretize</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>cuts</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"bin"</span>,
+  <span class='kw'>keep_na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>infs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>min_unique</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for discretize</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>object</span>, <span class='no'>new_data</span>, <span class='no'>...</span>)</pre>

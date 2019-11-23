@@ -167,10 +167,19 @@ will apply the rectified linear or softplus transformations to numeric
 data. The transformed data is added as new columns to the data matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_relu</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"right_relu_"</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"relu"</span>))
+    <pre class="usage"><span class='fu'>step_relu</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"right_relu_"</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"relu"</span>)
+)
 
 <span class='co'># S3 method for step_relu</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

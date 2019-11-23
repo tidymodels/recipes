@@ -167,9 +167,18 @@ step that will potentially remove variables that have large
 absolute correlations with other variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_corr</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>))
+    <pre class="usage"><span class='fu'>step_corr</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>,
+  <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>)
+)
 
 <span class='co'># S3 method for step_corr</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

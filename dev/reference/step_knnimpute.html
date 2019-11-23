@@ -167,10 +167,19 @@ recipe step that will impute missing data using nearest
 neighbors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_knnimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>neighbors</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-08</span>), <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>))
+    <pre class="usage"><span class='fu'>step_knnimpute</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>neighbors</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-08</span>),
+  <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>)
+)
 
 <span class='co'># S3 method for step_knnimpute</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

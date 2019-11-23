@@ -167,9 +167,17 @@ step that will transform data using a simple Box-Cox
 transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_BoxCox</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>num_unique</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"BoxCox"</span>))
+    <pre class="usage"><span class='fu'>step_BoxCox</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>5</span>, <span class='fl'>5</span>),
+  <span class='kw'>num_unique</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"BoxCox"</span>)
+)
 
 <span class='co'># S3 method for step_BoxCox</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

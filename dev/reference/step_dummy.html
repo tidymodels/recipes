@@ -169,9 +169,18 @@ into one or more numeric binary model terms for the levels of
 the original data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_dummy</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>one_hot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>preserve</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>,
-  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"dummy"</span>))
+    <pre class="usage"><span class='fu'>step_dummy</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>one_hot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>preserve</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>naming</span> <span class='kw'>=</span> <span class='no'>dummy_names</span>,
+  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"dummy"</span>)
+)
 
 <span class='co'># S3 method for step_dummy</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

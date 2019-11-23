@@ -171,9 +171,19 @@ helpful when creating partial regression plots for additive
 models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_profile</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pct</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>), <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"profile"</span>))
+    <pre class="usage"><span class='fu'>step_profile</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>profile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pct</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>),
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"profile"</span>)
+)
 
 <span class='co'># S3 method for step_profile</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>

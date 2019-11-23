@@ -169,9 +169,20 @@ distance measurements to the data centroid. This is done for
 each value of a categorical class variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_classdist</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>class</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>cov_func</span> <span class='kw'>=</span> <span class='no'>cov</span>, <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"classdist"</span>))
+    <pre class="usage"><span class='fu'>step_classdist</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='no'>class</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean</span>,
+  <span class='kw'>cov_func</span> <span class='kw'>=</span> <span class='no'>cov</span>,
+  <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"classdist"</span>)
+)
 
 <span class='co'># S3 method for step_classdist</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
