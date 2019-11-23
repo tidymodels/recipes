@@ -101,6 +101,11 @@ test_that('No NNF', {
 
 
 test_that('tunable', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
   rec <-
     recipe(~ ., data = iris) %>%
     step_nnmf(all_predictors())
