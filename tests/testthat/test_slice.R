@@ -54,9 +54,12 @@ test_that('quasiquotation', {
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
 
-  rec_2 <-
-    iris_rec %>%
-    step_slice(!!values)
+  expect_error(
+    rec_2 <-
+      iris_rec %>%
+      step_slice(!!values),
+    regexp = NA
+  )
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75), retain = TRUE)
 

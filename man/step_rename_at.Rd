@@ -59,7 +59,7 @@ the selected variables using a common function.
 \examples{
 library(dplyr)
 recipe(~ ., data = iris) \%>\%
-  step_rename_at(everything(), fn = ~ gsub("\\.", "_", .)) \%>\%
+  step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) \%>\%
   prep() \%>\%
   juice() \%>\%
   slice(1:10)
