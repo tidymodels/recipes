@@ -5,9 +5,17 @@
 \alias{tidy.step_integer}
 \title{Convert values to predefined integers}
 \usage{
-step_integer(recipe, ..., role = "predictor", trained = FALSE,
-  strict = FALSE, zero_based = FALSE, key = NULL, skip = FALSE,
-  id = rand_id("integer"))
+step_integer(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  strict = FALSE,
+  zero_based = FALSE,
+  key = NULL,
+  skip = FALSE,
+  id = rand_id("integer")
+)
 
 \method{tidy}{step_integer}(x, ...)
 }

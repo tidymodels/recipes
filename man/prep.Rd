@@ -7,8 +7,15 @@
 \usage{
 prep(x, ...)
 
-\method{prep}{recipe}(x, training = NULL, fresh = FALSE,
-  verbose = FALSE, retain = TRUE, strings_as_factors = TRUE, ...)
+\method{prep}{recipe}(
+  x,
+  training = NULL,
+  fresh = FALSE,
+  verbose = FALSE,
+  retain = TRUE,
+  strings_as_factors = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{an object}

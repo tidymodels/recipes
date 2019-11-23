@@ -5,9 +5,18 @@
 \alias{tidy.step_YeoJohnson}
 \title{Yeo-Johnson Transformation}
 \usage{
-step_YeoJohnson(recipe, ..., role = NA, trained = FALSE,
-  lambdas = NULL, limits = c(-5, 5), num_unique = 5, na_rm = TRUE,
-  skip = FALSE, id = rand_id("YeoJohnson"))
+step_YeoJohnson(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  lambdas = NULL,
+  limits = c(-5, 5),
+  num_unique = 5,
+  na_rm = TRUE,
+  skip = FALSE,
+  id = rand_id("YeoJohnson")
+)
 
 \method{tidy}{step_YeoJohnson}(x, ...)
 }

@@ -5,9 +5,17 @@
 \alias{tidy.step_num2factor}
 \title{Convert Numbers to Factors}
 \usage{
-step_num2factor(recipe, ..., role = NA, transform = function(x) x,
-  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE,
-  id = rand_id("num2factor"))
+step_num2factor(
+  recipe,
+  ...,
+  role = NA,
+  transform = function(x) x,
+  trained = FALSE,
+  levels = NULL,
+  ordered = FALSE,
+  skip = FALSE,
+  id = rand_id("num2factor")
+)
 
 \method{tidy}{step_num2factor}(x, ...)
 }
