@@ -2,6 +2,7 @@
 % Please edit documentation in R/selections.R
 \name{selections}
 \alias{selections}
+\alias{selection}
 \title{Methods for Select Variables in Step Functions}
 \description{
 When selecting variables or model terms in \code{step}

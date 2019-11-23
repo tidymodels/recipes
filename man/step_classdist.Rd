@@ -5,9 +5,20 @@
 \alias{tidy.step_classdist}
 \title{Distances to Class Centroids}
 \usage{
-step_classdist(recipe, ..., class, role = "predictor", trained = FALSE,
-  mean_func = mean, cov_func = cov, pool = FALSE, log = TRUE,
-  objects = NULL, skip = FALSE, id = rand_id("classdist"))
+step_classdist(
+  recipe,
+  ...,
+  class,
+  role = "predictor",
+  trained = FALSE,
+  mean_func = mean,
+  cov_func = cov,
+  pool = FALSE,
+  log = TRUE,
+  objects = NULL,
+  skip = FALSE,
+  id = rand_id("classdist")
+)
 
 \method{tidy}{step_classdist}(x, ...)
 }

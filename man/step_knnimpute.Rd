@@ -5,10 +5,19 @@
 \alias{tidy.step_knnimpute}
 \title{Imputation via K-Nearest Neighbors}
 \usage{
-step_knnimpute(recipe, ..., role = NA, trained = FALSE,
-  neighbors = 5, impute_with = imp_vars(all_predictors()),
-  options = list(nthread = 1, eps = 1e-08), ref_data = NULL,
-  columns = NULL, skip = FALSE, id = rand_id("knnimpute"))
+step_knnimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  neighbors = 5,
+  impute_with = imp_vars(all_predictors()),
+  options = list(nthread = 1, eps = 1e-08),
+  ref_data = NULL,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("knnimpute")
+)
 
 \method{tidy}{step_knnimpute}(x, ...)
 }

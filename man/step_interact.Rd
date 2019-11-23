@@ -5,9 +5,16 @@
 \alias{tidy.step_interact}
 \title{Create Interaction Variables}
 \usage{
-step_interact(recipe, terms, role = "predictor", trained = FALSE,
-  objects = NULL, sep = "_x_", skip = FALSE,
-  id = rand_id("interact"))
+step_interact(
+  recipe,
+  terms,
+  role = "predictor",
+  trained = FALSE,
+  objects = NULL,
+  sep = "_x_",
+  skip = FALSE,
+  id = rand_id("interact")
+)
 
 \method{tidy}{step_interact}(x, ...)
 }
@@ -76,7 +83,7 @@ between the variables. If the formula contains terms other than
 interactions (e.g. \code{(A+B+C)^3}) only the interaction terms
 are retained for the design matrix.
 
-The separator between the variables defaults to "\code{_x_}" so
+The separator between the variables defaults to "\verb{_x_}" so
 that the three way interaction shown previously would generate a
 column named \code{A_x_B_x_C}. This can be changed using the
 \code{sep} argument.

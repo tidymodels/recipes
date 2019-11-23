@@ -5,9 +5,19 @@
 \alias{tidy.step_upsample}
 \title{Up-Sample a Data Set Based on a Factor Variable}
 \usage{
-step_upsample(recipe, ..., over_ratio = 1, ratio = NA, role = NA,
-  trained = FALSE, column = NULL, target = NA, skip = TRUE,
-  seed = sample.int(10^5, 1), id = rand_id("upsample"))
+step_upsample(
+  recipe,
+  ...,
+  over_ratio = 1,
+  ratio = NA,
+  role = NA,
+  trained = FALSE,
+  column = NULL,
+  target = NA,
+  skip = TRUE,
+  seed = sample.int(10^5, 1),
+  id = rand_id("upsample")
+)
 
 \method{tidy}{step_upsample}(x, ...)
 }
