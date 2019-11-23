@@ -5,9 +5,18 @@
 \alias{tidy.step_discretize}
 \title{Discretize Numeric Variables}
 \usage{
-step_discretize(recipe, ..., role = NA, trained = FALSE,
-  num_breaks = 4, min_unique = 10, objects = NULL,
-  options = list(), skip = FALSE, id = rand_id("discretize"))
+step_discretize(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  num_breaks = 4,
+  min_unique = 10,
+  objects = NULL,
+  options = list(),
+  skip = FALSE,
+  id = rand_id("discretize")
+)
 
 \method{tidy}{step_discretize}(x, ...)
 }
@@ -32,7 +41,7 @@ data.}
 
 \item{min_unique}{An integer defining a sample size line of
 dignity for the binning. If (the number of unique
-values)\code{/(cuts+1)} is less than \code{min_unique}, no
+values)\verb{/(cuts+1)} is less than \code{min_unique}, no
 discretization takes place.}
 
 \item{objects}{The \code{\link[=discretize]{discretize()}} objects are stored

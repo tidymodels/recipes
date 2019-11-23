@@ -6,6 +6,7 @@
  
  * Code was added to explicitly register `tunable` methods when `recipes` is loaded. This is required because of changes occurring in R 4.0. 
  
+ * `step_scale()` and `step_normalize()` gained a factor argument that can be used to scale the inputs by one or two standard deviations. 
 
 #  `recipes` 0.1.7
 

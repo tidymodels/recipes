@@ -5,9 +5,18 @@
 \alias{tidy.step_kpca_rbf}
 \title{Radial Basis Function Kernel PCA Signal Extraction}
 \usage{
-step_kpca_rbf(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 5, res = NULL, sigma = 0.2, prefix = "kPC",
-  skip = FALSE, id = rand_id("kpca_rbf"))
+step_kpca_rbf(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 5,
+  res = NULL,
+  sigma = 0.2,
+  prefix = "kPC",
+  skip = FALSE,
+  id = rand_id("kpca_rbf")
+)
 
 \method{tidy}{step_kpca_rbf}(x, ...)
 }

@@ -5,8 +5,16 @@
 \alias{tidy.step_sample}
 \title{Sample rows using dplyr}
 \usage{
-step_sample(recipe, ..., role = NA, trained = FALSE, size = NULL,
-  replace = FALSE, skip = FALSE, id = rand_id("sample"))
+step_sample(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  size = NULL,
+  replace = FALSE,
+  skip = FALSE,
+  id = rand_id("sample")
+)
 
 \method{tidy}{step_sample}(x, ...)
 }

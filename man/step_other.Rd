@@ -5,9 +5,17 @@
 \alias{tidy.step_other}
 \title{Collapse Some Categorical Levels}
 \usage{
-step_other(recipe, ..., role = NA, trained = FALSE, threshold = 0.05,
-  other = "other", objects = NULL, skip = FALSE,
-  id = rand_id("other"))
+step_other(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  threshold = 0.05,
+  other = "other",
+  objects = NULL,
+  skip = FALSE,
+  id = rand_id("other")
+)
 
 \method{tidy}{step_other}(x, ...)
 }

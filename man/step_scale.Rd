@@ -5,8 +5,17 @@
 \alias{tidy.step_scale}
 \title{Scaling Numeric Data}
 \usage{
-step_scale(recipe, ..., role = NA, trained = FALSE, sds = NULL,
-  factor = 1, na_rm = TRUE, skip = FALSE, id = rand_id("scale"))
+step_scale(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  sds = NULL,
+  factor = 1,
+  na_rm = TRUE,
+  skip = FALSE,
+  id = rand_id("scale")
+)
 
 \method{tidy}{step_scale}(x, ...)
 }

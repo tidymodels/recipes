@@ -6,11 +6,19 @@
 \alias{tidy.step_bagimpute}
 \title{Imputation via Bagged Trees}
 \usage{
-step_bagimpute(recipe, ..., role = NA, trained = FALSE,
-  impute_with = imp_vars(all_predictors()), trees = 25,
-  models = NULL, options = list(keepX = FALSE),
-  seed_val = sample.int(10^4, 1), skip = FALSE,
-  id = rand_id("bagimpute"))
+step_bagimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  impute_with = imp_vars(all_predictors()),
+  trees = 25,
+  models = NULL,
+  options = list(keepX = FALSE),
+  seed_val = sample.int(10^4, 1),
+  skip = FALSE,
+  id = rand_id("bagimpute")
+)
 
 imp_vars(...)
 

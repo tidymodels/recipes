@@ -15,6 +15,11 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @param sds A named numeric vector of standard deviations This
 #'  is `NULL` until computed by [prep.recipe()].
+#' @param factor A numeric value of either 1 or 2 that scales the
+#'  numeric inputs by one or two standard deviations. By dividing
+#'  by two standard deviations, the coefficients attached to
+#'  continous predictors can be interpreted the same way as with
+#'  binary inputs. Defaults to `1`. More in reference below.
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation and mean.
 #' @return An updated version of `recipe` with the new step
@@ -22,6 +27,9 @@
 #'  `tidy` method, a tibble with columns `terms` (the
 #'  selectors or variables selected), `value` (the
 #'  standard deviations and means), and `statistic` for the type of value.
+#' @references Gelman, A. (2007) "Scaling regression inputs by
+#'  dividing by two standard deviations." Unpublished. Source:
+#'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
@@ -57,6 +65,7 @@ step_normalize <-
   function(recipe,
            ...,
            role = NA,
+           factor = 1,
            trained = FALSE,
            means = NULL,
            sds = NULL,
@@ -68,6 +77,7 @@ step_normalize <-
       step_normalize_new(
         terms = ellipse_check(...),
         role = role,
+        factor = factor,
         trained = trained,
         means = means,
         sds = sds,
@@ -79,11 +89,12 @@ step_normalize <-
   }
 
 step_normalize_new <-
-  function(terms, role, trained, means, sds, na_rm, skip, id) {
+  function(terms, role, factor, trained, means, sds, na_rm, skip, id) {
     step(
       subclass = "normalize",
       terms = terms,
       role = role,
+      factor = factor,
       trained = trained,
       means = means,
       sds = sds,
@@ -98,11 +109,19 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
+
+  if (x$factor != 1 | x$factor != 2) {
+    warning("Scaling `factor` should take either a value of 1 or 2", call. = FALSE)
+  }
+
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
   sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds <- sds * x$factor
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,
+    factor = x$factor,
     trained = TRUE,
     means = means,
     sds = sds,

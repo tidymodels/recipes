@@ -5,9 +5,18 @@
 \alias{tidy.check_range}
 \title{Check Range Consistency}
 \usage{
-check_range(recipe, ..., role = NA, skip = FALSE, trained = FALSE,
-  slack_prop = 0.05, warn = FALSE, lower = NULL, upper = NULL,
-  id = rand_id("range_check_"))
+check_range(
+  recipe,
+  ...,
+  role = NA,
+  skip = FALSE,
+  trained = FALSE,
+  slack_prop = 0.05,
+  warn = FALSE,
+  lower = NULL,
+  upper = NULL,
+  id = rand_id("range_check_")
+)
 
 \method{tidy}{check_range}(x, ...)
 }

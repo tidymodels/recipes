@@ -5,8 +5,15 @@
 \alias{tidy.step_modeimpute}
 \title{Impute Nominal Data Using the Most Common Value}
 \usage{
-step_modeimpute(recipe, ..., role = NA, trained = FALSE,
-  modes = NULL, skip = FALSE, id = rand_id("modeimpute"))
+step_modeimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  modes = NULL,
+  skip = FALSE,
+  id = rand_id("modeimpute")
+)
 
 \method{tidy}{step_modeimpute}(x, ...)
 }

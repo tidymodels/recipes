@@ -5,8 +5,15 @@
 \alias{tidy.step_naomit}
 \title{Remove observations with missing values}
 \usage{
-step_naomit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = rand_id("naomit"))
+step_naomit(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("naomit")
+)
 
 \method{tidy}{step_naomit}(x, ...)
 }

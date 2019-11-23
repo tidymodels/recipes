@@ -5,9 +5,16 @@
 \alias{tidy.step_spatialsign}
 \title{Spatial Sign Preprocessing}
 \usage{
-step_spatialsign(recipe, ..., role = "predictor", na_rm = TRUE,
-  trained = FALSE, columns = NULL, skip = FALSE,
-  id = rand_id("spatialsign"))
+step_spatialsign(
+  recipe,
+  ...,
+  role = "predictor",
+  na_rm = TRUE,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("spatialsign")
+)
 
 \method{tidy}{step_spatialsign}(x, ...)
 }

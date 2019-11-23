@@ -5,10 +5,19 @@
 \alias{tidy.step_isomap}
 \title{Isomap Embedding}
 \usage{
-step_isomap(recipe, ..., role = "predictor", trained = FALSE,
-  num_terms = 5, neighbors = 50, options = list(.mute = c("message",
-  "output")), res = NULL, prefix = "Isomap", skip = FALSE,
-  id = rand_id("isomap"))
+step_isomap(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_terms = 5,
+  neighbors = 50,
+  options = list(.mute = c("message", "output")),
+  res = NULL,
+  prefix = "Isomap",
+  skip = FALSE,
+  id = rand_id("isomap")
+)
 
 \method{tidy}{step_isomap}(x, ...)
 }

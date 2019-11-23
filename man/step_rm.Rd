@@ -5,8 +5,15 @@
 \alias{tidy.step_rm}
 \title{General Variable Filter}
 \usage{
-step_rm(recipe, ..., role = NA, trained = FALSE, removals = NULL,
-  skip = FALSE, id = rand_id("rm"))
+step_rm(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("rm")
+)
 
 \method{tidy}{step_rm}(x, ...)
 }

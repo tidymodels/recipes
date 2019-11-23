@@ -5,9 +5,18 @@
 \alias{tidy.step_normalize}
 \title{Center and scale numeric data}
 \usage{
-step_normalize(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  sds = NULL, na_rm = TRUE, skip = FALSE,
-  id = rand_id("normalize"))
+step_normalize(
+  recipe,
+  ...,
+  role = NA,
+  factor = 1,
+  trained = FALSE,
+  means = NULL,
+  sds = NULL,
+  na_rm = TRUE,
+  skip = FALSE,
+  id = rand_id("normalize")
+)
 
 \method{tidy}{step_normalize}(x, ...)
 }
@@ -22,6 +31,12 @@ currently used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
+
+\item{factor}{A numeric value of either 1 or 2 that scales the
+numeric inputs by one or two standard deviations. By dividing
+by two standard deviations, the coefficients attached to
+continous predictors can be interpreted the same way as with
+binary inputs. Defaults to \code{1}. More in reference below.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -87,6 +102,11 @@ transformed_te
 tidy(norm_trans, number = 1)
 tidy(norm_obj, number = 1)
 
+}
+\references{
+Gelman, A. (2007) "Scaling regression inputs by
+dividing by two standard deviations." Unpublished. Source:
+\url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 }
 \concept{normalization_methods}
 \concept{preprocessing}

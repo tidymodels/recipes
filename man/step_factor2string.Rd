@@ -5,8 +5,15 @@
 \alias{tidy.step_factor2string}
 \title{Convert Factors to Strings}
 \usage{
-step_factor2string(recipe, ..., role = NA, trained = FALSE,
-  columns = FALSE, skip = FALSE, id = rand_id("factor2string"))
+step_factor2string(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = FALSE,
+  skip = FALSE,
+  id = rand_id("factor2string")
+)
 
 \method{tidy}{step_factor2string}(x, ...)
 }

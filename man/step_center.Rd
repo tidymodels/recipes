@@ -5,8 +5,16 @@
 \alias{tidy.step_center}
 \title{Centering numeric data}
 \usage{
-step_center(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  na_rm = TRUE, skip = FALSE, id = rand_id("center"))
+step_center(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  means = NULL,
+  na_rm = TRUE,
+  skip = FALSE,
+  id = rand_id("center")
+)
 
 \method{tidy}{step_center}(x, ...)
 }
