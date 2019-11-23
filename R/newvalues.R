@@ -1,4 +1,4 @@
-#' Check for Missing Values
+#' Check for New Values
 #'
 #' `check_new_values` creates a a *specification* of a recipe
 #'  operation that will check if variables contain new values.
