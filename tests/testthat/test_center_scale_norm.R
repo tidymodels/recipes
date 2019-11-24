@@ -153,7 +153,9 @@ test_that('scale by factor of 1 or 2 for step_normalize', {
            value = sds*2,
            id = standardized$steps[[1]]$id)
 
-  expect_equal(tidy(standardized_trained, 1), scal_tibble_tr)
+  exp_tibble <- tidy(standardized_trained, 1)
+  exp_tibble <- exp_tibble[exp_tibble$statistic == "sd", -2]
+  expect_equal(exp_tibble, scal_tibble_tr)
 
   expect_equal(standardized_trained$steps[[1]]$sds, 2*sds)
 

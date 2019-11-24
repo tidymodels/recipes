@@ -110,7 +110,7 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
 
-  if (x$factor != 1 | x$factor != 2) {
+  if (x$factor != 1 & x$factor != 2) {
     warning("Scaling `factor` should take either a value of 1 or 2", call. = FALSE)
   }
 
