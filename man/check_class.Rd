@@ -5,9 +5,17 @@
 \alias{tidy.check_class}
 \title{Check Variable Class}
 \usage{
-check_class(recipe, ..., role = NA, trained = FALSE, class_nm = NULL,
-  allow_additional = FALSE, skip = FALSE, class_list = NULL,
-  id = rand_id("class"))
+check_class(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  class_nm = NULL,
+  allow_additional = FALSE,
+  skip = FALSE,
+  class_list = NULL,
+  id = rand_id("class")
+)
 
 \method{tidy}{check_class}(x, ...)
 }

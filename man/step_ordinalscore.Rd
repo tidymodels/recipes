@@ -5,9 +5,16 @@
 \alias{tidy.step_ordinalscore}
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
-step_ordinalscore(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, convert = as.numeric, skip = FALSE,
-  id = rand_id("ordinalscore"))
+step_ordinalscore(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  convert = as.numeric,
+  skip = FALSE,
+  id = rand_id("ordinalscore")
+)
 
 \method{tidy}{step_ordinalscore}(x, ...)
 }

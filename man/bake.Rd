@@ -7,8 +7,7 @@
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, new_data = NULL, ...,
-  composition = "tibble")
+\method{bake}{recipe}(object, new_data = NULL, ..., composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least

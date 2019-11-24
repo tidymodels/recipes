@@ -5,9 +5,18 @@
 \alias{tidy.step_dummy}
 \title{Dummy Variables Creation}
 \usage{
-step_dummy(recipe, ..., role = "predictor", trained = FALSE,
-  one_hot = FALSE, preserve = FALSE, naming = dummy_names,
-  levels = NULL, skip = FALSE, id = rand_id("dummy"))
+step_dummy(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  one_hot = FALSE,
+  preserve = FALSE,
+  naming = dummy_names,
+  levels = NULL,
+  skip = FALSE,
+  id = rand_id("dummy")
+)
 
 \method{tidy}{step_dummy}(x, ...)
 }
@@ -89,9 +98,9 @@ be changed by \code{\link[base:make.names]{base::make.names()}} to be valid (see
 below). The naming format can be changed using the \code{naming}
 argument and the function \code{\link[=dummy_names]{dummy_names()}} is the default. This
 function will also change the names of ordinal dummy variables.
-Instead of values such as "\code{.L}", "\code{.Q}", or "\code{^4}", ordinal
+Instead of values such as "\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal
 dummy variables are given simple integer suffixes such as
-"\code{_1}", "\code{_2}", etc.
+"\verb{_1}", "\verb{_2}", etc.
 
 To change the type of contrast being used, change the global
 contrast option via \code{options}.
