@@ -6,8 +6,7 @@
  
  * Code was added to explicitly register `tunable` methods when `recipes` is loaded. This is required because of changes occurring in R 4.0. 
  
-* `check_class` checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)
-
+* `check_class()` checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)
 
 #  `recipes` 0.1.7
 
