@@ -270,8 +270,7 @@ Chemical Information and Modeling</em>, 46(3), 1402-1409.</p>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_spatialsign</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 
-<span class='no'>ss_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ss_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-
+<span class='no'>ss_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ss_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Scaling `factor` should take either a value of 1 or 2</span></div><div class='input'>
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ss_obj</span>, <span class='no'>biomass_te</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>hydrogen</span>)</div><div class='img'><img src='step_spatialsign-1.png' alt='' width='768' height='552' /></div><div class='input'>
