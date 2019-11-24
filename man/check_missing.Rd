@@ -5,8 +5,15 @@
 \alias{tidy.check_missing}
 \title{Check for Missing Values}
 \usage{
-check_missing(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, skip = FALSE, id = rand_id("missing"))
+check_missing(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("missing")
+)
 
 \method{tidy}{check_missing}(x, ...)
 }

@@ -16,8 +16,9 @@
 #'  used as predictors in a model.
 #' @param objects A list of [stats::poly()] objects
 #'  created once the step has been trained.
+#' @param degree The polynomial degree (an integer).
 #' @param options A list of options for [stats::poly()]
-#'  which should not include `x` or `simple`. Note that
+#'  which should not include `x`, `degree`, or `simple`. Note that
 #'  the option `raw = TRUE` will produce the regular polynomial
 #'  values (not orthogonalized).
 #' @return An updated version of `recipe` with the new step
@@ -62,9 +63,25 @@ step_poly <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           options = list(degree = 2),
+           degree = 2,
+           options = list(),
         skip = FALSE,
         id = rand_id("poly")) {
+
+    if (!is_tune(degree) & !is_varying(degree)) {
+      degree <- as.integer(degree)
+    }
+
+    if (any(names(options == "degree"))) {
+      degree <- options$degree
+      message(
+        paste(
+          "The `degree` argument is now a main argument instead of being",
+          "within `options`."
+        )
+      )
+    }
+
     add_step(
       recipe,
       step_poly_new(
@@ -72,6 +89,7 @@ step_poly <-
         trained = trained,
         role = role,
         objects = objects,
+        degree = degree,
         options = options,
         skip = skip,
         id = id
@@ -80,13 +98,14 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, options, skip, id) {
+  function(terms, role, trained, objects, degree, options, skip, id) {
     step(
       subclass = "poly",
       terms = terms,
       role = role,
       trained = trained,
       objects = objects,
+      degree = degree,
       options = options,
       skip = skip,
       id = id
@@ -107,29 +126,31 @@ poly_wrapper <- function(x, args) {
   out
 }
 
-#' @importFrom stats poly
+
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  obj <- lapply(training[, col_names], poly_wrapper, x$options)
-  for (i in seq(along = col_names))
+  opts <- x$options
+  opts$degree <- x$degree
+  obj <- lapply(training[, col_names], poly_wrapper, opts)
+  for (i in seq(along = col_names)) {
     attr(obj[[i]], "var") <- col_names[i]
+  }
 
   step_poly_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     objects = obj,
+    degree = x$degree,
     options = x$options,
     skip = x$skip,
     id = x$id
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
-#' @importFrom stats predict
 #' @export
 bake.step_poly <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
@@ -168,13 +189,26 @@ print.step_poly <-
 #' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$objects),
-                  degree = x$options$degree)
+    res <- tibble(terms = names(x$objects), degree = x$degree)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  degree = x$options$degree)
+    res <- tibble(terms = term_names, degree = x$degree)
   }
   res$id <- x$id
   res
+}
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_poly <- function(x, ...) {
+  tibble::tibble(
+    name = c("degree"),
+    call_info = list(
+      list(pkg = "dials", fun = "degree_int")
+    ),
+    source = "recipe",
+    component = "step_poly",
+    component_id = x$id
+  )
 }

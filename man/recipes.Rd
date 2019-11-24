@@ -3,7 +3,6 @@
 \docType{package}
 \name{recipes}
 \alias{recipes}
-\alias{recipes-package}
 \title{recipes: A package for computing and preprocessing design matrices.}
 \description{
 The \code{recipes} package can be used to create design matrices for modeling

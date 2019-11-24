@@ -14,12 +14,13 @@
 #'  created.
 #' @param column A character string of the variable name that will
 #'  be populated (eventually) by the `...` selectors.
-#' @param ratio A numeric value for the ratio of the
+#' @param over_ratio A numeric value for the ratio of the
 #'  majority-to-minority frequencies. The default value (1) means
 #'  that all other levels are sampled up to have the same
 #'  frequency as the most occurring level. A value of 0.5 would mean
 #'  that the minority levels will have (at most) (approximately)
 #'  half as many rows than the majority level.
+#' @param ratio Deprecated argument; same as `over_ratio`.
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
 #' @param seed An integer that will be used as the seed when upsampling.
@@ -64,7 +65,7 @@
 #' up_rec <- recipe( ~ ., data = okc) %>%
 #'   # Bring the minority levels up to about 200 each
 #'   # 200/16562 is approx 0.0121
-#'   step_upsample(diet, ratio = 0.0121) %>%
+#'   step_upsample(diet, over_ratio = 0.0121) %>%
 #'   prep(training = okc, retain = TRUE)
 #'
 #' training <- table(juice(up_rec)$diet, useNA = "always")
@@ -83,14 +84,27 @@
 #' )
 
 step_upsample <-
-  function(recipe, ...,  ratio = 1, role = NA, trained = FALSE,
+  function(recipe, ...,  over_ratio = 1, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1),
            id = rand_id("upsample")) {
 
+    if (!is.na(ratio) & all(over_ratio != ratio)) {
+      message(
+        paste(
+          "The `ratio` argument is now deprecated in favor of `over_ratio`.",
+          "`ratio` will be removed in a subsequent version."
+        )
+      )
+      if (!is.na(ratio)) {
+        over_ratio <- ratio
+      }
+    }
+
     add_step(recipe,
              step_upsample_new(
                terms = ellipse_check(...),
+               over_ratio = over_ratio,
                ratio = ratio,
                role = role,
                trained = trained,
@@ -103,10 +117,11 @@ step_upsample <-
   }
 
 step_upsample_new <-
-  function(terms, ratio, role, trained, column, target, skip, seed, id) {
+  function(terms, over_ratio, ratio, role, trained, column, target, skip, seed, id) {
     step(
       subclass = "upsample",
       terms = terms,
+      over_ratio = over_ratio,
       ratio = ratio,
       role = role,
       trained = trained,
@@ -134,10 +149,11 @@ prep.step_upsample <- function(x, training, info = NULL, ...) {
   step_upsample_new(
     terms = x$terms,
     ratio = x$ratio,
+    over_ratio = x$over_ratio,
     role = x$role,
     trained = TRUE,
     column = col_name,
-    target = floor(majority * x$ratio),
+    target = floor(majority * x$over_ratio),
     skip = x$skip,
     id = x$id,
     seed = x$seed
@@ -155,9 +171,6 @@ supsamp <- function(x, num) {
   out
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom purrr map_dfr
-#' @importFrom withr with_seed
 #' @export
 bake.step_upsample <- function(object, new_data, ...) {
   if (any(is.na(new_data[[object$column]])))
@@ -202,3 +215,20 @@ tidy.step_upsample <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_upsample <- function(x, ...) {
+  tibble::tibble(
+    name = c("over_ratio"),
+    call_info = list(
+      list(pkg = "dials", fun = "over_ratio")
+    ),
+    source = "recipe",
+    component = "step_upsample",
+    component_id = x$id
+  )
+}
+

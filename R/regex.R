@@ -59,15 +59,20 @@ step_regex <- function(recipe,
                        input = NULL,
                        skip = FALSE,
                        id = rand_id("regex")) {
-  if (!is.character(pattern))
-    stop("`pattern` should be a character string", call. = FALSE)
-  if (length(pattern) != 1)
-    stop("`pattern` should be a single pattern", call. = FALSE)
-  valid_args <- names(formals(grepl))[- (1:2)]
-  if (any(!(names(options) %in% valid_args)))
+  if (!is_tune(pattern) & !is_varying(pattern)) {
+    if (!is.character(pattern)) {
+      stop("`pattern` should be a character string", call. = FALSE)
+    }
+    if (length(pattern) != 1) {
+      stop("`pattern` should be a single pattern", call. = FALSE)
+    }
+  }
+  valid_args <- names(formals(grepl))[-(1:2)]
+  if (any(!(names(options) %in% valid_args))) {
     stop("Valid options are: ",
          paste0(valid_args, collapse = ", "),
          call. = FALSE)
+  }
 
   terms <- ellipse_check(...)
   if (length(terms) > 1)
@@ -127,7 +132,6 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom rlang expr
 bake.step_regex <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(

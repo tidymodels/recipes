@@ -120,22 +120,26 @@ step_window <-
            call. = FALSE)
 
     ## ensure size is odd, integer, and not too small
-    if (is.na(size) | is.null(size))
-      stop("`size` needs a value.", call. = FALSE)
+    if (!is_tune(size) & !is_varying(size)) {
+      if (is.na(size) | is.null(size)) {
+        stop("`size` needs a value.", call. = FALSE)
+      }
 
-    if (!is.integer(size)) {
-      tmp <- size
-      size <- as.integer(size)
-      if (!isTRUE(all.equal(tmp, size)))
-        warning("`size` was not an integer (", tmp, ") and was ",
-                "converted to ", size, ".", sep = "",
-                call. = FALSE)
+      if (!is.integer(size)) {
+        tmp <- size
+        size <- as.integer(size)
+        if (!isTRUE(all.equal(tmp, size)))
+          warning("`size` was not an integer (", tmp, ") and was ",
+                  "converted to ", size, ".", sep = "",
+                  call. = FALSE)
+      }
+      if (size %% 2 == 0) {
+        stop("`size` should be odd.", call. = FALSE)
+      }
+      if (size < 3) {
+        stop("`size` should be at least 3.", call. = FALSE)
+      }
     }
-    if (size %% 2 == 0)
-      stop("`size` should be odd.", call. = FALSE)
-    if (size < 3)
-      stop("`size` should be at least 3.", call. = FALSE)
-
     add_step(
       recipe,
       step_window_new(
@@ -228,7 +232,6 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
   x2
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_window <- function(object, new_data, ...) {
   for (i in seq(along = object$columns)) {
@@ -274,3 +277,20 @@ tidy.step_window <- function(x, ...) {
   out$id <- x$id
   out
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_window <- function(x, ...) {
+  tibble::tibble(
+    name = c("statistic", "window"),
+    call_info = list(
+      list(pkg = "dials", fun = "summary_stat"),
+      list(pkg = "dials", fun = "window")
+    ),
+    source = "recipe",
+    component = "step_window",
+    component_id = x$id
+  )
+}
+

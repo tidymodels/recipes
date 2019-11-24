@@ -86,9 +86,6 @@ recipe.default <- function(x, ...)
 #'   data set to save time and memory.
 #'
 #' @export
-#' @importFrom tibble as_tibble is_tibble tibble
-#' @importFrom dplyr full_join
-#' @importFrom stats predict
 #' @examples
 #'
 #' ###############################################
@@ -106,8 +103,7 @@ recipe.default <- function(x, ...)
 #' # Now add preprocessing steps to the recipe.
 #'
 #' sp_signed <- rec %>%
-#'   step_center(all_predictors()) %>%
-#'   step_scale(all_predictors()) %>%
+#'   step_normalize(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #' sp_signed
 #'
@@ -121,8 +117,7 @@ recipe.default <- function(x, ...)
 #' # or use pipes for the entire workflow:
 #' rec <- biomass_tr %>%
 #'   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-#'   step_center(all_predictors()) %>%
-#'   step_scale(all_predictors()) %>%
+#'   step_normalize(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #'
 #' ###############################################
@@ -230,10 +225,6 @@ recipe.matrix <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 
-
-#' @importFrom stats as.formula
-#' @importFrom tibble as_tibble is_tibble
-
 form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
@@ -323,8 +314,6 @@ prep   <- function(x, ...)
 #'   data, the step for scaling is given the centered data.
 #'
 #' @rdname prep
-#' @importFrom tibble as_tibble is_tibble tibble
-#' @importFrom purrr map_lgl
 #' @export
 prep.recipe <-
   function(x,
@@ -514,10 +503,6 @@ bake <- function(object, ...)
 #'   of the steps applied.
 #' @seealso [recipe()], [juice()], [prep()]
 #' @rdname bake
-#' @importFrom tibble as_tibble
-#' @importFrom dplyr filter group_by arrange desc
-#' @importFrom tidyselect everything
-#' @importFrom utils object.size
 #' @export
 bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object)) {
@@ -594,7 +579,7 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
         new_data <- strings2factors(new_data, var_levels)
     }
   } else {
-    new_data <- tibble()
+    new_data <- tibble(.rows = nrow(new_data))
   }
 
   if (composition == "dgCMatrix") {
@@ -720,8 +705,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'               data = biomass_tr)
 #'
 #' sp_signed <- rec %>%
-#'   step_center(all_predictors()) %>%
-#'   step_scale(all_predictors()) %>%
+#'   step_normalize(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #'
 #' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
@@ -774,7 +758,7 @@ juice <- function(object, ..., composition = "tibble") {
         new_data <- strings2factors(new_data, var_levels)
     }
   } else {
-    new_data <- tibble()
+    new_data <- tibble(.rows = nrow(object$template))
   }
 
   if (composition == "dgCMatrix") {

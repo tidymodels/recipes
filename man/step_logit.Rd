@@ -5,8 +5,15 @@
 \alias{tidy.step_logit}
 \title{Logit Transformation}
 \usage{
-step_logit(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = rand_id("logit"))
+step_logit(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("logit")
+)
 
 \method{tidy}{step_logit}(x, ...)
 }

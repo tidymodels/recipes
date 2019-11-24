@@ -92,7 +92,6 @@ step_range_new <-
     )
   }
 
-#' @importFrom stats sd
 #' @export
 prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)

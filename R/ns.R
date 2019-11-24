@@ -91,7 +91,7 @@ step_ns_new <-
     )
   }
 
-#' @importFrom splines ns
+
 ns_wrapper <- function(x, args) {
   if (!("Boundary.knots" %in% names(args)))
     args$Boundary.knots <- range(x)
@@ -128,8 +128,6 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
-#' @importFrom stats predict
 #' @export
 bake.step_ns <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
@@ -175,4 +173,20 @@ tidy.step_ns <- function(x, ...) {
   res <- expand.grid(terms = cols, stringsAsFactors = FALSE)
   res$id <- x$id
   as_tibble(res)
+}
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_ns <- function(x, ...) {
+  tibble::tibble(
+    name = c("deg_free"),
+    call_info = list(
+      list(pkg = "dials", fun = "deg_free", range = c(3, 15))
+    ),
+    source = "recipe",
+    component = "step_ns",
+    component_id = x$id
+  )
 }

@@ -5,9 +5,17 @@
 \alias{tidy.step_hyperbolic}
 \title{Hyperbolic Transformations}
 \usage{
-step_hyperbolic(recipe, ..., role = NA, trained = FALSE,
-  func = "sin", inverse = TRUE, columns = NULL, skip = FALSE,
-  id = rand_id("hyperbolic"))
+step_hyperbolic(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  func = "sin",
+  inverse = TRUE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("hyperbolic")
+)
 
 \method{tidy}{step_hyperbolic}(x, ...)
 }

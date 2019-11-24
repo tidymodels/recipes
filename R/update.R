@@ -7,9 +7,6 @@
 #' conflicting information can arise between the data returned from [juice()]
 #' and the information in the step.
 #'
-#' This function is mainly useful for finalizing _varying parameters_, but
-#' it can also be used on non-varying parameters as well (as seen in the
-#' example below).
 #'
 #' @param object A recipe `step`.
 #' @param ... Key-value pairs where the keys match up with names of elements
@@ -55,8 +52,7 @@ update.step <- function(object, ...) {
   # Replace the appropriate values in object with the changes
   object <- update_fields(object, changes)
 
-  # Call step() to construct a new step
-  # to ensure all new changes are validated
+  # Call step() to construct a new step to ensure all new changes are validated
   reconstruct_step(object)
 
 }

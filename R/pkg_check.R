@@ -13,8 +13,6 @@
 #' \dontrun{
 #' recipes_pkg_check("recipes")
 #' }
-#' @importFrom rlang quos quo quo_squash
-#' @importFrom utils install.packages
 recipes_pkg_check <- function(pkg = NULL, ...) {
   good <- rep(TRUE, length(pkg))
   for (i in seq(along = pkg)) {
@@ -35,7 +33,7 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
       "Start a clean R session then run: "
     )
     cat(msg)
-    
+
     install_opt <- quos(...)
     install_pkg <- pkg[!good]
     if (length(install_pkg) > 1)
@@ -47,7 +45,7 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
     pkg_str <- deparse(quo_squash(inst_expr))
     cat(pkg_str)
   }
-  
+
   invisible()
 }
 

@@ -11,3 +11,5 @@ presentations
 .github
 ^revdep$
 tests/testthat/NMF*
+^azure-pipelines\.yml$
+^pkgdown$

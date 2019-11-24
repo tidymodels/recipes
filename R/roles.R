@@ -110,8 +110,6 @@
 #' recipe(biomass) %>%
 #'   summary()
 #'
-#' @importFrom rlang quos
-#' @importFrom dplyr filter group_by count
 #' @name roles
 NULL
 
@@ -251,7 +249,6 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 # ------------------------------------------------------------------------------
 
 #' @rdname roles
-#' @importFrom dplyr ungroup do
 #' @export
 remove_role <- function(recipe, ..., old_role) {
   single_chr(old_role, "old_")
@@ -332,8 +329,3 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
 
   invisible(NULL)
 }
-
-# ------------------------------------------------------------------------------
-
-#' @importFrom utils globalVariables
-utils::globalVariables(c(".", ".orig_order"))

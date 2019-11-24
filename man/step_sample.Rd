@@ -5,8 +5,16 @@
 \alias{tidy.step_sample}
 \title{Sample rows using dplyr}
 \usage{
-step_sample(recipe, ..., role = NA, trained = FALSE, size = NULL,
-  replace = FALSE, skip = FALSE, id = rand_id("sample"))
+step_sample(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  size = NULL,
+  replace = FALSE,
+  skip = FALSE,
+  id = rand_id("sample")
+)
 
 \method{tidy}{step_sample}(x, ...)
 }
@@ -60,22 +68,22 @@ that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
 recipe( ~ ., data = iris) \%>\%
   step_sample(size = 1) \%>\%
   prep(training = iris, retain = TRUE) \%>\%
-  juice() \%>\% 
+  juice() \%>\%
   nrow()
 
 # Uses `sample_frac`
 recipe( ~ ., data = iris) \%>\%
   step_sample(size = 0.9999) \%>\%
   prep(training = iris, retain = TRUE) \%>\%
-  juice() \%>\% 
+  juice() \%>\%
   nrow()
-  
-# Uses `sample_n` and returns _at maximum_ 120 samples. 
-smaller_iris <- 
+
+# Uses `sample_n` and returns _at maximum_ 120 samples.
+smaller_iris <-
   recipe( ~ ., data = iris) \%>\%
   step_sample() \%>\%
-  prep(training = iris \%>\% slice(1:120), retain = TRUE) 
-  
+  prep(training = iris \%>\% slice(1:120), retain = TRUE)
+
 juice(smaller_iris) \%>\% nrow()
 bake(smaller_iris, iris \%>\% slice(121:150)) \%>\% nrow()
 }

@@ -197,7 +197,6 @@ yj_trans <- function(x, lambda, eps = .001) {
 ## & Johnson, R. A. (2000). A new family of power transformations
 ## to improve normality or symmetry. Biometrika. page 957
 
-#' @importFrom stats var
 ll_yj <- function(lambda, y, eps = .001) {
   y <- y[!is.na(y)]
   n <- length(y)
@@ -210,7 +209,6 @@ ll_yj <- function(lambda, y, eps = .001) {
   res
 }
 
-#' @importFrom  stats complete.cases
 ## eliminates missing data and returns -llh
 yj_obj <- function(lam, dat){
   dat <- dat[complete.cases(dat)]
@@ -218,7 +216,6 @@ yj_obj <- function(lam, dat){
 }
 
 ## estimates the values
-#' @importFrom stats optimize
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal

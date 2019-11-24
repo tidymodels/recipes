@@ -5,8 +5,15 @@
 \alias{tidy.step_medianimpute}
 \title{Impute Numeric Data Using the Median}
 \usage{
-step_medianimpute(recipe, ..., role = NA, trained = FALSE,
-  medians = NULL, skip = FALSE, id = rand_id("medianimpute"))
+step_medianimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  medians = NULL,
+  skip = FALSE,
+  id = rand_id("medianimpute")
+)
 
 \method{tidy}{step_medianimpute}(x, ...)
 }

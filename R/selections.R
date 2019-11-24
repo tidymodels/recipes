@@ -170,8 +170,6 @@ element_check <- function(x, allowed = selectors) {
 #'  are no selectors or if no variables are selected.
 #' @seealso [recipe()] [summary.recipe()]
 #'   [prep.recipe()]
-#' @importFrom purrr map_lgl map_if map_chr map
-#' @importFrom rlang names2
 #' @export
 #' @examples
 #' library(rlang)
@@ -191,7 +189,14 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
   lapply(terms, element_check)
 
   # Set current_info so available to helpers
-  nested_info <- tidyr::nest(info, -variable)
+
+  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
+  if (tidyr_new_interface()) {
+    nested_info <- tidyr::nest(info, data = -variable)
+  } else {
+    nested_info <- tidyr::nest(info, -variable)
+  }
+
   old_info <- set_current_info(nested_info)
   on.exit(set_current_info(old_info), add = TRUE)
 
@@ -273,21 +278,18 @@ has_role <- function(match = "predictor") {
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_predictors <- function() {
   has_role("predictor")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_outcomes <- function() {
   has_role("outcome")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
   lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
@@ -296,14 +298,12 @@ has_type <- function(match = "numeric") {
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_numeric <- function() {
   has_type("numeric")
 }
 
 #' @export
 #' @rdname has_role
-#' @inheritParams has_role
 all_nominal <- function() {
   has_type("nominal")
 }

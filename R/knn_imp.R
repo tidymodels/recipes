@@ -31,8 +31,6 @@
 #' @param columns The column names that will be imputed and used
 #'  for imputation. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param K The number of neighbors (this will be deprecated in favor of
-#'  `neighbors` in version 0.1.5). `neighbors` will override this option.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -105,15 +103,10 @@ step_knnimpute <-
            options = list(nthread = 1, eps = 1e-08),
            ref_data = NULL,
            columns = NULL,
-           K = NULL,
            skip = FALSE,
            id = rand_id("knnimpute")) {
     if (is.null(impute_with)) {
       stop("Please list some variables in `impute_with`", call. = FALSE)
-    }
-    if (!is.null(K)) {
-      message("The argument `K` is deprecated in factor of `neighbors`. ",
-              "`K` will be removed in next version.", call. = FALSE)
     }
 
     if (!is.list(options))
@@ -144,7 +137,6 @@ step_knnimpute <-
         ref_data = ref_data,
         options = options,
         columns = columns,
-        K = K,
         skip = skip,
         id = id
       )
@@ -153,7 +145,7 @@ step_knnimpute <-
 
 step_knnimpute_new <-
   function(terms, role, trained, neighbors, impute_with, ref_data, options,
-           columns, K, skip, id) {
+           columns, skip, id) {
     step(
       subclass = "knnimpute",
       terms = terms,
@@ -164,7 +156,6 @@ step_knnimpute_new <-
       ref_data = ref_data,
       options = options,
       columns = columns,
-      K = K,
       skip = skip,
       id = id
     )
@@ -190,13 +181,11 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     ref_data = training[, all_x_vars],
     options = x$options,
     columns = var_lists,
-    K = x$neighbors,
     skip = x$skip,
     id = x$id
   )
 }
 
-#' @importFrom gower gower_topn
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
     ref_data[, vars],
@@ -218,8 +207,7 @@ nn_pred <- function(index, dat) {
   est
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats predict complete.cases
+
 #' @export
 bake.step_knnimpute <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
@@ -240,7 +228,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],
                            imp_data, preds,
-                           ifelse(!is.null(object$K), object$K, object$neighbors),
+                           object$neighbors,
                            object$options)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
@@ -256,12 +244,11 @@ print.step_knnimpute <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
-    cat(x$neighbors, "-nearest neighbor imputation for ", sep = "")
+    cat("K-nearest neighbor imputation for ", sep = "")
     printer(all_x_vars, x$terms, x$trained, width = width)
     invisible(x)
   }
 
-#' @importFrom purrr map_df
 #' @rdname step_knnimpute
 #' @param x A `step_knnimpute` object.
 #' @export
@@ -285,3 +272,15 @@ tidy.step_knnimpute <- function(x, ...) {
   res
 }
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_knnimpute <- function(x, ...) {
+  tibble::tibble(
+    name = "neighbors",
+    call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1, 10))),
+    source = "recipe",
+    component = "step_knnimpute",
+    component_id = x$id
+  )
+}

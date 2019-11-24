@@ -12,8 +12,7 @@ recipe(x, ...)
 
 \method{recipe}{default}(x, ...)
 
-\method{recipe}{data.frame}(x, formula = NULL, ..., vars = NULL,
-  roles = NULL)
+\method{recipe}{data.frame}(x, formula = NULL, ..., vars = NULL, roles = NULL)
 
 \method{recipe}{formula}(formula, data, ...)
 
@@ -115,8 +114,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 # Now add preprocessing steps to the recipe.
 
 sp_signed <- rec \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   step_spatialsign(all_predictors())
 sp_signed
 
@@ -130,8 +128,7 @@ test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
 # or use pipes for the entire workflow:
 rec <- biomass_tr \%>\%
   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   step_spatialsign(all_predictors())
 
 ###############################################

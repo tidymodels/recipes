@@ -92,9 +92,12 @@ step_date <-
       "quarter",
       "dow",
       "month")
-  if (!all(features %in% feat))
-    stop("Possible values of `features` should include: ",
-         paste0("'", feat, "'", collapse = ", "))
+  if (!is_tune(features) & !is_varying(features)) {
+    if (!all(features %in% feat)) {
+      stop("Possible values of `features` should include: ",
+           paste0("'", feat, "'", collapse = ", "))
+    }
+  }
   add_step(
     recipe,
     step_date_new(
@@ -129,7 +132,7 @@ step_date_new <-
     )
   }
 
-#' @importFrom stats as.formula model.frame
+
 #' @export
 prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -160,7 +163,6 @@ ord2fac <- function(x, what) {
 }
 
 
-#' @importFrom lubridate year yday week decimal_date quarter semester wday month
 get_date_features <-
   function(dt,
            feats,
@@ -201,7 +203,6 @@ get_date_features <-
     res
   }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_date <- function(object, new_data, ...) {
   new_cols <-

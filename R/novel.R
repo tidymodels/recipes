@@ -113,8 +113,6 @@ get_existing_values <- function(x) {
   out
 }
 
-#' @importFrom purrr map_lgl
-#' @importFrom dplyr filter
 #' @export
 prep.step_novel <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -150,7 +148,6 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_novel <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
@@ -181,7 +178,6 @@ print.step_novel <-
 
 #' @rdname step_novel
 #' @param x A `step_novel` object.
-#' @importFrom purrr map
 #' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {
@@ -196,5 +192,3 @@ tidy.step_novel <- function(x, ...) {
   res
 }
 
-#' @importFrom utils globalVariables
-utils::globalVariables("variable")

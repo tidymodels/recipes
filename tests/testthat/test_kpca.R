@@ -45,16 +45,6 @@ test_that('correct kernel PCA values', {
 })
 
 
-test_that('deprecated arg', {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("kernlab")
-
-  expect_message(
-    rec %>%
-      step_kpca(X2, X3, X4, X5, X6, num = 2)
-  )
-})
-
 test_that('printing', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")

@@ -5,9 +5,16 @@
 \alias{tidy.step_holiday}
 \title{Holiday Feature Generator}
 \usage{
-step_holiday(recipe, ..., role = "predictor", trained = FALSE,
+step_holiday(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-  columns = NULL, skip = FALSE, id = rand_id("holiday"))
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("holiday")
+)
 
 \method{tidy}{step_holiday}(x, ...)
 }

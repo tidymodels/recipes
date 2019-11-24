@@ -1,5 +1,4 @@
 
-#' @importFrom Matrix Matrix
 convert_matrix <- function(x, sparse = TRUE) {
   is_num <- vapply(x, is.numeric, logical(1))
 

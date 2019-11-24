@@ -32,9 +32,6 @@
 #' @param res The [stats::prcomp.default()] object is
 #'  stored here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param num The number of components to retain (this will be
-#'  deprecated in factor of `num_comp` in version 0.1.5). `num_comp`
-#'  will override this option.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below
 #' @return An updated version of `recipe` with the new step
@@ -111,17 +108,16 @@ step_pca <- function(recipe,
                      threshold = NA,
                      options = list(),
                      res = NULL,
-                     num = NULL,
                      prefix = "PC",
                      skip = FALSE,
                      id = rand_id("pca")) {
-  if (!is.na(threshold) && (threshold > 1 | threshold <= 0))
-    stop("`threshold` should be on (0, 1].", call. = FALSE)
-  if (!is.null(num))
-    message("The argument `num` is deprecated in factor of `num_comp`. ",
-            "`num` will be removed in next version.", call. = FALSE)
-  if (is.null(num_comp) & !is.null(num))
-    num_comp <- num
+
+  if (!is_tune(threshold) & !is_varying(threshold)) {
+    if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
+      stop("`threshold` should be on (0, 1].", call. = FALSE)
+    }
+  }
+
   add_step(
     recipe,
     step_pca_new(
@@ -132,7 +128,6 @@ step_pca <- function(recipe,
       threshold = threshold,
       options = options,
       res = res,
-      num = num,
       prefix = prefix,
       skip = skip,
       id = id
@@ -141,7 +136,7 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <-
-  function(terms, role, trained, num_comp, threshold, options, res, num,
+  function(terms, role, trained, num_comp, threshold, options, res,
            prefix, skip, id) {
     step(
       subclass = "pca",
@@ -152,15 +147,12 @@ step_pca_new <-
       threshold = threshold,
       options = options,
       res = res,
-      num = num,
       prefix = prefix,
       skip = skip,
       id = id
     )
   }
 
-#' @importFrom stats prcomp
-#' @importFrom rlang expr
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -207,14 +199,12 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     options = x$options,
     res = prc_obj,
-    num = x$num_comp,
     prefix = x$prefix,
     skip = x$skip,
     id = x$id
   )
 }
 
-#' @importFrom tibble as_tibble
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
   if (!all(is.na(object$res$rotation))) {
@@ -241,7 +231,6 @@ print.step_pca <-
     invisible(x)
   }
 
-#' @importFrom utils stack
 #' @rdname step_pca
 #' @param x A `step_pca` object.
 #' @export
@@ -268,4 +257,18 @@ tidy.step_pca <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_pca <- function(x, ...) {
+  tibble::tibble(
+    name = "num_comp",
+    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1, 4))),
+    source = "recipe",
+    component = "step_pca",
+    component_id = x$id
+  )
 }

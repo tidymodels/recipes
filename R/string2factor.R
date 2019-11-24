@@ -62,10 +62,14 @@ step_string2factor <-
            ordered = FALSE,
            skip = FALSE,
            id = rand_id("string2factor")) {
-    if(!is.logical(ordered) || length(ordered) != 1)
-      stop("`ordered` should be a single logical variable")
-    if((!is.null(levels) & !is.character(levels)) | is.list(levels))
+    if (!is_tune(ordered) & !is_varying(ordered)) {
+      if (!is.logical(ordered) || length(ordered) != 1) {
+        stop("`ordered` should be a single logical variable")
+      }
+    }
+    if ((!is.null(levels) & !is.character(levels)) | is.list(levels)) {
       stop("`levels` should be NULL or a single character vector")
+    }
 
     add_step(
       recipe,
@@ -139,7 +143,6 @@ make_factor <- function(x, lvl, ord) {
   factor(x, levels = lvl, ordered = ord)
 }
 
-#' @importFrom purrr map2_df map_df
 #' @export
 bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)

@@ -11,6 +11,8 @@
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
+#' @param freq_cut,unique_cut Numeric parameters for the filtering process. See
+#'  the Details section below.
 #' @param options A list of options for the filter (see Details
 #'  below).
 #' @param removals A character string that contains the names of
@@ -80,16 +82,34 @@ step_nzv <-
            ...,
            role = NA,
            trained = FALSE,
+           freq_cut = 95 / 5,
+           unique_cut = 10,
            options = list(freq_cut = 95 / 5, unique_cut = 10),
            removals = NULL,
            skip = FALSE,
            id = rand_id("nzv")) {
+
+    exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
+    if (!isTRUE(all.equal(exp_list, options))) {
+      freq_cut <- options$freq_cut
+      unique_cut <- options$unique_cut
+      message(
+        paste(
+          "The argument `options` is deprecated in favor of `freq_cut`",
+          "and `unique_cut`. options` will be removed in next version."
+        )
+      )
+    }
+
+
     add_step(
       recipe,
       step_nzv_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
+        freq_cut = freq_cut,
+        unique_cut = unique_cut,
         options = options,
         removals = removals,
         skip = skip,
@@ -99,12 +119,14 @@ step_nzv <-
   }
 
 step_nzv_new <-
-  function(terms, role, trained, options, removals, skip, id) {
+  function(terms, role, trained, freq_cut, unique_cut, options, removals, skip, id) {
     step(
       subclass = "nzv",
       terms = terms,
       role = role,
       trained = trained,
+      freq_cut = freq_cut,
+      unique_cut = unique_cut,
       options = options,
       removals = removals,
       skip = skip,
@@ -117,14 +139,16 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   filter <- nzv(
     x = training[, col_names],
-    freq_cut = x$options$freq_cut,
-    unique_cut = x$options$unique_cut
+    freq_cut = x$freq_cut,
+    unique_cut = x$unique_cut
   )
 
   step_nzv_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    freq_cut = x$freq_cut,
+    unique_cut = x$unique_cut,
     options = x$options,
     removals = filter,
     skip = x$skip,
@@ -196,3 +220,18 @@ nzv <- function(x,
 #' @export
 tidy.step_nzv <- tidy_filter
 
+
+#' @rdname tunable.step
+#' @export
+tunable.step_nzv <- function(x, ...) {
+  tibble::tibble(
+    name = c("freq_cut", "unique_cut"),
+    call_info = list(
+      list(pkg = "dials", fun = "freq_cut"),
+      list(pkg = "dials", fun = "unique_cut")
+    ),
+    source = "recipe",
+    component = "step_nzv",
+    component_id = x$id
+  )
+}

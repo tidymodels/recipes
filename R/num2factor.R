@@ -71,8 +71,10 @@ step_num2factor <-
            ordered = FALSE,
            skip = FALSE,
            id = rand_id("num2factor")) {
-    if(!is.logical(ordered) || length(ordered) != 1)
-      stop("`ordered` should be a single logical variable")
+    if (!is_tune(ordered) & !is_varying(ordered)) {
+      if (!is.logical(ordered) || length(ordered) != 1)
+        stop("`ordered` should be a single logical variable")
+    }
 
     add_step(
       recipe,
@@ -132,7 +134,7 @@ prep.step_num2factor <- function(x, training, info = NULL, ...) {
 make_factor_num <- function (x, lvl, ord, foo)
   factor(foo(x), levels = lvl, ordered = ord)
 
-#' @importFrom purrr map2_df map_df
+
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)

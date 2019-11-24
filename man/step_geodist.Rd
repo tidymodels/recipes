@@ -5,10 +5,20 @@
 \alias{tidy.step_geodist}
 \title{Distance between two locations}
 \usage{
-step_geodist(recipe, lat = NULL, lon = NULL, role = "predictor",
-  trained = FALSE, ref_lat = NULL, ref_lon = NULL, log = FALSE,
-  name = "geo_dist", columns = NULL, skip = FALSE,
-  id = rand_id("geodist"))
+step_geodist(
+  recipe,
+  lat = NULL,
+  lon = NULL,
+  role = "predictor",
+  trained = FALSE,
+  ref_lat = NULL,
+  ref_lon = NULL,
+  log = FALSE,
+  name = "geo_dist",
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("geodist")
+)
 
 \method{tidy}{step_geodist}(x, ...)
 }

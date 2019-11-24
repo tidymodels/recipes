@@ -124,7 +124,6 @@ step_nnmf_new <-
     )
   }
 
-#' @importFrom withr with_seed
 #' @export
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
@@ -148,7 +147,10 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
       )
     }
 
-    nnm <- do.call(dimRed::embed, opts)
+    nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
+    if (inherits(nnm, "try-error")) {
+      stop("`step_nnmf` failed with error:\n", as.character(nnm), call. = FALSE)
+    }
   } else {
     nnm <- list(x_vars = col_names)
   }
@@ -217,3 +219,19 @@ tidy.step_nnmf <- function(x, ...) {
   res
 }
 
+# ------------------------------------------------------------------------------
+
+#' @rdname tunable.step
+#' @export
+tunable.step_nnmf <- function(x, ...) {
+  tibble::tibble(
+    name = c("num_comp", "num_run"),
+    call_info = list(
+      list(pkg = "dials", fun = "num_comp", range = c(1, 4)),
+      list(pkg = "dials", fun = "num_run", range = c(1, 10))
+    ),
+    source = "recipe",
+    component = "step_nnmf",
+    component_id = x$id
+  )
+}

@@ -5,10 +5,18 @@
 \alias{tidy.step_kpca}
 \title{Kernel PCA Signal Extraction}
 \usage{
-step_kpca(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 5, res = NULL, options = list(kernel = "rbfdot", kpar =
-  list(sigma = 0.2)), num = NULL, prefix = "kPC", skip = FALSE,
-  id = rand_id("kpca"))
+step_kpca(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 5,
+  res = NULL,
+  options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
+  prefix = "kPC",
+  skip = FALSE,
+  id = rand_id("kpca")
+)
 
 \method{tidy}{step_kpca}(x, ...)
 }
@@ -43,10 +51,6 @@ here once this preprocessing step has be trained by
 \code{kernel} and \code{kpar} but others can be passed in.
 \strong{Note} that the arguments \code{x} and \code{features}
 should not be passed here (or at all).}
-
-\item{num}{The number of components to retain (this will be
-deprecated in factor of \code{num_comp} in version 0.1.5). \code{num_comp}
-will override this option.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -118,8 +122,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 kpca_trans <- rec \%>\%
   step_YeoJohnson(all_predictors()) \%>\%
-  step_center(all_predictors()) \%>\%
-  step_scale(all_predictors()) \%>\%
+  step_normalize(all_predictors()) \%>\%
   step_kpca(all_predictors())
 
 if (require(dimRed) & require(kernlab)) {
@@ -131,8 +134,8 @@ if (require(dimRed) & require(kernlab)) {
   plot(kpca_te$kPC1, kpca_te$kPC2,
        xlim = rng, ylim = rng)
 
-  tidy(kpca_trans, number = 4)
-  tidy(kpca_estimates, number = 4)
+  tidy(kpca_trans, number = 3)
+  tidy(kpca_estimates, number = 3)
 }
 }
 \references{

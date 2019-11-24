@@ -155,7 +155,6 @@ step_bagimpute_new <-
   }
 
 
-#' @importFrom ipred ipredbagg
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
@@ -217,8 +216,6 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble
-#' @importFrom stats predict complete.cases
 #' @export
 bake.step_bagimpute <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
@@ -270,4 +267,19 @@ tidy.step_bagimpute <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+
+# ------------------------------------------------------------------------------
+
+#' @rdname tunable.step
+#' @export
+tunable.step_bagimpute <- function(x, ...) {
+  tibble::tibble(
+    name = "trees",
+    call_info = list(list(pkg = "dials", fun = "trees", range = c(5, 25))),
+    source = "recipe",
+    component = "step_bagimpute",
+    component_id = x$id
+  )
 }

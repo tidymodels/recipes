@@ -108,7 +108,6 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom dplyr select arrange mutate desc
 #' @export
 bake.step_lag <- function(object, new_data, ...) {
 

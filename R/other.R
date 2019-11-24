@@ -103,10 +103,14 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (threshold <= 0)
-      stop("`threshold` should be greater than zero", call. = FALSE)
-    if (threshold >= 1 && !is_integerish(threshold))
-      stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
+    if (!is_tune(threshold) & !is_varying(threshold)) {
+      if (threshold <= 0) {
+        stop("`threshold` should be greater than zero", call. = FALSE)
+      }
+      if (threshold >= 1 && !is_integerish(threshold)) {
+        stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
+      }
+    }
     add_step(
       recipe,
       step_other_new(
@@ -137,7 +141,6 @@ step_other_new <-
     )
   }
 
-#' @importFrom stats sd
 #' @export
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info, empty_fun = passover)
@@ -163,7 +166,6 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @importFrom tibble as_tibble is_tibble
 #' @export
 bake.step_other <- function(object, new_data, ...) {
   if (!is.null(object$objects)) {
@@ -250,7 +252,6 @@ keep_levels <- function(x, threshold = .1, other = "other") {
 
 #' @rdname step_other
 #' @param x A `step_other` object.
-#' @importFrom purrr map
 #' @export
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {
@@ -266,3 +267,19 @@ tidy.step_other <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+#' @rdname tunable.step
+#' @export
+tunable.step_other <- function(x, ...) {
+  tibble::tibble(
+    name = "threshold",
+    call_info = list(
+      list(pkg = "dials", fun = "threshold", range = c(0, 0.1))
+    ),
+    source = "recipe",
+    component = "step_other",
+    component_id = x$id
+  )
+}
+

@@ -1,10 +1,10 @@
-## ancillary step functions
-
-## then 9 is to keep space for "[trained]"
-#' @param x
-#' @param sep
-#' @param width
-#' @return
+#' Helpers for printing step functions
+#'
+#' @param x A vector of objects.
+#' @param sep A character string for separating values.
+#' @param width An integer for when to split the output over lines.
+#' @return A character string
+#' @keywords internal
 #' @export
 format_ch_vec <-
   function(x,
@@ -24,12 +24,10 @@ format_ch_vec <-
     paste0(x, collapse = sep)
   }
 
-#' @param x
-#' @param width
-#' @return
-#### Unclear on if adding this @importFrom is the right call. rlang package is
-#### imported, but other rlang functions are also explicitly imported elsewhere.
-#' @importFrom rlang get_expr
+
+
+#' @keywords internal
+#' @rdname format_ch_vec
 #' @export
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~

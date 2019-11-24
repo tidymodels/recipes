@@ -5,9 +5,17 @@
 \alias{tidy.step_bin2factor}
 \title{Create a Factors from A Dummy Variable}
 \usage{
-step_bin2factor(recipe, ..., role = NA, trained = FALSE,
-  levels = c("yes", "no"), ref_first = TRUE, columns = NULL,
-  skip = FALSE, id = rand_id("bin2factor"))
+step_bin2factor(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  levels = c("yes", "no"),
+  ref_first = TRUE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("bin2factor")
+)
 
 \method{tidy}{step_bin2factor}(x, ...)
 }

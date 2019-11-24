@@ -118,3 +118,34 @@ test_that('`seed` produces identical sampling', {
   expect_equal(petal_width_1, petal_width_2)
   expect_false(identical(petal_width_1, petal_width_3))
 })
+
+
+test_that('ratio deprecation', {
+
+  expect_message(
+    new_rec <-
+      rec %>%
+      step_upsample(tidyselect::matches("Species$"), ratio = 2),
+    "argument is now deprecated"
+  )
+  expect_equal(new_rec$steps[[1]]$over_ratio, 2)
+})
+
+
+
+test_that('tunable', {
+  rec <-
+    recipe(~ ., data = iris) %>%
+    step_upsample(all_predictors())
+  rec_param <- tunable.step_upsample(rec$steps[[1]])
+  expect_equal(rec_param$name, c("over_ratio"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c('name', 'call_info', 'source', 'component', 'component_id')
+  )
+})
+
+
