@@ -11,6 +11,7 @@ step_scale(
   role = NA,
   trained = FALSE,
   sds = NULL,
+  factor = 1,
   na_rm = TRUE,
   skip = FALSE,
   id = rand_id("scale")
@@ -33,8 +34,14 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sds}{A named numeric vector of standard deviations This
+\item{sds}{A named numeric vector of standard deviations. This
 is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{factor}{A numeric value of either 1 or 2 that scales the
+numeric inputs by one or two standard deviations. By dividing
+by two standard deviations, the coefficients attached to
+continous predictors can be interpreted the same way as with
+binary inputs. Defaults to \code{1}. More in reference below.}
 
 \item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed when computing the standard deviation.}
@@ -91,6 +98,11 @@ transformed_te
 tidy(scaled_trans, number = 1)
 tidy(scaled_obj, number = 1)
 
+}
+\references{
+Gelman, A. (2007) "Scaling regression inputs by
+dividing by two standard deviations." Unpublished. Source:
+\url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 }
 \concept{normalization_methods}
 \concept{preprocessing}
