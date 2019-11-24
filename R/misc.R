@@ -595,3 +595,20 @@ tidyr_new_interface <- function() {
   utils::packageVersion("tidyr") > "0.8.99"
 }
 
+# ------------------------------------------------------------------------------
+# For all imputation functions that substitute elements into an existing vector:
+# vctrs's cast functions would be better but we'll deal with the known cases
+# to avoid a dependency.
+
+cast <- function(x, ref) {
+  if (is.factor(ref)) {
+    x <- factor(x, levels = levels(ref), ordered = is.ordered(ref))
+  } else {
+    if (is.integer(ref) & !is.factor(ref)) {
+      x <- as.integer(round(x, 0))
+    }
+  }
+  x
+}
+
+

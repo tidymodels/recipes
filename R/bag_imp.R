@@ -1,63 +1,54 @@
 #' Imputation via Bagged Trees
 #'
-#'   `step_bagimpute` creates a *specification* of a
-#'  recipe step that will create bagged tree models to impute
-#'  missing data.
+#' `step_bagimpute` creates a *specification* of a recipe step that will
+#'  create bagged tree models to impute missing data.
+
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose variables.
-#'  For `step_bagimpute`, this indicates the variables to be
-#'  imputed. When used with `imp_vars`, the dots indicates
-#'  which variables are used to predict the missing data in each
-#'  variable. See [selections()] for more details. For the
+#' @param ... One or more selector functions to choose variables. For
+#'  `step_bagimpute`, this indicates the variables to be imputed. When used with
+#'  `imp_vars`, the dots indicates which variables are used to predict the
+#'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param impute_with A call to `imp_vars` to specify which
-#'  variables are used to impute the variables that can include
-#'  specific variable names separated by commas or different
-#'  selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation
-#'  predictor, it will be removed from the latter and not used to
-#'  impute itself.
+#' @param role Not used by this step since no new variables are created.
+
+#' @param impute_with A call to `imp_vars` to specify which variables are used
+#'  to impute the variables that can include specific variable names separated
+#'  by commas or different selectors (see [selections()]). If a column is
+#'  included in both lists to be imputed and to be an imputation predictor, it
+#'  will be removed from the latter and not used to impute itself.
 #' @param trees An integer for the number bagged trees to use in each model.
-#' @param options A list of options to
-#'  [ipred::ipredbagg()]. Defaults are set for the
-#'  arguments `nbagg` and `keepX` but others can be passed
-#'  in. **Note** that the arguments `X` and `y` should
-#'  not be passed here.
-#' @param seed_val A integer used to create reproducible models.
-#'  The same seed is used across all imputation models.
-#' @param models The [ipred::ipredbagg()] objects are
-#'  stored here once this bagged trees have be trained by
-#'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the bagged
-#'  tree object).
+#' @param options A list of options to [ipred::ipredbagg()]. Defaults are set
+#'  for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
+#'  that the arguments `X` and `y` should not be passed here.
+#' @param seed_val A integer used to create reproducible models. The same seed
+#'  is used across all imputation models.
+#' @param models The [ipred::ipredbagg()] objects are stored here once this
+#'  bagged trees have be trained by [prep.recipe()].
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  columns `terms` (the selectors or variables selected) and `model` (the
+#'  bagged tree object).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details For each variables requiring imputation, a bagged tree
-#'  is created where the outcome is the variable of interest and the
-#'  predictors are any other variables listed in the
-#'  `impute_with` formula. One advantage to the bagged tree is
-#'  that is can accept predictors that have missing values
-#'  themselves. This imputation method can be used when the variable
-#'  of interest (and predictors) are numeric or categorical. Imputed
-#'  categorical variables will remain categorical.
+#' @details For each variables requiring imputation, a bagged tree is created
+#'  where the outcome is the variable of interest and the predictors are any
+#'  other variables listed in the `impute_with` formula. One advantage to the
+#'  bagged tree is that is can accept predictors that have missing values
+#'  themselves. This imputation method can be used when the variable of interest
+#'  (and predictors) are numeric or categorical. Imputed categorical variables
+#'  will remain categorical. Also, integers will be imputed to integer too.
 #'
-#' Note that if a variable that is to be imputed is also in
-#'  `impute_with`, this variable will be ignored.
+#'   Note that if a variable that is to be imputed is also in `impute_with`,
+#'  this variable will be ignored.
 #'
-#' It is possible that missing values will still occur after
-#'  imputation if a large majority (or all) of the imputing
-#'  variables are also missing.
-#' @references Kuhn, M. and Johnson, K. (2013). *Applied
-#'  Predictive Modeling*. Springer Verlag.
+#'   It is possible that missing values will still occur after imputation if a
+#'  large majority (or all) of the imputing variables are also missing.
+#' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
+#'  Springer Verlag.
 #' @examples
 #' data("credit_data")
 #'
@@ -227,13 +218,14 @@ bake.step_bagimpute <- function(object, new_data, ...) {
     imp_var <- names(object$models)[i]
     missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
-      preds <- object$models[[i]]$..imp_vars
+      preds <- object$models[[imp_var]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(pred_data))) {
         warning("All predictors are missing; cannot impute", call. = FALSE)
       } else {
-        pred_vals <- predict(object$models[[i]], pred_data)
+        pred_vals <- predict(object$models[[imp_var]], pred_data)
+        pred_vals <- cast(pred_vals, new_data[[imp_var]])
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }

@@ -21,19 +21,18 @@ step_medianimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+\item{...}{One or more selector functions to choose which variables are
+affected by the step. See \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{medians}{A named numeric vector of medians. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{medians}{A named numeric vector of medians. This is \code{NULL} until
+computed by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers,
+the median will be converted to an integer to maintain the same a data type.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -47,22 +46,20 @@ the computations for subsequent operations}
 \item{x}{A \code{step_medianimpute} object.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{model} (the median
-value).
+An updated version of \code{recipe} with the new step added to the
+sequence of existing steps (if any). For the \code{tidy} method, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model} (the
+median value).
 }
 \description{
-\code{step_medianimpute} creates a \emph{specification} of a
-recipe step that will substitute missing values of numeric
-variables by the training set median of those variables.
+\code{step_medianimpute} creates a \emph{specification} of a recipe step that will
+substitute missing values of numeric variables by the training set median of
+those variables.
 }
 \details{
-\code{step_medianimpute} estimates the variable medians
-from the data used in the \code{training} argument of
-\code{prep.recipe}. \code{bake.recipe} then applies the new
-values to new data sets using these medians
+\code{step_medianimpute} estimates the variable medians from the data
+used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies
+the new values to new data sets using these medians
 }
 \examples{
 data("credit_data")
