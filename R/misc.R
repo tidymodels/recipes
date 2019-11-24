@@ -444,7 +444,7 @@ is_trained <- function(x)
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
-  map_chr(x, to_character)
+  unname(map_chr(x, to_character))
 }
 
 to_character <- function(x) {
