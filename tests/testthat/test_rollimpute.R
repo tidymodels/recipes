@@ -23,7 +23,7 @@ test_that('imputation values with 7-pt median', {
   seven_pt <- recipe(~ . , data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_rollimpute(all_predictors(), window = 7, id = "") %>%
-    prep(training = example_data, retain = TRUE)
+    prep(training = example_data)
 
   seven_pt_exp <- example_data
   seven_pt_exp$x1[1] <- median(seven_pt_exp$x1[1:7], na.rm = TRUE)
@@ -52,7 +52,7 @@ test_that('imputation values with 3-pt mean', {
   three_pt <- recipe(~ . , data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_rollimpute(all_predictors(), window = 3, id = "") %>%
-    prep(training = example_data, retain = TRUE)
+    prep(training = example_data)
 
 
   three_pt_exp <- example_data
@@ -82,14 +82,14 @@ test_that('bad args', {
   expect_error(
     recipe( ~ . , data = example_data) %>%
       step_rollimpute(all_predictors(), window = 3) %>%
-      prep(training = example_data, retain = TRUE)
+      prep(training = example_data)
   )
 
   expect_error(
     recipe( ~ . , data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_rollimpute(all_predictors(), window = 4) %>%
-      prep(training = example_data, retain = TRUE)
+      prep(training = example_data)
   )
 
   example_data$x4 <- 1:12
@@ -97,7 +97,7 @@ test_that('bad args', {
     recipe( ~ . , data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_rollimpute(all_predictors(), window = 3) %>%
-      prep(training = example_data, retain = TRUE)
+      prep(training = example_data)
   )
 })
 

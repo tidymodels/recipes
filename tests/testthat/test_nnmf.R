@@ -68,7 +68,7 @@ test_that('Correct values', {
     step_nnmf(all_predictors(), seed = 2432, num_run = 3)
   expect_output(print(rec))
 
-  expect_output(rec <- prep(rec, training = iris, verbose = TRUE, retain = TRUE))
+  expect_output(rec <- prep(rec, training = iris, verbose = TRUE))
 
   rec_res <- juice(rec, all_predictors(), composition = "matrix")[1:7,]
 

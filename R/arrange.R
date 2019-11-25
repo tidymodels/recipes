@@ -28,7 +28,7 @@
 #' rec <- recipe( ~ ., data = iris) %>%
 #'   step_arrange(desc(Sepal.Length), 1/Petal.Length)
 #'
-#' prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+#' prepped <- prep(rec, training = iris %>% slice(1:75))
 #' tidy(prepped, number = 1)
 #'
 #' library(dplyr)

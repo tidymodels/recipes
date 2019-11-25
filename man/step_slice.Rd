@@ -65,7 +65,7 @@ be portable between sessions). See the examples.
 rec <- recipe( ~ ., data = iris) \%>\%
   step_slice(1:3)
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 tidy(prepped, number = 1)
 
 library(dplyr)

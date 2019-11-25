@@ -110,7 +110,7 @@ pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
   step_normalize(all_outcomes(), skip = TRUE) \%>\%
   step_pls(all_predictors(), outcome = "HHV")
 
-pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
+pls_rec <- prep(pls_rec, training = biomass_tr)
 
 pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 

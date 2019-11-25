@@ -266,7 +266,7 @@ abort_selection <- exiting(function(cnd) {
 #' # Centering on all predictors except carbon
 #' rec %>%
 #'   step_center(all_predictors(), -carbon) %>%
-#'   prep(training = biomass, retain = TRUE) %>%
+#'   prep(training = biomass) %>%
 #'   juice()
 #'
 #' @export

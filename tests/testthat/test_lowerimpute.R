@@ -12,7 +12,7 @@ biomass$has_neg <- runif(nrow(biomass), min = -2)
 
 rec <- recipe(HHV ~ carbon + hydrogen + has_neg,
               data = biomass)
-  
+
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
@@ -20,26 +20,26 @@ biomass_te <- biomass[biomass$dataset == "Testing", ]
 test_that('basic usage', {
   rec1 <- rec %>%
     step_lowerimpute(carbon, hydrogen, id = "")
- 
+
   untrained <- tibble(
     terms = c("carbon", "hydrogen"),
     value = rep(NA_real_, 2),
     id = ""
   )
-  
+
   expect_equal(untrained, tidy(rec1, number = 1))
 
-  rec1 <- prep(rec1, biomass_tr, retain = TRUE)
+  rec1 <- prep(rec1, biomass_tr)
 
   trained <- tibble(
     terms = c("carbon", "hydrogen"),
     value = c(40, 5),
     id = ""
-  )  
-  
+  )
+
   expect_equal(trained, tidy(rec1, number = 1))
-  
-  expect_equal(c(carbon = 40, hydrogen = 5), 
+
+  expect_equal(c(carbon = 40, hydrogen = 5),
                rec1$steps[[1]]$threshold)
 
   processed <- juice(rec1)
@@ -65,7 +65,7 @@ test_that('bad data', {
 test_that('printing', {
   rec2 <- rec %>%
     step_lowerimpute(carbon, hydrogen)
-  
+
   expect_output(print(rec))
   expect_output(prep(rec2, training = biomass_tr, verbose = TRUE))
 })

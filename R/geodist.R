@@ -37,7 +37,7 @@
 #'   update_role(name, new_role = "location") %>%
 #'   step_geodist(lat = latitude, lon = longitude, log = FALSE,
 #'                ref_lat = 38.8986312, ref_lon = -77.0062457) %>%
-#'   prep(training = Smithsonian, retain = TRUE)
+#'   prep(training = Smithsonian)
 #'
 #' juice(near_station) %>%
 #'   arrange(geo_dist)

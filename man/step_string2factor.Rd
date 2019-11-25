@@ -80,8 +80,7 @@ make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
                     training = okc,
-                    strings_as_factors = FALSE,
-                    retain = TRUE)
+                    strings_as_factors = FALSE)
 
 # note that `diet` is a factor
 juice(make_factor) \%>\% head

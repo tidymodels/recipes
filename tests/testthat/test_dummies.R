@@ -128,7 +128,7 @@ test_that('tests for NA values in factor', {
   rec <- recipe(~ diet, data = okc_missing)
   factors <- rec %>% step_dummy(diet)
   expect_warning(
-    factors <- prep(factors, training = okc_missing, retain = TRUE)
+    factors <- prep(factors, training = okc_missing)
   )
 
   factors_data_0 <- juice(factors)
@@ -150,7 +150,7 @@ test_that('tests for NA values in ordered factor', {
   rec <- recipe(~ diet, data = okc_ordered)
   factors <- rec %>% step_dummy(diet)
   expect_warning(
-    factors <- prep(factors, training = okc_ordered, retain = TRUE)
+    factors <- prep(factors, training = okc_ordered)
   )
 
   factors_data_0 <- juice(factors)
@@ -191,7 +191,7 @@ test_that('new levels', {
   rec <- recipe(y ~ x1, data = training) %>%
     step_dummy(x1)
   expect_silent(
-    rec <- prep(rec, training = training, retain = TRUE)
+    rec <- prep(rec, training = training)
   )
   expect_warning(
     bake(rec, new_data = testing)

@@ -44,7 +44,7 @@ The default approach is to create dummy variables using the "reference cell" par
 ref_cell <- 
   iris_rec %>% 
   step_dummy(Species) %>%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 summary(ref_cell)
 
 # Get a row for each factor level
@@ -76,7 +76,7 @@ options(contrasts = go_helmert)
 helmert <- 
   iris_rec %>% 
   step_dummy(Species) %>%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 summary(helmert)
 
 juice(helmert, original, starts_with("Species")) %>% distinct()
@@ -99,7 +99,7 @@ Creating interactions with recipes requires the use of a model formula, such as
 iris_int <- 
   iris_rec %>%
   step_interact( ~ Sepal.Width:Sepal.Length) %>%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 summary(iris_int)
 ```
 
@@ -135,7 +135,7 @@ iris_int <-
   iris_rec %>% 
   step_dummy(Species) %>%
   step_interact( ~ starts_with("Species"):Sepal.Length) %>%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 summary(iris_int)
 ```
 
@@ -167,7 +167,7 @@ Would it work if I didn't convert species to a factor and used the interactions 
 iris_int <- 
   iris_rec %>% 
   step_interact( ~ Species:Sepal.Length) %>%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 summary(iris_int)
 ```
 
@@ -185,7 +185,7 @@ There are models (e.g. `glmnet` and others) that can avoid this issue so you mig
 ```{r one-hot}
 iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
-  prep(training = iris, retain = TRUE) %>%
+  prep(training = iris) %>%
   juice(original, starts_with("Species")) %>%
   distinct()
 ```
@@ -200,7 +200,7 @@ This will give you the full set of indicators and, when you use the typical cont
 hot_reference <- 
   iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
-  prep(training = iris, retain = TRUE) %>%
+  prep(training = iris) %>%
   juice(original, starts_with("Species")) %>%
   distinct()
 
@@ -212,7 +212,7 @@ options(contrasts = go_helmert)
 hot_helmert <- 
   iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
-  prep(training = iris, retain = TRUE) %>%
+  prep(training = iris) %>%
   juice(original, starts_with("Species")) %>%
   distinct()
 

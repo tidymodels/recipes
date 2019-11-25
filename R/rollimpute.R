@@ -61,7 +61,7 @@
 #' seven_pt <- recipe(~ . , data = example_data) %>%
 #'   update_role(day, new_role = "time_index") %>%
 #'   step_rollimpute(all_predictors(), window = 7) %>%
-#'   prep(training = example_data, retain = TRUE)
+#'   prep(training = example_data)
 #'
 #' juice(seven_pt)
 

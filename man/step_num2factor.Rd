@@ -80,8 +80,7 @@ rec <- recipe(~ ., data = iris2)
 
 make_factor <- rec \%>\% step_num2factor(Species)
 make_factor <- prep(make_factor,
-                    training = iris2,
-                    retain = TRUE)
+                    training = iris2)
 
 # note that `diet` is a factor
 juice(make_factor) \%>\% head

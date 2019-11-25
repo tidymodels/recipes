@@ -9,7 +9,7 @@ test_that('simple skip', {
     step_dummy(Species) %>%
     step_center(all_predictors())
 
-  prepped_1 <- prep(rec_1, training = iris, retain = TRUE)
+  prepped_1 <- prep(rec_1, training = iris)
 
   juiced_1 <- juice(prepped_1)
   baked_1  <- bake(prepped_1, new_data = iris)
@@ -62,7 +62,7 @@ test_that('skips for steps that remove columns (#239)', {
     step_interact(terms = ~ Sepal.Length:Sepal.Width) %>%
     step_rm(Sepal.Length, skip = TRUE)
 
-  prep_simple <- prep(simple_ex, iris, retain=TRUE)
+  prep_simple <- prep(simple_ex, iris)
   simple_juiced <- juice(prep_simple)
   simple_baked <- bake(prep_simple, new_data = iris)
   expect_equal(
@@ -82,7 +82,7 @@ test_that('skips for steps that remove columns (#239)', {
     step_rm(Sepal.Length) %>%
     step_pca(contains("Sepal")) %>%
     step_rm(PC1, skip = TRUE) %>%
-    prep(retain = TRUE)
+    prep()
 
   complex_juiced <- juice(complex_ex)
   complex_baked <- bake(complex_ex, new_data = iris)
@@ -106,7 +106,7 @@ test_that('skips for steps that remove columns (#239)', {
   corr_example <-
     recipe(Species ~ ., data = iris_dups) %>%
     step_corr(all_predictors(), skip = TRUE) %>%
-    prep(retain = TRUE)
+    prep()
 
   corr_juiced <- juice(corr_example)
   corr_baked <- bake(corr_example, new_data = iris_dups)
