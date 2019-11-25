@@ -104,7 +104,7 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  if (x$factor != 1 | x$factor != 2) {
+  if (x$factor != 1 & x$factor != 2) {
     warning("Scaling `factor` should take either a value of 1 or 2", call. = FALSE)
   }
 
@@ -129,8 +129,7 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 bake.step_scale <- function(object, new_data, ...) {
   res <-
     sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
-  if (is.matrix(res) && ncol(res) == 1)
-    res <- res[, 1]
+  res <- tibble::as_tibble(res)
   new_data[, names(object$sds)] <- res
   as_tibble(new_data)
 }

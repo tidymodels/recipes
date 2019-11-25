@@ -274,3 +274,20 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+
+test_that('issue #415 -  strings to factor conversion', {
+  trans_recipe <-
+    recipe(Species ~ ., data = iris)
+
+  prepped <- prep(trans_recipe, iris)
+
+  iris_no_outcome <- iris
+  iris_no_outcome["Species"] <- NULL
+
+  expect_error(
+    res <- bake(prepped, iris_no_outcome),
+    regex = NA
+  )
+  expect_equal(names(res), names(iris[, 1:4]))
+})

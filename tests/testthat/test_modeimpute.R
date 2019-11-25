@@ -42,8 +42,9 @@ test_that('simple modes', {
            model = modes,
            id = "")
 
-  expect_equal(tidy(impute_rec, 1), imp_tibble_un)
-  expect_equal(tidy(imputed, 1), imp_tibble_tr)
+  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
+  expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+
 })
 
 

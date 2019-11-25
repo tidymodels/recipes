@@ -1,62 +1,53 @@
 #' Imputation via K-Nearest Neighbors
 #'
-#' `step_knnimpute` creates a *specification* of a
-#'  recipe step that will impute missing data using nearest
-#'  neighbors.
+#' `step_knnimpute` creates a *specification* of a recipe step that will
+#'  impute missing data using nearest neighbors.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose variables.
-#'  For `step_knnimpute`, this indicates the variables to be
-#'  imputed. When used with `imp_vars`, the dots indicates
-#'  which variables are used to predict the missing data in each
-#'  variable. See [selections()] for more details. For the
+#' @param ... One or more selector functions to choose variables. For
+#'  `step_knnimpute`, this indicates the variables to be imputed. When used with
+#'  `imp_vars`, the dots indicates which variables are used to predict the
+#'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param impute_with A call to `imp_vars` to specify which
-#'  variables are used to impute the variables that can include
-#'  specific variable names separated by commas or different
-#'  selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation
-#'  predictor, it will be removed from the latter and not used to
-#'  impute itself.
+#' @param role Not used by this step since no new variables are created.
+#' @param impute_with A call to `imp_vars` to specify which variables are used
+#'  to impute the variables that can include specific variable names separated
+#'  by commas or different selectors (see [selections()]). If a column is
+#'  included in both lists to be imputed and to be an imputation predictor, it
+#'  will be removed from the latter and not used to impute itself.
 #' @param neighbors The number of neighbors.
 #' @param options A named list of options to pass to [gower::gower_topn()].
 #'  Available options are currently `nthread` and `eps`.
-#' @param ref_data A tibble of data that will reflect the data
-#'  preprocessing done up to the point of this imputation step. This
-#'  is `NULL` until the step is trained by
-#'  [prep.recipe()].
-#' @param columns The column names that will be imputed and used
-#'  for imputation. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables for imputation), `predictors`
+#' @param ref_data A tibble of data that will reflect the data preprocessing
+#'  done up to the point of this imputation step. This is `NULL` until the step
+#'  is trained by [prep.recipe()].
+#' @param columns The column names that will be imputed and used for
+#'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  columns `terms` (the selectors or variables for imputation), `predictors`
 #'  (those variables used to impute), and `neighbors`.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details The step uses the training set to impute any other
-#'  data sets. The only distance function available is Gower's
-#'  distance which can be used for mixtures of nominal and numeric
-#'  data.
+#' @details The step uses the training set to impute any other data sets. The
+#'  only distance function available is Gower's distance which can be used for
+#'  mixtures of nominal and numeric data.
 #'
-#'   Once the nearest neighbors are determined, the mode is used to
-#'  predictor nominal variables and the mean is used for numeric
-#'  data.
+#' Once the nearest neighbors are determined, the mode is used to predictor
+#'  nominal variables and the mean is used for numeric data. Note that, if the
+#'  underlying data are integer, the mean will be converted to an integer too.
 #'
-#'   Note that if a variable that is to be imputed is also in
-#'  `impute_with`, this variable will be ignored.
+#' Note that if a variable that is to be imputed is also in `impute_with`,
+#'  this variable will be ignored.
 #'
-#'   It is possible that missing values will still occur after
-#'  imputation if a large majority (or all) of the imputing
-#'  variables are also missing.
-#' @references Gower, C. (1971) "A general coefficient of
-#'  similarity and some of its properties," Biometrics, 857-871.
+#' It is possible that missing values will still occur after imputation if a
+#'  large majority (or all) of the imputing variables are also missing.
+#'
+#' @references Gower, C. (1971) "A general coefficient of similarity and some
+#'  of its properties," Biometrics, 857-871.
 #' @examples
 #' library(recipes)
 #' data(biomass)
@@ -232,6 +223,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
                            object$options)
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
+        pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }
