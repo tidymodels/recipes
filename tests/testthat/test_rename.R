@@ -20,7 +20,7 @@ test_that('basic usage', {
       plum = Sepal.Length
     )
 
-  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+  prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -50,7 +50,7 @@ test_that('no input', {
   no_inputs <-
     iris_rec %>%
     step_rename() %>%
-    prep(training = iris, retain = TRUE) %>%
+    prep(training = iris) %>%
     juice(composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
@@ -72,7 +72,7 @@ test_that('basic usage', {
     iris_rec %>%
     step_rename_at(contains("Length"), fn = ~ tolower(.))
 
-  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+  prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -97,7 +97,7 @@ test_that('mulitple functions', {
     iris_rec %>%
     step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
 
-  expect_error(prep(rec, training = iris %>% slice(1:75), retain = TRUE))
+  expect_error(prep(rec, training = iris %>% slice(1:75)))
 
 })
 
@@ -106,7 +106,7 @@ test_that('no input', {
   expect_error(
     iris_rec %>%
       step_rename_at() %>%
-      prep(training = iris, retain = TRUE) %>%
+      prep(training = iris) %>%
       juice(composition = "data.frame")
   )
 })

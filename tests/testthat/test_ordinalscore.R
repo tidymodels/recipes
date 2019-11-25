@@ -27,7 +27,7 @@ score <- function(x) as.numeric(x)^2
 test_that('linear scores', {
   rec1 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
-  rec1 <- prep(rec1, training = ex_dat, retain = TRUE,
+  rec1 <- prep(rec1, training = ex_dat,
                strings_as_factors = FALSE, verbose = FALSE)
   rec1_scores <- bake(rec1, new_data = ex_dat)
   rec1_scores_NA <- bake(rec1, new_data = ex_miss)
@@ -44,7 +44,7 @@ test_that('nonlinear scores', {
   rec2 <- recipe(~ ., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"),
                       convert = score)
-  rec2 <- prep(rec2, training = ex_dat, retain = TRUE,
+  rec2 <- prep(rec2, training = ex_dat,
                strings_as_factors = FALSE, verbose = FALSE)
   rec2_scores <- bake(rec2, new_data = ex_dat)
   rec2_scores_NA <- bake(rec2, new_data = ex_miss)

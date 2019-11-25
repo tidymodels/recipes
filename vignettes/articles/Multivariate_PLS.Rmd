@@ -76,7 +76,7 @@ set.seed(57343)
 folds <- vfold_cv(tecator, repeats = 10)
 
 folds <- folds %>%
-  mutate(recipes = map(splits, prepper, recipe = norm_rec, retain = TRUE))
+  mutate(recipes = map(splits, prepper, recipe = norm_rec))
 ```
 
 The complicated part here is:

@@ -105,7 +105,7 @@ data(okc)
 # Setup a grid across date but keep the other values fixed
 recipe(~ diet + height + date, data = okc) \%>\%
   step_profile(-date, profile = vars(date)) \%>\%
-  prep(training = okc, retain = TRUE) \%>\%
+  prep(training = okc) \%>\%
   juice
 
 
@@ -120,7 +120,7 @@ lin_mod <- lm(mpg ~ poly(disp, 2) + cyl + hp, data = mtcars)
 
 disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(-disp, profile = vars(disp)) \%>\%
-  prep(training = mtcars, retain = TRUE)
+  prep(training = mtcars)
 
 disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(
@@ -128,7 +128,7 @@ disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
     profile = vars(disp),
     grid = list(pctl = FALSE, len = 100)
   ) \%>\%
-  prep(training = mtcars, retain = TRUE)
+  prep(training = mtcars)
 
 grid_data <- juice(disp_grid)
 grid_data <- grid_data \%>\%

@@ -99,7 +99,7 @@ okc_te$diet[2] <- NA
 
 rec <- recipe(Class ~ ., data = okc_tr) \%>\%
   step_integer(all_predictors()) \%>\%
-  prep(training = okc_tr, retain = TRUE)
+  prep(training = okc_tr)
 
 bake(rec, okc_te, all_predictors())
 tidy(rec, number = 1)

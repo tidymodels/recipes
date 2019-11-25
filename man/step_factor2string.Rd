@@ -73,8 +73,7 @@ rec <- rec \%>\%
 
 factor_test <- rec \%>\%
   prep(training = okc,
-       strings_as_factors = FALSE,
-       retain = TRUE) \%>\%
+       strings_as_factors = FALSE) \%>\%
   juice
 # diet is a
 class(factor_test$diet)
@@ -84,8 +83,7 @@ rec <- rec \%>\%
 
 string_test <- rec \%>\%
   prep(training = okc,
-       strings_as_factors = FALSE,
-       retain = TRUE) \%>\%
+       strings_as_factors = FALSE) \%>\%
   juice
 # diet is a
 class(string_test$diet)

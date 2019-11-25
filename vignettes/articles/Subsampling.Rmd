@@ -76,7 +76,7 @@ An additional column is added to the data that contains the trained recipes for 
 library(purrr)
 cv_folds <- 
   cv_folds %>%
-  mutate(recipes = map(splits, prepper, recipe = imbal_rec, retain = TRUE))
+  mutate(recipes = map(splits, prepper, recipe = imbal_rec))
 cv_folds$recipes[[1]]
 ```
 

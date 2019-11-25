@@ -68,7 +68,7 @@ between sessions). See the examples.
 rec <- recipe( ~ ., data = iris) \%>\%
   step_filter(Sepal.Length > 4.5, Species == "setosa")
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 
 library(dplyr)
 

@@ -27,7 +27,7 @@ te_dat$y[1] <- NA
 test_that('basic functionality', {
   rec <- recipe( ~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors())
-  rec_trained <- prep(rec, traning = tr_dat, retain = TRUE)
+  rec_trained <- prep(rec, traning = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
@@ -47,7 +47,7 @@ test_that('basic functionality', {
 test_that('zero-based', {
   rec <- recipe( ~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), zero_based = TRUE)
-  rec_trained <- prep(rec, traning = tr_dat, retain = TRUE)
+  rec_trained <- prep(rec, traning = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
@@ -66,7 +66,7 @@ test_that('zero-based', {
 test_that('integers', {
   rec <- recipe( ~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), strict = TRUE)
-  rec_trained <- prep(rec, traning = tr_dat, retain = TRUE)
+  rec_trained <- prep(rec, traning = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())

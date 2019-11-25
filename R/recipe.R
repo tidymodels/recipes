@@ -708,7 +708,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'   step_normalize(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #'
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
+#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 #'
 #' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
 #' og_values <- juice(sp_signed_trained, all_predictors())

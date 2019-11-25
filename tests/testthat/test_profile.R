@@ -14,7 +14,7 @@ is_unq <- function(x) length(unique(x)) == 1
 test_that('numeric profile', {
   num_rec <- okc_rec %>%
     step_profile(-age, profile = vars(age)) %>%
-    prep(okc, retain = TRUE) %>%
+    prep(okc) %>%
     juice()
   expect_true(is_unq(num_rec$diet))
   expect_true(is_unq(num_rec$height))
@@ -28,7 +28,7 @@ test_that('numeric profile', {
 test_that('factor profile', {
   fact_rec <- okc_rec %>%
     step_profile(-diet, profile = vars(diet)) %>%
-    prep(okc, retain = TRUE) %>%
+    prep(okc) %>%
     juice()
   expect_false(is_unq(fact_rec$diet))
   expect_true(is_unq(fact_rec$height))
@@ -42,7 +42,7 @@ test_that('factor profile', {
 test_that('date profile', {
   date_rec <- okc_rec %>%
     step_profile(-date, profile = vars(date)) %>%
-    prep(okc, retain = TRUE) %>%
+    prep(okc) %>%
     juice()
   expect_true(is_unq(date_rec$diet))
   expect_true(is_unq(date_rec$height))
@@ -55,7 +55,7 @@ test_that('date profile', {
 test_that('character profile', {
   chr_rec <- okc_rec %>%
     step_profile(-location, profile = vars(location)) %>%
-    prep(okc, retain = TRUE, strings_as_factors = FALSE) %>%
+    prep(okc, strings_as_factors = FALSE) %>%
     juice()
   expect_true(is_unq(chr_rec$diet))
   expect_true(is_unq(chr_rec$height))

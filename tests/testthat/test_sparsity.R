@@ -22,7 +22,7 @@ rec <- recipe( ~ ., data = okc_tr) %>%
   step_modeimpute(all_nominal()) %>%
   step_meanimpute(all_numeric()) %>%
   step_dummy(location, diet) %>%
-  prep(training = okc_tr, retain = TRUE)
+  prep(training = okc_tr)
 
 ###################################################################
 

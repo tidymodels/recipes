@@ -17,7 +17,7 @@ test_that('basic usage', {
     iris_rec %>%
     step_arrange(desc(Sepal.Length), 1/Petal.Length)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+  prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -44,7 +44,7 @@ test_that('quasiquotation', {
     iris_rec %>%
     step_arrange(!!!sort_vars)
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75), retain = TRUE)
+  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -61,7 +61,7 @@ test_that('no input', {
   no_inputs <-
     iris_rec %>%
     step_arrange() %>%
-    prep(training = iris, retain = TRUE) %>%
+    prep(training = iris) %>%
     juice(composition = "data.frame")
   expect_equal(no_inputs, iris)
 })

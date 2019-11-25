@@ -34,7 +34,7 @@
 #'     half_length = Sepal.Length / 2
 #'   )
 #'
-#' prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+#' prepped <- prep(rec, training = iris %>% slice(1:75))
 #'
 #' library(dplyr)
 #'
@@ -70,7 +70,7 @@
 #'     bad_approach = Sepal.Width * const,
 #'     best_approach = Sepal.Width * !!const
 #'   ) %>%
-#'   prep(training = iris, retain = TRUE)
+#'   prep(training = iris)
 #'
 #' juice(qq_rec, contains("appro")) %>% slice(1:4)
 #'

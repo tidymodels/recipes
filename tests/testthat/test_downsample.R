@@ -23,7 +23,7 @@ test_that('basic usage', {
 
   expect_equivalent(untrained, tidy(rec1, number = 1))
 
-  rec1_p <- prep(rec1, training = iris2, retain = TRUE)
+  rec1_p <- prep(rec1, training = iris2)
 
   trained <- tibble(
     terms = "Species",
@@ -48,7 +48,7 @@ test_that('ratio value', {
   rec2 <- rec %>%
     step_downsample(tidyselect::matches("Species$"), under_ratio = 2)
 
-  rec2_p <- prep(rec2, training = iris2, retain = TRUE)
+  rec2_p <- prep(rec2, training = iris2)
 
   tr_xtab <- table(juice(rec2_p)$Species, useNA = "always")
   te_xtab <- table(bake(rec2_p, new_data = iris2)$Species, useNA = "always")
@@ -64,7 +64,7 @@ test_that('no skipping', {
   rec3 <- rec %>%
     step_downsample(tidyselect::matches("Species$"), skip = FALSE)
 
-  rec3_p <- prep(rec3, training = iris2, retain = TRUE)
+  rec3_p <- prep(rec3, training = iris2)
 
   tr_xtab <- table(juice(rec3_p)$Species, useNA = "always")
   te_xtab <- table(bake(rec3_p, new_data = iris2)$Species, useNA = "always")
@@ -85,12 +85,12 @@ test_that('bad data', {
   expect_error(
     rec %>%
       step_downsample(Species3) %>%
-      prep(strings_as_factors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE)
   )
   expect_error(
     rec %>%
       step_downsample(Species, Species2) %>%
-      prep(strings_as_factors = FALSE, retain = TRUE)
+      prep(strings_as_factors = FALSE)
   )
 })
 
@@ -99,7 +99,7 @@ test_that('printing', {
     step_downsample(Species)
 
   expect_output(print(rec))
-  expect_output(prep(rec4, training = iris2, retain = TRUE, verbose = TRUE))
+  expect_output(prep(rec4, training = iris2, verbose = TRUE))
 })
 
 test_that('`seed` produces identical sampling', {
@@ -107,7 +107,7 @@ test_that('`seed` produces identical sampling', {
   downsample_with_seed <- function(rec, seed = sample.int(10^5, 1)) {
     rec %>%
       step_downsample(Species, seed = seed) %>%
-      prep(training = iris2, retain = TRUE) %>%
+      prep(training = iris2) %>%
       juice() %>%
       pull(Petal.Width)
   }

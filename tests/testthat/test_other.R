@@ -167,7 +167,7 @@ test_that('novel levels', {
   novel_level <- recipe(y ~ ., data = training) %>%
     step_other(x1)
 
-  novel_level <- prep(novel_level, training = training, retain = TRUE)
+  novel_level <- prep(novel_level, training = training)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
   expect_true(all(is.na(new_results$x1[testing$x1 == "C"])))
@@ -183,7 +183,7 @@ test_that('novel levels', {
   novel_level <- recipe(y ~ ., data = training) %>%
     step_other(x1, threshold = .1)
 
-  novel_level <- prep(novel_level, training = training, retain = TRUE)
+  novel_level <- prep(novel_level, training = training)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
   expect_true(all(new_results$x1[testing$x1 == "D"] == "other"))

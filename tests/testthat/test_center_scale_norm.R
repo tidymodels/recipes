@@ -77,17 +77,17 @@ test_that('training in stages', {
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
-  at_once_trained <- prep(at_once, training = biomass, retain = TRUE)
+  at_once_trained <- prep(at_once, training = biomass)
 
   ## not train in stages
   center_first <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center")
-  center_first_trained <- prep(center_first, training = biomass, retain = TRUE)
+  center_first_trained <- prep(center_first, training = biomass)
   in_stages <- center_first_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
-  in_stages_trained <- prep(in_stages, retain = TRUE)
+  in_stages_trained <- prep(in_stages)
   in_stages_retrained <-
-    prep(in_stages, training = biomass, fresh = TRUE, retain = TRUE)
+    prep(in_stages, training = biomass, fresh = TRUE)
 
   expect_equal(at_once_trained, in_stages_trained)
   expect_equal(at_once_trained, in_stages_retrained)
