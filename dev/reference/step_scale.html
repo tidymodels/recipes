@@ -277,7 +277,8 @@ dividing by two standard deviations." Unpublished. Source:
 <span class='no'>scaled_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_scale</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 
-<span class='no'>scaled_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Scaling `factor` should take either a value of 1 or 2</span></div><div class='input'>
+<span class='no'>scaled_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>scaled_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>scaled_obj</span>, <span class='no'>biomass_te</span>)
 
 <span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV

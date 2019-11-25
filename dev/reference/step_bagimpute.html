@@ -42,9 +42,8 @@
 
 
 <meta property="og:title" content="Imputation via Bagged Trees — step_bagimpute" />
-<meta property="og:description" content="step_bagimpute creates a specification of a
-recipe step that will create bagged tree models to impute
-missing data." />
+<meta property="og:description" content="step_bagimpute creates a specification of a recipe step that will
+create bagged tree models to impute missing data." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -162,9 +161,8 @@ missing data." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_bagimpute</code> creates a <em>specification</em> of a
-recipe step that will create bagged tree models to impute
-missing data.</p>
+    <p><code>step_bagimpute</code> creates a <em>specification</em> of a recipe step that will
+create bagged tree models to impute missing data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_bagimpute</span>(
@@ -196,17 +194,15 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose variables.
-For <code>step_bagimpute</code>, this indicates the variables to be
-imputed. When used with <code>imp_vars</code>, the dots indicates
-which variables are used to predict the missing data in each
-variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
+      <td><p>One or more selector functions to choose variables. For
+<code>step_bagimpute</code>, this indicates the variables to be imputed. When used with
+<code>imp_vars</code>, the dots indicates which variables are used to predict the
+missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
+      <td><p>Not used by this step since no new variables are created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -215,13 +211,11 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>impute_with</th>
-      <td><p>A call to <code>imp_vars</code> to specify which
-variables are used to impute the variables that can include
-specific variable names separated by commas or different
-selectors (see <code><a href='selections.html'>selections()</a></code>). If a column is
-included in both lists to be imputed and to be an imputation
-predictor, it will be removed from the latter and not used to
-impute itself.</p></td>
+      <td><p>A call to <code>imp_vars</code> to specify which variables are used
+to impute the variables that can include specific variable names separated
+by commas or different selectors (see <code><a href='selections.html'>selections()</a></code>). If a column is
+included in both lists to be imputed and to be an imputation predictor, it
+will be removed from the latter and not used to impute itself.</p></td>
     </tr>
     <tr>
       <th>trees</th>
@@ -229,22 +223,19 @@ impute itself.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>The <code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code> objects are
-stored here once this bagged trees have be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <td><p>The <code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code> objects are stored here once this
+bagged trees have be trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to
-<code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code>. Defaults are set for the
-arguments <code>nbagg</code> and <code>keepX</code> but others can be passed
-in. <strong>Note</strong> that the arguments <code>X</code> and <code>y</code> should
-not be passed here.</p></td>
+      <td><p>A list of options to <code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code>. Defaults are set
+for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <strong>Note</strong>
+that the arguments <code>X</code> and <code>y</code> should not be passed here.</p></td>
     </tr>
     <tr>
       <th>seed_val</th>
-      <td><p>A integer used to create reproducible models.
-The same seed is used across all imputation models.</p></td>
+      <td><p>A integer used to create reproducible models. The same seed
+is used across all imputation models.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -267,30 +258,27 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>model</code> (the bagged
-tree object).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
+columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
+bagged tree object).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For each variables requiring imputation, a bagged tree
-is created where the outcome is the variable of interest and the
-predictors are any other variables listed in the
-<code>impute_with</code> formula. One advantage to the bagged tree is
-that is can accept predictors that have missing values
-themselves. This imputation method can be used when the variable
-of interest (and predictors) are numeric or categorical. Imputed
-categorical variables will remain categorical.</p>
-<p>Note that if a variable that is to be imputed is also in
-<code>impute_with</code>, this variable will be ignored.</p>
-<p>It is possible that missing values will still occur after
-imputation if a large majority (or all) of the imputing
-variables are also missing.</p>
+    <p>For each variables requiring imputation, a bagged tree is created
+where the outcome is the variable of interest and the predictors are any
+other variables listed in the <code>impute_with</code> formula. One advantage to the
+bagged tree is that is can accept predictors that have missing values
+themselves. This imputation method can be used when the variable of interest
+(and predictors) are numeric or categorical. Imputed categorical variables
+will remain categorical. Also, integers will be imputed to integer too.</p>
+<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>,
+this variable will be ignored.</p>
+<p>It is possible that missing values will still occur after imputation if a
+large majority (or all) of the imputing variables are also missing.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Kuhn, M. and Johnson, K. (2013). <em>Applied
-Predictive Modeling</em>. Springer Verlag.</p>
+    <p>Kuhn, M. and Johnson, K. (2013). <em>Applied Predictive Modeling</em>.
+Springer Verlag.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
@@ -327,11 +315,11 @@ Predictive Modeling</em>. Springer Verlag.</p>
 #&gt; 688    2000    0   1250  1517
 #&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
 #&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
+#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
 #&gt; 1 good          15 owner    36    43 married no      fixed       75    251
 #&gt; 2 good           2 rent     60    32 married no      part…       87    115
 #&gt; 3 good          21 rent     60    39 married no      fixed      124    191
-#&gt; # … with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
+#&gt; # … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
 #&gt;   terms   model id             
 #&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
@@ -372,11 +360,11 @@ Predictive Modeling</em>. Springer Verlag.</p>
 #&gt; 688    2000    0   1250  1517
 #&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
 #&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
+#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
 #&gt; 1 good          15 owner    36    43 married no      fixed       75    251
 #&gt; 2 good           2 rent     60    32 married no      part…       87    115
 #&gt; 3 good          21 rent     60    39 married no      fixed      124    191
-#&gt; # … with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
+#&gt; # … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
 #&gt;   terms   model id             
 #&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          

@@ -252,7 +252,8 @@ new step added to the sequence of existing steps (if any).</p>
   <span class='fu'>step_intercept</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>carbon</span>)
 
-<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Scaling `factor` should take either a value of 1 or 2</span></div><div class='input'>
+<span class='no'>rec_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+
 <span class='no'>with_intercept</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_obj</span>, <span class='no'>biomass_te</span>)
 <span class='no'>with_intercept</span></div><div class='output co'>#&gt; # A tibble: 80 x 7
 #&gt;    intercept carbon hydrogen oxygen nitrogen sulfur   HHV

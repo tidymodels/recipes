@@ -253,24 +253,23 @@
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Scaling for all_predictors</span></a></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">trained_rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prep.html">prep</a></span>(standardized, <span class="dt">training =</span> credit_train)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Warning: Scaling `factor` should take either a value of 1 or 2</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">trained_rec</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; Data Recipe</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; Inputs:</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;       role #variables</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;    outcome          1</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  predictor         13</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; Operations:</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-2" data-line-number="2">trained_rec</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; Data Recipe</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; Inputs:</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;       role #variables</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;    outcome          1</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  predictor         13</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; Operations:</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></a></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">train_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(trained_rec, <span class="dt">new_data =</span> credit_train)</a>
@@ -288,10 +287,10 @@
 <a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  4 good     0.00966  0.921 -0.635      0.987  0.705   -0.0316  1.86   0.995</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  5 good     0.875   -1.52   1.37      -1.05   2.34     0.929  -0.273  0.995</span></a>
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  6 good     3.10    -1.52   2.84       0.479  0.718   -0.0316  1.43  -0.912</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good     2.24     0.921  1.28      -0.539  0.00436 -0.157  -0.273  0.677</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  7 good     2.24     0.921  1.28      -0.539  0.00434 -0.157  -0.273  0.677</span></a>
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  8 bad     -0.979    0.108  0.00402   -1.05  -0.371   -0.265  -0.273  0.995</span></a>
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  9 good     1.99     0.921  0.461      0.987 -0.0707  -0.115  -0.273 -0.276</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 bad     -0.979    0.921 -0.453     -0.539 -0.00815  0.136   2.28   0.465</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 10 bad     -0.979    0.921 -0.453     -0.539 -0.00817  0.136   2.28   0.465</span></a>
 <a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt; # … with 1,103 more rows, and 14 more variables: Price &lt;dbl&gt;, Home_other &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; #   Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt; #   Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;,</span></a>

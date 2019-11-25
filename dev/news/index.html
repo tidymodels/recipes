@@ -160,6 +160,13 @@
     <div id="recipes-0-1-7-9001" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-7-9001" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.1.7.9001</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<ul>
+<li>The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types).</li>
+</ul>
+</div>
 <div id="other-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other Changes</h2>
@@ -167,6 +174,7 @@
 <li><p>When using a selector that returns no columns, <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now return a tibble with as many rows as the original template data or the <code>new_data</code> respectively. This is more consistent with how selectors work in dplyr (<a href="https://github.com/tidymodels/recipes/issues/411"><a href='https://github.com/tidymodels/recipes/issues/411'>#411</a></a>).</p></li>
 <li><p>Code was added to explicitly register <code>tunable</code> methods when <code>recipes</code> is loaded. This is required because of changes occurring in R 4.0.</p></li>
 <li><p><code><a href="../reference/check_class.html">check_class()</a></code> checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)</p></li>
+<li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> gained a <code>factor</code> argument with values of 1 or 2 that can scale the standard deviations used to transform the data. (<a href="https://github.com/tidymodels/recipes/issues/380"><a href='https://github.com/tidymodels/recipes/issues/380'>#380</a></a>)</p></li>
 </ul>
 </div>
 </div>
@@ -174,9 +182,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-1-7" class="anchor"></a><small> 2019-09-15 </small><code>recipes</code> 0.1.7</h1>
 <p>Release driven by changes in <code>tidyr</code> (v 1.0.0).</p>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
 <p><code>format_selector()</code>’s <code>wdth</code> argument has been renamed to <code>width</code> (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p>
 </div>
 <div id="new-operations" class="section level2">
@@ -208,9 +216,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-1-6" class="anchor"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
 <p>Release driven by changes in <code>rlang</code>.</p>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li><p>Since 2018, a warning has been issued when the wrong argument was used in <code><a href="../reference/bake.html">bake(recipe, newdata)</a></code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
 <li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
@@ -258,9 +266,9 @@
 <li><p>Set the embedded environment to NULL in <code>prep.step_dummy</code> to reduce the file size of serialized recipe class objects when using <code>saveRDS</code>.</p></li>
 </ul>
 </div>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
 </ul>
@@ -276,9 +284,9 @@
     <div id="recipes-0-1-4" class="section level1">
 <h1 class="page-header">
 <a href="#recipes-0-1-4" class="anchor"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
-<div id="breaking-changes-3" class="section level2">
+<div id="breaking-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-3" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-4" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>) and the general tidyverse naming conventions.
 <ul>
