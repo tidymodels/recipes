@@ -283,7 +283,7 @@ prior to the current point.</p>
 <span class='no'>seven_pt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>day</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"time_index"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
 #&gt;    day           x1    x2    x3

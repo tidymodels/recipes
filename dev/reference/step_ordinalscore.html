@@ -275,7 +275,7 @@ functions can also be used (see the example below).</p>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>)
 
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
@@ -296,7 +296,7 @@ functions can also be used (see the example below).</p>
 #&gt;   terms         id                
 #&gt;   &lt;chr&gt;         &lt;chr&gt;             
 #&gt; 1 fail_severity ordinalscore_qIB0v</div><div class='input'>
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter

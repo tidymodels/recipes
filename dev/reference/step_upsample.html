@@ -302,7 +302,7 @@ conducted outside of the training set.</p>
   <span class='co'># Bring the minority levels up to about 200 each</span>
   <span class='co'># 200/16562 is approx 0.0121</span>
   <span class='fu'>step_upsample</span>(<span class='no'>diet</span>, <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>0.0121</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)
 
 <span class='no'>training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>up_rec</span>)$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
 

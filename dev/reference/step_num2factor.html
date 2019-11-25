@@ -267,8 +267,7 @@ of <code>NA</code> to these rows (see the example below).</p>
 
 <span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_num2factor</span>(<span class='no'>Species</span>)
 <span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>make_factor</span>,
-                    <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris2</span>,
-                    <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+                    <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris2</span>)
 
 <span class='co'># note that `diet` is a factor</span>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 5

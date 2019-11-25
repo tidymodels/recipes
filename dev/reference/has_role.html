@@ -233,7 +233,7 @@ matching is used (i.e. regular expressions won't work).</p></td>
 <span class='co'># Centering on all predictors except carbon</span>
 <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'>all_predictors</span>(), -<span class='no'>carbon</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; # A tibble: 536 x 8
 #&gt;    sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV
 #&gt;    &lt;fct&gt;                  &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;

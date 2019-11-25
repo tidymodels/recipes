@@ -157,7 +157,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec))</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Data Recipe</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span></a>

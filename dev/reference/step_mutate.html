@@ -253,7 +253,7 @@ between sessions). See the examples.</p>
     <span class='kw'>half_length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span> / <span class='fl'>2</span>
   )
 
-<span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>75</span>), <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>75</span>))
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
@@ -287,7 +287,7 @@ between sessions). See the examples.</p>
     <span class='kw'>bad_approach</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span> * <span class='no'>const</span>,
     <span class='kw'>best_approach</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span> * !!<span class='no'>const</span>
   ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>qq_rec</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"appro"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 2
 #&gt;   bad_approach best_approach

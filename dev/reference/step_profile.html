@@ -294,7 +294,7 @@ based on the fixed and profiled variable's information.</p>
 <span class='co'># Setup a grid across date but keep the other values fixed</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(-<span class='no'>date</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'>vars</span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>juice</span></div><div class='output co'>#&gt; # A tibble: 100 x 3
 #&gt;    diet     height date      
 #&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;date&gt;    
@@ -321,7 +321,7 @@ based on the fixed and profiled variable's information.</p>
 
 <span class='no'>disp_pctl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(-<span class='no'>disp</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 
 <span class='no'>disp_grid</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(
@@ -329,7 +329,7 @@ based on the fixed and profiled variable's information.</p>
     <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>),
     <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 
 <span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>disp_grid</span>)
 <span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='no'>grid_data</span> <span class='kw'>%&gt;%</span>

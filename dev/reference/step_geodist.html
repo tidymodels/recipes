@@ -275,7 +275,7 @@ method, a tibble with columns echoing the values of <code>lat</code>,
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>name</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"location"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_geodist</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>latitude</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>longitude</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                <span class='kw'>ref_lat</span> <span class='kw'>=</span> <span class='fl'>38.8986312</span>, <span class='kw'>ref_lon</span> <span class='kw'>=</span> -<span class='fl'>77.0062457</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>Smithsonian</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>Smithsonian</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>near_station</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>arrange</span>(<span class='no'>geo_dist</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 4

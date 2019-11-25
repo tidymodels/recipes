@@ -167,7 +167,7 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">folds &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rsample/man/vfold_cv.html">vfold_cv</a></span>(tecator, <span class="dt">repeats =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">folds &lt;-<span class="st"> </span>folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> norm_rec, <span class="dt">retain =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> norm_rec))</a></code></pre></div>
 <pre><code>## Warning: Scaling `factor` should take either a value of 1 or 2
 
 ## Warning: Scaling `factor` should take either a value of 1 or 2

@@ -299,7 +299,7 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
   <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>(), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>)
 
-<span class='no'>pls_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>pls_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>pls_test_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pls_rec</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>[, -<span class='fl'>8</span>])
 

@@ -244,7 +244,7 @@ be portable between sessions). See the examples.</p>
     <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_arrange</span>(<span class='fu'>desc</span>(<span class='no'>Sepal.Length</span>), <span class='fl'>1</span>/<span class='no'>Petal.Length</span>)
 
-<span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>1</span>:<span class='fl'>75</span>), <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>1</span>:<span class='fl'>75</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>prepped</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
 #&gt;   terms              id           
 #&gt;   &lt;chr&gt;              &lt;chr&gt;        

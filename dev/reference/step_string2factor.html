@@ -263,8 +263,7 @@ can also take existing factors (but will leave them as-is).</p>
   <span class='fu'>step_string2factor</span>(<span class='no'>diet</span>)
 <span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>make_factor</span>,
                     <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>,
-                    <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-                    <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+                    <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># note that `diet` is a factor</span>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 2
