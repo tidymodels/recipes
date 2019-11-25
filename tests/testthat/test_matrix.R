@@ -46,11 +46,11 @@ test_that('correct types', {
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
 
-  expect_equal(class(bake_sparse), "matrix")
-  expect_equal(class(juice_sparse), "matrix")
+  expect_true(inherits(bake_sparse, "matrix"))
+  expect_true(inherits(juice_sparse, "matrix"))
 
-  expect_equal(class(bake_sparse_1d), "matrix")
-  expect_equal(class(juice_sparse_1d), "matrix")
+  expect_true(inherits(bake_sparse_1d, "matrix"))
+  expect_true(inherits(juice_sparse_1d, "matrix"))
 
   expect_equal(recipes:::convert_matrix(bake_default, sparse = FALSE),
                bake_sparse)
