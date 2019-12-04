@@ -27,7 +27,7 @@ Note that:
 beyond those supported (see below).
 \item These arguments are not evaluated until the \code{prep}
 function for the step is executed.
-\item The \code{dplyr}-like syntax allows for negative signs to
+\item The \code{dplyr}-like syntax allows for negative sings to
 exclude variables (e.g. \code{-Murder}) and the set of selectors will
 processed in order.
 \item A leading exclusion in these arguments (e.g. \code{-Murder})
