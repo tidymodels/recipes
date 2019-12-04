@@ -26,9 +26,9 @@ recipe(x, ...)
 used).}
 
 \item{formula}{A model formula. No in-line functions should be used here
-(e.g. \code{log(x)}, \code{x:y}, etc.). These types of transformations
-should be enacted using \code{step} functions in this package. Dots are
-allowed as are simple multivariate outcome terms (i.e. no need for
+(e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types of
+transformations should be enacted using \code{step} functions in this package.
+Dots are allowed as are simple multivariate outcome terms (i.e. no need for
 \code{cbind}; see Examples).}
 
 \item{vars}{A character string of column names corresponding to variables
