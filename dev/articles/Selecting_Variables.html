@@ -184,18 +184,18 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">with_dummy &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bake.html">bake</a></span>(dummied, <span class="dt">new_data =</span> credit_data)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">with_dummy</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; # A tibble: 4,454 x 5</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;    Status Seniority  Time   Age Records_yes</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;  1 good           9    60    30           0</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;  2 good          17    60    58           0</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;  3 bad           10    36    46           1</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  4 good           0    60    24           0</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  5 good           0    36    26           0</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  6 good           1    60    36           0</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  7 good          29    60    44           0</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  8 good           9    12    27           0</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  9 good           0    60    32           0</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; 10 bad            0    48    41           0</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;    Seniority  Time   Age Status Records_yes</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;        &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;  1         9    60    30 good             0</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;  2        17    60    58 good             0</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;  3        10    36    46 bad              1</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  4         0    60    24 good             0</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  5         0    36    26 good             0</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  6         1    60    36 good             0</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  7        29    60    44 good             0</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  8         9    12    27 good             0</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  9         0    60    32 good             0</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; 10         0    48    41 bad              0</span></a>
 <a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; # … with 4,444 more rows</span></a></code></pre></div>
 <p><code>Status</code> is unaffected.</p>
 <p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>

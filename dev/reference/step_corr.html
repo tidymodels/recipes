@@ -295,12 +295,12 @@ is chosen), some columns will also be excluded from the filter.</p>
 #&gt; oxygen      0.63     0.54   1.00     0.18   0.31      0.63
 #&gt; nitrogen    0.15     0.07   0.18     1.00   0.27      0.15
 #&gt; sulfur      0.09     0.19   0.31     0.27   1.00      0.10
-#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur  HHV duplicate
-#&gt; hydrogen      1.00     0.11   0.26 0.10      0.20
-#&gt; nitrogen      0.11     1.00   0.16 0.11      0.13
-#&gt; sulfur        0.26     0.16   1.00 0.08      0.13
-#&gt; HHV           0.10     0.11   0.08 1.00      0.94
-#&gt; duplicate     0.20     0.13   0.13 0.94      1.00</div><div class='input'>
+#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur duplicate  HHV
+#&gt; hydrogen      1.00     0.11   0.26      0.20 0.10
+#&gt; nitrogen      0.11     1.00   0.16      0.13 0.11
+#&gt; sulfur        0.26     0.16   1.00      0.13 0.08
+#&gt; duplicate     0.20     0.13   0.13      1.00 0.94
+#&gt; HHV           0.10     0.11   0.08      0.94 1.00</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms id        
 #&gt;   &lt;chr&gt; &lt;chr&gt;     

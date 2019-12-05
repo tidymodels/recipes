@@ -274,18 +274,18 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>train</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; # A tibble: 1,000 x 6
-#&gt;      age diet                height location      date       Class
-#&gt;    &lt;int&gt; &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;         &lt;date&gt;     &lt;fct&gt;
-#&gt;  1    34 &lt;NA&gt;                    66 san francisco 2012-06-27 other
-#&gt;  2    23 strictly anything       74 berkeley      2012-06-26 stem 
-#&gt;  3    23 mostly anything         67 san francisco 2012-06-29 other
-#&gt;  4    45 anything                72 burlingame    2012-06-29 other
-#&gt;  5    35 strictly vegetarian     71 oakland       2012-06-29 stem 
-#&gt;  6    20 mostly anything         66 san francisco 2011-10-17 other
-#&gt;  7    39 &lt;NA&gt;                    66 san francisco 2012-04-10 stem 
-#&gt;  8    39 anything                67 san francisco 2012-06-29 other
-#&gt;  9    35 mostly anything         67 oakland       2012-06-29 other
-#&gt; 10    33 mostly anything         64 san francisco 2012-06-26 other
+#&gt;    diet                height location      date       Class   age
+#&gt;    &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;         &lt;date&gt;     &lt;fct&gt; &lt;int&gt;
+#&gt;  1 &lt;NA&gt;                    66 san francisco 2012-06-27 other    34
+#&gt;  2 strictly anything       74 berkeley      2012-06-26 stem     23
+#&gt;  3 mostly anything         67 san francisco 2012-06-29 other    23
+#&gt;  4 anything                72 burlingame    2012-06-29 other    45
+#&gt;  5 strictly vegetarian     71 oakland       2012-06-29 stem     35
+#&gt;  6 mostly anything         66 san francisco 2011-10-17 other    20
+#&gt;  7 &lt;NA&gt;                    66 san francisco 2012-04-10 stem     39
+#&gt;  8 anything                67 san francisco 2012-06-29 other    39
+#&gt;  9 mostly anything         67 oakland       2012-06-29 other    35
+#&gt; 10 mostly anything         64 san francisco 2012-06-26 other    33
 #&gt; # … with 990 more rows</div><div class='input'>
 <span class='co'># Manual specification</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>train</span>, <span class='no'>age</span> ~ <span class='no'>.</span>) <span class='kw'>%&gt;%</span>
@@ -294,18 +294,18 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span>(<span class='no'>date</span>, <span class='kw'>class_nm</span> <span class='kw'>=</span> <span class='st'>"Date"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>train</span>, <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; # A tibble: 1,000 x 6
-#&gt;      age diet                height location      date       Class
-#&gt;    &lt;int&gt; &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;         &lt;date&gt;     &lt;fct&gt;
-#&gt;  1    34 &lt;NA&gt;                    66 san francisco 2012-06-27 other
-#&gt;  2    23 strictly anything       74 berkeley      2012-06-26 stem 
-#&gt;  3    23 mostly anything         67 san francisco 2012-06-29 other
-#&gt;  4    45 anything                72 burlingame    2012-06-29 other
-#&gt;  5    35 strictly vegetarian     71 oakland       2012-06-29 stem 
-#&gt;  6    20 mostly anything         66 san francisco 2011-10-17 other
-#&gt;  7    39 &lt;NA&gt;                    66 san francisco 2012-04-10 stem 
-#&gt;  8    39 anything                67 san francisco 2012-06-29 other
-#&gt;  9    35 mostly anything         67 oakland       2012-06-29 other
-#&gt; 10    33 mostly anything         64 san francisco 2012-06-26 other
+#&gt;    diet                height location      date       Class   age
+#&gt;    &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;         &lt;date&gt;     &lt;fct&gt; &lt;int&gt;
+#&gt;  1 &lt;NA&gt;                    66 san francisco 2012-06-27 other    34
+#&gt;  2 strictly anything       74 berkeley      2012-06-26 stem     23
+#&gt;  3 mostly anything         67 san francisco 2012-06-29 other    23
+#&gt;  4 anything                72 burlingame    2012-06-29 other    45
+#&gt;  5 strictly vegetarian     71 oakland       2012-06-29 stem     35
+#&gt;  6 mostly anything         66 san francisco 2011-10-17 other    20
+#&gt;  7 &lt;NA&gt;                    66 san francisco 2012-04-10 stem     39
+#&gt;  8 anything                67 san francisco 2012-06-29 other    39
+#&gt;  9 mostly anything         67 oakland       2012-06-29 other    35
+#&gt; 10 mostly anything         64 san francisco 2012-06-26 other    33
 #&gt; # … with 990 more rows</div><div class='input'>
 <span class='co'># By default only the classes that are specified</span>
 <span class='co'>#   are allowed.</span>
@@ -324,8 +324,8 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>x_df</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 1
 #&gt;   time               
 #&gt;   &lt;dttm&gt;             
-#&gt; 1 2019-12-05 20:00:16
-#&gt; 2 2019-12-05 20:01:16</div><div class='input'>
+#&gt; 1 2019-12-05 20:13:54
+#&gt; 2 2019-12-05 20:14:54</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
