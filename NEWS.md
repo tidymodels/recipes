@@ -14,6 +14,8 @@
 
 * `step_normalize()` and `step_scale()` gained a `factor` argument with values of 1 or 2 that can scale the standard deviations used to transform the data. ([#380](https://github.com/tidymodels/recipes/issues/380))
 
+* `bake()` now produces a tibble with columns in the same order as `juice()` ([#365](https://github.com/tidymodels/recipes/issues/365))
+
 #  `recipes` 0.1.7
 
 Release driven by changes in `tidyr` (v 1.0.0). 
