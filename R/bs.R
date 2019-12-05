@@ -190,7 +190,7 @@ tunable.step_bs <- function(x, ...) {
   tibble::tibble(
     name = c("deg_free", "degree"),
     call_info = list(
-      list(pkg = "dials", fun = "deg_free", range = c(3, 15)),
+      list(pkg = "dials", fun = "spline_degree", range = c(1L, 15L)),
       list(pkg = "dials", fun = "degree_int", range = c(1, 2))
     ),
     source = "recipe",
