@@ -28,7 +28,7 @@
 #'   \item These arguments are not evaluated until the `prep`
 #'    function for the step is executed.
 
-#'   \item The `dplyr`-like syntax allows for negative sings to
+#'   \item The `dplyr`-like syntax allows for negative signs to
 #'    exclude variables (e.g. `-Murder`) and the set of selectors will
 #'    processed in order.
 
