@@ -24,7 +24,7 @@ test_that('basics', {
 #   rec <- recipe(~., data = ex_dat) %>%
 #     step_rm(x1, skip = TRUE)
 #
-#   rec_trained <- prep(rec, training = ex_dat, retain = TRUE)
+#   rec_trained <- prep(rec, training = ex_dat)
 #   tr_res <- juice(rec_trained)
 #   te_res <- bake(rec_trained, new_data = ex_dat)
 #

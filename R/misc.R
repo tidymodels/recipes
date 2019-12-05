@@ -198,19 +198,24 @@ get_levels <- function(x) {
   out
 }
 
-has_lvls <- function(info)
+has_lvls <- function(info) {
   !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
+}
 
 strings2factors <- function(x, info) {
   check_lvls <- has_lvls(info)
-  if (!any(check_lvls))
+  if (!any(check_lvls)) {
     return(x)
+  }
   info <- info[check_lvls]
+  vars <- names(info)
+  info <- info[vars %in% names(x)]
   for (i in seq_along(info)) {
     lcol <- names(info)[i]
-    x[, lcol] <- factor(as.character(getElement(x, lcol)),
-                        levels = info[[i]]$values,
-                        ordered = info[[i]]$ordered)
+    x[, lcol] <-
+      factor(as.character(x[[lcol]]),
+             levels = info[[i]]$values,
+             ordered = info[[i]]$ordered)
   }
   x
 }
@@ -444,7 +449,7 @@ is_trained <- function(x)
 #' @keywords internal
 #' @rdname recipes-internal
 sel2char <- function(x) {
-  map_chr(x, to_character)
+  unname(map_chr(x, to_character))
 }
 
 to_character <- function(x) {
@@ -594,4 +599,21 @@ is_tune <- function(x) {
 tidyr_new_interface <- function() {
   utils::packageVersion("tidyr") > "0.8.99"
 }
+
+# ------------------------------------------------------------------------------
+# For all imputation functions that substitute elements into an existing vector:
+# vctrs's cast functions would be better but we'll deal with the known cases
+# to avoid a dependency.
+
+cast <- function(x, ref) {
+  if (is.factor(ref)) {
+    x <- factor(x, levels = levels(ref), ordered = is.ordered(ref))
+  } else {
+    if (is.integer(ref) & !is.factor(ref)) {
+      x <- as.integer(round(x, 0))
+    }
+  }
+  x
+}
+
 

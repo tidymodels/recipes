@@ -5,8 +5,15 @@
 \alias{tidy.step_sqrt}
 \title{Square Root Transformation}
 \usage{
-step_sqrt(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = rand_id("sqrt"))
+step_sqrt(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("sqrt")
+)
 
 \method{tidy}{step_sqrt}(x, ...)
 }

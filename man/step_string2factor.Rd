@@ -5,9 +5,16 @@
 \alias{tidy.step_string2factor}
 \title{Convert Strings to Factors}
 \usage{
-step_string2factor(recipe, ..., role = NA, trained = FALSE,
-  levels = NULL, ordered = FALSE, skip = FALSE,
-  id = rand_id("string2factor"))
+step_string2factor(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  levels = NULL,
+  ordered = FALSE,
+  skip = FALSE,
+  id = rand_id("string2factor")
+)
 
 \method{tidy}{step_string2factor}(x, ...)
 }
@@ -73,8 +80,7 @@ make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
                     training = okc,
-                    strings_as_factors = FALSE,
-                    retain = TRUE)
+                    strings_as_factors = FALSE)
 
 # note that `diet` is a factor
 juice(make_factor) \%>\% head

@@ -1,7 +1,22 @@
+#  `recipes` 0.1.7.9001
+
+## Breaking Changes
+
+ * The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types). 
+
+## Other Changes
+
+ * When using a selector that returns no columns, `juice()` and `bake()` will now return a tibble with as many rows as the original template data or the `new_data` respectively. This is more consistent with how selectors work in dplyr ([#411](https://github.com/tidymodels/recipes/issues/411)).
+ 
+ * Code was added to explicitly register `tunable` methods when `recipes` is loaded. This is required because of changes occurring in R 4.0. 
+ 
+* `check_class()` checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)
+
+* `step_normalize()` and `step_scale()` gained a `factor` argument with values of 1 or 2 that can scale the standard deviations used to transform the data. ([#380](https://github.com/tidymodels/recipes/issues/380))
+
 #  `recipes` 0.1.7
 
 Release driven by changes in `tidyr` (v 1.0.0). 
-
 
 ## Breaking Changes
 

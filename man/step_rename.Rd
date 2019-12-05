@@ -6,8 +6,15 @@
 \alias{tidy.step_rename_at}
 \title{Rename variables by name}
 \usage{
-step_rename(recipe, ..., role = "predictor", trained = FALSE,
-  inputs = NULL, skip = FALSE, id = rand_id("rename"))
+step_rename(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("rename")
+)
 
 \method{tidy}{step_rename}(x, ...)
 
@@ -54,7 +61,7 @@ variables using \code{\link[dplyr:rename]{dplyr::rename()}}.
 \details{
 When an object in the user's global environment is referenced in
 the expression defining the new variable(s), it is a good idea to use
-quasiquotation (e.g. \code{!!}) to embed the value of the object in the
+quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
 }
 \examples{

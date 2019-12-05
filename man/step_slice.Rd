@@ -5,8 +5,15 @@
 \alias{tidy.step_slice}
 \title{Filter rows by position using dplyr}
 \usage{
-step_slice(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
-  skip = FALSE, id = rand_id("slice"))
+step_slice(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("slice")
+)
 
 \method{tidy}{step_slice}(x, ...)
 }
@@ -50,7 +57,7 @@ that will filter rows using \code{\link[dplyr:slice]{dplyr::slice()}}.
 \details{
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \code{!!})
+it is a good idea to use quasiquotation (e.g. \verb{!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
@@ -58,7 +65,7 @@ be portable between sessions). See the examples.
 rec <- recipe( ~ ., data = iris) \%>\%
   step_slice(1:3)
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 tidy(prepped, number = 1)
 
 library(dplyr)

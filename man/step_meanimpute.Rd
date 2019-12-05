@@ -5,8 +5,16 @@
 \alias{tidy.step_meanimpute}
 \title{Impute Numeric Data Using the Mean}
 \usage{
-step_meanimpute(recipe, ..., role = NA, trained = FALSE,
-  means = NULL, trim = 0, skip = FALSE, id = rand_id("meanimpute"))
+step_meanimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  means = NULL,
+  trim = 0,
+  skip = FALSE,
+  id = rand_id("meanimpute")
+)
 
 \method{tidy}{step_meanimpute}(x, ...)
 }
@@ -14,24 +22,22 @@ step_meanimpute(recipe, ..., role = NA, trained = FALSE,
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+\item{...}{One or more selector functions to choose which variables are
+affected by the step. See \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
+method, these are not currently used.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until computed
+by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers, the mean
+will be converted to an integer to maintain the same a data type.}
 
-\item{trim}{The fraction (0 to 0.5) of observations to be
-trimmed from each end of the variables before the mean is
-computed. Values of trim outside that range are taken as the
-nearest endpoint.}
+\item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
+end of the variables before the mean is computed. Values of trim outside
+that range are taken as the nearest endpoint.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -45,22 +51,20 @@ the computations for subsequent operations}
 \item{x}{A \code{step_meanimpute} object.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{model} (the mean
+An updated version of \code{recipe} with the new step added to the
+sequence of existing steps (if any). For the \code{tidy} method, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model} (the mean
 value).
 }
 \description{
-\code{step_meanimpute} creates a \emph{specification} of a
-recipe step that will substitute missing values of numeric
-variables by the training set mean of those variables.
+\code{step_meanimpute} creates a \emph{specification} of a recipe step that will
+substitute missing values of numeric variables by the training set mean of
+those variables.
 }
 \details{
-\code{step_meanimpute} estimates the variable means
-from the data used in the \code{training} argument of
-\code{prep.recipe}. \code{bake.recipe} then applies the new
-values to new data sets using these averages.
+\code{step_meanimpute} estimates the variable means from the data used
+in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies the
+new values to new data sets using these averages.
 }
 \examples{
 data("credit_data")

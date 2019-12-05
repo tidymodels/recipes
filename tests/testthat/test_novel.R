@@ -12,7 +12,7 @@ tr_dat <- data.frame(
   w = sample(LETTERS[1:2], size = n, replace = TRUE),
   x = factor(rep_len(month.abb, n)),
   y = factor(rep_len(month.name[-1], n), ordered = TRUE),
-  z = factor(rep_len(month.name[-1], n), ordered = TRUE, levels = month.name),  
+  z = factor(rep_len(month.name[-1], n), ordered = TRUE, levels = month.name),
   stringsAsFactors = FALSE
 )
 
@@ -37,20 +37,20 @@ rec <- recipe(~ ., data = tr_dat)
 test_that('basic functionality', {
   ex_1 <- rec %>%
     step_novel(all_predictors()) %>%
-    prep(tr_dat, strings_as_factors = FALSE, retain = TRUE) 
-  
+    prep(tr_dat, strings_as_factors = FALSE)
+
   ex_1_tr <- bake(ex_1, new_data = tr_dat)
   ex_1_te <- bake(ex_1, new_data = te_dat)
-  
+
   all(ex_1_te$v[!(ex_1_te$v %in% letters[1:3])] == "new")
-  
-  
+
+
   expect_true(all(vapply(ex_1_tr, is.factor, logical(1))))
   expect_true(all(vapply(ex_1_te, is.factor, logical(1))))
-  
-  for(i in names(ex_1_tr)) 
+
+  for(i in names(ex_1_tr))
     expect_true(
-      all.equal(as.character(tr_dat[[i]]), 
+      all.equal(as.character(tr_dat[[i]]),
                 as.character(ex_1_tr[[i]])
       )
     )
@@ -59,18 +59,18 @@ test_that('basic functionality', {
   )
   expect_true(
     all(ex_1_te$w[!(ex_1_te$w %in% LETTERS[1:2])] == "new")
-  )  
+  )
   expect_true(
     all(as.character(te_dat$x) == as.character(ex_1_te$x))
-  )    
+  )
   expect_true(ex_1_te$y[1] == "new")
   expect_true(
     all(as.character(te_dat$z[-1]) == as.character(ex_1_te$z[-1]))
-  )  
+  )
   expect_true(
     all(as.character(te_dat$z) == as.character(ex_1_te$z))
-  )      
-  
+  )
+
   expect_true(is.ordered(ex_1_te$y))
   expect_true(is.ordered(ex_1_te$z))
 })
@@ -100,7 +100,7 @@ test_that('missing values', {
 
 test_that('printing', {
   ex_3 <- rec %>%
-    step_novel(all_predictors()) 
+    step_novel(all_predictors())
   expect_output(print(ex_3))
   expect_output(print(prep(ex_3, training = tr_dat, verbose = TRUE)))
 })

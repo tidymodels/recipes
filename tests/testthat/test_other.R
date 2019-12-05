@@ -167,7 +167,7 @@ test_that('novel levels', {
   novel_level <- recipe(y ~ ., data = training) %>%
     step_other(x1)
 
-  novel_level <- prep(novel_level, training = training, retain = TRUE)
+  novel_level <- prep(novel_level, training = training)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
   expect_true(all(is.na(new_results$x1[testing$x1 == "C"])))
@@ -183,7 +183,7 @@ test_that('novel levels', {
   novel_level <- recipe(y ~ ., data = training) %>%
     step_other(x1, threshold = .1)
 
-  novel_level <- prep(novel_level, training = training, retain = TRUE)
+  novel_level <- prep(novel_level, training = training)
   new_results <- bake(novel_level, new_data = testing)
   orig_results <- bake(novel_level, new_data = training)
   expect_true(all(new_results$x1[testing$x1 == "D"] == "other"))
@@ -273,4 +273,21 @@ test_that('tunable', {
     names(rec_param),
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
+})
+
+
+test_that('issue #415 -  strings to factor conversion', {
+  trans_recipe <-
+    recipe(Species ~ ., data = iris)
+
+  prepped <- prep(trans_recipe, iris)
+
+  iris_no_outcome <- iris
+  iris_no_outcome["Species"] <- NULL
+
+  expect_error(
+    res <- bake(prepped, iris_no_outcome),
+    regex = NA
+  )
+  expect_equal(names(res), names(iris[, 1:4]))
 })

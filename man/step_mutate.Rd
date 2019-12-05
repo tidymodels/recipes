@@ -6,8 +6,15 @@
 \alias{tidy.step_mutate_at}
 \title{Add new variables using \code{mutate}}
 \usage{
-step_mutate(recipe, ..., role = "predictor", trained = FALSE,
-  inputs = NULL, skip = FALSE, id = rand_id("mutate"))
+step_mutate(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("mutate")
+)
 
 \method{tidy}{step_mutate}(x, ...)
 
@@ -56,7 +63,7 @@ that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 \details{
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \code{!!}) to embed
+it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
 }
@@ -68,7 +75,7 @@ rec <-
     half_length = Sepal.Length / 2
   )
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 
 library(dplyr)
 
@@ -104,7 +111,7 @@ qq_rec <-
     bad_approach = Sepal.Width * const,
     best_approach = Sepal.Width * !!const
   ) \%>\%
-  prep(training = iris, retain = TRUE)
+  prep(training = iris)
 
 juice(qq_rec, contains("appro")) \%>\% slice(1:4)
 

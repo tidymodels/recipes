@@ -1,31 +1,28 @@
 #' Impute Numeric Data Using the Median
 #'
-#'   `step_medianimpute` creates a *specification* of a
-#'  recipe step that will substitute missing values of numeric
-#'  variables by the training set median of those variables.
+#' `step_medianimpute` creates a *specification* of a recipe step that will
+#'  substitute missing values of numeric variables by the training set median of
+#'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param medians A named numeric vector of medians. This is
-#'  `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the median
-#'  value).
+#' @param ... One or more selector functions to choose which variables are
+#'  affected by the step. See [selections()] for more details. For the `tidy`
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are created.
+#' @param medians A named numeric vector of medians. This is `NULL` until
+#'  computed by [prep.recipe()]. Note that, if the original data are integers,
+#'  the median will be converted to an integer to maintain the same a data type.
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  columns `terms` (the selectors or variables selected) and `model` (the
+#'  median value).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details `step_medianimpute` estimates the variable medians
-#'  from the data used in the `training` argument of
-#'  `prep.recipe`. `bake.recipe` then applies the new
-#'  values to new data sets using these medians
+#' @details `step_medianimpute` estimates the variable medians from the data
+#'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
+#'  the new values to new data sets using these medians
 #' @examples
 #' data("credit_data")
 #'
@@ -93,11 +90,9 @@ prep.step_medianimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  medians <-
-    vapply(training[, col_names],
-           median,
-           c(median = 0),
-           na.rm = TRUE)
+  medians <- lapply(training[, col_names], median, na.rm = TRUE)
+  medians <- purrr::map2(medians, training[, col_names], cast)
+
   step_medianimpute_new(
     terms = x$terms,
     role = x$role,
@@ -111,8 +106,8 @@ prep.step_medianimpute <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_medianimpute <- function(object, new_data, ...) {
   for (i in names(object$medians)) {
-    if (any(is.na(new_data[, i])))
-      new_data[is.na(new_data[, i]), i] <- object$medians[i]
+    if (any(is.na(new_data[[i]])))
+      new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
   }
   as_tibble(new_data)
 }
@@ -130,7 +125,7 @@ print.step_medianimpute <-
 tidy.step_medianimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$medians),
-                  model = x$medians)
+                  model = unlist(x$medians))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

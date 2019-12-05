@@ -5,9 +5,18 @@
 \alias{tidy.step_nzv}
 \title{Near-Zero Variance Filter}
 \usage{
-step_nzv(recipe, ..., role = NA, trained = FALSE, freq_cut = 95/5,
-  unique_cut = 10, options = list(freq_cut = 95/5, unique_cut = 10),
-  removals = NULL, skip = FALSE, id = rand_id("nzv"))
+step_nzv(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  freq_cut = 95/5,
+  unique_cut = 10,
+  options = list(freq_cut = 95/5, unique_cut = 10),
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("nzv")
+)
 
 \method{tidy}{step_nzv}(x, ...)
 }

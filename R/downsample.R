@@ -67,7 +67,7 @@
 #'
 #' ds_rec <- recipe( ~ ., data = okc) %>%
 #'   step_downsample(diet) %>%
-#'   prep(training = okc, retain = TRUE)
+#'   prep(training = okc)
 #'
 #' table(juice(ds_rec)$diet, useNA = "always")
 #'

@@ -4,8 +4,16 @@
 \alias{step_mutate_at}
 \title{Mutate multiple columns}
 \usage{
-step_mutate_at(recipe, ..., fn, role = "predictor", trained = FALSE,
-  inputs = NULL, skip = FALSE, id = rand_id("mutate_at"))
+step_mutate_at(
+  recipe,
+  ...,
+  fn,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("mutate_at")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the

@@ -68,7 +68,7 @@ test_that('Correct values', {
     step_nnmf(all_predictors(), seed = 2432, num_run = 3)
   expect_output(print(rec))
 
-  expect_output(rec <- prep(rec, training = iris, verbose = TRUE, retain = TRUE))
+  expect_output(rec <- prep(rec, training = iris, verbose = TRUE))
 
   rec_res <- juice(rec, all_predictors(), composition = "matrix")[1:7,]
 
@@ -101,6 +101,11 @@ test_that('No NNF', {
 
 
 test_that('tunable', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
   rec <-
     recipe(~ ., data = iris) %>%
     step_nnmf(all_predictors())

@@ -5,9 +5,17 @@
 \alias{tidy.step_rollimpute}
 \title{Impute Numeric Data Using a Rolling Window Statistic}
 \usage{
-step_rollimpute(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, statistic = median, window = 5, skip = FALSE,
-  id = rand_id("rollimpute"))
+step_rollimpute(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  statistic = median,
+  window = 5,
+  skip = FALSE,
+  id = rand_id("rollimpute")
+)
 
 \method{tidy}{step_rollimpute}(x, ...)
 }
@@ -94,7 +102,7 @@ library(recipes)
 seven_pt <- recipe(~ . , data = example_data) \%>\%
   update_role(day, new_role = "time_index") \%>\%
   step_rollimpute(all_predictors(), window = 7) \%>\%
-  prep(training = example_data, retain = TRUE)
+  prep(training = example_data)
 
 juice(seven_pt)
 }

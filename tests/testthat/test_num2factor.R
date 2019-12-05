@@ -18,7 +18,7 @@ rec <- recipe(~ ., data = ex_dat)
 test_that('basic functionality', {
   ex_1 <- rec %>%
     step_num2factor(all_numeric()) %>%
-    prep(ex_dat, retain = TRUE) %>%
+    prep(ex_dat) %>%
     juice
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
@@ -28,7 +28,7 @@ test_that('basic functionality', {
 
   ex_2 <- rec %>%
     step_num2factor(all_numeric(), ordered = TRUE) %>%
-    prep(ex_dat, retain = TRUE) %>%
+    prep(ex_dat) %>%
     juice
   expect_equal(class(ex_2$x), c("ordered", "factor"))
   expect_equal(class(ex_2$x), c("ordered", "factor"))
@@ -48,7 +48,7 @@ test_that('bad args', {
 test_that('printing', {
   ex_3 <- rec %>%
     step_num2factor(all_numeric()) %>%
-    prep(ex_dat, strings_as_factors = FALSE, retain = TRUE)
+    prep(ex_dat, strings_as_factors = FALSE)
   expect_output(print(ex_3))
   expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
 })

@@ -582,7 +582,7 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
         new_data <- strings2factors(new_data, var_levels)
     }
   } else {
-    new_data <- tibble()
+    new_data <- tibble(.rows = nrow(new_data))
   }
 
   if (composition == "dgCMatrix") {
@@ -711,7 +711,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'   step_normalize(all_predictors()) %>%
 #'   step_spatialsign(all_predictors())
 #'
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr, retain = TRUE)
+#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 #'
 #' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
 #' og_values <- juice(sp_signed_trained, all_predictors())
@@ -761,7 +761,7 @@ juice <- function(object, ..., composition = "tibble") {
         new_data <- strings2factors(new_data, var_levels)
     }
   } else {
-    new_data <- tibble()
+    new_data <- tibble(.rows = nrow(object$template))
   }
 
   if (composition == "dgCMatrix") {

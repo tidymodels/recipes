@@ -5,10 +5,20 @@
 \alias{tidy.step_nnmf}
 \title{NNMF Signal Extraction}
 \usage{
-step_nnmf(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 2, num_run = 30, options = list(), res = NULL,
-  prefix = "NNMF", seed = sample.int(10^5, 1), skip = FALSE,
-  id = rand_id("nnmf"))
+step_nnmf(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 2,
+  num_run = 30,
+  options = list(),
+  res = NULL,
+  prefix = "NNMF",
+  seed = sample.int(10^5, 1),
+  skip = FALSE,
+  id = rand_id("nnmf")
+)
 
 \method{tidy}{step_nnmf}(x, ...)
 }
@@ -95,7 +105,7 @@ data(biomass)
 #   update_role(sample, new_role = "id var") \%>\%
 #   update_role(dataset, new_role = "split variable") \%>\%
 #   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) \%>\%
-#   prep(training = biomass, retain = TRUE)
+#   prep(training = biomass)
 #
 # juice(rec)
 #

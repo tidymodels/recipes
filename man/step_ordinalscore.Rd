@@ -5,9 +5,16 @@
 \alias{tidy.step_ordinalscore}
 \title{Convert Ordinal Factors to Numeric Scores}
 \usage{
-step_ordinalscore(recipe, ..., role = NA, trained = FALSE,
-  columns = NULL, convert = as.numeric, skip = FALSE,
-  id = rand_id("ordinalscore"))
+step_ordinalscore(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  convert = as.numeric,
+  skip = FALSE,
+  id = rand_id("ordinalscore")
+)
 
 \method{tidy}{step_ordinalscore}(x, ...)
 }
@@ -79,7 +86,7 @@ linear_values <- recipe(~ item + fail_severity, data = ord_data) \%>\%
   step_dummy(item) \%>\%
   step_ordinalscore(fail_severity)
 
-linear_values <- prep(linear_values, training = ord_data, retain = TRUE)
+linear_values <- prep(linear_values, training = ord_data)
 
 juice(linear_values, everything())
 
@@ -94,7 +101,7 @@ nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) \%>\%
 
 tidy(nonlin_scores, number = 2)
 
-nonlin_scores <- prep(nonlin_scores, training = ord_data, retain = TRUE)
+nonlin_scores <- prep(nonlin_scores, training = ord_data)
 
 juice(nonlin_scores, everything())
 

@@ -28,14 +28,14 @@
 #' # Uses `sample_n`
 #' recipe( ~ ., data = iris) %>%
 #'   step_sample(size = 1) %>%
-#'   prep(training = iris, retain = TRUE) %>%
+#'   prep(training = iris) %>%
 #'   juice() %>%
 #'   nrow()
 #'
 #' # Uses `sample_frac`
 #' recipe( ~ ., data = iris) %>%
 #'   step_sample(size = 0.9999) %>%
-#'   prep(training = iris, retain = TRUE) %>%
+#'   prep(training = iris) %>%
 #'   juice() %>%
 #'   nrow()
 #'
@@ -43,7 +43,7 @@
 #' smaller_iris <-
 #'   recipe( ~ ., data = iris) %>%
 #'   step_sample() %>%
-#'   prep(training = iris %>% slice(1:120), retain = TRUE)
+#'   prep(training = iris %>% slice(1:120))
 #'
 #' juice(smaller_iris) %>% nrow()
 #' bake(smaller_iris, iris %>% slice(121:150)) %>% nrow()

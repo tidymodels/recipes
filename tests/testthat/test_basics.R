@@ -27,11 +27,11 @@ test_that("return character or factor values", {
   centered <- raw_recipe %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  centered_char <- prep(centered, training = biomass, strings_as_factors = FALSE, retain = TRUE)
+  centered_char <- prep(centered, training = biomass, strings_as_factors = FALSE)
   char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE, retain = TRUE)
+  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE)
   fac_var <- bake(centered_fac, new_data = head(biomass))
   expect_equal(class(fac_var$sample), "factor")
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))
@@ -117,18 +117,27 @@ test_that("bake without newdata", {
   rec <-  recipe(HHV ~ ., data = biomass) %>%
     step_center(all_numeric()) %>%
     step_scale(all_numeric()) %>%
-    prep(training = biomass, retain = TRUE)
+    prep(training = biomass)
 
   expect_error(bake(rec, newdata = biomass))
 })
 
+test_that("`juice()` returns a 0 column / N row tibble when a selection returns no columns", {
+  rec <- recipe(~ ., data = iris)
+  rec <- prep(rec, iris)
 
-test_that("no outcomes", {
-  rec <-  recipe(~ ., data = biomass) %>%
-    step_center(all_numeric()) %>%
-    step_scale(all_numeric()) %>%
-    prep(training = biomass, retain = TRUE)
+  expect_equal(
+    juice(rec, all_outcomes()),
+    tibble(.rows = nrow(iris))
+  )
+})
 
-  expect_equal(juice(rec, all_outcomes()), tibble::tibble())
-  expect_equal(bake(rec, new_data = head(biomass), all_outcomes()), tibble::tibble())
+test_that("`bake()` returns a 0 column / N row tibble when a selection returns no columns", {
+  rec <- recipe(~ ., data = iris)
+  rec <- prep(rec, iris)
+
+  expect_equal(
+    bake(rec, iris, all_outcomes()),
+    tibble(.rows = nrow(iris))
+  )
 })

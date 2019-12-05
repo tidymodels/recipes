@@ -1,35 +1,31 @@
 #' Impute Numeric Data Using the Mean
 #'
-#'   `step_meanimpute` creates a *specification* of a
-#'  recipe step that will substitute missing values of numeric
-#'  variables by the training set mean of those variables.
+#' `step_meanimpute` creates a *specification* of a recipe step that will
+#'  substitute missing values of numeric variables by the training set mean of
+#'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param means A named numeric vector of means. This is
-#'  `NULL` until computed by [prep.recipe()].
-#' @param trim The fraction (0 to 0.5) of observations to be
-#'  trimmed from each end of the variables before the mean is
-#'  computed. Values of trim outside that range are taken as the
-#'  nearest endpoint.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the mean
+#' @param ... One or more selector functions to choose which variables are
+#'  affected by the step. See [selections()] for more details. For the `tidy`
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are created.
+#' @param means A named numeric vector of means. This is `NULL` until computed
+#'  by [prep.recipe()]. Note that, if the original data are integers, the mean
+#'  will be converted to an integer to maintain the same a data type.
+#' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
+#'  end of the variables before the mean is computed. Values of trim outside
+#'  that range are taken as the nearest endpoint.
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  columns `terms` (the selectors or variables selected) and `model` (the mean
 #'  value).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details `step_meanimpute` estimates the variable means
-#'  from the data used in the `training` argument of
-#'  `prep.recipe`. `bake.recipe` then applies the new
-#'  values to new data sets using these averages.
+#' @details `step_meanimpute` estimates the variable means from the data used
+#'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
+#'  new values to new data sets using these averages.
 #' @examples
 #' data("credit_data")
 #'
@@ -100,12 +96,9 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
-  means <-
-    vapply(training[, col_names],
-           mean,
-           c(mean = 0),
-           trim = x$trim,
-           na.rm = TRUE)
+  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
+  means <- purrr::map2(means, training[, col_names], cast)
+
   step_meanimpute_new(
     terms = x$terms,
     role = x$role,
@@ -120,8 +113,8 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_meanimpute <- function(object, new_data, ...) {
   for (i in names(object$means)) {
-    if (any(is.na(new_data[, i])))
-      new_data[is.na(new_data[, i]), i] <- object$means[i]
+    if (any(is.na(new_data[[i]])))
+      new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
   as_tibble(new_data)
 }
@@ -139,7 +132,7 @@ print.step_meanimpute <-
 tidy.step_meanimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
-                  model = x$means)
+                  model = unlist(x$means))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

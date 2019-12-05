@@ -5,9 +5,19 @@
 \alias{tidy.step_pls}
 \title{Partial Least Squares Feature Extraction}
 \usage{
-step_pls(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 2, outcome = NULL, options = NULL, res = NULL,
-  prefix = "PLS", skip = FALSE, id = rand_id("pls"))
+step_pls(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 2,
+  outcome = NULL,
+  options = NULL,
+  res = NULL,
+  prefix = "PLS",
+  skip = FALSE,
+  id = rand_id("pls")
+)
 
 \method{tidy}{step_pls}(x, ...)
 }
@@ -100,7 +110,7 @@ pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
   step_normalize(all_outcomes(), skip = TRUE) \%>\%
   step_pls(all_predictors(), outcome = "HHV")
 
-pls_rec <- prep(pls_rec, training = biomass_tr, retain = TRUE)
+pls_rec <- prep(pls_rec, training = biomass_tr)
 
 pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
 

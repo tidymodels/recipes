@@ -21,12 +21,12 @@ test_that('training in stages', {
   center_first <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
   center_first_trained <-
-    prep(center_first, training = biomass, retain = TRUE)
+    prep(center_first, training = biomass)
 
   no_sulfur <- center_first_trained %>%
     step_rm(sulfur)
   no_sulfur_trained <-
-    prep(no_sulfur, retain = TRUE)
+    prep(no_sulfur)
 
   scale_last <- no_sulfur_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen)
@@ -37,7 +37,7 @@ test_that('training in stages', {
     step_rm(sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen)
   in_stages_trained <-
-    prep(in_stages, retain = TRUE)
+    prep(in_stages)
   in_stages_retrained <-
     prep(in_stages, training = biomass, fresh = TRUE)
 

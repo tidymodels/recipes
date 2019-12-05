@@ -49,22 +49,45 @@ test_that('correct means and std devs', {
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
 })
 
+test_that('scale by factor of 1 or 2', {
+  standardized <- rec %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale", factor = 2)
+
+  standardized_trained <- prep(standardized, training = biomass)
+
+  scal_tibble_tr <-
+    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+           value = sds*2,
+           id = standardized$steps[[1]]$id)
+
+  expect_equal(tidy(standardized_trained, 1), scal_tibble_tr)
+
+  expect_equal(standardized_trained$steps[[1]]$sds, 2*sds)
+
+  expect_warning(
+    not_recommended_standardized_input <- rec %>%
+      step_scale(carbon, id = "scale", factor = 3) %>%
+      prep(training = biomass)
+  )
+
+})
+
 test_that('training in stages', {
   at_once <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
-  at_once_trained <- prep(at_once, training = biomass, retain = TRUE)
+  at_once_trained <- prep(at_once, training = biomass)
 
   ## not train in stages
   center_first <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center")
-  center_first_trained <- prep(center_first, training = biomass, retain = TRUE)
+  center_first_trained <- prep(center_first, training = biomass)
   in_stages <- center_first_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
-  in_stages_trained <- prep(in_stages, retain = TRUE)
+  in_stages_trained <- prep(in_stages)
   in_stages_retrained <-
-    prep(in_stages, training = biomass, fresh = TRUE, retain = TRUE)
+    prep(in_stages, training = biomass, fresh = TRUE)
 
   expect_equal(at_once_trained, in_stages_trained)
   expect_equal(at_once_trained, in_stages_retrained)

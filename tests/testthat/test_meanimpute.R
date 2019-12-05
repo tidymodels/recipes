@@ -20,15 +20,22 @@ test_that('simple mean', {
   te_imputed <- bake(imputed, new_data = credit_te)
 
   expect_equal(te_imputed$Age, credit_te$Age)
+
+  assets_pred <- mean(credit_tr$Assets, na.rm = TRUE)
+  assets_pred <- recipes:::cast(assets_pred, credit_tr$Assets)
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)],
-               rep(mean(credit_tr$Assets, na.rm = TRUE),
-                   sum(is.na(credit_te$Assets))))
+               rep(assets_pred, sum(is.na(credit_te$Assets))))
+
+  inc_pred <- mean(credit_tr$Income, na.rm = TRUE)
+  inc_pred <- recipes:::cast(inc_pred, credit_tr$Assets)
   expect_equal(te_imputed$Income[is.na(credit_te$Income)],
-               rep(mean(credit_tr$Income, na.rm = TRUE),
-                   sum(is.na(credit_te$Income))))
+               rep(inc_pred, sum(is.na(credit_te$Income))))
 
   means <- vapply(credit_tr[, c("Age", "Assets", "Income")],
                  mean, numeric(1), na.rm = TRUE)
+  means <- purrr::map2(means, credit_tr[, c("Age", "Assets", "Income")], recipes:::cast)
+  means <- unlist(means)
+
   imp_tibble_un <-
     tibble(terms = c("Age", "Assets", "Income"),
            model = rep(NA_real_, 3),
@@ -38,7 +45,7 @@ test_that('simple mean', {
            model = means,
            id = "")
 
-  expect_equal(tidy(impute_rec, 1), imp_tibble_un)
+  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
   expect_equal(tidy(imputed, 1), imp_tibble_tr)
 
 })
@@ -51,9 +58,10 @@ test_that('trimmed mean', {
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
 
+  mean_val <- mean(credit_tr$Assets, na.rm = TRUE, trim = .1)
+  mean_val <- recipes:::cast(mean_val, credit_tr$Assets)
   expect_equal(te_imputed$Assets[is.na(credit_te$Assets)],
-               rep(mean(credit_tr$Assets, na.rm = TRUE, trim = .1),
-                   sum(is.na(credit_te$Assets))))
+               rep(mean_val, sum(is.na(credit_te$Assets))))
 })
 
 test_that('non-numeric', {

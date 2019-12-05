@@ -5,8 +5,15 @@
 \alias{tidy.step_filter}
 \title{Filter rows using dplyr}
 \usage{
-step_filter(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
-  skip = FALSE, id = rand_id("filter"))
+step_filter(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("filter")
+)
 
 \method{tidy}{step_filter}(x, ...)
 }
@@ -53,7 +60,7 @@ that will remove rows using \code{\link[dplyr:filter]{dplyr::filter()}}.
 \details{
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \code{!!}) to embed
+it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
 }
@@ -61,7 +68,7 @@ between sessions). See the examples.
 rec <- recipe( ~ ., data = iris) \%>\%
   step_filter(Sepal.Length > 4.5, Species == "setosa")
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 
 library(dplyr)
 

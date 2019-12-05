@@ -17,7 +17,7 @@ test_that('basic usage', {
     iris_rec %>%
     step_slice(1:5)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75), retain = TRUE)
+  prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -43,7 +43,7 @@ test_that('quasiquotation', {
     iris_rec %>%
     step_slice(values)
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75), retain = TRUE)
+  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
@@ -54,16 +54,19 @@ test_that('quasiquotation', {
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
 
-  rec_2 <-
-    iris_rec %>%
-    step_slice(!!values)
+  expect_error(
+    rec_2 <-
+      iris_rec %>%
+      step_slice(!!values),
+    regexp = NA
+  )
 
-  prepped_2 <- prep(rec_2, training = iris %>% slice(1:75), retain = TRUE)
+  prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
   rm(values)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75), retain = TRUE))
+  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
   expect_error(
-    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75), retain = TRUE),
+    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
     regexp = NA
   )
   rec_2_train <- juice(prepped_2)
@@ -75,7 +78,7 @@ test_that('no input', {
   no_inputs <-
     iris_rec %>%
     step_slice() %>%
-    prep(training = iris, retain = TRUE) %>%
+    prep(training = iris) %>%
     juice(composition = "data.frame")
   expect_equal(no_inputs, iris)
 })

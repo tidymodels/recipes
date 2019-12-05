@@ -32,7 +32,7 @@
 #'
 #' recipe(Ozone ~ ., data = airquality) %>%
 #'   step_naomit(Solar.R) %>%
-#'   prep(airquality, verbose = FALSE, retain = TRUE) %>%
+#'   prep(airquality, verbose = FALSE) %>%
 #'   juice()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]

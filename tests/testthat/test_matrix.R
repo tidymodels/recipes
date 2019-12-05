@@ -21,7 +21,7 @@ rec <- recipe( ~ ., data = okc_tr) %>%
   step_modeimpute(all_nominal()) %>%
   step_meanimpute(all_numeric()) %>%
   step_dummy(location, diet) %>%
-  prep(training = okc_tr, retain = TRUE)
+  prep(training = okc_tr)
 
 ###################################################################
 
@@ -42,16 +42,16 @@ test_that('correct types', {
     juice(rec, all_numeric(), composition = "matrix")
   juice_sparse_1d <-
     juice(rec, age, composition = "matrix")
-  
+
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
-  
-  expect_equal(as.vector(class(bake_sparse)), "matrix")
-  expect_equal(as.vector(class(juice_sparse)), "matrix")
-  
-  expect_equal(as.vector(class(bake_sparse_1d)), "matrix")
-  expect_equal(as.vector(class(juice_sparse_1d)), "matrix")
-  
+
+  expect_true(inherits(bake_sparse, "matrix"))
+  expect_true(inherits(juice_sparse, "matrix"))
+
+  expect_true(inherits(bake_sparse_1d, "matrix"))
+  expect_true(inherits(juice_sparse_1d, "matrix"))
+
   expect_equal(recipes:::convert_matrix(bake_default, sparse = FALSE),
                bake_sparse)
   expect_equal(recipes:::convert_matrix(juice_default, sparse = FALSE),

@@ -5,8 +5,15 @@
 \alias{tidy.step_arrange}
 \title{Sort rows using dplyr}
 \usage{
-step_arrange(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
-  skip = FALSE, id = rand_id("arrange"))
+step_arrange(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("arrange")
+)
 
 \method{tidy}{step_arrange}(x, ...)
 }
@@ -15,7 +22,7 @@ step_arrange(recipe, ..., role = NA, trained = FALSE, inputs = NULL,
 sequence of operations for this recipe.}
 
 \item{...}{Comma separated list of unquoted variable names.
-Use \code{desc()`` to sort a variable in descending order. See [dplyr::arrange()] for more details. For the }tidy`
+Use \verb{desc()`` to sort a variable in descending order. See [dplyr::arrange()] for more details. For the }tidy`
 method, these are not currently used.}
 
 \item{role}{Not used by this step since no new variables are
@@ -51,7 +58,7 @@ that will sort rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 \details{
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \code{!!!})
+it is a good idea to use quasiquotation (e.g. \verb{!!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
@@ -59,7 +66,7 @@ be portable between sessions). See the examples.
 rec <- recipe( ~ ., data = iris) \%>\%
   step_arrange(desc(Sepal.Length), 1/Petal.Length)
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75), retain = TRUE)
+prepped <- prep(rec, training = iris \%>\% slice(1:75))
 tidy(prepped, number = 1)
 
 library(dplyr)

@@ -5,9 +5,19 @@
 \alias{tidy.step_downsample}
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
-step_downsample(recipe, ..., under_ratio = 1, ratio = NA, role = NA,
-  trained = FALSE, column = NULL, target = NA, skip = TRUE,
-  seed = sample.int(10^5, 1), id = rand_id("downsample"))
+step_downsample(
+  recipe,
+  ...,
+  under_ratio = 1,
+  ratio = NA,
+  role = NA,
+  trained = FALSE,
+  column = NULL,
+  target = NA,
+  skip = TRUE,
+  seed = sample.int(10^5, 1),
+  id = rand_id("downsample")
+)
 
 \method{tidy}{step_downsample}(x, ...)
 }
@@ -101,7 +111,7 @@ sort(table(okc$diet, useNA = "always"))
 
 ds_rec <- recipe( ~ ., data = okc) \%>\%
   step_downsample(diet) \%>\%
-  prep(training = okc, retain = TRUE)
+  prep(training = okc)
 
 table(juice(ds_rec)$diet, useNA = "always")
 

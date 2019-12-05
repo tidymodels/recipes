@@ -5,9 +5,17 @@
 \alias{tidy.step_num2factor}
 \title{Convert Numbers to Factors}
 \usage{
-step_num2factor(recipe, ..., role = NA, transform = function(x) x,
-  trained = FALSE, levels = NULL, ordered = FALSE, skip = FALSE,
-  id = rand_id("num2factor"))
+step_num2factor(
+  recipe,
+  ...,
+  role = NA,
+  transform = function(x) x,
+  trained = FALSE,
+  levels = NULL,
+  ordered = FALSE,
+  skip = FALSE,
+  id = rand_id("num2factor")
+)
 
 \method{tidy}{step_num2factor}(x, ...)
 }
@@ -72,8 +80,7 @@ rec <- recipe(~ ., data = iris2)
 
 make_factor <- rec \%>\% step_num2factor(Species)
 make_factor <- prep(make_factor,
-                    training = iris2,
-                    retain = TRUE)
+                    training = iris2)
 
 # note that `diet` is a factor
 juice(make_factor) \%>\% head

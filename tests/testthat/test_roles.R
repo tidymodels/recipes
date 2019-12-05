@@ -279,7 +279,7 @@ test_that("adding multiple roles/types does not duplicate prepped columns", {
   expect_equal(
     rec %>%
       add_role(carbon, new_role = "carb") %>%
-      prep(training = biomass, retain = TRUE) %>%
+      prep(training = biomass) %>%
       juice() %>%
       ncol(),
 
@@ -290,7 +290,7 @@ test_that("adding multiple roles/types does not duplicate prepped columns", {
   expect_equal(
     rec %>%
       add_role(carbon, new_type = "carb") %>%
-      prep(training = biomass, retain = TRUE) %>%
+      prep(training = biomass) %>%
       juice() %>%
       ncol(),
 
@@ -306,7 +306,7 @@ test_that("type selectors can be combined", {
   prepped <- rec %>%
     add_role(carbon, new_role = "predictor", new_type = "carb") %>%
     step_center(all_numeric(), -has_type("carb")) %>%
-    prep(training = biomass, retain = TRUE)
+    prep(training = biomass)
 
   expect_equal(
     names(prepped$steps[[1]]$means),
@@ -322,7 +322,7 @@ test_that("step_rm() removes ALL mention of variables with that role", {
   rec_prepped <- rec %>%
     add_role(carbon, new_role = "predictor", new_type = "carb") %>%
     step_rm(has_type("carb")) %>%
-    prep(training = biomass, retain = TRUE) %>%
+    prep(training = biomass) %>%
     summary()
 
   expect_false("carbon" %in% rec_prepped$variable)
