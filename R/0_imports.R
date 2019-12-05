@@ -41,7 +41,7 @@ utils::globalVariables(
   recipe_exports <- getNamespaceExports(ns = "recipes")
   tunable_steps <- grep("tunable.step", recipe_exports, fixed = TRUE, value = TRUE)
   for (i in tunable_steps) {
-    s3_register("dplyr::tune", i)
+    s3_register("dplyr::tunable", i)
   }
 }
 
