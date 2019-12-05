@@ -27,10 +27,10 @@ recipe.default <- function(x, ...)
 #' @param ... Further arguments passed to or from other methods (not currently
 #'   used).
 #' @param formula A model formula. No in-line functions should be used here
-#'   (e.g. `log(x)`, `x:y`, etc.). These types of transformations
-#'   should be enacted using `step` functions in this package. Dots are
-#'   allowed as are simple multivariate outcome terms (i.e. no need for
-#'   `cbind`; see Examples).
+#'  (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types of
+#'  transformations should be enacted using `step` functions in this package.
+#'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
+#'  `cbind`; see Examples).
 #' @param x,data A data frame or tibble of the *template* data set
 #'   (see below).
 #' @return An object of class `recipe` with sub-objects:
@@ -207,6 +207,13 @@ recipe.data.frame <-
 #' @rdname recipe
 #' @export
 recipe.formula <- function(formula, data, ...) {
+  # check for minus:
+  f_funcs <- fun_calls(formula)
+  if (any(f_funcs == "-")) {
+    rlang::abort("`-` is not allowed in a recipe formula. Use `step_rm()` instead.")
+  }
+
+  # Check for other in-line functions
   args <- form2args(formula, data, ...)
   obj <- recipe.data.frame(
     x = args$x,
