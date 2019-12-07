@@ -124,9 +124,7 @@ reference:
   - title: Check Functions
     contents:
     - matches("^check_")
-  - title: Example Datasets
-    contents:
-    - matches("(okc)|(biomass)|(credit)|(covers)||(Smithsonian)")
+
 
 navbar:
   left:
