@@ -54,6 +54,7 @@
 #' @concept preprocessing
 #' @export
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' # Setup a grid across date but keep the other values fixed

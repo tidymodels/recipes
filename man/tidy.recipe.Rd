@@ -37,6 +37,7 @@ regarding a recipe or operation within the recipe (when a \code{tidy}
 method for the operation exists).
 }
 \examples{
+library(modeldata)
 data(okc)
 
 okc_rec <- recipe(~ ., data = okc) \%>\%

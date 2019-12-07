@@ -100,6 +100,7 @@ This step is atypical in that, when baked, the
 based on the fixed and profiled variable's information.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 # Setup a grid across date but keep the other values fixed

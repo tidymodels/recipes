@@ -151,7 +151,9 @@ test_that('issue #', {
 
 # tests based on the results of this code before the update:
 
-# data(credit_data)
+library(modeldata)
+library(modeldata)
+data(credit_data)
 #
 # recipe(Status ~ Seniority + Job + Price + Age, data = credit_data) %>%
 #   step_dummy(Job) %>%

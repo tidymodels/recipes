@@ -31,6 +31,7 @@
 #'  columns does contain `NA` values. If the check passes, nothing is changed
 #'  to the data.
 #' @examples
+#' library(modeldata)
 #' data(credit_data)
 #' is.na(credit_data) %>% colSums()
 #'

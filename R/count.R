@@ -39,6 +39,7 @@
 #' @concept regular_expressions
 #' @export
 #' @examples
+#' library(modeldata)
 #' data(covers)
 #'
 #' rec <- recipe(~ description, covers) %>%

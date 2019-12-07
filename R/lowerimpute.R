@@ -30,6 +30,7 @@
 #'  with a random uniform value between zero and the minimum.
 #' @examples
 #' library(recipes)
+#' library(modeldata)
 #' data(biomass)
 #'
 #' ## Truncate some values to emulate what a lower limit of

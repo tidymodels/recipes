@@ -59,6 +59,7 @@ on all of the variables that have a custom role with the selector
 }
 \examples{
 library(recipes)
+library(modeldata)
 data(biomass)
 
 # Using the formula method, roles are created for any outcomes and predictors:

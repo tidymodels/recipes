@@ -61,6 +61,7 @@
 #' @concept subsampling
 #' @export
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' sort(table(okc$diet, useNA = "always"))

@@ -2,7 +2,8 @@ library(testthat)
 library(gower)
 library(recipes)
 library(dplyr)
-data("biomass")
+library(modeldata)
+data(biomass)
 
 context("K-nn imputation")
 

@@ -58,6 +58,7 @@ is the columns that will be removed.
 that will remove variables that contain only a single value.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass$one_value <- 1

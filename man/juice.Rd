@@ -38,6 +38,7 @@ have been applied to the data, irrespective of the value of
 the step's \code{skip} argument.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

@@ -73,6 +73,7 @@ the training set, the new values are truncated at \code{min} or
 \code{max}.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

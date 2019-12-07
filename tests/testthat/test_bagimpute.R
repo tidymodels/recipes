@@ -5,7 +5,8 @@ library(recipes)
 
 context("bagged imputation")
 
-data("biomass")
+library(modeldata)
+data(biomass)
 
 biomass$fac <- factor(sample(letters[1:2], size = nrow(biomass), replace = TRUE))
 

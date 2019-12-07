@@ -120,6 +120,7 @@ The \href{https://tidymodels.github.io/recipes/articles/Dummies.html}{package vi
 and interactions has more information.
 }
 \examples{
+library(modeldata)
 data(okc)
 okc <- okc[complete.cases(okc),]
 

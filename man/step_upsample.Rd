@@ -100,6 +100,7 @@ option \code{skip = TRUE} so that the extra sampling is \emph{not}
 conducted outside of the training set.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 orig <- table(okc$diet, useNA = "always")

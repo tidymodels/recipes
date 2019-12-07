@@ -42,6 +42,7 @@ Suggests:
     igraph,
     kernlab,
     knitr,
+    modeldata,
     pls,
     RANN,
     RcppRoll,

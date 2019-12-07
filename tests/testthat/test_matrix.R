@@ -6,6 +6,7 @@ context("Matrix data types")
 
 ###################################################################
 
+library(modeldata)
 data(okc)
 
 okc$diet <- as.factor(okc$diet)

@@ -82,6 +82,9 @@ make_factor <- rec \%>\% step_num2factor(Species)
 make_factor <- prep(make_factor,
                     training = iris2)
 
+library(modeldata)
+data(okc)
+
 # note that `diet` is a factor
 juice(make_factor) \%>\% head
 okc \%>\% head

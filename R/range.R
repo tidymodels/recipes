@@ -31,6 +31,7 @@
 #'  the training set, the new values are truncated at `min` or
 #'  `max`.
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

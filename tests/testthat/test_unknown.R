@@ -3,6 +3,7 @@ library(testthat)
 
 context("Convert to unknowns")
 
+library(modeldata)
 data(okc)
 
 okc_tr <- okc[ (1:30000), ]

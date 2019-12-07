@@ -4,6 +4,7 @@ library(recipes)
 context("Dummy variable creation")
 
 
+library(modeldata)
 data(okc)
 
 okc_missing <- okc

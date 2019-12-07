@@ -173,6 +173,7 @@ element_check <- function(x, allowed = selectors) {
 #' @export
 #' @examples
 #' library(rlang)
+#' library(modeldata)
 #' data(okc)
 #' rec <- recipe(~ ., data = okc)
 #' info <- summary(rec)
@@ -249,6 +250,7 @@ abort_selection <- exiting(function(cnd) {
 #'
 #' @keywords datagen
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' rec <- recipe(biomass) %>%

@@ -62,6 +62,7 @@ used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} t
 the new values to new data sets using these medians
 }
 \examples{
+library(modeldata)
 data("credit_data")
 
 ## missing data per column

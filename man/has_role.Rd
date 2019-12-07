@@ -47,6 +47,7 @@ All of these functions have have limited utility
 outside of column selection in step functions.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 rec <- recipe(biomass) \%>\%

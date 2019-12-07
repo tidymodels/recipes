@@ -1,6 +1,7 @@
 library(testthat)
 library(recipes)
-data("biomass")
+library(modeldata)
+data(biomass)
 
 context("Spatial sign transformation")
 

@@ -54,6 +54,7 @@
 #'  names would be `PLS001` - `PLS101`.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

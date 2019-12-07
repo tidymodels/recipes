@@ -67,6 +67,7 @@ in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then a
 new values to new data sets using these averages.
 }
 \examples{
+library(modeldata)
 data("credit_data")
 
 ## missing data per column

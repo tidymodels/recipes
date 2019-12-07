@@ -85,6 +85,7 @@ If \code{infs = FALSE} and a new value is greater than the
 largest value of \code{x}, a missing value will result.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

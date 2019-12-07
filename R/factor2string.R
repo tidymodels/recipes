@@ -29,6 +29,7 @@
 #'  to factors after all of the steps have been prepped.
 #' @seealso [step_string2factor()] [step_dummy()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' rec <- recipe(~ diet + location, data = okc)

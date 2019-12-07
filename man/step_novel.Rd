@@ -78,6 +78,7 @@ If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 okc_tr <- okc[1:30000,]

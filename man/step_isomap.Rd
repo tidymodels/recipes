@@ -103,6 +103,7 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 }
 \examples{
 \donttest{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

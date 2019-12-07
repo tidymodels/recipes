@@ -58,6 +58,7 @@ is the columns that will be removed.
 that will remove variables based on their name, type, or role.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

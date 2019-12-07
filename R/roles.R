@@ -47,6 +47,7 @@
 #' @concept model_specification
 #' @examples
 #' library(recipes)
+#' library(modeldata)
 #' data(biomass)
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:

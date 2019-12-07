@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+library(modeldata)
+data(biomass)
+
 context("PLS")
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

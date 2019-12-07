@@ -50,6 +50,7 @@
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #'  [step_novel()], [step_dummy()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' okc$location <- factor(okc$location)

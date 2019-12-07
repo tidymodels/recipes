@@ -3,6 +3,8 @@
 ## Breaking Changes
 
  * The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types). 
+ 
+ * The data sets were moved to the new `modeldata` package. 
 
 ## Other Changes
 

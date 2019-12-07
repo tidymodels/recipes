@@ -37,6 +37,7 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_poly_1` and so on.
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

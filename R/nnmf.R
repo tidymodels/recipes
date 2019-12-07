@@ -54,6 +54,7 @@
 #'
 #' @examples
 #'
+#' library(modeldata)
 #' data(biomass)
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%

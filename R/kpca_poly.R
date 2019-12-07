@@ -70,6 +70,7 @@
 #'  of Statistical Software*, 11(1), 1-20.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

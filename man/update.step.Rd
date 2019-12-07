@@ -22,6 +22,7 @@ conflicting information can arise between the data returned from \code{\link[=ju
 and the information in the step.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

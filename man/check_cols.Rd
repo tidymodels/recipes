@@ -54,6 +54,7 @@ to the data.
 }
 \examples{
 
+library(modeldata)
 data(biomass)
 
 biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%

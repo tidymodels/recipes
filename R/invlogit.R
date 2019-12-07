@@ -25,6 +25,7 @@
 #'  real line and translates them to be between zero and one using
 #'  the function `f(x) = 1/(1+exp(-x))`.
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

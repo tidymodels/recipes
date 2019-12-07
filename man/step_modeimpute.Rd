@@ -66,6 +66,7 @@ values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.
 }
 \examples{
+library(modeldata)
 data("credit_data")
 
 ## missing data per column

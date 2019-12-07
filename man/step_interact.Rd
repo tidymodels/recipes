@@ -101,6 +101,7 @@ so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x6):z} and
 all two-way interactions are created.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

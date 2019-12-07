@@ -90,6 +90,7 @@ closed to the bounds, or if the optimization fails, a value of
 }
 \examples{
 
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

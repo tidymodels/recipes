@@ -6,6 +6,7 @@ context("Checking factors in new data versus original")
 
 # ----------------------------------------------------------------
 
+library(modeldata)
 data("okc")
 
 okc_chr <-

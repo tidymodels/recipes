@@ -57,7 +57,8 @@ discretize.default <- function(x, ...)
 #' If `infs = FALSE` and a new value is greater than the
 #'  largest value of `x`, a missing value will result.
 #'@examples
-#'data(biomass)
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]

@@ -43,6 +43,7 @@
 #'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' okc_tr <- okc[1:30000,]

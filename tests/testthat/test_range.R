@@ -1,5 +1,6 @@
 library(testthat)
 library(recipes)
+library(modeldata)
 data(biomass)
 
 context("Range scaling")

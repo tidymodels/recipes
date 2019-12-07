@@ -3,6 +3,7 @@ library(recipes)
 
 context("Testing retraining")
 
+library(modeldata)
 data(biomass)
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,

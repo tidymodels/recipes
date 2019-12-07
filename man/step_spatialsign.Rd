@@ -71,6 +71,7 @@ The variables should be centered and scaled prior to the
 computations.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

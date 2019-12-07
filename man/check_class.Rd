@@ -81,6 +81,9 @@ the check will be break \code{bake} when \code{strings_as_factors} is
 }
 \examples{
 library(dplyr)
+library(modeldata)
+data(okc)
+
 # Learn the classes on the train set
 train <- okc[1:1000, ]
 test  <- okc[1001:2000, ]

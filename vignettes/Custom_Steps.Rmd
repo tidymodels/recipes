@@ -36,6 +36,7 @@ For checks, the process is very similar. Notes on this are given at the end of t
 As an example, let's create a step that replaces the value of a variable with its percentile from the training set. The date that I'll use is from the `recipes` package:
 
 ```{r initial}
+library(modeldata)
 data(biomass)
 str(biomass)
 

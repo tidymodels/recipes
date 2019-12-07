@@ -53,6 +53,7 @@
 #'  value percentage is 0.0001.
 
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass$sparse <- c(1, rep(0, nrow(biomass) - 1))

@@ -1,6 +1,7 @@
 library(tibble)
 library(recipes)
-data("biomass")
+library(modeldata)
+data(biomass)
 
 context("Multivariate data")
 

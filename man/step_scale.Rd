@@ -78,6 +78,7 @@ the variable standard deviations from the data used in the
 using these standard deviations.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

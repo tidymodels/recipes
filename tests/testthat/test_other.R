@@ -4,6 +4,7 @@ library(recipes)
 context("Pooling to other category")
 
 
+library(modeldata)
 data(okc)
 
 set.seed(19)

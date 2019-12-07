@@ -39,6 +39,7 @@
 #'  dividing by two standard deviations." Unpublished. Source:
 #'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

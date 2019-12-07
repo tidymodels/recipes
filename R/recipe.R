@@ -90,6 +90,7 @@ recipe.default <- function(x, ...)
 #'
 #' ###############################################
 #' # simple example:
+#' library(modeldata)
 #' data(biomass)
 #'
 #' # split data
@@ -706,6 +707,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  the step's `skip` argument.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

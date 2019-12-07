@@ -68,6 +68,7 @@ argument of \code{prep.recipe}. \code{bake.recipe} then applies
 the centering to new data sets using these means.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

@@ -76,6 +76,7 @@ new column name).
 create a new dummy variable based on a regular expression.
 }
 \examples{
+library(modeldata)
 data(covers)
 
 rec <- recipe(~ description, covers) \%>\%

@@ -30,6 +30,7 @@
 #'
 #' @examples
 #'
+#' library(modeldata)
 #' data(Smithsonian)
 #'
 #' # How close are the museums to Union Station?
