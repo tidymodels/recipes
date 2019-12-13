@@ -254,7 +254,8 @@ applied multiple times (as defined by <code>max_steps</code>).</p>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='no'>biomass</span>$<span class='no'>new_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>biomass</span>,
                       <span class='fl'>.1</span>*<span class='no'>carbon</span> - <span class='fl'>.2</span>*<span class='no'>hydrogen</span> + <span class='fl'>.6</span>*<span class='no'>sulfur</span>)

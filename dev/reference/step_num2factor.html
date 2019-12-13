@@ -269,6 +269,9 @@ of <code>NA</code> to these rows (see the example below).</p>
 <span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>make_factor</span>,
                     <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris2</span>)
 
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+
 <span class='co'># note that `diet` is a factor</span>
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 5
 #&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species

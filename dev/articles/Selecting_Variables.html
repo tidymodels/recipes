@@ -136,33 +136,35 @@
 <p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and <code><a href="../reference/has_role.html">?has_role</a></code> have details about the available selection methods.</p>
 <p>To illustrate this, the credit data will be used:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"credit_data"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(credit_data)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; 'data.frame':    4454 obs. of  14 variables:</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;  $ Status   : Factor w/ 2 levels "bad","good": 2 2 1 2 2 2 2 2 2 1 ...</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt;  $ Seniority: int  9 17 10 0 0 1 29 9 0 0 ...</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt;  $ Home     : Factor w/ 6 levels "ignore","other",..: 6 6 3 6 6 3 3 4 3 4 ...</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;  $ Time     : int  60 60 36 60 36 60 60 12 60 48 ...</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  $ Age      : int  30 58 46 24 26 36 44 27 32 41 ...</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;  $ Marital  : Factor w/ 5 levels "divorced","married",..: 2 5 2 4 4 2 2 4 2 2 ...</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt;  $ Records  : Factor w/ 2 levels "no","yes": 1 1 2 1 1 1 1 1 1 1 ...</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;  $ Job      : Factor w/ 4 levels "fixed","freelance",..: 2 1 2 1 1 1 1 1 2 4 ...</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt;  $ Expenses : int  73 48 90 63 46 75 75 35 90 90 ...</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt;  $ Income   : int  129 131 200 182 107 214 125 80 107 80 ...</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;  $ Assets   : int  0 0 3000 2500 0 3500 10000 0 15000 0 ...</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;  $ Debt     : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;  $ Amount   : int  800 1000 2000 900 310 650 1600 200 1200 1200 ...</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;  $ Price    : int  846 1658 2985 1325 910 1645 1800 1093 1957 1468 ...</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Status <span class="op">~</span><span class="st"> </span>Seniority <span class="op">+</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>Records, <span class="dt">data =</span> credit_data)</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">rec</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; Data Recipe</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; Inputs:</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(modeldata)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"credit_data"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(credit_data)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; 'data.frame':    4454 obs. of  14 variables:</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt;  $ Status   : Factor w/ 2 levels "bad","good": 2 2 1 2 2 2 2 2 2 1 ...</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;  $ Seniority: int  9 17 10 0 0 1 29 9 0 0 ...</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  $ Home     : Factor w/ 6 levels "ignore","other",..: 6 6 3 6 6 3 3 4 3 4 ...</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;  $ Time     : int  60 60 36 60 36 60 60 12 60 48 ...</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt;  $ Age      : int  30 58 46 24 26 36 44 27 32 41 ...</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;  $ Marital  : Factor w/ 5 levels "divorced","married",..: 2 5 2 4 4 2 2 4 2 2 ...</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt;  $ Records  : Factor w/ 2 levels "no","yes": 1 1 2 1 1 1 1 1 1 1 ...</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt;  $ Job      : Factor w/ 4 levels "fixed","freelance",..: 2 1 2 1 1 1 1 1 2 4 ...</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;  $ Expenses : int  73 48 90 63 46 75 75 35 90 90 ...</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;  $ Income   : int  129 131 200 182 107 214 125 80 107 80 ...</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;  $ Assets   : int  0 0 3000 2500 0 3500 10000 0 15000 0 ...</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;  $ Debt     : int  0 0 0 0 0 0 0 0 0 0 ...</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;  $ Amount   : int  800 1000 2000 900 310 650 1600 200 1200 1200 ...</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;  $ Price    : int  846 1658 2985 1325 910 1645 1800 1093 1957 1468 ...</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">rec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/recipe.html">recipe</a></span>(Status <span class="op">~</span><span class="st"> </span>Seniority <span class="op">+</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>Records, <span class="dt">data =</span> credit_data)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">rec</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; Data Recipe</span></a>
 <a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt;       role #variables</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt;    outcome          1</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt;  predictor          4</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; Inputs:</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt;       role #variables</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt;    outcome          1</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">#&gt;  predictor          4</span></a></code></pre></div>
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(rec, <span class="dt">original =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; # A tibble: 5 x 4</span></a>

@@ -160,20 +160,21 @@
 <h1 class="hasAnchor">
 <a href="#a-new-step-definition" class="anchor"></a>A new step definition</h1>
 <p>As an example, let’s create a step that replaces the value of a variable with its percentile from the training set. The date that I’ll use is from the <code>recipes</code> package:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(biomass)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(biomass)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; 'data.frame':    536 obs. of  8 variables:</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  $ dataset : chr  "Training" "Training" "Training" "Training" ...</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;  $ carbon  : num  49.8 49.5 47.8 45.1 46.8 ...</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  $ hydrogen: num  5.64 5.7 5.8 4.97 5.4 5.75 5.99 5.7 5.5 5.9 ...</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  $ oxygen  : num  42.9 41.3 46.2 35.6 40.7 ...</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  $ nitrogen: num  0.41 0.2 0.11 3.3 1 2.04 2.68 1.7 0.8 1.2 ...</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  $ sulfur  : num  0 0 0.02 0.16 0.02 0.1 0.2 0.2 0 0.1 ...</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  $ HHV     : num  20 19.2 18.3 18.2 18.4 ...</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(modeldata)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(biomass)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(biomass)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; 'data.frame':    536 obs. of  8 variables:</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;  $ dataset : chr  "Training" "Training" "Training" "Training" ...</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  $ carbon  : num  49.8 49.5 47.8 45.1 46.8 ...</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  $ hydrogen: num  5.64 5.7 5.8 4.97 5.4 5.75 5.99 5.7 5.5 5.9 ...</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  $ oxygen  : num  42.9 41.3 46.2 35.6 40.7 ...</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  $ nitrogen: num  0.41 0.2 0.11 3.3 1 2.04 2.68 1.7 0.8 1.2 ...</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  $ sulfur  : num  0 0 0.02 0.16 0.02 0.1 0.2 0.2 0 0.1 ...</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  $ HHV     : num  20 19.2 18.3 18.2 18.4 ...</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">biomass_tr &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Training"</span>,]</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">biomass_te &lt;-<span class="st"> </span>biomass[biomass<span class="op">$</span>dataset <span class="op">==</span><span class="st"> "Testing"</span>,]</a></code></pre></div>
 <p>To illustrate the transformation with the <code>carbon</code> variable, the training set distribution of that variables is shown below with a vertical line for the first value of the test set.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>())</a>
