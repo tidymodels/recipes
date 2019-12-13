@@ -47,6 +47,7 @@
 #' residuals only if they are within a certain margin of the decision boundary.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

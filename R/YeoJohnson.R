@@ -47,6 +47,7 @@
 #'   transformations to improve normality or symmetry. *Biometrika*.
 #' @examples
 #'
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

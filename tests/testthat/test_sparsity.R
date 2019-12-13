@@ -7,6 +7,7 @@ context("Spare matrix format")
 
 ###################################################################
 
+library(modeldata)
 data(okc)
 
 okc$diet <- as.factor(okc$diet)

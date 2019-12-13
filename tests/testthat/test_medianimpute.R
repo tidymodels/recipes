@@ -1,6 +1,8 @@
 library(testthat)
 library(recipes)
-data("credit_data")
+library(modeldata)
+library(modeldata)
+data(credit_data)
 
 context("Median imputation")
 

@@ -68,6 +68,7 @@ removed to resolve the issue. This algorithm may need to be
 applied multiple times (as defined by \code{max_steps}).
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass$new_1 <- with(biomass,

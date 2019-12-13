@@ -76,6 +76,7 @@ from the data and new columns are added. The naming convention
 for the new variables is \code{varname_ns_1} and so on.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

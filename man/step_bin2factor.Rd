@@ -75,6 +75,7 @@ density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).
 }
 \examples{
+library(modeldata)
 data(covers)
 
 rec <- recipe(~ description, covers) \%>\%

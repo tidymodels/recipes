@@ -13,6 +13,7 @@
 #' in the step, and the values are the new values to update the step with.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

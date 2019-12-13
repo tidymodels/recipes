@@ -61,6 +61,7 @@
 #'  all two-way interactions are created.
 
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

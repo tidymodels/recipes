@@ -34,6 +34,7 @@
 #' @concept factors
 #' @export
 #' @examples
+#' library(modeldata)
 #' data(covers)
 #'
 #' rec <- recipe(~ description, covers) %>%

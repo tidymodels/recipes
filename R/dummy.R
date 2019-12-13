@@ -85,6 +85,7 @@
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]
 #'  [step_novel()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #' okc <- okc[complete.cases(okc),]
 #'

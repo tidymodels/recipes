@@ -32,6 +32,8 @@ To illustrate this, the credit data will be used:
 
 ```{r credit}
 library(recipes)
+library(modeldata)
+
 data("credit_data")
 str(credit_data)
 

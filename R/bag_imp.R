@@ -50,6 +50,7 @@
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
 #' @examples
+#' library(modeldata)
 #' data("credit_data")
 #'
 #' ## missing data per column

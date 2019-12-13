@@ -38,6 +38,7 @@
 #'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()], [step_novel()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' rec <-

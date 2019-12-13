@@ -21,6 +21,7 @@
 #'  estimated using `prep`, a logical for `skip`, and a character column `id`. 
 #'
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' okc_rec <- recipe(~ ., data = okc) %>%

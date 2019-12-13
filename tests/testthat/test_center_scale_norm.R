@@ -2,6 +2,9 @@ library(testthat)
 library(rlang)
 library(recipes)
 
+library(modeldata)
+data(biomass)
+
 context("Testing center and scale")
 
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))

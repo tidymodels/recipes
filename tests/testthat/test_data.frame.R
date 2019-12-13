@@ -6,6 +6,7 @@ context("Data framedness")
 
 ###################################################################
 
+library(modeldata)
 data(okc)
 
 okc$diet <- as.factor(okc$diet)

@@ -37,6 +37,7 @@
 #' @seealso [step_factor2string()] [step_dummy()] [step_other()]
 #'  [step_novel()]
 #' @examples
+#' library(modeldata)
 #' data(okc)
 #'
 #' rec <- recipe(~ diet + location, data = okc)

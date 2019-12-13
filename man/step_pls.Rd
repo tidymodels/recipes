@@ -96,6 +96,7 @@ The variable names are padded with zeros. For example, if \code{num_comp < 10}, 
 names would be \code{PLS001} - \code{PLS101}.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

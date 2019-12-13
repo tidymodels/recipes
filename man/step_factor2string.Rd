@@ -64,6 +64,7 @@ option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 rec <- recipe(~ diet + location, data = okc)

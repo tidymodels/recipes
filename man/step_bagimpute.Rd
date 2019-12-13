@@ -94,6 +94,7 @@ It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 }
 \examples{
+library(modeldata)
 data("credit_data")
 
 ## missing data per column

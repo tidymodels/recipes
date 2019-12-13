@@ -2,6 +2,9 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
+library(modeldata)
+data(okc)
+
 x1 <- rnorm(3)
 x2 <- as.POSIXct(1:3, origin = "1970-01-01", tz = "CET")
 x <- data_frame(x1, x2)

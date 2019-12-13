@@ -28,6 +28,7 @@ useful when creating custom steps.
 }
 \examples{
 library(rlang)
+library(modeldata)
 data(okc)
 rec <- recipe(~ ., data = okc)
 info <- summary(rec)

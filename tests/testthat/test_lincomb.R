@@ -16,6 +16,7 @@ dum_rec <- recipe(yield ~ . , data = dummies)
 
 ###################################################################
 
+library(modeldata)
 data(biomass)
 biomass$new_1 <- with(biomass,
                       .1*carbon - .2*hydrogen + .6*sulfur)

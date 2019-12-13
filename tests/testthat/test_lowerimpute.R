@@ -4,7 +4,8 @@ library(dplyr)
 
 context("Lower limit imputation")
 
-data("biomass")
+library(modeldata)
+data(biomass)
 
 biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
 biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)

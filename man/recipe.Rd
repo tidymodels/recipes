@@ -101,6 +101,7 @@ data set to save time and memory.
 
 ###############################################
 # simple example:
+library(modeldata)
 data(biomass)
 
 # split data

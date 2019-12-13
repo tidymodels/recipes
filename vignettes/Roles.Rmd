@@ -38,6 +38,9 @@ recipe(Sepal.Length + Sepal.Width ~ ., data = iris) %>% summary()
 These roles can be updated despite this initial assignment. `update_role()` can modify a single existing role:
 
 ```{r formula-update}
+library(modeldata)
+data(biomass)
+
 recipe(HHV ~ ., data = biomass) %>% 
   update_role(dataset, new_role = "dataset split variable") %>% 
   update_role(sample, new_role = "sample ID") %>% 

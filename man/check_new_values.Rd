@@ -65,6 +65,7 @@ columns does contain values it did not contain when \code{prep} was called
 on the recipe. If the check passes, nothing is changed to the data.
 }
 \examples{
+library(modeldata)
 data(credit_data)
 
 # If the test passes, `new_data` is returned unaltered

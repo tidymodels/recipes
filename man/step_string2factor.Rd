@@ -72,6 +72,7 @@ data will be applied to \code{step_string2factor}. However, this step
 can also take existing factors (but will leave them as-is).
 }
 \examples{
+library(modeldata)
 data(okc)
 
 rec <- recipe(~ diet + location, data = okc)

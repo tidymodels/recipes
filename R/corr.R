@@ -45,6 +45,7 @@
 #'  is chosen), some columns will also be excluded from the filter.
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' set.seed(3535)

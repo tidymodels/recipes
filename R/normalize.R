@@ -33,6 +33,7 @@
 #'  `prep.recipe`. `bake.recipe` then applies the scaling to new data sets using
 #'  these estimates.
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

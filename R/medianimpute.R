@@ -24,6 +24,7 @@
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
 #'  the new values to new data sets using these medians
 #' @examples
+#' library(modeldata)
 #' data("credit_data")
 #'
 #' ## missing data per column

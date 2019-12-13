@@ -81,6 +81,7 @@ step that will create a variable that counts instances of a
 regular expression pattern in text.
 }
 \examples{
+library(modeldata)
 data(covers)
 
 rec <- recipe(~ description, covers) \%>\%

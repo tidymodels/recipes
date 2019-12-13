@@ -94,6 +94,7 @@ When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 set.seed(19)

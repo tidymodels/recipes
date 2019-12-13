@@ -24,6 +24,7 @@
 #' @export
 #'
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass$one_value <- 1

@@ -38,6 +38,7 @@
 #'  Chemical Information and Modeling*, 46(3), 1402-1409.
 
 #' @examples
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training",]

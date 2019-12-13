@@ -36,6 +36,7 @@
 #' @export
 #' @examples
 #' library(recipes)
+#' library(modeldata)
 #' data(biomass)
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)

@@ -92,6 +92,7 @@ large majority (or all) of the imputing variables are also missing.
 }
 \examples{
 library(recipes)
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]

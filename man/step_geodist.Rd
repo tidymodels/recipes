@@ -81,6 +81,7 @@ points on a map to a reference location.
 }
 \examples{
 
+library(modeldata)
 data(Smithsonian)
 
 # How close are the museums to Union Station?

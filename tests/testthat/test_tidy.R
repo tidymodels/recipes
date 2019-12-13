@@ -4,6 +4,7 @@ library(tibble)
 
 context("General tidy method")
 
+library(modeldata)
 data(okc)
 
 set.seed(131)

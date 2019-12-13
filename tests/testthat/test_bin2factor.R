@@ -3,6 +3,7 @@ library(recipes)
 
 context("binary to factor conversion")
 
+library(modeldata)
 data(covers)
 rec <- recipe(~ description, covers) %>%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%

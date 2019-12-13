@@ -99,6 +99,7 @@ If \code{num = 101}, the names would be \code{NNMF001} -
 }
 \examples{
 
+library(modeldata)
 data(biomass)
 
 # rec <- recipe(HHV ~ ., data = biomass) \%>\%

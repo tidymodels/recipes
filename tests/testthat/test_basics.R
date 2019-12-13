@@ -4,7 +4,8 @@ library(recipes)
 
 context("Testing basic functionalities")
 
-data("biomass")
+library(modeldata)
+data(biomass)
 
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)

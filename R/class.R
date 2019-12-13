@@ -50,6 +50,9 @@
 #'  `TRUE`.
 #' @examples
 #' library(dplyr)
+#' library(modeldata)
+#' data(okc)
+#'
 #' # Learn the classes on the train set
 #' train <- okc[1:1000, ]
 #' test  <- okc[1001:2000, ]

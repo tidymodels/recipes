@@ -85,6 +85,7 @@ Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
 }
 \examples{
+library(modeldata)
 data(okc)
 
 okc$location <- factor(okc$location)

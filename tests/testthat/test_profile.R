@@ -4,6 +4,7 @@ library(recipes)
 context("Creating profiling data")
 
 
+library(modeldata)
 data(okc)
 okc <- okc[1:20,]
 okc$diet <- factor(okc$diet)

@@ -112,6 +112,7 @@ if \code{num_comp < 10}, their names will be \code{kPC1} -
 \code{kPC001} - \code{kPC101}.
 }
 \examples{
+library(modeldata)
 data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training",]

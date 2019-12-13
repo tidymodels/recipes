@@ -4,6 +4,7 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+library(modeldata)
 data(biomass)
 
 test_that('default method', {
