@@ -83,3 +83,23 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+
+
+test_that('old option argument', {
+  expect_message(
+    res <-
+      recipe(~ ., data = iris) %>%
+      step_poly(Sepal.Width, options = list(degree = 3)) %>%
+      prep() %>%
+      juice(),
+    "The `degree` argument is now a main argument"
+  )
+  exp_names <- c('Sepal.Length', 'Petal.Length', 'Petal.Width', 'Species',
+                 'Sepal.Width_poly_1', 'Sepal.Width_poly_2', 'Sepal.Width_poly_3')
+  expect_equal(
+    names(res),
+    exp_names
+  )
+})
+

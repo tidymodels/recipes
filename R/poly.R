@@ -73,7 +73,7 @@ step_poly <-
       degree <- as.integer(degree)
     }
 
-    if (any(names(options == "degree"))) {
+    if (any(names(options) == "degree")) {
       degree <- options$degree
       message(
         paste(
@@ -154,26 +154,14 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_poly <- function(object, new_data, ...) {
-  ## pre-allocate a matrix for the basis functions.
-  new_cols <- vapply(object$objects, ncol, c(int = 1L))
+  col_names <- names(object$objects)
+  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
   poly_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(poly_values) <- rep("", sum(new_cols))
-  strt <- 1
-  for (i in names(object$objects)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
-    orig_var <- attr(object$objects[[i]], "var")
-    poly_values[, cols] <-
-      predict(object$objects[[i]], getElement(new_data, i))
-    new_names <-
-      paste(orig_var, "poly", names0(new_cols[i], ""), sep = "_")
-    colnames(poly_values)[cols] <- new_names
-    strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
-  }
-  new_data <- bind_cols(new_data, as_tibble(poly_values))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
+    purrr::map2(new_data[, col_names], object$objects, ~ predict(.y, .x)) %>%
+    purrr::map(as_tibble) %>%
+    purrr::map2_dfc(new_names, ~ setNames(.x, .y))
+  new_data <- dplyr::bind_cols(new_data, poly_values)
+  new_data[, col_names] <- NULL
   new_data
 }
 
