@@ -42,9 +42,9 @@
 
 
 <meta property="og:title" content="Convert Numbers to Factors — step_num2factor" />
-<meta property="og:description" content="step_num2factor will convert one or more numeric
-vectors to factors (ordered or unordered). This can be useful
-when categories are encoded as integers." />
+<meta property="og:description" content="step_num2factor will convert one or more numeric vectors to factors
+(ordered or unordered). This can be useful when categories are encoded as
+integers." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -162,9 +162,9 @@ when categories are encoded as integers." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_num2factor</code> will convert one or more numeric
-vectors to factors (ordered or unordered). This can be useful
-when categories are encoded as integers.</p>
+    <p><code>step_num2factor</code> will convert one or more numeric vectors to factors
+(ordered or unordered). This can be useful when categories are encoded as
+integers.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_num2factor</span>(
@@ -173,7 +173,7 @@ when categories are encoded as integers.</p>
   <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span>,
   <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>levels</span>,
   <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"num2factor"</span>)
@@ -192,21 +192,21 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables will converted to factors. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+      <td><p>One or more selector functions to choose which variables will
+converted to factors. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
+      <td><p>Not used by this step since no new variables are created.</p></td>
     </tr>
     <tr>
       <th>transform</th>
-      <td><p>A function taking a single argument <code>x</code> that
-can be used to modify the numeric values prior to determining
-the levels (perhaps using <code><a href='https://rdrr.io/r/base/paste.html'>base::paste()</a></code> or <code><a href='https://rdrr.io/r/base/format.html'>base::format()</a></code>).</p></td>
+      <td><p>A function taking a single argument <code>x</code> that can be used
+to modify the numeric values prior to determining the levels (perhaps using
+<code><a href='https://rdrr.io/r/base/integer.html'>base::as.integer()</a></code>). The output of a function should be an integer that
+corresponds to the value of <code>levels</code> that should be assigned. If not an
+integer, the value will be converted to an integer during <code><a href='bake.html'>bake()</a></code>.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -215,14 +215,13 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>levels</th>
-      <td><p>A list of values that will be used as the levels.
-These are the numeric data converted to character and ordered.
-This is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <td><p>A character vector of values that will be used as the levels.
+These are the numeric data converted to character and ordered. This is
+modified once <code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
-      <td><p>A single logical value; should the factor(s) be
-ordered?</p></td>
+      <td><p>A single logical value; should the factor(s) be ordered?</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -245,73 +244,87 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>ordered</code>.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>If <code>bake</code> is used on a data set where a new value is
-in the column being converted, <code>bake</code> will silently give values
-of <code>NA</code> to these rows (see the example below).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
+columns <code>terms</code> (the selectors or variables selected) and <code>ordered</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
-<code><a href='step_dummy.html'>step_dummy()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>, <code><a href='step_dummy.html'>step_dummy()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>iris2</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
-<span class='no'>iris2</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>iris2</span>$<span class='no'>Species</span>)
-
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris2</span>)
-
-<span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'>step_num2factor</span>(<span class='no'>Species</span>)
-<span class='no'>make_factor</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>make_factor</span>,
-                    <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris2</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>attrition</span>)
 
-<span class='co'># note that `diet` is a factor</span>
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 5
-#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-#&gt; 1          5.1         3.5          1.4         0.2 1      
-#&gt; 2          4.9         3            1.4         0.2 1      
-#&gt; 3          4.7         3.2          1.3         0.2 1      
-#&gt; 4          4.6         3.1          1.5         0.2 1      
-#&gt; 5          5           3.6          1.4         0.2 1      
-#&gt; 6          5.4         3.9          1.7         0.4 1      </div><div class='input'><span class='no'>okc</span> <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 6
-#&gt;     age diet              height location            date       Class
-#&gt;   &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;               &lt;date&gt;     &lt;fct&gt;
-#&gt; 1    22 strictly anything     75 south san francisco 2012-06-28 other
-#&gt; 2    35 mostly other          70 oakland             2012-06-29 other
-#&gt; 3    38 anything              68 san francisco       2012-06-27 other
-#&gt; 4    23 vegetarian            71 berkeley            2012-06-28 other
-#&gt; 5    29 &lt;NA&gt;                  66 san francisco       2012-06-27 other
-#&gt; 6    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   terms   ordered id              
-#&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;           
-#&gt; 1 Species FALSE   num2factor_YUUKY</div><div class='input'>
-<span class='co'># When novel values are exposed</span>
-<span class='no'>with_transform</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_num2factor</span>(<span class='no'>Species</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"val_"</span>, <span class='no'>x</span>))
+<span class='no'>attrition</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>StockOptionLevel</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tally.html'>count</a></span>()</div><div class='output co'>#&gt; # A tibble: 4 x 2
+#&gt; # Groups:   StockOptionLevel [4]
+#&gt;   StockOptionLevel     n
+#&gt;              &lt;int&gt; &lt;int&gt;
+#&gt; 1                0   631
+#&gt; 2                1   596
+#&gt; 3                2   158
+#&gt; 4                3    85</div><div class='input'>
+<span class='no'>amnt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nothin"</span>, <span class='st'>"meh"</span>, <span class='st'>"some"</span>, <span class='st'>"copious"</span>)
 
-<span class='no'>with_transform</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_transform</span>,
-                       <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris2</span>[<span class='fl'>1</span>:<span class='fl'>75</span>,])
-<span class='no'>new_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_transform</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>iris2</span>, <span class='no'>Species</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>new_values</span><span class='kw'>[[</span><span class='st'>"Species"</span>]], <span class='no'>iris2</span>$<span class='no'>Species</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"ifany"</span>)</div><div class='output co'>#&gt;        
-#&gt;          1  2  3
-#&gt;   val_1 50  0  0
-#&gt;   val_2  0 50  0
-#&gt;   &lt;NA&gt;   0  0 50</div></pre>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Attrition</span> ~ <span class='no'>StockOptionLevel</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>attrition</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_num2factor</span>(
+    <span class='no'>StockOptionLevel</span>,
+    <span class='kw'>transform</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> + <span class='fl'>1</span>,
+    <span class='kw'>levels</span> <span class='kw'>=</span> <span class='no'>amnt</span>
+  )
+
+<span class='no'>encoded</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='juice.html'>juice</a></span>()
+
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>encoded</span>$<span class='no'>StockOptionLevel</span>, <span class='no'>attrition</span>$<span class='no'>StockOptionLevel</span>)</div><div class='output co'>#&gt;          
+#&gt;             0   1   2   3
+#&gt;   nothin  631   0   0   0
+#&gt;   meh       0 596   0   0
+#&gt;   some      0   0 158   0
+#&gt;   copious   0   0   0  85</div><div class='input'>
+
+<span class='co'># an example for binning</span>
+
+<span class='no'>binner</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>1000</span> * <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>10</span>, <span class='fl'>20</span>), <span class='kw'>include.lowest</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='co'># now return the group number</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>x</span>)
+}
+
+<span class='no'>inc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"low"</span>, <span class='st'>"med"</span>, <span class='st'>"high"</span>)
+
+<span class='no'>rec</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Attrition</span> ~ <span class='no'>MonthlyIncome</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>attrition</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_num2factor</span>(
+    <span class='no'>MonthlyIncome</span>,
+    <span class='kw'>transform</span> <span class='kw'>=</span> <span class='no'>binner</span>,
+    <span class='kw'>levels</span> <span class='kw'>=</span> <span class='no'>inc</span>,
+    <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
+
+<span class='no'>encoded</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>rec</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>encoded</span>$<span class='no'>MonthlyIncome</span>, <span class='fu'>binner</span>(<span class='no'>attrition</span>$<span class='no'>MonthlyIncome</span>))</div><div class='output co'>#&gt;       
+#&gt;          1   2   3
+#&gt;   low  749   0   0
+#&gt;   med    0 440   0
+#&gt;   high   0   0 281</div><div class='input'>
+<span class='co'># What happens when a value is out of range?</span>
+<span class='no'>ceo</span> <span class='kw'>&lt;-</span> <span class='no'>attrition</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>MonthlyIncome</span> <span class='kw'>=</span> <span class='fl'>10</span>^<span class='fl'>10</span>)
+
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>ceo</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   MonthlyIncome Attrition
+#&gt;   &lt;ord&gt;         &lt;fct&gt;    
+#&gt; 1 &lt;NA&gt;          Yes      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

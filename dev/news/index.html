@@ -166,6 +166,7 @@
 <ul>
 <li><p>The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types).</p></li>
 <li><p>The data sets were moved to the new <code>modeldata</code> package.</p></li>
+<li><p><code><a href="../reference/step_num2factor.html">step_num2factor()</a></code> was rewritten due to a bug that ignored the user-supplied levels (<a href="https://github.com/tidymodels/recipes/issues/425"><a href='https://github.com/tidymodels/recipes/issues/425'>#425</a></a>). The results of the <code>transform</code> argument are now required to be a function and <code>levels</code> must now be supplied.</p></li>
 </ul>
 </div>
 <div id="other-changes" class="section level2">
