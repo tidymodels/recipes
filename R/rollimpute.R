@@ -117,10 +117,11 @@ step_rollimpute_new <-
 prep.step_rollimpute <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
+
   dbl_check <- vapply(training[, col_names], is.double, logical(1))
-  if (any(!dbl_check))
-    stop("All columns must be double precision for rolling imputation",
-         call. = FALSE)
+  if (any(!dbl_check)) {
+    stop("All columns must be double precision for rolling imputation", call. = FALSE)
+  }
 
   step_rollimpute_new(
     terms = x$terms,
@@ -144,8 +145,10 @@ get_window_ind <- function(i, n, k) {
     return((n - k + 1):n)
 }
 
-get_rolling_ind <- function(inds, n, k)
+get_rolling_ind <- function(inds, n, k) {
   map(inds, get_window_ind, n = n, k = k)
+}
+
 window_est <- function(inds, x, statfun) {
   x <- x[inds]
   x <- x[!is.na(x)]
@@ -157,6 +160,7 @@ window_est <- function(inds, x, statfun) {
     out <- as.double(out)
   out
 }
+
 impute_rolling <- function(inds, x, statfun) {
   map_dbl(inds, window_est, x = x, statfun = statfun)
 }
@@ -164,18 +168,25 @@ impute_rolling <- function(inds, x, statfun) {
 #' @export
 bake.step_rollimpute <- function(object, new_data, ...) {
   n <- nrow(new_data)
-  missing_ind <- lapply(new_data[, object$columns],
-                        function(x) which(is.na(x)))
+
+  new_data_selection <- new_data[, object$columns]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  # Apply `enforce_quant_type()` to `new_data` too
+  # for assignment in the for loop
+  new_data[, object$columns] <- new_data_selection
+
+  missing_ind <- lapply(new_data_selection, function(x) which(is.na(x)))
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
   for(i in seq(along = roll_ind)) {
     imp_var <- names(roll_ind)[i]
-    estimates <-
-      impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
+    estimates <- impute_rolling(roll_ind[[i]], new_data_selection[[imp_var]], object$statistic)
     new_data[missing_ind[[i]], imp_var] <- estimates
   }
+
   as_tibble(new_data)
 }
 

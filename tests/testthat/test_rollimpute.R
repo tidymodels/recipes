@@ -126,3 +126,21 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+test_that("works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(c(1:5, NA)))
+
+  rec <- recipe(~ x, df)
+  rec <- step_rollimpute(rec, x)
+
+  prepped <- prep(rec, df)
+
+  expect <- df
+  expect$x <- as.double(expect$x)
+  expect$x[6] <- 3.5
+
+  expect_equal(
+    juice(prepped),
+    expect
+  )
+})
