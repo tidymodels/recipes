@@ -292,3 +292,25 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+test_that("works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(1:5), y = 6:10)
+
+  rec <- recipe(y ~ x, df)
+  rec <- step_pls(rec, x, outcome = "y")
+
+  prepped <- prep(rec, df)
+
+  expect_equal(
+    prepped$steps[[1]]$res$Xmeans,
+    3
+  )
+
+  expect <- tibble::tibble(y = df$y, PLS1 = as.double(seq(-2, 2)))
+
+  expect_equal(
+    juice(prepped),
+    expect
+  )
+})
+

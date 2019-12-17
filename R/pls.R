@@ -134,7 +134,9 @@ step_pls_new <-
 prep.step_pls <- function(x, training, info = NULL, ...) {
   x_names <- terms_select(x$terms, info = info)
   y_names <- terms_select(x$outcome, info = info)
-  check_type(training[, c(y_names, x_names)])
+
+  training_selection <- training[, c(y_names, x_names)]
+  training_selection <- enforce_quant_type(training_selection)
 
   if (length(y_names) == 1) {
     y_form <- y_names
@@ -144,8 +146,10 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   }
 
   if (x$num_comp > 0) {
-    args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
-                 data = training[, c(y_names, x_names)])
+    args <- list(
+      formula = as.formula(paste(y_form, ".", sep = "~")),
+      data = training_selection
+    )
 
     x$options$ncomp <- min(x$num_comp, length(x_names))
     args <- c(args, x$options)
@@ -175,24 +179,34 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
-    pls_vars <- rownames(object$res$projection)
-    n <- nrow(new_data)
-    input_data <- as.matrix(new_data[, pls_vars])
-
-    if (!all(is.na(object$res$scale)))
-      input_data <- sweep(input_data, 2, object$res$scale, "/")
-
-    input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
-
-    comps <- input_data %*% object$res$projection
-    comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
-    if (!is_tibble(new_data))
-      new_data <- as_tibble(new_data)
+  if (object$num_comp <= 0) {
+    return(new_data)
   }
+
+  pls_vars <- rownames(object$res$projection)
+  n <- nrow(new_data)
+
+  new_data_selection <- new_data[, pls_vars]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  input_data <- as.matrix(new_data_selection)
+
+  if (!all(is.na(object$res$scale))) {
+    input_data <- sweep(input_data, 2, object$res$scale, "/")
+  }
+
+  input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
+
+  comps <- input_data %*% object$res$projection
+  comps <- check_name(comps, new_data, object)
+
+  new_data <- bind_cols(new_data, as_tibble(comps))
+  new_data <- new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+
+  if (!is_tibble(new_data)) {
+    new_data <- as_tibble(new_data)
+  }
+
   new_data
 }
 
