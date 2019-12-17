@@ -14,12 +14,12 @@ maybe_register_tunable_methods <- function() {
   }
 
   ns <- asNamespace("recipes")
+
   names <- names(ns)
+  names <- grep("tunable.step", names, fixed = TRUE, value = TRUE)
 
-  locs <- grep("tunable.step", names, fixed = TRUE)
-
-  for (loc in locs) {
-    s3_register("tune::tunable", names[[loc]], ns[[loc]])
+  for (name in names) {
+    s3_register("tune::tunable", name, get(name, envir = ns))
   }
 
   invisible()
