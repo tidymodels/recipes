@@ -5,6 +5,8 @@
  * The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types). 
  
  * The data sets were moved to the new `modeldata` package. 
+ 
+ * `step_num2factor()` was rewritten due to a bug that ignored the user-supplied levels ([#425](https://github.com/tidymodels/recipes/issues/425)). The results of the `transform` argument are now required to be a function and `levels` must now be supplied. 
 
 ## Other Changes
 

@@ -3,6 +3,7 @@ library(testthat)
 
 context("Number to factor conversion")
 
+# ------------------------------------------------------------------------------
 
 n <- 200
 
@@ -17,37 +18,43 @@ rec <- recipe(~ ., data = ex_dat)
 
 test_that('basic functionality', {
   ex_1 <- rec %>%
-    step_num2factor(all_numeric()) %>%
+    step_num2factor(z, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
-    juice
-  expect_equal(class(ex_1$w), "factor")
-  expect_equal(class(ex_1$x), "factor")
-  expect_equal(class(ex_1$z), "factor")
-  expect_equal(levels(ex_1$z), sort(paste(1:10)))
-  expect_equal(levels(ex_1$x), sort(paste(unique(ex_dat$x))))
+    juice()
+  expect_true(inherits(ex_1$w, "factor"))
+  expect_true(inherits(ex_1$x, "numeric"))
+  expect_true(inherits(ex_1$z, "factor"))
+  expect_equal(levels(ex_1$z), rev(LETTERS[1:10]))
 
   ex_2 <- rec %>%
-    step_num2factor(all_numeric(), ordered = TRUE) %>%
+    step_num2factor(z, ordered = TRUE, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
     juice
-  expect_equal(class(ex_2$x), c("ordered", "factor"))
-  expect_equal(class(ex_2$x), c("ordered", "factor"))
-  expect_equal(levels(ex_2$z), sort(paste(1:10)))
-  expect_equal(levels(ex_2$x), sort(paste(unique(ex_dat$x))))
+  expect_true(inherits(ex_2$w, "factor"))
+  expect_true(inherits(ex_2$x, "numeric"))
+  expect_true(inherits(ex_2$z, "ordered"))
+  expect_equal(levels(ex_1$z), rev(LETTERS[1:10]))
 })
 
 test_that('bad args', {
   expect_error(
-  rec %>%
-    step_num2factor(w, x) %>%
-    prep(ex_dat)
+    rec %>%
+      step_num2factor(w, x, levels = c("one", "two")) %>%
+      prep(ex_dat),
+    "All columns selected for the step should be numeric"
+  )
+  expect_error(
+    rec %>%
+      step_num2factor(w, x) %>%
+      prep(ex_dat),
+    "Please provide a character vector of"
   )
 })
 
 
 test_that('printing', {
   ex_3 <- rec %>%
-    step_num2factor(all_numeric()) %>%
+    step_num2factor(z, levels = letters) %>%
     prep(ex_dat, strings_as_factors = FALSE)
   expect_output(print(ex_3))
   expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))

@@ -11,7 +11,7 @@ step_num2factor(
   role = NA,
   transform = function(x) x,
   trained = FALSE,
-  levels = NULL,
+  levels,
   ordered = FALSE,
   skip = FALSE,
   id = rand_id("num2factor")
@@ -23,27 +23,26 @@ step_num2factor(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will converted to factors. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
+\item{...}{One or more selector functions to choose which variables will
+converted to factors. See \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{transform}{A function taking a single argument \code{x} that
-can be used to modify the numeric values prior to determining
-the levels (perhaps using \code{\link[base:paste]{base::paste()}} or \code{\link[base:format]{base::format()}}).}
+\item{transform}{A function taking a single argument \code{x} that can be used
+to modify the numeric values prior to determining the levels (perhaps using
+\code{\link[base:as.integer]{base::as.integer()}}). The output of a function should be an integer that
+corresponds to the value of \code{levels} that should be assigned. If not an
+integer, the value will be converted to an integer during \code{bake()}.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{levels}{A list of values that will be used as the levels.
-These are the numeric data converted to character and ordered.
-This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{levels}{A character vector of values that will be used as the levels.
+These are the numeric data converted to character and ordered. This is
+modified once \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
 
-\item{ordered}{A single logical value; should the factor(s) be
-ordered?}
+\item{ordered}{A single logical value; should the factor(s) be ordered?}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -57,51 +56,70 @@ the computations for subsequent operations}
 \item{x}{A \code{step_num2factor} object.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{ordered}.
+An updated version of \code{recipe} with the new step added to the
+sequence of existing steps (if any). For the \code{tidy} method, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{ordered}.
 }
 \description{
-\code{step_num2factor} will convert one or more numeric
-vectors to factors (ordered or unordered). This can be useful
-when categories are encoded as integers.
-}
-\note{
-If \code{bake} is used on a data set where a new value is
-in the column being converted, \code{bake} will silently give values
-of \code{NA} to these rows (see the example below).
+\code{step_num2factor} will convert one or more numeric vectors to factors
+(ordered or unordered). This can be useful when categories are encoded as
+integers.
 }
 \examples{
-iris2 <- iris
-iris2$Species <- as.numeric(iris2$Species)
-
-rec <- recipe(~ ., data = iris2)
-
-make_factor <- rec \%>\% step_num2factor(Species)
-make_factor <- prep(make_factor,
-                    training = iris2)
-
+library(dplyr)
 library(modeldata)
-data(okc)
+data(attrition)
 
-# note that `diet` is a factor
-juice(make_factor) \%>\% head
-okc \%>\% head
-tidy(make_factor, number = 1)
+attrition \%>\%
+  group_by(StockOptionLevel) \%>\%
+  count()
 
-# When novel values are exposed
-with_transform <- rec \%>\%
-  step_num2factor(Species, transform = function(x) paste0("val_", x))
+amnt <- c("nothin", "meh", "some", "copious")
 
-with_transform <- prep(with_transform,
-                       training = iris2[1:75,])
-new_values <- bake(with_transform, new_data = iris2, Species)
-table(new_values[["Species"]], iris2$Species, useNA = "ifany")
+rec <-
+  recipe(Attrition ~ StockOptionLevel, data = attrition) \%>\%
+  step_num2factor(
+    StockOptionLevel,
+    transform = function(x) x + 1,
+    levels = amnt
+  )
+
+encoded <- rec \%>\% prep() \%>\% juice()
+
+table(encoded$StockOptionLevel, attrition$StockOptionLevel)
+
+
+# an example for binning
+
+binner <- function(x) {
+  x <- cut(x, breaks = 1000 * c(0, 5, 10, 20), include.lowest = TRUE)
+  # now return the group number
+  as.numeric(x)
+}
+
+inc <- c("low", "med", "high")
+
+rec <-
+  recipe(Attrition ~ MonthlyIncome, data = attrition) \%>\%
+  step_num2factor(
+    MonthlyIncome,
+    transform = binner,
+    levels = inc,
+    ordered = TRUE
+  ) \%>\%
+  prep()
+
+encoded <- juice(rec)
+
+table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
+
+# What happens when a value is out of range?
+ceo <- attrition \%>\% slice(1) \%>\% mutate(MonthlyIncome = 10^10)
+
+bake(rec, ceo)
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
-\code{\link[=step_dummy]{step_dummy()}}
+\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}}, \code{\link[=step_dummy]{step_dummy()}}
 }
 \concept{factors}
 \concept{preprocessing}
