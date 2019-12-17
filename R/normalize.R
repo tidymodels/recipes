@@ -99,11 +99,11 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
 
   training_selection <- training[, col_names]
-
-  check_type(training_selection)
+  training_selection <- enforce_quant_type(training_selection)
 
   means <- vapply(training_selection, mean, c(mean = 0), na.rm = x$na_rm)
   sds <- vapply(training_selection, sd, c(sd = 0), na.rm = x$na_rm)
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,
@@ -118,9 +118,13 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
-  res <- sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
+  new_data_selection <- new_data[, names(object$means)]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  res <- sweep(as.matrix(new_data_selection), 2, object$means, "-")
   res <- sweep(res, 2, object$sds, "/")
   res <- tibble::as_tibble(res)
+
   new_data[, names(object$sds)] <- res
   as_tibble(new_data)
 }

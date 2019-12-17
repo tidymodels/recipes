@@ -186,3 +186,25 @@ test_that("center - works with integer64", {
     expect
   )
 })
+
+test_that("normalize - works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(1:5))
+
+  rec <- recipe(~ x, df)
+  rec <- step_normalize(rec, x)
+
+  prepped <- prep(rec, df)
+
+  expect_equal(
+    prepped$steps[[1]]$means,
+    c(x = mean(as.numeric(df$x)))
+  )
+
+  x_dbl <- as.double(df$x)
+  expect <- tibble::tibble(x = (x_dbl - mean(x_dbl)) / sd(x_dbl))
+
+  expect_equal(
+    juice(prepped),
+    expect
+  )
+})
