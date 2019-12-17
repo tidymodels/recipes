@@ -121,3 +121,25 @@ test_that('printing', {
   expect_output(prep(standardized, training = biomass_tr, verbose = TRUE))
 })
 
+test_that("works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(1:5))
+
+  rec <- recipe(~ x, df)
+  rec <- step_range(rec, x)
+
+  prepped <- prep(rec, df)
+
+  expect <- matrix(c(1, 5), dimnames = list(c("mins", "maxs"), "x"))
+
+  expect_equal(
+    prepped$steps[[1]]$ranges,
+    expect
+  )
+
+  expect <- tibble::tibble(x = seq(0, 1, by = .25))
+
+  expect_equal(
+    juice(prepped),
+    expect
+  )
+})

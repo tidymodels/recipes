@@ -424,6 +424,14 @@ check_type <- function(dat, quant = TRUE) {
   invisible(all_good)
 }
 
+# A version of `check_type()` that goes a step further by coercing to numeric.
+# This is important for integer64 types, which return TRUE with `is.numeric()`
+# but work incorrectly with `mean()` and `vapply()` (#401)
+enforce_quant_type <- function(dat) {
+  check_type(dat, quant = TRUE)
+  dat[] <- lapply(dat, as.double)
+  dat
+}
 
 
 ## Support functions

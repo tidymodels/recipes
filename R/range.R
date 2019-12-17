@@ -96,12 +96,13 @@ step_range_new <-
 #' @export
 prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  check_type(training[, col_names])
 
-  mins <-
-    vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
-  maxs <-
-    vapply(training[, col_names], max, c(max = 0), na.rm = TRUE)
+  training_selection <- training[, col_names]
+  training_selection <- enforce_quant_type(training_selection)
+
+  mins <- vapply(training_selection, min, c(min = 0), na.rm = TRUE)
+  maxs <- vapply(training_selection, max, c(max = 0), na.rm = TRUE)
+
   step_range_new(
     terms = x$terms,
     role = x$role,
@@ -116,7 +117,10 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_range <- function(object, new_data, ...) {
-  tmp <- as.matrix(new_data[, colnames(object$ranges)])
+  new_data_selection <- new_data[, colnames(object$ranges)]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  tmp <- as.matrix(new_data_selection)
   tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
   tmp <- tmp * (object$max - object$min)
   tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
