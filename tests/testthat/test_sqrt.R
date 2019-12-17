@@ -30,3 +30,19 @@ test_that('printing', {
   expect_output(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
+test_that("works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(1:5))
+
+  rec <- recipe(~ x, df)
+  rec <- step_sqrt(rec, x)
+
+  prepped <- prep(rec, df)
+
+  expect <- tibble::tibble(x = sqrt(as.double(df$x)))
+
+  expect_equal(
+    juice(prepped),
+    expect
+  )
+})
+

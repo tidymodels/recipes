@@ -92,9 +92,12 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
   col_names <- object$columns
-  for (i in seq_along(col_names))
-    new_data[, col_names[i]] <-
-      sqrt(getElement(new_data, col_names[i]))
+
+  for (i in seq_along(col_names)) {
+    col <- getElement(new_data, col_names[i])
+    new_data[, col_names[i]] <- sqrt(col)
+  }
+
   as_tibble(new_data)
 }
 
