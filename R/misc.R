@@ -228,28 +228,22 @@ strings2factors <- function(x, info) {
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
 n_complete_rows <- function(x) {
-  list_cols <- purrr::map_lgl(x, is.list)
-  list_cols <- names(list_cols)[list_cols]
+  is_list_col <- purrr::map_lgl(x, is.list)
+  pos_list_cols <- which(is_list_col)
 
-  if (length(list_cols) > 0) {
-    # replace with logical vector (with possible missings) for calculations
-    x[, list_cols] <- map_dfc(list_cols, convert_to_logical, x = x)
+  for (pos_list_col in pos_list_cols) {
+    x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
+
   sum(complete.cases(x))
 }
 
-insert_na <- function(x) {
-  has_miss <- all(is.na(x))
-  if (has_miss) {
-    res <- NA
+flatten_na <- function(x) {
+  if (all(is.na(x))) {
+    NA
   } else {
-    res <- FALSE
+    FALSE
   }
-  res
-}
-
-convert_to_logical <- function(col, x) {
-  map_lgl(x[[col]], insert_na)
 }
 
 ## short summary of training set
