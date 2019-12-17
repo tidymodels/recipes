@@ -103,10 +103,12 @@ step_center_new <-
 
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  check_type(training[, col_names])
 
-  means <-
-    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
+  training_selection <- training[, col_names]
+  training_selection <- enforce_quant_type(training_selection)
+
+  means <- vapply(training_selection, mean, c(mean = 0), na.rm = x$na_rm)
+
   step_center_new(
     terms = x$terms,
     role = x$role,
@@ -119,9 +121,12 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_center <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
+  new_data_selection <- new_data[, names(object$means)]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  res <- sweep(as.matrix(new_data_selection), 2, object$means, "-")
   res <- tibble::as_tibble(res)
+
   new_data[, names(object$means)] <- res
   as_tibble(new_data)
 }
