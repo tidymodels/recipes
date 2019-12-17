@@ -156,7 +156,13 @@ bake.step_relu <- function(object, new_data, ...) {
   exprs <- purrr::map(object$columns, make_relu_call)
   newname <- paste0(object$prefix, object$columns)
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
-  dplyr::mutate(new_data, !!!exprs)
+
+  new_data_selection <- new_data[, object$columns]
+  new_data_selection <- enforce_quant_type(new_data_selection)
+
+  new_cols <- dplyr::transmute(new_data_selection, !!!exprs)
+
+  dplyr::bind_cols(new_data, new_cols)
 }
 
 

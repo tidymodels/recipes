@@ -105,3 +105,17 @@ test_that('prints something', {
 })
 
 rm(df)
+
+test_that("works with integer64", {
+  df <- data.frame(x = bit64::as.integer64(c(1:5)))
+
+  rec <- recipe(~ x, df)
+  rec <- step_relu(rec, x, smooth = TRUE)
+
+  prepped <- prep(rec, df)
+
+  expect_equal(
+    class(juice(prepped)$right_relu_x),
+    "numeric"
+  )
+})
