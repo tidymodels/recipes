@@ -60,7 +60,15 @@ variables by the a measure of location (e.g. median) within a moving window." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -81,7 +89,7 @@ variables by the a measure of location (e.g. median) within a moving window." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -159,9 +167,17 @@ recipe step that will substitute missing values of numeric
 variables by the a measure of location (e.g. median) within a moving window.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_rollimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rollimpute"</span>))
+    <pre class="usage"><span class='fu'>step_rollimpute</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='no'>median</span>,
+  <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rollimpute"</span>)
+)
 
 <span class='co'># S3 method for step_rollimpute</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -267,7 +283,7 @@ prior to the current point.</p>
 <span class='no'>seven_pt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>day</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"time_index"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
 #&gt;    day           x1    x2    x3

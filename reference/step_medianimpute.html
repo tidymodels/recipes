@@ -42,9 +42,9 @@
 
 
 <meta property="og:title" content="Impute Numeric Data Using the Median — step_medianimpute" />
-<meta property="og:description" content="step_medianimpute creates a specification of a
-recipe step that will substitute missing values of numeric
-variables by the training set median of those variables." />
+<meta property="og:description" content="step_medianimpute creates a specification of a recipe step that will
+substitute missing values of numeric variables by the training set median of
+those variables." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -60,7 +60,15 @@ variables by the training set median of those variables." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -81,7 +89,7 @@ variables by the training set median of those variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -154,13 +162,20 @@ variables by the training set median of those variables." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_medianimpute</code> creates a <em>specification</em> of a
-recipe step that will substitute missing values of numeric
-variables by the training set median of those variables.</p>
+    <p><code>step_medianimpute</code> creates a <em>specification</em> of a recipe step that will
+substitute missing values of numeric variables by the training set median of
+those variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_medianimpute</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>medians</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"medianimpute"</span>))
+    <pre class="usage"><span class='fu'>step_medianimpute</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>medians</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"medianimpute"</span>)
+)
 
 <span class='co'># S3 method for step_medianimpute</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -175,15 +190,13 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+      <td><p>One or more selector functions to choose which variables are
+affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
+      <td><p>Not used by this step since no new variables are created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -192,8 +205,9 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>medians</th>
-      <td><p>A named numeric vector of medians. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <td><p>A named numeric vector of medians. This is <code>NULL</code> until
+computed by <code><a href='prep.html'>prep.recipe()</a></code>. Note that, if the original data are integers,
+the median will be converted to an integer to maintain the same a data type.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -216,20 +230,19 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>model</code> (the median
-value).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
+columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
+median value).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_medianimpute</code> estimates the variable medians
-from the data used in the <code>training</code> argument of
-<code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
-values to new data sets using these medians</p>
+    <p><code>step_medianimpute</code> estimates the variable medians from the data
+used in the <code>training</code> argument of <code>prep.recipe</code>. <code>bake.recipe</code> then applies
+the new values to new data sets using these medians</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
@@ -263,11 +276,11 @@ values to new data sets using these medians</p>
 #&gt; 688    2000    0   1250  1517
 #&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
 #&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
+#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
 #&gt; 1 good          15 owner    36    43 married no      fixed       75    251
 #&gt; 2 good           2 rent     60    32 married no      part…       87    115
 #&gt; 3 good          21 rent     60    39 married no      fixed      124    191
-#&gt; # … with 4 more variables: Assets &lt;dbl&gt;, Debt &lt;dbl&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
+#&gt; # … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   terms  model id                
 #&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;             
@@ -275,7 +288,7 @@ values to new data sets using these medians</p>
 #&gt; 2 Assets    NA medianimpute_Hlm2y
 #&gt; 3 Debt      NA medianimpute_Hlm2y</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   terms  model id                
-#&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;             
+#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;             
 #&gt; 1 Income   125 medianimpute_Hlm2y
 #&gt; 2 Assets  3000 medianimpute_Hlm2y
 #&gt; 3 Debt       0 medianimpute_Hlm2y</div></pre>

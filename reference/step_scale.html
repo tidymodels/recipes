@@ -60,7 +60,15 @@ deviation of one." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -81,7 +89,7 @@ deviation of one." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -159,8 +167,17 @@ step that will normalize numeric data to have a standard
 deviation of one.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_scale</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>))
+    <pre class="usage"><span class='fu'>step_scale</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"scale"</span>)
+)
 
 <span class='co'># S3 method for step_scale</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -192,8 +209,16 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>sds</th>
-      <td><p>A named numeric vector of standard deviations This
+      <td><p>A named numeric vector of standard deviations. This
 is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>factor</th>
+      <td><p>A numeric value of either 1 or 2 that scales the
+numeric inputs by one or two standard deviations. By dividing
+by two standard deviations, the coefficients attached to
+continous predictors can be interpreted the same way as with
+binary inputs. Defaults to <code>1</code>. More in reference below.</p></td>
     </tr>
     <tr>
       <th>na_rm</th>
@@ -234,9 +259,15 @@ the variable standard deviations from the data used in the
 <code>training</code> argument of <code>prep.recipe</code>.
 <code>bake.recipe</code> then applies the scaling to new data sets
 using these standard deviations.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Gelman, A. (2007) "Scaling regression inputs by
+dividing by two standard deviations." Unpublished. Source:
+<a href='http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf'>http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
 <span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
@@ -291,6 +322,7 @@ using these standard deviations.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

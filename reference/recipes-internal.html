@@ -62,7 +62,15 @@ printing." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -83,7 +91,7 @@ printing." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -169,8 +177,12 @@ printing.</p>
 
 <span class='fu'>ellipse_check</span>(<span class='no'>...</span>)
 
-<span class='fu'>printer</span>(<span class='kw'>tr_obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>untr_obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>()$<span class='no'>width</span> - <span class='fl'>30</span>))
+<span class='fu'>printer</span>(
+  <span class='kw'>tr_obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>untr_obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>()$<span class='no'>width</span> - <span class='fl'>30</span>)
+)
 
 <span class='fu'>prepare</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -183,7 +195,7 @@ printing.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a step object.</p></td>
+      <td><p>A list of selectors</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -207,10 +219,6 @@ recipe (e.g. <code>terms</code> in most steps).</p></td>
     <tr>
       <th>width</th>
       <td><p>An integer denoting where the output should be wrapped.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A list of selectors</p></td>
     </tr>
     </table>
 

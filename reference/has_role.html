@@ -65,7 +65,15 @@ outside of column selection in step functions." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -86,7 +94,7 @@ outside of column selection in step functions." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -199,7 +207,8 @@ matching is used (i.e. regular expressions won't work).</p></td>
 <p><code>current_info()</code> returns an environment with objects <code>vars</code> and <code>data</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span>(
@@ -225,7 +234,7 @@ matching is used (i.e. regular expressions won't work).</p></td>
 <span class='co'># Centering on all predictors except carbon</span>
 <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'>all_predictors</span>(), -<span class='no'>carbon</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; # A tibble: 536 x 8
 #&gt;    sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV
 #&gt;    &lt;fct&gt;                  &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;

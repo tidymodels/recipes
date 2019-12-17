@@ -59,7 +59,15 @@ the selected variables using a common function." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -80,7 +88,7 @@ the selected variables using a common function." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -157,8 +165,16 @@ the selected variables using a common function." />
 the selected variables using a common function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_rename_at</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='no'>fn</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>inputs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rename_at"</span>))</pre>
+    <pre class="usage"><span class='fu'>step_rename_at</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='no'>fn</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>inputs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rename_at"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,7 +237,7 @@ columns <code>terms</code> which contains the columns being transformed.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_rename_at</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>(), <span class='kw'>fn</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"\\."</span>, <span class='st'>"_"</span>, <span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_rename_at</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>(), <span class='kw'>fn</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"."</span>, <span class='st'>"_"</span>, <span class='no'>.</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 5

@@ -62,7 +62,7 @@ The selector arguments should not contain functions
 beyond those supported (see below).
 These arguments are not evaluated until the prep
 function for the step is executed.
-The dplyr-like syntax allows for negative sings to
+The dplyr-like syntax allows for negative signs to
 exclude variables (e.g. -Murder) and the set of selectors will
 processed in order.
 A leading exclusion in these arguments (e.g. -Murder)
@@ -141,7 +141,15 @@ and all_nominal()
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -162,7 +170,7 @@ and all_nominal()
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -255,7 +263,7 @@ to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
 beyond those supported (see below).</p></li>
 <li><p>These arguments are not evaluated until the <code>prep</code>
 function for the step is executed.</p></li>
-<li><p>The <code>dplyr</code>-like syntax allows for negative sings to
+<li><p>The <code>dplyr</code>-like syntax allows for negative signs to
 exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
 processed in order.</p></li>
 <li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)

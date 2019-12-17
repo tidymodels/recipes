@@ -60,7 +60,15 @@ numeric scores." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -81,7 +89,7 @@ numeric scores." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -159,9 +167,16 @@ recipe step that will convert ordinal factor variables into
 numeric scores.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_ordinalscore</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ordinalscore"</span>))
+    <pre class="usage"><span class='fu'>step_ordinalscore</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ordinalscore"</span>)
+)
 
 <span class='co'># S3 method for step_ordinalscore</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -260,7 +275,7 @@ functions can also be used (see the example below).</p>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>)
 
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter
@@ -281,7 +296,7 @@ functions can also be used (see the example below).</p>
 #&gt;   terms         id                
 #&gt;   &lt;chr&gt;         &lt;chr&gt;             
 #&gt; 1 fail_severity ordinalscore_qIB0v</div><div class='input'>
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>, <span class='kw'>retain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; # A tibble: 3 x 3
 #&gt;   fail_severity item_paperclip item_twitter

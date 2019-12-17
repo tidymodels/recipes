@@ -60,7 +60,15 @@ absolute correlations with other variables." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -81,7 +89,7 @@ absolute correlations with other variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -159,9 +167,18 @@ step that will potentially remove variables that have large
 absolute correlations with other variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_corr</span>(<span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>))
+    <pre class="usage"><span class='fu'>step_corr</span>(
+  <span class='no'>recipe</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"pairwise.complete.obs"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>,
+  <span class='kw'>removals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"corr"</span>)
+)
 
 <span class='co'># S3 method for step_corr</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -254,7 +271,8 @@ is chosen), some columns will also be excluded from the filter.</p>
 <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>3535</span>)
 <span class='no'>biomass</span>$<span class='no'>duplicate</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>$<span class='no'>carbon</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>biomass</span>))
@@ -278,12 +296,12 @@ is chosen), some columns will also be excluded from the filter.</p>
 #&gt; oxygen      0.63     0.54   1.00     0.18   0.31      0.63
 #&gt; nitrogen    0.15     0.07   0.18     1.00   0.27      0.15
 #&gt; sulfur      0.09     0.19   0.31     0.27   1.00      0.10
-#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur  HHV duplicate
-#&gt; hydrogen      1.00     0.11   0.26 0.10      0.20
-#&gt; nitrogen      0.11     1.00   0.16 0.11      0.13
-#&gt; sulfur        0.26     0.16   1.00 0.08      0.13
-#&gt; HHV           0.10     0.11   0.08 1.00      0.94
-#&gt; duplicate     0.20     0.13   0.13 0.94      1.00</div><div class='input'>
+#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur duplicate  HHV
+#&gt; hydrogen      1.00     0.11   0.26      0.20 0.10
+#&gt; nitrogen      0.11     1.00   0.16      0.13 0.11
+#&gt; sulfur        0.26     0.16   1.00      0.13 0.08
+#&gt; duplicate     0.20     0.13   0.13      1.00 0.94
+#&gt; HHV           0.10     0.11   0.08      0.94 1.00</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>corr_filter</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   terms id        
 #&gt;   &lt;chr&gt; &lt;chr&gt;     

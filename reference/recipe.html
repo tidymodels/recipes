@@ -59,7 +59,15 @@ order to get it ready for data analysis." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -80,7 +88,7 @@ order to get it ready for data analysis." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
         </div>
       </div>
     </div>
@@ -163,8 +171,7 @@ order to get it ready for data analysis.</p>
 <span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for formula</span>
 <span class='fu'>recipe</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>...</span>)
@@ -188,9 +195,9 @@ used).</p></td>
     <tr>
       <th>formula</th>
       <td><p>A model formula. No in-line functions should be used here
-(e.g. <code><a href='https://rdrr.io/r/base/Log.html'>log(x)</a></code>, <code>x:y</code>, etc.). These types of transformations
-should be enacted using <code>step</code> functions in this package. Dots are
-allowed as are simple multivariate outcome terms (i.e. no need for
+(e.g. <code><a href='https://rdrr.io/r/base/Log.html'>log(x)</a></code>, <code>x:y</code>, etc.) and minus signs are not allowed. These types of
+transformations should be enacted using <code>step</code> functions in this package.
+Dots are allowed as are simple multivariate outcome terms (i.e. no need for
 <code>cbind</code>; see Examples).</p></td>
     </tr>
     <tr>
@@ -260,6 +267,7 @@ data set to save time and memory.</p>
     <pre class="examples"><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># simple example:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
 
 <span class='co'># split data</span>
