@@ -97,10 +97,13 @@ step_normalize_new <-
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
-  check_type(training[, col_names])
 
-  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  training_selection <- training[, col_names]
+
+  check_type(training_selection)
+
+  means <- vapply(training_selection, mean, c(mean = 0), na.rm = x$na_rm)
+  sds <- vapply(training_selection, sd, c(sd = 0), na.rm = x$na_rm)
   step_normalize_new(
     terms = x$terms,
     role = x$role,
