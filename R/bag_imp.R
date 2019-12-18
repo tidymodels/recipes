@@ -64,7 +64,7 @@
 #' missing_examples <- c(14, 394, 565)
 #'
 #' rec <- recipe(Price ~ ., data = credit_tr)
-#'
+#' \dontrun{
 #' impute_rec <- rec %>%
 #'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 #'
@@ -95,7 +95,7 @@
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-#'
+#' }
 
 step_bagimpute <-
   function(recipe,

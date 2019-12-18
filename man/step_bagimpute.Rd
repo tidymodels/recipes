@@ -108,7 +108,7 @@ credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 
 rec <- recipe(Price ~ ., data = credit_tr)
-
+\dontrun{
 impute_rec <- rec \%>\%
   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
 
@@ -139,7 +139,7 @@ imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
-
+}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}.
