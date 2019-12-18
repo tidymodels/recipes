@@ -299,7 +299,7 @@ Springer Verlag.</p>
 <span class='no'>missing_examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
-
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
 
@@ -307,39 +307,12 @@ Springer Verlag.</p>
 
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority  Home Time Age Marital Records     Job Expenses Income
-#&gt; 28     good        15 owner   36  43 married      no   fixed       75    251
-#&gt; 688    good         2  rent   60  32 married      no partime       87    115
-#&gt; 1002   good        21  rent   60  39 married      no   fixed      124    191
-#&gt;      Assets Debt Amount Price
-#&gt; 28     4000    0   1800  2557
-#&gt; 688    2000    0   1250  1517
-#&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
-#&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
-#&gt; 1 good          15 owner    36    43 married no      fixed       75    251
-#&gt; 2 good           2 rent     60    32 married no      part…       87    115
-#&gt; 3 good          21 rent     60    39 married no      fixed      124    191
-#&gt; # … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
-#&gt;   terms   model id             
-#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
-#&gt; 1 Status  NA    bagimpute_m2y3I
-#&gt; 2 Home    NA    bagimpute_m2y3I
-#&gt; 3 Marital NA    bagimpute_m2y3I
-#&gt; 4 Job     NA    bagimpute_m2y3I
-#&gt; 5 Income  NA    bagimpute_m2y3I
-#&gt; 6 Assets  NA    bagimpute_m2y3I
-#&gt; 7 Debt    NA    bagimpute_m2y3I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
-#&gt;   terms   model        id             
-#&gt;   &lt;chr&gt;   &lt;named list&gt; &lt;chr&gt;          
-#&gt; 1 Status  &lt;classbgg&gt;   bagimpute_m2y3I
-#&gt; 2 Home    &lt;classbgg&gt;   bagimpute_m2y3I
-#&gt; 3 Marital &lt;classbgg&gt;   bagimpute_m2y3I
-#&gt; 4 Job     &lt;classbgg&gt;   bagimpute_m2y3I
-#&gt; 5 Income  &lt;regbagg&gt;    bagimpute_m2y3I
-#&gt; 6 Assets  &lt;regbagg&gt;    bagimpute_m2y3I
-#&gt; 7 Debt    &lt;regbagg&gt;    bagimpute_m2y3I</div><div class='input'>
+<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]
+<span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]
+
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
 <span class='co'>## Specifying which variables to imputate with</span>
 
  <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
@@ -352,40 +325,12 @@ Springer Verlag.</p>
 
 <span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority  Home Time Age Marital Records     Job Expenses Income
-#&gt; 28     good        15 owner   36  43 married      no   fixed       75    251
-#&gt; 688    good         2  rent   60  32 married      no partime       87    115
-#&gt; 1002   good        21  rent   60  39 married      no   fixed      124    191
-#&gt;      Assets Debt Amount Price
-#&gt; 28     4000    0   1800  2557
-#&gt; 688    2000    0   1250  1517
-#&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]</div><div class='output co'>#&gt; # A tibble: 3 x 14
-#&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   &lt;fct&gt;      &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;
-#&gt; 1 good          15 owner    36    43 married no      fixed       75    251
-#&gt; 2 good           2 rent     60    32 married no      part…       87    115
-#&gt; 3 good          21 rent     60    39 married no      fixed      124    191
-#&gt; # … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
-#&gt;   terms   model id             
-#&gt;   &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;          
-#&gt; 1 Status  NA    bagimpute_wJ2js
-#&gt; 2 Home    NA    bagimpute_wJ2js
-#&gt; 3 Marital NA    bagimpute_wJ2js
-#&gt; 4 Job     NA    bagimpute_wJ2js
-#&gt; 5 Income  NA    bagimpute_wJ2js
-#&gt; 6 Assets  NA    bagimpute_wJ2js
-#&gt; 7 Debt    NA    bagimpute_wJ2js</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
-#&gt;   terms   model        id             
-#&gt;   &lt;chr&gt;   &lt;named list&gt; &lt;chr&gt;          
-#&gt; 1 Status  &lt;classbgg&gt;   bagimpute_wJ2js
-#&gt; 2 Home    &lt;classbgg&gt;   bagimpute_wJ2js
-#&gt; 3 Marital &lt;classbgg&gt;   bagimpute_wJ2js
-#&gt; 4 Job     &lt;classbgg&gt;   bagimpute_wJ2js
-#&gt; 5 Income  &lt;regbagg&gt;    bagimpute_wJ2js
-#&gt; 6 Assets  &lt;regbagg&gt;    bagimpute_wJ2js
-#&gt; 7 Debt    &lt;regbagg&gt;    bagimpute_wJ2js</div><div class='input'>
-</div></pre>
+<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]
+<span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]
+
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
