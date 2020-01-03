@@ -18,8 +18,13 @@ maybe_register_tunable_methods <- function() {
   names <- names(ns)
   names <- grep("tunable.step", names, fixed = TRUE, value = TRUE)
 
-  for (name in names) {
-    s3_register("tune::tunable", name, get(name, envir = ns))
+  classes <- gsub("tunable.", "", names)
+
+  for (i in seq_along(names)) {
+    name <- names[[i]]
+    class <- classes[[i]]
+
+    s3_register("tune::tunable", class, get(name, envir = ns))
   }
 
   invisible()
