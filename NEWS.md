@@ -1,6 +1,7 @@
 # recipes (development version)
 
  * Delayed S3 method registration for `tune::tunable()` methods that live in recipes will now work correctly on R >=4.0.0 (#439, tidymodels/tune#146).
+ * `step_relevel()` added.
 
 #  `recipes` 0.1.8
 
