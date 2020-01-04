@@ -13,7 +13,7 @@ step_relevel(
   ref_level,
   objects = NULL,
   skip = FALSE,
-  id = recipes::rand_id("relevel")
+  id = rand_id("relevel")
 )
 
 \method{tidy}{step_relevel}(x, ...)

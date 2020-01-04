@@ -53,11 +53,11 @@ step_relevel <-
            ref_level,
            objects = NULL,
            skip = FALSE,
-           id = recipes::rand_id("relevel")) {
-    recipes::add_step(
+           id = rand_id("relevel")) {
+    add_step(
       recipe,
       step_relevel_new(
-        terms = recipes::ellipse_check(...),
+        terms = ellipse_check(...),
         role = role,
         trained = trained,
         ref_level = ref_level,
@@ -70,7 +70,7 @@ step_relevel <-
 
 step_relevel_new <-
   function(terms, role, trained, ref_level, objects, skip, id) {
-    recipes::step(
+    step(
       subclass = "relevel",
       terms = terms,
       role = role,
@@ -84,7 +84,7 @@ step_relevel_new <-
 
 #' @export
 prep.step_relevel <- function(x, training, info = NULL, ...) {
-  col_names <- recipes::terms_select(x$terms, info = info)
+  col_names <- terms_select(x$terms, info = info)
   col_check <- dplyr::filter(info, .data$variable %in% col_names)
   if (any(col_check$type != "nominal")) {
     rlang::abort(
