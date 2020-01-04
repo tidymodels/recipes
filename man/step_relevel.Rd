@@ -10,7 +10,7 @@ step_relevel(
   ...,
   role = NA,
   trained = FALSE,
-  ref_level = "UNKNOWN",
+  ref_level,
   objects = NULL,
   skip = FALSE,
   id = recipes::rand_id("relevel")

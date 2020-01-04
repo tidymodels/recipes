@@ -50,7 +50,7 @@ step_relevel <-
            ...,
            role = NA,
            trained = FALSE,
-           ref_level = "UNKNOWN",
+           ref_level,
            objects = NULL,
            skip = FALSE,
            id = recipes::rand_id("relevel")) {
@@ -87,12 +87,11 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   col_names <- recipes::terms_select(x$terms, info = info)
   col_check <- dplyr::filter(info, .data$variable %in% col_names)
   if (any(col_check$type != "nominal")) {
-    stop(
+    rlang::abort(
       "Columns must be character or factor: ",
       paste0(col_check$variable[col_check$type != "nominal"],
         collapse = ", "
-      ),
-      call. = FALSE
+      )
     )
   }
 
@@ -101,11 +100,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   # Check to make sure that no ordered levels are provided
   order_check <- map_lgl(objects, attr, "is_ordered")
   if (any(order_check)) {
-    stop(
+    rlang::abort(
       "Columns contain ordered factors (which cannot be releveled) '",
       x$ref_level, "': ",
-      paste0(names(order_check)[order_check], collapse = ", "),
-      call. = FALSE
+      paste0(names(order_check)[order_check], collapse = ", ")
     )
   }
 
@@ -114,11 +112,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
     y = x$ref_level
   )
   if (any(ref_check)) {
-    stop(
+    rlang::abort(
       "Columns must contain the reference level '",
       x$ref_level, "': ",
-      paste0(names(ref_check)[ref_check], collapse = ", "),
-      call. = FALSE
+      paste0(names(ref_check)[ref_check], collapse = ", ")
     )
   }
 
