@@ -10,25 +10,15 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/New_York             |
-|date     |2019-12-17                   |
+|date     |2020-01-04                   |
 
 # Dependencies
 
 |package |old   |new        |Δ  |
 |:-------|:-----|:----------|:--|
-|recipes |0.1.7 |0.1.7.9000 |*  |
+|recipes |0.1.8 |0.1.8.9000 |*  |
 |BH      |NA    |1.72.0-2   |*  |
-|cli     |NA    |2.0.0.9000 |*  |
-|vctrs   |NA    |0.2.1      |*  |
+|pillar  |NA    |1.4.3.9000 |*  |
 
 # Revdeps
-
-## New problems (4)
-
-|package                            |version |error  |warning |note |
-|:----------------------------------|:-------|:------|:-------|:----|
-|[butcher](problems.md#butcher)     |0.1.0   |__+2__ |        |     |
-|[embed](problems.md#embed)         |0.0.4   |__+2__ |        |     |
-|[formulize](problems.md#formulize) |0.1.0   |__+1__ |        |     |
-|[hardhat](problems.md#hardhat)     |0.1.0   |__+1__ |        |     |
 
