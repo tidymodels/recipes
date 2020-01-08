@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simple Value Assignments for Novel Factor Levels — step_novel • recipes</title>
+<title>Relevel factors to a desired level — step_relevel • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,10 +41,12 @@
 
 
 
-<meta property="og:title" content="Simple Value Assignments for Novel Factor Levels — step_novel" />
-<meta property="og:description" content="step_novel creates a specification of a recipe
-step that will assign a previously unseen factor level to a
-new value." />
+<meta property="og:title" content="Relevel factors to a desired level — step_relevel" />
+<meta property="og:description" content="step_relevel creates a specification of a recipe
+step that will reorder the provided factor columns so that
+the level specified by ref_level is first. This is useful
+for contr.treatment contrasts which take the first level as the
+reference." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -156,29 +158,31 @@ new value." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simple Value Assignments for Novel Factor Levels</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/novel.R'><code>R/novel.R</code></a></small>
-    <div class="hidden name"><code>step_novel.Rd</code></div>
+    <h1>Relevel factors to a desired level</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/relevel.R'><code>R/relevel.R</code></a></small>
+    <div class="hidden name"><code>step_relevel.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>step_novel</code> creates a <em>specification</em> of a recipe
-step that will assign a previously unseen factor level to a
-new value.</p>
+    <p><code>step_relevel</code> creates a <em>specification</em> of a recipe
+step that will reorder the provided factor columns so that
+the level specified by ref_level is first. This is useful
+for contr.treatment contrasts which take the first level as the
+reference.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_novel</span>(
+    <pre class="usage"><span class='fu'>step_relevel</span>(
   <span class='no'>recipe</span>,
   <span class='no'>...</span>,
   <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>new_level</span> <span class='kw'>=</span> <span class='st'>"new"</span>,
+  <span class='no'>ref_level</span>,
   <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"novel"</span>)
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"relevel"</span>)
 )
 
-<span class='co'># S3 method for step_novel</span>
+<span class='co'># S3 method for step_relevel</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -194,7 +198,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose which
 variables that will be affected by the step. These variables
 should be character or factor types. See <code><a href='selections.html'>selections()</a></code> for more
-details. For the <code>tidy</code> method, these are not currently used.</p></td>
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -207,9 +211,9 @@ created.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
-      <th>new_level</th>
-      <td><p>A single character value that will be assigned
-to new factor levels.</p></td>
+      <th>ref_level</th>
+      <td><p>A single character value that will be used to
+relevel the factor column(s) (if the level is present).</p></td>
     </tr>
     <tr>
       <th>objects</th>
@@ -231,65 +235,39 @@ the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_novel</code> object.</p></td>
+      <td><p>A <code>step_relevel</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected) and <code>value</code> (the factor
-levels that is used for the new value)</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The selected variables are adjusted to have a new
-level (given by <code>new_level</code>) that is placed in the last
-position. During preparation there will be no data points
-associated with this new level since all of the data have been
-seen.</p>
+    <p>The selected variables are releveled to a level
+(given by <code>ref_level</code>). Placing the <code>ref_level</code> in the first
+position.</p>
 <p>Note that if the original columns are character, they will be
 converted to factors by this step.</p>
-<p>Missing values will remain missing.</p>
-<p>If <code>new_level</code> is already in the data given to <code>prep</code>, an error
-is thrown.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
-<code><a href='names0.html'>dummy_names()</a></code>, <code><a href='step_regex.html'>step_regex()</a></code>, <code><a href='step_count.html'>step_count()</a></code>,
-<code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_other.html'>step_other()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='step_unknown.html'>step_unknown</a></span>(<span class='no'>diet</span>, <span class='kw'>new_level</span> <span class='kw'>=</span> <span class='st'>"UNKNOWN"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_relevel</span>(<span class='no'>diet</span>, <span class='kw'>ref_level</span> <span class='kw'>=</span> <span class='st'>"UNKNOWN"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='no'>okc_tr</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[<span class='fl'>1</span>:<span class='fl'>30000</span>,]
-<span class='no'>okc_te</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[<span class='fl'>30001</span>:<span class='fl'>30006</span>,]
-<span class='no'>okc_te</span>$<span class='no'>diet</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='st'>"cannibalism"</span>
-<span class='no'>okc_te</span>$<span class='no'>diet</span>[<span class='fl'>4</span>] <span class='kw'>&lt;-</span> <span class='st'>"vampirism"</span>
-
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
-
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_novel</span>(<span class='no'>diet</span>, <span class='no'>location</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
-
-<span class='no'>processed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
-<span class='fu'>tibble</span>(<span class='kw'>old</span> <span class='kw'>=</span> <span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='no'>processed</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 2
-#&gt;   old               new              
-#&gt;   &lt;chr&gt;             &lt;fct&gt;            
-#&gt; 1 vegetarian        vegetarian       
-#&gt; 2 strictly anything strictly anything
-#&gt; 3 cannibalism       new              
-#&gt; 4 vampirism         new              
-#&gt; 5 &lt;NA&gt;              &lt;NA&gt;             
-#&gt; 6 &lt;NA&gt;              &lt;NA&gt;             </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   terms    value id         
-#&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;      
-#&gt; 1 diet     new   novel_auqbV
-#&gt; 2 location new   novel_auqbV</div></pre>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>data</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt;  [1] "UNKNOWN"             "anything"            "halal"              
+#&gt;  [4] "kosher"              "mostly anything"     "mostly halal"       
+#&gt;  [7] "mostly kosher"       "mostly other"        "mostly vegan"       
+#&gt; [10] "mostly vegetarian"   "other"               "strictly anything"  
+#&gt; [13] "strictly halal"      "strictly kosher"     "strictly other"     
+#&gt; [16] "strictly vegan"      "strictly vegetarian" "vegan"              
+#&gt; [19] "vegetarian"         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -297,7 +275,6 @@ is thrown.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
