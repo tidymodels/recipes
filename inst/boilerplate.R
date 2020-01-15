@@ -124,7 +124,7 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
 
   <prepping action here>
 
-  step_center_new(
+  {which}_{name}_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
