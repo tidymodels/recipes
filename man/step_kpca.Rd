@@ -30,7 +30,7 @@ variables will be used to compute the components. See
 method, these are not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
+role should they be assigned? By default, the function assumes
 that the new principal component columns created by the original
 variables will be used as predictors in a model.}
 
