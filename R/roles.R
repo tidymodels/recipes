@@ -318,15 +318,15 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
   }
 
   if (length(x) != 1L) {
-    rlang::abort(arg, " must have length 1.")
+    rlang::abort(paste0(arg, " must have length 1."))
   }
 
   if (!is.character(x)) {
-    rlang::abort(arg, " must be a character vector.")
+    rlang::abort(paste0(arg, " must be a character vector."))
   }
 
   if (is.na(x)) {
-    rlang::abort(arg, " must not be `NA`.")
+    rlang::abort(paste0(arg, " must not be `NA`."))
   }
 
   invisible(NULL)
