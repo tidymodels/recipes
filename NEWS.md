@@ -2,7 +2,7 @@
 
 ## Breaking Changes
 
-* renamed `yr_trans()` to `yr_transform()` to avoid conflicts. 
+* renamed `yj_trans()` to `yj_transform()` to avoid conflicts. 
 
 # recipes 0.1.9
 
