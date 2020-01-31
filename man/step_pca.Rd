@@ -16,7 +16,8 @@ step_pca(
   res = NULL,
   prefix = "PC",
   skip = FALSE,
-  id = rand_id("pca")
+  id = rand_id("pca"),
+  keep_vars = FALSE
 )
 
 \method{tidy}{step_pca}(x, ...)
@@ -69,6 +70,8 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
+
+\item{keep_vars}{Whether to keep the original values, or drop them (default).}
 
 \item{x}{A \code{step_pca} object.}
 }
