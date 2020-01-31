@@ -85,8 +85,7 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
   if (nrow(new_data) == 1) {
-    warning("`new_data` contains a single row; unable to shuffle",
-            call. = FALSE)
+    rlang::warn("`new_data` contains a single row; unable to shuffle")
     return(new_data)
   }
 

@@ -215,7 +215,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
       imp_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(imp_data))) {
-        warning("All predictors are missing; cannot impute", call. = FALSE)
+        rlang::warn("All predictors are missing; cannot impute")
       } else {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],

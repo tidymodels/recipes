@@ -60,7 +60,7 @@ step_sample <- function(
 ) {
 
   if (length(list(...)) > 0) {
-    warning("Selectors are not used for this step.", call. = FALSE)
+    rlang::warn("Selectors are not used for this step.")
   }
 
   if (!is_tune(size) & !is_varying(size)) {

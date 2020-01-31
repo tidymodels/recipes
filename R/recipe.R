@@ -361,11 +361,12 @@ prep.recipe <-
           call. = FALSE
         )
       if (!is.null(x$training))
-        warning(
-          "The previous data will be used by `prep`; ",
-          "the data passed using `training` will be ",
-          "ignored.",
-          call. = FALSE
+        rlang::warn(
+          paste0(
+            "The previous data will be used by `prep`; ",
+            "the data passed using `training` will be ",
+            "ignored."
+          )
         )
       training <- x$template
     }
@@ -386,9 +387,13 @@ prep.recipe <-
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
     if (any(skippers) & !retain)
-      warning("Since some operations have `skip = FALSE`, using ",
-              "`retain = TRUE` will allow those steps results to ",
-              "be accessible.")
+      rlang::warn(
+        paste0(
+          "Since some operations have `skip = FALSE`, using ",
+          "`retain = TRUE` will allow those steps results to ",
+          "be accessible."
+        )
+      )
 
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)

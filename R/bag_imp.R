@@ -223,7 +223,7 @@ bake.step_bagimpute <- function(object, new_data, ...) {
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(pred_data))) {
-        warning("All predictors are missing; cannot impute", call. = FALSE)
+        rlang::warn("All predictors are missing; cannot impute")
       } else {
         pred_vals <- predict(object$models[[imp_var]], pred_data)
         pred_vals <- cast(pred_vals, new_data[[imp_var]])

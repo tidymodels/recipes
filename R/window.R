@@ -129,9 +129,16 @@ step_window <-
         tmp <- size
         size <- as.integer(size)
         if (!isTRUE(all.equal(tmp, size)))
-          warning("`size` was not an integer (", tmp, ") and was ",
-                  "converted to ", size, ".", sep = "",
-                  call. = FALSE)
+          rlang::warn(
+            paste0(
+            "`size` was not an integer (",
+            tmp,
+            ") and was ",
+            "converted to ",
+            size,
+            "."
+            )
+          )
       }
       if (size %% 2 == 0) {
         stop("`size` should be odd.", call. = FALSE)

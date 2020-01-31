@@ -130,7 +130,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   terms <- quos(...)
 
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
 
   vars <- terms_select(terms = terms, info = summary(recipe))
@@ -164,12 +164,11 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
       sep = ", "
     )
 
-    warning(
+    rlang::warn(
       glue::glue(
         "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
         "Skipping."
-      ),
-      call. = FALSE
+      )
     )
 
     vars <- vars[!(vars %in% vars_that_role_exists_for)]
@@ -216,7 +215,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   terms <- quos(...)
 
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
 
   rec_vars <- summary(recipe)
@@ -256,11 +255,11 @@ remove_role <- function(recipe, ..., old_role) {
 
   terms <- quos(...)
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
   vars <- terms_select(terms = terms, info = summary(recipe))
   if (length(vars) == 0) {
-    warning("No columns were selected for role removal.", call. = FALSE)
+    rlang::warn("No columns were selected for role removal.")
   }
 
   term_info <- summary(recipe)
@@ -291,10 +290,8 @@ role_rm_machine <- function(x, role, var) {
     var <- glue::single_quote(x$variable[1])
     role <- glue::single_quote(role)
 
-    warning(
-      glue::glue("Column, {var}, does not have role, {role}."),
-      call. = FALSE
-    )
+    rlang::warn(
+      glue::glue("Column, {var}, does not have role, {role}."))
 
     return(x)
   }

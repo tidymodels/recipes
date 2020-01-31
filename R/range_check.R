@@ -175,7 +175,7 @@ range_check_func <- function(x,
                   upper_allowed)
   }
   if (warn & !is.null(msg)) {
-    warning(msg, call. = FALSE)
+    rlang::warn(msg)
   } else if (!is.null(msg)) {
     stop(msg, call. = FALSE)
   }

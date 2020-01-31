@@ -102,13 +102,14 @@ discretize.numeric <-
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
       if (num_breaks > length(breaks))
-        warning(
+        rlang::warn(
+          paste0(
           "Not enough data for ",
           cuts,
           " breaks. Only ",
           length(breaks),
-          " breaks were used.",
-          sep = ""
+          " breaks were used."
+          )
         )
       if (infs) {
         breaks[1] <- -Inf
@@ -119,12 +120,12 @@ discretize.numeric <-
       if (is.null(labels)) {
         prefix <- prefix[1]
         if (make.names(prefix) != prefix) {
-          warning(
+          rlang::warn(paste0(
             "The prefix '",
             prefix,
             "' is not a valid R name. It has been changed to '",
             make.names(prefix),
-            "'."
+            "'.")
           )
           prefix <- make.names(prefix)
         }
@@ -142,8 +143,12 @@ discretize.numeric <-
       )
     } else {
       out <- list(bins = 0)
-      warning("Data not binned; too few unique values per bin. ",
-              "Adjust 'min_unique' as needed", call. = FALSE)
+      rlang::warn(
+        paste0(
+          "Data not binned; too few unique values per bin. ",
+          "Adjust 'min_unique' as needed"
+        )
+      )
     }
     class(out) <- "discretize"
     out
@@ -299,8 +304,12 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
-    warning("Note that the options `prefix` and `labels`",
-            "will be applied to all variables")
+    rlang::warn(
+      paste0(
+        "Note that the options `prefix` and `labels`",
+        "will be applied to all variables"
+      )
+    )
   }
 
   x$options$cuts <- x$num_breaks

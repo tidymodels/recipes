@@ -542,17 +542,18 @@ check_nominal_type <- function(x, lvl) {
     was_factor <- fac_ref_cols[!(fac_ref_cols %in% fac_act_cols)]
 
     if (length(was_factor) > 0) {
-      warning(
-        " There ",
-        ifelse(length(was_factor) > 1, "were ", "was "),
-        length(was_factor),
-        ifelse(length(was_factor) > 1, " columns ", " column "),
-        "that ",
-        ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
-        "when the recipe was prepped:\n ",
-        paste0("'", was_factor, "'", collapse = ", "),
-        ".\n This may cause errors when processing new data.",
-        call. = FALSE
+      rlang::warn(
+        paste0(
+          " There ",
+          ifelse(length(was_factor) > 1, "were ", "was "),
+          length(was_factor),
+          ifelse(length(was_factor) > 1, " columns ", " column "),
+          "that ",
+          ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
+          "when the recipe was prepped:\n ",
+          paste0("'", was_factor, "'", collapse = ", "),
+          ".\n This may cause errors when processing new data."
+        )
       )
     }
   }
