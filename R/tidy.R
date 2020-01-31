@@ -18,7 +18,7 @@
 #'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, a logical for `skip`, and a character column `id`. 
+#'  estimated using `prep`, a logical for `skip`, and a character column `id`.
 #'
 #' @examples
 #' library(modeldata)
@@ -47,7 +47,7 @@ NULL
 tidy.recipe <- function(x, number = NA, ...) {
   num_oper <- length(x$steps)
   if (num_oper == 0)
-    stop("No steps in recipe.", call. = FALSE)
+    rlang::abort("No steps in recipe.")
   pattern <- "(^step_)|(^check_)"
   if (is.na(number)) {
     skipped <- vapply(x$steps, function(x) x$skip, logical(1))
@@ -71,8 +71,13 @@ tidy.recipe <- function(x, number = NA, ...) {
                   id = ids)
   } else {
     if (number > num_oper || length(number) > 1)
-      stop("`number` should be a single value between 1 and ",
-           num_oper, ".", call. = FALSE)
+      rlang::abort(
+        paste0(
+          "`number` should be a single value between 1 and ",
+           num_oper,
+          "."
+          )
+      )
 
     res <- tidy(x$steps[[number]], ...)
   }
@@ -82,15 +87,21 @@ tidy.recipe <- function(x, number = NA, ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step <- function(x, ...) {
-  stop("No `tidy` method for a step with classes: ",
-       paste0(class(x), collapse = ", "),
-       call. = FALSE)
+  rlang::abort(
+    paste0(
+      "No `tidy` method for a step with classes: ",
+      paste0(class(x), collapse = ", ")
+    )
+  )
 }
 
 #' @rdname tidy.recipe
 #' @export
 tidy.check <- function(x, ...) {
-  stop("No `tidy` method for a check with classes: ",
-       paste0(class(x), collapse = ", "),
-       call. = FALSE)
+  rlang::abort(
+    paste0(
+       "No `tidy` method for a check with classes: ",
+       paste0(class(x), collapse = ", ")
+    )
+  )
 }

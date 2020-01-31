@@ -179,9 +179,12 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       )
     col_names <- col_names[fac_check]
     if (length(col_names) == 0) {
-      stop("The `terms` argument in `step_dummy` did not select ",
-           "any factor columns.",
-           call. = FALSE)
+      rlang::abort(
+        paste0(
+        "The `terms` argument in `step_dummy` did not select ",
+        "any factor columns."
+        )
+      )
     }
 
 
@@ -265,7 +268,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     fac_type <- attr(object$levels[[i]], "dataClasses")
 
     if (!any(names(attributes(object$levels[[i]])) == "values"))
-      stop("Factor level values not recorded", call. = FALSE)
+      rlang::abort("Factor level values not recorded")
 
     warn_new_levels(
       new_data[[orig_var]],

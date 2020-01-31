@@ -70,8 +70,12 @@ step_ratio <-
            skip = FALSE,
            id = rand_id("ratio")) {
     if (is_empty(denom))
-      stop("Please supply at least one denominator variable specification. ",
-           "See ?selections.", call. = FALSE)
+      rlang::abort(
+        paste0(
+          "Please supply at least one denominator variable specification. ",
+          "See ?selections."
+          )
+        )
     add_step(
       recipe,
       step_ratio_new(
@@ -113,11 +117,11 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
   if (nrow(col_names) == 0)
-    stop("No variables were selected for making ratios", call. = FALSE)
+    rlang::abort("No variables were selected for making ratios")
   if (any(info$type[info$variable %in% col_names$top] != "numeric"))
-    stop("The ratio variables should be numeric")
+    rlang::abort("The ratio variables should be numeric")
   if (any(info$type[info$variable %in% col_names$bottom] != "numeric"))
-    stop("The ratio variables should be numeric")
+    rlang::abort("The ratio variables should be numeric")
 
   step_ratio_new(
     terms = x$terms,

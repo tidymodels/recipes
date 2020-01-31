@@ -134,18 +134,21 @@ element_check <- function(x, allowed = selectors) {
     # when called from a step
     not_good <- funs[!(funs %in% allowed)]
     if (length(not_good) > 0)
-      stop(
-        "Not all functions are allowed in step function selectors (e.g. ",
-        paste0("`", not_good, "`", collapse = ", "),
-        "). See ?selections.",
-        call. = FALSE
+      rlang::abort(
+          paste0(
+          "Not all functions are allowed in step function selectors (e.g. ",
+          paste0("`", not_good, "`", collapse = ", "),
+          "). See ?selections."
+        )
       )
   } else {
     # when called from formula.recipe
     if (length(funs) > 0)
-      stop(
-        "No in-line functions should be used here; use steps to define ",
-        "baking actions", call. = FALSE
+      rlang::abort(
+        paste0(
+          "No in-line functions should be used here; use steps to define ",
+          "baking actions"
+        )
       )
   }
   invisible(NULL)
@@ -183,7 +186,7 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
   vars <- unique(info$variable)
 
   if (is_empty(terms)) {
-    stop("At least one selector should be used", call. = FALSE)
+    rlang::abort("At least one selector should be used")
   }
 
   ## check arguments against whitelist
@@ -340,5 +343,5 @@ set_current_info <- function(x) {
 #' @export
 #' @rdname has_role
 current_info <- function() {
-  cur_info_env %||% stop("Variable context not set", call. = FALSE)
+  cur_info_env %||% rlang::abort("Variable context not set")
 }

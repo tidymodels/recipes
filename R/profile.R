@@ -116,17 +116,15 @@ step_profile <- function(recipe,
                          id = rand_id("profile")) {
 
   if (pct < 0 | pct > 1)
-    stop("`pct should be on [0, 1]`", call. = FALSE)
+    rlang::abort("`pct should be on [0, 1]`")
   if (length(grid) != 2)
-    stop("`grid` should have two named elements. See ?step_profile",
-         call. = FALSE)
+    rlang::abort("`grid` should have two named elements. See ?step_profile")
   if (all(sort(names(grid)) == c("len", "ptcl")))
-    stop("`grid` should have two named elements. See ?step_profile",
-         call. = FALSE)
+    rlang::abort("`grid` should have two named elements. See ?step_profile")
   if (grid$len < 2)
-    stop("`grid$len should be at least 2.`", call. = FALSE)
+    rlang::abort("`grid$len should be at least 2.`")
   if (!is.logical(grid$pctl))
-    stop("`grid$pctl should be logical.`", call. = FALSE)
+    rlang::abort("`grid$pctl should be logical.`")
 
   add_step(recipe,
            step_profile_new(
@@ -167,12 +165,16 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
   profile_name <- terms_select(x$profile, info = info)
 
   if(length(fixed_names) == 0)
-    stop("At least one variable should be fixed", call. = FALSE)
+    rlang::abort("At least one variable should be fixed")
   if(length(profile_name) != 1)
-    stop("Only one variable should be profiled", call. = FALSE)
+    rlang::abort("Only one variable should be profiled")
   if(any(profile_name == fixed_names))
-    stop("The profiled variable cannot be in the list of ",
-         "variables to be fixed.", call. = FALSE)
+    rlang::abort(
+      paste0(
+        "The profiled variable cannot be in the list of ",
+        "variables to be fixed."
+        )
+      )
   fixed_vals <- lapply(
     training[, fixed_names],
     fixed,
@@ -255,7 +257,7 @@ fixed <- function (x, pct, index, ...) UseMethod("fixed")
 #' @export
 #' @rdname fixed
 fixed.default <- function(x, pct, index, ...) {
-  stop("No method for determining a value to fix for ",
+  rlang::abort("No method for determining a value to fix for ",
        "objects of class(s) ",
        paste0("'", class(x), "'", collapse = ","),
        call. = FALSE)

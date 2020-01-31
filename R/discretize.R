@@ -11,7 +11,7 @@ discretize <- function(x, ...)
 
 #' @rdname discretize
 discretize.default <- function(x, ...)
-  stop("Only numeric `x` is accepted")
+  rlang::abort("Only numeric `x` is accepted")
 
 #' @rdname discretize
 #' @param cuts An integer defining how many cuts to make of the
@@ -95,7 +95,7 @@ discretize.numeric <-
     missing_lab <- "_missing"
 
     if (cuts < 2)
-      stop("There should be at least 2 cuts")
+      rlang::abort("There should be at least 2 cuts")
 
     if (unique_vals / (cuts + 1) >= min_unique) {
       breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)

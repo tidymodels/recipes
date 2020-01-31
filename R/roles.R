@@ -120,11 +120,11 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   single_chr(new_role, "new_", null_ok = FALSE)
 
   if (length(new_type) != 1L & length(new_type) != 0L) {
-    stop("`new_type` must have length 1.")
+    rlang::abort("`new_type` must have length 1.")
   }
 
   if (!is.character(new_type) & !is.null(new_type)) {
-    stop("`new_type` must be a character vector, or `NULL`.")
+    rlang::abort("`new_type` must be a character vector, or `NULL`.")
   }
 
   terms <- quos(...)
@@ -141,10 +141,10 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
     vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
-    stop(glue::glue(
+    rlang::abort(glue::glue(
       "No role currently exists for column(s): {vars}. Please use ",
       "`update_role()` instead."
-    ), call. = FALSE)
+    ))
   }
 
   role_already_exists <- recipe$var_info$role[existing_var_idx] %in% new_role
@@ -229,8 +229,12 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
       dplyr::group_by(variable) %>%
       dplyr::count()
     if (any(var_counts$n > 1)) {
-      stop("`old_role` can only be `NULL` when the variable(s) have ",
-           "a single existing role.", call. = FALSE)
+      rlang::abort(
+        paste0(
+          "`old_role` can only be `NULL` when the variable(s) have ",
+          "a single existing role."
+        )
+      )
     }
   }
 
@@ -314,15 +318,15 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
   }
 
   if (length(x) != 1L) {
-    stop(arg, " must have length 1.", call. = FALSE)
+    rlang::abort(arg, " must have length 1.")
   }
 
   if (!is.character(x)) {
-    stop(arg, " must be a character vector.", call. = FALSE)
+    rlang::abort(arg, " must be a character vector.")
   }
 
   if (is.na(x)) {
-    stop(arg, " must not be `NA`.", call. = FALSE)
+    rlang::abort(arg, " must not be `NA`.")
   }
 
   invisible(NULL)

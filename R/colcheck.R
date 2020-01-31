@@ -73,8 +73,13 @@ bake.check_cols <- function(object, new_data, ...) {
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    stop("The following cols are missing from `new_data`: ",
-         mis_cols, ".", call. = FALSE)
+    rlang::abort(
+      paste0(
+        "The following cols are missing from `new_data`: ",
+         mis_cols,
+        "."
+        )
+    )
   }
   new_data
 }

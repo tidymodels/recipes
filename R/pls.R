@@ -91,7 +91,7 @@ step_pls <-
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome))
-      stop("`outcome` should select at least one column.", call. = FALSE)
+      rlang::abort("`outcome` should select at least one column.")
 
     recipes_pkg_check("pls")
 

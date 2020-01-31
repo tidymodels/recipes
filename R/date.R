@@ -94,7 +94,7 @@ step_date <-
       "month")
   if (!is_tune(features) & !is_varying(features)) {
     if (!all(features %in% feat)) {
-      stop("Possible values of `features` should include: ",
+      rlang::abort("Possible values of `features` should include: ",
            paste0("'", feat, "'", collapse = ", "))
     }
   }
@@ -139,8 +139,11 @@ prep.step_date <- function(x, training, info = NULL, ...) {
 
   date_data <- info[info$variable %in% col_names, ]
   if (any(date_data$type != "date"))
-    stop("All variables for `step_date` should be either `Date` or",
-         "`POSIXct` classes.", call. = FALSE)
+    rlang::abort(
+      paste0("All variables for `step_date` should be either `Date` or",
+          "`POSIXct` classes."
+         )
+      )
 
   step_date_new(
     terms = x$terms,

@@ -57,13 +57,13 @@ step_geodist <- function(recipe,
                          skip = FALSE,
                          id = rand_id("geodist")) {
   if (length(ref_lon) != 1 || !is.numeric(ref_lon))
-    stop("`ref_lon` should be a single numeric value.", call. = FALSE)
+    rlang::abort("`ref_lon` should be a single numeric value.")
   if (length(ref_lat) != 1 || !is.numeric(ref_lat))
-    stop("`ref_lat` should be a single numeric value.", call. = FALSE)
+    rlang::abort("`ref_lat` should be a single numeric value.")
   if (length(log) != 1 || !is.logical(log))
-    stop("`log` should be a single logical value.", call. = FALSE)
+    rlang::abort("`log` should be a single logical value.")
   if (length(name) != 1 || !is.character(name))
-    stop("`name` should be a single character value.", call. = FALSE)
+    rlang::abort("`name` should be a single character value.")
 
   add_step(
     recipe,
@@ -107,15 +107,15 @@ step_geodist_new <-
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- terms_select(x$lon, info = info)
   if (length(lon_name) > 1)
-    stop("`lon` should resolve to a single column name.", call. = FALSE)
+    rlang::abort("`lon` should resolve to a single column name.")
   check_type(training[, lon_name])
   lat_name <- terms_select(x$lat, info = info)
   if (length(lat_name) > 1)
-    stop("`lat` should resolve to a single column name.", call. = FALSE)
+    rlang::abort("`lat` should resolve to a single column name.")
   check_type(training[, lat_name])
 
   if (any(names(training) == x$name))
-    stop("'", x$name, "' is already used in the data.", call. = FALSE)
+    rlang::abort("'", x$name, "' is already used in the data.")
 
   step_geodist_new(
     lon = x$lon,

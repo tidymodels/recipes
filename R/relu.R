@@ -79,17 +79,17 @@ step_relu <-
            id = rand_id("relu")) {
     if (!is_tune(shift) & !is_varying(shift)) {
       if (!is.numeric(shift)) {
-        stop("Shift argument must be a numeric value.", call. = FALSE)
+        rlang::abort("Shift argument must be a numeric value.")
       }
     }
     if (!is_tune(reverse) & !is_varying(reverse)) {
       if (!is.logical(reverse)) {
-        stop("Reverse argument must be a logical value.", call. = FALSE)
+        rlang::abort("Reverse argument must be a logical value.")
       }
     }
     if (!is_tune(smooth) & !is_varying(smooth)) {
       if (!is.logical(smooth)) {
-        stop("Smooth argument must be logical value.", call. = FALSE)
+        rlang::abort("Smooth argument must be logical value.")
       }
     }
     if (reverse & prefix == "right_relu_") {
@@ -174,7 +174,7 @@ print.step_relu <-
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (!is.numeric(x))
-    stop("step_relu can only be applied to numeric data.", call. = FALSE)
+    rlang::abort("step_relu can only be applied to numeric data.")
 
   if (reverse) {
     shifted <- shift - x

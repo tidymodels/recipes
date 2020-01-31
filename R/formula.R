@@ -18,9 +18,12 @@
 #' @export
 formula.recipe <- function(x, ...) {
   if (!fully_trained(x))
-    stop("All steps in the recipe must be prepped before the ",
-         "formula can be computed.",
-         call. = FALSE)
+    rlang::abort(
+      paste0(
+      "All steps in the recipe must be prepped before the ",
+      "formula can be computed."
+      )
+    )
 
   x <- summary(x)
   x_vars <- x$variable[x$role == "predictor"]

@@ -139,9 +139,9 @@ step_upsample_new <-
 prep.step_upsample <- function(x, training, info = NULL, ...) {
   col_name <- terms_select(x$terms, info = info)
   if (length(col_name) != 1)
-    stop("Please select a single factor variable.", call. = FALSE)
+    rlang::abort("Please select a single factor variable.")
   if (!is.factor(training[[col_name]]))
-    stop(col_name, " should be a factor variable.", call. = FALSE)
+    rlang::abort(col_name, " should be a factor variable.")
 
 
   obs_freq <- table(training[[col_name]])

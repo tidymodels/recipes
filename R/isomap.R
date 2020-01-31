@@ -169,7 +169,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
         ),
         silent = TRUE)
     if (inherits(iso_map, "try-error")) {
-      stop("`step_isomap` failed with error:\n", as.character(iso_map), call. = FALSE)
+      rlang::abort(paste0("`step_isomap` failed with error:\n", as.character(iso_map)))
     }
 
   } else {

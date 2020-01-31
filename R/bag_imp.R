@@ -110,7 +110,7 @@ step_bagimpute <-
            skip = FALSE,
            id = rand_id("bagimpute")) {
     if (is.null(impute_with))
-      stop("Please list some variables in `impute_with`", call. = FALSE)
+      rlang::abort("Please list some variables in `impute_with`")
     add_step(
       recipe,
       step_bagimpute_new(

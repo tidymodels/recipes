@@ -51,9 +51,9 @@ step_intercept <- function(recipe, ..., role = "predictor",
   if (length(list(...)) > 0)
     rlang::warn("Selectors are not used for this step.")
   if (!is.numeric(value))
-    stop("Intercept value must be numeric.", call. = FALSE)
+    rlang::abort("Intercept value must be numeric.")
   if (!is.character(name) | length(name) != 1)
-    stop("Intercept/constant column name must be a character value.")
+    rlang::abort("Intercept/constant column name must be a character value.")
   add_step(
     recipe,
     step_intercept_new(

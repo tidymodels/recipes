@@ -122,8 +122,7 @@ print.step_modeimpute <-
 
 mode_est <- function(x) {
   if (!is.character(x) & !is.factor(x))
-    stop("The data should be character or factor to compute the mode.",
-         call. = FALSE)
+    rlang::abort("The data should be character or factor to compute the mode.")
   tab <- table(x)
   modes <- names(tab)[tab == max(tab)]
   sample(modes, size = 1)

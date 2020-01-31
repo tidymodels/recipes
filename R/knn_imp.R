@@ -98,15 +98,15 @@ step_knnimpute <-
            skip = FALSE,
            id = rand_id("knnimpute")) {
     if (is.null(impute_with)) {
-      stop("Please list some variables in `impute_with`", call. = FALSE)
+      rlang::abort("Please list some variables in `impute_with`")
     }
 
     if (!is.list(options))
-      stop("`options` should be a named list.", call. = FALSE)
+      rlang::abort("`options` should be a named list.")
     opt_nms <- names(options)
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
-        stop("Availible options are 'eps', and 'nthread'.", call. = FALSE)
+        rlang::abort("Availible options are 'eps', and 'nthread'.")
       }
       if (all(opt_nms != "nthread")) {
         options$nthread <- 1

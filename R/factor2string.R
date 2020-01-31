@@ -95,10 +95,11 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
   if (any(!fac_check))
-    stop(
+    rlang::abort(
+      paste0(
       "The following variables are not factor vectors: ",
-      paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
-      call. = FALSE
+      paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
+      )
     )
 
   step_factor2string_new(

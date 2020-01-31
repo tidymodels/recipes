@@ -336,8 +336,7 @@ find_selectors <- function (f) {
   }
   else {
     # User supplied incorrect input
-    stop("Don't know how to handle type ", typeof(f),
-         call. = FALSE)
+    rlang::abort(paste0("Don't know how to handle type ", typeof(f), "."))
   }
 }
 
@@ -354,8 +353,7 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    stop("Don't know how to handle type ", typeof(x),
-         call. = FALSE)
+    rlang::abort(paste0("Don't know how to handle type ", typeof(x), "."))
   }
 }
 

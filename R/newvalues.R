@@ -114,10 +114,11 @@ new_values_func <- function(x,
   if (length(new_vals) == 0) return()
   if (all(is.na(new_vals)) && ignore_NA) return()
   if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
-  stop(colname,
-       " contains the new value(s): ",
-       paste(new_vals, collapse = ","),
-       call. = FALSE)
+  rlang::abort(paste0(
+    colname,
+    " contains the new value(s): ",
+    paste(new_vals, collapse = ",")
+  ))
 }
 
 prep.check_new_values <- function(x, training, info = NULL, ...) {
