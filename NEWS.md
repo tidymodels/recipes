@@ -4,6 +4,10 @@
 
 * renamed `yj_trans()` to `yj_transform()` to avoid conflicts. 
 
+## Other Changes
+
+* Added keep_vars argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca`, `step_pls`, `step_spatialsign`, and `step_isomap` (#282, @jonthegeek).
+
 # recipes 0.1.9
 
  * Delayed S3 method registration for `tune::tunable()` methods that live in recipes will now work correctly on R >=4.0.0 ([#439](https://github.com/tidymodels/recipes/issues/439), [tidymodels/tune#146](https://github.com/tidymodels/tune/issues/146)).

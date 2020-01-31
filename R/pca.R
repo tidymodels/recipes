@@ -34,6 +34,7 @@
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below
+#' @param keep_vars Whether to keep the original values, or drop them (default).
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -110,7 +111,8 @@ step_pca <- function(recipe,
                      res = NULL,
                      prefix = "PC",
                      skip = FALSE,
-                     id = rand_id("pca")) {
+                     id = rand_id("pca"),
+                     keep_vars = FALSE) {
 
   if (!is_tune(threshold) & !is_varying(threshold)) {
     if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
@@ -127,6 +129,7 @@ step_pca <- function(recipe,
       num_comp = num_comp,
       threshold = threshold,
       options = options,
+      keep_vars = keep_vars,
       res = res,
       prefix = prefix,
       skip = skip,
@@ -136,7 +139,7 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <-
-  function(terms, role, trained, num_comp, threshold, options, res,
+  function(terms, role, trained, num_comp, threshold, options, keep_vars, res,
            prefix, skip, id) {
     step(
       subclass = "pca",
@@ -146,6 +149,7 @@ step_pca_new <-
       num_comp = num_comp,
       threshold = threshold,
       options = options,
+      keep_vars = keep_vars,
       res = res,
       prefix = prefix,
       skip = skip,
@@ -185,7 +189,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     ## e.g. `sdev` etc.
 
   } else {
-    # fake a roation matrix so that the resolved names can be used for tidy()
+    # fake a rotation matrix so that the resolved names can be used for tidy()
     fake_matrix <- matrix(NA, nrow = length(col_names))
     rownames(fake_matrix) <- col_names
     prc_obj <- list(rotation = fake_matrix)
@@ -198,6 +202,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     threshold = x$threshold,
     options = x$options,
+    # Allow prepping of old recipes without this argument.
+    keep_vars = x$keep_vars %||% FALSE,
     res = prc_obj,
     prefix = x$prefix,
     skip = x$skip,
@@ -213,8 +219,15 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+
+    # Make sure baking of old prepped recipes will behave as expected. New
+    # recipes won't make it here if somehow keep_vars is NULL.
+    object$keep_vars <- object$keep_vars || FALSE
+
+    if (!object$keep_vars) {
+      new_data <-
+        new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }
