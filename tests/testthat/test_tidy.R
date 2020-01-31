@@ -10,7 +10,7 @@ data(okc)
 set.seed(131)
 okc_rec <- recipe(~ ., data = okc) %>%
   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-  step_date(date, features = "dow") %>%
+  step_date(date, features = "dow", id = "date_dow") %>%
   step_center(all_numeric()) %>%
   step_dummy(all_nominal()) %>%
   check_cols(starts_with("date"))
@@ -43,10 +43,23 @@ test_that('trained', {
   expect_equal(tidy(trained), exp_res_2)
 })
 
+test_that('select step', {
+  exp_res_3 <- tibble(
+   terms = factor("date"),
+   value = factor("dow"),
+   ordinal = FALSE,
+   id = okc_rec$steps[[2]][["id"]]
+  )
+  expect_equal(tidy(okc_rec, number = 2), exp_res_3)
+  expect_equal(tidy(okc_rec, id = "date_dow"), exp_res_3)
+})
+
 
 test_that('bad args', {
   expect_error(tidy(trained, number = NULL))
   expect_error(tidy(trained, number = 100))
+  expect_error(tidy(trained, number = 1, id = "id"))
+  expect_error(tidy(trained, id = "id"))
   expect_error(tidy(recipe(x = iris)))
 })
 
