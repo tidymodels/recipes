@@ -290,14 +290,14 @@ transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='no'>yj_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
+<span class='no'>yj_transform</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
 
-<span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>yj_transform</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_YeoJohnson-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_YeoJohnson-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>yj_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>yj_transform</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms         value id              
 #&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;           
 #&gt; 1 all_numeric()    NA YeoJohnson_8LSSy</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 3
