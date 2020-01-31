@@ -120,17 +120,17 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   single_chr(new_role, "new_", null_ok = FALSE)
 
   if (length(new_type) != 1L & length(new_type) != 0L) {
-    stop("`new_type` must have length 1.")
+    rlang::abort("`new_type` must have length 1.")
   }
 
   if (!is.character(new_type) & !is.null(new_type)) {
-    stop("`new_type` must be a character vector, or `NULL`.")
+    rlang::abort("`new_type` must be a character vector, or `NULL`.")
   }
 
   terms <- quos(...)
 
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
 
   vars <- terms_select(terms = terms, info = summary(recipe))
@@ -141,10 +141,10 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
     vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
-    stop(glue::glue(
+    rlang::abort(glue::glue(
       "No role currently exists for column(s): {vars}. Please use ",
       "`update_role()` instead."
-    ), call. = FALSE)
+    ))
   }
 
   role_already_exists <- recipe$var_info$role[existing_var_idx] %in% new_role
@@ -164,12 +164,11 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
       sep = ", "
     )
 
-    warning(
+    rlang::warn(
       glue::glue(
         "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
         "Skipping."
-      ),
-      call. = FALSE
+      )
     )
 
     vars <- vars[!(vars %in% vars_that_role_exists_for)]
@@ -216,7 +215,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   terms <- quos(...)
 
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
 
   rec_vars <- summary(recipe)
@@ -230,8 +229,12 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
       dplyr::group_by(variable) %>%
       dplyr::count()
     if (any(var_counts$n > 1)) {
-      stop("`old_role` can only be `NULL` when the variable(s) have ",
-           "a single existing role.", call. = FALSE)
+      rlang::abort(
+        paste0(
+          "`old_role` can only be `NULL` when the variable(s) have ",
+          "a single existing role."
+        )
+      )
     }
   }
 
@@ -256,11 +259,11 @@ remove_role <- function(recipe, ..., old_role) {
 
   terms <- quos(...)
   if (is_empty(terms)) {
-    warning("No selectors were found", call. = FALSE)
+    rlang::warn("No selectors were found")
   }
   vars <- terms_select(terms = terms, info = summary(recipe))
   if (length(vars) == 0) {
-    warning("No columns were selected for role removal.", call. = FALSE)
+    rlang::warn("No columns were selected for role removal.")
   }
 
   term_info <- summary(recipe)
@@ -291,10 +294,8 @@ role_rm_machine <- function(x, role, var) {
     var <- glue::single_quote(x$variable[1])
     role <- glue::single_quote(role)
 
-    warning(
-      glue::glue("Column, {var}, does not have role, {role}."),
-      call. = FALSE
-    )
+    rlang::warn(
+      glue::glue("Column, {var}, does not have role, {role}."))
 
     return(x)
   }
@@ -317,15 +318,15 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
   }
 
   if (length(x) != 1L) {
-    stop(arg, " must have length 1.", call. = FALSE)
+    rlang::abort(paste0(arg, " must have length 1."))
   }
 
   if (!is.character(x)) {
-    stop(arg, " must be a character vector.", call. = FALSE)
+    rlang::abort(paste0(arg, " must be a character vector."))
   }
 
   if (is.na(x)) {
-    stop(arg, " must not be `NA`.", call. = FALSE)
+    rlang::abort(paste0(arg, " must not be `NA`."))
   }
 
   invisible(NULL)

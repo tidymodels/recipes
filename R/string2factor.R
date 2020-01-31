@@ -64,11 +64,11 @@ step_string2factor <-
            id = rand_id("string2factor")) {
     if (!is_tune(ordered) & !is_varying(ordered)) {
       if (!is.logical(ordered) || length(ordered) != 1) {
-        stop("`ordered` should be a single logical variable")
+        rlang::abort("`ordered` should be a single logical variable")
       }
     }
     if ((!is.null(levels) & !is.character(levels)) | is.list(levels)) {
-      stop("`levels` should be NULL or a single character vector")
+      rlang::abort("`levels` should be NULL or a single character vector")
     }
 
     add_step(
@@ -112,10 +112,11 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
       logical(1)
     )
   if (any(!str_check))
-    stop(
-      "The following variables are not character vectors: ",
-      paste0("`", names(str_check)[!str_check], "`", collapse = ", "),
-      call. = FALSE
+    rlang::abort(
+      paste0(
+        "The following variables are not character vectors: ",
+        paste0("`", names(str_check)[!str_check], "`", collapse = ", ")
+      )
     )
 
   if (is.null(x$levels)) {

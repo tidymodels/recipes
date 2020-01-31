@@ -144,7 +144,7 @@ recommend_rm <- function(x, eps  = 1e-6, ...) {
   if (!is.matrix(x))
     x <- as.matrix(x)
   if (is.null(colnames(x)))
-    stop("`x` should have column names", call. = FALSE)
+    rlang::abort("`x` should have column names")
 
   qr_decomp <- qr(x)
   qr_decomp_R <- qr.R(qr_decomp)           # extract R matrix
@@ -178,7 +178,7 @@ iter_lc_rm <- function(x,
                        max_steps = 10,
                        verbose = FALSE) {
   if (is.null(colnames(x)))
-    stop("`x` should have column names", call. = FALSE)
+    rlang::abort("`x` should have column names")
 
   orig_names <- colnames(x)
   if (!is.matrix(x))

@@ -163,11 +163,13 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
     var_check <- info[info$variable %in% vars, ]
     if (any(var_check$type == "nominal"))
-      warning(
+      rlang::warn(
+        paste0(
         "Categorical variables used in `step_interact` should probably be ",
         "avoided;  This can lead to differences in dummy variable values that ",
         "are produced by `step_dummy`. Please convert all involved variables ",
-        "to dummy variables first.", call. = FALSE
+        "to dummy variables first."
+        )
       )
 
     ## For each interaction, create a new formula that has main effects
@@ -264,12 +266,13 @@ get_term_names <- function(form, vnames) {
     silent = TRUE
   )
   if (inherits(nms, "try-error")) {
-    warning(
-      "Interaction specification failed for: ",
-      deparse(form),
-      ". No interactions will be created.",
-      call. = FALSE
+    rlang::warn(
+      paste0(
+        "Interaction specification failed for: ",
+        deparse(form),
+        ". No interactions will be created."
       )
+    )
     return(rlang::na_chr)
   }
   nms <- nms[nms != "(Intercept)"]
@@ -333,8 +336,7 @@ find_selectors <- function (f) {
   }
   else {
     # User supplied incorrect input
-    stop("Don't know how to handle type ", typeof(f),
-         call. = FALSE)
+    rlang::abort(paste0("Don't know how to handle type ", typeof(f), "."))
   }
 }
 
@@ -351,8 +353,7 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    stop("Don't know how to handle type ", typeof(x),
-         call. = FALSE)
+    rlang::abort(paste0("Don't know how to handle type ", typeof(x), "."))
   }
 }
 

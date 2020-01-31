@@ -160,7 +160,7 @@ range_check_func <- function(x,
     lower_allowed <- lower - ((upper - lower) * slack_prop[1])
     upper_allowed <- upper + ((upper - lower) * slack_prop[2])
   } else {
-    stop("slack_prop should be of length 1 or of length 2")
+    rlang::abort("slack_prop should be of length 1 or of length 2")
   }
 
   if (min_x < lower_allowed & max_x > upper_allowed) {
@@ -175,9 +175,9 @@ range_check_func <- function(x,
                   upper_allowed)
   }
   if (warn & !is.null(msg)) {
-    warning(msg, call. = FALSE)
+    rlang::warn(msg)
   } else if (!is.null(msg)) {
-    stop(msg, call. = FALSE)
+    rlang::abort(msg)
   }
 }
 

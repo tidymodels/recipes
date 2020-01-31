@@ -82,14 +82,18 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
                         is.ordered,
                         logical(1L))
   if(all(!order_check)) {
-    stop("`step_unorder` required ordered factors.", call. = FALSE)
+    rlang::abort("`step_unorder` required ordered factors.")
   } else {
     if(any(!order_check)) {
       bad_cols <- names(order_check)[!order_check]
       bad_cols <- paste0(bad_cols, collapse = ", ")
-      warning("`step_unorder` requires ordered factors. Variables ",
-              bad_cols,
-              " will be ignored.", call. = FALSE)
+      rlang::warn(
+        paste0(
+          "`step_unorder` requires ordered factors. Variables ",
+          bad_cols,
+          " will be ignored."
+        )
+      )
       col_names <- names(order_check)[order_check]
     }
   }

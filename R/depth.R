@@ -90,7 +90,7 @@ step_depth <-
            skip = FALSE,
            id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
-      stop("`class` should be a single character value.")
+      rlang::abort("`class` should be a single character value.")
 
     recipes_pkg_check("ddalpha")
 

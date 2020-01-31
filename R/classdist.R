@@ -74,7 +74,7 @@ step_classdist <- function(recipe,
                            skip = FALSE,
                            id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1)
-    stop("`class` should be a single character value.")
+    rlang::abort("`class` should be a single character value.")
   add_step(
     recipe,
     step_classdist_new(

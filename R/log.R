@@ -139,7 +139,7 @@ bake.step_log <- function(object, new_data, ...) {
         log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
   } else {
     if (object$offset != 0)
-      warning("When signed is TRUE, offset will be ignored")
+      rlang::warn("When signed is TRUE, offset will be ignored")
      for (i in seq_along(col_names))
        new_data[, col_names[i]] <-
          ifelse(abs(new_data[[ col_names[i] ]]) < 1,

@@ -95,11 +95,12 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   col_check <- dplyr::filter(info, variable %in% col_names)
   if (any(col_check$type != "nominal"))
-    stop(
-      "Columns must be character or factor: ",
-      paste0(col_check$variable[col_check$type != "nominal"],
-             collapse = ", "),
-      call. = FALSE
+    rlang::abort(
+      paste0(
+        "Columns must be character or factor: ",
+        paste0(col_check$variable[col_check$type != "nominal"],
+               collapse = ", ")
+      )
     )
 
   # Get existing levels and their factor type (i.e. ordered)
@@ -108,10 +109,11 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check))
-    stop(
-      "Columns already contain a level '", x$new_level, "': ",
-      paste0(names(level_check)[level_check], collapse = ", "),
-      call. = FALSE
+    rlang::abort(
+      paste0(
+        "Columns already contain a level '", x$new_level, "': ",
+        paste0(names(level_check)[level_check], collapse = ", ")
+      )
     )
 
   step_unknown_new(

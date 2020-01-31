@@ -115,29 +115,39 @@ step_window <-
            skip = FALSE,
            id = rand_id("window")) {
     if (!(statistic %in% roll_funs) | length(statistic) != 1)
-      stop("`statistic` should be one of: ",
-           paste0("'", roll_funs, "'", collapse = ", "),
-           call. = FALSE)
+      rlang::abort(
+        paste0(
+        "`statistic` should be one of: ",
+        paste0("'", roll_funs, "'", collapse = ", ")
+          )
+        )
 
     ## ensure size is odd, integer, and not too small
     if (!is_tune(size) & !is_varying(size)) {
       if (is.na(size) | is.null(size)) {
-        stop("`size` needs a value.", call. = FALSE)
+        rlang::abort("`size` needs a value.")
       }
 
       if (!is.integer(size)) {
         tmp <- size
         size <- as.integer(size)
         if (!isTRUE(all.equal(tmp, size)))
-          warning("`size` was not an integer (", tmp, ") and was ",
-                  "converted to ", size, ".", sep = "",
-                  call. = FALSE)
+          rlang::warn(
+            paste0(
+            "`size` was not an integer (",
+            tmp,
+            ") and was ",
+            "converted to ",
+            size,
+            "."
+            )
+          )
       }
       if (size %% 2 == 0) {
-        stop("`size` should be odd.", call. = FALSE)
+        rlang::abort("`size` should be odd.")
       }
       if (size < 3) {
-        stop("`size` should be at least 3.", call. = FALSE)
+        rlang::abort("`size` should be at least 3.")
       }
     }
     add_step(
@@ -181,13 +191,16 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
 
   if (any(info$type[info$variable %in% col_names] != "numeric"))
-    stop("The selected variables should be numeric")
+    rlang::abort("The selected variables should be numeric")
 
   if (!is.null(x$names)) {
     if (length(x$names) != length(col_names))
-      stop("There were ", length(col_names), " term(s) selected but ",
+      rlang::abort(
+        paste0("There were ", length(col_names), " term(s) selected but ",
            length(x$names), " values for the new features ",
-           "were passed to `names`.", call. = FALSE)
+           "were passed to `names`."
+        )
+      )
   }
 
   step_window_new(
@@ -211,7 +224,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   gap <- floor(window / 2)
   if (m - window <= 2)
-    stop("The window is too large.", call. = FALSE)
+    rlang::abort("The window is too large.")
 
   ## stats for centered window
   opts <- list(

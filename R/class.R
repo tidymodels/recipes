@@ -170,23 +170,29 @@ bake_check_class_core <- function(x,
   classes <- class(x)
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
-    stop(var_nm,
-         " should have the class(es) ",
-         paste(class_nm, collapse = ", "),
-         " but has the class(es) ",
-         paste(classes, collapse = ", "),
-         ".")
+    rlang::abort(
+      paste0(
+        var_nm,
+        " should have the class(es) ",
+        paste(class_nm, collapse = ", "),
+        " but has the class(es) ",
+        paste(classes, collapse = ", "),
+        "."
+    )
+    )
   }
 
   extra <- setdiff(classes, class_nm)
   if (length(extra) > 0 && !aa) {
-    stop(
-      var_nm,
-      " has the class(es) ",
-      paste(classes, collapse = ", "),
-      ", but only the following is/are asked ",
-      paste(class_nm, collapse = ", "),
-      ", allow_additional is FALSE."
+    rlang::abort(
+      paste0(
+        var_nm,
+        " has the class(es) ",
+        paste(classes, collapse = ", "),
+        ", but only the following is/are asked ",
+        paste(class_nm, collapse = ", "),
+        ", allow_additional is FALSE."
+      )
     )
   }
 }

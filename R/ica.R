@@ -160,7 +160,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
         silent = TRUE
       )
     if (inherits(indc, "try-error")) {
-      stop("`step_ica` failed with error:\n", as.character(indc), call. = FALSE)
+      rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
     }
   } else {
     indc <- list(x_vars = col_names)

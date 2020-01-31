@@ -15,7 +15,7 @@ recipe <- function(x, ...)
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...)
-  stop("`x` should be a data frame, matrix, or tibble", call. = FALSE)
+  rlang::abort("`x` should be a data frame, matrix, or tibble")
 
 #' @rdname recipe
 #' @param vars A character string of column names corresponding to variables
@@ -154,11 +154,17 @@ recipe.data.frame <-
 
     if (!is.null(formula)) {
       if (!is.null(vars))
-        stop("This `vars` specification will be ignored when a formula is ",
-             "used", call. = FALSE)
+        rlang::abort(
+          paste0("This `vars` specification will be ignored ",
+             "when a formula is used"
+             )
+          )
       if (!is.null(roles))
-        stop("This `roles` specification will be ignored when a formula is ",
-             "used", call. = FALSE)
+        rlang::abort(
+          paste0("This `roles` specification will be ignored ",
+             "when a formula is used"
+             )
+          )
 
       obj <- recipe.formula(formula, x, ...)
       return(obj)
@@ -171,9 +177,9 @@ recipe.data.frame <-
       x <- as_tibble(x)
 
     if (any(table(vars) > 1))
-      stop("`vars` should have unique members", call. = FALSE)
+      rlang::abort("`vars` should have unique members")
     if (any(!(vars %in% colnames(x))))
-      stop("1+ elements of `vars` are not in `x`", call. = FALSE)
+      rlang::abort("1+ elements of `vars` are not in `x`")
 
     x <- x[, vars]
 
@@ -182,8 +188,10 @@ recipe.data.frame <-
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars))
-        stop("The number of roles should be the same as the number of ",
-             "variables", call. = FALSE)
+        rlang::abort(
+          paste0("The number of roles should be the same as the number of ",
+             "variables")
+        )
       var_info$role <- roles
     } else
       var_info$role <- NA
@@ -337,13 +345,19 @@ prep.recipe <-
 
     if (is.null(training)) {
       if (fresh)
-        stop("A training set must be supplied to the `training` argument ",
-             "when `fresh = TRUE`", call. = FALSE)
+        rlang::abort(
+          paste0("A training set must be supplied to the `training` argument ",
+             "when `fresh = TRUE`"
+             )
+          )
       training <- x$template
     } else {
       if (!all(vars %in% colnames(training))) {
-        stop("Not all variables in the recipe are present in the supplied ",
-             "training set", call. = FALSE)
+        rlang::abort(
+          paste0("Not all variables in the recipe are present in the supplied ",
+             "training set"
+          )
+        )
       }
       training <- if (!is_tibble(training))
         as_tibble(training[, vars, drop = FALSE])
@@ -354,18 +368,20 @@ prep.recipe <-
     steps_trained <- vapply(x$steps, is_trained, logical(1))
     if (any(steps_trained) & !fresh) {
       if(!x$retained)
-        stop(
+        rlang::abort(
+          paste0(
           "To prep new steps after prepping the original ",
           "recipe, `retain = TRUE` must be set each time that ",
-          "the recipe is trained.",
-          call. = FALSE
+          "the recipe is trained."
+          )
         )
       if (!is.null(x$training))
-        warning(
-          "The previous data will be used by `prep`; ",
-          "the data passed using `training` will be ",
-          "ignored.",
-          call. = FALSE
+        rlang::warn(
+          paste0(
+            "The previous data will be used by `prep`; ",
+            "the data passed using `training` will be ",
+            "ignored."
+          )
         )
       training <- x$template
     }
@@ -386,9 +402,13 @@ prep.recipe <-
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
     if (any(skippers) & !retain)
-      warning("Since some operations have `skip = FALSE`, using ",
-              "`retain = TRUE` will allow those steps results to ",
-              "be accessible.")
+      rlang::warn(
+        paste0(
+          "Since some operations have `skip = FALSE`, using ",
+          "`retain = TRUE` will allow those steps results to ",
+          "be accessible."
+        )
+      )
 
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
@@ -514,15 +534,16 @@ bake <- function(object, ...)
 #' @export
 bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    stop("At least one step has not been trained. Please ",
-         "run `prep`.",
-         call. = FALSE)
+    rlang::abort("At least one step has not been trained. Please run `prep`.")
   }
 
   if (!any(composition == formats)) {
-    stop("`composition` should be one of: ",
-         paste0("'", formats, "'", collapse = ","),
-         call. = FALSE)
+    rlang::abort(
+      paste0(
+      "`composition` should be one of: ",
+      paste0("'", formats, "'", collapse = ",")
+      )
+    )
   }
 
   terms <- quos(...)
@@ -533,10 +554,9 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   # In case someone used the deprecated `newdata`:
   if (is.null(new_data) || is.null(ncol(new_data))) {
     if (any(names(terms) == "newdata")) {
-      stop("Please use `new_data` instead of `newdata` with `bake`.",
-           call. = FALSE)
+      rlang::abort("Please use `new_data` instead of `newdata` with `bake`.")
     } else {
-      stop("Please pass a data set to `new_data`.", call. = FALSE)
+      rlang::abort("Please pass a data set to `new_data`.")
     }
   }
 
@@ -730,20 +750,23 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    stop("At least one step has not been trained. Please ",
-         "run `prep`.",
-         call. = FALSE)
+    rlang::abort("At least one step has not been trained. Please run `prep`.")
   }
 
   if (!isTRUE(object$retained)) {
-    stop("Use `retain = TRUE` in `prep` to be able to extract the training set",
-         call. = FALSE)
+    rlang::abort(
+      paste0("Use `retain = TRUE` in `prep` to be able",
+             "to extract the training set"
+             )
+    )
   }
 
   if (!any(composition == formats)) {
-    stop("`composition` should be one of: ",
-         paste0("'", formats, "'", collapse = ","),
-         call. = FALSE)
+    rlang::abort(
+      paste0("`composition` should be one of: ",
+         paste0("'", formats, "'", collapse = ",")
+         )
+      )
   }
 
   terms <- quos(...)

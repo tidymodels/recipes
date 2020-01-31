@@ -162,7 +162,7 @@ step_dummy_new <-
 passover <- function(cmd) {
   # cat("`step_dummy()` was not able to select any columns. ",
   #     "No dummy variables will be created.\n")
-} # figure out how to return a warning without exiting
+} # figure out how to return a warning() without exiting
 
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
@@ -171,15 +171,20 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   if (length(col_names) > 0) {
     fac_check <- vapply(training[, col_names], is.factor, logical(1))
     if (any(!fac_check))
-      warning(
+      rlang::warn(
+        paste0(
         "The following variables are not factor vectors and will be ignored: ",
-        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", "),
-        call. = FALSE
+        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
+        )
       )
     col_names <- col_names[fac_check]
     if (length(col_names) == 0) {
-      stop("The `terms` argument in `step_dummy` did not select ",
-           "any factor columns.", call. = FALSE)
+      rlang::abort(
+        paste0(
+        "The `terms` argument in `step_dummy` did not select ",
+        "any factor columns."
+        )
+      )
     }
 
 
@@ -231,9 +236,11 @@ warn_new_levels <- function(dat, lvl) {
   ind <- which(!(dat %in% lvl))
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
-    warning("There are new levels in a factor: ",
-            paste0(lvl2, collapse = ", "),
-            call. = FALSE)
+    rlang::warn(
+      paste0("There are new levels in a factor: ",
+            paste0(lvl2, collapse = ", ")
+            )
+      )
   }
   invisible(NULL)
 }
@@ -261,7 +268,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     fac_type <- attr(object$levels[[i]], "dataClasses")
 
     if (!any(names(attributes(object$levels[[i]])) == "values"))
-      stop("Factor level values not recorded", call. = FALSE)
+      rlang::abort("Factor level values not recorded")
 
     warn_new_levels(
       new_data[[orig_var]],

@@ -105,10 +105,11 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
            numeric(1),
            na.rm = TRUE)
   if (any(threshold < 0))
-    stop(
-      "Some columns have negative values. Lower bound ",
-      "imputation is intended for data bounded at zero.",
-      call. = FALSE
+    rlang::abort(
+      paste0(
+        "Some columns have negative values. Lower bound ",
+        "imputation is intended for data bounded at zero."
+      )
     )
   step_lowerimpute_new(
     terms = x$terms,
