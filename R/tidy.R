@@ -18,7 +18,7 @@
 #'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, a logical for `skip`, and a character column `id`. 
+#'  estimated using `prep`, a logical for `skip`, and a character column `id`.
 #'
 #' @examples
 #' library(modeldata)
@@ -44,11 +44,27 @@ NULL
 
 #' @rdname tidy.recipe
 #' @export
-tidy.recipe <- function(x, number = NA, ...) {
+tidy.recipe <- function(x, number = NA, id = NA, ...) {
+  # add id = NA as default. If both ID & number are non-NA, error.
+  # If number is NA and ID is not, select the step with the corresponding
+  # ID. Only a single ID is allowed, as this follows the convention for number
   num_oper <- length(x$steps)
   if (num_oper == 0)
     stop("No steps in recipe.", call. = FALSE)
   pattern <- "(^step_)|(^check_)"
+  if (!is.na(id)) {
+    if (!is.na(number))
+      rlang::abort(paste0("You must specify one of `number` or `id`, ",
+                          "or neither."))
+    if (is.null(id)) {
+      rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+    }
+    step_ids <- vapply(x$steps, function(x) x$id, character(1))
+    if(!(id %in% step_ids)) {
+      rlang::abort("`id` provided not found in the recipe.")
+    }
+    number <- which(id == step_ids)
+  }
   if (is.na(number)) {
     skipped <- vapply(x$steps, function(x) x$skip, logical(1))
     ids <- vapply(x$steps, function(x) x$id, character(1))
