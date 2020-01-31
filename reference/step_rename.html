@@ -263,19 +263,19 @@ expression (to be portable between sessions).</p>
 <span class='no'>car_rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; # A tibble: 32 x 11
-#&gt;      mpg  var1  disp    hp  drat    wt  qsec    vs  var2  gear  carb
-#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
-#&gt;  2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
-#&gt;  3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
-#&gt;  4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
-#&gt;  5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
-#&gt;  6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
-#&gt;  7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
-#&gt;  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
-#&gt;  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
-#&gt; 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-#&gt; # … with 22 more rows</div><div class='input'>
+#&gt;      mpg `&lt;chr&gt;...var1`  disp    hp  drat    wt  qsec    vs `&lt;chr&gt;...var2`  gear
+#&gt;    &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1  21                6  160    110  3.9   2.62  16.5     0              1     4
+#&gt;  2  21                6  160    110  3.9   2.88  17.0     0              1     4
+#&gt;  3  22.8              4  108     93  3.85  2.32  18.6     1              1     4
+#&gt;  4  21.4              6  258    110  3.08  3.22  19.4     1              0     3
+#&gt;  5  18.7              8  360    175  3.15  3.44  17.0     0              0     3
+#&gt;  6  18.1              6  225    105  2.76  3.46  20.2     1              0     3
+#&gt;  7  14.3              8  360    245  3.21  3.57  15.8     0              0     3
+#&gt;  8  24.4              4  147.    62  3.69  3.19  20       1              0     4
+#&gt;  9  22.8              4  141.    95  3.92  3.15  22.9     1              0     4
+#&gt; 10  19.2              6  168.   123  3.92  3.44  18.3     1              0     4
+#&gt; # … with 22 more rows, and 1 more variable: carb &lt;dbl&gt;</div><div class='input'>
 <span class='no'>car_rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms value                              id          
