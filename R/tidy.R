@@ -60,14 +60,12 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   pattern <- "(^step_)|(^check_)"
   if (!is.na(id)) {
     if (!is.na(number))
-      rlang::abort(paste0("You must specify one of `number` or `id`, ",
-                          "or neither."))
-    if (is.null(id)) {
+      rlang::abort("You may specify `number` or `id`, but not both.")
+    if (length(id) != 1L && !is.character(id))
       rlang::abort("If `id` is provided, it must be a length 1 character vector.")
-    }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
     if(!(id %in% step_ids)) {
-      rlang::abort("`id` provided not found in the recipe.")
+      rlang::abort("Supplied `id` not found in the recipe.")
     }
     number <- which(id == step_ids)
   }
