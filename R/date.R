@@ -205,12 +205,19 @@ get_date_features <-
 
 #' @export
 bake.step_date <- function(object, new_data, ...) {
-  new_cols <-
-    rep(length(object$features), each = length(object$columns))
-  date_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(date_values) <- rep("", sum(new_cols))
+  new_cols <- rep(
+    length(object$features),
+    each = length(object$columns)
+  )
+
+  date_values <- matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
+
+  # Dummy column names to avoid tibble warning
+  colnames(date_values) <- as.character(seq_len(sum(new_cols)))
+
   date_values <- as_tibble(date_values)
+
+  new_names <- vector("character", length = ncol(date_values))
 
   strt <- 1
   for (i in seq_along(object$columns)) {
@@ -226,16 +233,23 @@ bake.step_date <- function(object, new_data, ...) {
 
     date_values[, cols] <- tmp
 
-    names(date_values)[cols] <-
-      paste(object$columns[i],
-            names(tmp),
-            sep = "_")
+    new_names[cols] <- paste(
+      object$columns[i],
+      names(tmp),
+      sep = "_"
+    )
 
     strt <- max(cols) + 1
   }
+
+  names(date_values) <- new_names
+
   new_data <- bind_cols(new_data, date_values)
-  if (!is_tibble(new_data))
+
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
+
   new_data
 }
 
