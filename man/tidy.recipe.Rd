@@ -6,7 +6,7 @@
 \alias{tidy.check}
 \title{Tidy the Result of a Recipe}
 \usage{
-\method{tidy}{recipe}(x, number = NA, ...)
+\method{tidy}{recipe}(x, number = NA, id = NA, ...)
 
 \method{tidy}{step}(x, ...)
 
@@ -15,16 +15,23 @@
 \arguments{
 \item{x}{A \code{recipe} object (trained or otherwise).}
 
-\item{number}{An integer or \code{NA}. If missing, the return
-value is a list of the operation in the recipe. If a number is
-given, a \code{tidy} method is executed for that operation in the
-recipe (if it exists).}
+\item{number}{An integer or \code{NA}. If missing and \code{id} is not provided,
+the return value is a list of the operations in the recipe.
+If a number is  given, a \code{tidy} method is executed for that operation
+in the recipe (if it exists). \code{number} must not be provided if
+\code{id} is.}
+
+\item{id}{A character string or \code{NA}. If missing and \code{number} is not provided,
+the return value is a list of the operations in the recipe.
+If a character string is given, a \code{tidy} method is executed for that
+operation in the recipe (if it exists). \code{id} must not be provided
+if \code{number} is.}
 
 \item{...}{Not currently used.}
 }
 \value{
 A tibble with columns that would vary depending on what
-\code{tidy} method is executed. When \code{x} is \code{NA}, a
+\code{tidy} method is executed. When \code{number} and \code{id} are \code{NA}, a
 tibble with columns \code{number} (the operation iteration),
 \code{operation} (either "step" or "check"),
 \code{type} (the method, e.g. "nzv", "center"), a logical
