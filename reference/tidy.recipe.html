@@ -168,7 +168,7 @@ method for the operation exists).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for step</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -185,10 +185,19 @@ method for the operation exists).</p>
     </tr>
     <tr>
       <th>number</th>
-      <td><p>An integer or <code>NA</code>. If missing, the return
-value is a list of the operation in the recipe. If a number is
-given, a <code>tidy</code> method is executed for that operation in the
-recipe (if it exists).</p></td>
+      <td><p>An integer or <code>NA</code>. If missing and <code>id</code> is not provided,
+the return value is a list of the operations in the recipe.
+If a number is  given, a <code>tidy</code> method is executed for that operation
+in the recipe (if it exists). <code>number</code> must not be provided if
+<code>id</code> is.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string or <code>NA</code>. If missing and <code>number</code> is not provided,
+the return value is a list of the operations in the recipe.
+If a character string is given, a <code>tidy</code> method is executed for that
+operation in the recipe (if it exists). <code>id</code> must not be provided
+if <code>number</code> is.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -199,7 +208,7 @@ recipe (if it exists).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble with columns that would vary depending on what
-<code>tidy</code> method is executed. When <code>x</code> is <code>NA</code>, a
+<code>tidy</code> method is executed. When <code>number</code> and <code>id</code> are <code>NA</code>, a
 tibble with columns <code>number</code> (the operation iteration),
 <code>operation</code> (either "step" or "check"),
 <code>type</code> (the method, e.g. "nzv", "center"), a logical
