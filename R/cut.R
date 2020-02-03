@@ -132,8 +132,12 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
 
 create_full_breaks <- function(var, breaks) {
   stopifnot(is.numeric(var), is.numeric(breaks))
-  if (min(var) < min(breaks)) breaks <- c(min(var), breaks)
-  if (max(var) > max(breaks)) breaks <- c(max(var), breaks)
+  if (min(var) < min(breaks)) {
+    breaks <- c(min(var), breaks)
+  }
+  if (max(var) > max(breaks)) {
+    breaks <- c(max(var), breaks)
+  }
   sort(breaks)
 }
 
