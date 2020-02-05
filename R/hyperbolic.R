@@ -58,8 +58,7 @@ step_hyperbolic <-
            id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
-      stop("`func` should be either `sin``, `cos`, or `tan`",
-           call. = FALSE)
+      rlang::abort("`func` should be either `sin``, `cos`, or `tan`")
     add_step(
       recipe,
       step_hyperbolic_new(

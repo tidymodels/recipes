@@ -7,18 +7,24 @@
 #' @name tidy.recipe
 #'
 #' @param x A `recipe` object (trained or otherwise).
-#' @param number An integer or `NA`. If missing, the return
-#'  value is a list of the operation in the recipe. If a number is
-#'  given, a `tidy` method is executed for that operation in the
-#'  recipe (if it exists).
+#' @param number An integer or `NA`. If missing and `id` is not provided,
+#'  the return value is a list of the operations in the recipe.
+#'  If a number is  given, a `tidy` method is executed for that operation
+#'  in the recipe (if it exists). `number` must not be provided if
+#'  `id` is.
+#' @param id A character string or `NA`. If missing and `number` is not provided,
+#'  the return value is a list of the operations in the recipe.
+#'  If a character string is given, a `tidy` method is executed for that
+#'  operation in the recipe (if it exists). `id` must not be provided
+#'  if `number` is.
 #' @param ... Not currently used.
 #' @return A tibble with columns that would vary depending on what
-#'  `tidy` method is executed. When `x` is `NA`, a
+#'  `tidy` method is executed. When `number` and `id` are `NA`, a
 #'  tibble with columns `number` (the operation iteration),
 #'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
 #'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, a logical for `skip`, and a character column `id`. 
+#'  estimated using `prep`, a logical for `skip`, and a character column `id`.
 #'
 #' @examples
 #' library(modeldata)
@@ -44,11 +50,25 @@ NULL
 
 #' @rdname tidy.recipe
 #' @export
-tidy.recipe <- function(x, number = NA, ...) {
+tidy.recipe <- function(x, number = NA, id = NA, ...) {
+  # add id = NA as default. If both ID & number are non-NA, error.
+  # If number is NA and ID is not, select the step with the corresponding
+  # ID. Only a single ID is allowed, as this follows the convention for number
   num_oper <- length(x$steps)
   if (num_oper == 0)
-    stop("No steps in recipe.", call. = FALSE)
+    rlang::abort("No steps in recipe.")
   pattern <- "(^step_)|(^check_)"
+  if (!is.na(id)) {
+    if (!is.na(number))
+      rlang::abort("You may specify `number` or `id`, but not both.")
+    if (length(id) != 1L && !is.character(id))
+      rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+    step_ids <- vapply(x$steps, function(x) x$id, character(1))
+    if(!(id %in% step_ids)) {
+      rlang::abort("Supplied `id` not found in the recipe.")
+    }
+    number <- which(id == step_ids)
+  }
   if (is.na(number)) {
     skipped <- vapply(x$steps, function(x) x$skip, logical(1))
     ids <- vapply(x$steps, function(x) x$id, character(1))
@@ -71,8 +91,13 @@ tidy.recipe <- function(x, number = NA, ...) {
                   id = ids)
   } else {
     if (number > num_oper || length(number) > 1)
-      stop("`number` should be a single value between 1 and ",
-           num_oper, ".", call. = FALSE)
+      rlang::abort(
+        paste0(
+          "`number` should be a single value between 1 and ",
+           num_oper,
+          "."
+          )
+      )
 
     res <- tidy(x$steps[[number]], ...)
   }
@@ -82,15 +107,21 @@ tidy.recipe <- function(x, number = NA, ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step <- function(x, ...) {
-  stop("No `tidy` method for a step with classes: ",
-       paste0(class(x), collapse = ", "),
-       call. = FALSE)
+  rlang::abort(
+    paste0(
+      "No `tidy` method for a step with classes: ",
+      paste0(class(x), collapse = ", ")
+    )
+  )
 }
 
 #' @rdname tidy.recipe
 #' @export
 tidy.check <- function(x, ...) {
-  stop("No `tidy` method for a check with classes: ",
-       paste0(class(x), collapse = ", "),
-       call. = FALSE)
+  rlang::abort(
+    paste0(
+       "No `tidy` method for a check with classes: ",
+       paste0(class(x), collapse = ", ")
+    )
+  )
 }

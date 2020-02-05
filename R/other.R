@@ -106,10 +106,10 @@ step_other <-
            id = rand_id("other")) {
     if (!is_tune(threshold) & !is_varying(threshold)) {
       if (threshold <= 0) {
-        stop("`threshold` should be greater than zero", call. = FALSE)
+        rlang::abort("`threshold` should be greater than zero")
       }
       if (threshold >= 1 && !is_integerish(threshold)) {
-        stop("If `threshold` is greater than one it should be an integer.", call. = FALSE)
+        rlang::abort("If `threshold` is greater than one it should be an integer.")
       }
     }
     add_step(
@@ -238,11 +238,13 @@ keep_levels <- function(x, threshold = .1, other = "other") {
     keepers <- names(xtab)[which.max(xtab)]
 
   if (other %in% keepers)
-    stop(
-      "The level ",
-      other,
-      " is already a factor level that will be retained. ",
-      "Please choose a different value.", call. = FALSE
+    rlang::abort(
+        paste0(
+        "The level ",
+        other,
+        " is already a factor level that will be retained. ",
+        "Please choose a different value."
+      )
     )
 
   list(keep = orig[orig %in% keepers],

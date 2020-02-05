@@ -66,18 +66,17 @@ step_count <- function(recipe,
                        skip = FALSE,
                        id = rand_id("count")) {
   if (!is.character(pattern))
-    stop("`pattern` should be a character string", call. = FALSE)
+    rlang::abort("`pattern` should be a character string")
   if (length(pattern) != 1)
-    stop("`pattern` should be a single pattern", call. = FALSE)
+    rlang::abort("`pattern` should be a single pattern")
   valid_args <- names(formals(grepl))[- (1:2)]
   if (any(!(names(options) %in% valid_args)))
-    stop("Valid options are: ",
-         paste0(valid_args, collapse = ", "),
-         call. = FALSE)
+    rlang::abort(paste0("Valid options are: ",
+                        paste0(valid_args, collapse = ", ")))
 
   terms <- ellipse_check(...)
   if (length(terms) > 1)
-    stop("For this step, only a single selector can be used.", call. = FALSE)
+    rlang::abort("For this step, only a single selector can be used.")
 
   add_step(
     recipe,
@@ -117,9 +116,9 @@ step_count_new <-
 prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- terms_select(x$terms, info = info)
   if (length(col_name) != 1)
-    stop("The selector should only select a single variable")
+    rlang::abort("The selector should only select a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))
-    stop("The regular expression input should be character or factor")
+    rlang::abort("The regular expression input should be character or factor")
 
   step_count_new(
     terms = x$terms,

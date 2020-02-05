@@ -170,7 +170,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   
   ## We'll use the names later so
   if (x$options$names == FALSE)
-    stop("`names` should be set to TRUE", call. = FALSE)
+    rlang::abort("`names` should be set to TRUE")
   
   if (!x$approx) {
     ref_dist <- training[, col_names]
@@ -284,6 +284,6 @@ The process here is exactly the same as steps; the internal functions have a sim
 It is strongly recommended that:
  
  1. The operations start with `check_` (i.e. `check_range` and `check_range_new`)
- 1. The check uses `stop(..., call. = FALSE)` when the conditions are not met
+ 1. The check uses `rlang::abort(paste0(...))` when the conditions are not met
  1. The original data are returned (unaltered) by the check when the conditions are satisfied. 
 

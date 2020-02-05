@@ -111,9 +111,12 @@ prep.step_ordinalscore <-
     ord_check <-
       vapply(training[, col_names], is.ordered, c(logic = TRUE))
     if (!all(ord_check))
-      stop("Ordinal factor variables should be selected as ",
-           "inputs into this step.",
-           call. = TRUE)
+      rlang::abort(
+        paste0(
+          "Ordinal factor variables should be selected as ",
+           "inputs into this step."
+          )
+        )
     step_ordinalscore_new(
       terms = x$terms,
       role = x$role,

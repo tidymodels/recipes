@@ -60,17 +60,17 @@ step_sample <- function(
 ) {
 
   if (length(list(...)) > 0) {
-    warning("Selectors are not used for this step.", call. = FALSE)
+    rlang::warn("Selectors are not used for this step.")
   }
 
   if (!is_tune(size) & !is_varying(size)) {
     if (!is.null(size) & (!is.numeric(size) || size < 0)) {
-      stop("`size` should be a positive number or NULL.", call. = FALSE)
+      rlang::abort("`size` should be a positive number or NULL.")
     }
   }
   if (!is_tune(replace) & !is_varying(replace)) {
     if (!is.logical(replace)) {
-      stop("`replace` should be a single logical.", call. = FALSE)
+      rlang::abort("`replace` should be a single logical.")
     }
   }
 

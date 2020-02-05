@@ -11,11 +11,11 @@ make_new <- function(name,
   in_recipes_root <-
     tail(stringr::str_split(getwd(), "/")[[1]], 1) == "recipes"
   if (!in_recipes_root) {
-    stop("Change working directory to package root")
+    rlang::abort("Change working directory to package root")
   }
 
   if (glue::glue("{name}.R") %in% list.files("./R")) {
-    stop("step or check already present with this name in /R")
+    rlang::abort("step or check already present with this name in /R")
   }
 
   boilerplate <-
@@ -124,7 +124,7 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
 
   <prepping action here>
 
-  step_center_new(
+  {which}_{name}_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,

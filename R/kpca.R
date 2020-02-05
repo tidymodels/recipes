@@ -180,7 +180,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
         silent = TRUE
       )
     if (inherits(kprc, "try-error")) {
-      stop("`step_kpca` failed with error:\n", as.character(kprc), call. = FALSE)
+      rlang::abort(paste0("`step_kpca` failed with error:\n", as.character(kprc)))
     }
   } else {
     kprc <- list(x_vars = col_names)

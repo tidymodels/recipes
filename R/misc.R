@@ -146,7 +146,7 @@ mod_call_args <- function(cl, args, removals = NULL) {
 
 names0 <- function(num, prefix = "x") {
   if (num < 1)
-    stop("`num` should be > 0", call. = FALSE)
+    rlang::abort("`num` should be > 0")
   ind <- format(1:num)
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
@@ -285,9 +285,12 @@ merge_term_info <- function(.new, .old) {
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms))
-    stop("Please supply at least one variable specification.",
-         "See ?selections.",
-         call. = FALSE)
+    rlang::abort(
+      paste0(
+      "Please supply at least one variable specification.",
+      "See ?selections."
+      )
+    )
   terms
 }
 
@@ -329,8 +332,8 @@ printer <- function(tr_obj = NULL,
 #' @keywords internal
 #' @rdname recipes-internal
 prepare   <- function(x, ...)
-  stop("As of version 0.0.1.9006, used `prep` ",
-       "instead of `prepare`", call. = FALSE)
+  rlang::abort(paste0("As of version 0.0.1.9006, used `prep` ",
+       "instead of `prepare`"))
 
 
 #' Check to see if a recipe is trained/prepared
@@ -370,8 +373,7 @@ fully_trained <- function(x) {
 detect_step <- function(recipe, name) {
   exports <- getNamespaceExports("recipes")
   if (!any(grepl(paste0(".*", name, ".*"), exports)))
-    stop("Please provide the name of valid step or check (ex: `center`).",
-         call. = FALSE)
+    rlang::abort("Please provide the name of valid step or check (ex: `center`).")
   name %in% tidy(recipe)$type
 }
 
@@ -413,8 +415,12 @@ check_type <- function(dat, quant = TRUE) {
     label <- "factor or character"
   }
   if (!all(all_good))
-    stop("All columns selected for the step",
-         " should be ", label, call. = FALSE)
+    rlang::abort(
+      paste0(
+        "All columns selected for the step",
+         " should be ",
+         label)
+      )
   invisible(all_good)
 }
 
@@ -487,10 +493,15 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
   new_data_names <- colnames(new_data)
   intersection <- new_data_names %in% newname
   if(any(intersection)) {
-    stop("Name collision occured in `", class(object)[1],
-         "`. The following variable names already exists: ",
-         paste0(new_data_names[intersection], collapse = ", "), ".",
-         call. = FALSE)
+    rlang::abort(
+      paste0(
+        "Name collision occured in `",
+        class(object)[1],
+        "`. The following variable names already exists: ",
+        paste0(new_data_names[intersection], collapse = ", "),
+        "."
+      )
+    )
   }
   if(names) {
     names(res) <- newname
@@ -542,17 +553,18 @@ check_nominal_type <- function(x, lvl) {
     was_factor <- fac_ref_cols[!(fac_ref_cols %in% fac_act_cols)]
 
     if (length(was_factor) > 0) {
-      warning(
-        " There ",
-        ifelse(length(was_factor) > 1, "were ", "was "),
-        length(was_factor),
-        ifelse(length(was_factor) > 1, " columns ", " column "),
-        "that ",
-        ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
-        "when the recipe was prepped:\n ",
-        paste0("'", was_factor, "'", collapse = ", "),
-        ".\n This may cause errors when processing new data.",
-        call. = FALSE
+      rlang::warn(
+        paste0(
+          " There ",
+          ifelse(length(was_factor) > 1, "were ", "was "),
+          length(was_factor),
+          ifelse(length(was_factor) > 1, " columns ", " column "),
+          "that ",
+          ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
+          "when the recipe was prepped:\n ",
+          paste0("'", was_factor, "'", collapse = ", "),
+          ".\n This may cause errors when processing new data."
+        )
       )
     }
   }

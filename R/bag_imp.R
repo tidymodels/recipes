@@ -110,7 +110,7 @@ step_bagimpute <-
            skip = FALSE,
            id = rand_id("bagimpute")) {
     if (is.null(impute_with))
-      stop("Please list some variables in `impute_with`", call. = FALSE)
+      rlang::abort("Please list some variables in `impute_with`")
     add_step(
       recipe,
       step_bagimpute_new(
@@ -223,7 +223,7 @@ bake.step_bagimpute <- function(object, new_data, ...) {
       pred_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(pred_data))) {
-        warning("All predictors are missing; cannot impute", call. = FALSE)
+        rlang::warn("All predictors are missing; cannot impute")
       } else {
         pred_vals <- predict(object$models[[imp_var]], pred_data)
         pred_vals <- cast(pred_vals, new_data[[imp_var]])

@@ -7,8 +7,8 @@
 #' @inheritParams check_missing
 #' @export
 #' @param id A character string that is unique to this step to identify it.
-#' @details This check will break the `bake` function if any of the checked
-#'  columns does contain `NA` values. If the check passes, nothing is changed
+#' @details This check will break the `bake` function if any of the specified
+#' columns is not present in the data. If the check passes, nothing is changed
 #'  to the data.
 #' @examples
 #'
@@ -73,8 +73,13 @@ bake.check_cols <- function(object, new_data, ...) {
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    stop("The following cols are missing from `new_data`: ",
-         mis_cols, ".", call. = FALSE)
+    rlang::abort(
+      paste0(
+        "The following cols are missing from `new_data`: ",
+         mis_cols,
+        "."
+        )
+    )
   }
   new_data
 }

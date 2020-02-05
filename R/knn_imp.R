@@ -98,15 +98,15 @@ step_knnimpute <-
            skip = FALSE,
            id = rand_id("knnimpute")) {
     if (is.null(impute_with)) {
-      stop("Please list some variables in `impute_with`", call. = FALSE)
+      rlang::abort("Please list some variables in `impute_with`")
     }
 
     if (!is.list(options))
-      stop("`options` should be a named list.", call. = FALSE)
+      rlang::abort("`options` should be a named list.")
     opt_nms <- names(options)
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
-        stop("Availible options are 'eps', and 'nthread'.", call. = FALSE)
+        rlang::abort("Availible options are 'eps', and 'nthread'.")
       }
       if (all(opt_nms != "nthread")) {
         options$nthread <- 1
@@ -215,7 +215,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
       imp_data <- old_data[missing_rows, preds, drop = FALSE]
       ## do a better job of checking this:
       if (all(is.na(imp_data))) {
-        warning("All predictors are missing; cannot impute", call. = FALSE)
+        rlang::warn("All predictors are missing; cannot impute")
       } else {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
         nn_ind <- nn_index(object$ref_data[imp_var_complete,],

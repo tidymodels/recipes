@@ -63,8 +63,7 @@ step_holiday <-
     if (!is_tune(holidays) & !is_varying(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days))
-        stop("Invalid `holidays` value. See timeDate::listHolidays",
-             call. = FALSE)
+        rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")
     }
 
   add_step(
@@ -101,8 +100,12 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
 
   holiday_data <- info[info$variable %in% col_names, ]
   if (any(holiday_data$type != "date"))
-    stop("All variables for `step_holiday` should be either `Date` ",
-         "or `POSIXct` classes.", call. = FALSE)
+    rlang::abort(
+      paste0(
+        "All variables for `step_holiday` should be either `Date` ",
+        "or `POSIXct` classes."
+         )
+    )
 
   step_holiday_new(
     terms = x$terms,

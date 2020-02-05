@@ -78,7 +78,7 @@ step_rollimpute <-
 
     if (!is_tune(window) & !is_varying(window)) {
       if (window < 3 | window %% 2 != 1) {
-        stop("`window` should be an odd integer >= 3", call. = FALSE)
+        rlang::abort("`window` should be an odd integer >= 3")
       }
       window <- as.integer(floor(window))
     }
@@ -119,8 +119,7 @@ prep.step_rollimpute <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
   dbl_check <- vapply(training[, col_names], is.double, logical(1))
   if (any(!dbl_check))
-    stop("All columns must be double precision for rolling imputation",
-         call. = FALSE)
+    rlang::abort("All columns must be double precision for rolling imputation")
 
   step_rollimpute_new(
     terms = x$terms,
