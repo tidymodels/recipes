@@ -25,7 +25,7 @@ visualization. From
 > their specific values for that object.
 
 While R already has long-standing methods for creating these matrices
-(e.g. [formulas](https://www.rstudio.com/rviews/2017/02/01/the-r-formula-method-the-good-parts)
+(e.g. [formulas](https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/)
 and `model.matrix`), there are some [limitations to what the existing
 infrastructure can
 do](https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/).
