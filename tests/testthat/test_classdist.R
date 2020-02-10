@@ -76,3 +76,13 @@ test_that('printing', {
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
 })
+
+test_that('prefix', {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species",
+                   log = FALSE, prefix = "centroid_")
+  trained <- prep(rec, training = iris, verbose = FALSE)
+  dists <- bake(trained, new_data = iris)
+  expect_false(any(grepl("classdist_", names(dists))))
+  expect_true(any(grepl("centroid_", names(dists))))
+})
