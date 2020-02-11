@@ -159,8 +159,6 @@ step_pca_new <-
 
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
-  x <- add_new_args(x)
-
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
 
@@ -205,7 +203,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     options = x$options,
     # Allow prepping of old recipes without this argument.
-    keep_vars = x$keep_vars,
+    keep_vars = x$keep_vars %||% FALSE,
     res = prc_obj,
     prefix = x$prefix,
     skip = x$skip,
@@ -215,13 +213,16 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
-  object <- add_new_args(object)
   if (!all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
     comps <- predict(object$res, newdata = new_data[, pca_vars])
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
+
+    # Make sure baking of old prepped recipes will behave as expected. New
+    # recipes won't make it here if somehow keep_vars is NULL.
+    object$keep_vars <- object$keep_vars || FALSE
 
     if (!object$keep_vars) {
       new_data <-
