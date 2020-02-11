@@ -195,6 +195,18 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     prc_obj <- list(rotation = fake_matrix)
   }
 
+  # Allow prepping of old recipes pre-keep_vars.
+  if (is.null(x$keep_vars)) {
+    x$keep_vars <- FALSE
+    rlang::warn(
+      paste(
+        "keep_vars was added to step_pca after this recipe was created.",
+        "Regenerate your recipe to avoid this warning.",
+        sep = "\n"
+      )
+    )
+  }
+
   step_pca_new(
     terms = x$terms,
     role = x$role,
@@ -202,8 +214,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     threshold = x$threshold,
     options = x$options,
-    # Allow prepping of old recipes without this argument.
-    keep_vars = x$keep_vars %||% FALSE,
+    keep_vars = x$keep_vars,
     res = prc_obj,
     prefix = x$prefix,
     skip = x$skip,
@@ -220,9 +231,17 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
 
-    # Make sure baking of old prepped recipes will behave as expected. New
-    # recipes won't make it here if somehow keep_vars is NULL.
-    object$keep_vars <- object$keep_vars || FALSE
+    # Allow prepping of old recipes pre-keep_vars.
+    if (is.null(object$keep_vars)) {
+      object$keep_vars <- FALSE
+      rlang::warn(
+        paste(
+          "keep_vars was added to step_pca after this recipe was created.",
+          "Regenerate your recipe to avoid this warning.",
+          sep = "\n"
+        )
+      )
+    }
 
     if (!object$keep_vars) {
       new_data <-
