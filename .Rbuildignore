@@ -14,3 +14,4 @@ tests/testthat/NMF*
 ^azure-pipelines\.yml$
 ^pkgdown$
 ^\.github/workflows/R-CMD-check\.yaml$
+^\.github/workflows/pr-commands\.yaml$
