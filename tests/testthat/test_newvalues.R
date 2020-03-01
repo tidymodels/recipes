@@ -130,8 +130,8 @@ test_that("check_new_values works on integers", {
 })
 
 test_that("check_new_values works on factors", {
-  x1 <- data.frame(a = letters[1:2])
-  x2 <- data.frame(a = letters[1:3])
+  x1 <- data.frame(a = factor(letters[1:2]))
+  x2 <- data.frame(a = factor(letters[1:3]))
   check_new_values_data_type_unit_tests(x1, x2)
 })
 
