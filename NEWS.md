@@ -1,4 +1,4 @@
-# recipes 0.1.9.9000
+# recipes 0.1.10
 
 ## Breaking Changes
 
@@ -7,6 +7,8 @@
 ## Other Changes
 
 * Added flexible naming options for new columns created by `step_depth()` and `step_classdist()` (#262).
+
+* Small changes for base R's `stringsAsFactors` change. 
 
 # recipes 0.1.9
 
