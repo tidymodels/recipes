@@ -168,6 +168,13 @@
 <li>renamed <code>yj_trans()</code> to <code><a href="../reference/recipes-internal.html">yj_transform()</a></code> to avoid conflicts.</li>
 </ul>
 </div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<ul>
+<li>Added flexible naming options for new columns created by <code><a href="../reference/step_depth.html">step_depth()</a></code> and <code><a href="../reference/step_classdist.html">step_classdist()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/262'>#262</a>).</li>
+</ul>
+</div>
 </div>
     <div id="recipes-0-1-9" class="section level1">
 <h1 class="page-header">
@@ -190,9 +197,9 @@
 <li><p><code><a href="../reference/step_num2factor.html">step_num2factor()</a></code> was rewritten due to a bug that ignored the user-supplied levels (<a href="https://github.com/tidymodels/recipes/issues/425"><a href='https://github.com/tidymodels/recipes/issues/425'>#425</a></a>). The results of the <code>transform</code> argument are now required to be a function and <code>levels</code> must now be supplied.</p></li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>Using a minus in the formula to <code><a href="../reference/recipes.html">recipes()</a></code> is no longer allowed (it didn’t remove variables anyway). <code><a href="../reference/step_rm.html">step_rm()</a></code> or <code><a href="../reference/roles.html">update_role()</a></code> can be used instead.</p></li>
 <li><p>When using a selector that returns no columns, <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now return a tibble with as many rows as the original template data or the <code>new_data</code> respectively. This is more consistent with how selectors work in dplyr (<a href="https://github.com/tidymodels/recipes/issues/411"><a href='https://github.com/tidymodels/recipes/issues/411'>#411</a></a>).</p></li>
@@ -220,9 +227,9 @@
 <code><a href="../reference/step_mutate_at.html">step_mutate_at()</a></code>, <code><a href="../reference/step_rename.html">step_rename()</a></code>, and <code><a href="../reference/step_rename_at.html">step_rename_at()</a></code> were added.</li>
 </ul>
 </div>
-<div id="other-changes-1" class="section level2">
+<div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>The use of <code>varying()</code> will be deprecated in favor of an upcoming function <code>tune()</code>. No changes are need in this version, but subsequent versions will work with <code>tune()</code>.</p></li>
 <li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p></li>
@@ -262,9 +269,9 @@
 <code><a href="../reference/step_unknown.html">step_unknown()</a></code> will convert missing data in categorical columns to “unknown” and update factor levels.</li>
 </ul>
 </div>
-<div id="other-changes-2" class="section level2">
+<div id="other-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-3" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289"><a href='https://github.com/tidymodels/recipes/issues/289'>#289</a></a></p></li>
 <li><p><code><a href="../reference/step_knnimpute.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
@@ -280,9 +287,9 @@
 <h1 class="page-header">
 <a href="#recipes-0-1-5" class="anchor"></a><small> 2019-03-21 </small><code>recipes</code> 0.1.5</h1>
 <p>Small release driven by changes in <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> in the current r-devel.</p>
-<div id="other-changes-3" class="section level2">
+<div id="other-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-3" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-4" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>A new vignette discussing roles has been added.</p></li>
 <li><p>To provide infrastructure for finalizing varying parameters, an <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.</p></li>
@@ -353,9 +360,9 @@
 <code>step_nnmf</code> computes the non-negative matrix factorization for data.</li>
 </ul>
 </div>
-<div id="other-changes-4" class="section level2">
+<div id="other-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-4" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-5" class="anchor"></a>Other Changes</h2>
 <ul>
 <li>The <code>rsample</code> function <code>prepper</code> was moved to <code>recipes</code> <a href="https://github.com/tidymodels/rsample/issues/48">(issue)</a>.</li>
 <li>A number of packages were moved from “Imports” to “Suggests” to reduce the install footprint. A function was added to prompt the user to install the needed packages when the relevant steps are invoked.</li>
@@ -393,9 +400,9 @@
 <li><p><code>step_pls</code> can conduct supervised feature extraction for predictors.</p></li>
 </ul>
 </div>
-<div id="other-changes-5" class="section level2">
+<div id="other-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-5" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-6" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p><code>step_log</code> gained an <code>offset</code> argument.</p></li>
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
@@ -453,9 +460,9 @@
 <li><p><code>step_lag</code> allows for the creation of lagged predictor columns.</p></li>
 </ul>
 </div>
-<div id="other-changes-6" class="section level2">
+<div id="other-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-6" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-7" class="anchor"></a>Other Changes</h2>
 <ul>
 <li>
 <code>step_spatialsign</code> now has the option of removing missing data prior to computing the norm.</li>
@@ -530,9 +537,9 @@
 <code>step_regex</code> applies a regular expression to a character or factor vector to create dummy variables.</li>
 </ul>
 </div>
-<div id="other-changes-7" class="section level2">
+<div id="other-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-7" class="anchor"></a>Other changes</h2>
+<a href="#other-changes-8" class="anchor"></a>Other changes</h2>
 <ul>
 <li>
 <code>step_dummy</code> and <code>step_interact</code> do a better job of respecting missing values in the data set.</li>

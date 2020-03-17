@@ -178,6 +178,7 @@ class variable.</p>
   <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>,
   <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"depth_"</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"depth"</span>)
 )
@@ -241,6 +242,11 @@ depth functions. See <code><a href='https://rdrr.io/pkg/ddalpha/man/depth.halfsp
 <code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
+      <th>prefix</th>
+      <td><p>A character string that defines the naming convention for
+new depth columns. Defaults to <code>"depth_"</code>. See Details below.</p></td>
+    </tr>
+    <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
@@ -287,7 +293,8 @@ class should have at least as many rows as variables listed in
 the <code>terms</code> argument.</p>
 <p>The function will create a new column for every unique value of
 the <code>class</code> variable. The resulting variables will not
-replace the original values and have the prefix <code>depth_</code>.</p>
+replace the original values and by default have the prefix <code>depth_</code>. The
+naming format can be changed using the <code>prefix</code> argument.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -295,34 +302,40 @@ replace the original values and have the prefix <code>depth_</code>.</p>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_depth</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
+<span class='co'># use zonoid metric instead</span>
+<span class='co'># also, define naming convention for new columns</span>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_depth</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
+             <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"zonoid"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"zonoid_"</span>)
+
 <span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
 <span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>dists_to_species</span></div><div class='output co'>#&gt; # A tibble: 150 x 8
-#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species depth_setosa
-#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;
-#&gt;  1          5.1         3.5          1.4         0.2 setosa          0.2 
-#&gt;  2          4.9         3            1.4         0.2 setosa          0.04
-#&gt;  3          4.7         3.2          1.3         0.2 setosa          0.1 
-#&gt;  4          4.6         3.1          1.5         0.2 setosa          0.06
-#&gt;  5          5           3.6          1.4         0.2 setosa          0.14
-#&gt;  6          5.4         3.9          1.7         0.4 setosa          0.04
-#&gt;  7          4.6         3.4          1.4         0.3 setosa          0.02
-#&gt;  8          5           3.4          1.5         0.2 setosa          0.26
-#&gt;  9          4.4         2.9          1.4         0.2 setosa          0.02
-#&gt; 10          4.9         3.1          1.5         0.1 setosa          0.02
-#&gt; # … with 140 more rows, and 2 more variables: depth_versicolor &lt;dbl&gt;,
-#&gt; #   depth_virginica &lt;dbl&gt;</div><div class='input'>
+#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species zonoid_setosa
+#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;
+#&gt;  1          5.1         3.5          1.4         0.2 setosa         0.559 
+#&gt;  2          4.9         3            1.4         0.2 setosa         0.167 
+#&gt;  3          4.7         3.2          1.3         0.2 setosa         0.299 
+#&gt;  4          4.6         3.1          1.5         0.2 setosa         0.170 
+#&gt;  5          5           3.6          1.4         0.2 setosa         0.391 
+#&gt;  6          5.4         3.9          1.7         0.4 setosa         0.0838
+#&gt;  7          4.6         3.4          1.4         0.3 setosa         0.02  
+#&gt;  8          5           3.4          1.5         0.2 setosa         0.645 
+#&gt;  9          4.4         2.9          1.4         0.2 setosa         0.02  
+#&gt; 10          4.9         3.1          1.5         0.1 setosa         0.0200
+#&gt; # … with 140 more rows, and 2 more variables: zonoid_versicolor &lt;dbl&gt;,
+#&gt; #   zonoid_virginica &lt;dbl&gt;</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   terms            class id         
 #&gt;   &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      
-#&gt; 1 all_predictors() &lt;NA&gt;  depth_SpRR8</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 3
+#&gt; 1 all_predictors() &lt;NA&gt;  depth_M3Pk0</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 3
 #&gt;   terms        class   id         
 #&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;      
-#&gt; 1 Sepal.Length Species depth_SpRR8
-#&gt; 2 Sepal.Width  Species depth_SpRR8
-#&gt; 3 Petal.Length Species depth_SpRR8
-#&gt; 4 Petal.Width  Species depth_SpRR8</div></pre>
+#&gt; 1 Sepal.Length Species depth_M3Pk0
+#&gt; 2 Sepal.Width  Species depth_M3Pk0
+#&gt; 3 Petal.Length Species depth_M3Pk0
+#&gt; 4 Petal.Width  Species depth_M3Pk0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
