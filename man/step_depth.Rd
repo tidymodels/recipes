@@ -14,6 +14,7 @@ step_depth(
   metric = "halfspace",
   options = list(),
   data = NULL,
+  prefix = "depth_",
   skip = FALSE,
   id = rand_id("depth")
 )
@@ -56,6 +57,9 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 
 \item{data}{The training data are stored here once after
 \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
+
+\item{prefix}{A character string that defines the naming convention for
+new depth columns. Defaults to \code{"depth_"}. See Details below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -104,13 +108,20 @@ the \code{terms} argument.
 
 The function will create a new column for every unique value of
 the \code{class} variable. The resulting variables will not
-replace the original values and have the prefix \code{depth_}.
+replace the original values and by default have the prefix \code{depth_}. The
+naming format can be changed using the \code{prefix} argument.
 }
 \examples{
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_depth(all_predictors(), class = "Species")
+
+# use zonoid metric instead
+# also, define naming convention for new columns
+rec <- recipe(Species ~ ., data = iris) \%>\%
+  step_depth(all_predictors(), class = "Species",
+             metric = "zonoid", prefix = "zonoid_")
 
 rec_dists <- prep(rec, training = iris)
 

@@ -16,6 +16,7 @@ step_classdist(
   pool = FALSE,
   log = TRUE,
   objects = NULL,
+  prefix = "classdist_",
   skip = FALSE,
   id = rand_id("classdist")
 )
@@ -55,6 +56,9 @@ the natural log function?}
 \item{objects}{Statistics are stored here once this step has
 been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
+\item{prefix}{A character string that defines the naming convention for
+new distance columns. Defaults to \code{"classdist_"}. See Details below.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
@@ -83,7 +87,8 @@ each value of a categorical class variable.
 \code{step_classdist} will create a new column for every
 unique value of the \code{class} variable.
 The resulting variables will not replace the original values
-and have the prefix \code{classdist_}.
+and by default have the prefix \code{classdist_}. The naming format can be
+changed using the \code{prefix} argument.
 
 Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
@@ -96,6 +101,12 @@ overall.
 # in case of missing data...
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
+# define naming convention
+rec <- recipe(Species ~ ., data = iris) \%>\%
+  step_classdist(all_predictors(), class = "Species",
+                 pool = FALSE, mean_func = mean2, prefix = "centroid_")
+
+# default naming
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_classdist(all_predictors(), class = "Species",
                  pool = FALSE, mean_func = mean2)

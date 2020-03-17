@@ -29,6 +29,8 @@
 #'  [ddalpha::depth.simplicialVolume()],
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
+#' @param prefix A character string that defines the naming convention for
+#'  new depth columns. Defaults to `"depth_"`. See Details below.
 #' @param data The training data are stored here once after
 #'  [prep.recipe()] is executed.
 #' @return An updated version of `recipe` with the new step
@@ -60,15 +62,22 @@
 #'  class should have at least as many rows as variables listed in
 #'  the `terms` argument.
 #'
-#'   The function will create a new column for every unique value of
+#'  The function will create a new column for every unique value of
 #'  the `class` variable. The resulting variables will not
-#'  replace the original values and have the prefix `depth_`.
+#'  replace the original values and by default have the prefix `depth_`. The
+#'  naming format can be changed using the `prefix` argument.
 #'
 #' @examples
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_depth(all_predictors(), class = "Species")
+#'
+#' # use zonoid metric instead
+#' # also, define naming convention for new columns
+#' rec <- recipe(Species ~ ., data = iris) %>%
+#'   step_depth(all_predictors(), class = "Species",
+#'              metric = "zonoid", prefix = "zonoid_")
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -87,6 +96,7 @@ step_depth <-
            metric =  "halfspace",
            options = list(),
            data = NULL,
+           prefix = "depth_",
            skip = FALSE,
            id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1)
@@ -104,6 +114,7 @@ step_depth <-
         metric = metric,
         options = options,
         data = data,
+        prefix = prefix,
         skip = skip,
         id = id
       )
@@ -111,7 +122,8 @@ step_depth <-
   }
 
 step_depth_new <-
-  function(terms, class, role, trained, metric, options, data, skip, id) {
+  function(terms, class, role, trained, metric,
+           options, data, prefix, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -121,6 +133,7 @@ step_depth_new <-
       metric = metric,
       options = options,
       data = data,
+      prefix = prefix,
       skip = skip,
       id = id
     )
@@ -143,6 +156,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     metric = x$metric,
     options = x$options,
     data = x_dat,
+    prefix = x$prefix,
     skip = x$skip,
     id = x$id
   )
@@ -169,7 +183,7 @@ bake.step_depth <- function(object, new_data, ...) {
     opts = object$options
   )
   res <- as_tibble(res)
-  newname <- paste0("depth_", colnames(res))
+  newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
   if (!is_tibble(res))
