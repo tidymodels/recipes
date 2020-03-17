@@ -48,7 +48,7 @@ colnames(absorp) <- names0(ncol(absorp))
 tecator <- cbind(endpoints, absorp) %>%
   as.data.frame()
 ```
-The three outcomes have fairly high correlations also. If the outcomes can be predicted using a linear model, partial least squares (PLS) is an idea method. PLS models the data as a function of a set of unobserved _latent_ variables that are derived in a manner similar to principal component analysis (PCA). 
+The three outcomes have fairly high correlations also. If the outcomes can be predicted using a linear model, partial least squares (PLS) is an ideal method. PLS models the data as a function of a set of unobserved _latent_ variables that are derived in a manner similar to principal component analysis (PCA). 
 
 PLS, unlike PCA, also incorporates the outcome data when creating the PLS components. Like PCA it tries to maximize the variance of the predictors that are explained by the components but also tries to simultaneously maximize the correlation between those components and the outcomes. In this way, PLS _chases_ variation of the predictors and outcomes. 
 
