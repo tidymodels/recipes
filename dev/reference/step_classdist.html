@@ -90,7 +90,7 @@ each value of a categorical class variable." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.8.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
         </div>
       </div>
     </div>
@@ -180,6 +180,7 @@ each value of a categorical class variable.</p>
   <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"classdist_"</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"classdist"</span>)
 )
@@ -243,6 +244,11 @@ the natural log function?</p></td>
 been trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
+      <th>prefix</th>
+      <td><p>A character string that defines the naming convention for
+new distance columns. Defaults to <code>"classdist_"</code>. See Details below.</p></td>
+    </tr>
+    <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
@@ -273,7 +279,8 @@ the class), and <code>class</code>.</p>
     <p><code>step_classdist</code> will create a new column for every
 unique value of the <code>class</code> variable.
 The resulting variables will not replace the original values
-and have the prefix <code>classdist_</code>.</p>
+and by default have the prefix <code>classdist_</code>. The naming format can be
+changed using the <code>prefix</code> argument.</p>
 <p>Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
 listed in the <code>terms</code> argument. If <code>pool = TRUE</code>,
@@ -285,6 +292,12 @@ overall.</p>
 <span class='co'># in case of missing data...</span>
 <span class='no'>mean2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># define naming convention</span>
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
+                 <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"centroid_"</span>)
+
+<span class='co'># default naming</span>
 <span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
                  <span class='kw'>pool</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mean_func</span> <span class='kw'>=</span> <span class='no'>mean2</span>)
@@ -311,21 +324,21 @@ overall.</p>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
 #&gt;   terms            value class id             
 #&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          
-#&gt; 1 all_predictors()    NA &lt;NA&gt;  classdist_Mcz0G</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
+#&gt; 1 all_predictors()    NA &lt;NA&gt;  classdist_wcZDL</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
 #&gt;    terms        value class      id             
 #&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;          
-#&gt;  1 Sepal.Length 5.01  setosa     classdist_Mcz0G
-#&gt;  2 Sepal.Width  3.43  setosa     classdist_Mcz0G
-#&gt;  3 Petal.Length 1.46  setosa     classdist_Mcz0G
-#&gt;  4 Petal.Width  0.246 setosa     classdist_Mcz0G
-#&gt;  5 Sepal.Length 5.94  versicolor classdist_Mcz0G
-#&gt;  6 Sepal.Width  2.77  versicolor classdist_Mcz0G
-#&gt;  7 Petal.Length 4.26  versicolor classdist_Mcz0G
-#&gt;  8 Petal.Width  1.33  versicolor classdist_Mcz0G
-#&gt;  9 Sepal.Length 6.59  virginica  classdist_Mcz0G
-#&gt; 10 Sepal.Width  2.97  virginica  classdist_Mcz0G
-#&gt; 11 Petal.Length 5.55  virginica  classdist_Mcz0G
-#&gt; 12 Petal.Width  2.03  virginica  classdist_Mcz0G</div></pre>
+#&gt;  1 Sepal.Length 5.01  setosa     classdist_wcZDL
+#&gt;  2 Sepal.Width  3.43  setosa     classdist_wcZDL
+#&gt;  3 Petal.Length 1.46  setosa     classdist_wcZDL
+#&gt;  4 Petal.Width  0.246 setosa     classdist_wcZDL
+#&gt;  5 Sepal.Length 5.94  versicolor classdist_wcZDL
+#&gt;  6 Sepal.Width  2.77  versicolor classdist_wcZDL
+#&gt;  7 Petal.Length 4.26  versicolor classdist_wcZDL
+#&gt;  8 Petal.Width  1.33  versicolor classdist_wcZDL
+#&gt;  9 Sepal.Length 6.59  virginica  classdist_wcZDL
+#&gt; 10 Sepal.Width  2.97  virginica  classdist_wcZDL
+#&gt; 11 Petal.Length 5.55  virginica  classdist_wcZDL
+#&gt; 12 Petal.Width  2.03  virginica  classdist_wcZDL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

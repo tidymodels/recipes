@@ -170,7 +170,7 @@ and all_nominal()
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.8.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
         </div>
       </div>
     </div>
@@ -272,10 +272,10 @@ excluded variable(s).</p></li>
 </ol>
 
 <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::starts_with()</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::ends_with()</a></code>,
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::contains()</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::matches()</a></code>,
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::num_range()</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::everything()</a></code>, and
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::one_of()</a></code>.
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::ends_with()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::matches()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::everything()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>.
 For example:</p>
 <pre>
   recipe(Species ~ ., data = iris) %&gt;%
@@ -317,10 +317,10 @@ useful if <code>Species</code> was converted to dummy variables
 previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
 <p>The complete list of allowable functions in steps:</p>
 <ul>
-<li><p><strong>By name</strong>: <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::starts_with()</a></code>,
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::ends_with()</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::contains()</a></code>,
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::matches()</a></code>, <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::num_range()</a></code>, and
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::everything()</a></code></p></li>
+<li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::starts_with()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::contains()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::num_range()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::everything()</a></code></p></li>
 <li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
 <code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
 <li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,
