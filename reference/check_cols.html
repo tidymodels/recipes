@@ -89,7 +89,7 @@ present in the new data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
         </div>
       </div>
     </div>
@@ -225,8 +225,8 @@ the computations for subsequent operations.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This check will break the <code>bake</code> function if any of the checked
-columns does contain <code>NA</code> values. If the check passes, nothing is changed
+    <p>This check will break the <code>bake</code> function if any of the specified
+columns is not present in the data. If the check passes, nothing is changed
 to the data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
