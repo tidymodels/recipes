@@ -256,7 +256,7 @@ tunable.step_kpca_poly <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "degree", "scale_factor", "offset"),
     call_info = list(
-      list(pkg = "dials", fun = "num_comp", range = c(1, 4)),
+      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
       list(pkg = "dials", fun = "degree"),
       list(pkg = "dials", fun = "scale_factor"),
       list(pkg = "dials", fun = "offset")

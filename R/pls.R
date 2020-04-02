@@ -237,7 +237,7 @@ tidy.step_pls <- function(x, ...) {
 tunable.step_pls <- function(x, ...) {
   tibble::tibble(
     name = "num_comp",
-    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1, 4))),
+    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1L, 4L))),
     source = "recipe",
     component = "step_pls",
     component_id = x$id
