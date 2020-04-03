@@ -48,8 +48,8 @@ step that will check if all the columns of the training frame are
 present in the new data.
 }
 \details{
-This check will break the \code{bake} function if any of the checked
-columns does contain \code{NA} values. If the check passes, nothing is changed
+This check will break the \code{bake} function if any of the specified
+columns is not present in the data. If the check passes, nothing is changed
 to the data.
 }
 \examples{

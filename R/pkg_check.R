@@ -25,7 +25,7 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
     msg <- paste0(
       sum(!good),
       ifelse(sum(!good) > 1, " packages are", " package is"),
-      " needed for this model and",
+      " needed for this step and",
       ifelse(sum(!good) > 1, " are", " is"),
       " not installed. (",
       pkList,

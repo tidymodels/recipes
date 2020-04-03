@@ -69,3 +69,12 @@ test_that('printing', {
   expect_output(prep(rec, training = iris, verbose = TRUE))
 })
 
+test_that('prefix', {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(all_predictors(), class = "Species",
+               metric = "spatial", prefix = "spatial_")
+  trained <- prep(rec, training = iris, verbose = FALSE)
+  dists <- bake(trained, new_data = iris)
+  expect_false(any(grepl("depth_", names(dists))))
+  expect_true(any(grepl("spatial_", names(dists))))
+})
