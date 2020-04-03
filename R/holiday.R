@@ -144,7 +144,7 @@ bake.step_holiday <- function(object, new_data, ...) {
   holiday_values <-
     matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
   colnames(holiday_values) <- rep("", sum(new_cols))
-  holiday_values <- as_tibble(holiday_values)
+  holiday_values <- as_tibble(holiday_values, .name_repair = "unique")
 
   strt <- 1
   for (i in seq_along(object$columns)) {

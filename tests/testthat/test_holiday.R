@@ -8,7 +8,8 @@ context("Holiday features")
 exp_dates <- data.frame(date  = ymd(c("2017-12-25", "2017-05-29", "2017-04-16")),
                         holiday = c("ChristmasDay", "USMemorialDay", "Easter"),
                         stringsAsFactors = FALSE)
-test_data <- data.frame(day  = ymd("2017-01-01") + days(0:364))
+test_data <- data.frame(day  = ymd("2017-01-01") + days(0:364),
+                        stringsAsFactors = FALSE)
 
 test_that('Date class', {
   holiday_rec <- recipe(~ day, test_data) %>%
