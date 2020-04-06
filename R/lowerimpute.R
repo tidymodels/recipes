@@ -145,7 +145,7 @@ print.step_lowerimpute <-
 tidy.step_lowerimpute <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$threshold),
-                  value = x$threshold)
+                  value = unname(x$threshold))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
