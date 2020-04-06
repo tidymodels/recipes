@@ -89,10 +89,11 @@ test_that('correct ICA values', {
   vars <- c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur")
   tidy_exp_un <- tibble(
     terms = rep(vars, 2),
-    value = rep(NA_real_, 2*5),
     component = rep(c("IC1", "IC2"), 5),
+    value = rep(NA_real_, 2*5),
     id = ""
-  )
+  ) %>%
+    arrange(terms, component)
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 1))
 
   loadings <- dimRed::getRotationMatrix(ica_extract_trained$steps[[1]]$res)
@@ -103,11 +104,12 @@ test_that('correct ICA values', {
   loadings <- utils::stack(loadings)
 
   tidy_exp_tr <- tibble(
-    terms = tidy_exp_un$terms,
-    value = loadings$values,
+    terms = rep(vars, 2),
     component = as.character(loadings$ind),
+    value = loadings$values,
     id = ""
-  )
+  ) %>%
+    arrange(terms, component)
   expect_equal(tidy_exp_tr, tidy(ica_extract_trained, number = 1))
 
 })
