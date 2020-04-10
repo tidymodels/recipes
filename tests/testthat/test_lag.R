@@ -61,8 +61,8 @@ test_that("specification of multiple lags in a vector",  {
 
   expected <- df %>%
     mutate(lag_1_t = dplyr::lag(t, 1),
-           lag_2_t = dplyr::lag(t, 2),
            lag_1_tt = dplyr::lag(tt, 1),
+           lag_2_t = dplyr::lag(t, 2),
            lag_2_tt = dplyr::lag(tt, 2))
 
   expect_equal(baked, expected)
