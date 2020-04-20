@@ -162,8 +162,12 @@ bake.step_cut <- function(object, new_data, ...) {
 
 cut_var <- function(var, breaks, include_outside_range) {
   if (include_outside_range) {
-    if (min(var) < min(breaks)) breaks[1] <- min(var)
-    if (max(var) > max(breaks)) breaks[length(breaks)] <- max(var)
+    if (min(var) < min(breaks)) {
+      breaks[1] <- min(var)
+    }
+    if (max(var) > max(breaks)) {
+      breaks[length(breaks)] <- max(var)
+    }
   }
   cutted_var <- cut(var, breaks, include.lowest = TRUE)
   if (include_outside_range) {
@@ -218,3 +222,17 @@ tidy.step_cut <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @rdname tunable.step
+#' @export
+# tunable.step_cut <- function(x, ...) {
+#   tibble::tibble(
+#     name = "breaks",
+#     call_info = list(
+#       list(pkg = "dials", fun = <to do>)
+#     ),
+#     source = "recipe",
+#     component = "step_cut",
+#     component_id = x$id
+#   )
+# }
