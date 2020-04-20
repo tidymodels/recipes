@@ -223,16 +223,3 @@ tidy.step_cut <- function(x, ...) {
   res
 }
 
-#' @rdname tunable.step
-#' @export
-# tunable.step_cut <- function(x, ...) {
-#   tibble::tibble(
-#     name = "breaks",
-#     call_info = list(
-#       list(pkg = "dials", fun = <to do>)
-#     ),
-#     source = "recipe",
-#     component = "step_cut",
-#     component_id = x$id
-#   )
-# }
