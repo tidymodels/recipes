@@ -12,13 +12,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../../tidyverse.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
+<script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><link href="../../tidyverse-2.css" rel="stylesheet">
 <meta property="og:title" content="Multivariate Analysis using Partial Least Squares">
-<meta property="og:description" content="">
+<meta property="og:description" content="recipes">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -32,7 +33,7 @@
   gtag('config', 'UA-115082821-1');
 </script>
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,9 +47,9 @@
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../../index.html">recipes</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
         </div>
       </div>
     </div>
@@ -97,7 +98,7 @@
   <a href="../../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes">
+  <a href="https://github.com/tidymodels/recipes/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -115,7 +116,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Multivariate Analysis using Partial Least Squares</h1>
+      <h1 data-toc-skip>Multivariate Analysis using Partial Least Squares</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/articles/Multivariate_PLS.Rmd"><code>vignettes/articles/Multivariate_PLS.Rmd</code></a></small>
@@ -126,7 +127,7 @@
     
     
 <p><em>Multivariate Analysis</em> usually refers to the situation where multiple <em>outcomes</em> are being modeled, analyzed, and/or predicted. There are multivariate versions of many common statistical tools. For example, suppose there was a data set with columns <code>y1</code> and <code>y2</code> containing two outcomes to be predicted. The <code>lm</code> function would look something like:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(y1, y2) <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> dat)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">y1</span>, <span class="no">y2</span>) ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">dat</span>)</pre></body></html></div>
 <p>The <code>cbind</code> is pretty awkward and is a consequence of how the traditional formula infrastructure works. <code>recipes</code> is a lot easter to work with and this document shows an example to illustrate how to use multiple outcomes.</p>
 <p>The data that we’ll use has three outcomes. From <code><a href="https://rdrr.io/pkg/caret/man/tecator.html">?tecator</a></code>:</p>
 <blockquote>
@@ -137,36 +138,36 @@
 </blockquote>
 <p>The goal would be to be able to predict the proportion of the three substances using the chemistry test. For the predictors, there is usually a very high degree of between-variable correlations in the data and that is certainly the case here.</p>
 <p>To start, let’s take the two data matrices (called <code>endpoints</code> and <code>absorp</code>) and bind them together in a data frame:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(caret)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(tecator)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(endpoints)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">caret</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">tecator</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">endpoints</span>)</pre></body></html></div>
 <pre><code>## [1] 215   3</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(absorp)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">absorp</span>)</pre></body></html></div>
 <pre><code>## [1] 215 100</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(endpoints) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"water"</span>, <span class="st">"fat"</span>, <span class="st">"protein"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(absorp) &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/names0.html">names0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(absorp))</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">tecator &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(endpoints, absorp) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">endpoints</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"water"</span>, <span class="st">"fat"</span>, <span class="st">"protein"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">absorp</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/names0.html">names0</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">absorp</span>))
+
+<span class="no">tecator</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">endpoints</span>, <span class="no">absorp</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()</pre></body></html></div>
 <p>The three outcomes have fairly high correlations also. If the outcomes can be predicted using a linear model, partial least squares (PLS) is an ideal method. PLS models the data as a function of a set of unobserved <em>latent</em> variables that are derived in a manner similar to principal component analysis (PCA).</p>
 <p>PLS, unlike PCA, also incorporates the outcome data when creating the PLS components. Like PCA it tries to maximize the variance of the predictors that are explained by the components but also tries to simultaneously maximize the correlation between those components and the outcomes. In this way, PLS <em>chases</em> variation of the predictors and outcomes.</p>
 <p>Since we are working with variances and covariances, it makes sense to standardize the data. The recipe will center and scale all of the variables.</p>
 <p>Many base R functions that deal with multivariate outcomes using the formula require the use of <code>cbind</code> on the left-hand side of the formula to work with the traditional formula methods. <code>recipes</code> do not; the outcomes can be symbolically “added” together on the left-hand side:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">norm_rec &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/recipe.html">recipe</a></span>(water <span class="op">+</span><span class="st"> </span>fat <span class="op">+</span><span class="st"> </span>protein <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> tecator) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../../reference/step_center.html">step_center</a></span>(<span class="kw">everything</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../../reference/step_scale.html">step_scale</a></span>(<span class="kw">everything</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">recipes</span>)
+<span class="no">norm_rec</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/recipe.html">recipe</a></span>(<span class="no">water</span> + <span class="no">fat</span> + <span class="no">protein</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">tecator</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../../reference/step_center.html">step_center</a></span>(<span class="fu">everything</span>()) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../../reference/step_scale.html">step_scale</a></span>(<span class="fu">everything</span>())</pre></body></html></div>
 <p>Before we can finalize the PLS model, the number of PLS components to retain must be determined. This can be done using performance metrics such as the root mean squared error. However, we can also calculate the proportion of variance explained by the components for the <em>predictors and each of the outcomes</em>. This allows an informed choice to be made based on the level of evidence that the situation requires.</p>
 <p>Since the data set isn’t large, resampling will be used to measure these proportions. Ten repeats of 10-fold cross-validation will be used to build the PLS model on 90% of the data. For each of the 100 models, the proportions will be extracted and saved.</p>
 <p>The folds can be created using the <a href="https://tidymodels.github.io/rsample/"><code>rsample</code> package</a> and the recipe can be estimated for each resample using the <a href="https://tidymodels.github.io/rsample/reference/prepper.html"><code>prepper</code> function</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rsample)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">57343</span>)</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">folds &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rsample/man/vfold_cv.html">vfold_cv</a></span>(tecator, <span class="dt">repeats =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">folds &lt;-<span class="st"> </span>folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> norm_rec))</a></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rsample</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">purrr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">57343</span>)
+<span class="no">folds</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/vfold_cv.html">vfold_cv</a></span>(<span class="no">tecator</span>, <span class="kw">repeats</span> <span class="kw">=</span> <span class="fl">10</span>)
+
+<span class="no">folds</span> <span class="kw">&lt;-</span> <span class="no">folds</span> <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">recipes</span> <span class="kw">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">splits</span>, <span class="no">prepper</span>, <span class="kw">recipe</span> <span class="kw">=</span> <span class="no">norm_rec</span>))</pre></body></html></div>
 <p>The complicated part here is:</p>
 <ol style="list-style-type: decimal">
 <li>Formatting the predictors and outcomes into the format that the <code>pls</code> package requires, and</li>
@@ -176,61 +177,61 @@
 <p>The <code>pls</code> wants to use a simple formula to specify the model but each side of the formula should <em>represent a matrix</em>. In other words, we need a data from with two columns and each column is a matrix. The secret to doing this is to “protect” the two matrices using <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> when adding them to the data frame.</p>
 <p>The calculation for the proportion of variance explained is simple for the predictors; the function <code><a href="https://rdrr.io/pkg/pls/man/coef.mvr.html">pls::explvar</a></code> will compute that. For the outcomes, the process is more complicated. I didn’t see a ready-made function to compute these but there is some code inside of the summary function to do the computation (see below).</p>
 <p>The function <code>get_var_explained</code> will do these computations and return a data frame with columns <code>components</code>, <code>source</code> (for the predictors, water, etc) and the <code>proportion</code> of variance that is explained by the components.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pls)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">get_var_explained &lt;-<span class="st"> </span><span class="cf">function</span>(recipe, ...) {</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="co"># Extract the predictors and outcomes into their own matrices</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">  y_mat &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/juice.html">juice</a></span>(recipe, <span class="dt">composition =</span> <span class="st">"matrix"</span>, <span class="kw"><a href="../../reference/has_role.html">all_outcomes</a></span>())</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">  x_mat &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/juice.html">juice</a></span>(recipe, <span class="dt">composition =</span> <span class="st">"matrix"</span>, <span class="kw"><a href="../../reference/has_role.html">all_predictors</a></span>())</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">  </a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">  <span class="co"># The pls package prefers the data in a data frame where the outcome</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  <span class="co"># and predictors are in _matrices_. To make sure this is formatted</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">  <span class="co"># properly, use the `I` function to inhibit `data.frame` from making</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">  <span class="co"># all the individual columns. `pls_format` should have two columns.</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">  pls_format &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">    <span class="dt">endpoints =</span> <span class="kw"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span>(y_mat),</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">    <span class="dt">measurements =</span> <span class="kw"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span>(x_mat)</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">  )</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">  <span class="co"># Fit the model</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18">  mod &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pls/man/mvr.html">plsr</a></span>(endpoints <span class="op">~</span><span class="st"> </span>measurements, <span class="dt">data =</span> pls_format)</a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">  </a>
-<a class="sourceLine" id="cb9-20" data-line-number="20">  <span class="co"># Get the proportion of the predictor variance that is explained</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21">  <span class="co"># by the model for different number of components. </span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22">  xve &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pls/man/coef.mvr.html">explvar</a></span>(mod)<span class="op">/</span><span class="dv">100</span> </a>
-<a class="sourceLine" id="cb9-23" data-line-number="23">  </a>
-<a class="sourceLine" id="cb9-24" data-line-number="24">  <span class="co"># To do the same for the outcome, it is more complex. This code </span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25">  <span class="co"># was extracted from pls:::summary.mvr. </span></a>
-<a class="sourceLine" id="cb9-26" data-line-number="26">  explained &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/drop.html">drop</a></span>(pls<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/pls/man/mvrVal.html">R2</a></span>(mod, <span class="dt">estimate =</span> <span class="st">"train"</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)<span class="op">$</span>val) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="st">    </span><span class="co"># transpose so that components are in rows</span></a>
-<a class="sourceLine" id="cb9-28" data-line-number="28"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-30" data-line-number="30"><span class="st">    </span><span class="co"># Add the predictor proportions</span></a>
-<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">predictors =</span> <span class="kw"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span>(xve) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span>(),</a>
-<a class="sourceLine" id="cb9-32" data-line-number="32">           <span class="dt">components =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(xve)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="st">    </span><span class="co"># Put into a tidy format that is tall</span></a>
-<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="st">    </span><span class="kw">gather</span>(source, proportion, <span class="op">-</span>components)</a>
-<a class="sourceLine" id="cb9-35" data-line-number="35">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pls</span>)
+
+<span class="no">get_var_explained</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">recipe</span>, <span class="no">...</span>) {
+
+  <span class="co"># Extract the predictors and outcomes into their own matrices</span>
+  <span class="no">y_mat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/juice.html">juice</a></span>(<span class="no">recipe</span>, <span class="kw">composition</span> <span class="kw">=</span> <span class="st">"matrix"</span>, <span class="fu"><a href="../../reference/has_role.html">all_outcomes</a></span>())
+  <span class="no">x_mat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/juice.html">juice</a></span>(<span class="no">recipe</span>, <span class="kw">composition</span> <span class="kw">=</span> <span class="st">"matrix"</span>, <span class="fu"><a href="../../reference/has_role.html">all_predictors</a></span>())
+
+  <span class="co"># The pls package prefers the data in a data frame where the outcome</span>
+  <span class="co"># and predictors are in _matrices_. To make sure this is formatted</span>
+  <span class="co"># properly, use the `I` function to inhibit `data.frame` from making</span>
+  <span class="co"># all the individual columns. `pls_format` should have two columns.</span>
+  <span class="no">pls_format</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
+    <span class="kw">endpoints</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span>(<span class="no">y_mat</span>),
+    <span class="kw">measurements</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span>(<span class="no">x_mat</span>)
+  )
+  <span class="co"># Fit the model</span>
+  <span class="no">mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pls/man/mvr.html">plsr</a></span>(<span class="no">endpoints</span> ~ <span class="no">measurements</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">pls_format</span>)
+
+  <span class="co"># Get the proportion of the predictor variance that is explained</span>
+  <span class="co"># by the model for different number of components. </span>
+  <span class="no">xve</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pls/man/coef.mvr.html">explvar</a></span>(<span class="no">mod</span>)/<span class="fl">100</span>
+
+  <span class="co"># To do the same for the outcome, it is more complex. This code </span>
+  <span class="co"># was extracted from pls:::summary.mvr. </span>
+  <span class="no">explained</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/drop.html">drop</a></span>(<span class="kw pkg">pls</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/pls/man/mvrVal.html">R2</a></span>(<span class="no">mod</span>, <span class="kw">estimate</span> <span class="kw">=</span> <span class="st">"train"</span>, <span class="kw">intercept</span> <span class="kw">=</span> <span class="fl">FALSE</span>)$<span class="no">val</span>) <span class="kw">%&gt;%</span>
+    <span class="co"># transpose so that components are in rows</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span>() <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="kw">%&gt;%</span>
+    <span class="co"># Add the predictor proportions</span>
+    <span class="fu">mutate</span>(<span class="kw">predictors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span>(<span class="no">xve</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span>(),
+           <span class="kw">components</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(<span class="no">xve</span>)) <span class="kw">%&gt;%</span>
+    <span class="co"># Put into a tidy format that is tall</span>
+    <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/reexports.html">gather</a></span>(<span class="no">source</span>, <span class="no">proportion</span>, -<span class="no">components</span>)
+}</pre></body></html></div>
 <p>We compute this data frame for each resample and save the results in different columns.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">folds &lt;-<span class="st"> </span>folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">var =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(recipes, get_var_explained))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">folds</span> <span class="kw">&lt;-</span> <span class="no">folds</span> <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">recipes</span>, <span class="no">get_var_explained</span>))</pre></body></html></div>
 <p>To extract and aggregate these data, simple row binding can be used to stack the data vertically. Most of the action happens in the first 15 components so the data are filtered and the <em>average</em> proportion is computed.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">variance_data &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(folds[[<span class="st">"var"</span>]]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(components <span class="op">&lt;=</span><span class="st"> </span><span class="dv">15</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(components, source) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">proportion =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(proportion))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">variance_data</span> <span class="kw">&lt;-</span> <span class="fu">bind_rows</span>(<span class="no">folds</span><span class="kw">[[</span><span class="st">"var"</span>]]) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">components</span> <span class="kw">&lt;=</span> <span class="fl">15</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">group_by</span>(<span class="no">components</span>, <span class="no">source</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">summarize</span>(<span class="kw">proportion</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">proportion</span>))</pre></body></html></div>
 <p>The plot below shows that, if the protein measurement is important, you might require 10 or so components to achieve a good representation of that outcome. Note that the predictor variance is captured extremely well using a single component. This is due to the high degree of correlation in those data.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(variance_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> components, <span class="dt">y =</span> proportion, <span class="dt">col =</span> source)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"top"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">variance_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">components</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">proportion</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="no">source</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"top"</span>)</pre></body></html></div>
 <p><img src="Multivariate_PLS_files/figure-html/plot-1.png" width="100%"></p>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
       </div>
 

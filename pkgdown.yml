@@ -1,5 +1,5 @@
 pandoc: '2.2'
-pkgdown: 1.4.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   Custom_Steps: Custom_Steps.html
@@ -11,4 +11,5 @@ articles:
   Skipping: Skipping.html
   Multivariate_PLS: articles/Multivariate_PLS.html
   Subsampling: articles/Subsampling.html
+last_built: 2020-04-26T23:10Z
 
