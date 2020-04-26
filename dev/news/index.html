@@ -17,22 +17,26 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -69,7 +73,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,7 +88,7 @@
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
         </div>
@@ -135,7 +139,7 @@
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes">
+  <a href="https://github.com/tidymodels/recipes/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -153,17 +157,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/tidymodels/recipes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="recipes-development-version" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor"></a>recipes (development version)<small> Unreleased </small>
 </h1>
 </div>
     <div id="recipes-0-1-10" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.10">
 <a href="#recipes-0-1-10" class="anchor"></a>recipes 0.1.10<small> 2020-03-18 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
@@ -183,7 +187,7 @@
 </div>
 </div>
     <div id="recipes-0-1-9" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.9">
 <a href="#recipes-0-1-9" class="anchor"></a>recipes 0.1.9<small> 2020-01-07 </small>
 </h1>
 <ul>
@@ -192,7 +196,7 @@
 </ul>
 </div>
     <div id="recipes-0-1-8" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.8">
 <a href="#recipes-0-1-8" class="anchor"></a><small> 2019-12-18 </small><code>recipes</code> 0.1.8</h1>
 <div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -217,7 +221,7 @@
 </div>
 </div>
     <div id="recipes-0-1-7" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.7">
 <a href="#recipes-0-1-7" class="anchor"></a><small> 2019-09-15 </small><code>recipes</code> 0.1.7</h1>
 <p>Release driven by changes in <code>tidyr</code> (v 1.0.0).</p>
 <div id="breaking-changes-2" class="section level2">
@@ -251,7 +255,7 @@
 </div>
 </div>
     <div id="recipes-0-1-6" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.6">
 <a href="#recipes-0-1-6" class="anchor"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
 <p>Release driven by changes in <code>rlang</code>.</p>
 <div id="breaking-changes-3" class="section level2">
@@ -290,7 +294,7 @@
 </div>
 </div>
     <div id="recipes-0-1-5" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.5">
 <a href="#recipes-0-1-5" class="anchor"></a><small> 2019-03-21 </small><code>recipes</code> 0.1.5</h1>
 <p>Small release driven by changes in <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> in the current r-devel.</p>
 <div id="other-changes-4" class="section level2">
@@ -320,7 +324,7 @@
 </div>
 </div>
     <div id="recipes-0-1-4" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.4">
 <a href="#recipes-0-1-4" class="anchor"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
 <div id="breaking-changes-5" class="section level2">
 <h2 class="hasAnchor">
@@ -392,7 +396,7 @@
 </div>
 </div>
     <div id="recipes-0-1-3" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.3">
 <a href="#recipes-0-1-3" class="anchor"></a><small> 2018-06-16 </small><code>recipes</code> 0.1.3</h1>
 <div id="new-operations-3" class="section level2">
 <h2 class="hasAnchor">
@@ -442,7 +446,7 @@
 </div>
 </div>
     <div id="recipes-0-1-2" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.2">
 <a href="#recipes-0-1-2" class="anchor"></a><small> 2018-01-11 </small><code>recipes</code> 0.1.2</h1>
 <div id="general-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -476,7 +480,7 @@
 </div>
 </div>
     <div id="recipes-0-1-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.1">
 <a href="#recipes-0-1-1" class="anchor"></a><small> 2017-11-20 </small><code>recipes</code> 0.1.1</h1>
 <ul>
 <li>The default selectors for <code>bake</code> was changed from <code><a href="../reference/has_role.html">all_predictors()</a></code> to <code>everything()</code>.</li>
@@ -513,7 +517,7 @@
 </ul>
 </div>
     <div id="recipes-0-1-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#recipes-0-1-0" class="anchor"></a><small> 2017-07-27 </small><code>recipes</code> 0.1.0</h1>
 <p>First CRAN release.</p>
 <ul>
@@ -522,7 +526,7 @@
 </ul>
 </div>
     <div id="recipes-0-0-1-9003" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.0.1.9003">
 <a href="#recipes-0-0-1-9003" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9003</h1>
 <ul>
 <li>Two of the main functions <a href="https://github.com/tidymodels/recipes/issues/57">changed names</a>. <code>learn</code> has become <code>prepare</code> and <code>process</code> has become <code>bake</code>
@@ -530,7 +534,7 @@
 </ul>
 </div>
     <div id="recipes-0-0-1-9002" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.0.1.9002">
 <a href="#recipes-0-0-1-9002" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9002</h1>
 <div id="new-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -553,7 +557,7 @@
 </div>
 </div>
     <div id="recipes-0-0-1-9001" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.0.1.9001">
 <a href="#recipes-0-0-1-9001" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9001</h1>
 <ul>
 <li>The class system for <code>recipe</code> objects was changed so that <a href="https://github.com/tidymodels/recipes/issues/46">pipes can be used to create the recipe with a formula</a>.</li>
@@ -564,27 +568,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#recipes-development-version">development version</a></li>
-        <li><a href="#recipes-0-1-10">0.1.10</a></li>
-        <li><a href="#recipes-0-1-9">0.1.9</a></li>
-        <li><a href="#recipes-0-1-8">0.1.8</a></li>
-        <li><a href="#recipes-0-1-7">0.1.7</a></li>
-        <li><a href="#recipes-0-1-6">0.1.6</a></li>
-        <li><a href="#recipes-0-1-5">0.1.5</a></li>
-        <li><a href="#recipes-0-1-4">0.1.4</a></li>
-        <li><a href="#recipes-0-1-3">0.1.3</a></li>
-        <li><a href="#recipes-0-1-2">0.1.2</a></li>
-        <li><a href="#recipes-0-1-1">0.1.1</a></li>
-        <li><a href="#recipes-0-1-0">0.1.0</a></li>
-        <li><a href="#recipes-0-0-1-9003">0.0.1.9003</a></li>
-        <li><a href="#recipes-0-0-1-9002">0.0.1.9002</a></li>
-        <li><a href="#recipes-0-0-1-9001">0.0.1.9001</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>

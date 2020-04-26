@@ -12,13 +12,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../../tidyverse.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
+<script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><link href="../../tidyverse-2.css" rel="stylesheet">
 <meta property="og:title" content="Subsampling for Class Imbalances">
-<meta property="og:description" content="">
+<meta property="og:description" content="recipes">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
@@ -33,7 +34,7 @@
   gtag('config', 'UA-115082821-1');
 </script>
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,7 +48,7 @@
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../../index.html">recipes</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
         </div>
@@ -98,7 +99,7 @@
   <a href="../../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes">
+  <a href="https://github.com/tidymodels/recipes/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -116,7 +117,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Subsampling for Class Imbalances</h1>
+      <h1 data-toc-skip>Subsampling for Class Imbalances</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/articles/Subsampling.Rmd"><code>vignettes/articles/Subsampling.Rmd</code></a></small>
@@ -128,14 +129,14 @@
     
 <p>Subsampling can be a helpful approach to dealing will classification data where one or more classes occur very infrequently. Often, most models will overfit to the majority class and produce very good statistics for the class containing the frequently occurring classes while the minority classes have poor performance.</p>
 <p>Consider a two-class problem where the first class has a very low rate of occurrence. The <a href="https://topepo.github.io/caret/"><code>caret</code></a> package has a function that can simulate such data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(caret)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">244</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">imbal_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/caret/man/twoClassSim.html">twoClassSim</a></span>(<span class="dv">1000</span>, <span class="dt">intercept =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(imbal_data<span class="op">$</span>Class)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; Class1 Class2 </span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;     47    953</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">caret</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">244</span>)
+<span class="no">imbal_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/twoClassSim.html">twoClassSim</a></span>(<span class="fl">1000</span>, <span class="kw">intercept</span> <span class="kw">=</span> <span class="fl">10</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">imbal_data</span>$<span class="no">Class</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Class1 Class2 </span>
+<span class="co">#&gt;     47    953</span></pre></body></html></div>
 <p>If “Class1” is the event of interest, it is very likely that a classification model would be able to achieve very good <em>specificity</em> since almost all of the data are the second class. <em>Sensitivity</em> will often be poor since the models will optimize accuracy (or other loss functions) by predicting everything to be the majority class.</p>
 <p>When there are two classes, the results is that the default probability cutoff of 50% is inappropriate; a different cutoff that is more extreme might be able to achieve good performance.</p>
 <p>One way to alleviate this issue is to <em>subsample</em> the data. There are a number of ways to do this but the most simple one is to <em>sample down</em> the majority class data until it occurs with the same frequency as the minority class. While counterintuitive, throwing out a large percentage of the data can be effective at producing a results. In some cases, this means that the overall performance of the model is better (e.g. improved area under the ROC curve). However, subsampling almost always produces models that are <em>better calibrated</em>, meaning that the distributions of the class probabilities are model well behaved. As a result, the default 50% cutoff is much model likely to produce better sensitivity and specificity values than they would otherwise.</p>
@@ -145,80 +146,80 @@
 <li>The subsampling process should only be applied to the analysis set. The assessment set should reflect the event rates seen “in the wild” and, for this reason, the <code>skip</code> argument to <code>step_downsample</code> is defaulted to <code>TRUE</code>.</li>
 </ul>
 <p>Here is a simple recipe:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recipes)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">imbal_rec &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../../reference/recipe.html">recipe</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> imbal_data) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../../reference/step_downsample.html">step_downsample</a></span>(Class)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">recipes</span>)
+<span class="no">imbal_rec</span> <span class="kw">&lt;-</span>
+  <span class="fu"><a href="../../reference/recipe.html">recipe</a></span>(<span class="no">Class</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">imbal_data</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../../reference/step_downsample.html">step_downsample</a></span>(<span class="no">Class</span>)</pre></body></html></div>
 <p>Basic cross-validation is used to resample the model:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rsample)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">5732</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">cv_folds &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rsample/man/vfold_cv.html">vfold_cv</a></span>(imbal_data, <span class="dt">strata =</span> <span class="st">"Class"</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rsample</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">5732</span>)
+<span class="no">cv_folds</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/vfold_cv.html">vfold_cv</a></span>(<span class="no">imbal_data</span>, <span class="kw">strata</span> <span class="kw">=</span> <span class="st">"Class"</span>, <span class="kw">repeats</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
 <p>An additional column is added to the data that contains the trained recipes for each resample:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recipes =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, prepper, <span class="dt">recipe =</span> imbal_rec))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Data Recipe</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; Inputs:</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;       role #variables</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;    outcome          1</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  predictor         15</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Training data contained 900 data points and no missing data.</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; Operations:</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; Down-sampling based on Class [trained]</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">purrr</span>)
+<span class="no">cv_folds</span> <span class="kw">&lt;-</span>
+  <span class="no">cv_folds</span> <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">recipes</span> <span class="kw">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">splits</span>, <span class="no">prepper</span>, <span class="kw">recipe</span> <span class="kw">=</span> <span class="no">imbal_rec</span>))
+<span class="no">cv_folds</span>$<span class="no">recipes</span><span class="kw">[[</span><span class="fl">1</span>]]
+<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Inputs:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       role #variables</span>
+<span class="co">#&gt;    outcome          1</span>
+<span class="co">#&gt;  predictor         15</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Training data contained 900 data points and no missing data.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Operations:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Down-sampling based on Class [trained]</span></pre></body></html></div>
 <p>The model that will be used to demonstrate subsampling is <a href="https://en.wikipedia.org/wiki/Quadratic_classifier#Quadratic_discriminant_analysis">quadratic discriminant analysis</a> via the <code>MASS</code> package. A function will be used to train the model and to produce class probabilities as well as hard class predictions using the default 50% cutoff. When a recipe is passed to the function, down-sampling will be applied. If no recipe is given, the data are used to fit the model as-is:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(MASS)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">assess_res &lt;-<span class="st"> </span><span class="cf">function</span>(split, <span class="dt">rec =</span> <span class="ot">NULL</span>, ...) {</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(rec))</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    mod_data &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/juice.html">juice</a></span>(rec)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="cf">else</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    mod_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rsample/man/as.data.frame.rsplit.html">analysis</a></span>(split)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  mod_fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/MASS/man/qda.html">qda</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mod_data)</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(rec))</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    eval_data &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bake.html">bake</a></span>(rec, <span class="kw"><a href="https://rdrr.io/pkg/rsample/man/as.data.frame.rsplit.html">assessment</a></span>(split))</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">  <span class="cf">else</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">    eval_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rsample/man/as.data.frame.rsplit.html">assessment</a></span>(split)</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">  </a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">  eval_data &lt;-<span class="st"> </span>eval_data </a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">  predictions &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(mod_fit, eval_data)</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">  eval_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="st">    </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">      <span class="dt">pred =</span> predictions<span class="op">$</span>class,</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">      <span class="dt">prob =</span> predictions<span class="op">$</span>posterior[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(Class, pred, prob)</a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">}</a></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">MASS</span>)
+
+<span class="no">assess_res</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">split</span>, <span class="no">rec</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="no">...</span>) {
+  <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">rec</span>))
+    <span class="no">mod_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/juice.html">juice</a></span>(<span class="no">rec</span>)
+  <span class="kw">else</span>
+    <span class="no">mod_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/as.data.frame.rsplit.html">analysis</a></span>(<span class="no">split</span>)
+
+  <span class="no">mod_fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/qda.html">qda</a></span>(<span class="no">Class</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mod_data</span>)
+
+  <span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">rec</span>))
+    <span class="no">eval_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/bake.html">bake</a></span>(<span class="no">rec</span>, <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/as.data.frame.rsplit.html">assessment</a></span>(<span class="no">split</span>))
+  <span class="kw">else</span>
+    <span class="no">eval_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/as.data.frame.rsplit.html">assessment</a></span>(<span class="no">split</span>)
+
+  <span class="no">eval_data</span> <span class="kw">&lt;-</span> <span class="no">eval_data</span>
+  <span class="no">predictions</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod_fit</span>, <span class="no">eval_data</span>)
+  <span class="no">eval_data</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(
+      <span class="kw">pred</span> <span class="kw">=</span> <span class="no">predictions</span>$<span class="no">class</span>,
+      <span class="kw">prob</span> <span class="kw">=</span> <span class="no">predictions</span>$<span class="no">posterior</span>[,<span class="fl">1</span>]
+    ) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">Class</span>, <span class="no">pred</span>, <span class="no">prob</span>)
+}</pre></body></html></div>
 <p>For example:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># No subsampling</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">assess_res</span>(cv_folds<span class="op">$</span>splits[[<span class="dv">1</span>]]) <span class="op">%&gt;%</span><span class="st"> </span>head</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;    Class   pred     prob</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 1 Class2 Class2 7.89e-13</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 2 Class2 Class2 3.42e-09</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 3 Class2 Class2 7.55e-27</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 4 Class2 Class2 1.79e-05</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 5 Class2 Class2 4.00e-14</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 6 Class2 Class2 1.63e-09</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># With downsampling:</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="kw">assess_res</span>(cv_folds<span class="op">$</span>splits[[<span class="dv">1</span>]], cv_folds<span class="op">$</span>recipes[[<span class="dv">1</span>]]) <span class="op">%&gt;%</span><span class="st"> </span>head</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;   Class  pred       prob</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;   &lt;fct&gt;  &lt;fct&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; 1 Class2 Class2 1.58e-11</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; 2 Class2 Class2 3.31e- 8</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; 3 Class2 Class2 2.59e-24</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; 4 Class2 Class2 5.60e- 4</span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; 5 Class2 Class2 1.94e-12</span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; 6 Class2 Class2 1.26e- 8</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># No subsampling</span>
+<span class="fu">assess_res</span>(<span class="no">cv_folds</span>$<span class="no">splits</span><span class="kw">[[</span><span class="fl">1</span>]]) <span class="kw">%&gt;%</span> <span class="no">head</span>
+<span class="co">#&gt;    Class   pred     prob</span>
+<span class="co">#&gt; 1 Class2 Class2 7.89e-13</span>
+<span class="co">#&gt; 2 Class2 Class2 3.42e-09</span>
+<span class="co">#&gt; 3 Class2 Class2 7.55e-27</span>
+<span class="co">#&gt; 4 Class2 Class2 1.79e-05</span>
+<span class="co">#&gt; 5 Class2 Class2 4.00e-14</span>
+<span class="co">#&gt; 6 Class2 Class2 1.63e-09</span>
+
+<span class="co"># With downsampling:</span>
+<span class="fu">assess_res</span>(<span class="no">cv_folds</span>$<span class="no">splits</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="no">cv_folds</span>$<span class="no">recipes</span><span class="kw">[[</span><span class="fl">1</span>]]) <span class="kw">%&gt;%</span> <span class="no">head</span>
+<span class="co">#&gt; # A tibble: 6 x 3</span>
+<span class="co">#&gt;   Class  pred       prob</span>
+<span class="co">#&gt;   &lt;fct&gt;  &lt;fct&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Class2 Class2 1.58e-11</span>
+<span class="co">#&gt; 2 Class2 Class2 3.31e- 8</span>
+<span class="co">#&gt; 3 Class2 Class2 2.59e-24</span>
+<span class="co">#&gt; 4 Class2 Class2 5.60e- 4</span>
+<span class="co">#&gt; 5 Class2 Class2 1.94e-12</span>
+<span class="co">#&gt; 6 Class2 Class2 1.26e- 8</span></pre></body></html></div>
 <p>To measure model effectiveness, two metrics are used:</p>
 <ul>
 <li>The area under the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">ROC curve</a> is an overall assessment of performance across <em>all</em> cutoffs. Values near one indicate very good results while values near 0.05 would imply that the model is very poor.</li>
@@ -226,81 +227,81 @@
 </ul>
 <p>If a model is poorly calibrated, the ROC curve value might not show diminished performance. However, the <em>J</em> index would be lower for models with pathological distributions for the class probabilities. The <code>yardstick</code> package will be used to compute these metrics.</p>
 <p>Now, we train the models and generate the predictions. These are stored in list columns where each list element is a data frame of the predictions on the assessment data:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">sampled_pred =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span>(splits, recipes, assess_res),</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">normal_pred  =</span>  <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(splits, assess_res)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  )</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">cv_folds</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; #  10-fold cross-validation repeated 5 times using stratification </span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; # A tibble: 50 x 6</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;    splits          id      id2    recipes      sampled_pred     normal_pred     </span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  * &lt;named list&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;named list&gt; &lt;named list&gt;     &lt;named list&gt;    </span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  1 &lt;split [900/10… Repeat1 Fold01 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  2 &lt;split [900/10… Repeat1 Fold02 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;  3 &lt;split [900/10… Repeat1 Fold03 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;  4 &lt;split [900/10… Repeat1 Fold04 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  5 &lt;split [900/10… Repeat1 Fold05 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  6 &lt;split [900/10… Repeat1 Fold06 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  7 &lt;split [900/10… Repeat1 Fold07 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  8 &lt;split [900/10… Repeat1 Fold08 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  9 &lt;split [900/10… Repeat1 Fold09 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; 10 &lt;split [900/10… Repeat1 Fold10 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; # … with 40 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">cv_folds</span> <span class="kw">&lt;-</span>
+  <span class="no">cv_folds</span> <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(
+    <span class="kw">sampled_pred</span> <span class="kw">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span>(<span class="no">splits</span>, <span class="no">recipes</span>, <span class="no">assess_res</span>),
+    <span class="kw">normal_pred</span>  <span class="kw">=</span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">splits</span>, <span class="no">assess_res</span>)
+  )
+<span class="no">cv_folds</span>
+<span class="co">#&gt; #  10-fold cross-validation repeated 5 times using stratification </span>
+<span class="co">#&gt; # A tibble: 50 x 6</span>
+<span class="co">#&gt;    splits          id      id2    recipes      sampled_pred     normal_pred     </span>
+<span class="co">#&gt;  * &lt;named list&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;named list&gt; &lt;named list&gt;     &lt;named list&gt;    </span>
+<span class="co">#&gt;  1 &lt;split [900/10… Repeat1 Fold01 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  2 &lt;split [900/10… Repeat1 Fold02 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  3 &lt;split [900/10… Repeat1 Fold03 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  4 &lt;split [900/10… Repeat1 Fold04 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  5 &lt;split [900/10… Repeat1 Fold05 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  6 &lt;split [900/10… Repeat1 Fold06 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  7 &lt;split [900/10… Repeat1 Fold07 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  8 &lt;split [900/10… Repeat1 Fold08 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt;  9 &lt;split [900/10… Repeat1 Fold09 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt; 10 &lt;split [900/10… Repeat1 Fold10 &lt;recipe&gt;     &lt;tibble [100 × … &lt;df[,3] [100 × …</span>
+<span class="co">#&gt; # … with 40 more rows</span></pre></body></html></div>
 <p>Now, the performance metrics are computed:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(yardstick)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">cv_folds &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="dt">sampled_roc =</span> </a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(sampled_pred, roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">normal_roc =</span>  </a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">      <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(normal_pred,  roc_auc, Class, prob) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),  </a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">    </a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="dt">sampled_J =</span>   </a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">      <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(sampled_pred, j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>),</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">    </a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">    <span class="dt">normal_J =</span>    </a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">      <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(normal_pred,  j_index, Class, pred) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="st">      </span><span class="kw">pull</span>(<span class="st">".estimate"</span>)       </a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">  )</a></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">yardstick</span>)
+<span class="no">cv_folds</span> <span class="kw">&lt;-</span>
+  <span class="no">cv_folds</span> <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(
+    <span class="kw">sampled_roc</span> <span class="kw">=</span>
+      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="no">sampled_pred</span>, <span class="no">roc_auc</span>, <span class="no">Class</span>, <span class="no">prob</span>) <span class="kw">%&gt;%</span>
+      <span class="fu">pull</span>(<span class="st">".estimate"</span>),
+
+    <span class="kw">normal_roc</span> <span class="kw">=</span>
+      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="no">normal_pred</span>,  <span class="no">roc_auc</span>, <span class="no">Class</span>, <span class="no">prob</span>) <span class="kw">%&gt;%</span>
+      <span class="fu">pull</span>(<span class="st">".estimate"</span>),
+
+    <span class="kw">sampled_J</span> <span class="kw">=</span>
+      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="no">sampled_pred</span>, <span class="no">j_index</span>, <span class="no">Class</span>, <span class="no">pred</span>) <span class="kw">%&gt;%</span>
+      <span class="fu">pull</span>(<span class="st">".estimate"</span>),
+
+    <span class="kw">normal_J</span> <span class="kw">=</span>
+      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="no">normal_pred</span>,  <span class="no">j_index</span>, <span class="no">Class</span>, <span class="no">pred</span>) <span class="kw">%&gt;%</span>
+      <span class="fu">pull</span>(<span class="st">".estimate"</span>)
+  )</pre></body></html></div>
 <p>What do the ROC values look like? A <a href="https://en.wikipedia.org/wiki/Bland%E2%80%93Altman_plot">Bland-Altman plot</a> can be used to show the differences in the results over the range of results:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(cv_folds, </a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> (sampled_roc <span class="op">+</span><span class="st"> </span>normal_roc)<span class="op">/</span><span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">           <span class="dt">y =</span> sampled_roc <span class="op">-</span><span class="st"> </span>normal_roc)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">"green"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">cv_folds</span>,
+       <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> (<span class="no">sampled_roc</span> + <span class="no">normal_roc</span>)/<span class="fl">2</span>,
+           <span class="kw">y</span> <span class="kw">=</span> <span class="no">sampled_roc</span> - <span class="no">normal_roc</span>)) +
+  <span class="fu">geom_point</span>() +
+  <span class="fu">geom_hline</span>(<span class="kw">yintercept</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"green"</span>)</pre></body></html></div>
 <p><img src="Subsampling_files/figure-html/bland-altman-roc-1.png" width="768"></p>
 <p>There doesn’t appear that subsampling had much of an effect on this metric. The average difference is -0.015, which is fairly small.</p>
 <p>For the <em>J</em> statistic, the results show a different story:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(cv_folds, </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> (sampled_J <span class="op">+</span><span class="st"> </span>normal_J)<span class="op">/</span><span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">           <span class="dt">y =</span>  sampled_J <span class="op">-</span><span class="st"> </span>normal_J)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">"green"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">cv_folds</span>,
+       <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> (<span class="no">sampled_J</span> + <span class="no">normal_J</span>)/<span class="fl">2</span>,
+           <span class="kw">y</span> <span class="kw">=</span>  <span class="no">sampled_J</span> - <span class="no">normal_J</span>)) +
+  <span class="fu">geom_point</span>() +
+  <span class="fu">geom_hline</span>(<span class="kw">yintercept</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"green"</span>)</pre></body></html></div>
 <p><img src="Subsampling_files/figure-html/bland-altman-j-1.png" width="768"></p>
 <p>Almost all of the differences area greater than zero. We can use <code>tidyposterior</code> to do a more formal analysis:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyposterior)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co"># Remove all columns except the resample info and the J indices,</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># then fit the Bayesian model</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">j_mod &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span>cv_folds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>recipes, <span class="op">-</span><span class="kw">matches</span>(<span class="st">"pred$"</span>), <span class="op">-</span><span class="kw">matches</span>(<span class="st">"roc$"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw">perf_mod</span>(<span class="dt">seed =</span> <span class="dv">62378</span>, <span class="dt">iter =</span> <span class="dv">5000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyposterior</span>)
+
+<span class="co"># Remove all columns except the resample info and the J indices,</span>
+<span class="co"># then fit the Bayesian model</span>
+<span class="no">j_mod</span> <span class="kw">&lt;-</span>
+  <span class="no">cv_folds</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">recipes</span>, -<span class="fu">matches</span>(<span class="st">"pred$"</span>), -<span class="fu">matches</span>(<span class="st">"roc$"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu">perf_mod</span>(<span class="kw">seed</span> <span class="kw">=</span> <span class="fl">62378</span>, <span class="kw">iter</span> <span class="kw">=</span> <span class="fl">5000</span>)</pre></body></html></div>
 <p>A simple plot of the posterior distributions of the <em>J</em> indices for each model shows that there is a real difference; subsampling the data prior to modeling produced better calibrated models:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">j_mod <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/generics/man/tidy.html">tidy</a></span>(<span class="dt">seed =</span> <span class="dv">234</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">j_mod</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/generics/man/tidy.html">tidy</a></span>(<span class="kw">seed</span> <span class="kw">=</span> <span class="fl">234</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">ggplot</span>()</pre></body></html></div>
 <p><img src="Subsampling-tidyposterior.png"><!-- --></p>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
       </div>
 
