@@ -247,7 +247,7 @@ tunable.step_kpca_rbf <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "sigma"),
     call_info = list(
-      list(pkg = "dials", fun = "num_comp", range = c(1, 4)),
+      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
       list(pkg = "dials", fun = "rbf_sigma")
     ),
     source = "recipe",

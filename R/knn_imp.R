@@ -271,7 +271,7 @@ tidy.step_knnimpute <- function(x, ...) {
 tunable.step_knnimpute <- function(x, ...) {
   tibble::tibble(
     name = "neighbors",
-    call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1, 10))),
+    call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))),
     source = "recipe",
     component = "step_knnimpute",
     component_id = x$id
