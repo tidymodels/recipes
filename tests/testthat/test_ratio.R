@@ -104,14 +104,12 @@ test_that('many:many', {
   for(i in names(res3))
     expect_equal(res3[i], obs3[i])
 
-  exp_tr_3 <- expand.grid(
+  exp_tr_3 <- tidyr::crossing(
     terms = paste0("x", 1:4),
-    denom = paste0("x", 1:4),
-    stringsAsFactors = FALSE
+    denom = paste0("x", 1:4)
   )
   exp_tr_3 <- exp_tr_3[exp_tr_3$terms != exp_tr_3$denom,]
   exp_tr_3$id <- ""
-  exp_tr_3 <- as_tibble(exp_tr_3)
 
   expect_equal(tidy(rec3, number = 1), exp_tr_3)
 })

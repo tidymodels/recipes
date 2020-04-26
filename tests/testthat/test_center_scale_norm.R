@@ -128,8 +128,8 @@ test_that('correct means and std devs for step_norm', {
   vrs <- c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur")
   norm_tibble_un <-
     tibble(terms = vrs,
-           value = rep(na_dbl, 5),
            statistic = rep(na_chr, 5),
+           value = rep(na_dbl, 5),
            id = standardized$steps[[1]]$id)
 
   expect_equal(tidy(standardized, 1), norm_tibble_un)
@@ -138,8 +138,8 @@ test_that('correct means and std devs for step_norm', {
 
   norm_tibble_tr <-
     tibble(terms = c(vrs, vrs),
-           value = c(means, sds),
            statistic = rep(c("mean", "sd"), each = 5),
+           value = c(means, sds),
            id = standardized$steps[[1]]$id)
 
   expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)

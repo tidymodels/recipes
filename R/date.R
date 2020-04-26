@@ -269,20 +269,19 @@ print.step_date <-
 #' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
-    res <- expand.grid(
+    res <- tidyr::crossing(
       terms = x$columns,
       value = x$features,
       ordinal = x$ordinal
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- expand.grid(
+    res <- tidyr::crossing(
       terms = term_names,
       value = x$features,
       ordinal = x$ordinal
     )
   }
-  res$id <- x$id
-  as_tibble(res)
+  tibble::add_column(res, id = x$id)
 }
 

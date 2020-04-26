@@ -354,7 +354,7 @@ tidy.step_discretize <- function(x, ...) {
     num_brks <- vapply(brks, length, c(1L))
     brk_vars <- rep(names(num_brks), num_brks)
 
-    res <- tibble(terms = brk_vars, value = unlist(brks))
+    res <- tibble(terms = brk_vars, value = unname(unlist(brks)))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)

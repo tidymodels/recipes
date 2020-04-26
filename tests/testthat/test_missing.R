@@ -23,7 +23,7 @@ test_that("check_missing passes silently when no NA", {
     check_missing(all_numeric()) %>%
     prep()
   expect_error(bake(no_na_rp, mtcars), NA)
-  expect_equal(bake(no_na_rp, mtcars), mtcars)
+  expect_equal(bake(no_na_rp, mtcars), tibble(mtcars))
 })
 
 test_that("check_missing throws error on all types", {

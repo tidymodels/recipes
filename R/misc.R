@@ -265,9 +265,10 @@ train_info <- function(x) {
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
   # the original value
-  .old %>%
-    right_join(.new %>% dplyr::rename(new_type = type), by = "variable") %>%
-    mutate(
+  .new %>%
+    dplyr::rename(new_type = type) %>%
+    dplyr::left_join(.old, by = "variable") %>%
+    dplyr::mutate(
       type = ifelse(is.na(type), "other", "type"),
       type = ifelse(type != new_type, new_type, type)
     ) %>%
