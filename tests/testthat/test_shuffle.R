@@ -73,5 +73,5 @@ test_that('bake a single row', {
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
   expect_warning(dat4 <- bake(rec4, dat[1,], everything()))
-  expect_equal(dat4, dat[1,])
+  expect_equal(dat4, tibble(dat[1,]))
 })

@@ -755,7 +755,7 @@ juice <- function(object, ..., composition = "tibble") {
 
   if (!isTRUE(object$retained)) {
     rlang::abort(
-      paste0("Use `retain = TRUE` in `prep` to be able",
+      paste0("Use `retain = TRUE` in `prep` to be able ",
              "to extract the training set"
              )
     )

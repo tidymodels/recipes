@@ -45,8 +45,8 @@ test_that('trained', {
 
 test_that('select step', {
   exp_res_3 <- tibble(
-   terms = factor("date"),
-   value = factor("dow"),
+   terms = "date",
+   value = "dow",
    ordinal = FALSE,
    id = okc_rec$steps[[2]][["id"]]
   )

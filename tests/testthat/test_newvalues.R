@@ -46,7 +46,7 @@ test_that("check_new_values does nothing when no new values", {
       prep() %>% bake(credit_data),
     NA
   )
-  expect_equal(x, credit_data)
+  expect_equal(x, as_tibble(credit_data))
 })
 
 test_that("check_new_values breaks with new values", {
@@ -109,7 +109,7 @@ check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
 
   expect_equal(res, x1)
 
-  error_msg <- paste( "a contains the new value(s):", x2[3,])
+  error_msg <- paste( "a contains the new value(s):", pull(x2[3,], a))
   expect_error(
     recipe(x1) %>% check_new_values(a) %>%
       prep() %>% bake(x2),
@@ -118,32 +118,31 @@ check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
 }
 
 test_that("check_new_values works on doubles", {
-  x1 <- data.frame(a = c(1.1, 1.2))
-  x2 <- data.frame(a = c(1.1, 1.2, 1.3))
+  x1 <- tibble(a = c(1.1, 1.2))
+  x2 <- tibble(a = c(1.1, 1.2, 1.3))
   check_new_values_data_type_unit_tests(x1, x2)
 })
 
 test_that("check_new_values works on integers", {
-  x1 <- data.frame(a = c(1L, 2L))
-  x2 <- data.frame(a = c(1L, 2L, 3L))
+  x1 <- tibble(a = c(1L, 2L))
+  x2 <- tibble(a = c(1L, 2L, 3L))
   check_new_values_data_type_unit_tests(x1, x2)
 })
 
 test_that("check_new_values works on factors", {
-  x1 <- data.frame(a = factor(letters[1:2]))
-  x2 <- data.frame(a = factor(letters[1:3]))
+  x1 <- tibble(a = factor(letters[1:2]))
+  x2 <- tibble(a = factor(letters[1:3]))
   check_new_values_data_type_unit_tests(x1, x2)
 })
 
 test_that("check_new_values works on characters", {
-  hell_no <- FALSE
-  x1 <- data.frame(a = letters[1:2], stringsAsFactors = hell_no)
-  x2 <- data.frame(a = letters[1:3], stringsAsFactors = hell_no)
+  x1 <- tibble(a = letters[1:2])
+  x2 <- tibble(a = letters[1:3])
   check_new_values_data_type_unit_tests(x1, x2, saf = FALSE)
 })
 
 test_that("check_new_values works on logicals", {
-  x1 <- data.frame(a = c(TRUE, TRUE))
-  x2 <- data.frame(a = c(TRUE, TRUE, FALSE))
+  x1 <- tibble(a = c(TRUE, TRUE))
+  x2 <- tibble(a = c(TRUE, TRUE, FALSE))
   check_new_values_data_type_unit_tests(x1, x2)
 })

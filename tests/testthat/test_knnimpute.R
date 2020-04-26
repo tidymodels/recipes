@@ -65,16 +65,16 @@ test_that('imputation values', {
   }
 
 
-  imp_exp_tr <- expand.grid(
+  imp_exp_tr <- tidyr::crossing(
     terms = c("carbon", "nitrogen"),
-    predictors = c("hydrogen", "oxygen", "nitrogen"),
-    stringsAsFactors = FALSE
+    predictors = c("hydrogen", "oxygen", "nitrogen")
   )
   imp_exp_tr <- imp_exp_tr[imp_exp_tr$terms != imp_exp_tr$predictors,]
-  imp_exp_tr$neighbors <- 3
-  imp_exp_tr$id <- ""
-  imp_exp_tr <- as_tibble(imp_exp_tr)
-  expect_equal(imp_exp_tr, tidy(impute_rec, number = 2))
+  imp_exp_tr <- as_tibble(imp_exp_tr) %>%
+    mutate(neighbors = 3,
+           id = "")
+  expect_identical(imp_exp_tr,
+                   tidy(impute_rec, number = 2) %>% arrange(terms, predictors))
 
 })
 

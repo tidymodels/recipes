@@ -233,15 +233,16 @@ tidy.step_ica <- function(x, ...) {
   } else {
     term_names <- sel2char(x$terms)
     comp_names <- names0(x$num_comp, x$prefix)
-    res <- expand.grid(terms = term_names,
-                       value = na_dbl,
-                       component  = comp_names)
+    res <- tidyr::crossing(terms = term_names,
+                           value = na_dbl,
+                           component  = comp_names)
     res$terms <- as.character(res$terms)
     res$component <- as.character(res$component)
     res <- as_tibble(res)
   }
   res$id <- x$id
-  res
+  res <- arrange(res, terms, component)
+  select(res, terms, component, value, id)
 }
 
 

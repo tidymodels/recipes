@@ -74,8 +74,8 @@ step_ratio <-
         paste0(
           "Please supply at least one denominator variable specification. ",
           "See ?selections."
-          )
         )
+      )
     add_step(
       recipe,
       step_ratio_new(
@@ -175,16 +175,14 @@ denom_vars <- function(...) quos(...)
 #' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
-    res <- x$columns
-    colnames(res) <- c("terms", "denom")
-    res <- as_tibble(res)
+    res <- tibble(terms = x$columns$top,
+                  denom = x$columns$bottom)
   } else {
-    res <- expand.grid(terms = sel2char(x$terms),
-                       denom = sel2char(x$denom),
-                       stringsAsFactors = FALSE)
+    res <- tidyr::crossing(terms = sel2char(x$terms),
+                           denom = sel2char(x$denom))
     res <- as_tibble(res)
   }
   res$id <- x$id
-  res
+  arrange(res, terms, denom)
 }
 
