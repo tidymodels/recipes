@@ -9,9 +9,6 @@
 # is defined in the `tune` package. As of R 4.0, we need to register them.
 # Since `tune` is not on CRAN, we only register them if tune is installed
 maybe_register_tunable_methods <- function() {
-  if (!rlang::is_installed("tune")) {
-    return(invisible())
-  }
 
   ns <- asNamespace("recipes")
 
@@ -23,8 +20,7 @@ maybe_register_tunable_methods <- function() {
   for (i in seq_along(names)) {
     name <- names[[i]]
     class <- classes[[i]]
-
-    s3_register("tune::tunable", class, get(name, envir = ns))
+    s3_register("tune::tunable", class)
   }
 
   invisible()
