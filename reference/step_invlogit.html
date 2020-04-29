@@ -269,7 +269,7 @@ the function <code>f(x) = 1/(1+exp(-x))</code>.</p>
 <span class='no'>ilogit_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ilogit_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ilogit_obj</span>, <span class='no'>biomass_te</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>carbon</span>)</div><div class='img'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>biomass_te</span>$<span class='no'>carbon</span>, <span class='no'>transformed_te</span>$<span class='no'>carbon</span>)</div><div class='img'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

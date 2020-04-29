@@ -319,7 +319,7 @@ Analysis</em>. Springer.</p>
 <span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>

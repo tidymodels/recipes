@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert Factors to Strings — step_factor2string • recipes</title>
+<title>Cut a numeric variable into a factor — step_cut • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,10 @@
 
 
 
-<meta property="og:title" content="Convert Factors to Strings — step_factor2string" />
-<meta property="og:description" content="step_factor2string will convert one or more factor
-vectors to strings." />
+<meta property="og:title" content="Cut a numeric variable into a factor — step_cut" />
+<meta property="og:description" content="step_cut creates a specification of a recipe
+step that cuts a numeric variable into a factor
+based on provided boundary values" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -159,27 +160,29 @@ vectors to strings." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert Factors to Strings</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/factor2string.R'><code>R/factor2string.R</code></a></small>
-    <div class="hidden name"><code>step_factor2string.Rd</code></div>
+    <h1>Cut a numeric variable into a factor</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/cut.R'><code>R/cut.R</code></a></small>
+    <div class="hidden name"><code>step_cut.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>step_factor2string</code> will convert one or more factor
-vectors to strings.</p>
+    <p><code>step_cut</code> creates a <em>specification</em> of a recipe
+step that cuts a numeric variable into a factor
+based on provided boundary values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_factor2string</span>(
+    <pre class="usage"><span class='fu'>step_cut</span>(
   <span class='no'>recipe</span>,
   <span class='no'>...</span>,
   <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>breaks</span>,
+  <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"factor2string"</span>)
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"cut"</span>)
 )
 
-<span class='co'># S3 method for step_factor2string</span>
+<span class='co'># S3 method for step_cut</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -193,7 +196,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables will converted to strings See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -208,10 +211,15 @@ created.</p></td>
 preprocessing have been estimated.</p></td>
     </tr>
     <tr>
-      <th>columns</th>
-      <td><p>A character string of variables that will be
-converted. This is <code>NULL</code> until computed by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <th>breaks</th>
+      <td><p>A numeric vector with at least one cut point.</p></td>
+    </tr>
+    <tr>
+      <th>include_outside_range</th>
+      <td><p>Logical, indicating if values outside
+the range in the train set should be included in the lowest or
+highest bucket. Defaults to <code>FALSE</code>, values outside
+the original range will be set to <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -228,54 +236,100 @@ the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_factor2string</code> object.</p></td>
+      <td><p>A <code>step_cut</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected).</p>
+    <p>An updated version of <code>recipe</code> with the new step added
+to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>prep</code> has an option <code>strings_as_factors</code> that
-defaults to <code>TRUE</code>. If this step is used with the default
-option, the string(s() produced by this step will be converted
-to factors after all of the steps have been prepped.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='step_string2factor.html'>step_string2factor()</a></code> <code><a href='step_dummy.html'>step_dummy()</a></code></p></div>
+    <p>Unlike the <code><a href='https://rdrr.io/r/base/cut.html'>base::cut</a></code> function there is no need to specify
+the min and the max values in the breaks. All values before the
+lowest break point will end up in the first bucket, all values
+after the last break points will end up in the last.</p>
+<p><code>step_cut</code> will call <code><a href='https://rdrr.io/r/base/cut.html'>base::cut</a></code> in the baking step with
+<code>include.lowest</code> set to <code>TRUE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>14</span>)
+<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>df</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
-
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_string2factor.html'>step_string2factor</a></span>(<span class='no'>diet</span>)
-
-<span class='no'>factor_test</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>,
-       <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span>
-<span class='co'># diet is a</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>factor_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "factor"</div><div class='input'>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_factor2string</span>(<span class='no'>diet</span>)
-
-<span class='no'>string_test</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>,
-       <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span>
-<span class='co'># diet is a</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>string_test</span>$<span class='no'>diet</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   terms ordered id                 
-#&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;              
-#&gt; 1 diet  FALSE   string2factor_fCgON</div></pre>
+<span class='co'># The min and max of the variable are used as boundaries</span>
+<span class='co'># if they exceed the breaks</span>
+<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 2
+#&gt;    x          y
+#&gt;    &lt;fct&gt;  &lt;int&gt;
+#&gt;  1 [1,5]      5
+#&gt;  2 [1,5]      6
+#&gt;  3 [1,5]      7
+#&gt;  4 [1,5]      8
+#&gt;  5 [1,5]      9
+#&gt;  6 (5,10]    10
+#&gt;  7 (5,10]    11
+#&gt;  8 (5,10]    12
+#&gt;  9 (5,10]    13
+#&gt; 10 (5,10]    14</div><div class='input'>
+<span class='co'># You can use the same breaks on multiple variables</span>
+<span class='co'># then for each variable the boundaries are set separately</span>
+<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>, <span class='fl'>9</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 2
+#&gt;    x      y     
+#&gt;    &lt;fct&gt;  &lt;fct&gt; 
+#&gt;  1 [1,6]  [5,6] 
+#&gt;  2 [1,6]  [5,6] 
+#&gt;  3 [1,6]  (6,9] 
+#&gt;  4 [1,6]  (6,9] 
+#&gt;  5 [1,6]  (6,9] 
+#&gt;  6 [1,6]  (9,14]
+#&gt;  7 (6,9]  (9,14]
+#&gt;  8 (6,9]  (9,14]
+#&gt;  9 (6,9]  (9,14]
+#&gt; 10 (9,10] (9,14]</div><div class='input'>
+<span class='co'># It is up to you if you want values outside the</span>
+<span class='co'># range learned at prep to be included</span>
+<span class='no'>new_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>11</span>)
+<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>new_df</span>)</div><div class='output co'>#&gt; # A tibble: 11 x 1
+#&gt;    x      
+#&gt;    &lt;fct&gt;  
+#&gt;  1 [min,5]
+#&gt;  2 [min,5]
+#&gt;  3 [min,5]
+#&gt;  4 [min,5]
+#&gt;  5 [min,5]
+#&gt;  6 (5,max]
+#&gt;  7 (5,max]
+#&gt;  8 (5,max]
+#&gt;  9 (5,max]
+#&gt; 10 (5,max]
+#&gt; 11 (5,max]</div><div class='input'>
+<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>new_df</span>)</div><div class='output co'>#&gt; # A tibble: 11 x 1
+#&gt;    x     
+#&gt;    &lt;fct&gt; 
+#&gt;  1 [1,5] 
+#&gt;  2 [1,5] 
+#&gt;  3 [1,5] 
+#&gt;  4 [1,5] 
+#&gt;  5 [1,5] 
+#&gt;  6 (5,10]
+#&gt;  7 (5,10]
+#&gt;  8 (5,10]
+#&gt;  9 (5,10]
+#&gt; 10 (5,10]
+#&gt; 11 &lt;NA&gt;  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
