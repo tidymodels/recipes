@@ -54,6 +54,7 @@ reference:
   - title: Step Functions - Discretization
     contents:
     - matches("discreti")
+    - step_cut
   - title: Step Functions - Dummy Variables and Encodings
     contents:
     - step_bin2factor
