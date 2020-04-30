@@ -54,7 +54,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
     formula <- as.formula(formula)
   }
   if (no_lhs) {
-    formula <- as.formula(paste("~", deparse(f_rhs(formula))))
+    formula <- rlang::new_formula(lhs = NULL, rhs = f_rhs(formula))
   }
 
   ## This will need a lot of work to account for cases with `.`
@@ -65,8 +65,9 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
-  if (length(response_info) > 0 && all(response_info > 0))
+  if (length(response_info) > 0 && all(response_info > 0)) {
     predictor_names <- predictor_names[-response_info]
+  }
   predictor_names
 }
 
