@@ -45,7 +45,7 @@ get_lhs_vars <- function(formula, data) {
     formula <- as.formula(formula)
   ## Want to make sure that multiple outcomes can be expressed as
   ## additions with no cbind business and that `.` works too (maybe)
-  new_formula <- as.formula(paste("~", deparse(f_lhs(formula))))
+  new_formula <- rlang::new_formula(lhs = NULL, rhs = f_lhs(formula))
   get_rhs_vars(new_formula, data)
 }
 
