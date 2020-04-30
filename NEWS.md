@@ -4,6 +4,8 @@
 
 * While `recipes` does not directly depend on `dials`, it has several S3 methods for generics in `dials`. Version 0.0.5 of `dials` added stricter validation for these methods, so changes were required for `recipes`.  
 
+* Some S3 methods were not being registered previously. This caused issues in R 4.0. 
+
 # recipes 0.1.10
 
 ## Breaking Changes
