@@ -9,22 +9,38 @@
 # is defined in the `tune` package. As of R 4.0, we need to register them.
 # Since `tune` is not on CRAN, we only register them if tune is installed
 maybe_register_tunable_methods <- function() {
-  if (!rlang::is_installed("tune")) {
-    return(invisible())
-  }
 
   ns <- asNamespace("recipes")
-
   names <- names(ns)
-  names <- grep("tunable.step", names, fixed = TRUE, value = TRUE)
 
-  classes <- gsub("tunable.", "", names)
+  # ----------------------------------------------------------------------------
 
-  for (i in seq_along(names)) {
-    name <- names[[i]]
-    class <- classes[[i]]
+  tunable_names <- grep("tunable.step", names, fixed = TRUE, value = TRUE)
+  tunable_classes <- gsub("tunable.", "", tunable_names)
 
-    s3_register("tune::tunable", class, get(name, envir = ns))
+  for (i in seq_along(tunable_names)) {
+    class <- tunable_classes[[i]]
+    s3_register("tune::tunable", class)
+  }
+
+  # ----------------------------------------------------------------------------
+
+  tidy_names <- grep("tidy.step", names, fixed = TRUE, value = TRUE)
+  tidy_classes <- gsub("tidy.", "", tidy_names)
+
+  for (i in seq_along(tidy_names)) {
+    class <- tidy_classes[[i]]
+    s3_register("generics::tidy", class)
+  }
+
+  # ----------------------------------------------------------------------------
+
+  tidy_check_names <- grep("tidy.check", names, fixed = TRUE, value = TRUE)
+  tidy_check_classes <- gsub("tidy.", "", tidy_check_names)
+
+  for (i in seq_along(tidy_check_names)) {
+    class <- tidy_check_classes[[i]]
+    s3_register("generics::tidy", class)
   }
 
   invisible()
