@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
 
 # recipes <img src="man/figures/logo.png" align="right" height="80px"/> 
 
-[![Build Status](https://travis-ci.org/tidymodels/recipes.svg?branch=master)](https://travis-ci.org/tidymodels/recipes)
 [![R build status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes)
 [![Coverage status](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/github/tidymodels/recipes?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes)
