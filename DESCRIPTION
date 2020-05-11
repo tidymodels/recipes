@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.1.11
+Version: 0.1.11.9000
 Authors@R: c(
     person(given = "Max",    family = "Kuhn",    email = "max@rstudio.com",    role = c("aut", "cre")),
     person(given = "Hadley", family = "Wickham", email = "hadley@rstudio.com", role = c("aut")),
@@ -11,7 +11,7 @@ Description: An extensible framework to create and preprocess
     be estimated from an initial data set and then applied to 
     other data sets. The resulting design matrices can then be used 
     as inputs into statistical or machine learning models. 
-URL: https://github.com/tidymodels/recipes, https://tidymodels.github.io/recipes/
+URL: https://github.com/tidymodels/recipes, https://recipes.tidymodels.org
 BugReports: https://github.com/tidymodels/recipes/issues
 Depends: 
     R (>= 3.1),

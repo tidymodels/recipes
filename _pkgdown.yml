@@ -1,7 +1,9 @@
+url: https://recipes.tidymodels.org
+
 template:
   package: tidytemplate
   params:
-    part_of: <a href="https://github.com/tidymodels">tidymodels</a>
+    part_of: <a href="https://tidymodels.org">tidymodels</a>
     footer: recipes is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
 
 development:
@@ -54,6 +56,7 @@ reference:
   - title: Step Functions - Discretization
     contents:
     - matches("discreti")
+    - step_cut
   - title: Step Functions - Dummy Variables and Encodings
     contents:
     - step_bin2factor
@@ -68,6 +71,7 @@ reference:
     - step_ordinalscore
     - step_other
     - step_regex
+    - step_relevel
     - step_string2factor
     - step_unknown
     - step_unorder
