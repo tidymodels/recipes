@@ -28,6 +28,7 @@ utils::globalVariables(
     "type", "new_type",                                                 # misc.R
     "variable",                                                        # novel.R
     "estimate",                                                  # lowerimpute.R
-    ".row"                                                           # integer.R
+    ".row",                                                          # integer.R
+    "component", "denom", "id", "value"                                  # ica.R
   )
 )

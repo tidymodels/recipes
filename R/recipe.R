@@ -340,51 +340,7 @@ prep.recipe <-
            strings_as_factors = TRUE,
            ...) {
 
-    # In case a variable has multiple roles
-    vars <- unique(x$var_info$variable)
-
-    if (is.null(training)) {
-      if (fresh)
-        rlang::abort(
-          paste0("A training set must be supplied to the `training` argument ",
-             "when `fresh = TRUE`"
-             )
-          )
-      training <- x$template
-    } else {
-      if (!all(vars %in% colnames(training))) {
-        rlang::abort(
-          paste0("Not all variables in the recipe are present in the supplied ",
-             "training set"
-          )
-        )
-      }
-      training <- if (!is_tibble(training))
-        as_tibble(training[, vars, drop = FALSE])
-      else
-        training[, vars]
-    }
-
-    steps_trained <- vapply(x$steps, is_trained, logical(1))
-    if (any(steps_trained) & !fresh) {
-      if(!x$retained)
-        rlang::abort(
-          paste0(
-          "To prep new steps after prepping the original ",
-          "recipe, `retain = TRUE` must be set each time that ",
-          "the recipe is trained."
-          )
-        )
-      if (!is.null(x$training))
-        rlang::warn(
-          paste0(
-            "The previous data will be used by `prep`; ",
-            "the data passed using `training` will be ",
-            "ignored."
-          )
-        )
-      training <- x$template
-    }
+    training <- check_training_set(training, x, fresh)
 
     tr_data <- train_info(training)
 
