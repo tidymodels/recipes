@@ -572,6 +572,62 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
+check_training_set <- function(x, rec, fresh) {
+  # In case a variable has multiple roles
+  vars <- unique(rec$var_info$variable)
+
+  if (is.null(x)) {
+    if (fresh)
+      rlang::abort(
+        paste0("A training set must be supplied to the `training` argument ",
+               "when `fresh = TRUE`."
+        )
+      )
+    x <- rec$template
+  } else {
+    in_data <- vars %in% colnames(x)
+    if (!all(in_data)) {
+      rlang::abort(
+        paste0("Not all variables in the recipe are present in the supplied ",
+               "training set: ",
+               paste0("'", vars[!in_data], "'", collapse = ", "),
+               "."
+        )
+      )
+    }
+    if (!is_tibble(x)) {
+      x <- as_tibble(x[, vars, drop = FALSE])
+    } else {
+      x <- x[, vars]
+    }
+  }
+
+  steps_trained <- vapply(rec$steps, is_trained, logical(1))
+  if (any(steps_trained) & !fresh) {
+    if(!rec$retained) {
+      rlang::abort(
+        paste0(
+          "To prep new steps after prepping the original ",
+          "recipe, `retain = TRUE` must be set each time that ",
+          "the recipe is trained."
+        )
+      )
+    }
+    if (!is.null(rec$training)) {
+      rlang::warn(
+        paste0(
+          "The previous data will be used by `prep`; ",
+          "the data passed using `training` will be ",
+          "ignored."
+        )
+      )
+    }
+    x <- rec$template
+  }
+  x
+}
+
+
 # ------------------------------------------------------------------------------
 # From parsnip, keep synced
 
