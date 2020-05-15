@@ -1,4 +1,7 @@
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 name: R-CMD-check
 
