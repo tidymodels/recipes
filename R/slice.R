@@ -10,10 +10,17 @@
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param inputs Quosure of values given by `...`.
+#' @param skip A logical. Should the step be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = FALSE`; in most instances that
+#'  affect the rows of the data being predicted, this step probably should not
+#'  be applied.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which
-#'  contains the filterint indices.
+#'  contains the filtering indices.
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`)
@@ -66,7 +73,7 @@ step_slice <- function(
   role = NA,
   trained = FALSE,
   inputs = NULL,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("slice")
 ) {
 

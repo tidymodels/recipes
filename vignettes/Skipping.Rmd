@@ -35,14 +35,31 @@ As an example of the second case, consider the problem of a [severe class imbala
 
 The important consideration is that this preprocessing is _only applied to the training set_ so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like "in the wild.". Based on this, a recipe that included down-sample should _skip_ this step when data are baked for the test set. 
 
+# Other Examples
+
+There are other steps that have a default value of `skip = TRUE`: 
+
+  * `step_filter()` allows for arbitrary filtering of rows. 
+  * `step_slice()` also removes (or adds) rows to the data. 
+  * `step_sample()` enables random sampling of the data set. 
+  * `step_naomit()` will remove rows with missing values in certain columns. 
+  
+The main issue with these steps being applied to new data (i.e. after the recipe has been trained) is that the non-outcome rows can become out-of-sync with the outcome data. 
+
+For example, when `bake()` is run with `step_naomit(skip = FALSE)` and their are missing values, the predictors will have fewer rows than the outcome vector. When model predictions are produced and merged with the other data, their will be discordant rows. In this case, it would be better to have missing values in the predictions and a full data set than a subset of predictions from the complete data. The [general rule](https://tidymodels.github.io/model-implementation-principles/model-predictions.html) in tidymodels is that, for models, 
+
+> The return value is a tibble with the **same number of rows** as the data being predicted and in the same order.
+
+
+
 # How To Skip Steps
 
 As of version recipes 0.1.2, each step has an optional logical argument called `skip`. In almost every case, the default is `FALSE`. When using this option:
 
-* No steps are skipped during `prep`
-* Steps with `skip = TRUE` are not applied to the data when `bake` is called
+* No steps are skipped during `prep()`
+* Steps with `skip = TRUE` are not applied to the data when `bake()` is called
 
-Recall that there are two ways of getting the results for the training set with `recipes`. First, `bake` can be used as usual. Second, `juice` is a shortcut that will use the already processed data that is contained in the recipe when `prep(recipe, retain = TRUE)` is used. `juice` is much faster and would be the way to get the training set _with all of the steps applied to the data_. For this reason, you should almost always used `retain = TRUE` if any steps are skipped (and a warning is produced otherwise). 
+Recall that there are two ways of getting the results for the training set with recipes. First, `bake()` can be used as usual. Second, `juice()` is a shortcut that will use the already processed data that is contained in the recipe when `prep(recipe, retain = TRUE)` is used. `juice()` is much faster and would be the way to get the training set _with all of the steps applied to the data_. For this reason, you should almost always used `retain = TRUE` if any steps are skipped (and a warning is produced otherwise). 
 
 # Be Careful!
 
@@ -62,6 +79,6 @@ juice(car_recipe) %>% head() %>% select(disp, hp)
 bake(car_recipe, new_data = mtcars) %>% head() %>% select(disp, hp)
 ```
 
-This should emphasize that `juice` should be used to get the training set values whenever a step is skipped. 
+This should emphasize that `juice()` should be used to get the training set values whenever a step is skipped. 
 
 
