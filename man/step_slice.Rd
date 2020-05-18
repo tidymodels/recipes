@@ -11,7 +11,7 @@ step_slice(
   role = NA,
   trained = FALSE,
   inputs = NULL,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("slice")
 )
 
@@ -37,8 +37,9 @@ preprocessing have been estimated.}
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+Care should be taken when using \code{skip = FALSE}; in most instances that
+affect the rows of the data being predicted, this step probably should not
+be applied.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 
@@ -48,7 +49,7 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} which
-contains the filterint indices.
+contains the filtering indices.
 }
 \description{
 \code{step_slice} creates a \emph{specification} of a recipe step

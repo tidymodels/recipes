@@ -20,8 +20,9 @@
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations
+#'  Care should be taken when using `skip = FALSE`; in most instances that
+#'  affect the rows of the data being predicted, this step probably should not
+#'  be applied.
 #'
 #' @rdname step_naomit
 #' @return An updated version of `recipe` with the

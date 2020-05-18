@@ -12,7 +12,7 @@ step_sample(
   trained = FALSE,
   size = NULL,
   replace = FALSE,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("sample")
 )
 
@@ -44,8 +44,9 @@ of the training set (or smaller for smaller \code{new_data}).}
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+Care should be taken when using \code{skip = FALSE}; in most instances that
+affect the rows of the data being predicted, this step probably should not
+be applied.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 

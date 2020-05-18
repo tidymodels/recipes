@@ -1,3 +1,10 @@
+# recipes 0.1.11.9000
+
+## Breaking Changes
+
+* `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
+
+
 # recipes 0.1.11
 
 ## Other Changes
