@@ -360,7 +360,7 @@ prep.recipe <-
     if (any(skippers) & !retain)
       rlang::warn(
         paste0(
-          "Since some operations have `skip = FALSE`, using ",
+          "Since some operations have `skip = TRUE`, using ",
           "`retain = TRUE` will allow those steps results to ",
           "be accessible."
         )
