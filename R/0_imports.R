@@ -29,7 +29,7 @@ utils::globalVariables(
     "variable",                                                        # novel.R
     "estimate",                                                  # lowerimpute.R
     ".row",                                                          # integer.R
-    "component", "id", "value",                                          # ica.R
     "denom"                                                            # ratio.R
+    "component", "denom", "id", "value"                                  # ica.R
   )
 )

@@ -1,3 +1,10 @@
+# recipes 0.1.12.9000
+
+## Breaking Changes
+
+* `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
+
+
 # recipes 0.1.12
 
 * Some S3 methods were not being registered previously. This caused issues in R 4.0. 

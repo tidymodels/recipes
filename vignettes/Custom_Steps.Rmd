@@ -9,4 +9,4 @@ output:
     toc: yes
 ---
 
-This article can now be found at [`tidymodels.org`](https://www.tidymodels.org/learn/develop/recipes/).
+This article has been moved to [`tidymodels.org`](https://www.tidymodels.org/learn/develop/recipes/). 

@@ -31,6 +31,31 @@ test_that('basic usage', {
   dplyr_test <-
     iris %>%
     as_tibble() %>%
+    slice(76:150)
+  rec_test <- bake(prepped, iris %>% slice(76:150))
+  expect_equal(dplyr_test, rec_test)
+})
+
+
+test_that('skip = FALSE', {
+  rec <-
+    iris_rec %>%
+    step_slice(1:5, skip = FALSE)
+
+  prepped <- prep(rec, training = iris %>% slice(1:75))
+
+  dplyr_train <-
+    iris %>%
+    as_tibble() %>%
+    slice(1:75) %>%
+    slice(1:5)
+
+  rec_train <- juice(prepped)
+  expect_equal(dplyr_train, rec_train)
+
+  dplyr_test <-
+    iris %>%
+    as_tibble() %>%
     slice(76:150) %>%
     slice(1:5)
   rec_test <- bake(prepped, iris %>% slice(76:150))

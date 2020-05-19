@@ -15,6 +15,13 @@
 #'  value of 1 or greater is used, [dplyr::sample_n()] is applied.
 #'  The default of `NULL` uses [dplyr::sample_n()] with the size
 #'  of the training set (or smaller for smaller `new_data`).
+#' @param skip A logical. Should the step be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = FALSE`; in most instances that
+#'  affect the rows of the data being predicted, this step probably should not
+#'  be applied.
 #' @param replace Sample with or without replacement?
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -55,7 +62,7 @@ step_sample <- function(
   trained = FALSE,
   size = NULL,
   replace = FALSE,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("sample")
 ) {
 

@@ -1,8 +1,6 @@
 
 # recipes <img src="man/figures/logo.png" align="right" height="80px"/>
 
-[![Build
-Status](https://travis-ci.org/tidymodels/recipes.svg?branch=master)](https://travis-ci.org/tidymodels/recipes)
 [![R build
 status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes)
 [![Coverage
