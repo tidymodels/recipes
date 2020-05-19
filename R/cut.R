@@ -1,42 +1,37 @@
 #' Cut a numeric variable into a factor
 #'
-#' `step_cut` creates a *specification* of a recipe
-#'  step that cuts a numeric variable into a factor
-#'  based on provided boundary values
+#' `step_cut()` creates a *specification* of a recipe step that cuts a numeric
+#'  variable into a factor based on provided boundary values
 #'
-#' @param recipe A recipe object. The step will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param trained A logical to indicate if the quantities for
-#'  preprocessing have been estimated.
+#' @param recipe A recipe object. The step will be added to the sequence of
+#'  operations for this recipe.
+#' @param ... One or more selector functions to choose which variables are
+#'  affected by the step. See [selections()] for more details. For the `tidy`
+#'  method, these are not currently used.
+#' @param role Not used by this step since no new variables are created.
+#' @param trained A logical to indicate if the quantities for preprocessing
+#'  have been estimated.
 #' @param breaks A numeric vector with at least one cut point.
-#' @param include_outside_range Logical, indicating if values outside
-#'  the range in the train set should be included in the lowest or
-#'  highest bucket. Defaults to `FALSE`, values outside
-#'  the original range will be set to `NA`.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations
+#' @param include_outside_range Logical, indicating if values outside the
+#'  range in the train set should be included in the lowest or highest bucket.
+#'  Defaults to `FALSE`, values outside the original range will be set to `NA`.
+#' @param skip A logical. Should the step be skipped when the recipe is baked
+#'  by [bake.recipe()]? While all operations are baked when [prep.recipe()] is
+#'  run, some operations may not be able to be conducted on new data (e.g.
+#'  processing the outcome variable(s)). Care should be taken when using `skip =
+#'  TRUE` as it may affect the computations for subsequent operations
 #' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any).
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
-#' @details Unlike the `base::cut` function there is no need to specify
-#'  the min and the max values in the breaks. All values before the
-#'  lowest break point will end up in the first bucket, all values
-#'  after the last break points will end up in the last.
+#' @details Unlike the `base::cut()` function there is no need to specify the
+#'  min and the max values in the breaks. All values before the lowest break
+#'  point will end up in the first bucket, all values after the last break
+#'  points will end up in the last.
 #'
-#'  `step_cut` will call `base::cut` in the baking step with
+#'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
 #' @examples
@@ -94,7 +89,7 @@ step_cut <-
 
 step_cut_new <-
   function(terms, role, trained,
-           breaks, include_outside_range, na_rm, skip, id) {
+           breaks, include_outside_range, skip, id) {
     step(
       subclass = "cut",
       terms = terms,
@@ -143,10 +138,10 @@ create_full_breaks <- function(var, breaks) {
 
 full_breaks_check <- function(breaks) {
   if (length(breaks) == 1) {
-    stop("In step_cut: variable is invariant and equal to break point")
+    rlang::abort("In step_cut: variable is invariant and equal to break point.")
   }
   if (length(breaks) == 2) {
-    warning("In step_cut: this will create a factor with one value only")
+    rlang::warn("In step_cut: this will create a factor with one value only.")
   }
 }
 

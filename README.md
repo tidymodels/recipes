@@ -43,6 +43,10 @@ sonar_rec <- recipe(Class ~ ., data = Sonar) %>%
   step_scale(all_predictors())
 ```
 
+More information on `recipes` can be found at the [*Get
+Started*](https://www.tidymodels.org/start/recipes/) page of
+[`tidymodels.org`](https://www.tidymodels.org).
+
 To install it, use:
 
 ``` r

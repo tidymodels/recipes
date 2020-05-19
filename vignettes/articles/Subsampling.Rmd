@@ -9,3 +9,4 @@ output:
 ---
 
 This article has been moved to [`tidymodels.org`](https://www.tidymodels.org/learn/models/sub-sampling/). 
+

@@ -8,4 +8,4 @@ output:
     toc: yes
 ---
 
-This article has been moved to [`tidymodels.org`](https://www.tidymodels.org/learn/models/pls/). 
+This article can now be found at [`tidymodels.org`](https://www.tidymodels.org/learn/models/pls/).

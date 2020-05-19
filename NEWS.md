@@ -1,9 +1,13 @@
-# recipes 0.1.11.9000
+# recipes 0.1.12.9000
 
 ## Breaking Changes
 
 * `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
 
+
+# recipes 0.1.12
+
+* Some S3 methods were not being registered previously. This caused issues in R 4.0. 
 
 # recipes 0.1.11
 
@@ -11,7 +15,9 @@
 
 * While `recipes` does not directly depend on `dials`, it has several S3 methods for generics in `dials`. Version 0.0.5 of `dials` added stricter validation for these methods, so changes were required for `recipes`.  
 
-* Some S3 methods were not being registered previously. This caused issues in R 4.0. 
+## New Operations
+
+* `step_cut()` enables you to create a factor from a numeric based on provided break (contributed by Edwin Thoen)
 
 # recipes 0.1.10
 
@@ -26,8 +32,6 @@
 * Small changes for base R's `stringsAsFactors` change. 
 
 # recipes 0.1.9
-
-* `step_cut()` enables you to create a factor from a numeric based on provided break (contributed by Edwin Thoen)
 
  * Delayed S3 method registration for `tune::tunable()` methods that live in recipes will now work correctly on R >=4.0.0 ([#439](https://github.com/tidymodels/recipes/issues/439), [tidymodels/tune#146](https://github.com/tidymodels/tune/issues/146)).
  
