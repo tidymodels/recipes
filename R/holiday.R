@@ -128,8 +128,9 @@ is_holiday <- function(hol, dt) {
 }
 
 get_holiday_features <- function(dt, hdays) {
-  if (!is.Date(dt))
+  if (!is.Date(dt)) {
     dt <- as.Date(dt)
+  }
   hdays <- as.list(hdays)
   hfeat <- lapply(hdays, is_holiday, dt = dt)
   hfeat <- do.call("cbind", hfeat)
@@ -139,32 +140,17 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
-  new_cols <-
-    rep(length(object$holidays), each = length(object$columns))
-  holiday_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(holiday_values) <- rep("", sum(new_cols))
-  holiday_values <- as_tibble(holiday_values, .name_repair = "unique")
-
-  strt <- 1
   for (i in seq_along(object$columns)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
-
-    tmp <- get_holiday_features(dt = getElement(new_data, object$columns[i]),
+    tmp <- get_holiday_features(dt = new_data[[ object$columns[i] ]],
                                 hdays = object$holidays)
 
-    holiday_values[, cols] <- tmp
-
-    names(holiday_values)[cols] <-
-      paste(object$columns[i],
-            names(tmp),
-            sep = "_")
-
-    strt <- max(cols) + 1
+    names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
+    new_data <- bind_cols(new_data, tmp)
   }
-  new_data <- bind_cols(new_data, as_tibble(holiday_values))
-  if (!is_tibble(new_data))
+
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
