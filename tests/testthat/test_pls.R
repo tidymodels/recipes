@@ -292,3 +292,72 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+
+test_that("New pls prep is equivalent to old where old worked" , {
+
+  prep.step_pls_old <- function(x, training, info = NULL, ...) {
+    x_names <- terms_select(x$terms, info = info)
+    y_names <- terms_select(x$outcome, info = info)
+    check_type(training[, c(y_names, x_names)])
+
+    if (length(y_names) == 1) {
+      y_form <- y_names
+    } else {
+      y_form <- paste0(y_names, collapse = ",")
+      y_form <- paste0("cbind(", y_form, ")")
+    }
+
+    if (x$num_comp > 0) {
+      args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
+                   data = training[, c(y_names, x_names)])
+
+      x$options$ncomp <- min(x$num_comp, length(x_names))
+      args <- c(args, x$options)
+      mod <- do.call(pls::plsr, args)
+
+      if (!any(names(mod) == "scale"))
+        mod$scale <- NA
+
+      res <- mod[c("projection", "Xmeans", "scale")]
+    } else {
+      res <- list(x_vars = x_names, y_vars = y_names)
+    }
+
+    step_pls_new(
+      terms = x$terms,
+      role = x$role,
+      trained = TRUE,
+      num_comp = x$num_comp,
+      outcome = x$outcome,
+      options = x$options,
+      res = res,
+      prefix = x$prefix,
+      skip = x$skip,
+      id = x$id
+    )
+  }
+  on.exit(rm(prep.step_pls_old, envir = .GlobalEnv), add = TRUE)
+  assign("prep.step_pls_old", prep.step_pls_old, envir = .GlobalEnv)
+
+  df11k <- replicate(11e3 + 1, runif(200), simplify = FALSE) %>%
+    set_names(c("y", paste0("x", seq_len(11e3)))) %>%
+    as_tibble()
+
+  rec_pls <- recipe(df11k) %>%
+    update_role(everything(), new_role = "predictor") %>%
+    update_role(y, new_role = "outcome") %>%
+    step_pls(all_predictors(), outcome = "y")
+  rec_pls_prepped <- prep(rec_pls)
+  rec_pls_juiced <- juice(rec_pls_prepped)
+
+  rec_pls_old <- rec_pls
+  class(rec_pls_old$steps[[1]])[[1]] <- "step_pls_old"
+  rec_pls_old_prepped <- prep(rec_pls_old)
+  class(rec_pls_old$steps[[1]])[[1]] <- "step_pls"
+  rec_pls_old_juiced <- juice(rec_pls_prepped)
+
+  expect_equal(rec_pls, rec_pls_old)
+  expect_equal(rec_pls_juiced, rec_pls_old_juiced)
+
+})
