@@ -144,8 +144,17 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   }
 
   if (x$num_comp > 0) {
-    args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
-                 data = training[, c(y_names, x_names)])
+    if (length(x_names) < 1e4) {
+      args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
+                   data = training[, c(y_names, x_names)])
+    } else {
+      arg_data <- cbind(
+        training[y_names],
+        tibble::tibble(x = as.matrix(training[x_names]))
+      )
+      args <- list(formula = as.formula(paste(y_form, "x", sep = "~")),
+                   data = arg_data)
+    }
 
     x$options$ncomp <- min(x$num_comp, length(x_names))
     args <- c(args, x$options)
