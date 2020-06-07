@@ -115,7 +115,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
   opt <- x$options
   opt$df <- x$deg_free
   obj <- lapply(training[, col_names], ns_wrapper, opt)
-  for (i in seq(along = col_names))
+  for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
     terms = x$terms,

@@ -169,7 +169,7 @@ bake.step_rollimpute <- function(object, new_data, ...) {
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
-  for(i in seq(along = roll_ind)) {
+  for(i in seq(along.with = roll_ind)) {
     imp_var <- names(roll_ind)[i]
     estimates <-
       impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)

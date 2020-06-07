@@ -215,7 +215,7 @@ bake.step_bagimpute <- function(object, new_data, ...) {
     return(new_data)
 
   old_data <- new_data
-  for (i in seq(along = object$models)) {
+  for (i in seq(along.with = object$models)) {
     imp_var <- names(object$models)[i]
     missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {

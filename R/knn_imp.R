@@ -207,7 +207,7 @@ bake.step_knnimpute <- function(object, new_data, ...) {
     return(new_data)
 
   old_data <- new_data
-  for (i in seq(along = object$columns)) {
+  for (i in seq(along.with = object$columns)) {
     imp_var <- object$columns[[i]]$y
     missing_rows <- !complete.cases(new_data[, imp_var])
     if (any(missing_rows)) {
