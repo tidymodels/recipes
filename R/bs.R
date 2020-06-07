@@ -121,7 +121,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   opt$df <- x$deg_free
   opt$degree <- x$degree
   obj <- lapply(training[, col_names], bs_wrapper, opt)
-  for (i in seq(along = col_names))
+  for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_bs_new(
     terms = x$terms,
