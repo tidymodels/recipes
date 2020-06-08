@@ -30,6 +30,7 @@ test_that('simple skip', {
   )
   expect_equal(log(baked_1$Sepal.Length), juiced_1$Sepal.Length)
   expect_equal(setdiff(names(baked_1), names(baked_2)), "Sepal.Length")
+  expect_equal(setdiff(names(baked_2), names(baked_3)), character(0))
 
   expect_warning(prep(rec_1, training = iris, retain = FALSE))
 })
@@ -42,6 +43,7 @@ test_that('check existing steps for `skip` arg', {
   step_check <- step_check[step_check != "check_nominal_type"]
   step_check <- step_check[step_check != "check_name"]
   step_check <- step_check[step_check != "step_type"]
+  step_check <- step_check[step_check != "check_training_set"]
   has_skip_arg <- function(x) {
     x_code <- getFromNamespace(x, "recipes")
     x_args <- names(formals(x_code))
@@ -66,14 +68,14 @@ test_that('skips for steps that remove columns (#239)', {
   simple_juiced <- juice(prep_simple)
   simple_baked <- bake(prep_simple, new_data = iris)
   expect_equal(
-    sort(names(simple_juiced)),
-    c('Petal.Length', 'Petal.Width', 'Sepal.Length_x_Sepal.Width',
-      'Sepal.Width', 'Species')
-    )
+    names(simple_juiced),
+    c("Sepal.Width", "Petal.Length", "Petal.Width", "Species",
+      "Sepal.Length_x_Sepal.Width")
+  )
   expect_equal(
-    sort(names(simple_baked)),
-    c('Petal.Length', 'Petal.Width', 'Sepal.Length',
-      'Sepal.Length_x_Sepal.Width', 'Sepal.Width', 'Species')
+    names(simple_baked),
+    c("Sepal.Width", "Petal.Length", "Petal.Width", "Species",
+      "Sepal.Length_x_Sepal.Width", "Sepal.Length")
   )
 
   complex_ex <-
@@ -88,12 +90,12 @@ test_that('skips for steps that remove columns (#239)', {
   complex_baked <- bake(complex_ex, new_data = iris)
 
   expect_equal(
-    sort(names(complex_juiced)),
-    c('PC2', 'Petal.Length', 'Petal.Width', 'Species')
+    names(complex_juiced),
+    c("Petal.Length", "Petal.Width", "Species", "PC2")
   )
   expect_equal(
-    sort(names(complex_baked)),
-    c('PC1', 'PC2', 'Petal.Length', 'Petal.Width', 'Species')
+    names(complex_baked),
+    c("Petal.Length", "Petal.Width", "Species", "PC2", "PC1")
   )
 
   iris_dups <-

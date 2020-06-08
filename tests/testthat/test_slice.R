@@ -32,6 +32,7 @@ test_that('basic usage', {
     iris %>%
     as_tibble() %>%
     slice(76:150)
+  dplyr_test <- dplyr_test[, names(rec_train)]
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
