@@ -50,8 +50,8 @@ non-zero coefficients for each PLS component (via regularization).}
 string or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome
 variable.}
 
-\item{options}{A list of options to \code{\link[mixOmics:pls]{mixOmics::pls()}}, \code{\link[mixOmics:spls]{mixOmics::spls()}},
-\code{\link[mixOmics:plsda]{mixOmics::plsda()}}, or \code{\link[mixOmics:splsda]{mixOmics::splsda()}} (depending on the data and
+\item{options}{A list of options to \code{mixOmics::pls()}, \code{mixOmics::spls()},
+\code{mixOmics::plsda()}, or \code{mixOmics::splsda()} (depending on the data and
 arguments).}
 
 \item{preserve}{A single logical: should the original predictor data be
@@ -102,8 +102,8 @@ names would be \code{PLS001} - \code{PLS101}.
 Sparsity can be encouraged using the \code{predictor_prop} parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. \code{step_pls()} converts this
-proportion to determine the \code{keepX} parameter in \code{\link[mixOmics:spls]{mixOmics::spls()}} and
-\code{\link[mixOmics:splsda]{mixOmics::splsda()}}. See the references in \code{\link[mixOmics:spls]{mixOmics::spls()}} for details.
+proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} and
+\code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
 
 The \code{tidy()} method returns the coefficients that are usually defined as
 

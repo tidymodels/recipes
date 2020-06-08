@@ -22,8 +22,8 @@
 #' @param outcome When a single outcome is available, character
 #'  string or call to [dplyr::vars()] can be used to specify a single outcome
 #'  variable.
-#' @param options A list of options to [mixOmics::pls()], [mixOmics::spls()],
-#' [mixOmics::plsda()], or [mixOmics::splsda()] (depending on the data and
+#' @param options A list of options to `mixOmics::pls()`, `mixOmics::spls()`,
+#' `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
 #'  has be trained by [prep.recipe()].
@@ -56,8 +56,8 @@
 #' Sparsity can be encouraged using the `predictor_prop` parameter. This affects
 #' each PLS component, and indicates the maximum proportion of predictors with
 #' non-zero coefficients in each component. `step_pls()` converts this
-#' proportion to determine the `keepX` parameter in [mixOmics::spls()] and
-#' [mixOmics::splsda()]. See the references in [mixOmics::spls()] for details.
+#' proportion to determine the `keepX` parameter in `mixOmics::spls()` and
+#' `mixOmics::splsda()`. See the references in `mixOmics::spls()` for details.
 #'
 #' The `tidy()` method returns the coefficients that are usually defined as
 #'
