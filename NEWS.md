@@ -4,6 +4,8 @@
 
 * `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
 
+* `tidyr` version 1.0.0 or later is now required. 
+
 
 # recipes 0.1.12
 

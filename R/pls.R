@@ -23,7 +23,9 @@
 #' @param outcome When a single outcome is available, character
 #'  string or call to [dplyr::vars()] can be used to specify a single outcome
 #'  variable.
-#' @param options A list of options to [pls::plsr()].
+#' @param options A list of options to [mixOmics::pls()], [mixOmics::spls()],
+#' [mixOmics::plsda()], or [mixOmics::splsda()] (depending on the data and
+#' arguments).
 #' @param res A list of results are stored here once this preprocessing step
 #'  has be trained by [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
@@ -51,6 +53,9 @@
 #'  The variable names are padded with zeros. For example, if `num_comp <
 #'  10`, their names will be `PLS1` - `PLS9`. If `num_comp = 101`, the
 #'  names would be `PLS001` - `PLS101`.
+#'
+#' Sparsity can be encouraged using the `num_terms` parameter. This affects each
+#' PLS component,
 #'
 #' @examples
 #' # requires the Bioconductor mixOmics package
@@ -337,7 +342,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
     cat("No PLS components were extracted.\n")
   } else {
     cat("PLS feature extraction with ")
-    # printer(rownames(x$res$projection), x$terms, x$trained, width = width)
+    printer(rownames(x$res$coefs), x$terms, x$trained, width = width)
   }
   invisible(x)
 }
@@ -349,14 +354,14 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {
-      res <- as.data.frame(x$res$projection)
-      res <- stack(res)
-      res$terms <- rep(rownames(x$res$projection), ncol(x$res$projection))
-      names(res)[1:2] <- c("value", "component")
+      res <-
+        purrr::map2_dfc(as.data.frame(x$res$coefs), x$res$col_norms, ~ .x * .y) %>%
+        dplyr::mutate(terms = rownames(x$res$coefs)) %>%
+        tidyr::pivot_longer(c(-terms), names_to = "component", values_to = "value")
       res <- res[, c("terms", "value", "component")]
-      res$component <- gsub("Comp ", "PLS", res$component)
+      res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
+      res <- tibble(terms = rownames(x$res$coefs), value = na_dbl, component  = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -378,3 +383,4 @@ tunable.step_pls <- function(x, ...) {
     component_id = x$id
   )
 }
+
