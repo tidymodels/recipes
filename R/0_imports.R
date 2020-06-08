@@ -30,6 +30,7 @@ utils::globalVariables(
     "estimate",                                                  # lowerimpute.R
     ".row",                                                          # integer.R
     "denom",                                                           # ratio.R
-    "component", "denom", "id", "value"                                  # ica.R
+    "component", "denom", "id", "value",                                 # ica.R
+    ".order_1", ".order_2"                                           # recipes.R
   )
 )
