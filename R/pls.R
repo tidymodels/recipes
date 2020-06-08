@@ -15,9 +15,8 @@
 #' @param num_comp The number of pls dimensions to retain as new predictors.
 #'  If `num_comp` is greater than the number of columns or the number of
 #'  possible dimensions, a smaller value will be used.
-#' @param num_terms The maximum number of original predictors that can have
-#'  non-zero coefficients for each PLS component (via regularization). If left
-#'  `NULL`, all predictors will influence all PLS loadings.
+#' @param predictor_prop The maximum number of original predictors that can have
+#'  non-zero coefficients for each PLS component (via regularization).
 #' @param preserve A single logical: should the original predictor data be
 #' retained along with the new features?
 #' @param outcome When a single outcome is available, character
@@ -33,7 +32,7 @@
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#'  selectors or variables selected), `components`, and `values`.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pls
@@ -54,9 +53,28 @@
 #'  10`, their names will be `PLS1` - `PLS9`. If `num_comp = 101`, the
 #'  names would be `PLS001` - `PLS101`.
 #'
-#' Sparsity can be encouraged using the `num_terms` parameter. This affects each
-#' PLS component,
+#' Sparsity can be encouraged using the `predictor_prop` parameter. This affects
+#' each PLS component, and indicates the maximum proportion of predictors with
+#' non-zero coefficients in each component. `step_pls()` converts this
+#' proportion to determine the `keepX` parameter in [mixOmics::spls()] and
+#' [mixOmics::splsda()]. See the references in [mixOmics::spls()] for details.
 #'
+#' The `tidy()` method returns the coefficients that are usually defined as
+#'
+#' \deqn{W(P'W)^{-1}}
+#'
+#' (See the Wikipedia article below)
+#'
+#' When applied to data, these values are usually scaled by a column-specific
+#' norm. The `tidy()` method applies this same norm to the coefficients shown
+#' above.
+#'
+#' @references
+#' \url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
+#'
+#' Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) _mixOmics: An R package for
+#' 'omics feature selection and multiple data integration_. PLoS Comput Biol
+#' 13(11): e1005752. \url{https://doi.org/10.1371/journal.pcbi.1005752}
 #' @examples
 #' # requires the Bioconductor mixOmics package
 #' data(biomass, package = "modeldata")
@@ -77,10 +95,11 @@
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, num_terms = 2) %>%
+#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5) %>%
 #'   prep()
 #'
 #' ## -----------------------------------------------------------------------------
+#' ## PLS discriminant analysis
 #'
 #' data(cells, package = "modeldata")
 #'
@@ -99,11 +118,22 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, num_terms = 10)
+#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
 #'
-#' @seealso [step_pca()] [step_kpca()]
-#'   [step_ica()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
+#' loadings <- tidy(sparse_plsda, number = 1)
+#' col_rngs <- max(abs(loadings$value))
+#'
+#' library(ggplot2)
+#'
+#' ggplot(loadings, aes(x = component, y = terms, fill = value)) +
+#'   geom_tile() +
+#'   scale_fill_gradientn(
+#'     colors = c("blue", "white", "red"),
+#'     limits = c(-col_rngs, col_rngs)
+#'   ) +
+#'   theme_bw()
+#' @seealso [step_pca()], [step_kpca()], [step_ica()], [recipe()],
+#'  [prep.recipe()], [bake.recipe()]
 
 step_pls <-
   function(recipe,
@@ -111,7 +141,7 @@ step_pls <-
            role = "predictor",
            trained = FALSE,
            num_comp  = 2,
-           num_terms = NULL,
+           predictor_prop = 1,
            outcome = NULL,
            options = list(scale = TRUE),
            preserve = FALSE,
@@ -132,7 +162,7 @@ step_pls <-
         role = role,
         trained = trained,
         num_comp = num_comp,
-        num_terms = num_terms,
+        predictor_prop = predictor_prop,
         outcome = outcome,
         options = options,
         preserve = preserve,
@@ -145,7 +175,7 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms, role, trained, num_comp, num_terms, outcome, options,
+  function(terms, role, trained, num_comp, predictor_prop, outcome, options,
            preserve, res, prefix, skip, id) {
     step(
       subclass = "pls",
@@ -153,7 +183,7 @@ step_pls_new <-
       role = role,
       trained = trained,
       num_comp = num_comp,
-      num_terms = num_terms,
+      predictor_prop = predictor_prop,
       outcome = outcome,
       options = options,
       preserve = preserve,
@@ -164,12 +194,16 @@ step_pls_new <-
     )
   }
 
+
 ## -----------------------------------------------------------------------------
 ## Taken from plsmod
 
 pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
   dots <- rlang::enquos(...)
   p <- ncol(x)
+  if (is.null(keepX)) {
+    keepX <- p
+  }
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
@@ -178,17 +212,17 @@ pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
   } else {
     ncomp <- min(ncomp, p)
   }
-  if (!is.null(keepX) && length(keepX) == 1) {
+  if (all(keepX < p) && length(keepX) == 1) {
     keepX <- rep(min(keepX, p), ncomp)
   }
   if (is.factor(y)) {
-    if (is.null(keepX)) {
+    if (all(keepX == p)) {
       cl  <- rlang::call2("plsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
       cl  <- rlang::call2("splsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
     }
   } else {
-    if (is.null(keepX)) {
+    if (all(keepX == p)) {
       cl  <- rlang::call2("pls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
       cl  <- rlang::call2("spls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
@@ -264,6 +298,13 @@ use_old_pls <- function(x) {
   any(names(x) == "Xmeans")
 }
 
+
+prop2int <- function(x, p) {
+  cuts <- seq(0, p, length.out = p + 1)
+  as.integer(cut(x * p, breaks = cuts, include.lowest = TRUE))
+}
+
+
 ## -----------------------------------------------------------------------------
 
 #' @export
@@ -277,11 +318,11 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
   if (x$num_comp > 0) {
     ncomp <- min(x$num_comp,  length(x_names))
-    if (!is.null(x$num_terms)) {
-      nterm <- min(x$num_terms, length(x_names))
-    } else {
-      nterm <- NULL
-    }
+    # Convert proportion to number of terms
+    x$predictor_prop <- max(x$predictor_prop, 0.00001)
+    x$predictor_prop <- min(x$predictor_prop, 1)
+    nterm <- prop2int(x$predictor_prop, length(x_names))
+
     cl <- make_pls_call(ncomp, nterm, x$options)
     res <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(res, "try-error")) {
@@ -300,7 +341,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     num_comp = x$num_comp,
-    num_terms = x$num_terms,
+    predictor_prop = x$predictor_prop,
     outcome = x$outcome,
     options = x$options,
     preserve = x$preserve,
@@ -376,11 +417,13 @@ tidy.step_pls <- function(x, ...) {
 #' @export
 tunable.step_pls <- function(x, ...) {
   tibble::tibble(
-    name = "num_comp",
-    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1L, 4L))),
+    name = c("num_comp", "predictor_prop"),
+    call_info = list(
+      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
+      list(pkg = "dials", fun = "predictor_prop")
+    ),
     source = "recipe",
     component = "step_pls",
     component_id = x$id
   )
 }
-

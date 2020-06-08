@@ -11,7 +11,7 @@ step_pls(
   role = "predictor",
   trained = FALSE,
   num_comp = 2,
-  num_terms = NULL,
+  predictor_prop = 1,
   outcome = NULL,
   options = list(scale = TRUE),
   preserve = FALSE,
@@ -43,15 +43,16 @@ preprocessing have been estimated.}
 If \code{num_comp} is greater than the number of columns or the number of
 possible dimensions, a smaller value will be used.}
 
-\item{num_terms}{The maximum number of original predictors that can have
-non-zero coefficients for each PLS component (via regularization). If left
-\code{NULL}, all predictors will influence all PLS loadings.}
+\item{predictor_prop}{The maximum number of original predictors that can have
+non-zero coefficients for each PLS component (via regularization).}
 
 \item{outcome}{When a single outcome is available, character
 string or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome
 variable.}
 
-\item{options}{A list of options to \code{\link[pls:plsr]{pls::plsr()}}.}
+\item{options}{A list of options to \code{\link[mixOmics:pls]{mixOmics::pls()}}, \code{\link[mixOmics:spls]{mixOmics::spls()}},
+\code{\link[mixOmics:plsda]{mixOmics::plsda()}}, or \code{\link[mixOmics:splsda]{mixOmics::splsda()}} (depending on the data and
+arguments).}
 
 \item{preserve}{A single logical: should the original predictor data be
 retained along with the new features?}
@@ -77,7 +78,7 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected).
+selectors or variables selected), \code{components}, and \code{values}.
 }
 \description{
 \code{step_pls} creates a \emph{specification} of a recipe step that will
@@ -97,6 +98,22 @@ components are removed from the data). The new components will
 have names that begin with \code{prefix} and a sequence of numbers.
 The variable names are padded with zeros. For example, if \code{num_comp < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num_comp = 101}, the
 names would be \code{PLS001} - \code{PLS101}.
+
+Sparsity can be encouraged using the \code{predictor_prop} parameter. This affects
+each PLS component, and indicates the maximum proportion of predictors with
+non-zero coefficients in each component. \code{step_pls()} converts this
+proportion to determine the \code{keepX} parameter in \code{\link[mixOmics:spls]{mixOmics::spls()}} and
+\code{\link[mixOmics:splsda]{mixOmics::splsda()}}. See the references in \code{\link[mixOmics:spls]{mixOmics::spls()}} for details.
+
+The \code{tidy()} method returns the coefficients that are usually defined as
+
+\deqn{W(P'W)^{-1}}
+
+(See the Wikipedia article below)
+
+When applied to data, these values are usually scaled by a column-specific
+norm. The \code{tidy()} method applies this same norm to the coefficients shown
+above.
 }
 \examples{
 # requires the Bioconductor mixOmics package
@@ -118,10 +135,11 @@ dense_pls <-
 
 sparse_pls <-
   recipe(HHV ~ ., data = biom_tr) \%>\%
-  step_pls(all_predictors(), outcome = "HHV", num_comp = 3, num_terms = 2) \%>\%
+  step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5) \%>\%
   prep()
 
 ## -----------------------------------------------------------------------------
+## PLS discriminant analysis
 
 data(cells, package = "modeldata")
 
@@ -140,13 +158,31 @@ dense_plsda <-
 
 sparse_plsda <-
   recipe(class ~ ., data = cell_tr) \%>\%
-  step_pls(all_predictors(), outcome = "class", num_comp = 5, num_terms = 10)
+  step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
 
+loadings <- tidy(sparse_plsda, number = 1)
+col_rngs <- max(abs(loadings$value))
+
+library(ggplot2)
+
+ggplot(loadings, aes(x = component, y = terms, fill = value)) +
+  geom_tile() +
+  scale_fill_gradientn(
+    colors = c("blue", "white", "red"),
+    limits = c(-col_rngs, col_rngs)
+  ) +
+  theme_bw()
+}
+\references{
+\url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
+
+Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) \emph{mixOmics: An R package for
+'omics feature selection and multiple data integration}. PLoS Comput Biol
+13(11): e1005752. \url{https://doi.org/10.1371/journal.pcbi.1005752}
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+\code{\link[=step_pca]{step_pca()}}, \code{\link[=step_kpca]{step_kpca()}}, \code{\link[=step_ica]{step_ica()}}, \code{\link[=recipe]{recipe()}},
+\code{\link[=prep.recipe]{prep.recipe()}}, \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{pls}
 \concept{preprocessing}
