@@ -5,27 +5,27 @@
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the dimensions. See
-#'  [selections()] for more details. For the `tidy` method, these
-#'  are not currently used.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new dimension columns created by the original variables
-#'  will be used as predictors in a model.
-#' @param num_comp The number of pls dimensions to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible dimensions, a smaller value will be
-#'  used.
+#' @param ... One or more selector functions to choose which variables will be
+#'  used to compute the dimensions. See [selections()] for more details. For the
+#'  `tidy` method, these are not currently used.
+#' @param role For model terms created by this step, what analysis role should
+#'  they be assigned?. By default, the function assumes that the new dimension
+#'  columns created by the original variables will be used as predictors in a
+#'  model.
+#' @param num_comp The number of pls dimensions to retain as new predictors.
+#'  If `num_comp` is greater than the number of columns or the number of
+#'  possible dimensions, a smaller value will be used.
+#' @param num_terms The maximum number of original predictors that can have
+#'  non-zero coefficients for each PLS component (via regularization). If left
+#'  `NULL`, all predictors will influence all PLS loadings.
+#' @param preserve A single logical: should the original predictor data be
+#' retained along with the new features?
 #' @param outcome When a single outcome is available, character
-#'  string or call to [dplyr::vars()] can be used to specify the
-#'  variable. When there are multipole outcomes, [dplyr::vars()]
-#'  must be used. This that can include specific variable names
-#'  separated by commas or different selectors (see [selections()]).
+#'  string or call to [dplyr::vars()] can be used to specify a single outcome
+#'  variable.
 #' @param options A list of options to [pls::plsr()].
-#' @param res The [pls::plsr()] object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#' @param res A list of results are stored here once this preprocessing step
+#'  has be trained by [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -38,11 +38,10 @@
 #' @concept projection_methods
 #' @export
 #' @details PLS is a supervised version of principal component
-#'  analysis that requires one or more numeric outcomes to compute
-#'  the new features. The data should be scaled (and perhaps
-#'  centered) prior to running these calculations.
+#'  analysis that requires the outcome data to compute
+#'  the new features.
 #'
-#' This step requires the \pkg{pls} package. If not installed, the
+#' This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
 #' The argument `num_comp` controls the number of components that will
@@ -54,26 +53,49 @@
 #'  names would be `PLS001` - `PLS101`.
 #'
 #' @examples
-#' library(modeldata)
-#' data(biomass)
+#' # requires the Bioconductor mixOmics package
+#' data(biomass, package = "modeldata")
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biom_tr <-
+#'   biomass %>%
+#'   dplyr::filter(dataset == "Training") %>%
+#'   dplyr::select(-dataset,-sample)
+#' biom_te <-
+#'   biomass %>%
+#'   dplyr::filter(dataset == "Testing")  %>%
+#'   dplyr::select(-dataset,-sample,-HHV)
 #'
-#' pls_rec <- recipe(HHV ~ ., data = biomass_tr) %>%
-#'   step_rm(sample, dataset) %>%
-#'   step_normalize(all_predictors()) %>%
-#'   # If the outcome(s) need standardization, do it in separate
-#'   # steps with skip = FALSE so that new data where the
-#'   # outcome is missing can be processed.
-#'   step_normalize(all_outcomes(), skip = TRUE) %>%
-#'   step_pls(all_predictors(), outcome = "HHV")
+#' dense_pls <-
+#'   recipe(HHV ~ ., data = biom_tr) %>%
+#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3) %>%
+#'   prep()
 #'
-#' pls_rec <- prep(pls_rec, training = biomass_tr)
+#' sparse_pls <-
+#'   recipe(HHV ~ ., data = biom_tr) %>%
+#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, num_terms = 2) %>%
+#'   prep()
 #'
-#' pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
+#' ## -----------------------------------------------------------------------------
 #'
-#' tidy(pls_rec, number = 4)
+#' data(cells, package = "modeldata")
+#'
+#' cell_tr <-
+#'   cells %>%
+#'   dplyr::filter(case == "Train") %>%
+#'   dplyr::select(-case)
+#' cell_te <-
+#'   cells %>%
+#'   dplyr::filter(case == "Test")  %>%
+#'   dplyr::select(-case,-class)
+#'
+#' dense_plsda <-
+#'   recipe(class ~ ., data = cell_tr) %>%
+#'   step_pls(all_predictors(), outcome = "class", num_comp = 5)
+#'
+#' sparse_plsda <-
+#'   recipe(class ~ ., data = cell_tr) %>%
+#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, num_terms = 10)
+#'
 #' @seealso [step_pca()] [step_kpca()]
 #'   [step_ica()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
@@ -84,7 +106,7 @@ step_pls <-
            role = "predictor",
            trained = FALSE,
            num_comp  = 2,
-           num_terms = 2,
+           num_terms = NULL,
            outcome = NULL,
            options = list(scale = TRUE),
            preserve = FALSE,
@@ -141,6 +163,7 @@ step_pls_new <-
 ## Taken from plsmod
 
 pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
+  dots <- rlang::enquos(...)
   p <- ncol(x)
   if (!is.matrix(x)) {
     x <- as.matrix(x)
@@ -151,21 +174,22 @@ pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
     ncomp <- min(ncomp, p)
   }
   if (!is.null(keepX) && length(keepX) == 1) {
-    keepX <- rep(min(keepX, p), p)
+    keepX <- rep(min(keepX, p), ncomp)
   }
   if (is.factor(y)) {
     if (is.null(keepX)) {
-      res <- mixOmics::plsda(X = x, Y = y, ncomp = ncomp, ...)
+      cl  <- rlang::call2("plsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
-      res <- mixOmics::splsda(X = x, Y = y, ncomp = ncomp, keepX = keepX, ...)
+      cl  <- rlang::call2("splsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
     }
   } else {
     if (is.null(keepX)) {
-      res <- mixOmics::pls(X = x, Y = y, ncomp = ncomp, ...)
+      cl  <- rlang::call2("pls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
-      res <- mixOmics::spls(X = x, Y = y, ncomp = ncomp, keepX = keepX, ...)
+      cl  <- rlang::call2("spls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
     }
   }
+  res <- rlang::eval_tidy(cl)
   res
 }
 
@@ -201,6 +225,8 @@ butcher_pls <- function(x) {
 }
 
 pls_project <- function(object, x) {
+  pls_vars <- names(object$mu)
+  x <- x[, pls_vars]
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
@@ -211,6 +237,29 @@ pls_project <- function(object, x) {
   res <- purrr::map2_dfc(res, object$col_norms, ~ .x * .y)
   res
 }
+
+old_pls_project <- function(object, x) {
+  pls_vars <- rownames(object$projection)
+  n <- nrow(x)
+  input_data <- as.matrix(x[, pls_vars])
+  if (!all(is.na(object$scale))) {
+    input_data <- sweep(input_data, 2, object$scale,  "/")
+  }
+  input_data <- sweep(input_data, 2, object$Xmeans,  "-")
+  comps <- input_data %*% object$projection
+  colnames(comps) <- paste0("pls", 1:ncol(comps))
+  tibble::as_tibble(comps)
+}
+
+pls_worked <- function(x) {
+  !isTRUE(all.equal(names(x), c("x_vars", "y_vars")))
+}
+
+use_old_pls <- function(x) {
+  any(names(x) == "Xmeans")
+}
+
+## -----------------------------------------------------------------------------
 
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
@@ -223,7 +272,11 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
   if (x$num_comp > 0) {
     ncomp <- min(x$num_comp,  length(x_names))
-    nterm <- min(x$num_terms, length(x_names))
+    if (!is.null(x$num_terms)) {
+      nterm <- min(x$num_terms, length(x_names))
+    } else {
+      nterm <- NULL
+    }
     cl <- make_pls_call(ncomp, nterm, x$options)
     res <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(res, "try-error")) {
@@ -255,17 +308,25 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  if (object$num_comp > 0 & any(names(object$res) == "coefs")) {
-    pls_vars <- names(object$res$mu)
-    comps <- pls_project(object$res, new_data[, pls_vars])
+  if (object$num_comp > 0 & pls_worked(object$res)) {
+
+    if (use_old_pls(object$res)) {
+      comps <- old_pls_project(object$res, new_data)
+    } else {
+      comps <- pls_project(object$res, new_data)
+    }
+
     names(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
+
     new_data <- bind_cols(new_data, as_tibble(comps))
-    if (!object$preserve) {
+    if (!use_old_pls(object$res) && !object$preserve) {
+      pls_vars <- names(object$res$mu)
       new_data <- new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
     }
-    if (!is_tibble(new_data))
+    if (!is_tibble(new_data)) {
       new_data <- as_tibble(new_data)
+    }
   }
   new_data
 }

@@ -43,7 +43,7 @@ Suggests:
     kernlab,
     knitr,
     modeldata,
-    pls,
+    mixOmics,
     RANN,
     RcppRoll,
     rmarkdown,
@@ -52,6 +52,7 @@ Suggests:
     RSpectra,
     testthat (>= 2.1.0),
     xml2
+biocViews: mixOmics    
 License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
