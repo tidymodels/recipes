@@ -23,6 +23,7 @@ load(test_path("test_pls_new.RData"))
 ## -----------------------------------------------------------------------------
 
 test_that('PLS, dense loadings', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
     step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
 
@@ -41,6 +42,7 @@ test_that('PLS, dense loadings', {
 
 
 test_that('PLS, sparse loadings', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
     step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 3/5)
 
@@ -60,6 +62,7 @@ test_that('PLS, sparse loadings', {
 ## -----------------------------------------------------------------------------
 
 test_that('PLS-DA, dense loadings', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(class ~ ., data = cell_tr) %>%
     step_pls(all_predictors(), outcome = "class", num_comp = 3)
 
@@ -78,6 +81,7 @@ test_that('PLS-DA, dense loadings', {
 
 
 test_that('PLS-DA, sparse loadings', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(class ~ ., data = cell_tr) %>%
     step_pls(all_predictors(), outcome = "class", num_comp = 3, predictor_prop = 50/56)
 
@@ -97,6 +101,7 @@ test_that('PLS-DA, sparse loadings', {
 ## -----------------------------------------------------------------------------
 
 test_that('No PLS', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(class ~ ., data = cell_tr) %>%
     step_pls(all_predictors(), outcome = "class", num_comp = 0)
 
@@ -117,6 +122,7 @@ test_that('No PLS', {
 ## -----------------------------------------------------------------------------
 
 test_that('tidy method', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
     step_pls(all_predictors(), outcome = "HHV", num_comp = 3, id = "dork")
 
@@ -154,6 +160,7 @@ test_that('tidy method', {
 ## -----------------------------------------------------------------------------
 
 test_that('print method', {
+  skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
     step_pls(all_predictors(), outcome = "HHV", num_comp = 3, id = "dork")
 
