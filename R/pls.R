@@ -84,16 +84,19 @@ step_pls <-
            role = "predictor",
            trained = FALSE,
            num_comp  = 2,
+           num_terms = 2,
            outcome = NULL,
-           options = NULL,
+           options = list(scale = TRUE),
+           preserve = FALSE,
            res = NULL,
            prefix = "PLS",
            skip = FALSE,
            id = rand_id("pls")) {
-    if (is.null(outcome))
+    if (is.null(outcome)) {
       rlang::abort("`outcome` should select at least one column.")
+    }
 
-    recipes_pkg_check("pls")
+    recipes_pkg_check("mixOmics")
 
     add_step(
       recipe,
@@ -102,8 +105,10 @@ step_pls <-
         role = role,
         trained = trained,
         num_comp = num_comp,
+        num_terms = num_terms,
         outcome = outcome,
         options = options,
+        preserve = preserve,
         res = res,
         prefix = prefix,
         skip = skip,
@@ -113,16 +118,18 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms, role, trained, num_comp, outcome, options, res,
-           prefix, skip, id) {
+  function(terms, role, trained, num_comp, num_terms, outcome, options,
+           preserve, res, prefix, skip, id) {
     step(
       subclass = "pls",
       terms = terms,
       role = role,
       trained = trained,
       num_comp = num_comp,
+      num_terms = num_terms,
       outcome = outcome,
       options = options,
+      preserve = preserve,
       res = res,
       prefix = prefix,
       skip = skip,
@@ -130,31 +137,102 @@ step_pls_new <-
     )
   }
 
+## -----------------------------------------------------------------------------
+## Taken from plsmod
+
+pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
+  p <- ncol(x)
+  if (!is.matrix(x)) {
+    x <- as.matrix(x)
+  }
+  if (is.null(ncomp)) {
+    ncomp <- p
+  } else {
+    ncomp <- min(ncomp, p)
+  }
+  if (!is.null(keepX) && length(keepX) == 1) {
+    keepX <- rep(min(keepX, p), p)
+  }
+  if (is.factor(y)) {
+    if (is.null(keepX)) {
+      res <- mixOmics::plsda(X = x, Y = y, ncomp = ncomp, ...)
+    } else {
+      res <- mixOmics::splsda(X = x, Y = y, ncomp = ncomp, keepX = keepX, ...)
+    }
+  } else {
+    if (is.null(keepX)) {
+      res <- mixOmics::pls(X = x, Y = y, ncomp = ncomp, ...)
+    } else {
+      res <- mixOmics::spls(X = x, Y = y, ncomp = ncomp, keepX = keepX, ...)
+    }
+  }
+  res
+}
+
+make_pls_call <- function(ncomp, keepX, args = NULL) {
+  cl <-
+    rlang::call2(
+      "pls_fit",
+      x = rlang::expr(as.matrix(training[, x_names])),
+      y = rlang::expr(training[[y_names]]),
+      ncomp = ncomp,
+      keepX = keepX,
+      !!!args
+    )
+  cl
+}
+
+get_norms <- function(x) norm(x, type = "2")^2
+
+butcher_pls <- function(x) {
+  if (inherits(x, "try-error")) {
+    return(NULL)
+  }
+  .mu <- attr(x$X, "scaled:center")
+  .sd <- attr(x$X, "scaled:scale")
+  W <- x$loadings$X  # W matrix, P = X'rot
+  variates <- x$variates[["X"]]
+  P <- crossprod(x$X, variates)
+  coefs <- W %*% solve(t(P) %*%  W)
+
+  col_norms <- apply(variates, 2, get_norms)
+
+  list(mu = .mu, sd = .sd, coefs = coefs, col_norms = col_norms)
+}
+
+pls_project <- function(object, x) {
+  if (!is.matrix(x)) {
+    x <- as.matrix(x)
+  }
+  z <- sweep(x, 2, STATS = object$mu, "-")
+  z <- sweep(z, 2, STATS = object$sd, "/")
+  res <- z %*% object$coefs
+  res <- tibble::as_tibble(res)
+  res <- purrr::map2_dfc(res, object$col_norms, ~ .x * .y)
+  res
+}
+
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
-  x_names <- terms_select(x$terms, info = info)
+  x_names <- terms_select(x$terms,   info = info)
   y_names <- terms_select(x$outcome, info = info)
-  check_type(training[, c(y_names, x_names)])
-
-  if (length(y_names) == 1) {
-    y_form <- y_names
-  } else {
-    y_form <- paste0(y_names, collapse = ",")
-    y_form <- paste0("cbind(", y_form, ")")
+  check_type(training[, x_names])
+  if (length(y_names) > 1 ) {
+    rlang::abort("`step_pls()` only supports univariate models.")
   }
 
   if (x$num_comp > 0) {
-    args <- list(formula = as.formula(paste(y_form, ".", sep = "~")),
-                 data = training[, c(y_names, x_names)])
+    ncomp <- min(x$num_comp,  length(x_names))
+    nterm <- min(x$num_terms, length(x_names))
+    cl <- make_pls_call(ncomp, nterm, x$options)
+    res <- try(rlang::eval_tidy(cl), silent = TRUE)
+    if (inherits(res, "try-error")) {
+      rlang::warn(paste0("`step_pls()` failed: ", as.character(res)))
+      res <- list(x_vars = x_names, y_vars = y_names)
+    } else {
+      res <- butcher_pls(res)
+    }
 
-    x$options$ncomp <- min(x$num_comp, length(x_names))
-    args <- c(args, x$options)
-    mod <- do.call(pls::plsr, args)
-
-    if (!any(names(mod) == "scale"))
-      mod$scale <- NA
-
-    res <- mod[c("projection", "Xmeans", "scale")]
   } else {
     res <- list(x_vars = x_names, y_vars = y_names)
   }
@@ -164,8 +242,10 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     num_comp = x$num_comp,
+    num_terms = x$num_terms,
     outcome = x$outcome,
     options = x$options,
+    preserve = x$preserve,
     res = res,
     prefix = x$prefix,
     skip = x$skip,
@@ -175,21 +255,15 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
-    pls_vars <- rownames(object$res$projection)
-    n <- nrow(new_data)
-    input_data <- as.matrix(new_data[, pls_vars])
-
-    if (!all(is.na(object$res$scale)))
-      input_data <- sweep(input_data, 2, object$res$scale, "/")
-
-    input_data <- sweep(input_data, 2, object$res$Xmeans, "-")
-
-    comps <- input_data %*% object$res$projection
+  if (object$num_comp > 0 & any(names(object$res) == "coefs")) {
+    pls_vars <- names(object$res$mu)
+    comps <- pls_project(object$res, new_data[, pls_vars])
+    names(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+    if (!object$preserve) {
+      new_data <- new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+    }
     if (!is_tibble(new_data))
       new_data <- as_tibble(new_data)
   }
@@ -202,7 +276,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
     cat("No PLS components were extracted.\n")
   } else {
     cat("PLS feature extraction with ")
-    printer(rownames(x$res$projection), x$terms, x$trained, width = width)
+    # printer(rownames(x$res$projection), x$terms, x$trained, width = width)
   }
   invisible(x)
 }
