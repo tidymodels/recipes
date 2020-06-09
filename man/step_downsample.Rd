@@ -72,9 +72,12 @@ added to the sequence of existing steps (if any). For the
 the variable used to sample.
 }
 \description{
-\code{step_downsample} creates a \emph{specification} of a recipe
-step that will remove rows of a data set to make the occurrence
-of levels in a specific factor level equal.
+\Sexpr[results=rd, stage=render]{lifecycle::badge("soft-deprecated")}
+
+\code{step_downsample} is now available as \code{\link[themis:step_downsample]{themis::step_downsample()}}. This
+function creates a \emph{specification} of a recipe step that will remove
+rows of a data set to make the occurrence of levels in a specific factor
+level equal.
 }
 \details{
 Down-sampling is intended to be performed on the \emph{training} set

@@ -14,6 +14,8 @@
 
 * Avoided partial matching on `seq()` arguments in internal functions. 
 
+* `step_upsample` and `step_downsample` are soft deprecated in recipes as they are now available in the themis package.
+
 # recipes 0.1.12
 
 * Some S3 methods were not being registered previously. This caused issues in R 4.0. 
