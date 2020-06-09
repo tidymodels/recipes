@@ -101,7 +101,7 @@ step_ica <-
            role = "predictor",
            trained = FALSE,
            num_comp  = 5,
-           options = list(),
+           options = list(method = "C"),
            res = NULL,
            prefix = "IC",
            skip = FALSE,

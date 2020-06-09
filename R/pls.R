@@ -90,13 +90,11 @@
 #'
 #' dense_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3) %>%
-#'   prep()
+#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5) %>%
-#'   prep()
+#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5)
 #'
 #' ## -----------------------------------------------------------------------------
 #' ## PLS discriminant analysis
@@ -118,21 +116,8 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4) %>%
-#'   prep()
+#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
 #'
-#' loadings <- tidy(sparse_plsda, number = 1)
-#' col_rngs <- max(abs(loadings$value))
-#'
-#' library(ggplot2)
-#'
-#' ggplot(loadings, aes(x = component, y = terms, fill = value)) +
-#'   geom_tile() +
-#'   scale_fill_gradientn(
-#'     colors = c("blue", "white", "red"),
-#'     limits = c(-col_rngs, col_rngs)
-#'   ) +
-#'   theme_bw()
 #' @seealso [step_pca()], [step_kpca()], [step_ica()], [recipe()],
 #'  [prep.recipe()], [bake.recipe()]
 
