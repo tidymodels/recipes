@@ -1,7 +1,7 @@
 #' Up-Sample a Data Set Based on a Factor Variable
 #'
 #' @description
-#' \Sexpr[results=rd, stage=render]{lifecycle::badge("soft-deprecated")}
+#' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 #'
 #' `step_upsample` is now available as [themis::step_upsample()]. This
 #'  function creates a *specification* of a recipe step that

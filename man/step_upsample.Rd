@@ -72,7 +72,7 @@ added to the sequence of existing steps (if any). For the
 the variable used to sample.
 }
 \description{
-\Sexpr[results=rd, stage=render]{lifecycle::badge("soft-deprecated")}
+\if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 
 \code{step_upsample} is now available as \code{\link[themis:step_upsample]{themis::step_upsample()}}. This
 function creates a \emph{specification} of a recipe step that
