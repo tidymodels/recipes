@@ -270,6 +270,11 @@ bake.step_dummy <- function(object, new_data, ...) {
     if (!any(names(attributes(object$levels[[i]])) == "values"))
       rlang::abort("Factor level values not recorded")
 
+    if (length(attr(object$levels[[i]], "values")) == 1)
+      rlang::abort(
+        paste0("Only one factor level in ", orig_var)
+        )
+
     warn_new_levels(
       new_data[[orig_var]],
       attr(object$levels[[i]], "values")
