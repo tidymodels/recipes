@@ -118,7 +118,8 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
+#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4) %>%
+#'   prep()
 #'
 #' loadings <- tidy(sparse_plsda, number = 1)
 #' col_rngs <- max(abs(loadings$value))
