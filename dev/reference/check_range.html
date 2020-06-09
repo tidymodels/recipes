@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Check Range Consistency — check_range" />
 <meta property="og:description" content="check_range creates a specification of a recipe
 check that will check if the range of a numeric
 variable changed in the new data." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ variable changed in the new data." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -273,8 +277,8 @@ the second to compute the allowed slack at the upper end.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>  <span class='no'>slack_df</span> <span class='kw'>&lt;-</span> <span class='fu'>data_frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `data_frame()` is deprecated as of tibble 1.1.0.</span>
 #&gt; <span class='warning'>Please use `tibble()` instead.</span>
-#&gt; <span class='warning'>This warning is displayed once every 8 hours.</span>
-#&gt; <span class='warning'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span></div><div class='input'>  <span class='no'>slack_new_data</span> <span class='kw'>&lt;-</span> <span class='fu'>data_frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> -<span class='fl'>10</span>:<span class='fl'>110</span>)
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>  <span class='no'>slack_new_data</span> <span class='kw'>&lt;-</span> <span class='fu'>data_frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> -<span class='fl'>10</span>:<span class='fl'>110</span>)
 
   <span class='co'># this will fail the check both ends</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -298,7 +302,7 @@ the second to compute the allowed slack at the upper end.</p>
     <span class='fu'>check_range</span>(<span class='no'>x</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>slack_new_data</span>)
-}</div></pre>
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

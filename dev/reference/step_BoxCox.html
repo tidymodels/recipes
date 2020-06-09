@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Box-Cox Transformation for Non-Negative Data — step_BoxCox" />
 <meta property="og:description" content="step_BoxCox creates a specification of a recipe
 step that will transform data using a simple Box-Cox
 transformation." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ transformation." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -288,21 +292,21 @@ A review. <em>The Statistician</em>, 169-178..</p>
 
 <span class='no'>bc_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>bc_estimates</span>, <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>state.x77</span>))
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>state.x77</span>[, <span class='st'>"Illiteracy"</span>]), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_BoxCox-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>bc_data</span>$<span class='no'>Illiteracy</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_BoxCox-2.png' alt='' width='768' height='552' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>bc_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms         value id          
-#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 all_numeric()    NA BoxCox_hiYO6</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 7 x 3
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> BoxCox_68LSS</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>bc_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 3</span><span>
 #&gt;   terms          value id          
-#&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 Population  0.000966 BoxCox_hiYO6
-#&gt; 2 Income      0.524    BoxCox_hiYO6
-#&gt; 3 Illiteracy -0.379    BoxCox_hiYO6
-#&gt; 4 Life Exp    4.59     BoxCox_hiYO6
-#&gt; 5 Murder      0.606    BoxCox_hiYO6
-#&gt; 6 HS Grad     1.92     BoxCox_hiYO6
-#&gt; 7 Area        0.250    BoxCox_hiYO6</div><div class='input'>
-</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> Population  0.000</span><span style='text-decoration: underline;'>966</span><span> BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>2</span><span> Income      0.524    BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>3</span><span> Illiteracy -</span><span style='color: #BB0000;'>0.379</span><span>    BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>4</span><span> Life Exp    4.59     BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>5</span><span> Murder      0.606    BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>6</span><span> HS Grad     1.92     BoxCox_68LSS
+#&gt; </span><span style='color: #555555;'>7</span><span> Area        0.250    BoxCox_68LSS</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

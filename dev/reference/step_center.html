@@ -43,12 +43,16 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Centering numeric data — step_center" />
 <meta property="og:description" content="step_center creates a specification of a recipe
 step that will normalize numeric data to have a mean of zero." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,8 +95,8 @@ step that will normalize numeric data to have a mean of zero." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -282,31 +286,31 @@ the centering to new data sets using these means.</p>
 #&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; # A tibble: 80 x 6
+#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 6</span><span>
 #&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1  -2.00      5.67   8.68   -0.775   0.22  18.3
-#&gt;  2  -5.10      5.5    9.54    1.78    0.34  17.6
-#&gt;  3  -5.65      5.5   10.6     1.33    0.3   17.2
-#&gt;  4  -1.95      6.1   -1.22    0.725   0.5   18.9
-#&gt;  5   0.406     6.32   4.25   -0.875   0     20.5
-#&gt;  6  -4.05      5.5    3.18   -0.375   0.2   18.5
-#&gt;  7  -9.41      5.23  15.6     0.115   0.51  15.1
-#&gt;  8  -6.25      4.66  -4.72   -0.125   0.2   16.2
-#&gt;  9 -19.2       4.4   -7.42   -0.935   4.9   11.1
-#&gt; 10 -20.6       3.77 -14.8     3.56    1.05  10.8
-#&gt; # … with 70 more rows</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>  -</span><span style='color: #BB0000;'>2.00</span><span>      5.67   8.68   -</span><span style='color: #BB0000;'>0.775</span><span>   0.22  18.3
+#&gt; </span><span style='color: #555555;'> 2</span><span>  -</span><span style='color: #BB0000;'>5.10</span><span>      5.5    9.54    1.78    0.34  17.6
+#&gt; </span><span style='color: #555555;'> 3</span><span>  -</span><span style='color: #BB0000;'>5.65</span><span>      5.5   10.6     1.33    0.3   17.2
+#&gt; </span><span style='color: #555555;'> 4</span><span>  -</span><span style='color: #BB0000;'>1.95</span><span>      6.1   -</span><span style='color: #BB0000;'>1.22</span><span>    0.725   0.5   18.9
+#&gt; </span><span style='color: #555555;'> 5</span><span>   0.406     6.32   4.25   -</span><span style='color: #BB0000;'>0.875</span><span>   0     20.5
+#&gt; </span><span style='color: #555555;'> 6</span><span>  -</span><span style='color: #BB0000;'>4.05</span><span>      5.5    3.18   -</span><span style='color: #BB0000;'>0.375</span><span>   0.2   18.5
+#&gt; </span><span style='color: #555555;'> 7</span><span>  -</span><span style='color: #BB0000;'>9.41</span><span>      5.23  15.6     0.115   0.51  15.1
+#&gt; </span><span style='color: #555555;'> 8</span><span>  -</span><span style='color: #BB0000;'>6.25</span><span>      4.66  -</span><span style='color: #BB0000;'>4.72</span><span>   -</span><span style='color: #BB0000;'>0.125</span><span>   0.2   16.2
+#&gt; </span><span style='color: #555555;'> 9</span><span> -</span><span style='color: #BB0000;'>19.2</span><span>       4.4   -</span><span style='color: #BB0000;'>7.42</span><span>   -</span><span style='color: #BB0000;'>0.935</span><span>   4.9   11.1
+#&gt; </span><span style='color: #555555;'>10</span><span> -</span><span style='color: #BB0000;'>20.6</span><span>       3.77 -</span><span style='color: #BB0000;'>14.8</span><span>     3.56    1.05  10.8
+#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>center_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   terms               value id          
-#&gt;   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 "carbon"               NA center_qfjMB
-#&gt; 2 "contains(\"gen\")"    NA center_qfjMB
-#&gt; 3 "-hydrogen"            NA center_qfjMB</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 3
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>carbon</span><span style='color: #555555;'>"</span><span>               </span><span style='color: #BB0000;'>NA</span><span> center_qfjMB
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>"</span><span>contains(\"gen\")</span><span style='color: #555555;'>"</span><span>    </span><span style='color: #BB0000;'>NA</span><span> center_qfjMB
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>"</span><span>-hydrogen</span><span style='color: #555555;'>"</span><span>            </span><span style='color: #BB0000;'>NA</span><span> center_qfjMB</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>center_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   terms    value id          
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 carbon   48.4  center_qfjMB
-#&gt; 2 oxygen   38.5  center_qfjMB
-#&gt; 3 nitrogen  1.07 center_qfjMB</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon   48.4  center_qfjMB
+#&gt; </span><span style='color: #555555;'>2</span><span> oxygen   38.5  center_qfjMB
+#&gt; </span><span style='color: #555555;'>3</span><span> nitrogen  1.07 center_qfjMB</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

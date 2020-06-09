@@ -43,10 +43,14 @@
 <script src="pkgdown.js"></script>
 <link href="tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="NA" />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -89,8 +93,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -163,12 +167,19 @@
 
 <p>If you are filing a bug, make sure these boxes are checked before submitting your issue— thank you!</p>
 <ul>
-<li>[ ] Start a new R session</li>
-<li>[ ] Install the latest version of of the package: <code><a href="https://rdrr.io/r/utils/update.packages.html">update.packages(oldPkgs="recipes", ask=FALSE)</a></code>
+<li>
+<input type="checkbox" disabled>
+Start a new R session</li>
+<li>
+<input type="checkbox" disabled>
+Install the latest version of of the package: <code><a href="https://rdrr.io/r/utils/update.packages.html">update.packages(oldPkgs="recipes", ask=FALSE)</a></code>
 </li>
-<li>[ ] <a href="http://stackoverflow.com/a/5963610">Write a minimal reproducible example</a>
+<li>
+<input type="checkbox" disabled><a href="http://stackoverflow.com/a/5963610">Write a minimal reproducible example</a>
 </li>
-<li>[ ] run <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code> and add the results to the issue. Even better would be to use the <a href="https://github.com/r-lib/sessioninfo"><code>sessioninfo</code></a> package’s <code>session_info()</code>.</li>
+<li>
+<input type="checkbox" disabled>
+run <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code> and add the results to the issue. Even better would be to use the <a href="https://github.com/r-lib/sessioninfo"><code>sessioninfo</code></a> package’s <code>session_info()</code>.</li>
 </ul>
 <div id="minimal-reproducible-example" class="section level3">
 <h3 class="hasAnchor">
@@ -178,7 +189,7 @@
 <div id="minimal-reproducible-dataset" class="section level4">
 <h4 class="hasAnchor">
 <a href="#minimal-reproducible-dataset" class="anchor"></a><em>Minimal</em> Reproducible Dataset:</h4>
-<p>If you are not using a data set in a package then use e.g. <code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> to give us something that can be put in R immediately, e.g.</p>
+<p>If you are not using a data set in a package then use e.g. <code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> to give us something that can be put in R immediately, e.g. </p>
 <div class="sourceCode" id="cb1"><html><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris</span>,<span class="fl">4</span>))</pre></html></div>
 <p>Without a dataset, there usually isn’t much that we can do to help.</p>
 <p>If your data frame has a factor with many levels, the <code>dput</code> output can be unwieldy because it will still list all the possible factor levels even if they aren’t present in the the subset of your data. To solve this issue, you can use the <code><a href="https://rdrr.io/r/base/droplevels.html">droplevels()</a></code> function. Notice below how species is a factor with only one level: <code><a href="https://rdrr.io/r/base/dput.html">dput(droplevels(head(iris, 4)))</a></code>.</p>

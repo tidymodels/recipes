@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Preprocessing Tools to Create Design Matrices">
 <meta property="og:description" content='An extensible framework to create and preprocess 
     design matrices. Recipes consist of one or more data manipulation 
@@ -25,7 +26,7 @@
     be estimated from an initial data set and then applied to 
     other data sets. The resulting design matrices can then be used 
     as inputs into statistical or machine learning models. '>
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -54,8 +55,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -121,7 +122,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="recipes" class="section level1">
+<div id="recipes-" class="section level1">
 
 
 <div id="introduction" class="section level2">
@@ -139,6 +140,7 @@
 <span class="no">sonar_rec</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span>(<span class="no">Class</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">Sonar</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/step_center.html">step_center</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>()) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/step_scale.html">step_scale</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>())</pre></div>
+<p>More information on <code>recipes</code> can be found at the <a href="https://www.tidymodels.org/start/recipes/"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org"><code>tidymodels.org</code></a>.</p>
 <p>To install it, use:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"recipes"</span>)
 
@@ -180,7 +182,6 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/tidymodels/recipes"><img src="https://travis-ci.org/tidymodels/recipes.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://github.com/tidymodels/recipes"><img src="https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/github/tidymodels/recipes?branch=master"><img src="https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="http://cran.r-project.org/web/packages/recipes"><img src="http://www.r-pkg.org/badges/version/recipes" alt="CRAN_Status_Badge"></a></li>

@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Dummy Variables Creation — step_dummy" />
@@ -50,7 +54,7 @@
 step that will convert nominal data (e.g. character or factors)
 into one or more numeric binary model terms for the levels of
 the original data." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -93,8 +97,8 @@ the original data." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -345,27 +349,27 @@ and interactions has more information.</p>
 <span class='co'># Without one_hot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dummy_data</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>dummies</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 18 x 3
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>dummies</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
 #&gt;    terms columns             id         
-#&gt;    &lt;chr&gt; &lt;chr&gt;               &lt;chr&gt;      
-#&gt;  1 diet  anything            dummy_bnHQR
-#&gt;  2 diet  halal               dummy_bnHQR
-#&gt;  3 diet  kosher              dummy_bnHQR
-#&gt;  4 diet  mostly anything     dummy_bnHQR
-#&gt;  5 diet  mostly halal        dummy_bnHQR
-#&gt;  6 diet  mostly kosher       dummy_bnHQR
-#&gt;  7 diet  mostly other        dummy_bnHQR
-#&gt;  8 diet  mostly vegan        dummy_bnHQR
-#&gt;  9 diet  mostly vegetarian   dummy_bnHQR
-#&gt; 10 diet  other               dummy_bnHQR
-#&gt; 11 diet  strictly anything   dummy_bnHQR
-#&gt; 12 diet  strictly halal      dummy_bnHQR
-#&gt; 13 diet  strictly kosher     dummy_bnHQR
-#&gt; 14 diet  strictly other      dummy_bnHQR
-#&gt; 15 diet  strictly vegan      dummy_bnHQR
-#&gt; 16 diet  strictly vegetarian dummy_bnHQR
-#&gt; 17 diet  vegan               dummy_bnHQR
-#&gt; 18 diet  vegetarian          dummy_bnHQR</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'> 1</span><span> diet  anything            dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 2</span><span> diet  halal               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 3</span><span> diet  kosher              dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 4</span><span> diet  mostly anything     dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 5</span><span> diet  mostly halal        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 6</span><span> diet  mostly kosher       dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 7</span><span> diet  mostly other        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 8</span><span> diet  mostly vegan        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 9</span><span> diet  mostly vegetarian   dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>10</span><span> diet  other               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>11</span><span> diet  strictly anything   dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>12</span><span> diet  strictly halal      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>13</span><span> diet  strictly kosher     dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>14</span><span> diet  strictly other      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>15</span><span> diet  strictly vegan      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>16</span><span> diet  strictly vegetarian dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>17</span><span> diet  vegan               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>18</span><span> diet  vegetarian          dummy_CL8hh</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

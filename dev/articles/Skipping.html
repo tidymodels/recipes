@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="../tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="On Skipping Steps">
 <meta property="og:description" content="recipes">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -49,8 +50,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -143,16 +144,36 @@
 <p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
 </div>
+<div id="other-examples" class="section level1">
+<h1 class="hasAnchor">
+<a href="#other-examples" class="anchor"></a>Other Examples</h1>
+<p>There are other steps that have a default value of <code>skip = TRUE</code>:</p>
+<ul>
+<li>
+<code><a href="../reference/step_filter.html">step_filter()</a></code> allows for arbitrary filtering of rows.</li>
+<li>
+<code><a href="../reference/step_slice.html">step_slice()</a></code> also removes (or adds) rows to the data.</li>
+<li>
+<code><a href="../reference/step_sample.html">step_sample()</a></code> enables random sampling of the data set.</li>
+<li>
+<code><a href="../reference/step_naomit.html">step_naomit()</a></code> will remove rows with missing values in certain columns.</li>
+</ul>
+<p>The main issue with these steps being applied to new data (i.e. after the recipe has been trained) is that the non-outcome rows can become out-of-sync with the outcome data.</p>
+<p>For example, when <code><a href="../reference/bake.html">bake()</a></code> is run with <code><a href="../reference/step_naomit.html">step_naomit(skip = FALSE)</a></code> and their are missing values, the predictors will have fewer rows than the outcome vector. When model predictions are produced and merged with the other data, their will be discordant rows. In this case, it would be better to have missing values in the predictions and a full data set than a subset of predictions from the complete data. The <a href="https://tidymodels.github.io/model-implementation-principles/model-predictions.html">general rule</a> in tidymodels is that, for models,</p>
+<blockquote>
+<p>The return value is a tibble with the <strong>same number of rows</strong> as the data being predicted and in the same order.</p>
+</blockquote>
+</div>
 <div id="how-to-skip-steps" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-skip-steps" class="anchor"></a>How To Skip Steps</h1>
 <p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>FALSE</code>. When using this option:</p>
 <ul>
-<li>No steps are skipped during <code>prep</code>
+<li>No steps are skipped during <code><a href="../reference/prep.html">prep()</a></code>
 </li>
-<li>Steps with <code>skip = TRUE</code> are not applied to the data when <code>bake</code> is called</li>
+<li>Steps with <code>skip = TRUE</code> are not applied to the data when <code><a href="../reference/bake.html">bake()</a></code> is called</li>
 </ul>
-<p>Recall that there are two ways of getting the results for the training set with <code>recipes</code>. First, <code>bake</code> can be used as usual. Second, <code>juice</code> is a shortcut that will use the already processed data that is contained in the recipe when <code><a href="../reference/prep.html">prep(recipe, retain = TRUE)</a></code> is used. <code>juice</code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
+<p>Recall that there are two ways of getting the results for the training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as usual. Second, <code><a href="../reference/juice.html">juice()</a></code> is a shortcut that will use the already processed data that is contained in the recipe when <code><a href="../reference/prep.html">prep(recipe, retain = TRUE)</a></code> is used. <code><a href="../reference/juice.html">juice()</a></code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
 </div>
 <div id="be-careful" class="section level1">
 <h1 class="hasAnchor">
@@ -186,7 +207,7 @@
 <span class="co">#&gt; 4  253. -36.7</span>
 <span class="co">#&gt; 5  355.  28.3</span>
 <span class="co">#&gt; 6  220. -41.7</span></pre></body></html></div>
-<p>This should emphasize that <code>juice</code> should be used to get the training set values whenever a step is skipped.</p>
+<p>This should emphasize that <code><a href="../reference/juice.html">juice()</a></code> should be used to get the training set values whenever a step is skipped.</p>
 </div>
   </div>
 

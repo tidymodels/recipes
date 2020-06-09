@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="../tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="How are categorical predictors handled in `recipes`?">
 <meta property="og:description" content="recipes">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -49,8 +50,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -248,14 +249,14 @@
   <span class="co"># show a few specific rows</span>
   <span class="fu">slice</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">51</span>, <span class="fl">101</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()
-<span class="co">#&gt;   (Intercept) Speciesversicolor Speciesvirginica Sepal.Length</span>
-<span class="co">#&gt; 1           1                 0                0          5.1</span>
-<span class="co">#&gt; 2           1                 1                0          7.0</span>
-<span class="co">#&gt; 3           1                 0                1          6.3</span>
-<span class="co">#&gt;   Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length</span>
-<span class="co">#&gt; 1                              0                           0.0</span>
-<span class="co">#&gt; 2                              7                           0.0</span>
-<span class="co">#&gt; 3                              0                           6.3</span></pre></body></html></div>
+<span class="co">#&gt;     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length</span>
+<span class="co">#&gt; 1             1                 0                0          5.1</span>
+<span class="co">#&gt; 51            1                 1                0          7.0</span>
+<span class="co">#&gt; 101           1                 0                1          6.3</span>
+<span class="co">#&gt;     Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length</span>
+<span class="co">#&gt; 1                                0                           0.0</span>
+<span class="co">#&gt; 51                               7                           0.0</span>
+<span class="co">#&gt; 101                              0                           6.3</span></pre></body></html></div>
 <p>With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variable?</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Must I do this?</span>
 <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
@@ -300,7 +301,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Dummy variables from Species [trained]</span>
 <span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sepal.Length [trained]</span></pre></body></html></div>
-<p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>
+<p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>
 </div>
 <div id="warning" class="section level2">
 <h2 class="hasAnchor">
@@ -332,7 +333,7 @@
 <a href="#getting-all-of-the-indicator-variables" class="anchor"></a>Getting All of the Indicator Variables</h2>
 <p>As mentioned above, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created. You might want to get all of them back.</p>
 <p>Historically, <em>C</em> - 1 are used so that a linear dependency is avoided in the design matrix; all <em>C</em> dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can’t be computed. This technical term for a the design matrix like this is “less than full rank”.</p>
-<p>There are models (e.g. <code>glmnet</code> and others) that can avoid this issue so you might want to get all of the columns. To do this, <code>step_dummy</code> has an option called <code>one_hot</code> that will make sure that all <em>C</em> are produced:</p>
+<p>There are models (e.g. <code>glmnet</code> and others) that can avoid this issue so you might want to get all of the columns. To do this, <code>step_dummy</code> has an option called <code>one_hot</code> that will make sure that all <em>C</em> are produced:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>, <span class="kw">one_hot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>

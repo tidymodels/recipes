@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="../tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Basic Recipes">
 <meta property="og:description" content="recipes">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -49,8 +50,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -147,10 +148,10 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"credit_data"</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">55</span>)
-<span class="no">train_test_split</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/initial_split.html">initial_split</a></span>(<span class="no">credit_data</span>)
+<span class="no">train_test_split</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span>(<span class="no">credit_data</span>)
 
-<span class="no">credit_train</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/initial_split.html">training</a></span>(<span class="no">train_test_split</span>)
-<span class="no">credit_test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidymodels.github.io/rsample/reference/initial_split.html">testing</a></span>(<span class="no">train_test_split</span>)</pre></body></html></div>
+<span class="no">credit_train</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">training</a></span>(<span class="no">train_test_split</span>)
+<span class="no">credit_test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span>(<span class="no">train_test_split</span>)</pre></body></html></div>
 <p>Note that there are some missing values in these data:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(<span class="no">credit_train</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">x</span>)), <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fl">1</span>))
 <span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job </span>
@@ -176,7 +177,7 @@
 <span class="co">#&gt;    outcome          1</span>
 <span class="co">#&gt;  predictor         13</span></pre></body></html></div>
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
-<p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
+<p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
 <div id="preprocessing-steps" class="section level2">
 <h2 class="hasAnchor">
@@ -187,7 +188,7 @@ rec_obj &lt;- rec_obj %&gt;% step_{X}(arguments)</pre></body></html></div>
 <p><code>step_dummy</code> and the other functions will always return updated recipes.</p>
 <p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a>-like selector functions can be used:</p>
 <ul>
-<li>use basic variable names (e.g. <code>x1, x2</code>),</li>
+<li>use basic variable names (e.g. <code>x1, x2</code>),</li>
 <li>
 <a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> functions for selecting variables: <code>contains</code>, <code>ends_with</code>, <code>everything</code>, <code>matches</code>, <code>num_range</code>, and <code>starts_with</code>,</li>
 <li>functions that subset on the role of the variables that have been specified so far: <code>all_outcomes</code>, <code>all_predictors</code>, <code>has_role</code>, or</li>
@@ -272,7 +273,7 @@ rec_obj &lt;- rec_obj %&gt;% step_{X}(arguments)</pre></body></html></div>
 <span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span>
 <span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span>
 <span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></pre></body></html></div>
-<p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
+<p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">train_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="no">trained_rec</span>, <span class="kw">new_data</span> <span class="kw">=</span> <span class="no">credit_train</span>)
 <span class="no">test_data</span>  <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="no">trained_rec</span>, <span class="kw">new_data</span> <span class="kw">=</span> <span class="no">credit_test</span>)</pre></body></html></div>
@@ -316,28 +317,29 @@ rec_obj &lt;- rec_obj %&gt;% step_{X}(arguments)</pre></body></html></div>
 <pre><code>#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   
 #&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       
 #&gt;  [7] "step_classdist"     "step_corr"          "step_count"        
-#&gt; [10] "step_date"          "step_depth"         "step_discretize"   
-#&gt; [13] "step_downsample"    "step_dummy"         "step_factor2string"
-#&gt; [16] "step_filter"        "step_geodist"       "step_holiday"      
-#&gt; [19] "step_hyperbolic"    "step_ica"           "step_integer"      
-#&gt; [22] "step_interact"      "step_intercept"     "step_inverse"      
-#&gt; [25] "step_invlogit"      "step_isomap"        "step_knnimpute"    
-#&gt; [28] "step_kpca"          "step_kpca_poly"     "step_kpca_rbf"     
-#&gt; [31] "step_lag"           "step_lincomb"       "step_log"          
-#&gt; [34] "step_logit"         "step_lowerimpute"   "step_meanimpute"   
-#&gt; [37] "step_medianimpute"  "step_modeimpute"    "step_mutate"       
-#&gt; [40] "step_mutate_at"     "step_naomit"        "step_nnmf"         
-#&gt; [43] "step_normalize"     "step_novel"         "step_ns"           
-#&gt; [46] "step_num2factor"    "step_nzv"           "step_ordinalscore" 
-#&gt; [49] "step_other"         "step_pca"           "step_pls"          
-#&gt; [52] "step_poly"          "step_profile"       "step_range"        
-#&gt; [55] "step_ratio"         "step_regex"         "step_relevel"      
-#&gt; [58] "step_relu"          "step_rename"        "step_rename_at"    
-#&gt; [61] "step_rm"            "step_rollimpute"    "step_sample"       
-#&gt; [64] "step_scale"         "step_shuffle"       "step_slice"        
-#&gt; [67] "step_spatialsign"   "step_sqrt"          "step_string2factor"
-#&gt; [70] "step_unknown"       "step_unorder"       "step_upsample"     
-#&gt; [73] "step_window"        "step_YeoJohnson"    "step_zv"</code></pre>
+#&gt; [10] "step_cut"           "step_date"          "step_depth"        
+#&gt; [13] "step_discretize"    "step_downsample"    "step_dummy"        
+#&gt; [16] "step_factor2string" "step_filter"        "step_geodist"      
+#&gt; [19] "step_holiday"       "step_hyperbolic"    "step_ica"          
+#&gt; [22] "step_integer"       "step_interact"      "step_intercept"    
+#&gt; [25] "step_inverse"       "step_invlogit"      "step_isomap"       
+#&gt; [28] "step_knnimpute"     "step_kpca"          "step_kpca_poly"    
+#&gt; [31] "step_kpca_rbf"      "step_lag"           "step_lincomb"      
+#&gt; [34] "step_log"           "step_logit"         "step_lowerimpute"  
+#&gt; [37] "step_meanimpute"    "step_medianimpute"  "step_modeimpute"   
+#&gt; [40] "step_mutate"        "step_mutate_at"     "step_naomit"       
+#&gt; [43] "step_nnmf"          "step_normalize"     "step_novel"        
+#&gt; [46] "step_ns"            "step_num2factor"    "step_nzv"          
+#&gt; [49] "step_ordinalscore"  "step_other"         "step_pca"          
+#&gt; [52] "step_pls"           "step_poly"          "step_profile"      
+#&gt; [55] "step_range"         "step_ratio"         "step_regex"        
+#&gt; [58] "step_relevel"       "step_relu"          "step_rename"       
+#&gt; [61] "step_rename_at"     "step_rm"            "step_rollimpute"   
+#&gt; [64] "step_sample"        "step_scale"         "step_shuffle"      
+#&gt; [67] "step_slice"         "step_spatialsign"   "step_sqrt"         
+#&gt; [70] "step_string2factor" "step_unknown"       "step_unorder"      
+#&gt; [73] "step_upsample"      "step_window"        "step_YeoJohnson"   
+#&gt; [76] "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">

@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Create a Profiling Version of a Data Set — step_profile" />
@@ -51,7 +55,7 @@ will fix the levels of all variables but one and will create a
 sequence of values for the remaining variable. This step can be
 helpful when creating partial regression plots for additive
 models." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,8 +98,8 @@ models." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -300,20 +304,20 @@ based on the fixed and profiled variable's information.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_profile</span>(-<span class='no'>date</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'>vars</span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span></div><div class='output co'>#&gt; # A tibble: 100 x 3
+  <span class='no'>juice</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 3</span><span>
 #&gt;    diet     height date      
-#&gt;    &lt;fct&gt;     &lt;dbl&gt; &lt;date&gt;    
-#&gt;  1 anything     68 2011-06-27
-#&gt;  2 anything     68 2011-06-30
-#&gt;  3 anything     68 2011-07-04
-#&gt;  4 anything     68 2011-07-08
-#&gt;  5 anything     68 2011-07-11
-#&gt;  6 anything     68 2011-07-15
-#&gt;  7 anything     68 2011-07-19
-#&gt;  8 anything     68 2011-07-23
-#&gt;  9 anything     68 2011-07-26
-#&gt; 10 anything     68 2011-07-30
-#&gt; # … with 90 more rows</div><div class='input'>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'> 1</span><span> anything     68 2011-06-27
+#&gt; </span><span style='color: #555555;'> 2</span><span> anything     68 2011-06-30
+#&gt; </span><span style='color: #555555;'> 3</span><span> anything     68 2011-07-04
+#&gt; </span><span style='color: #555555;'> 4</span><span> anything     68 2011-07-08
+#&gt; </span><span style='color: #555555;'> 5</span><span> anything     68 2011-07-11
+#&gt; </span><span style='color: #555555;'> 6</span><span> anything     68 2011-07-15
+#&gt; </span><span style='color: #555555;'> 7</span><span> anything     68 2011-07-19
+#&gt; </span><span style='color: #555555;'> 8</span><span> anything     68 2011-07-23
+#&gt; </span><span style='color: #555555;'> 9</span><span> anything     68 2011-07-26
+#&gt; </span><span style='color: #555555;'>10</span><span> anything     68 2011-07-30
+#&gt; </span><span style='color: #555555;'># … with 90 more rows</span><span></div><div class='input'>
 
 <span class='co'>##########</span>
 
@@ -348,13 +352,11 @@ based on the fixed and profiled variable's information.</p>
 
 <span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>bind_rows</span>(<span class='no'>grid_data</span>, <span class='no'>pctl_data</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    alpha</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>plot_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>pred</span>)) +
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></pre>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

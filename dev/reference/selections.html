@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Methods for Select Variables in Step Functions — selections" />
@@ -53,7 +57,7 @@ type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:
 
-  recipe( ~ ., data = USArrests) %&amp;amp;gt;%
+  recipe( ~ ., data = USArrests) %&amp;gt;%
     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
 
 The first four arguments indicate which variables should be
@@ -80,7 +84,7 @@ tidyselect::num_range(), tidyselect::everything(), and
 tidyselect::one_of().
 For example:
 
-  recipe(Species ~ ., data = iris) %&amp;amp;gt;%
+  recipe(Species ~ ., data = iris) %&amp;gt;%
     step_center(starts_with(&quot;Sepal&quot;), -contains(&quot;Width&quot;))
 
 would only select Sepal.Length
@@ -102,7 +106,7 @@ conjunction with the previous functions described for selecting
 variables using their names:
 
   data(biomass)
-  recipe(HHV ~ ., data = biomass) %&amp;amp;gt;%
+  recipe(HHV ~ ., data = biomass) %&amp;gt;%
     step_center(all_numeric(), -all_outcomes())
 
 This results in all the numeric predictors: carbon, hydrogen,
@@ -127,7 +131,7 @@ By type: has_type(), all_numeric(),
 and all_nominal()
 
 " />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -170,8 +174,8 @@ and all_nominal()
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -251,7 +255,7 @@ type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>Murder</span>, <span class='no'>Assault</span>, <span class='no'>UrbanPop</span>, <span class='no'>Rape</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
 
 <p>The first four arguments indicate which variables should be
@@ -272,13 +276,13 @@ excluded variable(s).</p></li>
 </ol>
 
 <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::ends_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::matches()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::everything()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code>, and
 <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>.
 For example:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>), -<span class='fu'>contains</span>(<span class='st'>"Width"</span>))</pre>
 
 <p>would only select <code>Sepal.Length</code></p>
@@ -300,7 +304,7 @@ conjunction with the previous functions described for selecting
 variables using their names:</p>
 <pre>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), -<span class='fu'><a href='has_role.html'>all_outcomes</a></span>())</pre>
 
 <p>This results in all the numeric predictors: carbon, hydrogen,
@@ -315,10 +319,10 @@ useful if <code>Species</code> was converted to dummy variables
 previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
 <p>The complete list of allowable functions in steps:</p>
 <ul>
-<li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::num_range()</a></code>, and
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::everything()</a></code></p></li>
+<li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code></p></li>
 <li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
 <code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
 <li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,

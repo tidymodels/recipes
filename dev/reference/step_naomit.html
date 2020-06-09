@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Remove observations with missing values — step_naomit" />
 <meta property="og:description" content="step_naomit creates a specification of a recipe step that
 will add remove observations (rows of data) if they contain NA
 or NaN values." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ or NaN values." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -219,8 +223,9 @@ be populated (eventually) by the <code>terms</code> argument.</p></td>
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+Care should be taken when using <code>skip = FALSE</code>; in most instances that
+affect the rows of the data being predicted, this step probably should not
+be applied.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -245,21 +250,21 @@ new step added to the sequence of existing steps (if any).</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Ozone</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>airquality</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_naomit</span>(<span class='no'>Solar.R</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>airquality</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; # A tibble: 146 x 6
+  <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
 #&gt;    Solar.R  Wind  Temp Month   Day Ozone
-#&gt;      &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1     190   7.4    67     5     1    41
-#&gt;  2     118   8      72     5     2    36
-#&gt;  3     149  12.6    74     5     3    12
-#&gt;  4     313  11.5    62     5     4    18
-#&gt;  5     299   8.6    65     5     7    23
-#&gt;  6      99  13.8    59     5     8    19
-#&gt;  7      19  20.1    61     5     9     8
-#&gt;  8     194   8.6    69     5    10    NA
-#&gt;  9     256   9.7    69     5    12    16
-#&gt; 10     290   9.2    66     5    13    11
-#&gt; # … with 136 more rows</div><div class='input'>
-</div></pre>
+#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>     190   7.4    67     5     1    41
+#&gt; </span><span style='color: #555555;'> 2</span><span>     118   8      72     5     2    36
+#&gt; </span><span style='color: #555555;'> 3</span><span>     149  12.6    74     5     3    12
+#&gt; </span><span style='color: #555555;'> 4</span><span>     313  11.5    62     5     4    18
+#&gt; </span><span style='color: #555555;'> 5</span><span>     299   8.6    65     5     7    23
+#&gt; </span><span style='color: #555555;'> 6</span><span>      99  13.8    59     5     8    19
+#&gt; </span><span style='color: #555555;'> 7</span><span>      19  20.1    61     5     9     8
+#&gt; </span><span style='color: #555555;'> 8</span><span>     194   8.6    69     5    10    </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span>     256   9.7    69     5    12    16
+#&gt; </span><span style='color: #555555;'>10</span><span>     290   9.2    66     5    13    11
+#&gt; </span><span style='color: #555555;'># … with 136 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

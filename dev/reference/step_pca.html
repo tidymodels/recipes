@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="PCA Signal Extraction — step_pca" />
 <meta property="og:description" content="step_pca creates a specification of a recipe step
 that will convert numeric data into one or more principal
 components." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ components." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -319,49 +323,49 @@ Analysis</em>. Springer.</p>
 <span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
 
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
      <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.99</span>)
 <span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_thresh</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; # A tibble: 50 x 4
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 4</span><span>
 #&gt;        PC1     PC2     PC3      PC4
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 -0.976   1.12   -0.440   0.155  
-#&gt;  2 -1.93    1.06    2.02   -0.434  
-#&gt;  3 -1.75   -0.738   0.0542 -0.826  
-#&gt;  4  0.140   1.11    0.113  -0.181  
-#&gt;  5 -2.50   -1.53    0.593  -0.339  
-#&gt;  6 -1.50   -0.978   1.08    0.00145
-#&gt;  7  1.34   -1.08   -0.637  -0.117  
-#&gt;  8 -0.0472 -0.322  -0.711  -0.873  
-#&gt;  9 -2.98    0.0388 -0.571  -0.0953 
-#&gt; 10 -1.62    1.27   -0.339   1.07   
-#&gt; # … with 40 more rows</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> -</span><span style='color: #BB0000;'>0.976</span><span>   1.12   -</span><span style='color: #BB0000;'>0.440</span><span>   0.155  
+#&gt; </span><span style='color: #555555;'> 2</span><span> -</span><span style='color: #BB0000;'>1.93</span><span>    1.06    2.02   -</span><span style='color: #BB0000;'>0.434</span><span>  
+#&gt; </span><span style='color: #555555;'> 3</span><span> -</span><span style='color: #BB0000;'>1.75</span><span>   -</span><span style='color: #BB0000;'>0.738</span><span>   0.054</span><span style='text-decoration: underline;'>2</span><span> -</span><span style='color: #BB0000;'>0.826</span><span>  
+#&gt; </span><span style='color: #555555;'> 4</span><span>  0.140   1.11    0.113  -</span><span style='color: #BB0000;'>0.181</span><span>  
+#&gt; </span><span style='color: #555555;'> 5</span><span> -</span><span style='color: #BB0000;'>2.50</span><span>   -</span><span style='color: #BB0000;'>1.53</span><span>    0.593  -</span><span style='color: #BB0000;'>0.339</span><span>  
+#&gt; </span><span style='color: #555555;'> 6</span><span> -</span><span style='color: #BB0000;'>1.50</span><span>   -</span><span style='color: #BB0000;'>0.978</span><span>   1.08    0.001</span><span style='text-decoration: underline;'>45</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span>  1.34   -</span><span style='color: #BB0000;'>1.08</span><span>   -</span><span style='color: #BB0000;'>0.637</span><span>  -</span><span style='color: #BB0000;'>0.117</span><span>  
+#&gt; </span><span style='color: #555555;'> 8</span><span> -</span><span style='color: #BB0000;'>0.047</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> -</span><span style='color: #BB0000;'>0.322</span><span>  -</span><span style='color: #BB0000;'>0.711</span><span>  -</span><span style='color: #BB0000;'>0.873</span><span>  
+#&gt; </span><span style='color: #555555;'> 9</span><span> -</span><span style='color: #BB0000;'>2.98</span><span>    0.038</span><span style='text-decoration: underline;'>8</span><span> -</span><span style='color: #BB0000;'>0.571</span><span>  -</span><span style='color: #BB0000;'>0.095</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
+#&gt; </span><span style='color: #555555;'>10</span><span> -</span><span style='color: #BB0000;'>1.62</span><span>    1.27   -</span><span style='color: #BB0000;'>0.339</span><span>   1.07   
+#&gt; </span><span style='color: #555555;'># … with 40 more rows</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms         value component id       
-#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
-#&gt; 1 all_numeric()    NA &lt;NA&gt;      pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 16 x 4
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 4</span><span>
 #&gt;    terms      value component id       
-#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
-#&gt;  1 Murder   -0.536  PC1       pca_YT48I
-#&gt;  2 Assault  -0.583  PC1       pca_YT48I
-#&gt;  3 UrbanPop -0.278  PC1       pca_YT48I
-#&gt;  4 Rape     -0.543  PC1       pca_YT48I
-#&gt;  5 Murder    0.418  PC2       pca_YT48I
-#&gt;  6 Assault   0.188  PC2       pca_YT48I
-#&gt;  7 UrbanPop -0.873  PC2       pca_YT48I
-#&gt;  8 Rape     -0.167  PC2       pca_YT48I
-#&gt;  9 Murder   -0.341  PC3       pca_YT48I
-#&gt; 10 Assault  -0.268  PC3       pca_YT48I
-#&gt; 11 UrbanPop -0.378  PC3       pca_YT48I
-#&gt; 12 Rape      0.818  PC3       pca_YT48I
-#&gt; 13 Murder    0.649  PC4       pca_YT48I
-#&gt; 14 Assault  -0.743  PC4       pca_YT48I
-#&gt; 15 UrbanPop  0.134  PC4       pca_YT48I
-#&gt; 16 Rape      0.0890 PC4       pca_YT48I</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'> 1</span><span> Murder   -</span><span style='color: #BB0000;'>0.536</span><span>  PC1       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 2</span><span> Assault  -</span><span style='color: #BB0000;'>0.583</span><span>  PC1       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 3</span><span> UrbanPop -</span><span style='color: #BB0000;'>0.278</span><span>  PC1       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 4</span><span> Rape     -</span><span style='color: #BB0000;'>0.543</span><span>  PC1       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 5</span><span> Murder    0.418  PC2       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 6</span><span> Assault   0.188  PC2       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 7</span><span> UrbanPop -</span><span style='color: #BB0000;'>0.873</span><span>  PC2       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 8</span><span> Rape     -</span><span style='color: #BB0000;'>0.167</span><span>  PC2       pca_YT48I
+#&gt; </span><span style='color: #555555;'> 9</span><span> Murder   -</span><span style='color: #BB0000;'>0.341</span><span>  PC3       pca_YT48I
+#&gt; </span><span style='color: #555555;'>10</span><span> Assault  -</span><span style='color: #BB0000;'>0.268</span><span>  PC3       pca_YT48I
+#&gt; </span><span style='color: #555555;'>11</span><span> UrbanPop -</span><span style='color: #BB0000;'>0.378</span><span>  PC3       pca_YT48I
+#&gt; </span><span style='color: #555555;'>12</span><span> Rape      0.818  PC3       pca_YT48I
+#&gt; </span><span style='color: #555555;'>13</span><span> Murder    0.649  PC4       pca_YT48I
+#&gt; </span><span style='color: #555555;'>14</span><span> Assault  -</span><span style='color: #BB0000;'>0.743</span><span>  PC4       pca_YT48I
+#&gt; </span><span style='color: #555555;'>15</span><span> UrbanPop  0.134  PC4       pca_YT48I
+#&gt; </span><span style='color: #555555;'>16</span><span> Rape      0.089</span><span style='text-decoration: underline;'>0</span><span> PC4       pca_YT48I</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="ICA Signal Extraction — step_ica" />
 <meta property="og:description" content="step_ica creates a specification of a recipe step
 that will convert numeric data into one or more independent
 components." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ components." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -330,13 +334,13 @@ Networks</em>, 13(4-5), 411-430.</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    embed</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; # A tibble: 4 x 4
+#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 4</span><span>
 #&gt;   terms component  value id       
-#&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
-#&gt; 1 V1    IC1       -1.04  ica_3zAWC
-#&gt; 2 V1    IC2       -0.378 ica_3zAWC
-#&gt; 3 V2    IC1       -0.773 ica_3zAWC
-#&gt; 4 V2    IC2        0.788 ica_3zAWC</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'>1</span><span> V1    IC1       -</span><span style='color: #BB0000;'>1.04</span><span>  ica_3zAWC
+#&gt; </span><span style='color: #555555;'>2</span><span> V1    IC2       -</span><span style='color: #BB0000;'>0.378</span><span> ica_3zAWC
+#&gt; </span><span style='color: #555555;'>3</span><span> V2    IC1       -</span><span style='color: #BB0000;'>0.773</span><span> ica_3zAWC
+#&gt; </span><span style='color: #555555;'>4</span><span> V2    IC2        0.788 ica_3zAWC</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

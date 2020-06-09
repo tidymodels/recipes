@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Date Feature Generator — step_date" />
 <meta property="og:description" content="step_date creates a a specification of a recipe
 step that will convert date data into one or more factor or
 numeric variables." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ numeric variables." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -290,9 +294,7 @@ used for this purpose.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:dplyr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'>Attaching package: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    date, intersect, setdiff, union</span></div><div class='input'>
 <span class='no'>examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Dan</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>),
@@ -300,39 +302,39 @@ used for this purpose.</p>
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>Dan</span> + <span class='no'>Stefan</span>, <span class='no'>examples</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   terms            value ordinal id        
-#&gt;   &lt;chr&gt;            &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;     
-#&gt; 1 all_predictors() dow   FALSE   date_wk5hD
-#&gt; 2 all_predictors() month FALSE   date_wk5hD
-#&gt; 3 all_predictors() year  FALSE   date_wk5hD</div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() dow   FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>2</span><span> all_predictors() month FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>3</span><span> all_predictors() year  FALSE   date_4kbnH</div><div class='input'>
 <span class='no'>date_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>date_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>examples</span>)
 
 <span class='no'>date_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>date_rec</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>examples</span>)
-<span class='no'>date_values</span></div><div class='output co'>#&gt; # A tibble: 10 x 8
+<span class='no'>date_values</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt;    Dan        Stefan     Dan_dow Dan_month Dan_year Stefan_dow Stefan_month
-#&gt;    &lt;date&gt;     &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;fct&gt;      &lt;fct&gt;       
-#&gt;  1 2002-03-05 2006-01-14 Tue     Mar           2002 Sat        Jan         
-#&gt;  2 2002-03-06 2006-01-15 Wed     Mar           2002 Sun        Jan         
-#&gt;  3 2002-03-07 2006-01-16 Thu     Mar           2002 Mon        Jan         
-#&gt;  4 2002-03-08 2006-01-17 Fri     Mar           2002 Tue        Jan         
-#&gt;  5 2002-03-09 2006-01-18 Sat     Mar           2002 Wed        Jan         
-#&gt;  6 2002-03-10 2006-01-19 Sun     Mar           2002 Thu        Jan         
-#&gt;  7 2002-03-11 2006-01-20 Mon     Mar           2002 Fri        Jan         
-#&gt;  8 2002-03-12 2006-01-21 Tue     Mar           2002 Sat        Jan         
-#&gt;  9 2002-03-13 2006-01-22 Wed     Mar           2002 Sun        Jan         
-#&gt; 10 2002-03-14 2006-01-23 Thu     Mar           2002 Mon        Jan         
-#&gt; # … with 1 more variable: Stefan_year &lt;dbl&gt;</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2002-03-05 2006-01-14 Tue     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sat        Jan         
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2002-03-06 2006-01-15 Wed     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sun        Jan         
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2002-03-07 2006-01-16 Thu     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Mon        Jan         
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2002-03-08 2006-01-17 Fri     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Tue        Jan         
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2002-03-09 2006-01-18 Sat     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Wed        Jan         
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2002-03-10 2006-01-19 Sun     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Thu        Jan         
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2002-03-11 2006-01-20 Mon     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Fri        Jan         
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2002-03-12 2006-01-21 Tue     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sat        Jan         
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2002-03-13 2006-01-22 Wed     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sun        Jan         
+#&gt; </span><span style='color: #555555;'>10</span><span> 2002-03-14 2006-01-23 Thu     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Mon        Jan         
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: Stefan_year </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>date_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   terms  value ordinal id        
-#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;     
-#&gt; 1 Dan    dow   FALSE   date_wk5hD
-#&gt; 2 Dan    month FALSE   date_wk5hD
-#&gt; 3 Dan    year  FALSE   date_wk5hD
-#&gt; 4 Stefan dow   FALSE   date_wk5hD
-#&gt; 5 Stefan month FALSE   date_wk5hD
-#&gt; 6 Stefan year  FALSE   date_wk5hD</div><div class='input'>
-</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'>1</span><span> Dan    dow   FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>2</span><span> Dan    month FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>3</span><span> Dan    year  FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>4</span><span> Stefan dow   FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>5</span><span> Stefan month FALSE   date_4kbnH
+#&gt; </span><span style='color: #555555;'>6</span><span> Stefan year  FALSE   date_4kbnH</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

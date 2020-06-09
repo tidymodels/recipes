@@ -43,12 +43,16 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Imputation via K-Nearest Neighbors — step_knnimpute" />
 <meta property="og:description" content="step_knnimpute creates a specification of a recipe step that will
 impute missing data using nearest neighbors." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,8 +95,8 @@ impute missing data using nearest neighbors." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -319,32 +323,32 @@ of its properties," Biometrics, 857-871.</p>
 #&gt; [1,]   1.24 0.59333333
 #&gt; [2,]   0.30 0.92333333
 #&gt; [3,]   0.06 0.04666667</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms            predictors neighbors id             
-#&gt;   &lt;chr&gt;            &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;          
-#&gt; 1 all_predictors() &lt;NA&gt;               3 knnimpute_iyPXM</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 4
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>                 3 knnimpute_iyPXM</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 20 x 4</span><span>
 #&gt;    terms    predictors neighbors id             
-#&gt;    &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;          
-#&gt;  1 carbon   hydrogen           3 knnimpute_iyPXM
-#&gt;  2 carbon   oxygen             3 knnimpute_iyPXM
-#&gt;  3 carbon   nitrogen           3 knnimpute_iyPXM
-#&gt;  4 carbon   sulfur             3 knnimpute_iyPXM
-#&gt;  5 hydrogen carbon             3 knnimpute_iyPXM
-#&gt;  6 hydrogen oxygen             3 knnimpute_iyPXM
-#&gt;  7 hydrogen nitrogen           3 knnimpute_iyPXM
-#&gt;  8 hydrogen sulfur             3 knnimpute_iyPXM
-#&gt;  9 oxygen   carbon             3 knnimpute_iyPXM
-#&gt; 10 oxygen   hydrogen           3 knnimpute_iyPXM
-#&gt; 11 oxygen   nitrogen           3 knnimpute_iyPXM
-#&gt; 12 oxygen   sulfur             3 knnimpute_iyPXM
-#&gt; 13 nitrogen carbon             3 knnimpute_iyPXM
-#&gt; 14 nitrogen hydrogen           3 knnimpute_iyPXM
-#&gt; 15 nitrogen oxygen             3 knnimpute_iyPXM
-#&gt; 16 nitrogen sulfur             3 knnimpute_iyPXM
-#&gt; 17 sulfur   carbon             3 knnimpute_iyPXM
-#&gt; 18 sulfur   hydrogen           3 knnimpute_iyPXM
-#&gt; 19 sulfur   oxygen             3 knnimpute_iyPXM
-#&gt; 20 sulfur   nitrogen           3 knnimpute_iyPXM</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #555555;'> 1</span><span> carbon   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 2</span><span> carbon   oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 3</span><span> carbon   nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 4</span><span> carbon   sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 5</span><span> hydrogen carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 6</span><span> hydrogen oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 7</span><span> hydrogen nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 8</span><span> hydrogen sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'> 9</span><span> oxygen   carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>10</span><span> oxygen   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>11</span><span> oxygen   nitrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>12</span><span> oxygen   sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>13</span><span> nitrogen carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>14</span><span> nitrogen hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>15</span><span> nitrogen oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>16</span><span> nitrogen sulfur             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>17</span><span> sulfur   carbon             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>18</span><span> sulfur   hydrogen           3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>19</span><span> sulfur   oxygen             3 knnimpute_iyPXM
+#&gt; </span><span style='color: #555555;'>20</span><span> sulfur   nitrogen           3 knnimpute_iyPXM</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Distance between two locations — step_geodist" />
 <meta property="og:description" content="step_geodist creates a a specification of a
 recipe step that will calculate the distance between
 points on a map to a reference location." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ points on a map to a reference location." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -283,33 +287,33 @@ method, a tibble with columns echoing the values of <code>lat</code>,
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>Smithsonian</span>)
 
 <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>near_station</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>arrange</span>(<span class='no'>geo_dist</span>)</div><div class='output co'>#&gt; # A tibble: 20 x 4
+  <span class='fu'>arrange</span>(<span class='no'>geo_dist</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 20 x 4</span><span>
 #&gt;    name                                              latitude longitude geo_dist
-#&gt;    &lt;fct&gt;                                                &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 National Postal Museum                                38.9     -77.0  0.00421
-#&gt;  2 Renwick Gallery                                       38.9     -77.0  0.0108 
-#&gt;  3 National Museum of the American Indian                38.9     -77.0  0.0161 
-#&gt;  4 Smithsonian American Art Museum                       38.9     -77.0  0.0189 
-#&gt;  5 National Air and Space Museum                         38.9     -77.0  0.0190 
-#&gt;  6 National Portrait Gallery                             38.9     -77.0  0.0190 
-#&gt;  7 Hirshhorn Museum and Sculpture Garden                 38.9     -77.0  0.0216 
-#&gt;  8 Arthur M. Sackler Gallery                             38.9     -77.0  0.0228 
-#&gt;  9 Arts and Industries Building                          38.9     -77.0  0.0230 
-#&gt; 10 National Museum of Natural History                    38.9     -77.0  0.0232 
-#&gt; 11 National Museum of African Art                        38.9     -77.0  0.0239 
-#&gt; 12 Smithsonian Institution Building                      38.9     -77.0  0.0241 
-#&gt; 13 Freer Gallery of Art                                  38.9     -77.0  0.0247 
-#&gt; 14 National Museum of American History                   38.9     -77.0  0.0270 
-#&gt; 15 National Museum of African American History and …     38.9     -77.0  0.0295 
-#&gt; 16 Anacostia Community Museum                            38.9     -77.0  0.0514 
-#&gt; 17 National Zoological Park                              38.9     -77.1  0.0552 
-#&gt; 18 Steven F. Udvar-Hazy Center                           38.9     -77.4  0.440  
-#&gt; 19 George Gustav Heye Center                             40.7     -74.0  3.49   
-#&gt; 20 Cooper Hewitt, Smithsonian Design Museum              40.8     -74.0  3.58   </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>near_station</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 6
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> National Postal Museum                                38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.004</span><span style='text-decoration: underline;'>21</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> Renwick Gallery                                       38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.010</span><span style='text-decoration: underline;'>8</span><span> 
+#&gt; </span><span style='color: #555555;'> 3</span><span> National Museum of the American Indian                38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.016</span><span style='text-decoration: underline;'>1</span><span> 
+#&gt; </span><span style='color: #555555;'> 4</span><span> Smithsonian American Art Museum                       38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.018</span><span style='text-decoration: underline;'>9</span><span> 
+#&gt; </span><span style='color: #555555;'> 5</span><span> National Air and Space Museum                         38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.019</span><span style='text-decoration: underline;'>0</span><span> 
+#&gt; </span><span style='color: #555555;'> 6</span><span> National Portrait Gallery                             38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.019</span><span style='text-decoration: underline;'>0</span><span> 
+#&gt; </span><span style='color: #555555;'> 7</span><span> Hirshhorn Museum and Sculpture Garden                 38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.021</span><span style='text-decoration: underline;'>6</span><span> 
+#&gt; </span><span style='color: #555555;'> 8</span><span> Arthur M. Sackler Gallery                             38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.022</span><span style='text-decoration: underline;'>8</span><span> 
+#&gt; </span><span style='color: #555555;'> 9</span><span> Arts and Industries Building                          38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.023</span><span style='text-decoration: underline;'>0</span><span> 
+#&gt; </span><span style='color: #555555;'>10</span><span> National Museum of Natural History                    38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.023</span><span style='text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #555555;'>11</span><span> National Museum of African Art                        38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.023</span><span style='text-decoration: underline;'>9</span><span> 
+#&gt; </span><span style='color: #555555;'>12</span><span> Smithsonian Institution Building                      38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.024</span><span style='text-decoration: underline;'>1</span><span> 
+#&gt; </span><span style='color: #555555;'>13</span><span> Freer Gallery of Art                                  38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.024</span><span style='text-decoration: underline;'>7</span><span> 
+#&gt; </span><span style='color: #555555;'>14</span><span> National Museum of American History                   38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.027</span><span style='text-decoration: underline;'>0</span><span> 
+#&gt; </span><span style='color: #555555;'>15</span><span> National Museum of African American History and …     38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.029</span><span style='text-decoration: underline;'>5</span><span> 
+#&gt; </span><span style='color: #555555;'>16</span><span> Anacostia Community Museum                            38.9     -</span><span style='color: #BB0000;'>77.0</span><span>  0.051</span><span style='text-decoration: underline;'>4</span><span> 
+#&gt; </span><span style='color: #555555;'>17</span><span> National Zoological Park                              38.9     -</span><span style='color: #BB0000;'>77.1</span><span>  0.055</span><span style='text-decoration: underline;'>2</span><span> 
+#&gt; </span><span style='color: #555555;'>18</span><span> Steven F. Udvar-Hazy Center                           38.9     -</span><span style='color: #BB0000;'>77.4</span><span>  0.440  
+#&gt; </span><span style='color: #555555;'>19</span><span> George Gustav Heye Center                             40.7     -</span><span style='color: #BB0000;'>74.0</span><span>  3.49   
+#&gt; </span><span style='color: #555555;'>20</span><span> Cooper Hewitt, Smithsonian Design Museum              40.8     -</span><span style='color: #BB0000;'>74.0</span><span>  3.58   </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>near_station</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
 #&gt;   latitude longitude ref_latitude ref_longitude name     id           
-#&gt;   &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;        
-#&gt; 1 latitude longitude         38.9         -77.0 geo_dist geodist_fCgON</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'>1</span><span> latitude longitude         38.9         -</span><span style='color: #BB0000;'>77.0</span><span> geo_dist geodist_lihkJ</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

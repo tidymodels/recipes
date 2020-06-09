@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Impute Numeric Data Using a Rolling Window Statistic — step_rollimpute" />
 <meta property="og:description" content="step_rollimpute creates a specification of a
 recipe step that will substitute missing values of numeric
 variables by the a measure of location (e.g. median) within a moving window." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ variables by the a measure of location (e.g. median) within a moving window." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -289,21 +293,21 @@ prior to the current point.</p>
   <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 4
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 4</span><span>
 #&gt;    day           x1    x2    x3
-#&gt;    &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 2012-06-08  0.89 0.79  0.580
-#&gt;  2 2012-06-09  0.53 0.79  0.45 
-#&gt;  3 2012-06-10  0.86 0.79  0.67 
-#&gt;  4 2012-06-11  0.92 0.79  0.05 
-#&gt;  5 2012-06-12  0.86 0.88  0.27 
-#&gt;  6 2012-06-13  0.86 0.6   0.13 
-#&gt;  7 2012-06-14  0.97 0.79  0.67 
-#&gt;  8 2012-06-15  0.85 0.27  0.16 
-#&gt;  9 2012-06-16  0.86 0.11  0.36 
-#&gt; 10 2012-06-17  0.96 0.435 0.09 
-#&gt; 11 2012-06-18  0.91 0.16  0.76 
-#&gt; 12 2012-06-19  0.07 0.86  0.74 </div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2012-06-08  0.89 0.79  0.580
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2012-06-09  0.53 0.79  0.45 
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2012-06-10  0.86 0.79  0.67 
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2012-06-11  0.92 0.79  0.05 
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2012-06-12  0.86 0.88  0.27 
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2012-06-13  0.86 0.6   0.13 
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2012-06-14  0.97 0.79  0.67 
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2012-06-15  0.85 0.27  0.16 
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2012-06-16  0.86 0.11  0.36 
+#&gt; </span><span style='color: #555555;'>10</span><span> 2012-06-17  0.96 0.435 0.09 
+#&gt; </span><span style='color: #555555;'>11</span><span> 2012-06-18  0.91 0.16  0.76 
+#&gt; </span><span style='color: #555555;'>12</span><span> 2012-06-19  0.07 0.86  0.74 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

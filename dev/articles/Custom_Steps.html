@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="../tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Creating Custom Step Functions">
 <meta property="og:description" content="recipes">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -49,8 +50,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -127,293 +128,12 @@
 
     
     
-<p>The <code>recipes</code> package contains a number of different operations:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">recipes</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>(<span class="st">"package:recipes"</span>, <span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"^step_"</span>)
-<span class="co">#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   </span>
-<span class="co">#&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       </span>
-<span class="co">#&gt;  [7] "step_classdist"     "step_corr"          "step_count"        </span>
-<span class="co">#&gt; [10] "step_date"          "step_depth"         "step_discretize"   </span>
-<span class="co">#&gt; [13] "step_downsample"    "step_dummy"         "step_factor2string"</span>
-<span class="co">#&gt; [16] "step_filter"        "step_geodist"       "step_holiday"      </span>
-<span class="co">#&gt; [19] "step_hyperbolic"    "step_ica"           "step_integer"      </span>
-<span class="co">#&gt; [22] "step_interact"      "step_intercept"     "step_inverse"      </span>
-<span class="co">#&gt; [25] "step_invlogit"      "step_isomap"        "step_knnimpute"    </span>
-<span class="co">#&gt; [28] "step_kpca"          "step_kpca_poly"     "step_kpca_rbf"     </span>
-<span class="co">#&gt; [31] "step_lag"           "step_lincomb"       "step_log"          </span>
-<span class="co">#&gt; [34] "step_logit"         "step_lowerimpute"   "step_meanimpute"   </span>
-<span class="co">#&gt; [37] "step_medianimpute"  "step_modeimpute"    "step_mutate"       </span>
-<span class="co">#&gt; [40] "step_mutate_at"     "step_naomit"        "step_nnmf"         </span>
-<span class="co">#&gt; [43] "step_normalize"     "step_novel"         "step_ns"           </span>
-<span class="co">#&gt; [46] "step_num2factor"    "step_nzv"           "step_ordinalscore" </span>
-<span class="co">#&gt; [49] "step_other"         "step_pca"           "step_pls"          </span>
-<span class="co">#&gt; [52] "step_poly"          "step_profile"       "step_range"        </span>
-<span class="co">#&gt; [55] "step_ratio"         "step_regex"         "step_relevel"      </span>
-<span class="co">#&gt; [58] "step_relu"          "step_rename"        "step_rename_at"    </span>
-<span class="co">#&gt; [61] "step_rm"            "step_rollimpute"    "step_sample"       </span>
-<span class="co">#&gt; [64] "step_scale"         "step_shuffle"       "step_slice"        </span>
-<span class="co">#&gt; [67] "step_spatialsign"   "step_sqrt"          "step_string2factor"</span>
-<span class="co">#&gt; [70] "step_unknown"       "step_unorder"       "step_upsample"     </span>
-<span class="co">#&gt; [73] "step_window"        "step_YeoJohnson"    "step_zv"</span></pre></body></html></div>
-<p>You might need to define your own operations; this page describes how to do that. If you are looking for good examples of existing steps, I would suggest looking at the code for <a href="https://github.com/tidymodels/recipes/blob/master/R/center.R">centering</a> or <a href="https://github.com/tidymodels/recipes/blob/master/R/pca.R">PCA</a> to start.</p>
-<p>For checks, the process is very similar. Notes on this are given at the end of this document.</p>
-<div id="a-new-step-definition" class="section level1">
-<h1 class="hasAnchor">
-<a href="#a-new-step-definition" class="anchor"></a>A new step definition</h1>
-<p>As an example, let’s create a step that replaces the value of a variable with its percentile from the training set. The date that I’ll use is from the <code>recipes</code> package:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">modeldata</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">biomass</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">biomass</span>)
-<span class="co">#&gt; 'data.frame':    536 obs. of  8 variables:</span>
-<span class="co">#&gt;  $ sample  : chr  "Akhrot Shell" "Alabama Oak Wood Waste" "Alder" "Alfalfa" ...</span>
-<span class="co">#&gt;  $ dataset : chr  "Training" "Training" "Training" "Training" ...</span>
-<span class="co">#&gt;  $ carbon  : num  49.8 49.5 47.8 45.1 46.8 ...</span>
-<span class="co">#&gt;  $ hydrogen: num  5.64 5.7 5.8 4.97 5.4 5.75 5.99 5.7 5.5 5.9 ...</span>
-<span class="co">#&gt;  $ oxygen  : num  42.9 41.3 46.2 35.6 40.7 ...</span>
-<span class="co">#&gt;  $ nitrogen: num  0.41 0.2 0.11 3.3 1 2.04 2.68 1.7 0.8 1.2 ...</span>
-<span class="co">#&gt;  $ sulfur  : num  0 0 0.02 0.16 0.02 0.1 0.2 0.2 0 0.1 ...</span>
-<span class="co">#&gt;  $ HHV     : num  20 19.2 18.3 18.2 18.4 ...</span>
-
-<span class="no">biomass_tr</span> <span class="kw">&lt;-</span> <span class="no">biomass</span>[<span class="no">biomass</span>$<span class="no">dataset</span> <span class="kw">==</span> <span class="st">"Training"</span>,]
-<span class="no">biomass_te</span> <span class="kw">&lt;-</span> <span class="no">biomass</span>[<span class="no">biomass</span>$<span class="no">dataset</span> <span class="kw">==</span> <span class="st">"Testing"</span>,]</pre></body></html></div>
-<p>To illustrate the transformation with the <code>carbon</code> variable, the training set distribution of that variables is shown below with a vertical line for the first value of the test set.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>())
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">biomass_tr</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">carbon</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span>(<span class="kw">binwidth</span> <span class="kw">=</span> <span class="fl">5</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"blue"</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"blue"</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.5</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="kw">xintercept</span> <span class="kw">=</span> <span class="no">biomass_te</span>$<span class="no">carbon</span>[<span class="fl">1</span>], <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
-<p><img src="Custom_Steps_files/figure-html/carbon_dist-1.png" width="100%"></p>
-<p>Based on the training set, 42.1% of the data are less than a value of 46.35. There are some applications where it might be advantageous to represent the predictor values as percentiles rather than their original values.</p>
-<p>Our new step will do this computation for any numeric variables of interest. We will call this <code>step_percentile</code>. The code below is designed for illustration and not speed or best practices. I’ve left out a lot of error trapping that we would want in a real implementation.</p>
-</div>
-<div id="create-the-initial-function" class="section level1">
-<h1 class="hasAnchor">
-<a href="#create-the-initial-function" class="anchor"></a>Create the initial function</h1>
-<p>The user-exposed function <code>step_percentile</code> is just a simple wrapper around an internal function called <code>add_step</code>. This function takes the same arguments as your function and simply adds it to a new recipe. The <code>...</code> signifies the variable selectors that can be used.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">step_percentile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(
-  <span class="no">recipe</span>, <span class="no">...</span>,
-  <span class="no">role</span> <span class="kw">=</span> <span class="fl">NA</span>,
-  <span class="no">trained</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-  <span class="no">ref_dist</span> <span class="kw">=</span> <span class="kw">NULL</span>,
-  <span class="no">approx</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-  <span class="no">options</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">probs</span> <span class="kw">=</span> (<span class="fl">0</span>:<span class="fl">100</span>)/<span class="fl">100</span>, <span class="kw">names</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
-  <span class="no">skip</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-  <span class="no">id</span> <span class="kw">=</span> <span class="fu"><a href="../reference/rand_id.html">rand_id</a></span>(<span class="st">"percentile"</span>)
-  ) {
-
-  <span class="co">## The variable selectors are not immediately evaluated by using</span>
-  <span class="co">##  the `quos` function in `rlang`. `ellipse_check` captures the</span>
-  <span class="co">##  values and also checks to make sure that they are not empty.  </span>
-  <span class="no">terms</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/recipes-internal.html">ellipse_check</a></span>(<span class="no">...</span>)
-
-  <span class="fu"><a href="../reference/add_step.html">add_step</a></span>(
-    <span class="no">recipe</span>,
-    <span class="fu">step_percentile_new</span>(
-      <span class="kw">terms</span> <span class="kw">=</span> <span class="no">terms</span>,
-      <span class="kw">trained</span> <span class="kw">=</span> <span class="no">trained</span>,
-      <span class="kw">role</span> <span class="kw">=</span> <span class="no">role</span>,
-      <span class="kw">ref_dist</span> <span class="kw">=</span> <span class="no">ref_dist</span>,
-      <span class="kw">approx</span> <span class="kw">=</span> <span class="no">approx</span>,
-      <span class="kw">options</span> <span class="kw">=</span> <span class="no">options</span>,
-      <span class="kw">skip</span> <span class="kw">=</span> <span class="no">skip</span>,
-      <span class="kw">id</span> <span class="kw">=</span> <span class="no">id</span>
-    )
-  )
-}</pre></body></html></div>
-<p>You should always keep the first four arguments (<code>recipe</code> though <code>trained</code>) the same as listed above. Some notes:</p>
-<ul>
-<li>the <code>role</code> argument is used when you either 1) create new variables and want their role to be pre-set or 2) replace the existing variables with new values. The latter is what we will be doing and using <code>role = NA</code> will leave the existing role intact.</li>
-<li>
-<code>trained</code> is set by the package when the estimation step has been run. You should default your function definition’s argument to <code>FALSE</code>.</li>
-<li>
-<code>skip</code> is a logical. Whenever a recipe is prepped, each step is trained and then baked. However, there are some steps that should not be applied when a call to <code>bake</code> is used. For example, if a step is applied to the variables with roles of “outcomes”, these data would not be available for new samples.</li>
-<li>
-<code>id</code> is a character string that can be used to identify steps in package code.</li>
-</ul>
-<p>I’ve added extra arguments specific to this step. In order to calculate the percentile, the training data for the relevant columns will need to be saved. This data will be saved in the <code>ref_dist</code> object. However, this might be problematic if the data set is large. <code>approx</code> would be used when you want to save a grid of pre-computed percentiles from the training set and use these to estimate the percentile for a new data point. If <code>approx = TRUE</code>, the argument <code>ref_dist</code> will contain the grid for each variable.</p>
-<p>We will use the <code><a href="https://rdrr.io/r/stats/quantile.html">stats::quantile</a></code> to compute the grid. However, we might also want to have control over the granularity of this grid, so the <code>options</code> argument will be used to define how that calculations is done. We could just use the ellipses (aka <code>...</code>) so that any options passed to <code>step_percentile</code> that are not one of its arguments will then be passed to <code><a href="https://rdrr.io/r/stats/quantile.html">stats::quantile</a></code>. We recommend making a separate list object with the options and use these inside the function.</p>
-</div>
-<div id="initialization-of-new-objects" class="section level1">
-<h1 class="hasAnchor">
-<a href="#initialization-of-new-objects" class="anchor"></a>Initialization of new objects</h1>
-<p>Next, you can utilize the internal function <code>step</code> that sets the class of new objects. Using <code>subclass = "percentile"</code> will set the class of new objects to `“step_percentile”.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">step_percentile_new</span> <span class="kw">&lt;-</span>
-  <span class="kw">function</span>(<span class="no">terms</span>, <span class="no">role</span>, <span class="no">trained</span>, <span class="no">ref_dist</span>, <span class="no">approx</span>, <span class="no">options</span>, <span class="no">skip</span>, <span class="no">id</span>) {
-    <span class="fu"><a href="../reference/step.html">step</a></span>(
-      <span class="kw">subclass</span> <span class="kw">=</span> <span class="st">"percentile"</span>,
-      <span class="kw">terms</span> <span class="kw">=</span> <span class="no">terms</span>,
-      <span class="kw">role</span> <span class="kw">=</span> <span class="no">role</span>,
-      <span class="kw">trained</span> <span class="kw">=</span> <span class="no">trained</span>,
-      <span class="kw">ref_dist</span> <span class="kw">=</span> <span class="no">ref_dist</span>,
-      <span class="kw">approx</span> <span class="kw">=</span> <span class="no">approx</span>,
-      <span class="kw">options</span> <span class="kw">=</span> <span class="no">options</span>,
-      <span class="kw">skip</span> <span class="kw">=</span> <span class="no">skip</span>,
-      <span class="kw">id</span> <span class="kw">=</span> <span class="no">id</span>
-    )
-  }</pre></body></html></div>
-<p>This constructor function should have no default argument values.</p>
-</div>
-<div id="define-the-estimation-procedure" class="section level1">
-<h1 class="hasAnchor">
-<a href="#define-the-estimation-procedure" class="anchor"></a>Define the estimation procedure</h1>
-<p>You will need to create a new <code>prep</code> method for your step’s class. To do this, three arguments that the method should have:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">function(x, training, info = NULL)</pre></body></html></div>
-<p>where</p>
-<ul>
-<li>
-<code>x</code> will be the <code>step_percentile</code> object</li>
-<li>
-<code>training</code> will be a <em>tibble</em> that has the training set data</li>
-<li>
-<code>info</code> will also be a tibble that has information on the current set of data available. This information is updated as each step is evaluated by its specific <code>prep</code> method so it may not have the variables from the original data. The columns in this tibble are <code>variable</code> (the variable name), <code>type</code> (currently either “numeric” or “nominal”), <code>role</code> (defining the variable’s role), and <code>source</code> (either “original” or “derived” depending on where it originated).</li>
-</ul>
-<p>You can define other options.</p>
-<p>The first thing that you might want to do in the <code>prep</code> function is to translate the specification listed in the <code>terms</code> argument to column names in the current data. There is an internal function called <code>terms_select</code> that can be used to obtain this.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">prep.step_percentile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">training</span>, <span class="no">info</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="no">...</span>) {
-  <span class="no">col_names</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/terms_select.html">terms_select</a></span>(<span class="kw">terms</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">terms</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="no">info</span>)
-}</pre></body></html></div>
-<p>Once we have this, we can either save the original data columns or estimate the approximation grid. For the grid, we will use a helper function that enables us to run <code>do.call</code> on a list of arguments that include the <code>options</code> list.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">get_pctl</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">args</span>) {
-  <span class="no">args</span>$<span class="no">x</span> <span class="kw">&lt;-</span> <span class="no">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="st">"quantile"</span>, <span class="no">args</span>)
-}
-
-<span class="no">prep.step_percentile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">training</span>, <span class="no">info</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="no">...</span>) {
-  <span class="no">col_names</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/terms_select.html">terms_select</a></span>(<span class="kw">terms</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">terms</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="no">info</span>)
-  <span class="co">## You can add error trapping for non-numeric data here and so on. See the</span>
-  <span class="co">## `check_type` function to do this for basic types. </span>
-
-  <span class="co">## We'll use the names later so</span>
-  <span class="kw">if</span> (<span class="no">x</span>$<span class="no">options</span>$<span class="no">names</span> <span class="kw">==</span> <span class="fl">FALSE</span>)
-    <span class="kw pkg">rlang</span><span class="kw ns">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span>(<span class="st">"`names` should be set to TRUE"</span>)
-
-  <span class="kw">if</span> (!<span class="no">x</span>$<span class="no">approx</span>) {
-    <span class="no">ref_dist</span> <span class="kw">&lt;-</span> <span class="no">training</span>[, <span class="no">col_names</span>]
-  } <span class="kw">else</span> {
-    <span class="no">ref_dist</span> <span class="kw">&lt;-</span> <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">training</span>[, <span class="no">col_names</span>],  <span class="no">get_pctl</span>, <span class="kw">args</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">options</span>)
-  }
-
-  <span class="co">## Use the constructor function to return the updated object. </span>
-  <span class="co">## Note that `trained` is set to TRUE</span>
-
-  <span class="fu">step_percentile_new</span>(
-    <span class="kw">terms</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">terms</span>,
-    <span class="kw">trained</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-    <span class="kw">role</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">role</span>,
-    <span class="kw">ref_dist</span> <span class="kw">=</span> <span class="no">ref_dist</span>,
-    <span class="kw">approx</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">approx</span>,
-    <span class="kw">options</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">options</span>,
-    <span class="kw">skip</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">skip</span>,
-    <span class="kw">id</span> <span class="kw">=</span> <span class="no">x</span>$<span class="no">id</span>
-  )
-}</pre></body></html></div>
-</div>
-<div id="create-the-bake-method" class="section level1">
-<h1 class="hasAnchor">
-<a href="#create-the-bake-method" class="anchor"></a>Create the <code>bake</code> method</h1>
-<p>Remember that the <code>prep</code> function does not <em>apply</em> the step to the data; it only estimates any required values such as <code>ref_dist</code>. We will need to create a new method for our <code>step_percentile</code> class. The minimum arguments for this are</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">function(object, new_data, ...)</pre></body></html></div>
-<p>where <code>object</code> is the updated step function that has been through the corresponding <code>prep</code> code and <code>new_data</code> is a tibble of data to be processed.</p>
-<p>Here is the code to convert the new data to percentiles. Two initial helper functions handle the two cases (approximation or not). We always return a tibble as the output.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">## Two helper functions</span>
-<span class="no">pctl_by_mean</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">ref</span>) <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">ref</span> <span class="kw">&lt;=</span> <span class="no">x</span>)
-
-<span class="no">pctl_by_approx</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">ref</span>) {
-  <span class="co">## go from 1 column tibble to vector</span>
-  <span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extract.html">getElement</a></span>(<span class="no">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">x</span>))
-  <span class="co">## get the percentiles values from the names (e.g. "10%")</span>
-  <span class="no">p_grid</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"%$"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">ref</span>)))
-  <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approx</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">ref</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">p_grid</span>, <span class="kw">xout</span> <span class="kw">=</span> <span class="no">x</span>)$<span class="no">y</span>/<span class="fl">100</span>
-}
-
-<span class="no">bake.step_percentile</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">object</span>, <span class="no">new_data</span>, <span class="no">...</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">tibble</span>)
-  <span class="co">## For illustration (and not speed), we will loop through the affected variables</span>
-  <span class="co">## and do the computations</span>
-  <span class="no">vars</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">object</span>$<span class="no">ref_dist</span>)
-
-  <span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="no">vars</span>) {
-    <span class="kw">if</span> (!<span class="no">object</span>$<span class="no">approx</span>) {
-      <span class="co">## We can use `apply` since tibbles do not drop dimensions:</span>
-      <span class="no">new_data</span>[, <span class="no">i</span>] <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">new_data</span>[, <span class="no">i</span>], <span class="fl">1</span>, <span class="no">pctl_by_mean</span>,
-                            <span class="kw">ref</span> <span class="kw">=</span> <span class="no">object</span>$<span class="no">ref_dist</span>[, <span class="no">i</span>])
-    } <span class="kw">else</span>
-      <span class="no">new_data</span>[, <span class="no">i</span>] <span class="kw">&lt;-</span> <span class="fu">pctl_by_approx</span>(<span class="no">new_data</span>[, <span class="no">i</span>], <span class="no">object</span>$<span class="no">ref_dist</span><span class="kw">[[</span><span class="no">i</span>]])
-  }
-  <span class="co">## Always convert to tibbles on the way out</span>
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>(<span class="no">new_data</span>)
-}</pre></body></html></div>
-</div>
-<div id="running-the-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#running-the-example" class="anchor"></a>Running the example</h1>
-<p>Let’s use the example data to make sure that it works:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">purrr</span>)
-<span class="no">rec_obj</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="../reference/recipe.html">recipe</a></span>(<span class="no">HHV</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">biomass_tr</span>[, -(<span class="fl">1</span>:<span class="fl">2</span>)]) <span class="kw">%&gt;%</span>
-  <span class="fu">step_percentile</span>(<span class="fu"><a href="../reference/has_role.html">all_predictors</a></span>(), <span class="kw">approx</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">biomass_tr</span>)
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-
-<span class="no">percentiles</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="no">rec_obj</span>, <span class="no">biomass_te</span>)
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-
-<span class="co">#&gt; Warning in regularize.values(x, y, ties, missing(ties)): collapsing to unique</span>
-<span class="co">#&gt; 'x' values</span>
-<span class="no">percentiles</span>
-<span class="co">#&gt; # A tibble: 80 x 6</span>
-<span class="co">#&gt;    carbon hydrogen oxygen nitrogen sulfur   HHV</span>
-<span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 0.421    0.45   0.903     0.215  0.735  18.3</span>
-<span class="co">#&gt;  2 0.18     0.385  0.922     0.928  0.839  17.6</span>
-<span class="co">#&gt;  3 0.156    0.385  0.945     0.9    0.805  17.2</span>
-<span class="co">#&gt;  4 0.423    0.775  0.28      0.845  0.902  18.9</span>
-<span class="co">#&gt;  5 0.666    0.867  0.631     0.155  0.09   20.5</span>
-<span class="co">#&gt;  6 0.218    0.385  0.536     0.495  0.7    18.5</span>
-<span class="co">#&gt;  7 0.0803   0.271  0.986     0.695  0.903  15.1</span>
-<span class="co">#&gt;  8 0.139    0.126  0.160     0.606  0.7    16.2</span>
-<span class="co">#&gt;  9 0.0226   0.103  0.131     0.126  0.996  11.1</span>
-<span class="co">#&gt; 10 0.0178   0.0821 0.0987    0.972  0.974  10.8</span>
-<span class="co">#&gt; # … with 70 more rows</span></pre></body></html></div>
-<p>The plot below shows how the original data line up with the percentiles for each split of the data for one of the predictors:</p>
-<p><img src="Custom_Steps_files/figure-html/cdf_plot-1.png" width="100%"></p>
-</div>
-<div id="custom-check-operations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#custom-check-operations" class="anchor"></a>Custom check operations</h1>
-<p>The process here is exactly the same as steps; the internal functions have a similar naming convention:</p>
-<ul>
-<li>
-<code>add_check</code> instead of <code>add_step</code>
-</li>
-<li>
-<code>check</code> instead of <code>step</code>, and so on.</li>
-</ul>
-<p>It is strongly recommended that:</p>
-<ol style="list-style-type: decimal">
-<li>The operations start with <code>check_</code> (i.e. <code>check_range</code> and <code>check_range_new</code>)</li>
-<li>The check uses <code><a href="https://rlang.r-lib.org/reference/abort.html">rlang::abort(paste0(...))</a></code> when the conditions are not met</li>
-<li>The original data are returned (unaltered) by the check when the conditions are satisfied.</li>
-</ol>
-</div>
+<p>This article has been moved to <a href="https://www.tidymodels.org/learn/develop/recipes/"><code>tidymodels.org</code></a>.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 

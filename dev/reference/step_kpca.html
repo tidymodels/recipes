@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Kernel PCA Signal Extraction — step_kpca" />
 <meta property="og:description" content="step_kpca a specification of a recipe step that
 will convert numeric data into one or more principal components
 using a kernel basis expansion." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ using a kernel basis expansion." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -334,14 +338,14 @@ of Statistical Software</em>, 11(1), 1-20.</p>
 
   <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
   <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>kpca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div><div class='output co'>#&gt; <span class='message'>2020-04-26 21:32:43: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2020-04-26 21:32:43: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2020-04-26 21:32:43: DONE</span></div><div class='img'><img src='step_kpca-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; # A tibble: 5 x 2
+}</div><div class='output co'>#&gt; <span class='message'>2020-06-09 00:23:25: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2020-06-09 00:23:26: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2020-06-09 00:23:26: DONE</span></div><div class='img'><img src='step_kpca-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
 #&gt;   terms    id        
-#&gt;   &lt;chr&gt;    &lt;chr&gt;     
-#&gt; 1 carbon   kpca_hQDhG
-#&gt; 2 hydrogen kpca_hQDhG
-#&gt; 3 oxygen   kpca_hQDhG
-#&gt; 4 nitrogen kpca_hQDhG
-#&gt; 5 sulfur   kpca_hQDhG</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon   kpca_hQDhG
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen kpca_hQDhG
+#&gt; </span><span style='color: #555555;'>3</span><span> oxygen   kpca_hQDhG
+#&gt; </span><span style='color: #555555;'>4</span><span> nitrogen kpca_hQDhG
+#&gt; </span><span style='color: #555555;'>5</span><span> sulfur   kpca_hQDhG</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

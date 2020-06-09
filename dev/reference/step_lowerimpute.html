@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Impute Numeric Data Below the Threshold of Measurement — step_lowerimpute" />
@@ -51,7 +55,7 @@ designed for cases where the non-negative numeric data cannot be
 measured below a known value. In these cases, one method for
 imputing the data is to substitute the truncated value by a
 random uniform number between zero and the truncation point." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,8 +98,8 @@ random uniform number between zero and the truncation point." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -271,22 +275,22 @@ with a random uniform value between zero and the minimum.</p>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>step_lowerimpute</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    value id               
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;            
-#&gt; 1 carbon      NA lowerimpute_f9MLF
-#&gt; 2 hydrogen    NA lowerimpute_f9MLF</div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon      </span><span style='color: #BB0000;'>NA</span><span> lowerimpute_f9MLF
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span> lowerimpute_f9MLF</div><div class='input'>
 <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    value id               
-#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;            
-#&gt; 1 carbon      40 lowerimpute_f9MLF
-#&gt; 2 hydrogen     5 lowerimpute_f9MLF</div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon      40 lowerimpute_f9MLF
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen     5 lowerimpute_f9MLF</div><div class='input'>
 <span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>impute_rec</span>, <span class='no'>biomass_te</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>carbon</span>,
-     <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"pre-imputation"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"imputed"</span>)</div><div class='img'><img src='step_lowerimpute-1.png' alt='' width='768' height='552' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>transformed_te</span>$<span class='no'>carbon</span>, <span class='no'>biomass_te</span>$<span class='no'>carbon</span>,
+     <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"pre-imputation"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"imputed"</span>)</div><div class='img'><img src='step_lowerimpute-1.png' alt='' width='768' height='552' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

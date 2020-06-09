@@ -43,12 +43,16 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Convert Strings to Factors — step_string2factor" />
 <meta property="og:description" content="step_string2factor will convert one or more character
 vectors to factors (ordered or unordered)." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,8 +95,8 @@ vectors to factors (ordered or unordered)." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.10.9000</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
         </div>
       </div>
     </div>
@@ -271,26 +275,26 @@ can also take existing factors (but will leave them as-is).</p>
                     <span class='kw'>strings_as_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># note that `diet` is a factor</span>
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 2
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>make_factor</span>) <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
 #&gt;   diet              location           
-#&gt;   &lt;fct&gt;             &lt;chr&gt;              
-#&gt; 1 strictly anything south san francisco
-#&gt; 2 mostly other      oakland            
-#&gt; 3 anything          san francisco      
-#&gt; 4 vegetarian        berkeley           
-#&gt; 5 &lt;NA&gt;              san francisco      
-#&gt; 6 mostly anything   san francisco      </div><div class='input'><span class='no'>okc</span> <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; # A tibble: 6 x 6
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
+#&gt; </span><span style='color: #555555;'>1</span><span> strictly anything south san francisco
+#&gt; </span><span style='color: #555555;'>2</span><span> mostly other      oakland            
+#&gt; </span><span style='color: #555555;'>3</span><span> anything          san francisco      
+#&gt; </span><span style='color: #555555;'>4</span><span> vegetarian        berkeley           
+#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>                san francisco      
+#&gt; </span><span style='color: #555555;'>6</span><span> mostly anything   san francisco      </div><div class='input'><span class='no'>okc</span> <span class='kw'>%&gt;%</span> <span class='no'>head</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt;     age diet              height location            date       Class
-#&gt;   &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;               &lt;date&gt;     &lt;fct&gt;
-#&gt; 1    22 strictly anything     75 south san francisco 2012-06-28 other
-#&gt; 2    35 mostly other          70 oakland             2012-06-29 other
-#&gt; 3    38 anything              68 san francisco       2012-06-27 other
-#&gt; 4    23 vegetarian            71 berkeley            2012-06-28 other
-#&gt; 5    29 &lt;NA&gt;                  66 san francisco       2012-06-27 other
-#&gt; 6    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>    22 strictly anything     75 south san francisco 2012-06-28 other
+#&gt; </span><span style='color: #555555;'>2</span><span>    35 mostly other          70 oakland             2012-06-29 other
+#&gt; </span><span style='color: #555555;'>3</span><span>    38 anything              68 san francisco       2012-06-27 other
+#&gt; </span><span style='color: #555555;'>4</span><span>    23 vegetarian            71 berkeley            2012-06-28 other
+#&gt; </span><span style='color: #555555;'>5</span><span>    29 </span><span style='color: #BB0000;'>NA</span><span>                    66 san francisco       2012-06-27 other
+#&gt; </span><span style='color: #555555;'>6</span><span>    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>make_factor</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms ordered id                 
-#&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;              
-#&gt; 1 diet  FALSE   string2factor_a3AY0</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
+#&gt; </span><span style='color: #555555;'>1</span><span> diet  FALSE   string2factor_a3AY0</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
