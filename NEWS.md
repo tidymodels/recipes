@@ -14,6 +14,8 @@
 
 * Avoided partial matching on `seq()` arguments in internal functions. 
 
+* `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
+
 # recipes 0.1.12
 
 * Some S3 methods were not being registered previously. This caused issues in R 4.0. 
