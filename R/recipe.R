@@ -368,7 +368,7 @@ prep.recipe <-
 
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
-    for (i in seq(along = x$steps)) {
+    for (i in seq(along.with = x$steps)) {
       note <-
         paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
@@ -594,7 +594,7 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   }
 
   if (length(keepers) > 0) {
-    for (i in seq(along = object$steps)) {
+    for (i in seq(along.with = object$steps)) {
       if (!is_skipable(object$steps[[i]])) {
         new_data <- bake(object$steps[[i]], new_data = new_data)
         if (!is_tibble(new_data))

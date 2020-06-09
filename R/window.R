@@ -247,7 +247,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
-  for (i in seq(along = object$columns)) {
+  for (i in seq(along.with = object$columns)) {
     if (!is.null(object$names)) {
       new_data[, object$names[i]] <-
         roller(x = getElement(new_data, object$columns[i]),

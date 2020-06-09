@@ -15,7 +15,7 @@
 #' }
 recipes_pkg_check <- function(pkg = NULL, ...) {
   good <- rep(TRUE, length(pkg))
-  for (i in seq(along = pkg)) {
+  for (i in seq(along.with = pkg)) {
     tested <- try(find.package(pkg[i]), silent = TRUE)
     if (class(tested)[1] == "try-error")
       good[i] <- FALSE

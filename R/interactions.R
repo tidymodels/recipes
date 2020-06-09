@@ -144,7 +144,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
     ## formula.
-    for(i in seq(along = form_res)) {
+    for(i in seq(along.with = form_res)) {
       x$terms <- replace_selectors(
         x$terms,
         form_sel[[i]],
