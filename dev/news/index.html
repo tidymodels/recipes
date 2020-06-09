@@ -183,6 +183,7 @@
 <ul>
 <li><p><code><a href="../reference/step_pls.html">step_pls()</a></code> was changed so that it uses the Bioconductor mixOmics package. Objects created with previous versions of <code>recipes</code> can still use <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code>. With the current version, the categorical outcomes can be used but now multivariate models do not. Also, the new method allows for sparse results.</p></li>
 <li><p>As suggested by <a href='https://github.com/StefanBRas'>@StefanBRas</a>, <code><a href="../reference/step_ica.html">step_ica()</a></code> now defaults to the C engine (<a href='https://github.com/tidymodels/recipes/issues/518'>#518</a>)</p></li>
+<li><p>Avoided partial matching on <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> arguments in internal functions.</p></li>
 </ul>
 </div>
 </div>
