@@ -12,6 +12,7 @@
 
 * As suggested by @StefanBRas, `step_ica()` now defaults to the C engine (#518)
 
+* Avoided partial matching on `seq()` arguments in internal functions. 
 
 # recipes 0.1.12
 
