@@ -359,7 +359,8 @@ above.</p>
 
 <span class='no'>sparse_plsda</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>class</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>cell_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>)
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
 
 <span class='no'>loadings</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>sparse_plsda</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>col_rngs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>loadings</span>$<span class='no'>value</span>))
