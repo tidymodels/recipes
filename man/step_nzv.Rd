@@ -90,7 +90,7 @@ number of samples (times 100), must also be below
 \code{unique_cut}.
 
 In the above example, the frequency ratio is 999 and the unique
-value percentage is 0.0001.
+value percent is 0.2\%.
 }
 \examples{
 library(modeldata)
