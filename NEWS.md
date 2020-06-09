@@ -4,6 +4,12 @@
 
 * `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
 
+* `tidyr` version 1.0.0 or later is now required. 
+
+## Other Changes
+
+* `step_pls()` was changed so that it uses the Bioconductor mixOmics package. Objects created with previous versions of `recipes` can still use `juice()` and `bake()`. With the current version, the categorical outcomes can be used but now multivariate models do not. Also, the new method allows for sparse results. 
+
 
 # recipes 0.1.12
 
