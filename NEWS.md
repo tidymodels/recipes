@@ -10,6 +10,8 @@
 
 * `step_pls()` was changed so that it uses the Bioconductor mixOmics package. Objects created with previous versions of `recipes` can still use `juice()` and `bake()`. With the current version, the categorical outcomes can be used but now multivariate models do not. Also, the new method allows for sparse results. 
 
+* As suggested by @StefanBRas, `step_ica()` now defaults to the C engine (#518)
+
 
 # recipes 0.1.12
 
