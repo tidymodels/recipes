@@ -331,13 +331,11 @@ above.</p>
 
 <span class='no'>dense_pls</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biom_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 
 <span class='no'>sparse_pls</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biom_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>4</span>/<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>4</span>/<span class='fl'>5</span>)
 
 <span class='co'>## -----------------------------------------------------------------------------</span>
 <span class='co'>## PLS discriminant analysis</span>
@@ -359,23 +357,7 @@ above.</p>
 
 <span class='no'>sparse_plsda</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>class</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>cell_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()
-
-<span class='no'>loadings</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>sparse_plsda</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>col_rngs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>loadings</span>$<span class='no'>value</span>))
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    alpha</span></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>loadings</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>component</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>terms</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_tile</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a></span>(
-    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"white"</span>, <span class='st'>"red"</span>),
-    <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='no'>col_rngs</span>, <span class='no'>col_rngs</span>)
-  ) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span>()</div><div class='img'><img src='step_pls-1.png' alt='' width='768' height='552' /></div></pre>
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
