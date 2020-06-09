@@ -11,7 +11,7 @@ articles:
   Skipping: Skipping.html
   Multivariate_PLS: articles/Multivariate_PLS.html
   Subsampling: articles/Subsampling.html
-last_built: 2020-06-09T00:22Z
+last_built: 2020-06-09T00:32Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles

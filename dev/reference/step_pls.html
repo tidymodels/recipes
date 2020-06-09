@@ -237,8 +237,8 @@ variable.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code>mixOmics::pls()</code>, <code>mixOmics::spls()</code>,
-<code>mixOmics::plsda()</code>, or <code>mixOmics::splsda()</code> (depending on the data and
+      <td><p>A list of options to <code><a href='https://rdrr.io/pkg/mixOmics/man/pls.html'>mixOmics::pls()</a></code>, <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code>,
+<code><a href='https://rdrr.io/pkg/mixOmics/man/plsda.html'>mixOmics::plsda()</a></code>, or <code><a href='https://rdrr.io/pkg/mixOmics/man/splsda.html'>mixOmics::splsda()</a></code> (depending on the data and
 arguments).</p></td>
     </tr>
     <tr>
@@ -297,8 +297,8 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 <p>Sparsity can be encouraged using the <code>predictor_prop</code> parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. <code>step_pls()</code> converts this
-proportion to determine the <code>keepX</code> parameter in <code>mixOmics::spls()</code> and
-<code>mixOmics::splsda()</code>. See the references in <code>mixOmics::spls()</code> for details.</p>
+proportion to determine the <code>keepX</code> parameter in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> and
+<code><a href='https://rdrr.io/pkg/mixOmics/man/splsda.html'>mixOmics::splsda()</a></code>. See the references in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> for details.</p>
 <p>The <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> method returns the coefficients that are usually defined as</p>
 <p>$$W(P'W)^{-1}$$</p>
 <p>(See the Wikipedia article below)</p>
@@ -332,11 +332,13 @@ above.</p>
 <span class='no'>dense_pls</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biom_tr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()</div><div class='output co'>#&gt; 1 package is needed for this step and is not installed. (mixOmics). Start a clean R session then run: install.packages("mixOmics")</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_pls()` failed: Error in loadNamespace(name) : there is no package called ‘mixOmics’</span></div><div class='input'>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
+
 <span class='no'>sparse_pls</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biom_tr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"HHV"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>4</span>/<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()</div><div class='output co'>#&gt; 1 package is needed for this step and is not installed. (mixOmics). Start a clean R session then run: install.packages("mixOmics")</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_pls()` failed: Error in loadNamespace(name) : there is no package called ‘mixOmics’</span></div><div class='input'>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
+
 <span class='co'>## -----------------------------------------------------------------------------</span>
 <span class='co'>## PLS discriminant analysis</span>
 
@@ -353,10 +355,12 @@ above.</p>
 
 <span class='no'>dense_plsda</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>class</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>cell_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; 1 package is needed for this step and is not installed. (mixOmics). Start a clean R session then run: install.packages("mixOmics")</div><div class='input'>
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
 <span class='no'>sparse_plsda</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>class</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>cell_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>)</div><div class='output co'>#&gt; 1 package is needed for this step and is not installed. (mixOmics). Start a clean R session then run: install.packages("mixOmics")</div><div class='input'>
+  <span class='fu'>step_pls</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>predictor_prop</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>)
+
 <span class='no'>loadings</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>sparse_plsda</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>col_rngs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>loadings</span>$<span class='no'>value</span>))
 
