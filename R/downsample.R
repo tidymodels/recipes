@@ -3,7 +3,7 @@
 #' @description
 #' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 #'
-#' `step_downsample` is now available as [themis::step_downsample()]. This
+#' `step_downsample` is now available as `themis::step_downsample()`. This
 #'  function creates a *specification* of a recipe step that will remove
 #'  rows of a data set to make the occurrence of levels in a specific factor
 #'  level equal.
@@ -24,7 +24,7 @@
 #'  frequency as the least occurring level. A value of 2 would mean
 #'  that the majority levels will have (at most) (approximately)
 #'  twice as many rows than the minority level.
-#' @param ratio Depracated argument; same as `under_ratio`
+#' @param ratio Deprecated argument; same as `under_ratio`
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
 #' @param seed An integer that will be used as the seed when downsampling.

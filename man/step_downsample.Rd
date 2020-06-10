@@ -38,7 +38,7 @@ frequency as the least occurring level. A value of 2 would mean
 that the majority levels will have (at most) (approximately)
 twice as many rows than the minority level.}
 
-\item{ratio}{Depracated argument; same as \code{under_ratio}}
+\item{ratio}{Deprecated argument; same as \code{under_ratio}}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -74,7 +74,7 @@ the variable used to sample.
 \description{
 \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 
-\code{step_downsample} is now available as \code{\link[themis:step_downsample]{themis::step_downsample()}}. This
+\code{step_downsample} is now available as \code{themis::step_downsample()}. This
 function creates a \emph{specification} of a recipe step that will remove
 rows of a data set to make the occurrence of levels in a specific factor
 level equal.

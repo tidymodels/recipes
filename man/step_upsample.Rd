@@ -74,7 +74,7 @@ the variable used to sample.
 \description{
 \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 
-\code{step_upsample} is now available as \code{\link[themis:step_upsample]{themis::step_upsample()}}. This
+\code{step_upsample} is now available as \code{themis::step_upsample()}. This
 function creates a \emph{specification} of a recipe step that
 will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal.
