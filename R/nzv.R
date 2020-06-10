@@ -50,7 +50,7 @@
 
 #'
 #' In the above example, the frequency ratio is 999 and the unique
-#'  value percentage is 0.0001.
+#'  value percent is 0.2%.
 
 #' @examples
 #' library(modeldata)
