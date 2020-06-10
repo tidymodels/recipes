@@ -39,3 +39,16 @@ test_that('printing', {
   expect_output(print(rec))
   expect_output(prep(rec, training = dat, verbose = TRUE))
 })
+
+
+test_that('mssing values in zero-variance screen', {
+
+  x <- rep(1, 5)
+  y <- c(NA, x)
+  z <- rep(NA, 5)
+
+  expect_true(recipes:::one_unique(x))
+  expect_true(recipes:::one_unique(y))
+  expect_true(recipes:::one_unique(z))
+
+})

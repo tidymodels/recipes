@@ -14,7 +14,10 @@
 
 * Avoided partial matching on `seq()` arguments in internal functions. 
 
-* `step_upsample` and `step_downsample` are soft deprecated in recipes as they are now available in the themis package.
+* `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package.
+
+* `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
+
 
 # recipes 0.1.12
 
