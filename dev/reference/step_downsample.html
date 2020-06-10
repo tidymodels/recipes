@@ -50,9 +50,11 @@
 
 
 <meta property="og:title" content="Down-Sample a Data Set Based on a Factor Variable — step_downsample" />
-<meta property="og:description" content="step_downsample creates a specification of a recipe
-step that will remove rows of a data set to make the occurrence
-of levels in a specific factor level equal." />
+<meta property="og:description" content="
+step_downsample is now available as themis::step_downsample(). This
+function creates a specification of a recipe step that will remove
+rows of a data set to make the occurrence of levels in a specific factor
+level equal." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -170,9 +172,11 @@ of levels in a specific factor level equal." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_downsample</code> creates a <em>specification</em> of a recipe
-step that will remove rows of a data set to make the occurrence
-of levels in a specific factor level equal.</p>
+    <p><img src='figures/lifecycle-soft-deprecated.svg' alt='alt="lifecycle-soft-deprecated"' /></p>
+<p><code>step_downsample</code> is now available as <code>themis::step_downsample()</code>. This
+function creates a <em>specification</em> of a recipe step that will remove
+rows of a data set to make the occurrence of levels in a specific factor
+level equal.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_downsample</span>(
@@ -311,8 +315,10 @@ conducted outside of the training set.</p>
 #&gt;                6174               16562               24360 </div><div class='input'>
 <span class='no'>ds_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>step_downsample</span>(<span class='no'>diet</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)
-
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_downsample()` is deprecated as of recipes 0.1.13.</span>
+#&gt; <span class='warning'>Please use `themis::step_downsample()` instead.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>ds_rec</span>)$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt; 
 #&gt;            anything               halal              kosher     mostly anything 
 #&gt;                  11                  11                  11                  11 
@@ -336,7 +342,7 @@ conducted outside of the training set.</p>
 #&gt;     strictly kosher      strictly other      strictly vegan strictly vegetarian 
 #&gt;                  18                 450                 227                 874 
 #&gt;               vegan          vegetarian                &lt;NA&gt; 
-#&gt;                 136                 665               24360 </div></pre>
+#&gt;                 136                 665               24360 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

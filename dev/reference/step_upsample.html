@@ -50,7 +50,9 @@
 
 
 <meta property="og:title" content="Up-Sample a Data Set Based on a Factor Variable — step_upsample" />
-<meta property="og:description" content="step_upsample creates a specification of a recipe step that
+<meta property="og:description" content="
+step_upsample is now available as themis::step_upsample(). This
+function creates a specification of a recipe step that
 will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -170,7 +172,9 @@ levels in a specific factor level equal." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_upsample</code> creates a <em>specification</em> of a recipe step that
+    <p><img src='figures/lifecycle-soft-deprecated.svg' alt='alt="lifecycle-soft-deprecated"' /></p>
+<p><code>step_upsample</code> is now available as <code>themis::step_upsample()</code>. This
+function creates a <em>specification</em> of a recipe step that
 will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal.</p>
     </div>
@@ -311,8 +315,10 @@ conducted outside of the training set.</p>
   <span class='co'># Bring the minority levels up to about 200 each</span>
   <span class='co'># 200/16562 is approx 0.0121</span>
   <span class='fu'>step_upsample</span>(<span class='no'>diet</span>, <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>0.0121</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)
-
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_upsample()` is deprecated as of recipes 0.1.13.</span>
+#&gt; <span class='warning'>Please use `themis::step_upsample()` instead.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
 <span class='no'>training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>up_rec</span>)$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
 
 <span class='co'># Since `skip` defaults to TRUE, baking the step has no effect</span>
@@ -345,7 +351,7 @@ conducted outside of the training set.</p>
 #&gt; 16 strictly vegetarian       874        874        874
 #&gt; 17               vegan       136        200        136
 #&gt; 18          vegetarian       665        665        665
-#&gt; 19                &lt;NA&gt;     24360      24360      24360</div></pre>
+#&gt; 19                &lt;NA&gt;     24360      24360      24360</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
