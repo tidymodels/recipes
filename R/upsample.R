@@ -3,7 +3,7 @@
 #' @description
 #' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
 #'
-#' `step_upsample` is now available as [themis::step_upsample()]. This
+#' `step_upsample` is now available as `themis::step_upsample()`. This
 #'  function creates a *specification* of a recipe step that
 #'  will replicate rows of a data set to make the occurrence of
 #'  levels in a specific factor level equal.

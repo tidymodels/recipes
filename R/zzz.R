@@ -15,7 +15,10 @@ maybe_register_tunable_methods <- function() {
 
   # ----------------------------------------------------------------------------
 
-  tunable_names <- grep("tunable.step", names, fixed = TRUE, value = TRUE)
+  tunable_names <- c(
+    grep("tunable.step",  names, fixed = TRUE, value = TRUE),
+    grep("tunable.check", names, fixed = TRUE, value = TRUE)
+  )
   tunable_classes <- gsub("tunable.", "", tunable_names)
 
   for (i in seq_along(tunable_names)) {
@@ -25,7 +28,11 @@ maybe_register_tunable_methods <- function() {
 
   # ----------------------------------------------------------------------------
 
-  tidy_names <- grep("tidy.step", names, fixed = TRUE, value = TRUE)
+  tidy_names <- c(
+    grep("tidy.step",  names, fixed = TRUE, value = TRUE),
+    grep("tidy.check", names, fixed = TRUE, value = TRUE)
+  )
+
   tidy_classes <- gsub("tidy.", "", tidy_names)
 
   for (i in seq_along(tidy_names)) {
