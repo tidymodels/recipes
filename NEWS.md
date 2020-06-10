@@ -20,6 +20,8 @@
 
 * `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
 
+* The selectors `all_of()` and `any_of()` can now be used in step selections (#477).
+
 
 # recipes 0.1.12
 

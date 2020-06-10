@@ -680,4 +680,8 @@ cast <- function(x, ref) {
   x
 }
 
+## -----------------------------------------------------------------------------
 
+tidyselect_pre_1.0.0 <- function() {
+  utils::packageVersion("tidyselect") <= "0.2.5"
+}
