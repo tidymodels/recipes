@@ -80,8 +80,9 @@ excluded variable(s).
 Also, select helpers from the tidyselect package can also be used:
 tidyselect::starts_with(), tidyselect::ends_with(),
 tidyselect::contains(), tidyselect::matches(),
-tidyselect::num_range(), tidyselect::everything(), and
-tidyselect::one_of().
+tidyselect::num_range(), tidyselect::everything(),
+tidyselect::one_of(), tidyselect::all_of(), and
+tidyselect::any_of()
 For example:
 
   recipe(Species ~ ., data = iris) %&amp;gt;%
@@ -123,7 +124,7 @@ The complete list of allowable functions in steps:
 
 By name: tidyselect::starts_with(),
 tidyselect::ends_with(), tidyselect::contains(),
-tidyselect::matches(), tidyselect::num_range(), and
+tidyselect::matches(), tidyselect::num_range(),
 tidyselect::everything()
 By role: has_role(),
 all_predictors(), and all_outcomes()
@@ -278,8 +279,9 @@ excluded variable(s).</p></li>
 <p>Also, select helpers from the <code>tidyselect</code> package can also be used:
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code>, and
-<code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>.
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::all_of()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code>
 For example:</p>
 <pre>
   <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
@@ -321,7 +323,7 @@ previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
 <ul>
 <li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code></p></li>
 <li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
 <code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
