@@ -21,6 +21,7 @@ Imports:
     glue,
     gower,
     ipred,
+    lifecycle,
     lubridate,
     magrittr,
     Matrix,
@@ -57,3 +58,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0.9000
 Roxygen: list(markdown = TRUE)
+RdMacros: lifecycle

@@ -16,6 +16,11 @@
 
 * Improved error messaging, for example when a user tries to `prep()` a tuneable recipe.
 
+* `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package.
+
+* `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
+
+
 # recipes 0.1.12
 
 * Some S3 methods were not being registered previously. This caused issues in R 4.0. 
