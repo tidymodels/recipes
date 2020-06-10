@@ -20,6 +20,7 @@
 
 * `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
 
+* The `tune` pacakge can now use recipes with `check` operations (but also requires `tune` >= 0.1.0.9000).
 
 # recipes 0.1.12
 
