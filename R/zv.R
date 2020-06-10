@@ -84,8 +84,10 @@ step_zv_new <-
     )
   }
 
-one_unique <- function(x)
-  length(unique(x)) == 1
+one_unique <- function(x) {
+  x <- x[!is.na(x)]
+  length(unique(x)) < 2
+  }
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
