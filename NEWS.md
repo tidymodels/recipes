@@ -14,6 +14,8 @@
 
 * Avoided partial matching on `seq()` arguments in internal functions. 
 
+* Improved error messaging, for example when a user tries to `prep()` a tuneable recipe.
+
 * `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package.
 
 * `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
