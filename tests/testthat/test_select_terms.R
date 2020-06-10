@@ -122,3 +122,45 @@ test_that('namespaced selectors', {
   )
 })
 
+
+
+test_that('new dplyr selectors', {
+  skip_if(tidyselect_pre_1.0.0())
+
+  vnames <- c("hydrogen", "carbon")
+  expect_error(
+    rec_1 <-
+      recipe(HHV ~ ., data = biomass) %>%
+      step_normalize(all_of(c("hydrogen", "carbon"))) %>%
+      prep(),
+    regex = NA
+  )
+  expect_equal(names(rec_1$steps[[1]]$means), c("hydrogen", "carbon"))
+
+  expect_error(
+    rec_2 <-
+      recipe(HHV ~ ., data = biomass) %>%
+      step_normalize(all_of(!!vnames)) %>%
+      prep(),
+    regex = NA
+  )
+  expect_equal(names(rec_2$steps[[1]]$means), c("hydrogen", "carbon"))
+
+  expect_error(
+    rec_3 <-
+      recipe(HHV ~ ., data = biomass) %>%
+      step_normalize(any_of(c("hydrogen", "carbon"))) %>%
+      prep(),
+    regex = NA
+  )
+  expect_equal(names(rec_3$steps[[1]]$means), c("hydrogen", "carbon"))
+
+  expect_error(
+    rec_4 <-
+      recipe(HHV ~ ., data = biomass) %>%
+      step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
+      prep(),
+    regex = NA
+  )
+  expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
+})

@@ -39,8 +39,9 @@ excluded variable(s).
 Also, select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}}, \code{\link[tidyselect:ends_with]{tidyselect::ends_with()}},
 \code{\link[tidyselect:contains]{tidyselect::contains()}}, \code{\link[tidyselect:matches]{tidyselect::matches()}},
-\code{\link[tidyselect:num_range]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}}, and
-\code{\link[tidyselect:one_of]{tidyselect::one_of()}}.
+\code{\link[tidyselect:num_range]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}},
+\code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
+\code{\link[tidyselect:any_of]{tidyselect::any_of()}}
 For example:
 
 \preformatted{
@@ -93,7 +94,7 @@ The complete list of allowable functions in steps:
 \itemize{
 \item \strong{By name}: \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}},
 \code{\link[tidyselect:ends_with]{tidyselect::ends_with()}}, \code{\link[tidyselect:contains]{tidyselect::contains()}},
-\code{\link[tidyselect:matches]{tidyselect::matches()}}, \code{\link[tidyselect:num_range]{tidyselect::num_range()}}, and
+\code{\link[tidyselect:matches]{tidyselect::matches()}}, \code{\link[tidyselect:num_range]{tidyselect::num_range()}},
 \code{\link[tidyselect:everything]{tidyselect::everything()}}
 \item \strong{By role}: \code{\link[=has_role]{has_role()}},
 \code{\link[=all_predictors]{all_predictors()}}, and \code{\link[=all_outcomes]{all_outcomes()}}

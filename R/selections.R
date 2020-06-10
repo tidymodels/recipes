@@ -41,8 +41,9 @@
 #' Also, select helpers from the `tidyselect` package can also be used:
 #'   [tidyselect::starts_with()], [tidyselect::ends_with()],
 #'   [tidyselect::contains()], [tidyselect::matches()],
-#'   [tidyselect::num_range()], [tidyselect::everything()], and
-#'   [tidyselect::one_of()].
+#'   [tidyselect::num_range()], [tidyselect::everything()],
+#'   [tidyselect::one_of()], [tidyselect::all_of()], and
+#'   [tidyselect::any_of()]
 #'   For example:
 #'
 #' \preformatted{
@@ -96,7 +97,7 @@
 #'   \itemize{
 #'     \item **By name**: [tidyselect::starts_with()],
 #'       [tidyselect::ends_with()], [tidyselect::contains()],
-#'       [tidyselect::matches()], [tidyselect::num_range()], and
+#'       [tidyselect::matches()], [tidyselect::num_range()],
 #'       [tidyselect::everything()]
 #'     \item **By role**: [has_role()],
 #'       [all_predictors()], and [all_outcomes()]
@@ -113,7 +114,10 @@ name_selectors <- c("starts_with",
                     "matches",
                     "num_range",
                     "everything",
-                    "one_of")
+                    "one_of",
+                    "all_of",
+                    "any_of",
+                    "c")
 
 role_selectors <-
   c("has_role", "all_predictors", "all_outcomes")

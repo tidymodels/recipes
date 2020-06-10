@@ -20,7 +20,10 @@
 
 * `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
 
+* The selectors `all_of()` and `any_of()` can now be used in step selections (#477).
+
 * The `tune` pacakge can now use recipes with `check` operations (but also requires `tune` >= 0.1.0.9000).
+
 
 # recipes 0.1.12
 
