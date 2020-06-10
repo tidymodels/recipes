@@ -142,3 +142,16 @@ test_that("`bake()` returns a 0 column / N row tibble when a selection returns n
     tibble(.rows = nrow(iris))
   )
 })
+
+
+
+test_that("tunable arguments at prep-time", {
+ .tune <- function() rlang::call2("tune")
+
+ expect_error(
+   recipe(Species ~ ., data = iris) %>%
+     step_ns(all_predictors(), deg_free = .tune()) %>%
+     prep(),
+   "'deg_free'. Do you want "
+ )
+})

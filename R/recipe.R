@@ -369,16 +369,19 @@ prep.recipe <-
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
     for (i in seq(along.with = x$steps)) {
-      if (any(map_lgl(x$steps[[i]], is_tune))) {
-        rlang::abort(
+      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
+      if (any(needs_tuning)) {
+        arg <- names(needs_tuning)[needs_tuning]
+        arg <- paste0("'", arg, "'", collapse = ", ")
+        msg <-
           paste0(
-            "You cannot `prep()` a tuneable recipe. ",
-            "Do you want to use a tuning function such as `tune_grid()`?"
+            "You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: ",
+            arg,
+            ". Do you want to use a tuning function such as `tune_grid()`?"
           )
-        )
+        rlang::abort(msg)
       }
-      note <-
-        paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
+      note <- paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
           cat(note, "[training]", "\n")
