@@ -23,3 +23,8 @@ no_param <-
     component_id = NA_character_
   )
 
+#' @rdname tunable.step
+#' @export
+tunable.check <- function(x, ...) {
+  no_param
+}
