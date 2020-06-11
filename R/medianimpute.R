@@ -88,11 +88,26 @@ step_medianimpute_new <-
 
 #' @export
 prep.step_medianimpute <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
-  check_type(training[, col_names])
+  col_names <- terms_select(x$terms, info = info, empty_fun = passover)
 
-  medians <- lapply(training[, col_names], median, na.rm = TRUE)
-  medians <- purrr::map2(medians, training[, col_names], cast)
+  # TODO An error occurs here when a column is passed that doesn't exist; I'm pretty sure
+  # that this worked at one time without having to use any_of().
+  # TODO Find a way to issue a warning above with the step name automatically instead
+  # of the warn() call below
+
+  if (length(col_names) > 0) {
+    check_type(training[, col_names])
+    medians <- lapply(training[, col_names], median, na.rm = TRUE)
+    medians <- purrr::map2(medians, training[, col_names], cast)
+  } else {
+    rlang::warn(
+      paste0(
+        "`prep.step_medianimpute()` did not select any columns. This ",
+        "step will not affect the data.")
+    )
+    medians <- list()
+  }
+
 
   step_medianimpute_new(
     terms = x$terms,
@@ -116,7 +131,7 @@ bake.step_medianimpute <- function(object, new_data, ...) {
 print.step_medianimpute <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Median Imputation for ", sep = "")
-    printer(names(x$medians), x$terms, x$trained, width = width)
+    printer(names(x$medians), x$terms, x$trained, width = width) # <- TODO modify printer() for missing names
     invisible(x)
   }
 
