@@ -54,7 +54,7 @@ given to \code{num_comp}.}
 \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument
 \code{x} should not be passed here (or at all).}
 
-\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is
+\item{res}{The \code{\link[stats:prcomp.default]{stats::prcomp.default()}} object is
 stored here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
