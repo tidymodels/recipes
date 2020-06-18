@@ -24,6 +24,8 @@
 
 * The `tune` pacakge can now use recipes with `check` operations (but also requires `tune` >= 0.1.0.9000).
 
+* The `tidy` method for `step_pca()` now has an option for returning the variance statistics for each component.
+
 
 # recipes 0.1.12
 

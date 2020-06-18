@@ -25,7 +25,7 @@ for more details. For the \code{tidy} method, these are not
 currently used.}
 
 \item{fn}{A function \code{fun}, a quosure style lambda `~ fun(.)`` or a list of
-either form (but containing only a single function, see \code{\link[dplyr:rename_at]{dplyr::rename_at()}}).
+either form (but containing only a single function, see \code{\link[dplyr:select_all]{dplyr::rename_at()}}).
 \strong{Note that this argument must be named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
