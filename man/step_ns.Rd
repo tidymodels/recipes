@@ -67,7 +67,7 @@ that will create new columns that are basis expansions of
 variables using natural splines.
 }
 \details{
-\code{step_ns} can new features from a single variable
+\code{step_ns} can create new features from a single variable
 that enable fitting routines to model this variable in a
 nonlinear manner. The extent of the possible nonlinearity is
 determined by the \code{df} or \code{knot} arguments of

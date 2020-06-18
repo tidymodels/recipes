@@ -70,7 +70,7 @@ that will create new columns that are basis expansions of
 variables using B-splines.
 }
 \details{
-\code{step_bs} can new features from a single variable
+\code{step_bs} can create new features from a single variable
 that enable fitting routines to model this variable in a
 nonlinear manner. The extent of the possible nonlinearity is
 determined by the \code{df}, \code{degree}, or \code{knot} arguments of
