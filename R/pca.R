@@ -33,7 +33,10 @@
 #'  stored here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below
+#'  resulting new variables. See notes below.
+#' @param type For the `tidy()` method, either "coefs" (for the variable
+#'  loadings per component) or "variance" (how much variance does each component
+#'  account for).
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
