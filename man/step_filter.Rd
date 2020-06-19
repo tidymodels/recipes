@@ -22,7 +22,7 @@ step_filter(
 sequence of operations for this recipe.}
 
 \item{...}{Logical predicates defined in terms of the variables
-in the data. Multiple conditions are combined with \verb{&}. Only
+in the data. Multiple conditions are combined with \code{&}. Only
 rows where the condition evaluates to \code{TRUE} are kept. See
 \code{\link[dplyr:filter]{dplyr::filter()}} for more details. For the \code{tidy}
 method, these are not currently used.}

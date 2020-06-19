@@ -25,7 +25,7 @@ for more details. For the \code{tidy} method, these are not
 currently used.}
 
 \item{fn}{A function fun, a quosure style lambda `~ fun(.)`` or a list of
-either form. (see \code{\link[dplyr:mutate_at]{dplyr::mutate_at()}}). \strong{Note that this argument must be
+either form. (see \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}). \strong{Note that this argument must be
 named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
