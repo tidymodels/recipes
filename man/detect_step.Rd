@@ -19,8 +19,9 @@ Logical indicating if recipes contains given step.
 Detect if a particular step or check is used in a recipe
 }
 \examples{
-rec <- recipe(Species ~ ., data = iris) \%>\%
+rec <- recipe(mpg ~ ., data = mtcars) \%>\%
   step_intercept()
 
 detect_step(rec, "step_intercept")
+detect_step(rec, name = "intercept")
 }

@@ -21,17 +21,27 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
-#'   step_mutate_at(contains("Length"), fn = ~ 1/.) %>%
+#' data(biomass, package = "modeldata")
+#'
+#' biomass %>%
+#'   slice(1:10) %>%
+#'   select(contains("gen"))
+#'
+#' ## ----------------------------------------------------------------------------
+#'
+#' recipe(~ ., data = biomass) %>%
+#'   step_mutate_at(contains("gen"), fn = ~ 1/.) %>%
 #'   prep() %>%
-#'   juice() %>%
+#'   juice(contains("gen")) %>%
 #'   slice(1:10)
 #'
-#' recipe(~ ., data = iris) %>%
+#' ## -----------------------------------------------------------------------------
+#'
+#' recipe(~ ., data = biomass) %>%
 #'   # leads to more columns being created.
-#'   step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) %>%
+#'   step_mutate_at(contains("gen"), fn = list(log = log, sqrt = sqrt)) %>%
 #'   prep() %>%
-#'   juice() %>%
+#'   juice(contains("gen")) %>%
 #'   slice(1:10)
 #' @export
 step_mutate_at <- function(

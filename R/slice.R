@@ -30,43 +30,30 @@
 #' @concept preprocessing
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
-#'   step_slice(1:3)
+#' rec <-
+#'   recipe( ~ ., data = mtcars) %>%
+#'   step_slice(1:3, id = "slice") %>%
+#'   prep()
 #'
-#' prepped <- prep(rec, training = iris %>% slice(1:75))
-#' tidy(prepped, number = 1)
+#'  juice(rec)
 #'
-#' library(dplyr)
+#'  # Not applied outside to other data
+#'  bake(rec, new_data = mtcars)
 #'
-#' dplyr_train <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(1:75) %>%
-#'   slice(1:3)
+#' tidy(rec, id = "slice")
 #'
-#' rec_train <- juice(prepped)
-#' all.equal(dplyr_train, rec_train)
-#'
-#' dplyr_test <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   slice(1:3)
-#' rec_test <- bake(prepped, iris %>% slice(76:150))
-#' all.equal(dplyr_test, rec_test)
+#' ## -----------------------------------------------------------------------------
 #'
 #' # Embedding the integer expression (or vector) into the
 #' # recipe:
 #'
 #' keep_rows <- 1:6
 #'
-#' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#' recipe( ~ ., data = mtcars) %>%
 #'   # Embed `keep_rows` in the call using !!
 #'   step_slice(!!keep_rows) %>%
-#'   prep(training = iris)
+#'   prep()
 #'
-#' tidy(qq_rec, number = 1)
 
 step_slice <- function(
   recipe, ...,

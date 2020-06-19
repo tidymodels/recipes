@@ -66,27 +66,27 @@ that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
 \examples{
 
 # Uses `sample_n`
-recipe( ~ ., data = iris) \%>\%
+recipe( ~ ., data = mtcars) \%>\%
   step_sample(size = 1) \%>\%
-  prep(training = iris) \%>\%
+  prep(training = mtcars) \%>\%
   juice() \%>\%
   nrow()
 
 # Uses `sample_frac`
-recipe( ~ ., data = iris) \%>\%
+recipe( ~ ., data = mtcars) \%>\%
   step_sample(size = 0.9999) \%>\%
-  prep(training = iris) \%>\%
+  prep(training = mtcars) \%>\%
   juice() \%>\%
   nrow()
 
-# Uses `sample_n` and returns _at maximum_ 120 samples.
-smaller_iris <-
-  recipe( ~ ., data = iris) \%>\%
+# Uses `sample_n` and returns _at maximum_ 20 samples.
+smaller_cars <-
+  recipe( ~ ., data = mtcars) \%>\%
   step_sample() \%>\%
-  prep(training = iris \%>\% slice(1:120))
+  prep(training = mtcars \%>\% slice(1:20))
 
-juice(smaller_iris) \%>\% nrow()
-bake(smaller_iris, iris \%>\% slice(121:150)) \%>\% nrow()
+juice(smaller_cars) \%>\% nrow()
+bake(smaller_cars, mtcars \%>\% slice(21:32)) \%>\% nrow()
 }
 \concept{preprocessing}
 \keyword{datagen}

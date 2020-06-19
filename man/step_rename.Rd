@@ -65,8 +65,8 @@ quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
 }
 \examples{
-recipe( ~ ., data = iris) \%>\%
-  step_rename(Sepal_Width = Sepal.Width) \%>\%
+recipe( ~ ., data = mtcars) \%>\%
+  step_rename(weight = wt) \%>\%
   prep() \%>\%
   juice() \%>\%
   slice(1:5)

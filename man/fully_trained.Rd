@@ -18,10 +18,11 @@ returned.
 Check to see if a recipe is trained/prepared
 }
 \examples{
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_center(all_numeric())
+rec <-
+  recipe(mpg ~ ., data = mtcars) \%>\%
+  step_center(all_predictors())
 
 rec \%>\% fully_trained
 
-rec \%>\% prep(training = iris) \%>\% fully_trained
+rec \%>\% prep() \%>\% fully_trained
 }

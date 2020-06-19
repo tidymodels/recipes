@@ -66,38 +66,24 @@ the value of the object in the expression (to be portable
 between sessions). See the examples.
 }
 \examples{
-rec <- recipe( ~ ., data = iris) \%>\%
-  step_filter(Sepal.Length > 4.5, Species == "setosa")
+rec <-
+  recipe( ~ ., data = mtcars) \%>\%
+  step_filter(gear > 4, cyl == 6) \%>\%
+  prep()
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75))
+# applies the filter:
+juice(rec)
 
-library(dplyr)
+# Does not apply the filter
+bake(rec, mtcars)
 
-dplyr_train <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(1:75) \%>\%
-  dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
+## -----------------------------------------------------------------------------
 
-rec_train <- juice(prepped)
-all.equal(dplyr_train, rec_train)
-
-dplyr_test <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(76:150) \%>\%
-  dplyr::filter(Sepal.Length > 4.5, Species != "setosa")
-rec_test <- bake(prepped, iris \%>\% slice(76:150))
-all.equal(dplyr_test, rec_test)
-
-values <- c("versicolor", "virginica")
-
-qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+values <- 6
+recipe( ~ ., data = mtcars) \%>\%
   # Embed the `values` object in the call using !!
-  step_filter(Sepal.Length > 4.5, Species  \%in\% !!values)
-
-tidy(qq_rec, number = 1)
+  step_filter(gear > 4, cyl  \%in\% !!values, id = "filter") \%>\%
+  prep()
 }
 \concept{preprocessing}
 \concept{row_filters}

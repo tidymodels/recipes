@@ -69,54 +69,32 @@ between sessions). See the examples.
 }
 \examples{
 rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe( ~ ., data = mtcars) \%>\%
   step_mutate(
-    dbl_width = Sepal.Width * 2,
-    half_length = Sepal.Length / 2
-  )
+    dbl_gear = gear * 2,
+    half_wt = wt / 2,
+    id = "mutate"
+  ) \%>\%
+  prep()
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75))
-
-library(dplyr)
-
-dplyr_train <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(1:75) \%>\%
-  mutate(
-    dbl_width = Sepal.Width * 2,
-    half_length = Sepal.Length / 2
-  )
-
-rec_train <- juice(prepped)
-all.equal(dplyr_train, rec_train)
-
-dplyr_test <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(76:150) \%>\%
-  mutate(
-    dbl_width = Sepal.Width * 2,
-    half_length = Sepal.Length / 2
-  )
-rec_test <- bake(prepped, iris \%>\% slice(76:150))
-all.equal(dplyr_test, rec_test)
+juice(rec, ends_with("wt"))
 
 # Embedding objects:
 const <- 1.414
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe( ~ ., data = mtcars) \%>\%
   step_mutate(
-    bad_approach = Sepal.Width * const,
-    best_approach = Sepal.Width * !!const
+    bad_approach = wt * const,
+    best_approach = wt * !!const,
+    id = "mutate"
   ) \%>\%
-  prep(training = iris)
+  prep()
 
-juice(qq_rec, contains("appro")) \%>\% slice(1:4)
+juice(qq_rec, contains("appro"))
 
 # The difference:
-tidy(qq_rec, number = 1)
+tidy(qq_rec, id = "mutate")
 }
 \concept{preprocessing}
 \concept{transformation_methods}

@@ -25,44 +25,27 @@
 #' @concept preprocessing
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
-#'   step_arrange(desc(Sepal.Length), 1/Petal.Length)
+#' rec <- recipe( ~ ., data = mtcars) %>%
+#'   step_arrange(desc(cyl), 1/disp, id = "arrange")
 #'
-#' prepped <- prep(rec, training = iris %>% slice(1:75))
-#' tidy(prepped, number = 1)
+#' prepped <- prep(rec, training = mtcars %>% slice(1:15))
+#' tidy(prepped, id = "arrange")
 #'
-#' library(dplyr)
-#'
-#' dplyr_train <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(1:75) %>%
-#'   dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
-#'
-#' rec_train <- juice(prepped)
-#' all.equal(dplyr_train, rec_train)
-#'
-#' dplyr_test <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
-#' rec_test <- bake(prepped, iris %>% slice(76:150))
-#' all.equal(dplyr_test, rec_test)
+#' juice(prepped)
 #'
 #' # When you have variables/expressions, you can create a
 #' # list of symbols with `rlang::syms()`` and splice them in
 #' # the call with `!!!`. See https://tidyeval.tidyverse.org
 #'
-#' sort_vars <- c("Sepal.Length", "Petal.Length")
+#' sort_vars <- c("cyl", "disp")
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe( ~ ., data = mtcars) %>%
 #'   # Embed the `values` object in the call using !!!
-#'   step_arrange(!!!syms(sort_vars)) %>%
-#'   prep(training = iris)
+#'   step_arrange(!!!syms(sort_vars), id = "arrange") %>%
+#'   prep()
 #'
-#' tidy(qq_rec, number = 1)
+#' tidy(qq_rec, id = "arrange")
 
 step_arrange <- function(
   recipe, ...,

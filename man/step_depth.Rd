@@ -112,24 +112,31 @@ replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
 }
 \examples{
+data(two_class_dat, package = "modeldata")
+
+## -----------------------------------------------------------------------------
 
 # halfspace depth is the default
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(all_predictors(), class = "Species")
+recipe(Class ~ ., data = two_class_dat) \%>\%
+  step_depth(all_predictors(), -all_nominal(), class = "Class") \%>\%
+  prep() \%>\%
+  juice()
+
+## -----------------------------------------------------------------------------
 
 # use zonoid metric instead
 # also, define naming convention for new columns
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(all_predictors(), class = "Species",
-             metric = "zonoid", prefix = "zonoid_")
+rec <- recipe(Class ~ ., data = two_class_dat) \%>\%
+  step_depth(all_predictors(), class = "Class",
+             metric = "zonoid", prefix = "zonoid_",
+             id = "depth")
 
-rec_dists <- prep(rec, training = iris)
+rec_dists <- prep(rec)
 
-dists_to_species <- bake(rec_dists, new_data = iris)
-dists_to_species
+bake(rec_dists, new_data = two_class_dat)
 
-tidy(rec, number = 1)
-tidy(rec_dists, number = 1)
+tidy(rec, id = "depth")
+tidy(rec_dists, id = "depth")
 }
 \concept{dimension_reduction}
 \concept{preprocessing}

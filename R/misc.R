@@ -346,12 +346,13 @@ prepare   <- function(x, ...)
 #'  returned.
 #' @export
 #' @examples
-#' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_center(all_numeric())
+#' rec <-
+#'   recipe(mpg ~ ., data = mtcars) %>%
+#'   step_center(all_predictors())
 #'
 #' rec %>% fully_trained
 #'
-#' rec %>% prep(training = iris) %>% fully_trained
+#' rec %>% prep() %>% fully_trained
 fully_trained <- function(x) {
   if (is.null(x$steps))
     return(TRUE)
@@ -368,10 +369,11 @@ fully_trained <- function(x) {
 #' @export
 #'
 #' @examples
-#' rec <- recipe(Species ~ ., data = iris) %>%
+#' rec <- recipe(mpg ~ ., data = mtcars) %>%
 #'   step_intercept()
 #'
 #' detect_step(rec, "step_intercept")
+#' detect_step(rec, name = "intercept")
 detect_step <- function(recipe, name) {
   exports <- getNamespaceExports("recipes")
   if (!any(grepl(paste0(".*", name, ".*"), exports)))

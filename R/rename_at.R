@@ -21,7 +21,7 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
+#' recipe(~ ., data = mtcars) %>%
 #'   step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) %>%
 #'   prep() %>%
 #'   juice() %>%

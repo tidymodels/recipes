@@ -20,11 +20,11 @@ be used on a recipe to show what predictors and outcome(s)
 could be used.
 }
 \examples{
+formula(recipe(mpg + wt ~ ., data = mtcars))
 
-formula(recipe(Species + Sepal.Length ~ ., data = iris))
-
-iris_rec <- recipe(Species ~ ., data = iris) \%>\%
+car_rec <-
+  recipe(mpg ~ ., data = mtcars) \%>\%
   step_center(all_numeric()) \%>\%
-  prep(training = iris)
-formula(iris_rec)
+  prep()
+formula(car_rec)
 }

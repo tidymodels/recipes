@@ -97,29 +97,41 @@ there must be at least as many data points are variables
 overall.
 }
 \examples{
+data(hpc_data, package = "modeldata")
 
 # in case of missing data...
-mean2 <- function(x) mean(x, na.rm = TRUE)
+mean_complete <- function(x) mean(x, na.rm = TRUE)
+
+## -----------------------------------------------------------------------------
 
 # define naming convention
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(all_predictors(), class = "Species",
-                 pool = FALSE, mean_func = mean2, prefix = "centroid_")
+rec <-
+  recipe(class ~ ., data = hpc_data) \%>\%
+  step_classdist(all_predictors(), -all_nominal(),
+                 class = "class",
+                 pool = FALSE,
+                 mean_func = mean_complete,
+                 prefix = "centroid_")
+
+## -----------------------------------------------------------------------------
 
 # default naming
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(all_predictors(), class = "Species",
-                 pool = FALSE, mean_func = mean2)
+rec <-
+  recipe(class ~ ., data = hpc_data) \%>\%
+  step_classdist(all_predictors(), -all_nominal(),
+                 class = "class",
+                 pool = FALSE,
+                 mean_func = mean_complete,
+                 id = "centroids")
 
-rec_dists <- prep(rec, training = iris)
+rec_dists <- prep(rec)
 
-dists_to_species <- bake(rec_dists, new_data = iris, everything())
-## on log scale:
-dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
-dists_to_species[, c("Species", dist_cols)]
+bake(rec_dists, new_data = hpc_data, starts_with("class"))
 
-tidy(rec, number = 1)
-tidy(rec_dists, number = 1)
+## ----------------------------------------------------------------------------
+
+tidy(rec, id = "centroids")
+tidy(rec_dists, id = "centroids")
 }
 \concept{dimension_reduction}
 \concept{preprocessing}

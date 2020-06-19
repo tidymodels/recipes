@@ -47,11 +47,12 @@
 #'   For example:
 #'
 #' \preformatted{
-#'   recipe(Species ~ ., data = iris) \%>\%
-#'     step_center(starts_with("Sepal"), -contains("Width"))
+#'  data(biomass, package = "modeldata")
+#'  recipe(HHV ~ ., data = biomass) \%>\%
+#'    step_center(contains("gen"), -contains("y"))
 #' }
 #'
-#' would only select `Sepal.Length`
+#' would only select `nitrogen`
 #'
 #' **Inline** functions that specify computations, such as
 #'  `log(x)`, should not be used in selectors and will produce an

@@ -45,11 +45,12 @@ Also, select helpers from the \code{tidyselect} package can also be used:
 For example:
 
 \preformatted{
-  recipe(Species ~ ., data = iris) \%>\%
-    step_center(starts_with("Sepal"), -contains("Width"))
+ data(biomass, package = "modeldata")
+ recipe(HHV ~ ., data = biomass) \%>\%
+   step_center(contains("gen"), -contains("y"))
 }
 
-would only select \code{Sepal.Length}
+would only select \code{nitrogen}
 
 \strong{Inline} functions that specify computations, such as
 \code{log(x)}, should not be used in selectors and will produce an
