@@ -33,7 +33,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{size}{An integer or fraction. If the value is within (0, 1),
-\code{\link[dplyr:sample_frac]{dplyr::sample_frac()}} is applied to the data. If an integer
+\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} is applied to the data. If an integer
 value of 1 or greater is used, \code{\link[dplyr:sample_n]{dplyr::sample_n()}} is applied.
 The default of \code{NULL} uses \code{\link[dplyr:sample_n]{dplyr::sample_n()}} with the size
 of the training set (or smaller for smaller \code{new_data}).}
@@ -61,7 +61,7 @@ and \code{id}.
 \description{
 \code{step_sample} creates a \emph{specification} of a recipe step
 that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
-\code{\link[dplyr:sample_frac]{dplyr::sample_frac()}}.
+\code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
 }
 \examples{
 
