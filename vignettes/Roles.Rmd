@@ -28,11 +28,11 @@ When a recipe is created using the formula interface, this defines the roles for
 ```{r formula-roles}
 library(recipes)
 
-recipe(Species ~ ., data = iris) %>% summary()
+recipe(mpg ~ ., data = mtcars) %>% summary()
 
-recipe( ~ Species, data = iris) %>% summary()
+recipe( ~ disp, data = mtcars) %>% summary()
 
-recipe(Sepal.Length + Sepal.Width ~ ., data = iris) %>% summary()
+recipe(mpg + wt ~ ., data = mtcars) %>% summary()
 ```
 
 These roles can be updated despite this initial assignment. `update_role()` can modify a single existing role:
@@ -125,7 +125,9 @@ In other cases, the roles are defaulted to a relevant value based the context. F
 So, by default, they are predictors but don't have to be:
 
 ```{r dummy}
-recipe( ~ ., data = iris) %>% 
+data(scat, package = "modeldata")
+
+recipe( ~ ., data = scat) %>% 
   step_dummy(Species) %>% 
   prep() %>% 
   juice(all_predictors()) %>% 
@@ -133,7 +135,7 @@ recipe( ~ ., data = iris) %>%
   names()
 
 # or something else
-recipe( ~ ., data = iris) %>% 
+recipe( ~ ., data = scat) %>% 
   step_dummy(Species, role = "trousers") %>% 
   prep() %>% 
   juice(has_role("trousers")) %>% 

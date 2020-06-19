@@ -188,16 +188,16 @@ test_that('missing columns', {
 
 # currently failing; try to figure out why
 # test_that('with factors', {
-#   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
-#     step_interact(~ (. - Sepal.Width)^3, sep = ":")
-#   int_rec_trained <- prep(int_rec, iris)
+#   int_rec <- recipe(Mass ~ ., data = scat) %>%
+#     step_interact(~ (. - Mass)^3, sep = ":")
+#   int_rec_trained <- prep(int_rec, scat)
 #
-#   te_new <- bake(int_rec_trained, new_data = iris, role = "predictor")
+#   te_new <- bake(int_rec_trained, new_data = scat, role = "predictor")
 #   te_new <- te_new[, sort(names(te_new))]
 #   te_new <- as.matrix(te_new)
 #
-#   og_terms <- terms(Sepal.Width ~ (.)^3, data = iris)
-#   te_og <- model.matrix(og_terms, data = iris)[, -1]
+#   og_terms <- terms(Mass ~ (.)^3, data = scat)
+#   te_og <- model.matrix(og_terms, data = scat)[, -1]
 #   te_og <- te_og[, sort(colnames(te_og))]
 #
 #   rownames(te_new) <- NULL

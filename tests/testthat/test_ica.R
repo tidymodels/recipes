@@ -142,7 +142,7 @@ test_that('No ICA comps', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_ica(all_predictors())
   rec_param <- tunable.step_ica(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp"))

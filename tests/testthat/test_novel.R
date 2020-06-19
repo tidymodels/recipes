@@ -77,9 +77,9 @@ test_that('basic functionality', {
 
 test_that('bad args', {
   expect_error(
-    recipe(~., data = iris) %>%
+    recipe(~., data = scat) %>%
       step_novel(all_predictors()) %>%
-      prep(iris)
+      prep(scat)
   )
   expect_error(
     recipe(~., data = tr_bad) %>%

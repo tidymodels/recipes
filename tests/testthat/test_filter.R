@@ -1,6 +1,9 @@
 library(testthat)
 library(recipes)
 library(dplyr)
+library(modeldata)
+data(scat)
+scat <- na.omit(scat)
 
 # ------------------------------------------------------------------------------
 
@@ -8,90 +11,90 @@ context("dplyr filter steps")
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+scat_rec <- recipe( ~ ., data = scat)
 
 # ------------------------------------------------------------------------------
 
 test_that('basic usage - skip = FALSE', {
   rec <-
-    iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species == "setosa", skip = FALSE)
+    scat_rec %>%
+    step_filter(Age > 3, Species == "bobcat", skip = FALSE)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = scat %>% slice(1:75))
 
   dplyr_train <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(1:75) %>%
-    dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
+    dplyr::filter(Age > 3, Species == "bobcat")
 
   rec_train <- juice(prepped)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(76:150) %>%
-    dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
+    dplyr::filter(Age > 3, Species == "bobcat")
   dplyr_test <- dplyr_test[, names(rec_train)]
 
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+  rec_test <- bake(prepped, scat %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 
 test_that('skip = FALSE', {
   rec <-
-    iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species == "setosa", skip = FALSE)
+    scat_rec %>%
+    step_filter(Age > 3, Species == "bobcat", skip = FALSE)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = scat %>% slice(1:75))
 
   dplyr_train <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(1:75) %>%
-    dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
+    dplyr::filter(Age > 3, Species == "bobcat")
 
   rec_train <- juice(prepped)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(76:150) %>%
-    dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+    dplyr::filter(Age > 3, Species == "bobcat")
+  rec_test <- bake(prepped, scat %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that('quasiquotation', {
-  values <- c("versicolor", "virginica")
+  values <- c("coyote", "gray_fox")
   rec_1 <-
-    iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species  %in% values)
+    scat_rec %>%
+    step_filter(Age > 3, Species  %in% values)
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
+  prepped_1 <- prep(rec_1, training = scat %>% slice(1:75))
 
   dplyr_train <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(1:75) %>%
-    filter(Sepal.Length > 4.5, Species  %in% values)
+    filter(Age > 3, Species  %in% values)
 
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
-    iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species  %in% !!values)
+    scat_rec %>%
+    step_filter(Age > 3, Species  %in% !!values)
 
-  prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
+  prepped_2 <- prep(rec_2, training = scat %>% slice(1:75))
 
   rm(values)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
+  expect_error(prep(rec_1, training = scat %>% slice(1:75)))
   expect_error(
-    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
+    prepped_2 <- prep(rec_2, training = scat %>% slice(1:75)),
     regexp = NA
   )
   rec_2_train <- juice(prepped_2)
@@ -100,17 +103,19 @@ test_that('quasiquotation', {
 
 test_that('no input', {
   no_inputs <-
-    iris_rec %>%
+    scat_rec %>%
     step_filter() %>%
-    prep(training = iris) %>%
-    juice(composition = "data.frame")
-  expect_equal(no_inputs, iris)
+    prep(training = scat) %>%
+    juice()
+  scat2 <- scat
+  scat2$Species <- factor(scat2$Species)
+  expect_equal(no_inputs, scat2)
 })
 
 
 test_that('printing', {
-  rec <- iris_rec %>% step_filter(Sepal.Length > 4.5)
+  rec <- scat_rec %>% step_filter(Age > 3)
   expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_output(prep(rec, training = scat, verbose = TRUE))
 })
 

@@ -1,5 +1,8 @@
 library(testthat)
 library(recipes)
+library(modeldata)
+data(scat)
+scat <- na.omit(scat)
 
 context("class distances")
 
@@ -11,18 +14,18 @@ eps <- if (capabilities("long.double"))
   0.1
 
 test_that("defaults", {
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Mass + Length, data = scat) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE, id = "")
-  trained <- prep(rec, training = iris, verbose = FALSE)
-  dists <- bake(trained, new_data = iris)
+  trained <- prep(rec, training = scat, verbose = FALSE)
+  dists <- bake(trained, new_data = scat)
   dists <- dists[, grepl("classdist", names(dists))]
   dists <- as.data.frame(dists)
 
-  split_up <- split(iris[, 1:4], iris$Species)
+  split_up <- split(scat[, c(6, 12, 8)], scat$Species)
   mahalanobis2 <- function(x, y)
     mahalanobis(y, center = colMeans(x), cov = cov(x))
 
-  exp_res <- lapply(split_up, mahalanobis2, y = iris[, 1:4])
+  exp_res <- lapply(split_up, mahalanobis2, y = scat[,c(6, 12, 8)])
   exp_res <- as.data.frame(exp_res)
 
   for(i in 1:ncol(exp_res))
@@ -41,7 +44,7 @@ test_that("defaults", {
   tidy_exp_tr <- tibble(
     terms = names(means),
     value = unname(means),
-    class = rep(names(split_up), each = 4),
+    class = rep(names(split_up), each = 3),
     id = ""
   )
   expect_equal(
@@ -52,18 +55,18 @@ test_that("defaults", {
 })
 
 test_that("alt args", {
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Mass + Length, data = scat) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE, mean_func = median)
-  trained <- prep(rec, training = iris, verbose = FALSE)
-  dists <- bake(trained, new_data = iris)
+  trained <- prep(rec, training = scat, verbose = FALSE)
+  dists <- bake(trained, new_data = scat)
   dists <- dists[, grepl("classdist", names(dists))]
   dists <- as.data.frame(dists)
 
-  split_up <- split(iris[, 1:4], iris$Species)
+  split_up <- split(scat[, c(6, 12, 8)], scat$Species)
   mahalanobis2 <- function(x, y)
     mahalanobis(y, center = apply(x, 2, median), cov = cov(x))
 
-  exp_res <- lapply(split_up, mahalanobis2, y = iris[, 1:4])
+  exp_res <- lapply(split_up, mahalanobis2, y = scat[, c(6, 12, 8)])
   exp_res <- as.data.frame(exp_res)
 
   for(i in 1:ncol(exp_res))
@@ -71,18 +74,18 @@ test_that("alt args", {
 })
 
 test_that('printing', {
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Mass + Length, data = scat) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
   expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_output(prep(rec, training = scat, verbose = TRUE))
 })
 
 test_that('prefix', {
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Mass + Length, data = scat) %>%
     step_classdist(all_predictors(), class = "Species",
                    log = FALSE, prefix = "centroid_")
-  trained <- prep(rec, training = iris, verbose = FALSE)
-  dists <- bake(trained, new_data = iris)
+  trained <- prep(rec, training = scat, verbose = FALSE)
+  dists <- bake(trained, new_data = scat)
   expect_false(any(grepl("classdist_", names(dists))))
   expect_true(any(grepl("centroid_", names(dists))))
 })

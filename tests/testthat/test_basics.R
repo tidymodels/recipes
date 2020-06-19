@@ -6,6 +6,10 @@ context("Testing basic functionalities")
 
 library(modeldata)
 data(biomass)
+data(scat)
+scat <- na.omit(scat)
+
+## -----------------------------------------------------------------------------
 
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
@@ -48,30 +52,30 @@ test_that("Using prepare", {
 
 test_that("Multiple variables on lhs of formula", {
   # from issue #96
-  expect_silent(multi_1 <- recipe(Petal.Width + Species ~ ., data = iris))
+  expect_silent(multi_1 <- recipe(Length + Species ~ ., data = scat))
   expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "outcome"],
-               names(iris)[4:5])
+               names(scat)[c(8, 1)])
   expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "predictor"],
-               names(iris)[1:3])
+               names(scat)[-c(8, 1)])
 
-  iris$Species <- as.character(iris$Species)
-  expect_silent(multi_2 <- recipe(Petal.Width + Species ~ ., data = iris))
+  scat$Species <- as.character(scat$Species)
+  expect_silent(multi_2 <- recipe(Length + Species ~ ., data = scat))
   expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "outcome"],
-               names(iris)[4:5])
+               names(scat)[c(8, 1)])
   expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "predictor"],
-               names(iris)[1:3])
+               names(scat)[-c(8, 1)])
 
 })
 
 test_that("detect_step function works", {
 
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_center(all_predictors()) %>%
-    step_scale(Sepal.Width) %>%
-    step_relu(Sepal.Length) %>%
+  rec <- recipe(Species ~ ., data = scat) %>%
+    step_center(all_predictors(), -all_nominal()) %>%
+    step_scale(Mass) %>%
+    step_relu(Age) %>%
     step_intercept()
 
-  prepped_rec <- prep(rec, iris)
+  prepped_rec <- prep(rec, scat)
 
   # only allow checking for valid steps
   expect_error(detect_step(rec, "not_a_step"))
@@ -124,22 +128,22 @@ test_that("bake without newdata", {
 })
 
 test_that("`juice()` returns a 0 column / N row tibble when a selection returns no columns", {
-  rec <- recipe(~ ., data = iris)
-  rec <- prep(rec, iris)
+  rec <- recipe(~ ., data = scat)
+  rec <- prep(rec, scat)
 
   expect_equal(
     juice(rec, all_outcomes()),
-    tibble(.rows = nrow(iris))
+    tibble(.rows = nrow(scat))
   )
 })
 
 test_that("`bake()` returns a 0 column / N row tibble when a selection returns no columns", {
-  rec <- recipe(~ ., data = iris)
-  rec <- prep(rec, iris)
+  rec <- recipe(~ ., data = scat)
+  rec <- prep(rec, scat)
 
   expect_equal(
-    bake(rec, iris, all_outcomes()),
-    tibble(.rows = nrow(iris))
+    bake(rec, scat, all_outcomes()),
+    tibble(.rows = nrow(scat))
   )
 })
 
@@ -149,7 +153,7 @@ test_that("tunable arguments at prep-time", {
  .tune <- function() rlang::call2("tune")
 
  expect_error(
-   recipe(Species ~ ., data = iris) %>%
+   recipe(Species ~ ., data = scat) %>%
      step_ns(all_predictors(), deg_free = .tune()) %>%
      prep(),
    "'deg_free'. Do you want "

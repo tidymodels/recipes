@@ -2,6 +2,8 @@ library(testthat)
 library(recipes)
 library(modeldata)
 data(biomass)
+data(scat)
+scat <- na.omit(scat)
 
 context("Polynomial features")
 
@@ -71,7 +73,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_poly(all_predictors())
   rec_param <- tunable.step_poly(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
@@ -89,14 +91,13 @@ test_that('tunable', {
 test_that('old option argument', {
   expect_message(
     res <-
-      recipe(~ ., data = iris) %>%
-      step_poly(Sepal.Width, options = list(degree = 3)) %>%
+      recipe(~ Age + Mass, data = scat) %>%
+      step_poly(Mass, options = list(degree = 3)) %>%
       prep() %>%
       juice(),
     "The `degree` argument is now a main argument"
   )
-  exp_names <- c('Sepal.Length', 'Petal.Length', 'Petal.Width', 'Species',
-                 'Sepal.Width_poly_1', 'Sepal.Width_poly_2', 'Sepal.Width_poly_3')
+  exp_names <- c('Age', 'Mass_poly_1', 'Mass_poly_2', 'Mass_poly_3')
   expect_equal(
     names(res),
     exp_names

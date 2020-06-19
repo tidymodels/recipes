@@ -1,29 +1,31 @@
 library(testthat)
 library(recipes)
 library(dplyr)
+library(modeldata)
+data(scat)
+scat <- na.omit(scat)
+scat$Species[c(1, 5, 10)] <- NA
 
 context("Down-sampling")
 
 
-iris2 <- iris[-(1:45),]
-iris2$Species[seq(6, 96, by = 5)] <- NA
-iris2$Species2 <- sample(iris2$Species)
-iris2$Species3 <- as.character(sample(iris2$Species))
-
-rec <- recipe( ~ ., data = iris2)
+rec <- recipe( ~ ., data = scat)
 
 test_that('basic usage', {
-  rec1 <- rec %>%
-    step_downsample(tidyselect::matches("Species$"), id = "")
+  expect_warning(
+    rec1 <- rec %>%
+      step_downsample(Species, id = ""),
+    "themis"
+  )
 
   untrained <- tibble(
-    terms = "tidyselect::matches(\"Species$\")",
+    terms = "Species",
     id = ""
   )
 
   expect_equivalent(untrained, tidy(rec1, number = 1))
 
-  rec1_p <- prep(rec1, training = iris2)
+  rec1_p <- prep(rec1, training = scat)
 
   trained <- tibble(
     terms = "Species",
@@ -34,43 +36,43 @@ test_that('basic usage', {
 
 
   tr_xtab <- table(juice(rec1_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec1_p, new_data = iris2)$Species, useNA = "always")
-  og_xtab <- table(iris2$Species, useNA = "always")
+  te_xtab <- table(bake(rec1_p, new_data = scat)$Species, useNA = "always")
+  og_xtab <- table(scat$Species, useNA = "always")
 
-  expect_equal(max(tr_xtab), 5)
-  expect_equal(sum(is.na(juice(rec1_p)$Species)), 5)
+  expect_equal(max(tr_xtab), 17)
+  expect_equal(sum(is.na(juice(rec1_p)$Species)), 3)
   expect_equal(te_xtab, og_xtab)
 
-  expect_warning(prep(rec1, training = iris2), NA)
+  expect_warning(prep(rec1, training = scat), NA)
 })
 
 test_that('ratio value', {
   rec2 <- rec %>%
-    step_downsample(tidyselect::matches("Species$"), under_ratio = 2)
+    step_downsample(Species, under_ratio = 2)
 
-  rec2_p <- prep(rec2, training = iris2)
+  rec2_p <- prep(rec2, training = scat)
 
   tr_xtab <- table(juice(rec2_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec2_p, new_data = iris2)$Species, useNA = "always")
-  og_xtab <- table(iris2$Species, useNA = "always")
+  te_xtab <- table(bake(rec2_p, new_data = scat)$Species, useNA = "always")
+  og_xtab <- table(scat$Species, useNA = "always")
 
-  expect_equal(max(tr_xtab), 10)
-  expect_equal(sum(is.na(juice(rec2_p)$Species)), 10)
+  expect_equal(max(tr_xtab), 34)
+  expect_equal(sum(is.na(juice(rec2_p)$Species)), 3)
   expect_equal(te_xtab, og_xtab)
 })
 
 
 test_that('no skipping', {
   rec3 <- rec %>%
-    step_downsample(tidyselect::matches("Species$"), skip = FALSE)
+    step_downsample(Species, skip = FALSE)
 
-  rec3_p <- prep(rec3, training = iris2)
+  rec3_p <- prep(rec3, training = scat)
 
   tr_xtab <- table(juice(rec3_p)$Species, useNA = "always")
-  te_xtab <- table(bake(rec3_p, new_data = iris2)$Species, useNA = "always")
-  og_xtab <- table(iris2$Species, useNA = "always")
+  te_xtab <- table(bake(rec3_p, new_data = scat)$Species, useNA = "always")
+  og_xtab <- table(scat$Species, useNA = "always")
 
-  expect_equal(max(tr_xtab), 5)
+  expect_equal(max(tr_xtab), 17)
   expect_equal(te_xtab, tr_xtab)
 })
 
@@ -79,7 +81,7 @@ test_that('no skipping', {
 test_that('bad data', {
   expect_error(
     rec %>%
-      step_downsample(Sepal.Width) %>%
+      step_downsample(Mass) %>%
       prep(retain = TRUE)
   )
   expect_error(
@@ -99,7 +101,7 @@ test_that('printing', {
     step_downsample(Species)
 
   expect_output(print(rec))
-  expect_output(prep(rec4, training = iris2, verbose = TRUE))
+  expect_output(prep(rec4, training = scat, verbose = TRUE))
 })
 
 test_that('`seed` produces identical sampling', {
@@ -107,9 +109,9 @@ test_that('`seed` produces identical sampling', {
   downsample_with_seed <- function(rec, seed = sample.int(10^5, 1)) {
     rec %>%
       step_downsample(Species, seed = seed) %>%
-      prep(training = iris2) %>%
+      prep(training = scat) %>%
       juice() %>%
-      pull(Petal.Width)
+      pull(Length)
   }
 
   petal_width_1 <- downsample_with_seed(rec, seed = 1234)
@@ -136,7 +138,7 @@ test_that('ratio deprecation', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_downsample(all_predictors(), under_ratio = 1)
   rec_param <- tunable.step_downsample(rec$steps[[1]])
   expect_equal(rec_param$name, c("under_ratio"))

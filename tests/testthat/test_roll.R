@@ -78,7 +78,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_window(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_window(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "window"))

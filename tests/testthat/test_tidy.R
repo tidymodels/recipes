@@ -60,6 +60,6 @@ test_that('bad args', {
   expect_error(tidy(trained, number = 100))
   expect_error(tidy(trained, number = 1, id = "id"))
   expect_error(tidy(trained, id = "id"))
-  expect_error(tidy(recipe(x = iris)))
+  expect_error(tidy(recipe(x = scat)))
 })
 

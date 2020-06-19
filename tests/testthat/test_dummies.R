@@ -201,16 +201,16 @@ test_that('new levels', {
 
 test_that('tests for issue #301', {
 
-  rec <- recipe(~ Species, data = iris)
+  rec <- recipe(~ Species, data = scat)
   dummies <- rec %>% step_dummy(Species)
-  dummies <- prep(dummies, training = iris)
+  dummies <- prep(dummies, training = scat)
   expect_equal(NULL, attr(dummies$steps[[1]]$levels$Species, ".Environment"))
 
   saved_recipe <- tempfile()
   saveRDS(dummies, file = saved_recipe)
   read_recipe <- readRDS(file = saved_recipe)
   unlink(saved_recipe)
-  expect_equal(bake(dummies, new_data = iris), bake(read_recipe, new_data = iris))
+  expect_equal(bake(dummies, new_data = scat), bake(read_recipe, new_data = scat))
 
   saved_dummies <- dummies
   saved_recipe <- tempfile()
@@ -218,7 +218,7 @@ test_that('tests for issue #301', {
   rm(saved_dummies)
   load(file = saved_recipe)
   unlink(saved_recipe)
-  expect_equal(bake(dummies, new_data = iris), bake(saved_dummies, new_data = iris))
+  expect_equal(bake(dummies, new_data = scat), bake(saved_dummies, new_data = scat))
 
 })
 

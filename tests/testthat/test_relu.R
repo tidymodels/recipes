@@ -1,5 +1,8 @@
 library(testthat)
 library(recipes)
+library(modeldata)
+data(scat)
+scat <- na.omit(scat)
 
 context("step_relu")
 
@@ -59,11 +62,11 @@ test_that('shifted and prefixed softplus', {
 test_that('works with all_predictors() selector', {
 
   expect_silent({
-    rec <- recipe(Species ~ ., data = iris) %>%
+    rec <- recipe(Species ~ Age + Mass, data = scat) %>%
     step_relu(all_predictors())
   })
 
-  expect_silent(prepped_rec <- prep(rec, iris))
+  expect_silent(prepped_rec <- prep(rec, scat))
 })
 
 

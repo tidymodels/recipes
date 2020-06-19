@@ -16,12 +16,18 @@ Text and example code modified from [the R FAQ on stackoverflow](http://stackove
 If you are not using a data set in a package then use e.g. `dput()` to give us something that can be put in R immediately, e.g. 
 
 ```r
-dput(head(iris,4))
+dput(head(mtcars,4))
+```
+
+or 
+
+```r
+datapasta::tribble_paste(mtcars)
 ```
 
 Without a dataset, there usually isn't much that we can do to help. 
 
-If your data frame has a factor with many levels, the `dput` output can be unwieldy because it will still list all the possible factor levels even if they aren't present in the the subset of your data. To solve this issue, you can use the `droplevels()` function. Notice below how species is a factor with only one level: `dput(droplevels(head(iris, 4)))`.
+If your data frame has a factor with many levels, the `dput` output can be unwieldy because it will still list all the possible factor levels even if they aren't present in the the subset of your data. To solve this issue, you can use the `droplevels()` function. Notice below how species is a factor with only one level: `dput(droplevels(head(mtcars, 4)))`.
 
 #### Minimal, runnable code:
 

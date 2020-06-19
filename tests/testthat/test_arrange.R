@@ -1,6 +1,10 @@
 library(testthat)
 library(recipes)
 library(dplyr)
+library(modeldata)
+
+data(scat)
+scat <- na.omit(scat)
 
 # ------------------------------------------------------------------------------
 
@@ -8,49 +12,49 @@ context("dplyr arrange steps")
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+scat_rec <- recipe( ~ ., data = scat)
 
 # ------------------------------------------------------------------------------
 
 test_that('basic usage', {
   rec <-
-    iris_rec %>%
-    step_arrange(desc(Sepal.Length), 1/Petal.Length)
+    scat_rec %>%
+    step_arrange(desc(Age), 1/Taper)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = scat %>% slice(1:75))
 
   dplyr_train <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(1:75) %>%
-    dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+    dplyr::arrange(desc(Age), 1/Taper)
 
   rec_train <- juice(prepped)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(76:150) %>%
-    dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+    dplyr::arrange(desc(Age), 1/Taper)
+  rec_test <- bake(prepped, scat %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that('quasiquotation', {
-  sort_vars <- c("Sepal.Length", "Petal.Length")
+  sort_vars <- c("Age", "Taper")
   sort_vars <- syms(sort_vars)
   rec_1 <-
-    iris_rec %>%
+    scat_rec %>%
     step_arrange(!!!sort_vars)
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
+  prepped_1 <- prep(rec_1, training = scat %>% slice(1:75))
 
   dplyr_train <-
-    iris %>%
+    scat %>%
     as_tibble() %>%
     slice(1:75) %>%
-    arrange(Sepal.Length, Petal.Length)
+    arrange(Age, Taper)
 
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
@@ -59,16 +63,16 @@ test_that('quasiquotation', {
 
 test_that('no input', {
   no_inputs <-
-    iris_rec %>%
+    scat_rec %>%
     step_arrange() %>%
-    prep(training = iris) %>%
-    juice(composition = "data.frame")
-  expect_equal(no_inputs, iris)
+    prep(training = scat) %>%
+    juice()
+  expect_equal(no_inputs, scat)
 })
 
 test_that('printing', {
-  rec <- iris_rec %>% step_arrange(Sepal.Length)
+  rec <- scat_rec %>% step_arrange(Age)
   expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_output(prep(rec, training = scat, verbose = TRUE))
 })
 

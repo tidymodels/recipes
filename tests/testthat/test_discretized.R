@@ -39,13 +39,9 @@ test_that('NA values from out of range', {
 
 
 test_that('NA values with step_discretize (issue #127)', {
-  iris_na <- iris
-  iris_na$sepal_na <- iris_na$Sepal.Length
-  iris_na$sepal_na[1:5] = NA
-
   disc_values <-
     discretize(
-      iris_na$sepal_na,
+      scat$d13C,
       min.unique = 2,
       cuts = 2,
       keep_na = TRUE,
@@ -54,11 +50,11 @@ test_that('NA values with step_discretize (issue #127)', {
 
   opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = TRUE)
 
-  rec <- recipe( ~ ., data = iris_na) %>%
-    step_discretize(sepal_na, options = opts) %>%
-    prep(training = iris_na)
+  rec <- recipe( ~ ., data = scat) %>%
+    step_discretize(d13C, options = opts) %>%
+    prep(training = scat)
 
-  expect_equal(rec$steps[[1]]$objects$sepal_na, disc_values)
+  expect_equal(rec$steps[[1]]$objects$d13C, disc_values)
 })
 
 test_that('printing and tidys', {
@@ -118,7 +114,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_discretize(all_predictors())
   rec_param <- tunable.step_discretize(rec$steps[[1]])
   expect_equal(rec_param$name, c("min_unique", "num_breaks"))

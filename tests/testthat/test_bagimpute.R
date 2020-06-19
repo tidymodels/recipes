@@ -7,6 +7,8 @@ context("bagged imputation")
 
 library(modeldata)
 data(biomass)
+data(scat)
+scat <- na.omit(scat)
 
 biomass$fac <- factor(sample(letters[1:2], size = nrow(biomass), replace = TRUE))
 
@@ -75,7 +77,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_bagimpute(all_predictors(), impute_with = imp_vars(all_predictors()))
   rec_param <- tunable.step_bagimpute(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))

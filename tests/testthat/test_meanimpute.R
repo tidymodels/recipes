@@ -85,7 +85,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_meanimpute(all_predictors())
   rec_param <- tunable.step_meanimpute(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))

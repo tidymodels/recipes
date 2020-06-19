@@ -99,9 +99,9 @@ test_that('ISOmap fails gracefully', {
   skip_if(getRversion() <= "3.4.4")
 
   expect_error(
-    recipe(Sepal.Length ~ ., data = iris) %>%
-      step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
-      step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
+    recipe(Age ~ ., data = na.omit(scat) %>% dplyr::select(Age, Mass, Species, Length)) %>%
+      step_bs(Mass, deg_free = 1, degree = 1) %>%
+      step_bs(Age, deg_free = 1, degree = 1) %>%
       step_other(Species, threshold = .000000001) %>%
       step_isomap(all_predictors(), -Species, num_terms = 1, neighbors = 1) %>%
       prep(),
@@ -112,7 +112,7 @@ test_that('ISOmap fails gracefully', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_isomap(all_predictors())
   rec_param <- tunable.step_isomap(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_terms", "neighbors"))

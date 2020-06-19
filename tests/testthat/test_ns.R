@@ -62,7 +62,7 @@ test_that('printing', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_ns(all_predictors())
   rec_param <- tunable.step_ns(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))

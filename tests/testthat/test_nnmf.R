@@ -1,10 +1,16 @@
 library(testthat)
 library(recipes)
 library(utils)
+library(modeldata)
+data(scat)
+scat <- na.omit(scat)
+
+context("NNeg Matrix Fact")
+
+## -----------------------------------------------------------------------------
 
 R_ver <- as.character(getRversion())
 
-context("NNeg Matrix Fact")
 req <- c("dimRed", "NMF")
 
 test_that('Correct values', {
@@ -17,64 +23,37 @@ test_that('Correct values', {
     require(i, character.only = TRUE)
 
   # # make test cases
-  # dat <- loadDataSet("Iris")
+  # dat <- scat[, c("Age", "Length")]
   # factorization <- embed(dat, "NNMF", seed = 2432, nrun = 3)
   # proj_dat <- factorization@apply(dat)
-  # nn_proj <- predict(factorization, iris[1:7, 1:4])
+  # nn_proj <- predict(factorization, scat[1:4, c("Age", "Length")])
+  # w <- as.vector(factorization@other.data$w)
   exp_w <-
-    structure(
-      c(
-        6.8773292872624,
-        4.97298823171793,
-        1.31813854010485,
-        0.0134584286822877,
-        8.65607280130039,
-        3.20684079829485,
-        8.55325512611619,
-        3.12136454264361
-      ),
-      .Dim = c(4L, 2L),
-      .Dimnames = list(
-        c("Sepal.Length",
-          "Sepal.Width", "Petal.Length", "Petal.Width"),
-        c("NNMF1", "NNMF2")
-      )
-    )
+    c(1.56699717680771, 22.7370737796942,
+      12.4311739219996, 9.65178637385127)
   exp_pred <-
-    structure(
-      c(
-        0.664359302949723,
-        0.590439874293881,
-        0.607417647961871,
-        0.566245763793409,
-        0.667498802933088,
-        0.692004564217231,
-        0.605796119468035,
-        0.0613037368385686,
-        0.0796317857686579,
-        0.0592956942623502,
-        0.0836713814327281,
-        0.0564414281690253,
-        0.0890848181660404,
-        0.0657435355504658
-      ),
-      .Dim = c(7L,
-               2L),
-      .Dimnames = list(NULL,
-                       c("NNMF1", "NNMF2"))
+    tibble::tribble(
+      ~NNMF1,             ~NNMF2,
+      0.261050107872493,  0.369308260568524,
+      0.542310107317385,  0.172968506946406,
+      0.309972732260825,  0.202255524654062,
+      0.214582632861181,  0.375165664110055,
+      0.191348895355525,  0.378094365880821,
+      0.237816370366837,  0.372236962339289,
+      0.242726669120878, 0.0498462975934273
     )
 
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Length, data = scat) %>%
     step_nnmf(all_predictors(), seed = 2432, num_run = 3)
   expect_output(print(rec))
 
-  expect_output(rec <- prep(rec, training = iris, verbose = TRUE))
+  expect_output(rec <- prep(rec, training = scat, verbose = TRUE))
 
-  rec_res <- juice(rec, all_predictors(), composition = "matrix")[1:7,]
+  rec_res <- juice(rec, all_predictors())[1:7,]
 
-  expect_equivalent(rec$steps[[1]]$res@other.data$w, exp_w)
+  expect_equivalent(as.vector(rec$steps[[1]]$res@other.data$w), exp_w)
 
-  expect_equal(exp_pred, rec_res)
+  expect_equivalent(exp_pred, rec_res)
 
 })
 
@@ -85,13 +64,13 @@ test_that('No NNF', {
   for (i in req)
     skip_if_not_installed(i)
 
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ Age + Length, data = scat) %>%
     step_nnmf(all_predictors(), seed = 2432, num_comp = 0) %>%
     prep()
 
   expect_equal(
     names(juice(rec)),
-    names(iris)
+    c("Age", "Length", "Species")
   )
   expect_true(inherits(rec$steps[[1]]$res, "list"))
   expect_output(print(rec),
@@ -107,7 +86,7 @@ test_that('tunable', {
     skip_if_not_installed(i)
 
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ Age + Length, data = scat) %>%
     step_nnmf(all_predictors())
   rec_param <- tunable.step_nnmf(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "num_run"))

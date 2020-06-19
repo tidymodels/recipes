@@ -149,7 +149,7 @@ test_that('options', {
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_knnimpute(all_predictors())
   rec_param <- tunable.step_knnimpute(rec$steps[[1]])
   expect_equal(rec_param$name, c("neighbors"))

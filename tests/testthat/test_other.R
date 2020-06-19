@@ -263,7 +263,7 @@ test_that(
 
 test_that('tunable', {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~ ., data = scat) %>%
     step_other(all_predictors())
   rec_param <- tunable.step_other(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -279,16 +279,16 @@ test_that('tunable', {
 
 test_that('issue #415 -  strings to factor conversion', {
   trans_recipe <-
-    recipe(Species ~ ., data = iris)
+    recipe(Species ~ ., data = scat)
 
-  prepped <- prep(trans_recipe, iris)
+  prepped <- prep(trans_recipe, scat)
 
-  iris_no_outcome <- iris
-  iris_no_outcome["Species"] <- NULL
+  scat_no_outcome <- scat
+  scat_no_outcome["Species"] <- NULL
 
   expect_error(
-    res <- bake(prepped, iris_no_outcome),
+    res <- bake(prepped, scat_no_outcome),
     regex = NA
   )
-  expect_equal(names(res), names(iris[, 1:4]))
+  expect_equal(names(res), names(scat)[-1])
 })

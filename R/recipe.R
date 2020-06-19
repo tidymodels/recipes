@@ -480,12 +480,12 @@ prep.recipe <-
 # end of the tibble. This seems reasonable but might lead to unexpected (but
 # consistent) results.
 #
-# Consider a recipe for the iris data with a single step:
-#     `step_rm(Sepal.Length, skip = TRUE)`
+# Consider a recipe for the mtcars data with a single step:
+#     `step_rm(disp, skip = TRUE)`
 # is used. For `juice()`, only three columns are returned. However, when `bake()`
-# is run on the recipe, it should return all five. However, when `bake()` is
-# run, `Sepal.Length` is not included in `term_info$variables` so this column
-# would come at the end (instead of first as it is in `iris`).
+# is run on the recipe, it should return all columns. However, when `bake()` is
+# run, `disp` is not included in `term_info$variables` so this column
+# would come at the end (instead of first as it is in `mtcars`).
 
 final_vars <- function(nms, vars, trms, baking) {
   # In case there are multiple roles for a column:
