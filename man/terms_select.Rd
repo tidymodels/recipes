@@ -8,7 +8,7 @@ terms_select(terms, info, empty_fun = abort_selection)
 }
 \arguments{
 \item{terms}{A list of formulas whose right-hand side contains
-quoted expressions. See \code{\link[rlang:quos]{rlang::quos()}} for examples.}
+quoted expressions. See \code{\link[rlang:nse-defuse]{rlang::quos()}} for examples.}
 
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
