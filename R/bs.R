@@ -27,7 +27,7 @@
 #' @concept preprocessing
 #' @concept basis_expansion
 #' @export
-#' @details `step_bs` can new features from a single variable
+#' @details `step_bs` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
 #'  determined by the `df`, `degree`, or `knot` arguments of

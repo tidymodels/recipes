@@ -31,7 +31,7 @@ method, these are not currently used.}
 
 \item{transform}{A function taking a single argument \code{x} that can be used
 to modify the numeric values prior to determining the levels (perhaps using
-\code{\link[base:as.integer]{base::as.integer()}}). The output of a function should be an integer that
+\code{\link[base:integer]{base::as.integer()}}). The output of a function should be an integer that
 corresponds to the value of \code{levels} that should be assigned. If not an
 integer, the value will be converted to an integer during \code{bake()}.}
 

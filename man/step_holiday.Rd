@@ -38,7 +38,7 @@ preprocessing have been estimated.}
 
 \item{holidays}{A character string that includes at least one
 holiday supported by the \code{timeDate} package. See
-\code{\link[timeDate:listHolidays]{timeDate::listHolidays()}} for a complete list.}
+\code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}} for a complete list.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
@@ -85,7 +85,7 @@ holiday_values
 \seealso{
 \code{\link[=step_date]{step_date()}} \code{\link[=step_rm]{step_rm()}}
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
+\code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
 }
 \concept{dates}
 \concept{model_specification}
