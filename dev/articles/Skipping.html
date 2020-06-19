@@ -115,7 +115,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Skipping_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>On Skipping Steps</h1>
@@ -180,14 +180,15 @@
 <a href="#be-careful" class="anchor"></a>Be Careful!</h1>
 <p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
 <p>As an example, skipping an operation whose variables are used later might be an issue:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">recipes</span>)
-<span class="no">car_recipe</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span>(<span class="no">mpg</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_log.html">step_log</a></span>(<span class="no">disp</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_center.html">step_center</a></span>(<span class="fu"><a href="../reference/has_role.html">all_predictors</a></span>()) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">mtcars</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
+<span class="kw">car_recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span>(<span class="kw">mpg</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">mtcars</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_log.html">step_log</a></span>(<span class="kw">disp</span>, skip = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_center.html">step_center</a></span>(<span class="fu"><a href="../reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">mtcars</span>)
 
 <span class="co"># These *should* produce the same results (as they do for `hp`)</span>
-<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">car_recipe</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>() <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">disp</span>, <span class="no">hp</span>)
+<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">car_recipe</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>() <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">disp</span>, <span class="kw">hp</span>)
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;     disp    hp</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -197,7 +198,7 @@
 <span class="co">#&gt; 4  0.268 -36.7</span>
 <span class="co">#&gt; 5  0.601  28.3</span>
 <span class="co">#&gt; 6  0.131 -41.7</span>
-<span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="no">car_recipe</span>, <span class="kw">new_data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>() <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">disp</span>, <span class="no">hp</span>)
+<span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="kw">car_recipe</span>, new_data = <span class="kw">mtcars</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>() <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">disp</span>, <span class="kw">hp</span>)
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;    disp    hp</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -206,7 +207,8 @@
 <span class="co">#&gt; 3  103. -53.7</span>
 <span class="co">#&gt; 4  253. -36.7</span>
 <span class="co">#&gt; 5  355.  28.3</span>
-<span class="co">#&gt; 6  220. -41.7</span></pre></body></html></div>
+<span class="co">#&gt; 6  220. -41.7</span>
+</pre></div>
 <p>This should emphasize that <code><a href="../reference/juice.html">juice()</a></code> should be used to get the training set values whenever a step is skipped.</p>
 </div>
   </div>

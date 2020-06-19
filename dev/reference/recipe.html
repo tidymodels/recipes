@@ -173,19 +173,19 @@ order to get it ready for data analysis." />
 order to get it ready for data analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>roles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>x</span>, formula = <span class='kw'>NULL</span>, <span class='kw'>...</span>, vars = <span class='kw'>NULL</span>, roles = <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for formula</span>
-<span class='fu'>recipe</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>formula</span>, <span class='kw'>data</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>recipe</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -258,15 +258,15 @@ such as dimension reduction or imputation can also be specified.
 <strong>Checks</strong> are operations that conduct specific tests of the
 data. When the test is satisfied, the data are returned without
 issue or modification. Otherwise, any error is thrown.</p>
-<p>Once a recipe has been defined, the <code><a href='prep.html'>prep()</a></code> function can be
+<p>Once a recipe has been defined, the <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code> function can be
 used to estimate quantities required for the operations using a
-data set (a.k.a. the training data). <code><a href='prep.html'>prep()</a></code> returns another
+data set (a.k.a. the training data). <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code> returns another
 recipe.</p>
-<p>To apply the recipe to a data set, the <code><a href='bake.html'>bake()</a></code> function is
+<p>To apply the recipe to a data set, the <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake()</a></code> function is
 used in the same manner as <code>predict</code> would be for models. This
 applies the steps to any data set.</p>
 <p>Note that the data passed to <code>recipe</code> need not be the complete data
-that will be used to train the steps (by <code><a href='prep.html'>prep()</a></code>). The recipe
+that will be used to train the steps (by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code>). The recipe
 only needs to know the names and types of data that will be used. For
 large data sets, <code>head</code> could be used to pass the recipe a smaller
 data set to save time and memory.</p>
@@ -278,23 +278,23 @@ data set to save time and memory.</p>
     <pre class="examples"><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># simple example:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
 <span class='co'># split data</span>
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
 <span class='co'># When only predictors and outcomes, a simplified formula can be used.</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
 <span class='co'># Now add preprocessing steps to the recipe.</span>
 
-<span class='no'>sp_signed</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
-<span class='no'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>sp_signed</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>())
+<span class='kw'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -307,8 +307,8 @@ data set to save time and memory.</p>
 #&gt; Centering and scaling for all_predictors
 #&gt; Spatial sign on  all_predictors</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
-<span class='no'>sp_signed_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>sp_signed</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>sp_signed_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>sp_signed</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -323,38 +323,38 @@ data set to save time and memory.</p>
 #&gt; Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 #&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
-<span class='no'>test_set_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>sp_signed_trained</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>biomass_te</span>)
+<span class='kw'>test_set_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>sp_signed_trained</span>, new_data = <span class='kw'>biomass_te</span>)
 
 <span class='co'># or use pipes for the entire workflow:</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>biomass_tr</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>recipe</span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>biomass_tr</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>())
 
 <span class='co'>###############################################</span>
 <span class='co'># multivariate example</span>
 
 <span class='co'># no need for `cbind(carbon, hydrogen)` for left-hand side</span>
-<span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>carbon</span> + <span class='no'>hydrogen</span> ~ <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-                  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>multi_y</span> <span class='kw'>&lt;-</span> <span class='no'>multi_y</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='kw'>multi_y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>~</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+                  data = <span class='kw'>biomass_tr</span>)
+<span class='kw'>multi_y</span> <span class='op'>&lt;-</span> <span class='kw'>multi_y</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_outcomes</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_scale.html'>step_scale</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>())
 
-<span class='no'>multi_y_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>multi_y</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>multi_y_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>multi_y</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>multi_y_trained</span>, <span class='no'>biomass_te</span>)
+<span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>multi_y_trained</span>, <span class='kw'>biomass_te</span>)
 
 <span class='co'>###############################################</span>
 <span class='co'># Creating a recipe manually with different roles</span>
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'>recipe</span>(<span class='no'>biomass_tr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>, <span class='no'>oxygen</span>, <span class='no'>nitrogen</span>, <span class='no'>sulfur</span>,
-           <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>HHV</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>sample</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"id variable"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>dataset</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"splitting indicator"</span>)
-<span class='no'>rec</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>biomass_tr</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/roles.html'>update_role</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>, <span class='kw'>oxygen</span>, <span class='kw'>nitrogen</span>, <span class='kw'>sulfur</span>,
+           new_role = <span class='st'>"predictor"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/roles.html'>update_role</a></span>(<span class='kw'>HHV</span>, new_role = <span class='st'>"outcome"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/roles.html'>update_role</a></span>(<span class='kw'>sample</span>, new_role = <span class='st'>"id variable"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/roles.html'>update_role</a></span>(<span class='kw'>dataset</span>, new_role = <span class='st'>"splitting indicator"</span>)
+<span class='kw'>rec</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 

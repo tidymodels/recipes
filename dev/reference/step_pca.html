@@ -175,22 +175,22 @@ that will convert numeric data into one or more principal
 components.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_pca</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"pca"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  num_comp = <span class='fl'>5</span>,
+  threshold = <span class='fl'>NA</span>,
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  res = <span class='kw'>NULL</span>,
+  prefix = <span class='st'>"PC"</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"pca"</span>)
 )
 
 <span class='co'># S3 method for step_pca</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,7 +204,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -245,7 +245,7 @@ given to <code>num_comp</code>.</p></td>
       <th>res</th>
       <td><p>The <code><a href='https://rdrr.io/r/stats/prcomp.html'>stats::prcomp.default()</a></code> object is
 stored here once this preprocessing step has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -255,8 +255,8 @@ resulting new variables. See notes below</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -290,8 +290,8 @@ to combat large inter-variables correlations in a data set.</p>
 <p>It is advisable to standardized the variables prior to running
 PCA. Here, each variable will be centered and scaled prior to
 the PCA calculation. This can be changed using the
-<code>options</code> argument or by using <code><a href='step_center.html'>step_center()</a></code>
-and <code><a href='step_scale.html'>step_scale()</a></code>.</p>
+<code>options</code> argument or by using <code><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center()</a></code>
+and <code><a href='https://rdrr.io/pkg/recipes/man/step_scale.html'>step_scale()</a></code>.</p>
 <p>The argument <code>num_comp</code> controls the number of components that
 will be retained (the original variables that are used to derive
 the components are removed from the data). The new components
@@ -309,28 +309,28 @@ fraction of the total variance in the variables.</p>
 Analysis</em>. Springer.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_ica.html'>step_ica()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
-<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/step_kpca.html'>step_kpca()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/step_isomap.html'>step_isomap()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='no'>pca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>pca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='no'>pca_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>pca_estimates</span>, <span class='no'>USArrests</span>)
+    <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>USArrests</span>)
+<span class='kw'>pca_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_scale.html'>step_scale</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>(), num_comp = <span class='fl'>3</span>)
+<span class='kw'>pca_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>pca_trans</span>, training = <span class='kw'>USArrests</span>)
+<span class='kw'>pca_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>pca_estimates</span>, <span class='kw'>USArrests</span>)
 
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pca_data</span>$<span class='no'>PC1</span>, <span class='no'>pca_data</span>$<span class='no'>PC2</span>,
-     <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.99</span>)
-<span class='no'>with_thresh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>with_thresh</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>USArrests</span>)
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>with_thresh</span>, <span class='no'>USArrests</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 4</span><span>
+<span class='kw'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC1</span>, <span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC2</span>))
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC1</span>, <span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC2</span>,
+     xlim = <span class='kw'>rng</span>, ylim = <span class='kw'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
+<span class='kw'>with_thresh</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_scale.html'>step_scale</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>(), threshold = <span class='fl'>.99</span>)
+<span class='kw'>with_thresh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>with_thresh</span>, training = <span class='kw'>USArrests</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>with_thresh</span>, <span class='kw'>USArrests</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 4</span><span>
 #&gt;        PC1     PC2     PC3      PC4
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> -</span><span style='color: #BB0000;'>0.976</span><span>   1.12   -</span><span style='color: #BB0000;'>0.440</span><span>   0.155  
@@ -344,10 +344,10 @@ Analysis</em>. Springer.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> -</span><span style='color: #BB0000;'>2.98</span><span>    0.038</span><span style='text-decoration: underline;'>8</span><span> -</span><span style='color: #BB0000;'>0.571</span><span>  -</span><span style='color: #BB0000;'>0.095</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
 #&gt; </span><span style='color: #555555;'>10</span><span> -</span><span style='color: #BB0000;'>1.62</span><span>    1.27   -</span><span style='color: #BB0000;'>0.339</span><span>   1.07   
 #&gt; </span><span style='color: #555555;'># … with 40 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_trans</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms         value component id       
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>pca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_estimates</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 4</span><span>
 #&gt;    terms      value component id       
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> Murder   -</span><span style='color: #BB0000;'>0.536</span><span>  PC1       pca_YT48I

@@ -256,12 +256,12 @@ type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>USArrests</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='step_pca.html'>step_pca</a></span>(<span class='no'>Murder</span>, <span class='no'>Assault</span>, <span class='no'>UrbanPop</span>, <span class='no'>Rape</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>USArrests</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca</a></span>(<span class='kw'>Murder</span>, <span class='kw'>Assault</span>, <span class='kw'>UrbanPop</span>, <span class='kw'>Rape</span>, num = <span class='fl'>3</span>)</pre>
 
 <p>The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
-to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
+to <code><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca()</a></code>.</p>
 <p>Note that:</p>
 <ol>
 <li><p>The selector arguments should not contain functions
@@ -284,8 +284,8 @@ excluded variable(s).</p></li>
 <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code>
 For example:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>), -<span class='fu'>contains</span>(<span class='st'>"Width"</span>))</pre>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"Sepal"</span>), <span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"Width"</span>))</pre>
 
 <p>would only select <code>Sepal.Length</code></p>
 <p><strong>Inline</strong> functions that specify computations, such as
@@ -295,40 +295,40 @@ error. A list of allowed selector functions is below.</p>
 is coded can also be selected. For example, when using
 <code>step_pca</code>, the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
-case, using <code>matches("^PC")</code> will select all of the columns
+case, using <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches("^PC")</a></code> will select all of the columns
 whose names start with "PC" <em>once those columns are created</em>.</p>
 <p>There are sets of functions that can be used to select
-variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
-<code><a href='has_role.html'>has_type()</a></code>. For convenience, there are also functions that are
-more specific: <code><a href='has_role.html'>all_numeric()</a></code>, <code><a href='has_role.html'>all_nominal()</a></code>,
-<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code>. These can be used in
+variables based on their role or type: <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>has_role()</a></code> and
+<code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>has_type()</a></code>. For convenience, there are also functions that are
+more specific: <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors()</a></code>, and <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_outcomes()</a></code>. These can be used in
 conjunction with the previous functions described for selecting
 variables using their names:</p>
 <pre>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), -<span class='fu'><a href='has_role.html'>all_outcomes</a></span>())</pre>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>(), <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_outcomes</a></span>())</pre>
 
 <p>This results in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.</p>
 <p>If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.</p>
-<p>Selectors can be used in <code><a href='step_interact.html'>step_interact()</a></code> in similar ways but
+<p>Selectors can be used in <code><a href='https://rdrr.io/pkg/recipes/man/step_interact.html'>step_interact()</a></code> in similar ways but
 must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
 could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be
 useful if <code>Species</code> was converted to dummy variables
-previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
+previously using <code><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy()</a></code>.</p>
 <p>The complete list of allowable functions in steps:</p>
 <ul>
 <li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code></p></li>
-<li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
-<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
-<li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,
-and <code><a href='has_role.html'>all_nominal()</a></code></p></li>
+<li><p><strong>By role</strong>: <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>has_role()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors()</a></code>, and <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_outcomes()</a></code></p></li>
+<li><p><strong>By type</strong>: <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>has_type()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric()</a></code>,
+and <code><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal()</a></code></p></li>
 </ul>
 
     </div>

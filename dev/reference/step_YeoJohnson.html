@@ -175,21 +175,21 @@ recipe step that will transform data using a simple Yeo-Johnson
 transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_YeoJohnson</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambdas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>5</span>, <span class='fl'>5</span>),
-  <span class='kw'>num_unique</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"YeoJohnson"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_YeoJohnson.html'>step_YeoJohnson</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  lambdas = <span class='kw'>NULL</span>,
+  limits = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span>),
+  num_unique = <span class='fl'>5</span>,
+  na_rm = <span class='fl'>TRUE</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"YeoJohnson"</span>)
 )
 
 <span class='co'># S3 method for step_YeoJohnson</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,7 +202,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -219,7 +219,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>lambdas</th>
       <td><p>A numeric vector of transformation values. This
-is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+is <code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>limits</th>
@@ -239,8 +239,8 @@ values should be removed during computations.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -284,39 +284,39 @@ closed to the bounds, or if the optimization fails, a value of
 transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_BoxCox.html'>step_BoxCox()</a></code> <code><a href='recipe.html'>recipe()</a></code>
-<code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_BoxCox.html'>step_BoxCox()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>yj_transform</span> <span class='kw'>&lt;-</span> <span class='fu'>step_YeoJohnson</span>(<span class='no'>rec</span>,  <span class='fu'><a href='has_role.html'>all_numeric</a></span>())
+<span class='kw'>yj_transform</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='kw'>rec</span>,  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>())
 
-<span class='no'>yj_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>yj_transform</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>yj_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>yj_transform</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>yj_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>yj_estimates</span>, <span class='no'>biomass_te</span>)
+<span class='kw'>yj_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>yj_estimates</span>, <span class='kw'>biomass_te</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>biomass_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"before"</span>)</div><div class='img'><img src='step_YeoJohnson-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>yj_te</span>$<span class='no'>sulfur</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"after"</span>)</div><div class='img'><img src='step_YeoJohnson-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>yj_transform</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>sulfur</span>), main = <span class='st'>"before"</span>)</div><div class='img'><img src='step_YeoJohnson-1.png' alt='' width='768' height='552' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>yj_te</span><span class='op'>$</span><span class='kw'>sulfur</span>), main = <span class='st'>"after"</span>)</div><div class='img'><img src='step_YeoJohnson-2.png' alt='' width='768' height='552' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>yj_transform</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms         value id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> YeoJohnson_y0ISr</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>yj_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 3</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> YeoJohnson_8LSSy</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>yj_estimates</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 3</span><span>
 #&gt;   terms      value id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon   -</span><span style='color: #BB0000;'>0.022</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> YeoJohnson_y0ISr
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen  2.10   YeoJohnson_y0ISr
-#&gt; </span><span style='color: #555555;'>3</span><span> oxygen    1.78   YeoJohnson_y0ISr
-#&gt; </span><span style='color: #555555;'>4</span><span> nitrogen -</span><span style='color: #BB0000;'>0.830</span><span>  YeoJohnson_y0ISr
-#&gt; </span><span style='color: #555555;'>5</span><span> sulfur   -</span><span style='color: #BB0000;'>4.09</span><span>   YeoJohnson_y0ISr
-#&gt; </span><span style='color: #555555;'>6</span><span> HHV      -</span><span style='color: #BB0000;'>0.388</span><span>  YeoJohnson_y0ISr</div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon   -</span><span style='color: #BB0000;'>0.022</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> YeoJohnson_8LSSy
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen  2.10   YeoJohnson_8LSSy
+#&gt; </span><span style='color: #555555;'>3</span><span> oxygen    1.78   YeoJohnson_8LSSy
+#&gt; </span><span style='color: #555555;'>4</span><span> nitrogen -</span><span style='color: #BB0000;'>0.830</span><span>  YeoJohnson_8LSSy
+#&gt; </span><span style='color: #555555;'>5</span><span> sulfur   -</span><span style='color: #BB0000;'>4.09</span><span>   YeoJohnson_8LSSy
+#&gt; </span><span style='color: #555555;'>6</span><span> HHV      -</span><span style='color: #BB0000;'>0.388</span><span>  YeoJohnson_8LSSy</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

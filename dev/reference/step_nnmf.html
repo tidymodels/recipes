@@ -175,23 +175,23 @@ that will convert numeric data into one or more non-negative
 components.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_nnmf</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>num_run</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"NNMF"</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>5</span>, <span class='fl'>1</span>),
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"nnmf"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_nnmf.html'>step_nnmf</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  num_comp = <span class='fl'>2</span>,
+  num_run = <span class='fl'>30</span>,
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  res = <span class='kw'>NULL</span>,
+  prefix = <span class='st'>"NNMF"</span>,
+  seed = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span><span class='op'>^</span><span class='fl'>5</span>, <span class='fl'>1</span>),
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"nnmf"</span>)
 )
 
 <span class='co'># S3 method for step_nnmf</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -235,14 +235,14 @@ to obtain a consensus projection.</p></td>
     <tr>
       <th>options</th>
       <td><p>A list of options to <code>nmf()</code> in the NMF package by way of the
-<code>NNMF()</code> function in the <code>dimRed</code> package. <strong>Note</strong> that the arguments
+<code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> function in the <code>dimRed</code> package. <strong>Note</strong> that the arguments
 <code>data</code> and <code>ndim</code> should not be passed here.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>The <code>NNMF()</code> object is stored
+      <td><p>The <code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -257,8 +257,8 @@ when computing the factorization.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -294,14 +294,14 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 <code>NNMF101</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code>, <code><a href='step_ica.html'>step_ica()</a></code>, <code><a href='step_kpca.html'>step_kpca()</a></code>,
-<code><a href='step_isomap.html'>step_isomap()</a></code>, <code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep.recipe()</a></code>,
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_kpca.html'>step_kpca()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/step_isomap.html'>step_isomap()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
 <span class='co'># rec &lt;- recipe(HHV ~ ., data = biomass) %&gt;%</span>
 <span class='co'>#   update_role(sample, new_role = "id var") %&gt;%</span>
@@ -312,7 +312,8 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 <span class='co'># juice(rec)</span>
 <span class='co'>#</span>
 <span class='co'># library(ggplot2)</span>
-<span class='co'># ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()</span></div></pre>
+<span class='co'># ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

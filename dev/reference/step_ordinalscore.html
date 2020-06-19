@@ -175,19 +175,19 @@ recipe step that will convert ordinal factor variables into
 numeric scores.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_ordinalscore</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>as.numeric</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ordinalscore"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_ordinalscore.html'>step_ordinalscore</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  columns = <span class='kw'>NULL</span>,
+  convert = <span class='kw'>as.numeric</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"ordinalscore"</span>)
 )
 
 <span class='co'># S3 method for step_ordinalscore</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,7 +200,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -218,7 +218,7 @@ preprocessing have been estimated.</p></td>
       <th>columns</th>
       <td><p>A character string of variables that will be
 converted. This is <code>NULL</code> until computed by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>convert</th>
@@ -228,8 +228,8 @@ as an input and outputs a single numeric variable.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -261,15 +261,15 @@ a linear scale (1, 2, 3, ... <code>C</code>) but custom score
 functions can also be used (see the example below).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fail_lvls</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"meh"</span>, <span class='st'>"annoying"</span>, <span class='st'>"really_bad"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>fail_lvls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"meh"</span>, <span class='st'>"annoying"</span>, <span class='st'>"really_bad"</span>)
 
-<span class='no'>ord_data</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>item</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"paperclip"</span>, <span class='st'>"twitter"</span>, <span class='st'>"airbag"</span>),
-             <span class='kw'>fail_severity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>fail_lvls</span>,
-                                    <span class='kw'>levels</span> <span class='kw'>=</span> <span class='no'>fail_lvls</span>,
-                                    <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='kw'>ord_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(item = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"paperclip"</span>, <span class='st'>"twitter"</span>, <span class='st'>"airbag"</span>),
+             fail_severity = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>fail_lvls</span>,
+                                    levels = <span class='kw'>fail_lvls</span>,
+                                    ordered = <span class='fl'>TRUE</span>))
 
-<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(~<span class='no'>fail_severity</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)</div><div class='output co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
+<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='op'>~</span><span class='kw'>fail_severity</span>, data = <span class='kw'>ord_data</span>)</div><div class='output co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
 #&gt; 1           1   -7.071068e-01       0.4082483
 #&gt; 2           1   -7.850462e-17      -0.8164966
 #&gt; 3           1    7.071068e-01       0.4082483
@@ -279,40 +279,40 @@ functions can also be used (see the example below).</p>
 #&gt; attr(,"contrasts")$fail_severity
 #&gt; [1] "contr.poly"
 #&gt; </div><div class='input'>
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>item</span> + <span class='no'>fail_severity</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ord_data</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>)
+<span class='kw'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>item</span> <span class='op'>+</span> <span class='kw'>fail_severity</span>, data = <span class='kw'>ord_data</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy</a></span>(<span class='kw'>item</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_ordinalscore.html'>step_ordinalscore</a></span>(<span class='kw'>fail_severity</span>)
 
-<span class='no'>linear_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>linear_values</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
+<span class='kw'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>linear_values</span>, training = <span class='kw'>ord_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>linear_values</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>linear_values</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>             1              1            0
 #&gt; </span><span style='color: #555555;'>2</span><span>             2              0            1
 #&gt; </span><span style='color: #555555;'>3</span><span>             3              0            0</div><div class='input'>
-<span class='no'>custom</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-  <span class='no'>new_values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>7</span>)
-  <span class='no'>new_values</span>[<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>x</span>)]
+<span class='kw'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) {
+  <span class='kw'>new_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>7</span>)
+  <span class='kw'>new_values</span>[<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='kw'>x</span>)]
 }
 
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>item</span> + <span class='no'>fail_severity</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ord_data</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='no'>item</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_ordinalscore</span>(<span class='no'>fail_severity</span>, <span class='kw'>convert</span> <span class='kw'>=</span> <span class='no'>custom</span>)
+<span class='kw'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>item</span> <span class='op'>+</span> <span class='kw'>fail_severity</span>, data = <span class='kw'>ord_data</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy</a></span>(<span class='kw'>item</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_ordinalscore.html'>step_ordinalscore</a></span>(<span class='kw'>fail_severity</span>, convert = <span class='kw'>custom</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms         id                
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
 #&gt; </span><span style='color: #555555;'>1</span><span> fail_severity ordinalscore_qIB0v</div><div class='input'>
-<span class='no'>nonlin_scores</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>ord_data</span>)
+<span class='kw'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>nonlin_scores</span>, training = <span class='kw'>ord_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>nonlin_scores</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>nonlin_scores</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>             1              1            0
 #&gt; </span><span style='color: #555555;'>2</span><span>             3              0            1
 #&gt; </span><span style='color: #555555;'>3</span><span>             7              0            0</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>nonlin_scores</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms         id                
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
 #&gt; </span><span style='color: #555555;'>1</span><span> fail_severity ordinalscore_qIB0v</div></span></pre>

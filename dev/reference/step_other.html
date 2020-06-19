@@ -175,20 +175,20 @@ step that will potentially pool infrequently occurring values
 into an "other" category.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_other</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other"</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"other"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  threshold = <span class='fl'>0.05</span>,
+  other = <span class='st'>"other"</span>,
+  objects = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"other"</span>)
 )
 
 <span class='co'># S3 method for step_other</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,7 +202,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables that will potentially be reduced. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -231,13 +231,13 @@ levels that occur less then <code>threshold</code> times will be "othered".</p><
       <th>objects</th>
       <td><p>A list of objects that contain the information
 to pool infrequent levels that is determined by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -267,7 +267,7 @@ whose individual proportion (or frequency) in the training set is less than
 <code>threshold</code>.</p>
 <p>If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of <code>strings_as_factors</code> in
-<code><a href='prep.html'>prep.recipe()</a></code>). Otherwise, a factor is always returned with
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>). Otherwise, a factor is always returned with
 different factor levels.</p>
 <p>If <code>threshold</code> is less than the largest category proportion, all levels
 except for the most frequent are collapsed to the <code>other</code> level.</p>
@@ -280,29 +280,29 @@ pooling is needed, they will be placed into the other category.</p>
 contained in the training set), the other category is assigned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
-<code><a href='names0.html'>dummy_names()</a></code>, <code><a href='step_regex.html'>step_regex()</a></code>, <code><a href='step_count.html'>step_count()</a></code>,
-<code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_novel.html'>step_novel()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_factor2string.html'>step_factor2string()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_string2factor.html'>step_string2factor()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/names0.html'>dummy_names()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_regex.html'>step_regex()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_count.html'>step_count()</a></code>,
+<code><a href='https://rdrr.io/pkg/recipes/man/step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_unorder.html'>step_unorder()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>19</span>)
-<span class='no'>in_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>okc</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>30000</span>)
+<span class='kw'>in_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>okc</span>), size = <span class='fl'>30000</span>)
 
-<span class='no'>okc_tr</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[ <span class='no'>in_train</span>,]
-<span class='no'>okc_te</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[-<span class='no'>in_train</span>,]
+<span class='kw'>okc_tr</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[ <span class='kw'>in_train</span>,]
+<span class='kw'>okc_te</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='op'>-</span><span class='kw'>in_train</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc_tr</span>)
 
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other</a></span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, threshold = <span class='fl'>.1</span>, other = <span class='st'>"other values"</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>okc_tr</span>)
 
-<span class='no'>collapsed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>okc_te</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>okc_te</span>$<span class='no'>diet</span>, <span class='no'>collapsed</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      
+<span class='kw'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>okc_te</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>okc_te</span><span class='op'>$</span><span class='kw'>diet</span>, <span class='kw'>collapsed</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)</div><div class='output co'>#&gt;                      
 #&gt;                       anything mostly anything strictly anything other values
 #&gt;   anything                3128               0                 0            0
 #&gt;   halal                      0               0                 0            4
@@ -344,7 +344,7 @@ contained in the training set), the other category is assigned.</p>
 #&gt;   vegan                   0
 #&gt;   vegetarian              0
 #&gt;   &lt;NA&gt;                12145</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 3</span><span>
 #&gt;   terms    retained          id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> diet     anything          other_ez6XT
@@ -353,20 +353,20 @@ contained in the training set), the other category is assigned.</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> location oakland           other_ez6XT
 #&gt; </span><span style='color: #555555;'>5</span><span> location san francisco     other_ez6XT</div><div class='input'>
 <span class='co'># novel levels are also "othered"</span>
-<span class='no'>tahiti</span> <span class='kw'>&lt;-</span> <span class='no'>okc</span>[<span class='fl'>1</span>,]
-<span class='no'>tahiti</span>$<span class='no'>location</span> <span class='kw'>&lt;-</span> <span class='st'>"a magical place"</span>
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>tahiti</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='kw'>tahiti</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='fl'>1</span>,]
+<span class='kw'>tahiti</span><span class='op'>$</span><span class='kw'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>tahiti</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   diet              location    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> strictly anything other values</div><div class='input'>
 <span class='co'># threshold as a frequency</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>location</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc_tr</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_other</span>(<span class='no'>diet</span>, <span class='no'>location</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2000</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"other values"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other</a></span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, threshold = <span class='fl'>2000</span>, other = <span class='st'>"other values"</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>okc_tr</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 3</span><span>
 #&gt;   terms    retained          id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> diet     anything          other_p2QWY

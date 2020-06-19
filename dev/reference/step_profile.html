@@ -179,22 +179,22 @@ helpful when creating partial regression plots for additive
 models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_profile</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>profile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pct</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>),
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"profile"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_profile.html'>step_profile</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  profile = <span class='kw'>NULL</span>,
+  pct = <span class='fl'>0.5</span>,
+  index = <span class='fl'>1</span>,
+  grid = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(pctl = <span class='fl'>TRUE</span>, len = <span class='fl'>100</span>),
+  columns = <span class='kw'>NULL</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"profile"</span>)
 )
 
 <span class='co'># S3 method for step_profile</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,14 +207,14 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables will fixed to a single value. See <code><a href='selections.html'>selections()</a></code> for
+variables will fixed to a single value. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for
 more details. For the <code>tidy</code> method, these are not currently
 used.</p></td>
     </tr>
     <tr>
       <th>profile</th>
       <td><p>A call to <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>dplyr::vars()</a></code>) to specify which
-variable will be profiled (see <code><a href='selections.html'>selections()</a></code>). If a column is
+variable will be profiled (see <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>). If a column is
 included in both lists to be fixed and to be profiled, an error
 is thrown.</p></td>
     </tr>
@@ -252,7 +252,7 @@ quantile method for dates.</p></td>
       <th>columns</th>
       <td><p>A character string that contains the names of
 columns that should be fixed and their values. These values are
-not determined until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
+not determined until <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -267,8 +267,8 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -297,14 +297,14 @@ profiled).</p>
 based on the fixed and profiled variable's information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
 <span class='co'># Setup a grid across date but keep the other values fixed</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>diet</span> + <span class='no'>height</span> + <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_profile</span>(-<span class='no'>date</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'>vars</span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>juice</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>height</span> <span class='op'>+</span> <span class='kw'>date</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_profile.html'>step_profile</a></span>(<span class='op'>-</span><span class='kw'>date</span>, profile = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>juice</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 3</span><span>
 #&gt;    diet     height date      
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> anything     68 2011-06-27
@@ -324,41 +324,41 @@ based on the fixed and profiled variable's information.</p>
 <span class='co'># An *additive* model; not for use when there are interactions or</span>
 <span class='co'># other functional relationships between predictors</span>
 
-<span class='no'>lin_mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>disp</span>, <span class='fl'>2</span>) + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='kw'>lin_mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='kw'>disp</span>, <span class='fl'>2</span>) <span class='op'>+</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>hp</span>, data = <span class='kw'>mtcars</span>)
 
 <span class='co'># Show the difference in the two grid creation methods</span>
 
-<span class='no'>disp_pctl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_profile</span>(-<span class='no'>disp</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='kw'>disp_pctl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>disp</span> <span class='op'>+</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>hp</span>, data = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_profile.html'>step_profile</a></span>(<span class='op'>-</span><span class='kw'>disp</span>, profile = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>disp</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span>)
 
-<span class='no'>disp_grid</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>disp</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_profile</span>(
-    -<span class='no'>disp</span>,
-    <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>disp</span>),
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pctl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='kw'>disp_grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>disp</span> <span class='op'>+</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>hp</span>, data = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_profile.html'>step_profile</a></span>(
+    <span class='op'>-</span><span class='kw'>disp</span>,
+    profile = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>disp</span>),
+    grid = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(pctl = <span class='fl'>FALSE</span>, len = <span class='fl'>100</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span>)
 
-<span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>disp_grid</span>)
-<span class='no'>grid_data</span> <span class='kw'>&lt;-</span> <span class='no'>grid_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>lin_mod</span>, <span class='no'>grid_data</span>),
-         <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)
+<span class='kw'>grid_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>disp_grid</span>)
+<span class='kw'>grid_data</span> <span class='op'>&lt;-</span> <span class='kw'>grid_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(pred = <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>lin_mod</span>, <span class='kw'>grid_data</span>),
+         method = <span class='st'>"grid"</span>)
 
-<span class='no'>pctl_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>disp_pctl</span>)
-<span class='no'>pctl_data</span> <span class='kw'>&lt;-</span> <span class='no'>pctl_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>lin_mod</span>, <span class='no'>pctl_data</span>),
-         <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"percentile"</span>)
+<span class='kw'>pctl_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>disp_pctl</span>)
+<span class='kw'>pctl_data</span> <span class='op'>&lt;-</span> <span class='kw'>pctl_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(pred = <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>lin_mod</span>, <span class='kw'>pctl_data</span>),
+         method = <span class='st'>"percentile"</span>)
 
-<span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>bind_rows</span>(<span class='no'>grid_data</span>, <span class='no'>pctl_data</span>)
+<span class='kw'>plot_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='kw'>grid_data</span>, <span class='kw'>pctl_data</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    alpha</span></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>plot_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>pred</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></span></pre>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>plot_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x = <span class='kw'>disp</span>, y = <span class='kw'>pred</span>)) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(alpha = <span class='fl'>.5</span>, cex = <span class='fl'>1</span>) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(<span class='op'>~</span> <span class='kw'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

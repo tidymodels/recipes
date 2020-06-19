@@ -115,7 +115,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Dummies_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How are categorical predictors handled in <code>recipes</code>?</h1>
@@ -133,13 +133,14 @@
 <h2 class="hasAnchor">
 <a href="#creating-dummy-variables" class="anchor"></a>Creating Dummy Variables</h2>
 <p>Let’s start, of course, with <code>iris</code> data. This has four numeric columns and a single factor column with three levels: <code>'setosa'</code>, <code>'versicolor'</code>, and <code>'virginica'</code>. Our initial recipe will have no outcome:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">recipes</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
 
 <span class="co"># make a copy for use below</span>
-<span class="no">iris</span> <span class="kw">&lt;-</span> <span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">mutate</span>(<span class="kw">original</span> <span class="kw">=</span> <span class="no">Species</span>)
+<span class="kw">iris</span> <span class="op">&lt;-</span> <span class="kw">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(original = <span class="kw">Species</span>)
 
-<span class="no">iris_rec</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span>( ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">iris_rec</span>)
+<span class="kw">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span>( <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">iris_rec</span>)
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -148,14 +149,16 @@
 <span class="co">#&gt; 3 Petal.Length numeric predictor original</span>
 <span class="co">#&gt; 4 Petal.Width  numeric predictor original</span>
 <span class="co">#&gt; 5 Species      nominal predictor original</span>
-<span class="co">#&gt; 6 original     nominal predictor original</span></pre></body></html></div>
+<span class="co">#&gt; 6 original     nominal predictor original</span>
+</pre></div>
 <p>A <a href="https://en.wikipedia.org/wiki/Contrast_(statistics)">contrast function</a> in R is a method for translating a column with categorical values into one or more numeric columns that take the place of the original. This can also be known as an encoding method or a parameterization function.</p>
 <p>The default approach is to create dummy variables using the “reference cell” parameterization. This means that, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created and all but the first factor level are made into new columns:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">ref_cell</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">ref_cell</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">ref_cell</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">ref_cell</span>)
 <span class="co">#&gt; # A tibble: 7 x 4</span>
 <span class="co">#&gt;   variable           type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;              &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -168,35 +171,39 @@
 <span class="co">#&gt; 7 Species_virginica  numeric predictor derived</span>
 
 <span class="co"># Get a row for each factor level</span>
-<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">ref_cell</span>, <span class="no">original</span>, <span class="fu">starts_with</span>(<span class="st">"Species"</span>)) <span class="kw">%&gt;%</span> <span class="fu">distinct</span>()
+<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">ref_cell</span>, <span class="kw">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   original   Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                      0                 0</span>
 <span class="co">#&gt; 2 versicolor                  1                 0</span>
-<span class="co">#&gt; 3 virginica                   0                 1</span></pre></body></html></div>
+<span class="co">#&gt; 3 virginica                   0                 1</span>
+</pre></div>
 <p>Note that the column that was used to make the new columns (<code>Species</code>) is no longer there. See the section below on obtaining the entire set of <em>C</em> columns.</p>
 <p>There are different types of contrasts that can be used for different types of factors. The defaults are:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">param</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span>(<span class="st">"contrasts"</span>)
-<span class="no">param</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span>(<span class="st">"contrasts"</span>)
+<span class="kw">param</span>
 <span class="co">#&gt;         unordered           ordered </span>
-<span class="co">#&gt; "contr.treatment"      "contr.poly"</span></pre></body></html></div>
+<span class="co">#&gt; "contr.treatment"      "contr.poly"</span>
+</pre></div>
 <p>Looking at <code>?contrast</code>, there are other options. One alternative is the little known Helmert contrast:</p>
 <blockquote>
 <p><code>contr.helmert</code> returns Helmert contrasts, which contrast the second level with the first, the third with the average of the first two, and so on.</p>
 </blockquote>
 <p>To get this encoding, the global option for the contrasts can be changed and saved. <a href="https://tidymodels.github.io/recipes/reference/step_dummy.html"><code>step_dummy</code></a> picks up on this and makes the correct calculations:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># change it:</span>
-<span class="no">go_helmert</span> <span class="kw">&lt;-</span> <span class="no">param</span>
-<span class="no">go_helmert</span>[<span class="st">"unordered"</span>] <span class="kw">&lt;-</span> <span class="st">"contr.helmert"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">contrasts</span> <span class="kw">=</span> <span class="no">go_helmert</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># change it:</span>
+<span class="kw">go_helmert</span> <span class="op">&lt;-</span> <span class="kw">param</span>
+<span class="kw">go_helmert</span>[<span class="st">"unordered"</span>] <span class="op">&lt;-</span> <span class="st">"contr.helmert"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(contrasts = <span class="kw">go_helmert</span>)
 
 <span class="co"># now make dummy variables with new parameterization</span>
-<span class="no">helmert</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">helmert</span>)
+<span class="kw">helmert</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">helmert</span>)
 <span class="co">#&gt; # A tibble: 7 x 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -208,7 +215,7 @@
 <span class="co">#&gt; 6 Species_X1   numeric predictor derived </span>
 <span class="co">#&gt; 7 Species_X2   numeric predictor derived</span>
 
-<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">helmert</span>, <span class="no">original</span>, <span class="fu">starts_with</span>(<span class="st">"Species"</span>)) <span class="kw">%&gt;%</span> <span class="fu">distinct</span>()
+<span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">helmert</span>, <span class="kw">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   original   Species_X1 Species_X2</span>
 <span class="co">#&gt;   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span>
@@ -217,7 +224,8 @@
 <span class="co">#&gt; 3 virginica           0          2</span>
 
 <span class="co"># Yuk; go back to the original method</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">contrasts</span> <span class="kw">=</span> <span class="no">param</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(contrasts = <span class="kw">param</span>)
+</pre></div>
 <p>Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn’t make sense.</p>
 <p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code> functions will return the data as-is (e.g. with no dummy variables).</p>
 <p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>preserve</code> that can be used to keep the original column that are being used to create the dummy variables.</p>
@@ -226,11 +234,12 @@
 <h2 class="hasAnchor">
 <a href="#interactions-with-dummy-variables" class="anchor"></a>Interactions with Dummy Variables</h2>
 <p>Creating interactions with recipes requires the use of a model formula, such as</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">iris_int</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( ~ <span class="no">Sepal.Width</span>:<span class="no">Sepal.Length</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">iris_int</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">iris_int</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span> <span class="kw">Sepal.Width</span><span class="op">:</span><span class="kw">Sepal.Length</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">iris_int</span>)
 <span class="co">#&gt; # A tibble: 7 x 4</span>
 <span class="co">#&gt;   variable                   type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -240,15 +249,17 @@
 <span class="co">#&gt; 4 Petal.Width                numeric predictor original</span>
 <span class="co">#&gt; 5 Species                    nominal predictor original</span>
 <span class="co">#&gt; 6 original                   nominal predictor original</span>
-<span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span></pre></body></html></div>
+<span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span>
+</pre></div>
 <p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://tidymodels.github.io/recipes/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(~ <span class="no">Species</span>*<span class="no">Sepal.Length</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span> <span class="kw">Species</span><span class="op">*</span><span class="kw">Sepal.Length</span>, data = <span class="kw">iris</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span> 
   <span class="co"># show a few specific rows</span>
-  <span class="fu">slice</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">51</span>, <span class="fl">101</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">51</span>, <span class="fl">101</span>)) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/as.data.frame.html">as.data.frame</a></span>()
 <span class="co">#&gt;     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length</span>
 <span class="co">#&gt; 1             1                 0                0          5.1</span>
 <span class="co">#&gt; 51            1                 1                0          7.0</span>
@@ -256,20 +267,24 @@
 <span class="co">#&gt;     Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length</span>
 <span class="co">#&gt; 1                                0                           0.0</span>
 <span class="co">#&gt; 51                               7                           0.0</span>
-<span class="co">#&gt; 101                              0                           6.3</span></pre></body></html></div>
+<span class="co">#&gt; 101                              0                           6.3</span>
+</pre></div>
 <p>With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variable?</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Must I do this?</span>
-<span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( ~ <span class="no">Species_versicolor</span>:<span class="no">Sepal.Length</span> +
-                   <span class="no">Species_virginica</span>:<span class="no">Sepal.Length</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co"># Must I do this?</span>
+<span class="kw">iris_rec</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span> <span class="kw">Species_versicolor</span><span class="op">:</span><span class="kw">Sepal.Length</span> <span class="op">+</span> 
+                   <span class="kw">Species_virginica</span><span class="op">:</span><span class="kw">Sepal.Length</span>) 
+</pre></div>
 <p>Note only is this a pain, but it may not be obvious what dummy variables are available (especially when <a href="https://tidymodels.github.io/recipes/reference/step_other.html"><code>step_other</code></a> is used).</p>
 <p>The solution is to use a selector:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">iris_int</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( ~ <span class="fu">starts_with</span>(<span class="st">"Species"</span>):<span class="no">Sepal.Length</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">iris_int</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">iris_int</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)<span class="op">:</span><span class="kw">Sepal.Length</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">iris_int</span>)
 <span class="co">#&gt; # A tibble: 9 x 4</span>
 <span class="co">#&gt;   variable                          type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                             &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -281,13 +296,19 @@
 <span class="co">#&gt; 6 Species_versicolor                numeric predictor derived </span>
 <span class="co">#&gt; 7 Species_virginica                 numeric predictor derived </span>
 <span class="co">#&gt; 8 Species_versicolor_x_Sepal.Length numeric predictor derived </span>
-<span class="co">#&gt; 9 Species_virginica_x_Sepal.Length  numeric predictor derived</span></pre></body></html></div>
-<p>What happens here is that <code>starts_with("Species")</code> is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu">starts_with</span>(<span class="st">"Species"</span>)</pre></body></html></div>
+<span class="co">#&gt; 9 Species_virginica_x_Sepal.Length  numeric predictor derived</span>
+</pre></div>
+<p>What happens here is that <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with("Species")</a></code> is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)
+</pre></div>
 <p>becomes</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">(<span class="no">Species_versicolor</span> + <span class="no">Species_virginica</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+(<span class="kw">Species_versicolor</span> <span class="op">+</span> <span class="kw">Species_virginica</span>)
+</pre></div>
 <p>The entire interaction formula is shown here:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">iris_int</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">iris_int</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
@@ -300,21 +321,23 @@
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Dummy variables from Species [trained]</span>
-<span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sepal.Length [trained]</span></pre></body></html></div>
+<span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sepal.Length [trained]</span>
+</pre></div>
 <p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>
 </div>
 <div id="warning" class="section level2">
 <h2 class="hasAnchor">
 <a href="#warning" class="anchor"></a>Warning!</h2>
 <p>Would it work if I didn’t convert species to a factor and used the interactions step?</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">iris_int</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( ~ <span class="no">Species</span>:<span class="no">Sepal.Length</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">iris_int</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span>( <span class="op">~</span> <span class="kw">Species</span><span class="op">:</span><span class="kw">Sepal.Length</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>)
 <span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span>
 <span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are produced</span>
 <span class="co">#&gt; by `step_dummy`. Please convert all involved variables to dummy variables first.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">iris_int</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">iris_int</span>)
 <span class="co">#&gt; # A tibble: 8 x 4</span>
 <span class="co">#&gt;   variable                         type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -325,7 +348,8 @@
 <span class="co">#&gt; 5 Species                          nominal predictor original</span>
 <span class="co">#&gt; 6 original                         nominal predictor original</span>
 <span class="co">#&gt; 7 Speciesversicolor_x_Sepal.Length numeric predictor derived </span>
-<span class="co">#&gt; 8 Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></pre></body></html></div>
+<span class="co">#&gt; 8 Speciesvirginica_x_Sepal.Length  numeric predictor derived</span>
+</pre></div>
 <p>The columns <code>Species</code> isn’t affected and a warning is issued. Basically, you only get half of what <code>model.matrix</code> does and that could really be problematic in subsequent steps.</p>
 </div>
 <div id="getting-all-of-the-indicator-variables" class="section level2">
@@ -334,28 +358,31 @@
 <p>As mentioned above, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created. You might want to get all of them back.</p>
 <p>Historically, <em>C</em> - 1 are used so that a linear dependency is avoided in the design matrix; all <em>C</em> dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can’t be computed. This technical term for a the design matrix like this is “less than full rank”.</p>
 <p>There are models (e.g. <code>glmnet</code> and others) that can avoid this issue so you might want to get all of the columns. To do this, <code>step_dummy</code> has an option called <code>one_hot</code> that will make sure that all <em>C</em> are produced:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>, <span class="kw">one_hot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">original</span>, <span class="fu">starts_with</span>(<span class="st">"Species"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">distinct</span>()
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>, one_hot = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                  1                  0                 0</span>
 <span class="co">#&gt; 2 versicolor              0                  1                 0</span>
-<span class="co">#&gt; 3 virginica               0                  0                 1</span></pre></body></html></div>
+<span class="co">#&gt; 3 virginica               0                  0                 1</span>
+</pre></div>
 <p>The option is named that way since this is that the computer scientists call <a href="https://www.google.com/search?q=one-hot+encoding">“one-hot encoding”</a>.</p>
 <p><strong><em>Warning!</em></strong> (again)</p>
 <p>This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">hot_reference</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>, <span class="kw">one_hot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">original</span>, <span class="fu">starts_with</span>(<span class="st">"Species"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">distinct</span>()
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="kw">hot_reference</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>, one_hot = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
 
-<span class="no">hot_reference</span>
+<span class="kw">hot_reference</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
@@ -364,22 +391,23 @@
 <span class="co">#&gt; 3 virginica               0                  0                 1</span>
 
 <span class="co"># from above</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">contrasts</span> <span class="kw">=</span> <span class="no">go_helmert</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(contrasts = <span class="kw">go_helmert</span>)
 
-<span class="no">hot_helmert</span> <span class="kw">&lt;-</span>
-  <span class="no">iris_rec</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="no">Species</span>, <span class="kw">one_hot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">training</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="no">original</span>, <span class="fu">starts_with</span>(<span class="st">"Species"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">distinct</span>()
+<span class="kw">hot_helmert</span> <span class="op">&lt;-</span> 
+  <span class="kw">iris_rec</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Species</span>, one_hot = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span>(training = <span class="kw">iris</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/juice.html">juice</a></span>(<span class="kw">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span>(<span class="st">"Species"</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>()
 
-<span class="no">hot_helmert</span>
+<span class="kw">hot_helmert</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                  1                  0                 0</span>
 <span class="co">#&gt; 2 versicolor              0                  1                 0</span>
-<span class="co">#&gt; 3 virginica               0                  0                 1</span></pre></body></html></div>
+<span class="co">#&gt; 3 virginica               0                  0                 1</span>
+</pre></div>
 <p>Since this contrast doesn’t make sense using all <em>C</em> columns, it reverts back to the default encoding.</p>
 </div>
 <div id="novel-levels" class="section level2">

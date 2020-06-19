@@ -173,24 +173,24 @@ create bagged tree models to impute missing data." />
 create bagged tree models to impute missing data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_bagimpute</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
-  <span class='kw'>trees</span> <span class='kw'>=</span> <span class='fl'>25</span>,
-  <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>seed_val</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>4</span>, <span class='fl'>1</span>),
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  impute_with = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()),
+  trees = <span class='fl'>25</span>,
+  models = <span class='kw'>NULL</span>,
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(keepX = <span class='fl'>FALSE</span>),
+  seed_val = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span><span class='op'>^</span><span class='fl'>4</span>, <span class='fl'>1</span>),
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>)
 )
 
-<span class='fu'>imp_vars</span>(<span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>...</span>)
 
 <span class='co'># S3 method for step_bagimpute</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose variables. For
 <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with
 <code>imp_vars</code>, the dots indicates which variables are used to predict the
-missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
+missing data in each variable. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -221,7 +221,7 @@ preprocessing have been estimated.</p></td>
       <th>impute_with</th>
       <td><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href='selections.html'>selections()</a></code>). If a column is
+by commas or different selectors (see <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></td>
     </tr>
@@ -232,7 +232,7 @@ will be removed from the latter and not used to impute itself.</p></td>
     <tr>
       <th>models</th>
       <td><p>The <code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code> objects are stored here once this
-bagged trees have be trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+bagged trees have be trained by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -248,8 +248,8 @@ is used across all imputation models.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -289,55 +289,55 @@ large majority (or all) of the imputing variables are also missing.</p>
 Springer Verlag.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='kw'>credit_data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(num = <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
 #&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
 #&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
 #&gt;       Amount        Price 
 #&gt; 0.0000000000 0.0000000000 </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>342</span>)
-<span class='no'>in_training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>credit_data</span>), <span class='fl'>2000</span>)
+<span class='kw'>in_training</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>credit_data</span>), <span class='fl'>2000</span>)
 
-<span class='no'>credit_tr</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[ <span class='no'>in_training</span>, ]
-<span class='no'>credit_te</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[-<span class='no'>in_training</span>, ]
-<span class='no'>missing_examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
+<span class='kw'>credit_tr</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[ <span class='kw'>in_training</span>, ]
+<span class='kw'>credit_te</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[<span class='op'>-</span><span class='kw'>in_training</span>, ]
+<span class='kw'>missing_examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]
-<span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]
+<span class='kw'>credit_te</span>[<span class='kw'>missing_examples</span>,]
+<span class='kw'>imputed_te</span>[<span class='kw'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>credit_te</span>)]
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>impute_rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>imp_models</span>, number = <span class='fl'>1</span>)
 
 <span class='co'>## Specifying which variables to imputate with</span>
 
- <span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_bagimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>, <span class='no'>Job</span>, <span class='no'>Income</span>, <span class='no'>Assets</span>, <span class='no'>Debt</span>,
-                 <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'>imp_vars</span>(<span class='no'>Time</span>, <span class='no'>Age</span>, <span class='no'>Expenses</span>),
+ <span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>,
+                 impute_with = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>Time</span>, <span class='kw'>Age</span>, <span class='kw'>Expenses</span>),
                  <span class='co'># for quick execution, nbagg lowered</span>
-                 <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nbagg</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keepX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
+                 options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(nbagg = <span class='fl'>5</span>, keepX = <span class='fl'>FALSE</span>))
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
-<span class='no'>credit_te</span>[<span class='no'>missing_examples</span>,]
-<span class='no'>imputed_te</span>[<span class='no'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>credit_te</span>)]
+<span class='kw'>credit_te</span>[<span class='kw'>missing_examples</span>,]
+<span class='kw'>imputed_te</span>[<span class='kw'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>credit_te</span>)]
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>impute_rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>imp_models</span>, number = <span class='fl'>1</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -169,23 +169,23 @@ variable into a factor based on provided boundary values" />
     </div>
 
     <div class="ref-description">
-    <p><code>step_cut()</code> creates a <em>specification</em> of a recipe step that cuts a numeric
+    <p><code><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut()</a></code> creates a <em>specification</em> of a recipe step that cuts a numeric
 variable into a factor based on provided boundary values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_cut</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>breaks</span>,
-  <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"cut"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  <span class='kw'>breaks</span>,
+  include_outside_range = <span class='fl'>FALSE</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"cut"</span>)
 )
 
 <span class='co'># S3 method for step_cut</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,7 +198,7 @@ operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -223,7 +223,7 @@ Defaults to <code>FALSE</code>, values outside the original range will be set to
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the recipe is baked
-by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked when <code><a href='prep.html'>prep.recipe()</a></code> is
+by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is
 run, some operations may not be able to be conducted on new data (e.g.
 processing the outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it may affect the computations for subsequent operations</p></td>
     </tr>
@@ -247,19 +247,19 @@ sequence of existing steps (if any).</p>
 min and the max values in the breaks. All values before the lowest break
 point will end up in the first bucket, all values after the last break
 points will end up in the last.</p>
-<p><code>step_cut()</code> will call <code><a href='https://rdrr.io/r/base/cut.html'>base::cut()</a></code> in the baking step with
+<p><code><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut()</a></code> will call <code><a href='https://rdrr.io/r/base/cut.html'>base::cut()</a></code> in the baking step with
 <code>include.lowest</code> set to <code>TRUE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>14</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>df</span>)
+    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, y = <span class='fl'>5</span><span class='op'>:</span><span class='fl'>14</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>df</span>)
 
 <span class='co'># The min and max of the variable are used as boundaries</span>
 <span class='co'># if they exceed the breaks</span>
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 2</span><span>
+<span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut</a></span>(<span class='kw'>x</span>, breaks = <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 2</span><span>
 #&gt;    x          y
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> [1,5]      5
@@ -274,10 +274,10 @@ points will end up in the last.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> (5,10]    14</div><div class='input'>
 <span class='co'># You can use the same breaks on multiple variables</span>
 <span class='co'># then for each variable the boundaries are set separately</span>
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>, <span class='fl'>9</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 2</span><span>
+<span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut</a></span>(<span class='kw'>x</span>, <span class='kw'>y</span>, breaks = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>, <span class='fl'>9</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 2</span><span>
 #&gt;    x      y     
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> 
 #&gt; </span><span style='color: #555555;'> 1</span><span> [1,6]  [5,6] 
@@ -292,11 +292,11 @@ points will end up in the last.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> (9,10] (9,14]</div><div class='input'>
 <span class='co'># It is up to you if you want values outside the</span>
 <span class='co'># range learned at prep to be included</span>
-<span class='no'>new_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>11</span>)
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>new_df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 1</span><span>
+<span class='kw'>new_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>11</span>)
+<span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut</a></span>(<span class='kw'>x</span>, breaks = <span class='fl'>5</span>, include_outside_range = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>new_df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 1</span><span>
 #&gt;    x      
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  
 #&gt; </span><span style='color: #555555;'> 1</span><span> [min,5]
@@ -310,10 +310,10 @@ points will end up in the last.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> (5,max]
 #&gt; </span><span style='color: #555555;'>10</span><span> (5,max]
 #&gt; </span><span style='color: #555555;'>11</span><span> (5,max]</div><div class='input'>
-<span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_cut</span>(<span class='no'>x</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>include_outside_range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>new_df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 1</span><span>
+<span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_cut.html'>step_cut</a></span>(<span class='kw'>x</span>, breaks = <span class='fl'>5</span>, include_outside_range = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>new_df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 1</span><span>
 #&gt;    x     
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> 
 #&gt; </span><span style='color: #555555;'> 1</span><span> [1,5] 

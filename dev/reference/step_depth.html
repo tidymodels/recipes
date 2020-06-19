@@ -177,22 +177,22 @@ step that will convert numeric data into measurement of
 class variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_depth</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='no'>class</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"halfspace"</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"depth_"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"depth"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_depth.html'>step_depth</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  <span class='kw'>class</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  metric = <span class='st'>"halfspace"</span>,
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  data = <span class='kw'>NULL</span>,
+  prefix = <span class='st'>"depth_"</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"depth"</span>)
 )
 
 <span class='co'># S3 method for step_depth</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,7 +206,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables that will be used to create the new features. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -247,7 +247,7 @@ depth functions. See <code><a href='https://rdrr.io/pkg/ddalpha/man/depth.halfsp
     <tr>
       <th>data</th>
       <td><p>The training data are stored here once after
-<code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -257,8 +257,8 @@ new depth columns. Defaults to <code>"depth_"</code>. See Details below.</p></td
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -307,19 +307,19 @@ naming format can be changed using the <code>prefix</code> argument.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># halfspace depth is the default</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_depth</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_depth.html'>step_depth</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>)
 
 <span class='co'># use zonoid metric instead</span>
 <span class='co'># also, define naming convention for new columns</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_depth</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
-             <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"zonoid"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"zonoid_"</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_depth.html'>step_depth</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>,
+             metric = <span class='st'>"zonoid"</span>, prefix = <span class='st'>"zonoid_"</span>)
 
-<span class='no'>rec_dists</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='kw'>rec_dists</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span>)
 
-<span class='no'>dists_to_species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>dists_to_species</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 8</span><span>
+<span class='kw'>dists_to_species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec_dists</span>, new_data = <span class='kw'>iris</span>)
+<span class='kw'>dists_to_species</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 8</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species zonoid_setosa
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2 setosa         0.559 
@@ -334,10 +334,10 @@ naming format can be changed using the <code>prefix</code> argument.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span>          4.9         3.1          1.5         0.1 setosa         0.02  
 #&gt; </span><span style='color: #555555;'># … with 140 more rows, and 2 more variables: zonoid_versicolor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   zonoid_virginica </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms            class id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>    depth_vUNsj</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec_dists</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 3</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>    depth_vUNsj</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec_dists</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 3</span><span>
 #&gt;   terms        class   id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> Sepal.Length Species depth_vUNsj

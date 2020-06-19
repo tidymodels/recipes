@@ -173,15 +173,15 @@ the selected variables using a common function." />
 the selected variables using a common function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_rename_at</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='no'>fn</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>inputs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rename_at"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_rename_at.html'>step_rename_at</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  <span class='kw'>fn</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  inputs = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"rename_at"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -195,7 +195,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -219,13 +219,13 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>inputs</th>
-      <td><p>A vector of column names populated by <code><a href='prep.html'>prep()</a></code>.</p></td>
+      <td><p>A vector of column names populated by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -243,12 +243,12 @@ sequence of existing steps (if any). For the <code>tidy</code> method, a tibble 
 columns <code>terms</code> which contains the columns being transformed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_rename_at</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>(), <span class='kw'>fn</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"."</span>, <span class='st'>"_"</span>, <span class='no'>.</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_rename_at.html'>step_rename_at</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>(), fn = <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"."</span>, <span class='st'>"_"</span>, <span class='kw'>.</span>, fixed = <span class='fl'>TRUE</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
 #&gt;    Sepal_Length Sepal_Width Petal_Length Petal_Width Species
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  
 #&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2 setosa 

@@ -175,20 +175,20 @@ recipe step that will substitute missing values of numeric
 variables by the a measure of location (e.g. median) within a moving window.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_rollimpute</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='no'>median</span>,
-  <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rollimpute"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_rollimpute.html'>step_rollimpute</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  columns = <span class='kw'>NULL</span>,
+  statistic = <span class='kw'>median</span>,
+  window = <span class='fl'>5</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"rollimpute"</span>)
 )
 
 <span class='co'># S3 method for step_rollimpute</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code> for more
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more
 details. These columns should be non-integer numerics (i.e.,
 double precision). For the <code>tidy</code> method, these are not
 currently used.</p></td>
@@ -219,7 +219,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>columns</th>
       <td><p>A named numeric vector of columns. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>statistic</th>
@@ -236,8 +236,8 @@ points at the ends of the series.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -274,26 +274,26 @@ does not know anything about previous imputations in the series
 prior to the current point.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lubridate</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://lubridate.tidyverse.org'>lubridate</a></span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>145</span>)
-<span class='no'>example_data</span> <span class='kw'>&lt;-</span>
+<span class='kw'>example_data</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-    <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2012-06-07"</span>) + <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span>:<span class='fl'>12</span>),
-    <span class='kw'>x1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>),
-    <span class='kw'>x2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>),
-    <span class='kw'>x3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>)
+    day = <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2012-06-07"</span>) <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>),
+    x1 = <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>),
+    x2 = <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>),
+    x3 = <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>12</span>), <span class='fl'>2</span>)
   )
-<span class='no'>example_data</span>$<span class='no'>x1</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>6</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>example_data</span>$<span class='no'>x2</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>10</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='kw'>example_data</span><span class='op'>$</span><span class='kw'>x1</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>6</span>)] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
+<span class='kw'>example_data</span><span class='op'>$</span><span class='kw'>x2</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fl'>10</span>)] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='no'>seven_pt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='no'>day</span>, <span class='kw'>new_role</span> <span class='kw'>=</span> <span class='st'>"time_index"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>example_data</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='kw'>seven_pt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span> , data = <span class='kw'>example_data</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/roles.html'>update_role</a></span>(<span class='kw'>day</span>, new_role = <span class='st'>"time_index"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_rollimpute.html'>step_rollimpute</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), window = <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>example_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>seven_pt</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>seven_pt</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 4</span><span>
 #&gt;    day           x1    x2    x3
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 2012-06-08  0.89 0.79  0.580

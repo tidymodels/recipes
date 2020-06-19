@@ -175,22 +175,22 @@ step that will create new columns that are the results of
 functions that compute statistics across moving windows.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_window</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"window"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_window.html'>step_window</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  size = <span class='fl'>3</span>,
+  na_rm = <span class='fl'>TRUE</span>,
+  statistic = <span class='st'>"mean"</span>,
+  columns = <span class='kw'>NULL</span>,
+  names = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"window"</span>)
 )
 
 <span class='co'># S3 method for step_window</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,7 +203,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details.  For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -242,7 +242,7 @@ values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
       <th>columns</th>
       <td><p>A character string that contains the names of
 columns that should be processed. These values are not
-determined until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
+determined until <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>names</th>
@@ -255,8 +255,8 @@ the names of the new columns created by the step.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -292,56 +292,56 @@ uses <code><a href='https://rdrr.io/r/stats/median.html'>median(x[2:6])</a></cod
 <p>step will stop with a note about installing the package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rlang</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://rlang.r-lib.org'>rlang</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>, quietly = <span class='fl'>TRUE</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>5522</span>)
-<span class='no'>sim_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x1</span> <span class='kw'>=</span> (<span class='fl'>20</span>:<span class='fl'>100</span>) / <span class='fl'>10</span>)
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sim_dat</span>)
-<span class='no'>sim_dat</span>$<span class='no'>y1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='no'>sim_dat</span>$<span class='no'>x1</span>) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
-<span class='no'>sim_dat</span>$<span class='no'>y2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>sim_dat</span>$<span class='no'>x1</span>) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
-<span class='no'>sim_dat</span>$<span class='no'>x2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='no'>n</span>)
-<span class='no'>sim_dat</span>$<span class='no'>x3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>)
+<span class='kw'>sim_dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x1 = (<span class='fl'>20</span><span class='op'>:</span><span class='fl'>100</span>) <span class='op'>/</span> <span class='fl'>10</span>)
+<span class='kw'>n</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>sim_dat</span>)
+<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>x1</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span>, sd = <span class='fl'>0.1</span>)
+<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>y2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>x1</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span>, sd = <span class='fl'>0.1</span>)
+<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>x2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='kw'>n</span>)
+<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>x3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>y1</span> + <span class='no'>y2</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-              <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"med_7pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
-              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>),
-              <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>),
-              <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"outcome"</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>y1</span> <span class='op'>+</span> <span class='kw'>y2</span> <span class='op'>~</span> <span class='kw'>x1</span> <span class='op'>+</span> <span class='kw'>x2</span> <span class='op'>+</span> <span class='kw'>x3</span>, data = <span class='kw'>sim_dat</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_window.html'>step_window</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"y"</span>), size = <span class='fl'>7</span>, statistic = <span class='st'>"median"</span>,
+              names = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"med_7pt_"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>),
+              role = <span class='st'>"outcome"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_window.html'>step_window</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"y"</span>),
+              names = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"mean_3pt_"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>),
+              role = <span class='st'>"outcome"</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>sim_dat</span>)
 
 <span class='co'># If you aren't sure how to set the names, see which variables are selected</span>
 <span class='co'># and the order that they are selected:</span>
-<span class='fu'><a href='terms_select.html'>terms_select</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>rec</span>), <span class='kw'>terms</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tidyeval-compat.html'>quos</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
-<span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>())
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/terms_select.html'>terms_select</a></span>(info = <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>rec</span>), terms = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tidyeval-compat.html'>quos</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"y"</span>)))</div><div class='output co'>#&gt; [1] "y1" "y2"</div><div class='input'>
+<span class='kw'>smoothed_dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>sim_dat</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>med_7pt_1</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>mean_3pt_1</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(data = <span class='kw'>sim_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x = <span class='kw'>x1</span>, y = <span class='kw'>y1</span>)) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(data = <span class='kw'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(y = <span class='kw'>med_7pt_1</span>)) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(data = <span class='kw'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(y = <span class='kw'>mean_3pt_1</span>), col = <span class='st'>"red"</span>) <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span>()</div><div class='img'><img src='step_window-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms statistic  size id          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> y1    median        7 window_uDjJs
-#&gt; </span><span style='color: #555555;'>2</span><span> y2    median        7 window_uDjJs</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> y2    median        7 window_uDjJs</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms statistic  size id          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> y1    mean          3 window_MbmJQ
 #&gt; </span><span style='color: #555555;'>2</span><span> y2    mean          3 window_MbmJQ</div><div class='input'>
 <span class='co'># If you want to replace the selected variables with the rolling statistic</span>
 <span class='co'># don't set `names`</span>
-<span class='no'>sim_dat</span>$<span class='no'>original</span> <span class='kw'>&lt;-</span> <span class='no'>sim_dat</span>$<span class='no'>y1</span>
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>y1</span> + <span class='no'>y2</span> + <span class='no'>original</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_window</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>starts_with</a></span>(<span class='st'>"y"</span>))
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>sim_dat</span>)
-<span class='no'>smoothed_dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>rec</span>, <span class='no'>sim_dat</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>())
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>original</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() +
+<span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>original</span> <span class='op'>&lt;-</span> <span class='kw'>sim_dat</span><span class='op'>$</span><span class='kw'>y1</span>
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>y1</span> <span class='op'>+</span> <span class='kw'>y2</span> <span class='op'>+</span> <span class='kw'>original</span> <span class='op'>~</span> <span class='kw'>x1</span> <span class='op'>+</span> <span class='kw'>x2</span> <span class='op'>+</span> <span class='kw'>x3</span>, data = <span class='kw'>sim_dat</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_window.html'>step_window</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"y"</span>))
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>sim_dat</span>)
+<span class='kw'>smoothed_dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>sim_dat</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>smoothed_dat</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x = <span class='kw'>original</span>, y = <span class='kw'>y1</span>)) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>() <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span>()</div><div class='img'><img src='step_window-2.png' alt='' width='768' height='552' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

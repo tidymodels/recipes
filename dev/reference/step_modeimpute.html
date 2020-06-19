@@ -175,18 +175,18 @@ recipe step that will substitute missing values of nominal
 variables by the training set mode of those variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_modeimpute</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>modes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_modeimpute.html'>step_modeimpute</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  modes = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>)
 )
 
 <span class='co'># S3 method for step_modeimpute</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +199,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -216,13 +216,13 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>modes</th>
       <td><p>A named character vector of modes. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -253,33 +253,33 @@ values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='no'>credit_data</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='kw'>credit_data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(num = <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
 #&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
 #&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
 #&gt;       Amount        Price 
 #&gt; 0.0000000000 0.0000000000 </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>342</span>)
-<span class='no'>in_training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>credit_data</span>), <span class='fl'>2000</span>)
+<span class='kw'>in_training</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>credit_data</span>), <span class='fl'>2000</span>)
 
-<span class='no'>credit_tr</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[ <span class='no'>in_training</span>, ]
-<span class='no'>credit_te</span> <span class='kw'>&lt;-</span> <span class='no'>credit_data</span>[-<span class='no'>in_training</span>, ]
-<span class='no'>missing_examples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
+<span class='kw'>credit_tr</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[ <span class='kw'>in_training</span>, ]
+<span class='kw'>credit_te</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[<span class='op'>-</span><span class='kw'>in_training</span>, ]
+<span class='kw'>missing_examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>Price</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
 
-<span class='no'>impute_rec</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_modeimpute</span>(<span class='no'>Status</span>, <span class='no'>Home</span>, <span class='no'>Marital</span>)
+<span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_modeimpute.html'>step_modeimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>)
 
-<span class='no'>imp_models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='no'>imputed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>imp_models</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>credit_te</span>, <span class='fu'>everything</span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>credit_te</span>$<span class='no'>Home</span>, <span class='no'>imputed_te</span>$<span class='no'>Home</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>credit_te</span><span class='op'>$</span><span class='kw'>Home</span>, <span class='kw'>imputed_te</span><span class='op'>$</span><span class='kw'>Home</span>, useNA = <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
 #&gt;           ignore other owner parents priv rent &lt;NA&gt;
 #&gt;   ignore      13     0     0       0    0    0    0
 #&gt;   other        0   176     0       0    0    0    0
@@ -288,12 +288,12 @@ data has more than one mode, one is selected at random.</p>
 #&gt;   priv         0     0     0       0  135    0    0
 #&gt;   rent         0     0     0       0    0  519    0
 #&gt;   &lt;NA&gt;         0     0     4       0    0    0    0</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>impute_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>impute_rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   terms   model id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> Status  </span><span style='color: #BB0000;'>NA</span><span>    modeimpute_Hlm2y
 #&gt; </span><span style='color: #555555;'>2</span><span> Home    </span><span style='color: #BB0000;'>NA</span><span>    modeimpute_Hlm2y
-#&gt; </span><span style='color: #555555;'>3</span><span> Marital </span><span style='color: #BB0000;'>NA</span><span>    modeimpute_Hlm2y</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>imp_models</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
+#&gt; </span><span style='color: #555555;'>3</span><span> Marital </span><span style='color: #BB0000;'>NA</span><span>    modeimpute_Hlm2y</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>imp_models</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   terms   model   id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> Status  good    modeimpute_Hlm2y

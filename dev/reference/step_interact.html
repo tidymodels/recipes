@@ -175,19 +175,19 @@ step that will create new columns that are interaction terms
 between two or more variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_interact</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>terms</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_x_"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_interact.html'>step_interact</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>terms</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  objects = <span class='kw'>NULL</span>,
+  sep = <span class='st'>"_x_"</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>)
 )
 
 <span class='co'># S3 method for step_interact</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,8 +228,8 @@ traditional <code>var1:var2</code>).</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -245,7 +245,7 @@ the computations for subsequent operations</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -262,7 +262,7 @@ the interaction effects.</p>
     <p><code>step_interact</code> can create interactions between
 variables. It is primarily intended for <strong>numeric data</strong>;
 categorical variables should probably be converted to dummy
-variables using <code><a href='step_dummy.html'>step_dummy()</a></code> prior to being used for
+variables using <code><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy()</a></code> prior to being used for
 interactions.</p>
 <p>Unlike other step functions, the <code>terms</code> argument should
 be a traditional R model formula but should contain no inline
@@ -279,55 +279,55 @@ column named <code>A_x_B_x_C</code>. This can be changed using the
 <p>When dummy variables are created and are used in interactions,
 selectors can help specify the interactions succinctly. For
 example, suppose a factor column <code>X</code> gets converted to dummy
-variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href='step_dummy.html'>step_dummy()</a></code>. If
+variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy()</a></code>. If
 you wanted an interaction with numeric column <code>z</code>, you could
 create a set of specific interaction effects (e.g.
 <code>x_2:z + x_3:z</code> and so on) or you could use
-<code>starts_with("z_"):z</code>. When <code><a href='prep.html'>prep()</a></code> evaluates this step,
-<code>starts_with("z_")</code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x6)</code>
+<code>starts_with("z_"):z</code>. When <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code> evaluates this step,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with("z_")</a></code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x6)</code>
 so that the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x6):z</code> and
 all two-way interactions are created.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>int_mod_1</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_interact</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ <span class='no'>carbon</span>:<span class='no'>hydrogen</span>)
+<span class='kw'>int_mod_1</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_interact.html'>step_interact</a></span>(terms = <span class='op'>~</span> <span class='kw'>carbon</span><span class='op'>:</span><span class='kw'>hydrogen</span>)
 
-<span class='no'>int_mod_2</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_interact</span>(<span class='kw'>terms</span> <span class='kw'>=</span> ~ (<span class='fu'>matches</span>(<span class='st'>"gen$"</span>) + <span class='no'>sulfur</span>)^<span class='fl'>2</span>)
+<span class='kw'>int_mod_2</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_interact.html'>step_interact</a></span>(terms = <span class='op'>~</span> (<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"gen$"</span>) <span class='op'>+</span> <span class='kw'>sulfur</span>)<span class='op'>^</span><span class='fl'>2</span>)
 
-<span class='no'>int_mod_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>int_mod_1</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>int_mod_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>int_mod_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>int_mod_1</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>int_mod_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>int_mod_2</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>dat_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>int_mod_1</span>, <span class='no'>biomass_te</span>)
-<span class='no'>dat_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>int_mod_2</span>, <span class='no'>biomass_te</span>)
+<span class='kw'>dat_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>int_mod_1</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>dat_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>int_mod_2</span>, <span class='kw'>biomass_te</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dat_1</span>)</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_1</span>)</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
 #&gt; [4] "nitrogen"          "sulfur"            "HHV"              
-#&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dat_2</span>)</div><div class='output co'>#&gt;  [1] "carbon"              "hydrogen"            "oxygen"             
+#&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_2</span>)</div><div class='output co'>#&gt;  [1] "carbon"              "hydrogen"            "oxygen"             
 #&gt;  [4] "nitrogen"            "sulfur"              "HHV"                
 #&gt;  [7] "hydrogen_x_oxygen"   "hydrogen_x_nitrogen" "hydrogen_x_sulfur"  
 #&gt; [10] "oxygen_x_nitrogen"   "oxygen_x_sulfur"     "nitrogen_x_sulfur"  </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>int_mod_1</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_1</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms           id            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon:hydrogen interact_KMY0D</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>int_mod_2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 2</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon:hydrogen interact_5lKMY</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_2</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 2</span><span>
 #&gt;   terms             id            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'>1</span><span> hydrogen:oxygen   interact_reNmL
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen:nitrogen interact_reNmL
-#&gt; </span><span style='color: #555555;'>3</span><span> hydrogen:sulfur   interact_reNmL
-#&gt; </span><span style='color: #555555;'>4</span><span> oxygen:nitrogen   interact_reNmL
-#&gt; </span><span style='color: #555555;'>5</span><span> oxygen:sulfur     interact_reNmL
-#&gt; </span><span style='color: #555555;'>6</span><span> nitrogen:sulfur   interact_reNmL</div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> hydrogen:oxygen   interact_0DreN
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen:nitrogen interact_0DreN
+#&gt; </span><span style='color: #555555;'>3</span><span> hydrogen:sulfur   interact_0DreN
+#&gt; </span><span style='color: #555555;'>4</span><span> oxygen:nitrogen   interact_0DreN
+#&gt; </span><span style='color: #555555;'>5</span><span> oxygen:sulfur     interact_0DreN
+#&gt; </span><span style='color: #555555;'>6</span><span> nitrogen:sulfur   interact_0DreN</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -175,20 +175,20 @@ step that will normalize numeric data to have a standard
 deviation of one and a mean of zero.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_normalize</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>means</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na_rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"normalize"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_normalize.html'>step_normalize</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  means = <span class='kw'>NULL</span>,
+  sds = <span class='kw'>NULL</span>,
+  na_rm = <span class='fl'>TRUE</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"normalize"</span>)
 )
 
 <span class='co'># S3 method for step_normalize</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -218,12 +218,12 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>means</th>
       <td><p>A named numeric vector of means. This is
-<code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>sds</th>
       <td><p>A named numeric vector of standard deviations This
-is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+is <code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>na_rm</th>
@@ -233,8 +233,8 @@ values should be removed when computing the standard deviation and mean.</p></td
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -266,23 +266,23 @@ deviations and means from the data used in the <code>training</code> argument of
 these estimates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>norm_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_normalize</span>(<span class='no'>carbon</span>, <span class='no'>hydrogen</span>)
+<span class='kw'>norm_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_normalize.html'>step_normalize</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
 
-<span class='no'>norm_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>norm_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>norm_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>norm_trans</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>transformed_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>norm_obj</span>, <span class='no'>biomass_te</span>)
+<span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>norm_obj</span>, <span class='kw'>biomass_te</span>)
 
-<span class='no'>biomass_te</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+<span class='kw'>biomass_te</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
 #&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
 #&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
 #&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
@@ -292,7 +292,7 @@ these estimates.</p>
 #&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='no'>transformed_te</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 6</span><span>
+#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='kw'>transformed_te</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 6</span><span>
 #&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> -</span><span style='color: #BB0000;'>0.193</span><span>    0.176    47.2     0.3    0.22  18.3
@@ -305,18 +305,17 @@ these estimates.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> -</span><span style='color: #BB0000;'>0.601</span><span>   -</span><span style='color: #BB0000;'>0.668</span><span>    33.8     0.95   0.2   16.2
 #&gt; </span><span style='color: #555555;'> 9</span><span> -</span><span style='color: #BB0000;'>1.84</span><span>    -</span><span style='color: #BB0000;'>0.885</span><span>    31.1     0.14   4.9   11.1
 #&gt; </span><span style='color: #555555;'>10</span><span> -</span><span style='color: #BB0000;'>1.97</span><span>    -</span><span style='color: #BB0000;'>1.41</span><span>     23.7     4.63   1.05  10.8
-#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>norm_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>norm_trans</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms    statistic value id             
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> normalize_DL0bc
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> normalize_DL0bc</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>norm_obj</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> normalize_DL0bc</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>norm_obj</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 4</span><span>
 #&gt;   terms    statistic value id             
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   mean      48.4  normalize_DL0bc
 #&gt; </span><span style='color: #555555;'>2</span><span> hydrogen mean       5.46 normalize_DL0bc
 #&gt; </span><span style='color: #555555;'>3</span><span> carbon   sd        10.4  normalize_DL0bc
-#&gt; </span><span style='color: #555555;'>4</span><span> hydrogen sd         1.20 normalize_DL0bc</div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'>4</span><span> hydrogen sd         1.20 normalize_DL0bc</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

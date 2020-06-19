@@ -170,26 +170,26 @@ prep.recipe(), apply the computations to new data." />
 
     <div class="ref-description">
     <p>For a recipe with at least one preprocessing operations that has been trained by
-<code><a href='prep.html'>prep.recipe()</a></code>, apply the computations to new data.</p>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>, apply the computations to new data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bake</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>bake</span>(<span class='no'>object</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>object</span>, new_data = <span class='kw'>NULL</span>, <span class='kw'>...</span>, composition = <span class='st'>"tibble"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>A trained object such as a <code><a href='recipe.html'>recipe()</a></code> with at least
+      <td><p>A trained object such as a <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code> with at least
 one preprocessing operation.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables will be
-returned by the function. See <code><a href='selections.html'>selections()</a></code> for more details.
+returned by the function. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details.
 If no selectors are given, the default is to use
 <code>everything()</code>.</p></td>
     </tr>
@@ -215,19 +215,19 @@ resolve to numeric columns (otherwise an error is thrown).</p></td>
 columns than the original columns in <code>new_data</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>bake()</code> takes a trained recipe and applies the
+    <p><code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake()</a></code> takes a trained recipe and applies the
 operations to a data set to create a design matrix.</p>
 <p>If the original data used to train the data are to be
 processed, time can be saved by using the <code>retain = TRUE</code> option
-of <code><a href='prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
-option set, <code><a href='juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
+of <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
+option set, <code><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
 <code>new_data</code> equal to the training set.</p>
 <p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
-data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
+data when <code>bake</code> is invoked. <code><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice()</a></code> will always have all
 of the steps applied.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='juice.html'>juice()</a></code>, <code><a href='prep.html'>prep()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep()</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Max Kuhn</p>

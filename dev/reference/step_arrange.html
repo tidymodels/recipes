@@ -173,18 +173,18 @@ that will sort rows using dplyr::arrange()." />
 that will sort rows using <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>dplyr::arrange()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_arrange</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>inputs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"arrange"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_arrange.html'>step_arrange</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  inputs = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"arrange"</span>)
 )
 
 <span class='co'># S3 method for step_arrange</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,8 +217,8 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -249,49 +249,49 @@ to embed the value of the object in the expression (to
 be portable between sessions). See the examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_arrange</span>(<span class='fu'>desc</span>(<span class='no'>Sepal.Length</span>), <span class='fl'>1</span>/<span class='no'>Petal.Length</span>)
+    <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_arrange.html'>step_arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='kw'>Sepal.Length</span>), <span class='fl'>1</span><span class='op'>/</span><span class='kw'>Petal.Length</span>)
 
-<span class='no'>prepped</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>slice</span>(<span class='fl'>1</span>:<span class='fl'>75</span>))
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>prepped</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
+<span class='kw'>prepped</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span>))
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>prepped</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms              id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'>1</span><span> desc(Sepal.Length) arrange_wZQdH
-#&gt; </span><span style='color: #555555;'>2</span><span> 1/Petal.Length     arrange_wZQdH</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+#&gt; </span><span style='color: #555555;'>1</span><span> desc(Sepal.Length) arrange_0ISrw
+#&gt; </span><span style='color: #555555;'>2</span><span> 1/Petal.Length     arrange_0ISrw</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 
-<span class='no'>dplyr_train</span> <span class='kw'>&lt;-</span>
-  <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>as_tibble</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>75</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>Sepal.Length</span>), <span class='fl'>1</span>/<span class='no'>Petal.Length</span>)
+<span class='kw'>dplyr_train</span> <span class='op'>&lt;-</span>
+  <span class='kw'>iris</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='kw'>Sepal.Length</span>), <span class='fl'>1</span><span class='op'>/</span><span class='kw'>Petal.Length</span>)
 
-<span class='no'>rec_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>prepped</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>dplyr_train</span>, <span class='no'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='no'>dplyr_test</span> <span class='kw'>&lt;-</span>
-  <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>as_tibble</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span>:<span class='fl'>150</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='no'>Sepal.Length</span>), <span class='fl'>1</span>/<span class='no'>Petal.Length</span>)
-<span class='no'>rec_test</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>prepped</span>, <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span>:<span class='fl'>150</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>dplyr_test</span>, <span class='no'>rec_test</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='kw'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>prepped</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_train</span>, <span class='kw'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='kw'>dplyr_test</span> <span class='op'>&lt;-</span>
+  <span class='kw'>iris</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='kw'>Sepal.Length</span>), <span class='fl'>1</span><span class='op'>/</span><span class='kw'>Petal.Length</span>)
+<span class='kw'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>prepped</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_test</span>, <span class='kw'>rec_test</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># When you have variables/expressions, you can create a</span>
 <span class='co'># list of symbols with `rlang::syms()`` and splice them in</span>
 <span class='co'># the call with `!!!`. See https://tidyeval.tidyverse.org</span>
 
-<span class='no'>sort_vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>)
+<span class='kw'>sort_vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>)
 
-<span class='no'>qq_rec</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>) <span class='kw'>%&gt;%</span>
+<span class='kw'>qq_rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
   <span class='co'># Embed the `values` object in the call using !!!</span>
-  <span class='fu'>step_arrange</span>(!!!<span class='fu'><a href='https://dplyr.tidyverse.org/reference/tidyeval-compat.html'>syms</a></span>(<span class='no'>sort_vars</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_arrange.html'>step_arrange</a></span>(<span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/tidyeval-compat.html'>syms</a></span>(<span class='kw'>sort_vars</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>qq_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>qq_rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms        id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'>1</span><span> Sepal.Length arrange_OrDsl
-#&gt; </span><span style='color: #555555;'>2</span><span> Petal.Length arrange_OrDsl</div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> Sepal.Length arrange_ZQdHO
+#&gt; </span><span style='color: #555555;'>2</span><span> Petal.Length arrange_ZQdHO</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

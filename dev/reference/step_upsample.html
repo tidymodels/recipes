@@ -179,22 +179,22 @@ will replicate rows of a data set to make the occurrence of
 levels in a specific factor level equal.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_upsample</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>ratio</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span>^<span class='fl'>5</span>, <span class='fl'>1</span>),
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"upsample"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_upsample.html'>step_upsample</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  over_ratio = <span class='fl'>1</span>,
+  ratio = <span class='fl'>NA</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  column = <span class='kw'>NULL</span>,
+  target = <span class='fl'>NA</span>,
+  skip = <span class='fl'>TRUE</span>,
+  seed = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span><span class='op'>^</span><span class='fl'>5</span>, <span class='fl'>1</span>),
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"upsample"</span>)
 )
 
 <span class='co'># S3 method for step_upsample</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,7 +207,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variable is used to sample the data. See <code><a href='selections.html'>selections()</a></code>
+variable is used to sample the data. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
 for more details. The selection should result in <em>single
 factor variable</em>. For the <code>tidy</code> method, these are not
 currently used.</p></td>
@@ -248,8 +248,8 @@ should not be set by the user and will be populated by <code>prep</code>.</p></t
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -278,8 +278,8 @@ the variable used to sample.</p>
 
     <p>Up-sampling is intended to be performed on the <em>training</em> set
 alone. For this reason, the default is <code>skip = TRUE</code>. It is
-advisable to use <code><a href='prep.html'>prep(recipe, retain = TRUE)</a></code> when preparing
-the recipe; in this way <code><a href='juice.html'>juice()</a></code> can be used to obtain the
+advisable to use <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep(recipe, retain = TRUE)</a></code> when preparing
+the recipe; in this way <code><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice()</a></code> can be used to obtain the
 up-sampled version of the data.</p>
 <p>If there are missing values in the factor variable that is used
 to define the sampling, missing data are selected at random in
@@ -288,19 +288,19 @@ values are not used to determine the amount of data in the
 majority level (see example below).</p>
 <p>For any data with factor levels occurring with the same
 frequency as the majority level, all data will be retained.</p>
-<p>All columns in the data are sampled and returned by <code><a href='juice.html'>juice()</a></code>
-and <code><a href='bake.html'>bake()</a></code>.</p>
+<p>All columns in the data are sampled and returned by <code><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice()</a></code>
+and <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake()</a></code>.</p>
 <p>When used in modeling, users should strongly consider using the
 option <code>skip = TRUE</code> so that the extra sampling is <em>not</em>
 conducted outside of the training set.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
-<span class='no'>orig</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>okc</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
+<span class='kw'>orig</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='no'>orig</span>, <span class='kw'>decreasing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='kw'>orig</span>, decreasing = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
 #&gt;                &lt;NA&gt;     mostly anything            anything   strictly anything 
 #&gt;               24360               16562                6174                5107 
 #&gt;   mostly vegetarian        mostly other strictly vegetarian          vegetarian 
@@ -311,27 +311,27 @@ conducted outside of the training set.</p>
 #&gt;                 136                  86                  48                  18 
 #&gt;     strictly kosher               halal              kosher 
 #&gt;                  18                  11                  11 </div><div class='input'>
-<span class='no'>up_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
+<span class='kw'>up_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
   <span class='co'># Bring the minority levels up to about 200 each</span>
   <span class='co'># 200/16562 is approx 0.0121</span>
-  <span class='fu'>step_upsample</span>(<span class='no'>diet</span>, <span class='kw'>over_ratio</span> <span class='kw'>=</span> <span class='fl'>0.0121</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_upsample()` is deprecated as of recipes 0.1.13.</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_upsample.html'>step_upsample</a></span>(<span class='kw'>diet</span>, over_ratio = <span class='fl'>0.0121</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_upsample()` is deprecated as of recipes 0.1.13.</span>
 #&gt; <span class='warning'>Please use `themis::step_upsample()` instead.</span>
 #&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
 #&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
-<span class='no'>training</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='no'>up_rec</span>)$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
+<span class='kw'>training</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>up_rec</span>)<span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
 
 <span class='co'># Since `skip` defaults to TRUE, baking the step has no effect</span>
-<span class='no'>baked_okc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>up_rec</span>, <span class='kw'>new_data</span> <span class='kw'>=</span> <span class='no'>okc</span>)
-<span class='no'>baked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>baked_okc</span>$<span class='no'>diet</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
+<span class='kw'>baked_okc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>up_rec</span>, new_data = <span class='kw'>okc</span>)
+<span class='kw'>baked</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>baked_okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
 
 <span class='co'># Note that if the original data contained more rows than the</span>
 <span class='co'># target n (= ratio * majority_n), the data are left alone:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>orig</span>),
-  <span class='kw'>orig_freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='no'>orig</span>),
-  <span class='kw'>train_freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='no'>training</span>),
-  <span class='kw'>baked_freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='no'>baked</span>)
+  level = <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>orig</span>),
+  orig_freq = <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='kw'>orig</span>),
+  train_freq = <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='kw'>training</span>),
+  baked_freq = <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='kw'>baked</span>)
 )</div><div class='output co'>#&gt;                  level orig_freq train_freq baked_freq
 #&gt; 1             anything      6174       6174       6174
 #&gt; 2                halal        11        200         11

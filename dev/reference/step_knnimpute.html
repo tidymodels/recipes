@@ -173,22 +173,22 @@ impute missing data using nearest neighbors." />
 impute missing data using nearest neighbors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_knnimpute</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>neighbors</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>impute_with</span> <span class='kw'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>eps</span> <span class='kw'>=</span> <span class='fl'>1e-08</span>),
-  <span class='kw'>ref_data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_knnimpute.html'>step_knnimpute</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='fl'>NA</span>,
+  trained = <span class='fl'>FALSE</span>,
+  neighbors = <span class='fl'>5</span>,
+  impute_with = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()),
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(nthread = <span class='fl'>1</span>, eps = <span class='fl'>1e-08</span>),
+  ref_data = <span class='kw'>NULL</span>,
+  columns = <span class='kw'>NULL</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>)
 )
 
 <span class='co'># S3 method for step_knnimpute</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,7 +203,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose variables. For
 <code>step_knnimpute</code>, this indicates the variables to be imputed. When used with
 <code>imp_vars</code>, the dots indicates which variables are used to predict the
-missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
+missing data in each variable. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -223,7 +223,7 @@ preprocessing have been estimated.</p></td>
       <th>impute_with</th>
       <td><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href='selections.html'>selections()</a></code>). If a column is
+by commas or different selectors (see <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></td>
     </tr>
@@ -236,18 +236,18 @@ Available options are currently <code>nthread</code> and <code>eps</code>.</p></
       <th>ref_data</th>
       <td><p>A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is <code>NULL</code> until the step
-is trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+is trained by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>The column names that will be imputed and used for
-imputation. This is <code>NULL</code> until the step is trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+imputation. This is <code>NULL</code> until the step is trained by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -286,47 +286,47 @@ large majority (or all) of the imputing variables are also missing.</p>
 of its properties," Biometrics, 857-871.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>, ]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>, ]
-<span class='no'>biomass_te_whole</span> <span class='kw'>&lt;-</span> <span class='no'>biomass_te</span>
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>, ]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>, ]
+<span class='kw'>biomass_te_whole</span> <span class='op'>&lt;-</span> <span class='kw'>biomass_te</span>
 
 <span class='co'># induce some missing data at random</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>9039</span>)
-<span class='no'>carb_missing</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>biomass_te</span>), <span class='fl'>3</span>)
-<span class='no'>nitro_missing</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>biomass_te</span>), <span class='fl'>3</span>)
+<span class='kw'>carb_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>biomass_te</span>), <span class='fl'>3</span>)
+<span class='kw'>nitro_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>biomass_te</span>), <span class='fl'>3</span>)
 
-<span class='no'>biomass_te</span>$<span class='no'>carbon</span>[<span class='no'>carb_missing</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>biomass_te</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>[<span class='kw'>carb_missing</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
+<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>nitrogen</span>[<span class='kw'>nitro_missing</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>ratio_recipe</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_knnimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), <span class='kw'>neighbors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>ratio_recipe2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
-<span class='no'>imputed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ratio_recipe2</span>, <span class='no'>biomass_te</span>)
+<span class='kw'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_knnimpute.html'>step_knnimpute</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), neighbors = <span class='fl'>3</span>)
+<span class='kw'>ratio_recipe2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>ratio_recipe</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>imputed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>ratio_recipe2</span>, <span class='kw'>biomass_te</span>)
 
 <span class='co'># how well did it work?</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>biomass_te_whole</span>$<span class='no'>carbon</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   27.80   44.24   47.30   47.96   49.00   79.34 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>before</span> <span class='kw'>=</span> <span class='no'>biomass_te_whole</span>$<span class='no'>carbon</span>[<span class='no'>carb_missing</span>],
-      <span class='kw'>after</span> <span class='kw'>=</span> <span class='no'>imputed</span>$<span class='no'>carbon</span>[<span class='no'>carb_missing</span>])</div><div class='output co'>#&gt;      before    after
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>biomass_te_whole</span><span class='op'>$</span><span class='kw'>carbon</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;   27.80   44.24   47.30   47.96   49.00   79.34 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(before = <span class='kw'>biomass_te_whole</span><span class='op'>$</span><span class='kw'>carbon</span>[<span class='kw'>carb_missing</span>],
+      after = <span class='kw'>imputed</span><span class='op'>$</span><span class='kw'>carbon</span>[<span class='kw'>carb_missing</span>])</div><div class='output co'>#&gt;      before    after
 #&gt; [1,]  46.83 47.43000
 #&gt; [2,]  47.80 47.53333
 #&gt; [3,]  46.40 46.21000</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>biomass_te_whole</span>$<span class='no'>nitrogen</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   0.010   0.295   0.690   1.092   1.450   4.790 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>before</span> <span class='kw'>=</span> <span class='no'>biomass_te_whole</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>],
-      <span class='kw'>after</span> <span class='kw'>=</span> <span class='no'>imputed</span>$<span class='no'>nitrogen</span>[<span class='no'>nitro_missing</span>])</div><div class='output co'>#&gt;      before      after
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>biomass_te_whole</span><span class='op'>$</span><span class='kw'>nitrogen</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;   0.010   0.295   0.690   1.092   1.450   4.790 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(before = <span class='kw'>biomass_te_whole</span><span class='op'>$</span><span class='kw'>nitrogen</span>[<span class='kw'>nitro_missing</span>],
+      after = <span class='kw'>imputed</span><span class='op'>$</span><span class='kw'>nitrogen</span>[<span class='kw'>nitro_missing</span>])</div><div class='output co'>#&gt;      before      after
 #&gt; [1,]   1.24 0.59333333
 #&gt; [2,]   0.30 0.92333333
 #&gt; [3,]   0.06 0.04666667</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ratio_recipe</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms            predictors neighbors id             
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>                 3 knnimpute_iyPXM</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ratio_recipe2</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 20 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>                 3 knnimpute_iyPXM</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ratio_recipe2</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 20 x 4</span><span>
 #&gt;    terms    predictors neighbors id             
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'> 1</span><span> carbon   hydrogen           3 knnimpute_iyPXM
