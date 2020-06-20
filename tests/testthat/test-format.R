@@ -23,12 +23,12 @@ test_that("format_ch_vec handles a vector with long items", {
 })
 
 test_that("format_selectors handles small numbers of selectors", {
-  test_exprs_small <- lapply(1:6, expr)
-  expect_equal(format_selectors(test_exprs_small), "1, 2, 3, 4, 5, 6")
+  test_exprs_small <- lapply(1:6, quo)
+  expect_equal(format_selectors(test_exprs_small), "1L, 2L, 3L, 4L, 5L, 6L")
 })
 
 test_that("format_ch_vec handles lots of small selectors", {
-  test_exprs_small_many <- lapply(1:100, expr)
+  test_exprs_small_many <- lapply(1:100, quo)
   # should fit the screen
   expect_true(length(format_selectors(test_exprs_small_many)) <=  max_width)
   #  should list as many items as possible, not just return "n items"
