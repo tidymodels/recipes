@@ -226,7 +226,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span>
+<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
 </pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code>step_dummy</code>. To do this, the step selects all predictors then removes those that are numeric:</p>
@@ -244,8 +244,8 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span>
-<span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span>
+<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
+<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span>
 </pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
@@ -263,10 +263,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors</span>
-<span class="co">#&gt; Dummy variables from all_predictors, -, all_numeric()</span>
-<span class="co">#&gt; Centering for all_predictors</span>
-<span class="co">#&gt; Scaling for all_predictors</span>
+<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
+<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span>
+<span class="co">#&gt; Centering for all_predictors()</span>
+<span class="co">#&gt; Scaling for all_predictors()</span>
 </pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
