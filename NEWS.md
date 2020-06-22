@@ -1,4 +1,4 @@
-# recipes 0.1.12.9000
+# recipes 0.1.13
 
 ## Breaking Changes
 
@@ -16,7 +16,7 @@
 
 * Improved error messaging, for example when a user tries to `prep()` a tuneable recipe.
 
-* `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package.
+* `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package. They will be removed in the next version. 
 
 * `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
 
