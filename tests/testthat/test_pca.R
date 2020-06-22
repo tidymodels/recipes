@@ -45,7 +45,9 @@ test_that('correct PCA values', {
 
   pca_obj <- prcomp(
     x = biomass_tr[, c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur")],
-    scale. = TRUE)$rotation
+    scale. = TRUE)
+  variances <- pca_obj$sdev^2
+  pca_obj <- pca_obj$rotation
   pca_obj <- as.data.frame(pca_obj)
   pca_obj <- utils::stack(pca_obj)
 
@@ -59,6 +61,27 @@ test_that('correct PCA values', {
     as.data.frame(tidy_exp_tr),
     as.data.frame(tidy(pca_extract_trained, number = 3))
   )
+
+  var_obj <- tidy(pca_extract_trained, number = 3, type = "variance")
+  expect_equal(
+    var_obj$value[var_obj$terms == "variance"],
+    variances
+  )
+  expect_equal(
+    var_obj$value[var_obj$terms == "cumulative variance"],
+    cumsum(variances)
+  )
+  expect_equal(
+    var_obj$value[var_obj$terms == "percent variance"],
+    variances / sum(variances) * 100
+  )
+  expect_equal(
+    var_obj$value[var_obj$terms == "cumulative percent variance"],
+    cumsum(variances) / sum(variances) * 100
+  )
+  expect_error(tidy(pca_extract_trained, number = 3, type = "variances"),
+               "variance")
+
 })
 
 test_that('correct PCA values with threshold', {

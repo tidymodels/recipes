@@ -33,7 +33,10 @@
 #'  stored here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below
+#'  resulting new variables. See notes below.
+#' @param type For the `tidy()` method, either "coefs" (for the variable
+#'  loadings per component) or "variance" (how much variance does each component
+#'  account for).
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -231,28 +234,75 @@ print.step_pca <-
     invisible(x)
   }
 
+pca_coefs <- function(x) {
+  rot <- as.data.frame(x$res$rotation)
+  vars <- rownames(rot)
+  if (x$num_comp > 0) {
+    npc <- ncol(rot)
+    res <- utils::stack(rot)
+    colnames(res) <- c("value", "component")
+    res$component <- as.character(res$component)
+    res$terms <- rep(vars, npc)
+    res <- as_tibble(res)[, c("terms", "value", "component")]
+  } else {
+    res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
+                          component = rlang::na_chr)
+  }
+  res
+}
+
+pca_variances <- function(x) {
+  rot <- as.data.frame(x$res$rotation)
+  vars <- rownames(rot)
+  if (x$num_comp > 0) {
+    variances <- x$res$sdev ^ 2
+    p <- length(variances)
+    tot <- sum(variances)
+    y <- c(variances,
+           cumsum(variances),
+           variances / tot * 100,
+           cumsum(variances) / tot * 100)
+    x <-
+      rep(
+        c(
+          "variance",
+          "cumulative variance",
+          "percent variance",
+          "cumulative percent variance"
+        ),
+        each = p
+      )
+
+    res <- tibble::tibble(terms = x,
+                          value = y,
+                          component = rep(1:p, 4))
+  } else {
+    res <- tibble::tibble(
+      terms = vars,
+      value = rep(rlang::na_dbl, length(vars)),
+      component = rep(rlang::na_chr, length(vars))
+    )
+  }
+  res
+}
+
+
+
 #' @rdname step_pca
 #' @param x A `step_pca` object.
 #' @export
-tidy.step_pca <- function(x, ...) {
+tidy.step_pca <- function(x, type = "coef", ...) {
   if (!is_trained(x)) {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
                   value = na_dbl,
                   component  = na_chr)
   } else {
-    rot <- as.data.frame(x$res$rotation)
-    vars <- rownames(rot)
-    if (x$num_comp > 0) {
-      npc <- ncol(rot)
-      res <- utils::stack(rot)
-      colnames(res) <- c("value", "component")
-      res$component <- as.character(res$component)
-      res$terms <- rep(vars, npc)
-      res <- as_tibble(res)[, c("terms", "value", "component")]
+    type <- match.arg(type, c("coef", "variance"))
+    if (type == "coef") {
+      res <- pca_coefs(x)
     } else {
-      res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
-                            component = rlang::na_chr)
+      res <- pca_variances(x)
     }
   }
   res$id <- x$id
