@@ -97,7 +97,7 @@ variables using orthogonal polynomials." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@ step that will create new columns that are basis expansions of
 variables using orthogonal polynomials.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_poly.html'>step_poly</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_poly.html'>step_poly</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -184,7 +184,7 @@ variables using orthogonal polynomials.</p>
   degree = <span class='fl'>2</span>,
   options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"poly"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"poly"</span>)
 )
 
 <span class='co'># S3 method for step_poly</span>
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
 for more details.  For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -236,8 +236,8 @@ values (not orthogonalized).</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -269,24 +269,24 @@ from the data and new columns are added. The naming convention
 for the new variables is <code>varname_poly_1</code> and so on.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_ns.html'>step_ns()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code>
-<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_ns.html'>step_ns()</a></code> <code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code>
+<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
 <span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
 <span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>quadratic</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_poly.html'>step_poly</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
-<span class='kw'>quadratic</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>quadratic</span>, training = <span class='kw'>biomass_tr</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_poly.html'>step_poly</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
+<span class='kw'>quadratic</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>quadratic</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>quadratic</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>quadratic</span>, <span class='kw'>biomass_te</span>)
 <span class='kw'>expanded</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 8</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_poly_1 carbon_poly_2 hydrogen_poly_1
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

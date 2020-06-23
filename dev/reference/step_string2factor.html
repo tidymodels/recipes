@@ -96,7 +96,7 @@ vectors to factors (ordered or unordered)." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@ vectors to factors (ordered or unordered)." />
 vectors to factors (ordered or unordered).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_string2factor.html'>step_string2factor</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_string2factor.html'>step_string2factor</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -181,7 +181,7 @@ vectors to factors (ordered or unordered).</p>
   levels = <span class='kw'>NULL</span>,
   ordered = <span class='fl'>FALSE</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"string2factor"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"string2factor"</span>)
 )
 
 <span class='co'># S3 method for step_string2factor</span>
@@ -199,7 +199,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will converted to factors. See
-<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -226,8 +226,8 @@ ordered?</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -259,23 +259,23 @@ data will be applied to <code>step_string2factor</code>. However, this step
 can also take existing factors (but will leave them as-is).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_factor2string.html'>step_factor2string()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other()</a></code>
-<code><a href='https://rdrr.io/pkg/recipes/man/step_novel.html'>step_novel()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_factor2string.html'>step_factor2string()</a></code> <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code> <code><a href='https://recipes.tidymodels.org/reference/step_other.html'>step_other()</a></code>
+<code><a href='https://recipes.tidymodels.org/reference/step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc</span>)
 
 <span class='kw'>make_factor</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_string2factor.html'>step_string2factor</a></span>(<span class='kw'>diet</span>)
-<span class='kw'>make_factor</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>make_factor</span>,
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_string2factor.html'>step_string2factor</a></span>(<span class='kw'>diet</span>)
+<span class='kw'>make_factor</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>make_factor</span>,
                     training = <span class='kw'>okc</span>,
                     strings_as_factors = <span class='fl'>FALSE</span>)
 
 <span class='co'># note that `diet` is a factor</span>
-<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/juice.html'>juice</a></span>(<span class='kw'>make_factor</span>) <span class='op'>%&gt;%</span> <span class='kw'>head</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
+<span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>(<span class='kw'>make_factor</span>) <span class='op'>%&gt;%</span> <span class='kw'>head</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
 #&gt;   diet              location           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
 #&gt; </span><span style='color: #555555;'>1</span><span> strictly anything south san francisco

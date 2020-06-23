@@ -97,7 +97,7 @@ variables by the training set mode of those variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -175,14 +175,14 @@ recipe step that will substitute missing values of nominal
 variables by the training set mode of those variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_modeimpute.html'>step_modeimpute</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_modeimpute.html'>step_modeimpute</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
   trained = <span class='fl'>FALSE</span>,
   modes = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"modeimpute"</span>)
 )
 
 <span class='co'># S3 method for step_modeimpute</span>
@@ -199,7 +199,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -216,13 +216,13 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>modes</th>
       <td><p>A named character vector of modes. This is
-<code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
+<code>NULL</code> until computed by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -253,7 +253,7 @@ values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
@@ -270,14 +270,14 @@ data has more than one mode, one is selected at random.</p>
 <span class='kw'>credit_te</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[<span class='op'>-</span><span class='kw'>in_training</span>, ]
 <span class='kw'>missing_examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
 
 <span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_modeimpute.html'>step_modeimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_modeimpute.html'>step_modeimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>)
 
-<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>credit_te</span><span class='op'>$</span><span class='kw'>Home</span>, <span class='kw'>imputed_te</span><span class='op'>$</span><span class='kw'>Home</span>, useNA = <span class='st'>"always"</span>)</div><div class='output co'>#&gt;          
 #&gt;           ignore other owner parents priv rent &lt;NA&gt;

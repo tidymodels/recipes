@@ -96,7 +96,7 @@ useful when creating custom steps." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@ useful when creating custom steps." />
 useful when creating custom steps.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/terms_select.html'>terms_select</a></span>(<span class='kw'>terms</span>, <span class='kw'>info</span>, empty_fun = <span class='kw'>abort_selection</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/terms_select.html'>terms_select</a></span>(<span class='kw'>terms</span>, <span class='kw'>info</span>, empty_fun = <span class='kw'>abort_selection</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,7 +187,7 @@ quoted expressions. See <code><a href='https://rlang.r-lib.org/reference/nse-def
       <th>info</th>
       <td><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
 and <code>source</code> that represent the current state of the data. The
-function <code><a href='https://rdrr.io/pkg/recipes/man/summary.recipe.html'>summary.recipe()</a></code> can be used to get this information
+function <code><a href='https://recipes.tidymodels.org/reference/summary.recipe.html'>summary.recipe()</a></code> can be used to get this information
 from a recipe.</p></td>
     </tr>
     <tr>
@@ -203,16 +203,16 @@ step. The default function throws an error with a message.</p></td>
 are no selectors or if no variables are selected.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/summary.recipe.html'>summary.recipe()</a></code>
-<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/summary.recipe.html'>summary.recipe()</a></code>
+<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://rlang.r-lib.org'>rlang</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>)
 <span class='kw'>info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>rec</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/terms_select.html'>terms_select</a></span>(info = <span class='kw'>info</span>, <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"     "Class"   </div></pre>
+<span class='fu'><a href='https://recipes.tidymodels.org/reference/terms_select.html'>terms_select</a></span>(info = <span class='kw'>info</span>, <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>()))</div><div class='output co'>#&gt; [1] "age"      "diet"     "height"   "location" "date"     "Class"   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

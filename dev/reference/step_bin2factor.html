@@ -97,7 +97,7 @@ dummy variable." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@ recipe step that will create a two-level factor from a single
 dummy variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bin2factor.html'>step_bin2factor</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bin2factor.html'>step_bin2factor</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -184,7 +184,7 @@ dummy variable.</p>
   ref_first = <span class='fl'>TRUE</span>,
   columns = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"bin2factor"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"bin2factor"</span>)
 )
 
 <span class='co'># S3 method for step_bin2factor</span>
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>Selector functions that choose which variables will
-be converted. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For
+be converted. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For
 the <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -228,13 +228,13 @@ factor levels for the 1's (in the first position) and the zeros
     <tr>
       <th>columns</th>
       <td><p>A vector with the selected variable names. This
-is <code>NULL</code> until computed by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
+is <code>NULL</code> until computed by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -266,20 +266,20 @@ density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>covers</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>description</span>, <span class='kw'>covers</span>) <span class='op'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_regex.html'>step_regex</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"rocks"</span>) <span class='op'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_regex.html'>step_regex</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"more_rocks"</span>) <span class='op'>%&gt;%</span>
- <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bin2factor.html'>step_bin2factor</a></span>(<span class='kw'>rocks</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>description</span>, <span class='kw'>covers</span>) <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_regex.html'>step_regex</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"rocks"</span>) <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_regex.html'>step_regex</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"more_rocks"</span>) <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bin2factor.html'>step_bin2factor</a></span>(<span class='kw'>rocks</span>)
 
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> rocks bin2factor_IUB7W</div><div class='input'>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>covers</span>)
-<span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>rec</span>, new_data = <span class='kw'>covers</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>covers</span>)
+<span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>rec</span>, new_data = <span class='kw'>covers</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>results</span><span class='op'>$</span><span class='kw'>rocks</span>, <span class='kw'>results</span><span class='op'>$</span><span class='kw'>more_rocks</span>)</div><div class='output co'>#&gt;      
 #&gt;        0  1

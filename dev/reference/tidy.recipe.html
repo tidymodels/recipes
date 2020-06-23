@@ -97,7 +97,7 @@ method for the operation exists)." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -224,15 +224,15 @@ column called <code>trained</code> for whether the operation has been
 estimated using <code>prep</code>, a logical for <code>skip</code>, and a character column <code>id</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
-<span class='kw'>okc_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal</a></span>(), threshold = <span class='fl'>0.05</span>, other = <span class='st'>"another"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_date.html'>step_date</a></span>(<span class='kw'>date</span>, features = <span class='st'>"dow"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/check_cols.html'>check_cols</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>), <span class='kw'>age</span>, <span class='kw'>height</span>)
+<span class='kw'>okc_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_other.html'>step_other</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_nominal</a></span>(), threshold = <span class='fl'>0.05</span>, other = <span class='st'>"another"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_date.html'>step_date</a></span>(<span class='kw'>date</span>, features = <span class='st'>"dow"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/check_cols.html'>check_cols</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>), <span class='kw'>age</span>, <span class='kw'>height</span>)
 
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 6</span><span>
 #&gt;   number operation type   trained skip  id          
@@ -249,7 +249,7 @@ estimated using <code>prep</code>, a logical for <code>skip</code>, and a charac
 #&gt;   terms         value id          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> center_jp5Kj</div><div class='input'>
-<span class='kw'>okc_rec_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>okc_rec</span>, training = <span class='kw'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
+<span class='kw'>okc_rec_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>okc_rec</span>, training = <span class='kw'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec_trained</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 6</span><span>
 #&gt;   number operation type   trained skip  id          
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       

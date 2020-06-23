@@ -96,7 +96,7 @@ convert numeric data into one or more new dimensions." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@ convert numeric data into one or more new dimensions." />
 convert numeric data into one or more new dimensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -186,7 +186,7 @@ convert numeric data into one or more new dimensions.</p>
   res = <span class='kw'>NULL</span>,
   prefix = <span class='st'>"PLS"</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"pls"</span>)
 )
 
 <span class='co'># S3 method for step_pls</span>
@@ -203,7 +203,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables will be
-used to compute the dimensions. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the
+used to compute the dimensions. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -249,7 +249,7 @@ retained along with the new features?</p></td>
     <tr>
       <th>res</th>
       <td><p>A list of results are stored here once this preprocessing step
-has be trained by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
+has be trained by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -259,8 +259,8 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -296,7 +296,7 @@ The variable names are padded with zeros. For example, if <code>num_comp &lt; 10
 names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 <p>Sparsity can be encouraged using the <code>predictor_prop</code> parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
-non-zero coefficients in each component. <code><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls()</a></code> converts this
+non-zero coefficients in each component. <code><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls()</a></code> converts this
 proportion to determine the <code>keepX</code> parameter in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> and
 <code><a href='https://rdrr.io/pkg/mixOmics/man/splsda.html'>mixOmics::splsda()</a></code>. See the references in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> for details.</p>
 <p>The <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> method returns the coefficients that are usually defined as</p>
@@ -313,8 +313,8 @@ above.</p>
 13(11): e1005752. <a href='https://doi.org/10.1371/journal.pcbi.1005752'>https://doi.org/10.1371/journal.pcbi.1005752</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_kpca.html'>step_kpca()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code>,
-<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>, <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_pca.html'>step_pca()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_kpca.html'>step_kpca()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_ica.html'>step_ica()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code>,
+<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># requires the Bioconductor mixOmics package</span>
@@ -330,12 +330,12 @@ above.</p>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>dataset</span>,<span class='op'>-</span><span class='kw'>sample</span>,<span class='op'>-</span><span class='kw'>HHV</span>)
 
 <span class='kw'>dense_pls</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biom_tr</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"HHV"</span>, num_comp = <span class='fl'>3</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biom_tr</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"HHV"</span>, num_comp = <span class='fl'>3</span>)
 
 <span class='kw'>sparse_pls</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biom_tr</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"HHV"</span>, num_comp = <span class='fl'>3</span>, predictor_prop = <span class='fl'>4</span><span class='op'>/</span><span class='fl'>5</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biom_tr</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"HHV"</span>, num_comp = <span class='fl'>3</span>, predictor_prop = <span class='fl'>4</span><span class='op'>/</span><span class='fl'>5</span>)
 
 <span class='co'>## -----------------------------------------------------------------------------</span>
 <span class='co'>## PLS discriminant analysis</span>
@@ -352,12 +352,12 @@ above.</p>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>case</span>,<span class='op'>-</span><span class='kw'>class</span>)
 
 <span class='kw'>dense_plsda</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>class</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>cell_tr</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"class"</span>, num_comp = <span class='fl'>5</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>class</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>cell_tr</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"class"</span>, num_comp = <span class='fl'>5</span>)
 
 <span class='kw'>sparse_plsda</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>class</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>cell_tr</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"class"</span>, num_comp = <span class='fl'>5</span>, predictor_prop = <span class='fl'>1</span><span class='op'>/</span><span class='fl'>4</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>class</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>cell_tr</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_pls.html'>step_pls</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), outcome = <span class='st'>"class"</span>, num_comp = <span class='fl'>5</span>, predictor_prop = <span class='fl'>1</span><span class='op'>/</span><span class='fl'>4</span>)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

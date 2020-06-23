@@ -96,7 +96,7 @@ create bagged tree models to impute missing data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -173,21 +173,21 @@ create bagged tree models to impute missing data." />
 create bagged tree models to impute missing data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(
+    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>step_bagimpute</a></span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
   trained = <span class='fl'>FALSE</span>,
-  impute_with = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()),
+  impute_with = <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>()),
   trees = <span class='fl'>25</span>,
   models = <span class='kw'>NULL</span>,
   options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(keepX = <span class='fl'>FALSE</span>),
   seed_val = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='fl'>10</span><span class='op'>^</span><span class='fl'>4</span>, <span class='fl'>1</span>),
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>)
+  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"bagimpute"</span>)
 )
 
-<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>...</span>)
+<span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>...</span>)
 
 <span class='co'># S3 method for step_bagimpute</span>
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose variables. For
 <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with
 <code>imp_vars</code>, the dots indicates which variables are used to predict the
-missing data in each variable. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the
+missing data in each variable. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -221,7 +221,7 @@ preprocessing have been estimated.</p></td>
       <th>impute_with</th>
       <td><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code>). If a column is
+by commas or different selectors (see <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></td>
     </tr>
@@ -232,7 +232,7 @@ will be removed from the latter and not used to impute itself.</p></td>
     <tr>
       <th>models</th>
       <td><p>The <code><a href='https://rdrr.io/pkg/ipred/man/bagging.html'>ipred::ipredbagg()</a></code> objects are stored here once this
-bagged trees have be trained by <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
+bagged trees have be trained by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
@@ -248,8 +248,8 @@ is used across all imputation models.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -289,7 +289,7 @@ large majority (or all) of the imputing variables are also missing.</p>
 Springer Verlag.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/modeldata'>modeldata</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
@@ -306,14 +306,14 @@ Springer Verlag.</p>
 <span class='kw'>credit_te</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[<span class='op'>-</span><span class='kw'>in_training</span>, ]
 <span class='kw'>missing_examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>)
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>)
 
-<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
 <span class='kw'>credit_te</span>[<span class='kw'>missing_examples</span>,]
 <span class='kw'>imputed_te</span>[<span class='kw'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>credit_te</span>)]
@@ -324,14 +324,14 @@ Springer Verlag.</p>
 <span class='co'>## Specifying which variables to imputate with</span>
 
  <span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>,
-                 impute_with = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>Time</span>, <span class='kw'>Age</span>, <span class='kw'>Expenses</span>),
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>step_bagimpute</a></span>(<span class='kw'>Status</span>, <span class='kw'>Home</span>, <span class='kw'>Marital</span>, <span class='kw'>Job</span>, <span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>,
+                 impute_with = <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>imp_vars</a></span>(<span class='kw'>Time</span>, <span class='kw'>Age</span>, <span class='kw'>Expenses</span>),
                  <span class='co'># for quick execution, nbagg lowered</span>
                  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(nbagg = <span class='fl'>5</span>, keepX = <span class='fl'>FALSE</span>))
 
-<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
 <span class='kw'>credit_te</span>[<span class='kw'>missing_examples</span>,]
 <span class='kw'>imputed_te</span>[<span class='kw'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>credit_te</span>)]

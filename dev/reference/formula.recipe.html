@@ -97,7 +97,7 @@ could be used." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.12.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
         </div>
       </div>
     </div>
@@ -197,13 +197,13 @@ could be used.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>))</div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7fa3b7190d68&gt;</div><div class='input'>
-<span class='kw'>iris_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>))</div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
+#&gt; &lt;environment: 0x7fbaa689ea90&gt;</div><div class='input'>
+<span class='kw'>iris_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='kw'>iris_rec</span>)</div><div class='output co'>#&gt; Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7fa398e41010&gt;</div></pre>
+#&gt; &lt;environment: 0x7fbaa7d09bc8&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
