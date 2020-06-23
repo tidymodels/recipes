@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Polynomial Kernel PCA Signal Extraction — step_kpca_poly" />
 <meta property="og:description" content="step_kpca_poly a specification of a recipe step that
 will convert numeric data into one or more principal components
 using a polynomial kernel basis expansion." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ using a polynomial kernel basis expansion." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.13</span>
         </div>
       </div>
     </div>
@@ -171,23 +175,23 @@ will convert numeric data into one or more principal components
 using a polynomial kernel basis expansion.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_kpca_poly</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>degree</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>scale_factor</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"kPC"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"kpca_poly"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_kpca_poly.html'>step_kpca_poly</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  num_comp = <span class='fl'>5</span>,
+  res = <span class='kw'>NULL</span>,
+  degree = <span class='fl'>2</span>,
+  scale_factor = <span class='fl'>1</span>,
+  offset = <span class='fl'>1</span>,
+  prefix = <span class='st'>"kPC"</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"kpca_poly"</span>)
 )
 
 <span class='co'># S3 method for step_kpca_poly</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -227,7 +231,7 @@ used.</p></td>
       <th>res</th>
       <td><p>An S4 <code><a href='https://rdrr.io/pkg/kernlab/man/kpca.html'>kernlab::kpca()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>degree, scale_factor, offset</th>
@@ -241,8 +245,8 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -297,44 +301,44 @@ kernlab - An S4 package for kernel methods in R. <em>Journal
 of Statistical Software</em>, 11(1), 1-20.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_ica.html'>step_ica()</a></code>
-<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/step_isomap.html'>step_isomap()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
 
-<span class='no'>biomass_tr</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Training"</span>,]
-<span class='no'>biomass_te</span> <span class='kw'>&lt;-</span> <span class='no'>biomass</span>[<span class='no'>biomass</span>$<span class='no'>dataset</span> <span class='kw'>==</span> <span class='st'>"Testing"</span>,]
+<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
+<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='no'>HHV</span> ~ <span class='no'>carbon</span> + <span class='no'>hydrogen</span> + <span class='no'>oxygen</span> + <span class='no'>nitrogen</span> + <span class='no'>sulfur</span>,
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+              data = <span class='kw'>biomass_tr</span>)
 
-<span class='no'>kpca_trans</span> <span class='kw'>&lt;-</span> <span class='no'>rec</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'>step_kpca_poly</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='kw'>kpca_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_kpca_poly.html'>step_kpca_poly</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_predictors</a></span>())
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dimRed</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>kernlab</span>)) {
-  <span class='no'>kpca_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>biomass_tr</span>)
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/gdkrmr/dimRed'>dimRed</a></span>) <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'>kernlab</span>)) {
+  <span class='kw'>kpca_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>kpca_trans</span>, training = <span class='kw'>biomass_tr</span>)
 
-  <span class='no'>kpca_te</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>kpca_estimates</span>, <span class='no'>biomass_te</span>)
+  <span class='kw'>kpca_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>kpca_estimates</span>, <span class='kw'>biomass_te</span>)
 
-  <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>))
-  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='no'>kpca_te</span>$<span class='no'>kPC1</span>, <span class='no'>kpca_te</span>$<span class='no'>kPC2</span>,
-       <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='no'>rng</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='no'>rng</span>)
+  <span class='kw'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>kpca_te</span><span class='op'>$</span><span class='kw'>kPC1</span>, <span class='kw'>kpca_te</span><span class='op'>$</span><span class='kw'>kPC2</span>))
+  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>kpca_te</span><span class='op'>$</span><span class='kw'>kPC1</span>, <span class='kw'>kpca_te</span><span class='op'>$</span><span class='kw'>kPC2</span>,
+       xlim = <span class='kw'>rng</span>, ylim = <span class='kw'>rng</span>)
 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>kpca_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>kpca_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div><div class='output co'>#&gt; <span class='message'>2020-04-30 17:01:26: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2020-04-30 17:01:27: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2020-04-30 17:01:27: DONE</span></div><div class='img'><img src='step_kpca_poly-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; # A tibble: 5 x 2
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>kpca_trans</span>, number = <span class='fl'>3</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>kpca_estimates</span>, number = <span class='fl'>3</span>)
+}</div><div class='output co'>#&gt; <span class='message'>2020-06-23 15:42:29: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2020-06-23 15:42:30: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2020-06-23 15:42:30: DONE</span></div><div class='img'><img src='step_kpca_poly-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
 #&gt;   terms    id             
-#&gt;   &lt;chr&gt;    &lt;chr&gt;          
-#&gt; 1 carbon   kpca_poly_yuKOt
-#&gt; 2 hydrogen kpca_poly_yuKOt
-#&gt; 3 oxygen   kpca_poly_yuKOt
-#&gt; 4 nitrogen kpca_poly_yuKOt
-#&gt; 5 sulfur   kpca_poly_yuKOt</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon   kpca_poly_yuKOt
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen kpca_poly_yuKOt
+#&gt; </span><span style='color: #555555;'>3</span><span> oxygen   kpca_poly_yuKOt
+#&gt; </span><span style='color: #555555;'>4</span><span> nitrogen kpca_poly_yuKOt
+#&gt; </span><span style='color: #555555;'>5</span><span> sulfur   kpca_poly_yuKOt</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

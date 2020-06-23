@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="ICA Signal Extraction — step_ica" />
 <meta property="og:description" content="step_ica creates a specification of a recipe step
 that will convert numeric data into one or more independent
 components." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ components." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.13</span>
         </div>
       </div>
     </div>
@@ -171,21 +175,21 @@ that will convert numeric data into one or more independent
 components.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_ica</span>(
-  <span class='no'>recipe</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>role</span> <span class='kw'>=</span> <span class='st'>"predictor"</span>,
-  <span class='kw'>trained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>res</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"IC"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ica"</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica</a></span>(
+  <span class='kw'>recipe</span>,
+  <span class='kw'>...</span>,
+  role = <span class='st'>"predictor"</span>,
+  trained = <span class='fl'>FALSE</span>,
+  num_comp = <span class='fl'>5</span>,
+  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(method = <span class='st'>"C"</span>),
+  res = <span class='kw'>NULL</span>,
+  prefix = <span class='st'>"IC"</span>,
+  skip = <span class='fl'>FALSE</span>,
+  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"ica"</span>)
 )
 
 <span class='co'># S3 method for step_ica</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +203,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -232,7 +236,7 @@ not be passed here.</p></td>
       <th>res</th>
       <td><p>The <code><a href='https://rdrr.io/pkg/fastICA/man/fastICA.html'>fastICA::fastICA()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -242,8 +246,8 @@ resulting new variables. See notes below.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -296,47 +300,47 @@ component analysis: algorithms and applications. <em>Neural
 Networks</em>, 13(4-5), 411-430.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
-<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/recipes/man/step_pca.html'>step_pca()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/step_kpca.html'>step_kpca()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/step_isomap.html'>step_isomap()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe()</a></code> <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>
+<code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># from fastICA::fastICA</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>131</span>)
-<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>400</span>), <span class='fl'>200</span>, <span class='fl'>2</span>)
-<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>S</span> <span class='kw'>%*%</span> <span class='no'>A</span>)
+<span class='kw'>S</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>400</span>), <span class='fl'>200</span>, <span class='fl'>2</span>)
+<span class='kw'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fl'>2</span>, <span class='fl'>2</span>, byrow = <span class='fl'>TRUE</span>)
+<span class='kw'>X</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>S</span> <span class='op'>%*%</span> <span class='kw'>A</span>)
 
-<span class='no'>tr</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>1</span>:<span class='fl'>100</span>, ]
-<span class='no'>te</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[<span class='fl'>101</span>:<span class='fl'>200</span>, ]
+<span class='kw'>tr</span> <span class='op'>&lt;-</span> <span class='kw'>X</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, ]
+<span class='kw'>te</span> <span class='op'>&lt;-</span> <span class='kw'>X</span>[<span class='fl'>101</span><span class='op'>:</span><span class='fl'>200</span>, ]
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>tr</span>)
 
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='no'>rec</span>,  <span class='no'>V1</span>, <span class='no'>V2</span>)
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>)
-<span class='no'>ica_trans</span> <span class='kw'>&lt;-</span> <span class='fu'>step_ica</span>(<span class='no'>ica_trans</span>, <span class='no'>V1</span>, <span class='no'>V2</span>, <span class='kw'>num_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='kw'>ica_trans</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='kw'>rec</span>,  <span class='kw'>V1</span>, <span class='kw'>V2</span>)
+<span class='kw'>ica_trans</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_scale.html'>step_scale</a></span>(<span class='kw'>ica_trans</span>, <span class='kw'>V1</span>, <span class='kw'>V2</span>)
+<span class='kw'>ica_trans</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_ica.html'>step_ica</a></span>(<span class='kw'>ica_trans</span>, <span class='kw'>V1</span>, <span class='kw'>V2</span>, num_comp = <span class='fl'>2</span>)
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dimRed</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>fastICA</span>)) {
-  <span class='no'>ica_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>tr</span>)
-  <span class='no'>ica_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='no'>ica_estimates</span>, <span class='no'>te</span>)
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/gdkrmr/dimRed'>dimRed</a></span>) <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'>fastICA</span>)) {
+  <span class='kw'>ica_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>ica_trans</span>, training = <span class='kw'>tr</span>)
+  <span class='kw'>ica_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake</a></span>(<span class='kw'>ica_estimates</span>, <span class='kw'>te</span>)
 
-  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='no'>te</span>$<span class='no'>V1</span>, <span class='no'>te</span>$<span class='no'>V2</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='no'>ica_data</span>$<span class='no'>IC1</span>, <span class='no'>ica_data</span>$<span class='no'>IC2</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>te</span><span class='op'>$</span><span class='kw'>V1</span>, <span class='kw'>te</span><span class='op'>$</span><span class='kw'>V2</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>ica_data</span><span class='op'>$</span><span class='kw'>IC1</span>, <span class='kw'>ica_data</span><span class='op'>$</span><span class='kw'>IC2</span>)
 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ica_trans</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>ica_estimates</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ica_trans</span>, number = <span class='fl'>3</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ica_estimates</span>, number = <span class='fl'>3</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: dimRed</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: DRR</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: kernlab</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: CVST</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dimRed’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    embed</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; # A tibble: 4 x 4
+#&gt; <span class='message'>    as.data.frame</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: fastICA</span></div><div class='img'><img src='step_ica-1.png' alt='' width='768' height='552' /></div><div class='img'><img src='step_ica-2.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 4</span><span>
 #&gt;   terms component  value id       
-#&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
-#&gt; 1 V1    IC1       -1.04  ica_3zAWC
-#&gt; 2 V1    IC2       -0.378 ica_3zAWC
-#&gt; 3 V2    IC1       -0.773 ica_3zAWC
-#&gt; 4 V2    IC2        0.788 ica_3zAWC</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'>1</span><span> V1    IC1       -</span><span style='color: #BB0000;'>1.04</span><span>  ica_3zAWC
+#&gt; </span><span style='color: #555555;'>2</span><span> V1    IC2       -</span><span style='color: #BB0000;'>0.378</span><span> ica_3zAWC
+#&gt; </span><span style='color: #555555;'>3</span><span> V2    IC1       -</span><span style='color: #BB0000;'>0.773</span><span> ica_3zAWC
+#&gt; </span><span style='color: #555555;'>4</span><span> V2    IC2        0.788 ica_3zAWC</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

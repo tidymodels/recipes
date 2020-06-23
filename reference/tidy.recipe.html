@@ -43,13 +43,17 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Tidy the Result of a Recipe — tidy.recipe" />
 <meta property="og:description" content="tidy will return a data frame that contains information
 regarding a recipe or operation within the recipe (when a tidy
 method for the operation exists)." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -92,8 +96,8 @@ method for the operation exists)." />
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.13</span>
         </div>
       </div>
     </div>
@@ -172,13 +176,13 @@ method for the operation exists).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, number = <span class='fl'>NA</span>, id = <span class='fl'>NA</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for step</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for check</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,44 +224,44 @@ column called <code>trained</code> for whether the operation has been
 estimated using <code>prep</code>, a logical for <code>skip</code>, and a character column <code>id</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>okc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
-<span class='no'>okc_rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>okc</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_other.html'>step_other</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"another"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_date.html'>step_date</a></span>(<span class='no'>date</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='st'>"dow"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='check_cols.html'>check_cols</a></span>(<span class='fu'>starts_with</span>(<span class='st'>"date"</span>), <span class='no'>age</span>, <span class='no'>height</span>)
+<span class='kw'>okc_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_other.html'>step_other</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal</a></span>(), threshold = <span class='fl'>0.05</span>, other = <span class='st'>"another"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_date.html'>step_date</a></span>(<span class='kw'>date</span>, features = <span class='st'>"dow"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/recipes/man/has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/check_cols.html'>check_cols</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>), <span class='kw'>age</span>, <span class='kw'>height</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>okc_rec</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 6</span><span>
 #&gt;   number operation type   trained skip  id          
-#&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;       
-#&gt; 1      1 step      other  FALSE   FALSE other_OruwB 
-#&gt; 2      2 step      date   FALSE   FALSE date_l3nYA  
-#&gt; 3      3 step      center FALSE   FALSE center_jp5Kj
-#&gt; 4      4 step      dummy  FALSE   FALSE dummy_FhDIk 
-#&gt; 5      5 check     cols   FALSE   FALSE cols_IyjzO  </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span>      1 step      other  FALSE   FALSE other_OruwB 
+#&gt; </span><span style='color: #555555;'>2</span><span>      2 step      date   FALSE   FALSE date_l3nYA  
+#&gt; </span><span style='color: #555555;'>3</span><span>      3 step      center FALSE   FALSE center_jp5Kj
+#&gt; </span><span style='color: #555555;'>4</span><span>      4 step      dummy  FALSE   FALSE dummy_FhDIk 
+#&gt; </span><span style='color: #555555;'>5</span><span>      5 check     cols   FALSE   FALSE cols_IyjzO  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms value ordinal id        
-#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;     
-#&gt; 1 date  dow   FALSE   date_l3nYA</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'>1</span><span> date  dow   FALSE   date_l3nYA</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms         value id          
-#&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 all_numeric()    NA center_jp5Kj</div><div class='input'>
-<span class='no'>okc_rec_trained</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='no'>okc_rec</span>, <span class='kw'>training</span> <span class='kw'>=</span> <span class='no'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>okc_rec_trained</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 6
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> center_jp5Kj</div><div class='input'>
+<span class='kw'>okc_rec_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep</a></span>(<span class='kw'>okc_rec</span>, training = <span class='kw'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There are new levels in a factor: NA</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec_trained</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 6</span><span>
 #&gt;   number operation type   trained skip  id          
-#&gt;    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;       
-#&gt; 1      1 step      other  TRUE    FALSE other_OruwB 
-#&gt; 2      2 step      date   TRUE    FALSE date_l3nYA  
-#&gt; 3      3 step      center TRUE    FALSE center_jp5Kj
-#&gt; 4      4 step      dummy  TRUE    FALSE dummy_FhDIk 
-#&gt; 5      5 check     cols   TRUE    FALSE cols_IyjzO  </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='no'>okc_rec_trained</span>, <span class='kw'>number</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span>      1 step      other  TRUE    FALSE other_OruwB 
+#&gt; </span><span style='color: #555555;'>2</span><span>      2 step      date   TRUE    FALSE date_l3nYA  
+#&gt; </span><span style='color: #555555;'>3</span><span>      3 step      center TRUE    FALSE center_jp5Kj
+#&gt; </span><span style='color: #555555;'>4</span><span>      4 step      dummy  TRUE    FALSE dummy_FhDIk 
+#&gt; </span><span style='color: #555555;'>5</span><span>      5 check     cols   TRUE    FALSE cols_IyjzO  </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>okc_rec_trained</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   terms  value id          
-#&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;       
-#&gt; 1 age     32.3 center_jp5Kj
-#&gt; 2 height  68.3 center_jp5Kj</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'>1</span><span> age     32.3 center_jp5Kj
+#&gt; </span><span style='color: #555555;'>2</span><span> height  68.3 center_jp5Kj</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
