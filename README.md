@@ -1,5 +1,5 @@
 
-# recipes <img src="man/figures/logo.png" align="right" height="80px"/>
+# recipes <a href='https://recipes.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 [![R build
 status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes)
@@ -14,7 +14,7 @@ coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg
 The `recipes` package is an alternative method for creating and
 preprocessing design matrices that can be used for modeling or
 visualization. From
-[wikipedia](https://en.wikipedia.org/wiki/Design_matrix):
+[Wikipedia](https://en.wikipedia.org/wiki/Design_matrix):
 
 > In statistics, a **design matrix** (also known as regressor matrix or
 > model matrix) is a matrix of values of explanatory variables of a set
@@ -38,6 +38,7 @@ predictors centered and scaled:
 library(recipes)
 library(mlbench)
 data(Sonar)
+
 sonar_rec <- recipe(Class ~ ., data = Sonar) %>%
   step_center(all_predictors()) %>%
   step_scale(all_predictors())
@@ -47,7 +48,9 @@ More information on `recipes` can be found at the [*Get
 Started*](https://www.tidymodels.org/start/recipes/) page of
 [`tidymodels.org`](https://www.tidymodels.org).
 
-To install it, use:
+## Installation
+
+To install this package, use:
 
 ``` r
 install.packages("recipes")
@@ -56,3 +59,24 @@ install.packages("recipes")
 require("devtools")
 install_github("tidymodels/recipes")
 ```
+
+## Contributing
+
+This project is released with a [Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+  - For questions and discussions about tidymodels packages, modeling,
+    and machine learning, [join us on RStudio
+    Community](https://rstd.io/tidymodels-community).
+
+  - If you think you have encountered a bug, please [submit an
+    issue](https://github.com/tidymodels/recipes/issues).
+
+  - Either way, learn how to create and share a
+    [reprex](https://rstd.io/reprex) (a minimal, reproducible example),
+    to clearly communicate about your code.
+
+  - Check out further details on [contributing guidelines for tidymodels
+    packages](https://www.tidymodels.org/contribute/) and [how to get
+    help](https://www.tidymodels.org/help/).
