@@ -67,7 +67,7 @@ Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
   - For questions and discussions about tidymodels packages, modeling,
-    and machine learning, [join us on RStudio
+    and machine learning, please [post on RStudio
     Community](https://rstd.io/tidymodels-community).
 
   - If you think you have encountered a bug, please [submit an
