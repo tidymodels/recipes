@@ -16,3 +16,4 @@ tests/testthat/NMF*
 ^\.github/workflows/R-CMD-check\.yaml$
 ^\.github/workflows/pr-commands\.yaml$
 ^\.github$
+^CODE_OF_CONDUCT\.md$
