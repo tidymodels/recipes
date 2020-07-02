@@ -128,7 +128,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The <code>recipes</code> package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From <a href="https://en.wikipedia.org/wiki/Design_matrix">wikipedia</a>:</p>
+<p>The <code>recipes</code> package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From <a href="https://en.wikipedia.org/wiki/Design_matrix">Wikipedia</a>:</p>
 <blockquote>
 <p>In statistics, a <strong>design matrix</strong> (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object.</p>
 </blockquote>
@@ -138,12 +138,17 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">mlbench</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">Sonar</span>)
+
 <span class="kw">sonar_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span>(<span class="kw">Class</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">Sonar</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/step_center.html">step_center</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/step_scale.html">step_scale</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>())
 </pre></div>
 <p>More information on <code>recipes</code> can be found at the <a href="https://www.tidymodels.org/start/recipes/"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org"><code>tidymodels.org</code></a>.</p>
-<p>To install it, use:</p>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>To install this package, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"recipes"</span>)
 
@@ -151,6 +156,17 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)
 <span class="fu">install_github</span>(<span class="st">"tidymodels/recipes"</span>)
 </pre></div>
+</div>
+<div id="contributing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributing" class="anchor"></a>Contributing</h2>
+<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<ul>
+<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://rstd.io/tidymodels-community">post on RStudio Community</a>.</p></li>
+<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/recipes/issues">submit an issue</a>.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://rstd.io/reprex">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/">how to get help</a>.</p></li>
+</ul>
 </div>
 </div>
   </div>
@@ -171,6 +187,12 @@
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 <div class="developers">
