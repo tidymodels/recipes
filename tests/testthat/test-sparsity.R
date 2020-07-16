@@ -33,12 +33,53 @@ res_matrix <- matrix(c(1, 1, 1, 0, 0, 0, 0, 0, 0, 2,
                      nrow = 4, ncol = 10, byrow = TRUE,
                      dimnames = list(NULL, c("z", "w", "x_a", "x_b", "x_c", "x_d", "y_a", "y_b", "y_c", "y_d")))
 
-expect_equal(
-  convert_matrix(ex_dat, sparse = FALSE),
-  res_matrix
-)
+test_that("convert_matrix works as expected", {
+  expect_equal(
+    convert_matrix(ex_dat, sparse = FALSE),
+    res_matrix
+  )
 
-expect_equal(
-  as(res_matrix, "CsparseMatrix"),
-  convert_matrix(ex_dat, sparse = TRUE)
-)
+  expect_equal(
+    as(res_matrix, "CsparseMatrix"),
+    convert_matrix(ex_dat, sparse = TRUE)
+  )
+})
+
+test_that("juice composition works with sparse columns", {
+  recipe(~., data = tibble(z = 1:4,
+                           w = 1:4)) %>%
+    step_mutate(x = CsparseMatrix_to_RsparseList(sparse_x),
+                y = CsparseMatrix_to_RsparseList(sparse_y)) %>%
+    prep() %>%
+    juice(composition = "tibble")
+
+  recipe(~., data = tibble(z = 1:4,
+                           w = 1:4)) %>%
+    step_mutate(x = CsparseMatrix_to_RsparseList(sparse_x),
+                y = CsparseMatrix_to_RsparseList(sparse_y)) %>%
+    prep() %>%
+    juice(composition = "data.frame")
+
+
+
+  expect_equal(
+    recipe(~., data = tibble(z = 1:4,
+                             w = 1:4)) %>%
+      step_mutate(x = CsparseMatrix_to_RsparseList(sparse_x),
+                  y = CsparseMatrix_to_RsparseList(sparse_y)) %>%
+      prep() %>%
+      juice(composition = "matrix"),
+    res_matrix
+  )
+
+  expect_equal(
+    recipe(~., data = tibble(z = 1:4,
+                             w = 1:4)) %>%
+      step_mutate(x = CsparseMatrix_to_RsparseList(sparse_x),
+                  y = CsparseMatrix_to_RsparseList(sparse_y)) %>%
+      prep() %>%
+      juice(composition = "dgCMatrix"),
+  as(res_matrix, "CsparseMatrix")
+  )
+
+})
