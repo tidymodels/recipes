@@ -54,7 +54,7 @@ convert_matrix <- function(x, sparse = TRUE) {
     }
   }
 
-  res[, column_order]
+  res[, column_order, drop = FALSE]
 }
 
 is_RsparseList <- function(x) {
