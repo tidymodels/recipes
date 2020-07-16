@@ -73,3 +73,48 @@ CsparseMatrix_to_RsparseList <- function(x) {
 RsparseList_to_CsparseMatrix <- function(x) {
   purrr::reduce(x, rbind)
 }
+
+expand_RsparseList <- function(x, to_tibble = FALSE) {
+  RsparseList_ind <- vapply(x, is_RsparseList, logical(1))
+
+  if (!any(RsparseList_ind)) {
+    return(x)
+  }
+
+  x_RsparseList <- x[RsparseList_ind]
+  x_mat <- x[!RsparseList_ind]
+
+  column_order <- insert_all(names(x), x_RsparseList)
+
+  sparse_matrices <- purrr::map(x_RsparseList, RsparseList_to_CsparseMatrix)
+  sparse_matrices <- purrr::reduce(sparse_matrices, cbind)
+  sparse_matrices <- as.data.frame(as.matrix(sparse_matrices))
+
+  if (to_tibble) {
+    sparse_matrices <- as_tibble(sparse_matrices)
+  }
+
+  res <- bind_cols(sparse_matrices, x_mat)
+  res[column_order]
+}
+
+insert_replace <- function(x, location, replacement) {
+  split <- which(x == location)
+  if (split == length(x)) {
+    c(x[-split], replacement)
+  } else {
+    c(x[seq(0, split - 1)], replacement, x[seq(split + 1, length(x))])
+  }
+}
+
+insert_all <- function(x, y) {
+  locations <- names(y)
+  replacements <- map(y, ~colnames(.x[[1]]))
+
+  for (i in seq_along(y)) {
+    x <- insert_replace(x, locations[i], replacements[[i]])
+  }
+  x
+}
+
+
