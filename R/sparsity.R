@@ -1,9 +1,9 @@
 
 convert_matrix <- function(x, sparse = TRUE) {
-  is_list <- vapply(x, is.list, logical(1))
+  RsparseList_ind <- vapply(x, is_RsparseList, logical(1))
 
-  x_lists <- x[is_list]
-  x <- x[!is_list]
+  x_RsparseList <- x[RsparseList_ind]
+  x <- x[!RsparseList_ind]
 
   is_num <- vapply(x, is.numeric, logical(1))
 
@@ -37,8 +37,8 @@ convert_matrix <- function(x, sparse = TRUE) {
     res <- Matrix(res, sparse = TRUE)
   }
 
-  if (length(x_lists) > 0) {
-    sparse_matrices <- purrr::map(x_lists, purrr::reduce, rbind)
+  if (length(x_RsparseList) > 0) {
+    sparse_matrices <- purrr::map(x_RsparseList, RsparseList_to_CsparseMatrix)
     sparse_matrices <- purrr::reduce(sparse_matrices, cbind)
 
     res <- cbind(res, sparse_matrices)
@@ -49,4 +49,27 @@ convert_matrix <- function(x, sparse = TRUE) {
   }
 
   res
+}
+
+is_RsparseList <- function(x) {
+  !is.null(attr(x, "RsparseList"))
+}
+
+#' Convert sparse matric to RsparseList
+#'
+#' @param x A sparse matrix
+#' @return A list of RsparseMatrix, one for each row in x.
+#' @export
+#' @importFrom methods as
+#' @keywords internal
+#' @rdname recipes-internal
+CsparseMatrix_to_RsparseList <- function(x) {
+  x <- methods::as(x, "RsparseMatrix")
+  res <- purrr::map(seq_len(nrow(x)), ~x[.x,, drop = FALSE])
+  attr(res, "RsparseList") <- TRUE
+  res
+}
+
+RsparseList_to_CsparseMatrix <- function(x) {
+  purrr::reduce(x, rbind)
 }

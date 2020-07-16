@@ -32,7 +32,8 @@ Imports:
     tidyselect (>= 0.2.5),
     timeDate,
     utils,
-    withr
+    withr,
+    methods
 Suggests: 
     covr,
     ddalpha,
