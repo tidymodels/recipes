@@ -3,7 +3,9 @@ convert_matrix <- function(x, sparse = TRUE) {
   RsparseList_ind <- vapply(x, is_RsparseList, logical(1))
 
   x_RsparseList <- x[RsparseList_ind]
+  column_order <- insert_all(names(x), x_RsparseList)
   x <- x[!RsparseList_ind]
+
 
   is_num <- vapply(x, is.numeric, logical(1))
 
@@ -48,7 +50,7 @@ convert_matrix <- function(x, sparse = TRUE) {
     }
   }
 
-  res
+  res[, column_order]
 }
 
 is_RsparseList <- function(x) {
