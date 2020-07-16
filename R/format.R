@@ -32,7 +32,7 @@ format_ch_vec <-
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
   x_items <- lapply(x, function(x) {
-    as.character(get_expr(x))
+    expr_deparse(quo_get_expr(x))
   })
 
   x_items <- unlist(x_items)

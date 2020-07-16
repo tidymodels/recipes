@@ -68,6 +68,11 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
+      - name: Install mixOmics (if possible)
+        run: |
+          try(remotes::install_bioc("mixOmics"), silent = TRUE)
+        shell: Rscript {0}
+
       - name: Session info
         run: |
           options(width = 100)

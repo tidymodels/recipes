@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.1.12.9000
+Version: 0.1.13.9000
 Authors@R: c(
     person(given = "Max",    family = "Kuhn",    email = "max@rstudio.com",    role = c("aut", "cre")),
     person(given = "Hadley", family = "Wickham", email = "hadley@rstudio.com", role = c("aut")),
@@ -21,6 +21,7 @@ Imports:
     glue,
     gower,
     ipred,
+    lifecycle,
     lubridate,
     magrittr,
     Matrix,
@@ -28,7 +29,7 @@ Imports:
     rlang (>= 0.4.0),
     stats,
     tibble,
-    tidyr (>= 0.8.3),
+    tidyr (>= 1.0.0),
     tidyselect (>= 0.2.5),
     timeDate,
     utils,
@@ -44,7 +45,6 @@ Suggests:
     kernlab,
     knitr,
     modeldata,
-    pls,
     RANN,
     RcppRoll,
     rmarkdown,
@@ -59,3 +59,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0.9000
 Roxygen: list(markdown = TRUE)
+RdMacros: lifecycle

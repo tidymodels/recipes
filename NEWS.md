@@ -1,8 +1,32 @@
-# recipes 0.1.12.9000
+# recipes (development version)
+
+# recipes 0.1.13
 
 ## Breaking Changes
 
 * `step_filter()`, `step_slice()`, `step_sample()`, and `step_naomit()` had their defaults for `skip` changed to `TRUE`. In the vast majority of applications, these steps should not be applied to the test or assessment sets. 
+
+* `tidyr` version 1.0.0 or later is now required. 
+
+## Other Changes
+
+* `step_pls()` was changed so that it uses the Bioconductor mixOmics package. Objects created with previous versions of `recipes` can still use `juice()` and `bake()`. With the current version, the categorical outcomes can be used but now multivariate models do not. Also, the new method allows for sparse results. 
+
+* As suggested by @StefanBRas, `step_ica()` now defaults to the C engine (#518)
+
+* Avoided partial matching on `seq()` arguments in internal functions. 
+
+* Improved error messaging, for example when a user tries to `prep()` a tuneable recipe.
+
+* `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package. They will be removed in the next version. 
+
+* `step_zv()` now handles `NA` values so that variables with zero variance _plus_ are removed.
+
+* The selectors `all_of()` and `any_of()` can now be used in step selections (#477).
+
+* The `tune` pacakge can now use recipes with `check` operations (but also requires `tune` >= 0.1.0.9000).
+
+* The `tidy` method for `step_pca()` now has an option for returning the variance statistics for each component.
 
 
 # recipes 0.1.12

@@ -368,9 +368,20 @@ prep.recipe <-
 
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
-    for (i in seq(along = x$steps)) {
-      note <-
-        paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
+    for (i in seq(along.with = x$steps)) {
+      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
+      if (any(needs_tuning)) {
+        arg <- names(needs_tuning)[needs_tuning]
+        arg <- paste0("'", arg, "'", collapse = ", ")
+        msg <-
+          paste0(
+            "You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: ",
+            arg,
+            ". Do you want to use a tuning function such as `tune_grid()`?"
+          )
+        rlang::abort(msg)
+      }
+      note <- paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose)
           cat(note, "[training]", "\n")
@@ -442,6 +453,59 @@ prep.recipe <-
       slice(1)
     x
   }
+
+# For columns that should be retained (based on the selectors used in `bake()`
+# or `juice()`), match those to the existing columns in the data.
+#
+# Some details:
+#  1. When running `juice()`, the resulting columns should be consistent with the
+#  variables in `term_info$variables`. If selectors are used, the final columns
+#  that are returned should be a subset of those.
+#  2. `term_info$variables` is consistent with a recipe when _no_ steps are
+#  skipped.
+#  3. If a step is skipped, its effect is only seen in `bake()`. Also, if a
+#  step is skipped, the columns names that should be returned are possibly
+#  inconsistent with what is in `term_info$variables`. The results might be that
+#  there are more/less/different columns between `bake()` and `juice()`.
+#
+# `final_vars()` follows this logic:
+#
+#  - During `juice()` it determines which if the selected columns are consistent
+#    with `term_info$variables` and returns them.
+#  - During `bake()`, the selected columns are subsetted with the names of the
+#    processed data.
+#
+# The column ordering is non-trivial. The approach here is to order the data
+# consistent with `term_info$variables` and to add other variables at the
+# end of the tibble. This seems reasonable but might lead to unexpected (but
+# consistent) results.
+#
+# Consider a recipe for the iris data with a single step:
+#     `step_rm(Sepal.Length, skip = TRUE)`
+# is used. For `juice()`, only three columns are returned. However, when `bake()`
+# is run on the recipe, it should return all five. However, when `bake()` is
+# run, `Sepal.Length` is not included in `term_info$variables` so this column
+# would come at the end (instead of first as it is in `iris`).
+
+final_vars <- function(nms, vars, trms, baking) {
+  # In case there are multiple roles for a column:
+  trms <- trms[!duplicated(trms$variable), ]
+
+  if (baking) {
+    possible <- nms[nms %in% vars]
+  } else {
+    possible <- trms$variable[trms$variable %in% vars]
+  }
+  possible <- possible[!is.na(possible)]
+  possible <- possible[!duplicated(possible)]
+  possible <-
+    tibble::tibble(variable = possible, .order_2 = seq_along(possible))
+  trms$.order_1 <- 1:nrow(trms)
+  both <-
+    dplyr::left_join(possible, trms, by = "variable") %>%
+    dplyr::arrange(.order_1, .order_2)
+  both$variable
+}
 
 #' @rdname bake
 #' @aliases bake bake.recipe
@@ -541,18 +605,16 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   }
 
   if (length(keepers) > 0) {
-    for (i in seq(along = object$steps)) {
+    for (i in seq(along.with = object$steps)) {
       if (!is_skipable(object$steps[[i]])) {
         new_data <- bake(object$steps[[i]], new_data = new_data)
         if (!is_tibble(new_data))
           new_data <- as_tibble(new_data)
       }
     }
+    vars <- final_vars(names(new_data), keepers, object$term_info, baking = TRUE)
+    new_data <- new_data[, vars]
 
-    new_data <- new_data[, names(new_data) %in% keepers]
-    columns_sorted <- match(keepers, names(new_data))
-    columns_sorted <- columns_sorted[!is.na(columns_sorted)]
-    new_data <- new_data[, columns_sorted]
     ## The levels are not null when no nominal data are present or
     ## if strings_as_factors = FALSE in `prep`
     if (!is.null(object$levels)) {
@@ -735,7 +797,8 @@ juice <- function(object, ..., composition = "tibble") {
                  empty_fun = passover)
 
   if (length(keepers) > 0) {
-    new_data <- object$template[, names(object$template) %in% keepers]
+    vars <- final_vars(names(object$template), keepers, object$term_info, baking = FALSE)
+    new_data <- object$template[, vars]
 
     ## Since most models require factors, do the conversion from character
     if (!is.null(object$levels)) {
@@ -748,6 +811,8 @@ juice <- function(object, ..., composition = "tibble") {
       if (length(var_levels) > 0)
         new_data <- strings2factors(new_data, var_levels)
     }
+
+
   } else {
     new_data <- tibble(.rows = nrow(object$template))
   }

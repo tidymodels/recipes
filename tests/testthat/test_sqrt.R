@@ -2,7 +2,7 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("sqrt transfomration")
+context("sqrt transformation")
 
 
 n <- 20

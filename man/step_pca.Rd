@@ -19,7 +19,7 @@ step_pca(
   id = rand_id("pca")
 )
 
-\method{tidy}{step_pca}(x, ...)
+\method{tidy}{step_pca}(x, type = "coef", ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -54,12 +54,12 @@ given to \code{num_comp}.}
 \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument
 \code{x} should not be passed here (or at all).}
 
-\item{res}{The \code{\link[stats:prcomp.default]{stats::prcomp.default()}} object is
+\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is
 stored here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below}
+resulting new variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -71,6 +71,10 @@ the computations for subsequent operations}
 \item{id}{A character string that is unique to this step to identify it.}
 
 \item{x}{A \code{step_pca} object.}
+
+\item{type}{For the \code{tidy()} method, either "coefs" (for the variable
+loadings per component) or "variance" (how much variance does each component
+account for).}
 }
 \value{
 An updated version of \code{recipe} with the new step

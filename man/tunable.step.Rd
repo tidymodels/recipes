@@ -24,6 +24,7 @@
 \alias{tunable.step_poly}
 \alias{tunable.step_rollimpute}
 \alias{tunable.step}
+\alias{tunable.check}
 \alias{tunable.step_upsample}
 \alias{tunable.step_window}
 \title{tunable methods for recipes}
@@ -67,6 +68,8 @@ tunable.step_poly(x, ...)
 tunable.step_rollimpute(x, ...)
 
 tunable.step(x, ...)
+
+tunable.check(x, ...)
 
 tunable.step_upsample(x, ...)
 

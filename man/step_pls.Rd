@@ -11,8 +11,10 @@ step_pls(
   role = "predictor",
   trained = FALSE,
   num_comp = 2,
+  predictor_prop = 1,
   outcome = NULL,
-  options = NULL,
+  options = list(scale = TRUE),
+  preserve = FALSE,
   res = NULL,
   prefix = "PLS",
   skip = FALSE,
@@ -25,35 +27,38 @@ step_pls(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to compute the dimensions. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy} method, these
-are not currently used.}
+\item{...}{One or more selector functions to choose which variables will be
+used to compute the dimensions. See \code{\link[=selections]{selections()}} for more details. For the
+\code{tidy} method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new dimension columns created by the original variables
-will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new dimension
+columns created by the original variables will be used as predictors in a
+model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of pls dimensions to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible dimensions, a smaller value will be
-used.}
+\item{num_comp}{The number of pls dimensions to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible dimensions, a smaller value will be used.}
+
+\item{predictor_prop}{The maximum number of original predictors that can have
+non-zero coefficients for each PLS component (via regularization).}
 
 \item{outcome}{When a single outcome is available, character
-string or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify the
-variable. When there are multipole outcomes, \code{\link[dplyr:vars]{dplyr::vars()}}
-must be used. This that can include specific variable names
-separated by commas or different selectors (see \code{\link[=selections]{selections()}}).}
+string or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome
+variable.}
 
-\item{options}{A list of options to \code{\link[pls:plsr]{pls::plsr()}}.}
+\item{options}{A list of options to \code{mixOmics::pls()}, \code{mixOmics::spls()},
+\code{mixOmics::plsda()}, or \code{mixOmics::splsda()} (depending on the data and
+arguments).}
 
-\item{res}{The \code{\link[pls:plsr]{pls::plsr()}} object is stored
-here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{preserve}{A single logical: should the original predictor data be
+retained along with the new features?}
+
+\item{res}{A list of results are stored here once this preprocessing step
+has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -73,7 +78,7 @@ the computations for subsequent operations}
 An updated version of \code{recipe} with the new step
 added to the sequence of existing steps (if any). For the
 \code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected).
+selectors or variables selected), \code{components}, and \code{values}.
 }
 \description{
 \code{step_pls} creates a \emph{specification} of a recipe step that will
@@ -81,11 +86,10 @@ convert numeric data into one or more new dimensions.
 }
 \details{
 PLS is a supervised version of principal component
-analysis that requires one or more numeric outcomes to compute
-the new features. The data should be scaled (and perhaps
-centered) prior to running these calculations.
+analysis that requires the outcome data to compute
+the new features.
 
-This step requires the \pkg{pls} package. If not installed, the
+This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
 step will stop with a note about installing the package.
 
 The argument \code{num_comp} controls the number of components that will
@@ -94,33 +98,77 @@ components are removed from the data). The new components will
 have names that begin with \code{prefix} and a sequence of numbers.
 The variable names are padded with zeros. For example, if \code{num_comp < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num_comp = 101}, the
 names would be \code{PLS001} - \code{PLS101}.
+
+Sparsity can be encouraged using the \code{predictor_prop} parameter. This affects
+each PLS component, and indicates the maximum proportion of predictors with
+non-zero coefficients in each component. \code{step_pls()} converts this
+proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} and
+\code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
+
+The \code{tidy()} method returns the coefficients that are usually defined as
+
+\deqn{W(P'W)^{-1}}
+
+(See the Wikipedia article below)
+
+When applied to data, these values are usually scaled by a column-specific
+norm. The \code{tidy()} method applies this same norm to the coefficients shown
+above.
 }
 \examples{
-library(modeldata)
-data(biomass)
+# requires the Bioconductor mixOmics package
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biom_tr <-
+  biomass \%>\%
+  dplyr::filter(dataset == "Training") \%>\%
+  dplyr::select(-dataset,-sample)
+biom_te <-
+  biomass \%>\%
+  dplyr::filter(dataset == "Testing")  \%>\%
+  dplyr::select(-dataset,-sample,-HHV)
 
-pls_rec <- recipe(HHV ~ ., data = biomass_tr) \%>\%
-  step_rm(sample, dataset) \%>\%
-  step_normalize(all_predictors()) \%>\%
-  # If the outcome(s) need standardization, do it in separate
-  # steps with skip = FALSE so that new data where the
-  # outcome is missing can be processed.
-  step_normalize(all_outcomes(), skip = TRUE) \%>\%
-  step_pls(all_predictors(), outcome = "HHV")
+dense_pls <-
+  recipe(HHV ~ ., data = biom_tr) \%>\%
+  step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
 
-pls_rec <- prep(pls_rec, training = biomass_tr)
+sparse_pls <-
+  recipe(HHV ~ ., data = biom_tr) \%>\%
+  step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5)
 
-pls_test_scores <- bake(pls_rec, new_data = biomass_te[, -8])
+## -----------------------------------------------------------------------------
+## PLS discriminant analysis
 
-tidy(pls_rec, number = 4)
+data(cells, package = "modeldata")
+
+cell_tr <-
+  cells \%>\%
+  dplyr::filter(case == "Train") \%>\%
+  dplyr::select(-case)
+cell_te <-
+  cells \%>\%
+  dplyr::filter(case == "Test")  \%>\%
+  dplyr::select(-case,-class)
+
+dense_plsda <-
+  recipe(class ~ ., data = cell_tr) \%>\%
+  step_pls(all_predictors(), outcome = "class", num_comp = 5)
+
+sparse_plsda <-
+  recipe(class ~ ., data = cell_tr) \%>\%
+  step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
+
+}
+\references{
+\url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
+
+Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) \emph{mixOmics: An R package for
+'omics feature selection and multiple data integration}. PLoS Comput Biol
+13(11): e1005752. \url{https://doi.org/10.1371/journal.pcbi.1005752}
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+\code{\link[=step_pca]{step_pca()}}, \code{\link[=step_kpca]{step_kpca()}}, \code{\link[=step_ica]{step_ica()}}, \code{\link[=recipe]{recipe()}},
+\code{\link[=prep.recipe]{prep.recipe()}}, \code{\link[=bake.recipe]{bake.recipe()}}
 }
 \concept{pls}
 \concept{preprocessing}

@@ -1,6 +1,10 @@
 #' Up-Sample a Data Set Based on a Factor Variable
 #'
-#' `step_upsample` creates a *specification* of a recipe step that
+#' @description
+#' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
+#'
+#' `step_upsample` is now available as `themis::step_upsample()`. This
+#'  function creates a *specification* of a recipe step that
 #'  will replicate rows of a data set to make the occurrence of
 #'  levels in a specific factor level equal.
 #'
@@ -89,6 +93,10 @@ step_upsample <-
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1),
            id = rand_id("upsample")) {
+
+    lifecycle::deprecate_soft("0.1.13",
+                              "recipes::step_upsample()",
+                              "themis::step_upsample()")
 
     if (!is.na(ratio) & all(over_ratio != ratio)) {
       message(

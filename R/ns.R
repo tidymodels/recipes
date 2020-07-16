@@ -26,7 +26,7 @@
 #' @concept preprocessing
 #' @concept basis_expansion
 #' @export
-#' @details `step_ns` can new features from a single variable
+#' @details `step_ns` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
 #'  determined by the `df` or `knot` arguments of
@@ -115,7 +115,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
   opt <- x$options
   opt$df <- x$deg_free
   obj <- lapply(training[, col_names], ns_wrapper, opt)
-  for (i in seq(along = col_names))
+  for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
     terms = x$terms,

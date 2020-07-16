@@ -47,10 +47,10 @@ will be removed from the latter and not used to impute itself.}
 
 \item{trees}{An integer for the number bagged trees to use in each model.}
 
-\item{models}{The \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}} objects are stored here once this
+\item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
 bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{options}{A list of options to \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}}. Defaults are set
+\item{options}{A list of options to \code{\link[ipred:bagging]{ipred::ipredbagg()}}. Defaults are set
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
 that the arguments \code{X} and \code{y} should not be passed here.}
 

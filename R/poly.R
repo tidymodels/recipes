@@ -136,7 +136,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
   opts <- x$options
   opts$degree <- x$degree
   obj <- lapply(training[, col_names], poly_wrapper, opts)
-  for (i in seq(along = col_names)) {
+  for (i in seq(along.with = col_names)) {
     attr(obj[[i]], "var") <- col_names[i]
   }
 
