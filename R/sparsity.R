@@ -2,10 +2,6 @@
 convert_matrix <- function(x, sparse = TRUE) {
   RsparseList_ind <- vapply(x, is_RsparseList, logical(1))
 
-  if (!any(RsparseList_ind)) {
-    return(x)
-  }
-
   x_RsparseList <- x[RsparseList_ind]
   column_order <- insert_all(names(x), x_RsparseList)
   x <- x[!RsparseList_ind]
