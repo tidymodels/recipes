@@ -636,7 +636,10 @@ bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
   } else if (composition == "matrix") {
     new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
+    new_data <- expand_RsparseList(new_data, FALSE)
     new_data <- base::as.data.frame(new_data)
+  } else if (composition == "tibble") {
+    new_data <- expand_RsparseList(new_data, TRUE)
   }
 
   new_data

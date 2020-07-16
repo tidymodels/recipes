@@ -59,15 +59,15 @@ test_that("convert_matrix works as expected", {
   )
 })
 
-test_that("juice composition works with sparse columns", {
+ex_rec <- recipe(~., data = tibble(temp = 1:4)) %>%
+  step_mutate(v = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 1, "v_")),
+              w = temp,
+              x = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 2, "x_")),
+              y = temp,
+              z = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 3, "z_"))) %>%
+  prep()
 
-  ex_rec <- recipe(~., data = tibble(temp = 1:4)) %>%
-    step_mutate(v = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 1, "v_")),
-                w = temp,
-                x = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 2, "x_")),
-                y = temp,
-                z = CsparseMatrix_to_RsparseList(create_diag_matrix(temp, 3, "z_"))) %>%
-    prep()
+test_that("juice composition works with sparse columns", {
 
   expect_equal(
     ex_rec %>%
@@ -95,5 +95,45 @@ test_that("juice composition works with sparse columns", {
         juice(composition = "dgCMatrix") %>%
       .[, -1],
     as(as.matrix(ref_df), "CsparseMatrix")
+  )
+})
+
+bake_df <- data.frame(v_1 = c(1, 0),
+                      v_2 = c(0, 1),
+                      w = c(1, 2),
+                      x_1 = c(2, 0),
+                      x_2 = c(0, 2),
+                      y = c(1, 2),
+                      z_1 = c(3, 0),
+                      z_2 = c(0, 3))
+
+test_that("bake composition works with sparse columns", {
+
+  expect_equal(
+    ex_rec %>%
+      bake(new_data = tibble(temp = 1:2), composition = "tibble") %>%
+      select(-temp),
+    as_tibble(bake_df)
+  )
+
+  expect_equal(
+    ex_rec %>%
+      bake(new_data = tibble(temp = 1:2), composition = "data.frame") %>%
+      select(-temp),
+    bake_df
+  )
+
+  expect_equal(
+    ex_rec %>%
+      bake(new_data = tibble(temp = 1:2), composition = "matrix") %>%
+      .[, -1],
+    as.matrix(bake_df)
+  )
+
+  expect_equal(
+    ex_rec %>%
+      bake(new_data = tibble(temp = 1:2), composition = "dgCMatrix") %>%
+      .[, -1],
+    as(as.matrix(bake_df), "CsparseMatrix")
   )
 })
