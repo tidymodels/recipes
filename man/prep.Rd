@@ -13,6 +13,7 @@ prep(x, ...)
   fresh = FALSE,
   verbose = FALSE,
   retain = TRUE,
+  log_changes = FALSE,
   strings_as_factors = TRUE,
   ...
 )
@@ -41,6 +42,9 @@ if any steps use the option \code{skip = FALSE}. \strong{Note} that this can mak
 the final recipe size large. When \code{verbose = TRUE}, a message is written
 with the approximate object size in memory but may be an underestimate
 since it does not take environments into account.}
+
+\item{log_changes}{A logical for printing a summary for each step regarding
+which (if any) columns were added or removed during training.}
 
 \item{strings_as_factors}{A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when

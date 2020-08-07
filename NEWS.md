@@ -1,5 +1,9 @@
 # recipes (development version)
 
+## Other Changes
+
+* `prep()` gained an option to print a summary of which columns were added and/or removed during execution. 
+
 # recipes 0.1.13
 
 ## Breaking Changes

@@ -298,6 +298,8 @@ prep   <- function(x, ...)
 #'   `training`.
 #' @param verbose A logical that controls whether progress is reported as operations
 #'   are executed.
+#' @param log_changes A logical for printing a summary for each step regarding
+#'  which (if any) columns were added or removed during training.
 #' @param retain A logical: should the *preprocessed* training set be saved
 #'   into the `template` slot of the recipe after training? This is a good
 #'     idea if you want to add more steps later but want to avoid re-training
@@ -337,6 +339,7 @@ prep.recipe <-
            fresh = FALSE,
            verbose = FALSE,
            retain = TRUE,
+           log_changes = FALSE,
            strings_as_factors = TRUE,
            ...) {
 
@@ -383,11 +386,15 @@ prep.recipe <-
       }
       note <- paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
-        if (verbose)
+
+        if (verbose) {
           cat(note, "[training]", "\n")
+        }
+
+        before_nms <- names(training)
+
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-
         x$steps[[i]] <-
           prep(x$steps[[i]],
                training = training,
@@ -398,7 +405,6 @@ prep.recipe <-
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {
-
           new_vars <- setdiff(x$term_info$variable, running_info$variable)
           pos_new_var <- x$term_info$variable %in% new_vars
           pos_new_and_na_role <- pos_new_var & is.na(x$term_info$role)
@@ -408,6 +414,8 @@ prep.recipe <-
           x$term_info$source[pos_new_and_na_source] <- "derived"
 
         }
+
+        changelog(log_changes, before_nms, names(training), x$steps[[i]])
 
         running_info <- rbind(
           running_info,
