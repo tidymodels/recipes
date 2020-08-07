@@ -143,8 +143,6 @@ test_that("`bake()` returns a 0 column / N row tibble when a selection returns n
   )
 })
 
-
-
 test_that("tunable arguments at prep-time", {
  .tune <- function() rlang::call2("tune")
 
@@ -154,4 +152,14 @@ test_that("tunable arguments at prep-time", {
      prep(),
    "'deg_free'. Do you want "
  )
+})
+
+test_that("logging", {
+
+  expect_output(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_ns(disp, deg_free = 2, id = "splines!") %>%
+      prep(log_changes = TRUE),
+    "splines"
+  )
 })
