@@ -717,7 +717,7 @@ changelog <- function(show, before, after, x) {
 
   cat(class(x)[1], " (", x$id, "): ", sep = "")
   if (length(new_cols) == 0 & length(rm_cols) == 0) {
-    cat("same number of columns\n")
+    cat("same number of columns\n\n")
   } else {
     cat("\n")
     print_col_names(new_cols, " new")

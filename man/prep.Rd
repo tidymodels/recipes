@@ -78,6 +78,27 @@ As the steps are executed, the \code{training} set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.
 }
+\examples{
+data(ames, package = "modeldata")
+
+library(dplyr)
+
+ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+
+ames_rec <-
+  recipe(
+    Sale_Price ~ Longitude + Latitude + Neighborhood + Year_Built + Central_Air,
+    data = ames
+  ) \%>\%
+  step_other(Neighborhood, threshold = 0.05) \%>\%
+  step_dummy(all_nominal()) \%>\%
+  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
+  step_ns(Longitude, Latitude, deg_free = 5)
+
+prep(ames_rec, verbose = TRUE)
+
+prep(ames_rec, log_changes = TRUE)
+}
 \author{
 Max Kuhn
 }
