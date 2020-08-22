@@ -175,7 +175,7 @@ step that will create a variable that counts instances of a
 regular expression pattern in text.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_count.html'>step_count</a></span>(
+    <pre class="usage"><span class='fu'>step_count</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -186,7 +186,7 @@ regular expression pattern in text.</p>
   result = <span class='fu'><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></span>(<span class='kw'>pattern</span>),
   input = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"count"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"count"</span>)
 )
 
 <span class='co'># S3 method for step_count</span>
@@ -204,7 +204,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
-into a single variable. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more
+into a single variable. See <code><a href='selections.html'>selections()</a></code> for more
 details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -246,13 +246,13 @@ variable. It should be a valid column name.</p></td>
       <th>input</th>
       <td><p>A single character value for the name of the
 variable being searched. This is <code>NULL</code> until computed by
-<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -279,11 +279,11 @@ new column name).</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>covers</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>description</span>, <span class='kw'>covers</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_count.html'>step_count</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"rocks"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_count.html'>step_count</a></span>(<span class='kw'>description</span>, pattern = <span class='st'>"famil"</span>, normalize = <span class='fl'>TRUE</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>description</span>, <span class='kw'>covers</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_count</span>(<span class='kw'>description</span>, pattern = <span class='st'>"(rock|stony)"</span>, result = <span class='st'>"rocks"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_count</span>(<span class='kw'>description</span>, pattern = <span class='st'>"famil"</span>, normalize = <span class='fl'>TRUE</span>)
 
-<span class='kw'>rec2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>covers</span>)
+<span class='kw'>rec2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>covers</span>)
 <span class='kw'>rec2</span></div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -297,7 +297,7 @@ new column name).</p>
 #&gt; 
 #&gt; Regular expression counts using `(rock|stony)` [trained]
 #&gt; Regular expression counts using `famil` [trained]</div><div class='input'>
-<span class='kw'>count_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>rec2</span>, new_data = <span class='kw'>covers</span>)
+<span class='kw'>count_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec2</span>, new_data = <span class='kw'>covers</span>)
 <span class='kw'>count_values</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 40 x 3</span><span>
 #&gt;    description                                                rocks  famil
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                                      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

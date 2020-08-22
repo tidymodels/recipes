@@ -206,15 +206,15 @@ run <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></
 <span class="kw">biomass_tr</span> <span class="op">&lt;-</span> <span class="kw">biomass</span>[<span class="kw">biomass</span><span class="op">$</span><span class="kw">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>,]
 <span class="kw">biomass_te</span> <span class="op">&lt;-</span> <span class="kw">biomass</span>[<span class="kw">biomass</span><span class="op">$</span><span class="kw">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>,]
 
-<span class="kw">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html">recipe</a></span>(<span class="kw">HHV</span> <span class="op">~</span> <span class="kw">carbon</span> <span class="op">+</span> <span class="kw">hydrogen</span> <span class="op">+</span> <span class="kw">oxygen</span> <span class="op">+</span> <span class="kw">nitrogen</span> <span class="op">+</span> <span class="kw">sulfur</span>,
+<span class="kw">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span>(<span class="kw">HHV</span> <span class="op">~</span> <span class="kw">carbon</span> <span class="op">+</span> <span class="kw">hydrogen</span> <span class="op">+</span> <span class="kw">oxygen</span> <span class="op">+</span> <span class="kw">nitrogen</span> <span class="op">+</span> <span class="kw">sulfur</span>,
               data = <span class="kw">biomass_tr</span>)
 
 <span class="kw">center_trans</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_center.html">step_center</a></span>(<span class="kw">carbon</span>, <span class="fu">contains</span>(<span class="st">"gen"</span>), <span class="op">-</span><span class="kw">hydrogen</span>)
+  <span class="fu"><a href="reference/step_center.html">step_center</a></span>(<span class="kw">carbon</span>, <span class="fu">contains</span>(<span class="st">"gen"</span>), <span class="op">-</span><span class="kw">hydrogen</span>)
 
-<span class="kw">center_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html">prep</a></span>(<span class="kw">center_trans</span>, training = <span class="kw">biomass_tr</span>)
+<span class="kw">center_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prep.html">prep</a></span>(<span class="kw">center_trans</span>, training = <span class="kw">biomass_tr</span>)
 
-<span class="kw">transformed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/bake.html">bake</a></span>(<span class="kw">center_obj</span>, <span class="kw">biomass_te</span>) 
+<span class="kw">transformed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bake.html">bake</a></span>(<span class="kw">center_obj</span>, <span class="kw">biomass_te</span>) 
 </pre></div>
 </div>
 </div>

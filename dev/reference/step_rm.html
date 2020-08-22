@@ -173,14 +173,14 @@ that will remove variables based on their name, type, or role." />
 that will remove variables based on their name, type, or role.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_rm.html'>step_rm</a></span>(
+    <pre class="usage"><span class='fu'>step_rm</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
   trained = <span class='fl'>FALSE</span>,
   removals = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"rm"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"rm"</span>)
 )
 
 <span class='co'># S3 method for step_rm</span>
@@ -198,7 +198,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables that will evaluated by the filtering bake. See
-<code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -215,13 +215,13 @@ preprocessing have been estimated.</p></td>
       <th>removals</th>
       <td><p>A character string that contains the names of
 columns that should be removed. These values are not determined
-until <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is called.</p></td>
+until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -250,16 +250,16 @@ is the columns that will be removed.</p>
 <span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
 <span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 <span class='kw'>smaller_set</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_rm.html'>step_rm</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"gen"</span>))
+  <span class='fu'>step_rm</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"gen"</span>))
 
-<span class='kw'>smaller_set</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>smaller_set</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>smaller_set</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>smaller_set</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='kw'>filtered_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>smaller_set</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>filtered_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>smaller_set</span>, <span class='kw'>biomass_te</span>)
 <span class='kw'>filtered_te</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 3</span><span>
 #&gt;    carbon sulfur   HHV
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

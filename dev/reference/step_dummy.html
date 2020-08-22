@@ -177,7 +177,7 @@ into one or more numeric binary model terms for the levels of
 the original data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span>(
+    <pre class="usage"><span class='fu'>step_dummy</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -187,7 +187,7 @@ the original data.</p>
   naming = <span class='kw'>dummy_names</span>,
   levels = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"dummy"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"dummy"</span>)
 )
 
 <span class='co'># S3 method for step_dummy</span>
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 <em>factor</em> variables will be used to create the dummy variables. See
-<code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. The selected
+<code><a href='selections.html'>selections()</a></code> for more details. The selected
 variables must be factors. For the <code>tidy</code> method, these are
 not currently used.</p></td>
     </tr>
@@ -241,13 +241,13 @@ new dummy columns. See Details below.</p></td>
       <td><p>A list that contains the information needed to
 create dummy variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -288,7 +288,7 @@ new variable called <code>x_b</code>. Note that if the factor levels are
 not valid variable names (e.g. "some text with spaces"), it will
 be changed by <code><a href='https://rdrr.io/r/base/make.names.html'>base::make.names()</a></code> to be valid (see the example
 below). The naming format can be changed using the <code>naming</code>
-argument and the function <code><a href='https://recipes.tidymodels.org/reference/names0.html'>dummy_names()</a></code> is the default. This
+argument and the function <code><a href='names0.html'>dummy_names()</a></code> is the default. This
 function will also change the names of ordinal dummy variables.
 Instead of values such as "<code>.L</code>", "<code>.Q</code>", or "<code>^4</code>", ordinal
 dummy variables are given simple integer suffixes such as
@@ -299,30 +299,30 @@ contrast option via <code>options</code>.</p>
 corresponding dummy variables are also missing.</p>
 <p>When data to be processed contains novel levels (i.e., not
 contained in the training set), a missing value is assigned to
-the results. See <code><a href='https://recipes.tidymodels.org/reference/step_other.html'>step_other()</a></code> for an alternative.</p>
-<p>If no columns are selected (perhaps due to an earlier <code><a href='https://recipes.tidymodels.org/reference/step_zv.html'>step_zv()</a></code>), the
-<code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake()</a></code> and <code><a href='https://recipes.tidymodels.org/reference/juice.html'>juice()</a></code> functions will return the data as-is (e.g. with no
+the results. See <code><a href='step_other.html'>step_other()</a></code> for an alternative.</p>
+<p>If no columns are selected (perhaps due to an earlier <code><a href='step_zv.html'>step_zv()</a></code>), the
+<code><a href='bake.html'>bake()</a></code> and <code><a href='juice.html'>juice()</a></code> functions will return the data as-is (e.g. with no
 dummy variables).</p>
 <p>The <a href='https://tidymodels.github.io/recipes/articles/Dummies.html'>package vignette for dummy variables</a>
 and interactions has more information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_factor2string.html'>step_factor2string()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_string2factor.html'>step_string2factor()</a></code>,
-<code><a href='https://recipes.tidymodels.org/reference/names0.html'>dummy_names()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_regex.html'>step_regex()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_count.html'>step_count()</a></code>,
-<code><a href='https://recipes.tidymodels.org/reference/step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_unorder.html'>step_unorder()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_other.html'>step_other()</a></code>
-<code><a href='https://recipes.tidymodels.org/reference/step_novel.html'>step_novel()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
+<code><a href='names0.html'>dummy_names()</a></code>, <code><a href='step_regex.html'>step_regex()</a></code>, <code><a href='step_count.html'>step_count()</a></code>,
+<code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_other.html'>step_other()</a></code>
+<code><a href='step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 <span class='kw'>okc</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span>(<span class='kw'>okc</span>),]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>height</span>, data = <span class='kw'>okc</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>height</span>, data = <span class='kw'>okc</span>)
 
-<span class='kw'>dummies</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span>(<span class='kw'>diet</span>)
-<span class='kw'>dummies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>dummies</span>, training = <span class='kw'>okc</span>)
+<span class='kw'>dummies</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'>step_dummy</span>(<span class='kw'>diet</span>)
+<span class='kw'>dummies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>dummies</span>, training = <span class='kw'>okc</span>)
 
-<span class='kw'>dummy_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>dummies</span>, new_data = <span class='kw'>okc</span>)
+<span class='kw'>dummy_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>dummies</span>, new_data = <span class='kw'>okc</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>)</div><div class='output co'>#&gt;  [1] "strictly anything"   "mostly other"        "anything"           
 #&gt;  [4] "vegetarian"          "mostly anything"     "mostly vegetarian"  
@@ -340,9 +340,9 @@ and interactions has more information.</p>
 #&gt; [17] "diet_vegetarian"         </div><div class='input'>
 <span class='co'># Obtain the full set of dummy variables using `one_hot` option</span>
 <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span>(<span class='kw'>diet</span>, one_hot = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"diet"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_dummy</span>(<span class='kw'>diet</span>, one_hot = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"diet"</span>)) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>))</div><div class='output co'>#&gt; [1] 18</div><div class='input'>

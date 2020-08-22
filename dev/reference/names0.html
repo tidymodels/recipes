@@ -176,12 +176,12 @@ dummy variables (in step_dummy())." />
 The names are numbered with leading zeros (e.g.
 <code>prefix01</code>-<code>prefix10</code> instead of <code>prefix1</code>-<code>prefix10</code>).
 <code>dummy_names</code> can be used for renaming unordered and ordered
-dummy variables (in <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code>).</p>
+dummy variables (in <code><a href='step_dummy.html'>step_dummy()</a></code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>names0</a></span>(<span class='kw'>num</span>, prefix = <span class='st'>"x"</span>)
+    <pre class="usage"><span class='fu'>names0</span>(<span class='kw'>num</span>, prefix = <span class='st'>"x"</span>)
 
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>dummy_names</a></span>(<span class='kw'>var</span>, <span class='kw'>lvl</span>, ordinal = <span class='fl'>FALSE</span>, sep = <span class='st'>"_"</span>)</pre>
+<span class='fu'>dummy_names</span>(<span class='kw'>var</span>, <span class='kw'>lvl</span>, ordinal = <span class='fl'>FALSE</span>, sep = <span class='st'>"_"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +201,7 @@ dummy variables (in <code><a href='https://recipes.tidymodels.org/reference/step
     <tr>
       <th>lvl</th>
       <td><p>A character vectors of the factor levels (in order).
-When used with <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code>, <code>lvl</code> would be the suffixes
+When used with <code><a href='step_dummy.html'>step_dummy()</a></code>, <code>lvl</code> would be the suffixes
 that result <em>after</em> <code>model.matrix</code> is called (see the
 example below).</p></td>
     </tr>
@@ -223,14 +223,14 @@ levels.</p></td>
 <code>lvl</code>,</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>names0</a></span>(<span class='fl'>9</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt; [1] "x1" "x2" "x3" "x4" "x5" "x6" "x7" "x8" "x9"</div><div class='input'><span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>names0</a></span>(<span class='fl'>10</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;  [1] "x01" "x02" "x03" "x04" "x05" "x06" "x07" "x08" "x09" "x10"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>names0</span>(<span class='fl'>9</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt; [1] "x1" "x2" "x3" "x4" "x5" "x6" "x7" "x8" "x9"</div><div class='input'><span class='fu'>names0</span>(<span class='fl'>10</span>, <span class='st'>"x"</span>)</div><div class='output co'>#&gt;  [1] "x01" "x02" "x03" "x04" "x05" "x06" "x07" "x08" "x09" "x10"</div><div class='input'>
 <span class='kw'>example</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(y = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>ordered</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]),
                       z = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]))
 
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>dummy_names</a></span>(<span class='st'>"z"</span>, <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='kw'>example</span><span class='op'>$</span><span class='kw'>z</span>)[<span class='op'>-</span><span class='fl'>1</span>])</div><div class='output co'>#&gt; [1] "z_B" "z_C" "z_D" "z_E"</div><div class='input'>
+<span class='fu'>dummy_names</span>(<span class='st'>"z"</span>, <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='kw'>example</span><span class='op'>$</span><span class='kw'>z</span>)[<span class='op'>-</span><span class='fl'>1</span>])</div><div class='output co'>#&gt; [1] "z_B" "z_C" "z_D" "z_E"</div><div class='input'>
 <span class='kw'>after_mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='op'>~</span><span class='kw'>y</span>, data = <span class='kw'>example</span>))[<span class='op'>-</span><span class='fl'>1</span>]
 <span class='kw'>after_mm</span></div><div class='output co'>#&gt; [1] "y.L" "y.Q" "y.C" "y^4"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='kw'>example</span><span class='op'>$</span><span class='kw'>y</span>)</div><div class='output co'>#&gt; [1] "a" "b" "c" "d" "e"</div><div class='input'>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/names0.html'>dummy_names</a></span>(<span class='st'>"y"</span>, <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span>(<span class='kw'>after_mm</span>, <span class='fl'>2</span>), ordinal = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "y_1" "y_2" "y_3" "y_4"</div></pre>
+<span class='fu'>dummy_names</span>(<span class='st'>"y"</span>, <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span>(<span class='kw'>after_mm</span>, <span class='fl'>2</span>), ordinal = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "y_1" "y_2" "y_3" "y_4"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

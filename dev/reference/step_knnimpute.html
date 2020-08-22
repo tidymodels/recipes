@@ -173,18 +173,18 @@ impute missing data using nearest neighbors." />
 impute missing data using nearest neighbors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_knnimpute.html'>step_knnimpute</a></span>(
+    <pre class="usage"><span class='fu'>step_knnimpute</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
   trained = <span class='fl'>FALSE</span>,
   neighbors = <span class='fl'>5</span>,
-  impute_with = <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>()),
+  impute_with = <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()),
   options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(nthread = <span class='fl'>1</span>, eps = <span class='fl'>1e-08</span>),
   ref_data = <span class='kw'>NULL</span>,
   columns = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"knnimpute"</span>)
 )
 
 <span class='co'># S3 method for step_knnimpute</span>
@@ -203,7 +203,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose variables. For
 <code>step_knnimpute</code>, this indicates the variables to be imputed. When used with
 <code>imp_vars</code>, the dots indicates which variables are used to predict the
-missing data in each variable. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the
+missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -223,7 +223,7 @@ preprocessing have been estimated.</p></td>
       <th>impute_with</th>
       <td><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>). If a column is
+by commas or different selectors (see <code><a href='selections.html'>selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></td>
     </tr>
@@ -236,18 +236,18 @@ Available options are currently <code>nthread</code> and <code>eps</code>.</p></
       <th>ref_data</th>
       <td><p>A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is <code>NULL</code> until the step
-is trained by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+is trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>The column names that will be imputed and used for
-imputation. This is <code>NULL</code> until the step is trained by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+imputation. This is <code>NULL</code> until the step is trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -302,13 +302,13 @@ of its properties," Biometrics, 857-871.</p>
 <span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>[<span class='kw'>carb_missing</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
 <span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>nitrogen</span>[<span class='kw'>nitro_missing</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_knnimpute.html'>step_knnimpute</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), neighbors = <span class='fl'>3</span>)
-<span class='kw'>ratio_recipe2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>ratio_recipe</span>, training = <span class='kw'>biomass_tr</span>)
-<span class='kw'>imputed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>ratio_recipe2</span>, <span class='kw'>biomass_te</span>)
+  <span class='fu'>step_knnimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), neighbors = <span class='fl'>3</span>)
+<span class='kw'>ratio_recipe2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>ratio_recipe</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>imputed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ratio_recipe2</span>, <span class='kw'>biomass_te</span>)
 
 <span class='co'># how well did it work?</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>biomass_te_whole</span><span class='op'>$</span><span class='kw'>carbon</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 

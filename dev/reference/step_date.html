@@ -175,7 +175,7 @@ step that will convert date data into one or more factor or
 numeric variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_date.html'>step_date</a></span>(
+    <pre class="usage"><span class='fu'>step_date</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -186,7 +186,7 @@ numeric variables.</p>
   ordinal = <span class='fl'>FALSE</span>,
   columns = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"date"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"date"</span>)
 )
 
 <span class='co'># S3 method for step_date</span>
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose which
 variables that will be used to create the new variables. The
 selected variables should have class <code>Date</code> or
-<code>POSIXct</code>. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details.
+<code>POSIXct</code>. See <code><a href='selections.html'>selections()</a></code> for more details.
 For the <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -253,13 +253,13 @@ available for features <code>month</code> or <code>dow</code>.</p></td>
       <th>columns</th>
       <td><p>A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is used.</p></td>
+populated once <code><a href='prep.html'>prep.recipe()</a></code> is used.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -284,13 +284,13 @@ names), and <code>ordinal</code> (a logical).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Unlike other steps, <code>step_date</code> does <em>not</em>
-remove the original date variables. <code><a href='https://recipes.tidymodels.org/reference/step_rm.html'>step_rm()</a></code> can be
+remove the original date variables. <code><a href='step_rm.html'>step_rm()</a></code> can be
 used for this purpose.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_holiday.html'>step_holiday()</a></code> <code><a href='https://recipes.tidymodels.org/reference/step_rm.html'>step_rm()</a></code>
-<code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>
-<code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='step_holiday.html'>step_holiday()</a></code> <code><a href='step_rm.html'>step_rm()</a></code>
+<code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
+<code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://lubridate.tidyverse.org'>lubridate</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
@@ -299,8 +299,8 @@ used for this purpose.</p>
 #&gt; <span class='message'>    date, intersect, setdiff, union</span></div><div class='input'>
 <span class='kw'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(Dan = <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>),
                        Stefan = <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2006-01-13"</span>) <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>))
-<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>Dan</span> <span class='op'>+</span> <span class='kw'>Stefan</span>, <span class='kw'>examples</span>) <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_date.html'>step_date</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>())
+<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>Dan</span> <span class='op'>+</span> <span class='kw'>Stefan</span>, <span class='kw'>examples</span>) <span class='op'>%&gt;%</span>
+   <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
 
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>date_rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   terms            value ordinal id        
@@ -308,9 +308,9 @@ used for this purpose.</p>
 #&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() dow   FALSE   date_4kbnH
 #&gt; </span><span style='color: #555555;'>2</span><span> all_predictors() month FALSE   date_4kbnH
 #&gt; </span><span style='color: #555555;'>3</span><span> all_predictors() year  FALSE   date_4kbnH</div><div class='input'>
-<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>date_rec</span>, training = <span class='kw'>examples</span>)
+<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>date_rec</span>, training = <span class='kw'>examples</span>)
 
-<span class='kw'>date_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>date_rec</span>, new_data = <span class='kw'>examples</span>)
+<span class='kw'>date_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>date_rec</span>, new_data = <span class='kw'>examples</span>)
 <span class='kw'>date_values</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt;    Dan        Stefan     Dan_dow Dan_month Dan_year Stefan_dow Stefan_month
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       

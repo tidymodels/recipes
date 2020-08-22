@@ -173,7 +173,7 @@ operation that will check if variables contain new values." />
 operation that will check if variables contain new values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/check_new_values.html'>check_new_values</a></span>(
+    <pre class="usage"><span class='fu'>check_new_values</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -182,7 +182,7 @@ operation that will check if variables contain new values.</p>
   ignore_NA = <span class='fl'>TRUE</span>,
   values = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"new_values"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"new_values"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -196,7 +196,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are checked in the check. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
+variables are checked in the check. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -208,7 +208,7 @@ created.</p></td>
     <tr>
       <th>trained</th>
       <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code>.</p></td>
+have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -228,8 +228,8 @@ This is <code>NULL</code> until computed by prep.recipe().</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the check be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></td>
@@ -257,10 +257,10 @@ on the recipe. If the check passes, nothing is changed to the data.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>credit_data</span>)
 
 <span class='co'># If the test passes, `new_data` is returned unaltered</span>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/check_new_values.html'>check_new_values</a></span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(new_data = <span class='kw'>credit_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>check_new_values</span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>credit_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> good           9 rent     60    30 married no      free…       73    129
@@ -278,17 +278,17 @@ on the recipe. If the check passes, nothing is changed to the data.</p>
 <span class='co'># If `new_data` contains values not in `x` at the `prep()` function,</span>
 <span class='co'># the `bake()` function will break.</span>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>Home</span> != <span class='st'>"rent"</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/check_new_values.html'>check_new_values</a></span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(new_data = <span class='kw'>credit_data</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>Home</span> != <span class='st'>"rent"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>check_new_values</span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>credit_data</span>)
 }
 
 <span class='co'># By default missing values are ignored, so this passes.</span>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>Home</span>))) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/check_new_values.html'>check_new_values</a></span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>Home</span>))) <span class='op'>%&gt;%</span>
+  <span class='fu'>check_new_values</span>(<span class='kw'>Home</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> good           9 rent     60    30 married no      free…       73    129
@@ -306,10 +306,10 @@ on the recipe. If the check passes, nothing is changed to the data.</p>
 <span class='co'># Use `ignore_NA = FALSE` if you consider missing values  as a value,</span>
 <span class='co'># that should not occur when not observed in the train set.</span>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>Home</span>))) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/check_new_values.html'>check_new_values</a></span>(<span class='kw'>Home</span>, ignore_NA = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span> <span class='op'>%&gt;%</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>Home</span>))) <span class='op'>%&gt;%</span>
+  <span class='fu'>check_new_values</span>(<span class='kw'>Home</span>, ignore_NA = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

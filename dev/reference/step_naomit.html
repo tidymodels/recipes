@@ -175,14 +175,14 @@ will add remove observations (rows of data) if they contain NA
 or NaN values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_naomit.html'>step_naomit</a></span>(
+    <pre class="usage"><span class='fu'>step_naomit</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
   trained = <span class='fl'>FALSE</span>,
   columns = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"naomit"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"naomit"</span>)
 )
 
 <span class='co'># S3 method for step_naomit</span>
@@ -200,7 +200,7 @@ operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to create the dummy variables. See
-<code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. The selected
+<code><a href='selections.html'>selections()</a></code> for more details. The selected
 variables must be factors.</p></td>
     </tr>
     <tr>
@@ -220,8 +220,8 @@ be populated (eventually) by the <code>terms</code> argument.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = FALSE</code>; in most instances that
 affect the rows of the data being predicted, this step probably should not
@@ -243,14 +243,14 @@ be applied.</p></td>
 new step added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Ozone</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>airquality</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_naomit.html'>step_naomit</a></span>(<span class='kw'>Solar.R</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>airquality</span>, verbose = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Ozone</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>airquality</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_naomit</span>(<span class='kw'>Solar.R</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>airquality</span>, verbose = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
 #&gt;    Solar.R  Wind  Temp Month   Day Ozone
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>     190   7.4    67     5     1    41

@@ -175,7 +175,7 @@ that will create new columns that are basis expansions of
 variables using B-splines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bs.html'>step_bs</a></span>(
+    <pre class="usage"><span class='fu'>step_bs</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='st'>"predictor"</span>,
@@ -185,7 +185,7 @@ variables using B-splines.</p>
   objects = <span class='kw'>NULL</span>,
   options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"bs"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"bs"</span>)
 )
 
 <span class='co'># S3 method for step_bs</span>
@@ -202,7 +202,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -239,8 +239,8 @@ which should not include <code>x</code>, <code>degree</code>, or <code>df</code>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -272,8 +272,8 @@ from the data and new columns are added. The naming convention
 for the new variables is <code>varname_bs_1</code> and so on.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_poly.html'>step_poly()</a></code> <code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/step_ns.html'>step_ns()</a></code>
-<code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='step_poly.html'>step_poly()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='step_ns.html'>step_ns()</a></code>
+<code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
@@ -282,14 +282,14 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 <span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
 <span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_bs.html'>step_bs</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
-<span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>with_splines</span>, training = <span class='kw'>biomass_tr</span>)
+  <span class='fu'>step_bs</span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
+<span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>with_splines</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>with_splines</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>with_splines</span>, <span class='kw'>biomass_te</span>)
 <span class='kw'>expanded</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 10</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

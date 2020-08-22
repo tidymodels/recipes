@@ -175,7 +175,7 @@ substitute missing values of numeric variables by the training set mean of
 those variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_meanimpute.html'>step_meanimpute</a></span>(
+    <pre class="usage"><span class='fu'>step_meanimpute</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -183,7 +183,7 @@ those variables.</p>
   means = <span class='kw'>NULL</span>,
   trim = <span class='fl'>0</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"meanimpute"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"meanimpute"</span>)
 )
 
 <span class='co'># S3 method for step_meanimpute</span>
@@ -200,7 +200,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables are
-affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -215,7 +215,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>means</th>
       <td><p>A named numeric vector of means. This is <code>NULL</code> until computed
-by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>. Note that, if the original data are integers, the mean
+by <code><a href='prep.html'>prep.recipe()</a></code>. Note that, if the original data are integers, the mean
 will be converted to an integer to maintain the same a data type.</p></td>
     </tr>
     <tr>
@@ -227,8 +227,8 @@ that range are taken as the nearest endpoint.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -273,14 +273,14 @@ new values to new data sets using these averages.</p>
 <span class='kw'>credit_te</span> <span class='op'>&lt;-</span> <span class='kw'>credit_data</span>[<span class='op'>-</span><span class='kw'>in_training</span>, ]
 <span class='kw'>missing_examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>14</span>, <span class='fl'>394</span>, <span class='fl'>565</span>)
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>credit_tr</span>)
 
 <span class='kw'>impute_rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_meanimpute.html'>step_meanimpute</a></span>(<span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>)
+  <span class='fu'>step_meanimpute</span>(<span class='kw'>Income</span>, <span class='kw'>Assets</span>, <span class='kw'>Debt</span>)
 
-<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
+<span class='kw'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>impute_rec</span>, training = <span class='kw'>credit_tr</span>)
 
-<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='kw'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>imp_models</span>, new_data = <span class='kw'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 
 <span class='kw'>credit_te</span>[<span class='kw'>missing_examples</span>,]</div><div class='output co'>#&gt;      Status Seniority  Home Time Age Marital Records     Job Expenses Income
 #&gt; 28     good        15 owner   36  43 married      no   fixed       75    251

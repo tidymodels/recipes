@@ -177,7 +177,7 @@ distance measurements to the data centroid. This is done for
 each value of a categorical class variable.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_classdist.html'>step_classdist</a></span>(
+    <pre class="usage"><span class='fu'>step_classdist</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   <span class='kw'>class</span>,
@@ -190,7 +190,7 @@ each value of a categorical class variable.</p>
   objects = <span class='kw'>NULL</span>,
   prefix = <span class='st'>"classdist_"</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"classdist"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"classdist"</span>)
 )
 
 <span class='co'># S3 method for step_classdist</span>
@@ -207,7 +207,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -249,7 +249,7 @@ the natural log function?</p></td>
     <tr>
       <th>objects</th>
       <td><p>Statistics are stored here once this step has
-been trained by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+been trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -259,8 +259,8 @@ new distance columns. Defaults to <code>"classdist_"</code>. See Details below.<
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -301,18 +301,18 @@ overall.</p>
 <span class='kw'>mean2</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>)
 
 <span class='co'># define naming convention</span>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_classdist.html'>step_classdist</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>,
                  pool = <span class='fl'>FALSE</span>, mean_func = <span class='kw'>mean2</span>, prefix = <span class='st'>"centroid_"</span>)
 
 <span class='co'># default naming</span>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_classdist.html'>step_classdist</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_classdist</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), class = <span class='st'>"Species"</span>,
                  pool = <span class='fl'>FALSE</span>, mean_func = <span class='kw'>mean2</span>)
 
-<span class='kw'>rec_dists</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span>)
+<span class='kw'>rec_dists</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span>)
 
-<span class='kw'>dists_to_species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>rec_dists</span>, new_data = <span class='kw'>iris</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+<span class='kw'>dists_to_species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec_dists</span>, new_data = <span class='kw'>iris</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 <span class='co'>## on log scale:</span>
 <span class='kw'>dist_cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"classdist"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dists_to_species</span>), value = <span class='fl'>TRUE</span>)
 <span class='kw'>dists_to_species</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='kw'>dist_cols</span>)]</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 4</span><span>

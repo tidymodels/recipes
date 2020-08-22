@@ -175,7 +175,7 @@ that will sample rows using <code><a href='https://dplyr.tidyverse.org/reference
 <code><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>dplyr::sample_frac()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_sample.html'>step_sample</a></span>(
+    <pre class="usage"><span class='fu'>step_sample</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -183,7 +183,7 @@ that will sample rows using <code><a href='https://dplyr.tidyverse.org/reference
   size = <span class='kw'>NULL</span>,
   replace = <span class='fl'>FALSE</span>,
   skip = <span class='fl'>TRUE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"sample"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"sample"</span>)
 )
 
 <span class='co'># S3 method for step_sample</span>
@@ -228,8 +228,8 @@ of the training set (or smaller for smaller <code>new_data</code>).</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = FALSE</code>; in most instances that
 affect the rows of the data being predicted, this step probably should not
@@ -255,24 +255,24 @@ and <code>id</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Uses `sample_n`</span>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_sample.html'>step_sample</a></span>(size = <span class='fl'>1</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_sample</span>(size = <span class='fl'>1</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 <span class='co'># Uses `sample_frac`</span>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_sample.html'>step_sample</a></span>(size = <span class='fl'>0.9999</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_sample</span>(size = <span class='fl'>0.9999</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 150</div><div class='input'>
 <span class='co'># Uses `sample_n` and returns _at maximum_ 120 samples.</span>
 <span class='kw'>smaller_iris</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_sample.html'>step_sample</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span>))
+  <span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_sample</span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span>))
 
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>(<span class='kw'>smaller_iris</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 120</div><div class='input'><span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>smaller_iris</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>121</span><span class='op'>:</span><span class='fl'>150</span>)) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 30</div></pre>
+<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>smaller_iris</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 120</div><div class='input'><span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>smaller_iris</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>121</span><span class='op'>:</span><span class='fl'>150</span>)) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

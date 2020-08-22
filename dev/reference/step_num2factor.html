@@ -175,7 +175,7 @@ integers." />
 integers.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_num2factor.html'>step_num2factor</a></span>(
+    <pre class="usage"><span class='fu'>step_num2factor</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -184,7 +184,7 @@ integers.</p>
   <span class='kw'>levels</span>,
   ordered = <span class='fl'>FALSE</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"num2factor"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"num2factor"</span>)
 )
 
 <span class='co'># S3 method for step_num2factor</span>
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which variables will
-converted to factors. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+converted to factors. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
@@ -214,7 +214,7 @@ method, these are not currently used.</p></td>
 to modify the numeric values prior to determining the levels (perhaps using
 <code><a href='https://rdrr.io/r/base/integer.html'>base::as.integer()</a></code>). The output of a function should be an integer that
 corresponds to the value of <code>levels</code> that should be assigned. If not an
-integer, the value will be converted to an integer during <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake()</a></code>.</p></td>
+integer, the value will be converted to an integer during <code><a href='bake.html'>bake()</a></code>.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -225,7 +225,7 @@ preprocessing have been estimated.</p></td>
       <th>levels</th>
       <td><p>A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
-modified once <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is executed.</p></td>
+modified once <code><a href='prep.html'>prep.recipe()</a></code> is executed.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
@@ -234,8 +234,8 @@ modified once <code><a href='https://recipes.tidymodels.org/reference/prep.html'
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -257,7 +257,7 @@ sequence of existing steps (if any). For the <code>tidy</code> method, a tibble 
 columns <code>terms</code> (the selectors or variables selected) and <code>ordered</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://recipes.tidymodels.org/reference/step_factor2string.html'>step_factor2string()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_string2factor.html'>step_string2factor()</a></code>, <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>, <code><a href='step_dummy.html'>step_dummy()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
@@ -277,14 +277,14 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='kw'>amnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nothin"</span>, <span class='st'>"meh"</span>, <span class='st'>"some"</span>, <span class='st'>"copious"</span>)
 
 <span class='kw'>rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Attrition</span> <span class='op'>~</span> <span class='kw'>StockOptionLevel</span>, data = <span class='kw'>attrition</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_num2factor.html'>step_num2factor</a></span>(
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Attrition</span> <span class='op'>~</span> <span class='kw'>StockOptionLevel</span>, data = <span class='kw'>attrition</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_num2factor</span>(
     <span class='kw'>StockOptionLevel</span>,
     transform = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>+</span> <span class='fl'>1</span>,
     levels = <span class='kw'>amnt</span>
   )
 
-<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>() <span class='op'>%&gt;%</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>()
+<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span> <span class='fu'><a href='juice.html'>juice</a></span>()
 
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>, <span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>)</div><div class='output co'>#&gt;          
 #&gt;             0   1   2   3
@@ -304,16 +304,16 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='kw'>inc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"low"</span>, <span class='st'>"med"</span>, <span class='st'>"high"</span>)
 
 <span class='kw'>rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Attrition</span> <span class='op'>~</span> <span class='kw'>MonthlyIncome</span>, data = <span class='kw'>attrition</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_num2factor.html'>step_num2factor</a></span>(
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Attrition</span> <span class='op'>~</span> <span class='kw'>MonthlyIncome</span>, data = <span class='kw'>attrition</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_num2factor</span>(
     <span class='kw'>MonthlyIncome</span>,
     transform = <span class='kw'>binner</span>,
     levels = <span class='kw'>inc</span>,
     ordered = <span class='fl'>TRUE</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>()
+  <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/juice.html'>juice</a></span>(<span class='kw'>rec</span>)
+<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>rec</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>, <span class='fu'>binner</span>(<span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>))</div><div class='output co'>#&gt;       
 #&gt;          1   2   3
@@ -323,7 +323,7 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='co'># What happens when a value is out of range?</span>
 <span class='kw'>ceo</span> <span class='op'>&lt;-</span> <span class='kw'>attrition</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(MonthlyIncome = <span class='fl'>10</span><span class='op'>^</span><span class='fl'>10</span>)
 
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>ceo</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>ceo</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   MonthlyIncome Attrition
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Yes      </div></span></pre>

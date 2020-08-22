@@ -175,7 +175,7 @@ step that will create new columns that are interaction terms
 between two or more variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_interact.html'>step_interact</a></span>(
+    <pre class="usage"><span class='fu'>step_interact</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>terms</span>,
   role = <span class='st'>"predictor"</span>,
@@ -183,7 +183,7 @@ between two or more variables.</p>
   objects = <span class='kw'>NULL</span>,
   sep = <span class='st'>"_x_"</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"interact"</span>)
 )
 
 <span class='co'># S3 method for step_interact</span>
@@ -228,8 +228,8 @@ traditional <code>var1:var2</code>).</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -245,7 +245,7 @@ the computations for subsequent operations</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables are affected by the step. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code>
+variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
 for more details. For the <code>tidy</code> method, these are not
 currently used.</p></td>
     </tr>
@@ -262,7 +262,7 @@ the interaction effects.</p>
     <p><code>step_interact</code> can create interactions between
 variables. It is primarily intended for <strong>numeric data</strong>;
 categorical variables should probably be converted to dummy
-variables using <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code> prior to being used for
+variables using <code><a href='step_dummy.html'>step_dummy()</a></code> prior to being used for
 interactions.</p>
 <p>Unlike other step functions, the <code>terms</code> argument should
 be a traditional R model formula but should contain no inline
@@ -279,11 +279,11 @@ column named <code>A_x_B_x_C</code>. This can be changed using the
 <p>When dummy variables are created and are used in interactions,
 selectors can help specify the interactions succinctly. For
 example, suppose a factor column <code>X</code> gets converted to dummy
-variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy()</a></code>. If
+variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href='step_dummy.html'>step_dummy()</a></code>. If
 you wanted an interaction with numeric column <code>z</code>, you could
 create a set of specific interaction effects (e.g.
 <code>x_2:z + x_3:z</code> and so on) or you could use
-<code>starts_with("z_"):z</code>. When <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code> evaluates this step,
+<code>starts_with("z_"):z</code>. When <code><a href='prep.html'>prep()</a></code> evaluates this step,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with("z_")</a></code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x6)</code>
 so that the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x6):z</code> and
 all two-way interactions are created.</p>
@@ -295,20 +295,20 @@ all two-way interactions are created.</p>
 <span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
 <span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>int_mod_1</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_interact.html'>step_interact</a></span>(terms = <span class='op'>~</span> <span class='kw'>carbon</span><span class='op'>:</span><span class='kw'>hydrogen</span>)
+  <span class='fu'>step_interact</span>(terms = <span class='op'>~</span> <span class='kw'>carbon</span><span class='op'>:</span><span class='kw'>hydrogen</span>)
 
 <span class='kw'>int_mod_2</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_interact.html'>step_interact</a></span>(terms = <span class='op'>~</span> (<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"gen$"</span>) <span class='op'>+</span> <span class='kw'>sulfur</span>)<span class='op'>^</span><span class='fl'>2</span>)
+  <span class='fu'>step_interact</span>(terms = <span class='op'>~</span> (<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"gen$"</span>) <span class='op'>+</span> <span class='kw'>sulfur</span>)<span class='op'>^</span><span class='fl'>2</span>)
 
-<span class='kw'>int_mod_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>int_mod_1</span>, training = <span class='kw'>biomass_tr</span>)
-<span class='kw'>int_mod_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>int_mod_2</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>int_mod_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>int_mod_1</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>int_mod_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>int_mod_2</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='kw'>dat_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>int_mod_1</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>dat_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>int_mod_2</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>dat_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>int_mod_1</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>dat_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>int_mod_2</span>, <span class='kw'>biomass_te</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_1</span>)</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
 #&gt; [4] "nitrogen"          "sulfur"            "HHV"              

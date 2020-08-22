@@ -175,10 +175,10 @@ parameters from a training set that can be later applied to other data
 sets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>prep</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(
+<span class='fu'>prep</span>(
   <span class='kw'>x</span>,
   training = <span class='kw'>NULL</span>,
   fresh = <span class='fl'>FALSE</span>,
@@ -245,11 +245,11 @@ executed.</p>
 
     <p>Given a data set, this function estimates the required quantities
 and statistics required by any operations.</p>
-<p><code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code> returns an updated recipe with the estimates.</p>
+<p><code>prep()</code> returns an updated recipe with the estimates.</p>
 <p>Note that missing data handling is handled in the steps; there is no global
-<code>na.rm</code> option at the recipe-level or in <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code>.</p>
-<p>Also, if a recipe has been trained using <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code> and then steps
-are added, <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep()</a></code> will only update the new operations. If
+<code>na.rm</code> option at the recipe-level or in <code>prep()</code>.</p>
+<p>Also, if a recipe has been trained using <code>prep()</code> and then steps
+are added, <code>prep()</code> will only update the new operations. If
 <code>fresh = TRUE</code>, all of the operations will be (re)estimated.</p>
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
 if the first step is to center the data and the second is to scale the

@@ -171,7 +171,7 @@
     <p>Check to see if a recipe is trained/prepared</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/fully_trained.html'>fully_trained</a></span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>fully_trained</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,11 +189,11 @@ through <code>prep</code>. If no steps have been added to the recipe, <code>TRUE
 returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_center.html'>step_center</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_numeric</a></span>())
+    <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>())
 
 <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='kw'>fully_trained</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span> <span class='kw'>fully_trained</span></div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span> <span class='kw'>fully_trained</span></div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -175,7 +175,7 @@ step that will normalize numeric data to be within a pre-defined
 range of values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_range.html'>step_range</a></span>(
+    <pre class="usage"><span class='fu'>step_range</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -184,7 +184,7 @@ range of values.</p>
   max = <span class='fl'>1</span>,
   ranges = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"range"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"range"</span>)
 )
 
 <span class='co'># S3 method for step_range</span>
@@ -201,7 +201,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables will be scaled. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more
+variables will be scaled. See <code><a href='selections.html'>selections()</a></code> for more
 details. For the <code>tidy</code> method, these are not currently
 used.</p></td>
     </tr>
@@ -229,14 +229,14 @@ range.</p></td>
       <th>ranges</th>
       <td><p>A character vector of variables that will be
 normalized. Note that this is ignored until the values are
-determined by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>. Setting this value will
+determined by <code><a href='prep.html'>prep.recipe()</a></code>. Setting this value will
 be ineffective.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -270,15 +270,15 @@ the training set, the new values are truncated at <code>min</code> or
 <span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
 <span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
               data = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>ranged_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_range.html'>step_range</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
+  <span class='fu'>step_range</span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
 
-<span class='kw'>ranged_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>(<span class='kw'>ranged_trans</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>ranged_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>ranged_trans</span>, training = <span class='kw'>biomass_tr</span>)
 
-<span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>ranged_obj</span>, <span class='kw'>biomass_te</span>)
+<span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ranged_obj</span>, <span class='kw'>biomass_te</span>)
 
 <span class='kw'>biomass_te</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
 #&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275

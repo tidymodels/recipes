@@ -179,7 +179,7 @@ for contr.treatment contrasts which take the first level as the
 reference.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://recipes.tidymodels.org/reference/step_relevel.html'>step_relevel</a></span>(
+    <pre class="usage"><span class='fu'>step_relevel</span>(
   <span class='kw'>recipe</span>,
   <span class='kw'>...</span>,
   role = <span class='fl'>NA</span>,
@@ -187,7 +187,7 @@ reference.</p>
   <span class='kw'>ref_level</span>,
   objects = <span class='kw'>NULL</span>,
   skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://recipes.tidymodels.org/reference/rand_id.html'>rand_id</a></span>(<span class='st'>"relevel"</span>)
+  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"relevel"</span>)
 )
 
 <span class='co'># S3 method for step_relevel</span>
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables that will be affected by the step. These variables
-should be character or factor types. See <code><a href='https://recipes.tidymodels.org/reference/selections.html'>selections()</a></code> for more
+should be character or factor types. See <code><a href='selections.html'>selections()</a></code> for more
 details.</p></td>
     </tr>
     <tr>
@@ -226,13 +226,13 @@ relevel the factor column(s) (if the level is present).</p></td>
     <tr>
       <th>objects</th>
       <td><p>A list of objects that contain the information
-on factor levels that will be determined by <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code>.</p></td>
+on factor levels that will be determined by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://recipes.tidymodels.org/reference/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://recipes.tidymodels.org/reference/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>
@@ -263,12 +263,12 @@ converted to factors by this step.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_unknown.html'>step_unknown</a></span>(<span class='kw'>diet</span>, new_level = <span class='st'>"UNKNOWN"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_relevel.html'>step_relevel</a></span>(<span class='kw'>diet</span>, ref_level = <span class='st'>"UNKNOWN"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/prep.html'>prep</a></span>()
+<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_unknown.html'>step_unknown</a></span>(<span class='kw'>diet</span>, new_level = <span class='st'>"UNKNOWN"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>step_relevel</span>(<span class='kw'>diet</span>, ref_level = <span class='st'>"UNKNOWN"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>okc</span>)
+<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>okc</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>diet</span>)</div><div class='output co'>#&gt;  [1] "UNKNOWN"             "anything"            "halal"              
 #&gt;  [4] "kosher"              "mostly anything"     "mostly halal"       
 #&gt;  [7] "mostly kosher"       "mostly other"        "mostly vegan"       
