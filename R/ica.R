@@ -108,7 +108,7 @@ step_ica <-
            id = rand_id("ica")) {
 
 
-    recipes_pkg_check(c("dimRed", "fastICA"))
+    recipes_pkg_check(required_pkgs.step_ica())
 
     add_step(
       recipe,
@@ -256,4 +256,11 @@ tunable.step_ica <- function(x, ...) {
     component = "step_ica",
     component_id = x$id
   )
+}
+
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_ica <- function(x, ...) {
+  c("dimRed", "fastICA")
 }

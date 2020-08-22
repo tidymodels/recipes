@@ -85,7 +85,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
-    recipes_pkg_check(nmf_pkg)
+    recipes_pkg_check(required_pkgs.step_nnmf())
     add_step(
       recipe,
       step_nnmf_new(
@@ -103,8 +103,6 @@ step_nnmf <-
       )
     )
   }
-
-nmf_pkg <- c("dimRed", "NMF")
 
 step_nnmf_new <-
   function(terms, role, trained, num_comp, num_run,
@@ -236,3 +234,12 @@ tunable.step_nnmf <- function(x, ...) {
     component_id = x$id
   )
 }
+
+
+nmf_pkg <- c("dimRed", "NMF")
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_nnmf <- function(x, ...) {
+  c("dimRed", "NMF")
+}
+

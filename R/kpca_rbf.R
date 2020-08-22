@@ -112,7 +112,7 @@ step_kpca_rbf <-
            skip = FALSE,
            id = rand_id("kpca_rbf")) {
 
-    recipes_pkg_check(c("dimRed", "kernlab"))
+    recipes_pkg_check(required_pkgs.step_kpca_rbf())
 
     add_step(
       recipe,
@@ -254,4 +254,10 @@ tunable.step_kpca_rbf <- function(x, ...) {
     component = "step_kpca_rbf",
     component_id = x$id
   )
+}
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_kpca_rbf <- function(x, ...) {
+  c("dimRed", "kernlab")
 }

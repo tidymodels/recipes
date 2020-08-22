@@ -2,13 +2,12 @@
 
 .onLoad <- function(libname, pkgname) {
   s3_register("stats::update", "step")
-  maybe_register_tunable_methods()
+  maybe_register_S3_methods()
 }
 
-# This package has specific methods for the `tunable()` generic. That generic
-# is defined in the `tune` package. As of R 4.0, we need to register them.
-# Since `tune` is not on CRAN, we only register them if tune is installed
-maybe_register_tunable_methods <- function() {
+# This package has specific methods for the `tunable()` and `required_pkgs()`
+# generic. That generic is defined in the `tune` package. As of R 4.0, we need to register them.
+maybe_register_S3_methods <- function() {
 
   ns <- asNamespace("recipes")
   names <- names(ns)
@@ -48,6 +47,16 @@ maybe_register_tunable_methods <- function() {
   for (i in seq_along(tidy_check_names)) {
     class <- tidy_check_classes[[i]]
     s3_register("generics::tidy", class)
+  }
+
+  # ----------------------------------------------------------------------------
+
+  req_pkgs_names <- grep("^required_pkgs\\.", names, value = TRUE)
+  req_pkgs_classes <- gsub("required_pkgs.", "", req_pkgs_names)
+
+  for (i in seq_along(req_pkgs_names)) {
+    class <- req_pkgs_classes[[i]]
+    s3_register("tune::required_pkgs", class)
   }
 
   invisible()
