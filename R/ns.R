@@ -1,4 +1,4 @@
-#' Nature Spline Basis Functions
+#' Natural Spline Basis Functions
 #'
 #' `step_ns` creates a *specification* of a recipe step
 #'  that will create new columns that are basis expansions of
