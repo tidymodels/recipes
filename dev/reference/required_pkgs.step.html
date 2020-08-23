@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a Formula from a Prepared Recipe — formula.recipe • recipes</title>
+<title>S3 methods for tracking which additional packages are needed for steps. — required_pkgs.step_depth • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,10 +49,8 @@
 
 
 
-<meta property="og:title" content="Create a Formula from a Prepared Recipe — formula.recipe" />
-<meta property="og:description" content="In case a model formula is required, the formula method can
-be used on a recipe to show what predictors and outcome(s)
-could be used." />
+<meta property="og:title" content="S3 methods for tracking which additional packages are needed for steps. — required_pkgs.step_depth" />
+<meta property="og:description" content="S3 methods for tracking which additional packages are needed for steps." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -164,46 +162,46 @@ could be used." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a Formula from a Prepared Recipe</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/formula.R'><code>R/formula.R</code></a></small>
-    <div class="hidden name"><code>formula.recipe.Rd</code></div>
+    <h1>S3 methods for tracking which additional packages are needed for steps.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/ica.R'><code>R/ica.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/isomap.R'><code>R/isomap.R</code></a>, and 6 more</small>
+    <div class="hidden name"><code>required_pkgs.step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>In case a model formula is required, the formula method can
-be used on a recipe to show what predictors and outcome(s)
-could be used.</p>
+    <p>S3 methods for tracking which additional packages are needed for steps.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for recipe</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>required_pkgs.step_depth</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_ica</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_isomap</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_kpca</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_kpca_poly</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_kpca_rbf</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_nnmf</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_pls</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+
+<span class='fu'>required_pkgs.step_window</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A recipe object where all steps have been prepared.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Note currently used.</p></td>
+      <td><p>A recipe step</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A formula.</p>
+    <p>A character vector</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>))</div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f8c0e758bd8&gt;</div><div class='input'>
-<span class='kw'>iris_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='kw'>iris_rec</span>)</div><div class='output co'>#&gt; Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f8c0efccfe0&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
