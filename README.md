@@ -2,7 +2,7 @@
 # recipes <a href='https://recipes.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 [![R build
-status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes)
+status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes)

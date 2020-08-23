@@ -124,8 +124,8 @@ step_kpca <-
            skip = FALSE,
            id = rand_id("kpca")) {
 
-    recipes_pkg_check(c("dimRed", "kernlab"))
-    message(
+    recipes_pkg_check(required_pkgs.step_kpca())
+    rlang::inform(
       paste(
         "`step_kpca()` is deprecated in favor of either `step_kpca_rbf()`",
         "or `step_kpca_poly()`. It will be removed in future versions."
@@ -249,3 +249,10 @@ tidy.step_kpca <- function(x, ...) {
   res
 }
 
+
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_kpca <- function(x, ...) {
+  c("dimRed", "kernlab")
+}

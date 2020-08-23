@@ -112,7 +112,7 @@ step_isomap <-
            skip = FALSE,
            id = rand_id("isomap")) {
 
-    recipes_pkg_check(c("dimRed", "RSpectra", "igraph", "RANN"))
+    recipes_pkg_check(required_pkgs.step_isomap())
 
     add_step(
       recipe,
@@ -255,3 +255,10 @@ tunable.step_isomap <- function(x, ...) {
     component_id = x$id
   )
 }
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_isomap <- function(x, ...) {
+  c("dimRed", "RSpectra", "igraph", "RANN")
+}
+
