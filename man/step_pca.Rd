@@ -72,7 +72,7 @@ the computations for subsequent operations}
 
 \item{x}{A \code{step_pca} object.}
 
-\item{type}{For the \code{tidy()} method, either "coefs" (for the variable
+\item{type}{For the \code{tidy()} method, either "coef" (for the variable
 loadings per component) or "variance" (how much variance does each component
 account for).}
 }
