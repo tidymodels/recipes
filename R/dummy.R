@@ -73,8 +73,8 @@
 #' contained in the training set), a missing value is assigned to
 #' the results. See [step_other()] for an alternative.
 #'
-#' If no columns are selected (perhaps due to an earlier `step_zv()`), the
-#'  `bake()` and `juice()` functions will return the data as-is (e.g. with no
+#' If no columns are selected (perhaps due to an earlier `step_zv()`),
+#'  `bake()` and `bake(new_data = NULL)` will return the data as-is (e.g. with no
 #'  dummy variables).
 #'
 #' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
@@ -103,7 +103,7 @@
 #' rec %>%
 #'   step_dummy(diet, one_hot = TRUE) %>%
 #'   prep(training = okc) %>%
-#'   juice(starts_with("diet")) %>%
+#'   bake(new_data = NULL, starts_with("diet")) %>%
 #'   names() %>%
 #'   length()
 #'

@@ -82,7 +82,9 @@ rec <-
   step_unknown(location, new_level = "unknown location") \%>\%
   prep()
 
-table(juice(rec)$diet, okc$diet, useNA = "always") \%>\%
+table(bake(rec, new_data = NULL) \%>\% pull(diet),
+      okc \%>\% pull(diet),
+      useNA = "always") \%>\%
   as.data.frame() \%>\%
   dplyr::filter(Freq > 0)
 

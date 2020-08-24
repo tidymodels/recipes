@@ -36,14 +36,14 @@
 #' recipe( ~ ., data = iris) %>%
 #'   step_sample(size = 1) %>%
 #'   prep(training = iris) %>%
-#'   juice() %>%
+#'   bake(new_data = NULL) %>%
 #'   nrow()
 #'
 #' # Uses `sample_frac`
 #' recipe( ~ ., data = iris) %>%
 #'   step_sample(size = 0.9999) %>%
 #'   prep(training = iris) %>%
-#'   juice() %>%
+#'   bake(new_data = NULL) %>%
 #'   nrow()
 #'
 #' # Uses `sample_n` and returns _at maximum_ 120 samples.
@@ -52,8 +52,8 @@
 #'   step_sample() %>%
 #'   prep(training = iris %>% slice(1:120))
 #'
-#' juice(smaller_iris) %>% nrow()
-#' bake(smaller_iris, iris %>% slice(121:150)) %>% nrow()
+#' bake(smaller_iris, new_data = NULL) %>% nrow()
+#' bake(smaller_iris, new_data = iris %>% slice(121:150)) %>% nrow()
 
 
 step_sample <- function(

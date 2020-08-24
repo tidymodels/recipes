@@ -276,7 +276,7 @@ abort_selection <- exiting(function(cnd) {
 #' rec %>%
 #'   step_center(all_predictors(), -carbon) %>%
 #'   prep(training = biomass) %>%
-#'   juice()
+#'   bake(new_data = NULL)
 #'
 #' @export
 has_role <- function(match = "predictor") {

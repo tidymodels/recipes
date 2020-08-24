@@ -88,7 +88,7 @@ linear_values <- recipe(~ item + fail_severity, data = ord_data) \%>\%
 
 linear_values <- prep(linear_values, training = ord_data)
 
-juice(linear_values, everything())
+bake(linear_values, new_data = NULL, everything())
 
 custom <- function(x) {
   new_values <- c(1, 3, 7)
@@ -103,7 +103,7 @@ tidy(nonlin_scores, number = 2)
 
 nonlin_scores <- prep(nonlin_scores, training = ord_data)
 
-juice(nonlin_scores, everything())
+bake(nonlin_scores, new_data = NULL, everything())
 
 tidy(nonlin_scores, number = 2)
 }

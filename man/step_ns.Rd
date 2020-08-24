@@ -3,7 +3,7 @@
 \name{step_ns}
 \alias{step_ns}
 \alias{tidy.step_ns}
-\title{Nature Spline Basis Functions}
+\title{Natural Spline Basis Functions}
 \usage{
 step_ns(
   recipe,

@@ -66,7 +66,7 @@ recipe_info
 rec \%>\%
   step_center(all_predictors(), -carbon) \%>\%
   prep(training = biomass) \%>\%
-  juice()
+  bake(new_data = NULL)
 
 }
 \keyword{datagen}

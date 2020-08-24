@@ -34,7 +34,7 @@
 #' recipe(Ozone ~ ., data = airquality) %>%
 #'   step_naomit(Solar.R) %>%
 #'   prep(airquality, verbose = FALSE) %>%
-#'   juice()
+#'   bake(new_data = NULL)
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 step_naomit <- function(recipe, ..., role = NA, trained = FALSE,

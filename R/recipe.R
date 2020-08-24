@@ -455,23 +455,24 @@ prep.recipe <-
   }
 
 # For columns that should be retained (based on the selectors used in `bake()`
-# or `juice()`), match those to the existing columns in the data.
+# or `bake(new_data = NULL)`), match those to the existing columns in the data.
 #
 # Some details:
-#  1. When running `juice()`, the resulting columns should be consistent with the
-#  variables in `term_info$variables`. If selectors are used, the final columns
-#  that are returned should be a subset of those.
+#  1. When running `bake(new_data = NULL)`, the resulting columns should be
+#  consistent with the variables in `term_info$variables`. If selectors are
+#  used, the final columns that are returned should be a subset of those.
 #  2. `term_info$variables` is consistent with a recipe when _no_ steps are
 #  skipped.
-#  3. If a step is skipped, its effect is only seen in `bake()`. Also, if a
+#  3. If a step is skipped, its effect is only seen in `bake()` when a data
+#  frame is given to `new_data`. Also, if a
 #  step is skipped, the columns names that should be returned are possibly
 #  inconsistent with what is in `term_info$variables`. The results might be that
-#  there are more/less/different columns between `bake()` and `juice()`.
+#  there are more/less/different columns between `bake()` and `bake(new_data = NULL)`.
 #
 # `final_vars()` follows this logic:
 #
-#  - During `juice()` it determines which if the selected columns are consistent
-#    with `term_info$variables` and returns them.
+#  - During `bake(new_data = NULL)` it determines which if the selected columns
+#    are consistent with `term_info$variables` and returns them.
 #  - During `bake()`, the selected columns are subsetted with the names of the
 #    processed data.
 #
@@ -482,10 +483,10 @@ prep.recipe <-
 #
 # Consider a recipe for the iris data with a single step:
 #     `step_rm(Sepal.Length, skip = TRUE)`
-# is used. For `juice()`, only three columns are returned. However, when `bake()`
-# is run on the recipe, it should return all five. However, when `bake()` is
-# run, `Sepal.Length` is not included in `term_info$variables` so this column
-# would come at the end (instead of first as it is in `iris`).
+# is used. For `bake(new_data = NULL)`, only three columns are returned.
+# However, when `bake()` is run on the recipe, it should return all five. When
+# `bake()` is run, `Sepal.Length` is not included in `term_info$variables` so
+# this column would come at the end (instead of first as it is in `iris`).
 
 final_vars <- function(nms, vars, trms, baking) {
   # In case there are multiple roles for a column:
@@ -543,16 +544,23 @@ bake <- function(object, ...)
 #' If the original data used to train the data are to be
 #'  processed, time can be saved by using the `retain = TRUE` option
 #'  of [prep()] to avoid duplicating the same operations. With this
-#'  option set, [juice()] can be used instead of `bake` with
-#'  `new_data` equal to the training set.
+#'  option set, `bake(object, new_data = NULL)` can be used to return the
+#'  existing, processed version of the training data.
 #'
 #' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when `bake` is invoked. [juice()] will always have all
-#'   of the steps applied.
-#' @seealso [recipe()], [juice()], [prep()]
+#'   data when `bake` is invoked with a data in `new_data`.
+#'   `bake(object, new_data = NULL)` will always have all of the steps applied.
+#' @seealso [recipe()], [prep()]
 #' @rdname bake
 #' @export
-bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
+bake.recipe <- function(object, new_data, ..., composition = "tibble") {
+  if (rlang::is_missing(new_data)) {
+    rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
+  }
+  if (is.null(new_data)) {
+    return(juice(object, ..., composition = composition))
+  }
+
   if (!fully_trained(object)) {
     rlang::abort("At least one step has not been trained. Please run `prep`.")
   }
@@ -729,8 +737,11 @@ summary.recipe <- function(object, original = FALSE, ...) {
 
 #' Extract Finalized Training Set
 #'
+#' As of `recipes` version 0.1.14, **`juice()` is deprecated** in factor of
+#' `bake(object, new_data = NULL)`. #'
+#'
 #' As steps are estimated by `prep`, these operations are
-#'  applied to the training set. Rather than running `bake`
+#'  applied to the training set. Rather than running `bake()`
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set.
 #' @inheritParams bake.recipe
@@ -761,7 +772,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
 #'
 #' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
-#' og_values <- juice(sp_signed_trained, all_predictors())
+#' og_values <- bake(sp_signed_trained, new_data =  NULL,      all_predictors())
 #'
 #' all.equal(tr_values, og_values)
 #' @export

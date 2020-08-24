@@ -7,7 +7,7 @@
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, new_data = NULL, ..., composition = "tibble")
+\method{bake}{recipe}(object, new_data, ..., composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
@@ -43,15 +43,15 @@ operations to a data set to create a design matrix.
 If the original data used to train the data are to be
 processed, time can be saved by using the \code{retain = TRUE} option
 of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
-option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
-\code{new_data} equal to the training set.
+option set, \code{bake(object, new_data = NULL)} can be used to return the
+existing, processed version of the training data.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the
-data when \code{bake} is invoked. \code{\link[=juice]{juice()}} will always have all
-of the steps applied.
+data when \code{bake} is invoked with a data in \code{new_data}.
+\code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \seealso{
-\code{\link[=recipe]{recipe()}}, \code{\link[=juice]{juice()}}, \code{\link[=prep]{prep()}}
+\code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}
 }
 \author{
 Max Kuhn

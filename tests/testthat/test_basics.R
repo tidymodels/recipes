@@ -6,6 +6,8 @@ context("Testing basic functionalities")
 
 library(modeldata)
 data(biomass)
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
 
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
