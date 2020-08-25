@@ -19,7 +19,8 @@ If no selectors are given, the default is to use
 \code{\link[=everything]{everything()}}.}
 
 \item{new_data}{A data frame or tibble for whom the preprocessing will be
-applied.}
+applied. If \code{NULL} is given to \code{new_data}, the pre-processed \emph{training
+data} will be returned (assuming that \code{prep(retain = TRUE)} was used).}
 
 \item{composition}{Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
@@ -49,6 +50,26 @@ existing, processed version of the training data.
 Also, any steps with \code{skip = TRUE} will not be applied to the
 data when \code{bake} is invoked with a data in \code{new_data}.
 \code{bake(object, new_data = NULL)} will always have all of the steps applied.
+}
+\examples{
+data(ames, package = "modeldata")
+
+ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+
+ames_rec <-
+  recipe(Sale_Price ~ ., data = ames[-(1:6), ]) \%>\%
+  step_other(Neighborhood, threshold = 0.05) \%>\%
+  step_dummy(all_nominal()) \%>\%
+  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
+  step_ns(Longitude, Latitude, deg_free = 2) \%>\%
+  step_zv(all_predictors()) \%>\%
+  prep()
+
+# return the training set (already embedded in ames_rec)
+ames_train <- bake(ames_rec, new_data = NULL)
+
+# apply processing to other data:
+ames_new <- bake(ames_rec, new_data = head(ames))
 }
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}

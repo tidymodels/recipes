@@ -525,7 +525,8 @@ bake <- function(object, ...)
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
 #' @param new_data A data frame or tibble for whom the preprocessing will be
-#'   applied.
+#'   applied. If `NULL` is given to `new_data`, the pre-processed _training
+#'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
@@ -552,6 +553,25 @@ bake <- function(object, ...)
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
+#' @examples
+#' data(ames, package = "modeldata")
+#'
+#' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+#'
+#' ames_rec <-
+#'   recipe(Sale_Price ~ ., data = ames[-(1:6), ]) %>%
+#'   step_other(Neighborhood, threshold = 0.05) %>%
+#'   step_dummy(all_nominal()) %>%
+#'   step_interact(~ starts_with("Central_Air"):Year_Built) %>%
+#'   step_ns(Longitude, Latitude, deg_free = 2) %>%
+#'   step_zv(all_predictors()) %>%
+#'   prep()
+#'
+#' # return the training set (already embedded in ames_rec)
+#' ames_train <- bake(ames_rec, new_data = NULL)
+#'
+#' # apply processing to other data:
+#' ames_new <- bake(ames_rec, new_data = head(ames))
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
@@ -737,8 +757,8 @@ summary.recipe <- function(object, original = FALSE, ...) {
 
 #' Extract Finalized Training Set
 #'
-#' As of `recipes` version 0.1.14, **`juice()` is deprecated** in factor of
-#' `bake(object, new_data = NULL)`. #'
+#' As of `recipes` version 0.1.14, **`juice()` is superseded** in factor of
+#' `bake(object, new_data = NULL)`.
 #'
 #' As steps are estimated by `prep`, these operations are
 #'  applied to the training set. Rather than running `bake()`
@@ -754,27 +774,6 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  `juice` will return the results of a recipes where _all steps_
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
-#'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
-#'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
-#'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#'
-#' sp_signed <- rec %>%
-#'   step_normalize(all_predictors()) %>%
-#'   step_spatialsign(all_predictors())
-#'
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-#'
-#' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
-#' og_values <- bake(sp_signed_trained, new_data =  NULL,      all_predictors())
-#'
-#' all.equal(tr_values, og_values)
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
