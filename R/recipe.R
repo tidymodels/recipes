@@ -778,12 +778,12 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep`.")
+    rlang::abort("At least one step has not been trained. Please run `prep()`.")
   }
 
   if (!isTRUE(object$retained)) {
     rlang::abort(
-      paste0("Use `retain = TRUE` in `prep` to be able ",
+      paste0("Use `retain = TRUE` in `prep()` to be able ",
              "to extract the training set"
              )
     )

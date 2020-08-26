@@ -74,8 +74,7 @@
 #' the results. See [step_other()] for an alternative.
 #'
 #' If no columns are selected (perhaps due to an earlier `step_zv()`),
-#'  `bake()` and `bake(new_data = NULL)` will return the data as-is (e.g. with no
-#'  dummy variables).
+#'  `bake()` will return the data as-is (e.g. with no dummy variables).
 #'
 #' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
 #' and interactions has more information.

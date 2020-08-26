@@ -113,8 +113,7 @@ contained in the training set), a missing value is assigned to
 the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
 If no columns are selected (perhaps due to an earlier \code{step_zv()}),
-\code{bake()} and \code{bake(new_data = NULL)} will return the data as-is (e.g. with no
-dummy variables).
+\code{bake()} will return the data as-is (e.g. with no dummy variables).
 
 The \href{https://tidymodels.github.io/recipes/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
