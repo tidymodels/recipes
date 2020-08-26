@@ -157,3 +157,21 @@ test_that("tunable arguments at prep-time", {
    "'deg_free'. Do you want "
  )
 })
+
+test_that("`bake(new_data = NULL)` same as `juice()`", {
+  rec <-
+    recipe(mpg ~ ., data = mtcars) %>%
+    step_filter(gear == 4) %>%
+    step_center(all_predictors()) %>%
+    prep()
+
+  juiced <- juice(rec)
+  baked <- bake(rec, new_data = NULL)
+  expect_equal(juiced, baked)
+
+  # make sure that filter is skipped on training data this way
+  roasted <- bake(rec, new_data = mtcars)
+  expect_equal(nrow(roasted), 32)
+
+})
+
