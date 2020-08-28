@@ -199,13 +199,13 @@ could be used.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>))
 </div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f9b1fa63c28&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x7ff2241d4420&gt;</div><div class='input'>
 <span class='kw'>iris_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span>(<span class='kw'>iris_rec</span>)
 </div><div class='output co'>#&gt; Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f9b1b987b18&gt;</div></pre>
+#&gt; &lt;environment: 0x7ff21e626de0&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
