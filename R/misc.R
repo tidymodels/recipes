@@ -685,3 +685,44 @@ cast <- function(x, ref) {
 tidyselect_pre_1.0.0 <- function() {
   utils::packageVersion("tidyselect") <= "0.2.5"
 }
+
+
+## -----------------------------------------------------------------------------
+
+print_col_names <- function(x, prefix = "") {
+  if (length(x) == 0) {
+    return(invisible(TRUE))
+  }
+  wdth <- options()$width
+  if (length(prefix) > 0) {
+    prefix <- paste0(prefix, " (", length(x), "): ")
+  }
+  nm_sdth <- cumsum(c(nchar(prefix), purrr::map_int(x, nchar) + 2))
+  keep_x <- nm_sdth + 5 < wdth
+  x <- x[ keep_x[-1] ]
+  y <- paste0(prefix, paste0(x, collapse = ", "))
+  if (!all(keep_x)) {
+    y <- paste0(y, ", ...")
+  }
+  cat(y, "\n", sep = "")
+  return(invisible(TRUE))
+}
+
+changelog <- function(show, before, after, x) {
+  if (!show) {
+    return(invisible(TRUE))
+  }
+  rm_cols <- setdiff(before, after)
+  new_cols <- setdiff(after, before)
+
+  cat(class(x)[1], " (", x$id, "): ", sep = "")
+  if (length(new_cols) == 0 & length(rm_cols) == 0) {
+    cat("same number of columns\n\n")
+  } else {
+    cat("\n")
+    print_col_names(new_cols, " new")
+    print_col_names(rm_cols,  " removed")
+    cat("\n")
+  }
+}
+

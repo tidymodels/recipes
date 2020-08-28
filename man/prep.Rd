@@ -13,6 +13,7 @@ prep(x, ...)
   fresh = FALSE,
   verbose = FALSE,
   retain = TRUE,
+  log_changes = FALSE,
   strings_as_factors = TRUE,
   ...
 )
@@ -41,6 +42,9 @@ if any steps use the option \code{skip = FALSE}. \strong{Note} that this can mak
 the final recipe size large. When \code{verbose = TRUE}, a message is written
 with the approximate object size in memory but may be an underestimate
 since it does not take environments into account.}
+
+\item{log_changes}{A logical for printing a summary for each step regarding
+which (if any) columns were added or removed during training.}
 
 \item{strings_as_factors}{A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
@@ -73,6 +77,27 @@ are added, \code{\link[=prep]{prep()}} will only update the new operations. If
 As the steps are executed, the \code{training} set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.
+}
+\examples{
+data(ames, package = "modeldata")
+
+library(dplyr)
+
+ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+
+ames_rec <-
+  recipe(
+    Sale_Price ~ Longitude + Latitude + Neighborhood + Year_Built + Central_Air,
+    data = ames
+  ) \%>\%
+  step_other(Neighborhood, threshold = 0.05) \%>\%
+  step_dummy(all_nominal()) \%>\%
+  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
+  step_ns(Longitude, Latitude, deg_free = 5)
+
+prep(ames_rec, verbose = TRUE)
+
+prep(ames_rec, log_changes = TRUE)
 }
 \author{
 Max Kuhn
