@@ -481,12 +481,13 @@ prep.recipe <-
 # end of the tibble. This seems reasonable but might lead to unexpected (but
 # consistent) results.
 #
-# Consider a recipe for the iris data with a single step:
-#     `step_rm(Sepal.Length, skip = TRUE)`
-# is used. For `bake(new_data = NULL)`, only three columns are returned.
-# However, when `bake()` is run on the recipe, it should return all five. When
-# `bake()` is run, `Sepal.Length` is not included in `term_info$variables` so
-# this column would come at the end (instead of first as it is in `iris`).
+# Consider a recipe for the `mtcars` data with a single step:
+#     `step_rm(cyl, skip = TRUE)`
+# is used. For `bake(new_data = NULL)`, only ten columns are returned. However,
+# when `bake()` is run on the recipe with new data, it should return all eleven.
+# When `bake()` is run, `cyl` is not included in `term_info$variables` so this
+# column would come at the end (instead of as the second column as it is in
+# `mtcars`).
 
 final_vars <- function(nms, vars, trms, baking) {
   # In case there are multiple roles for a column:
@@ -520,7 +521,7 @@ bake <- function(object, ...)
 
 #' Apply a Trained Data Recipe
 #'
-#' For a recipe with at least one preprocessing operations that has been trained by
+#' For a recipe with at least one preprocessing operation that has been trained by
 #'   [prep.recipe()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
@@ -757,7 +758,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 
 #' Extract Finalized Training Set
 #'
-#' As of `recipes` version 0.1.14, **`juice()` is superseded** in factor of
+#' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.
 #'
 #' As steps are estimated by `prep`, these operations are
@@ -768,10 +769,10 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
 #' @details When preparing a recipe, if the training data set is
-#'  retained using `retain = TRUE`, there is no need to `bake` the
+#'  retained using `retain = TRUE`, there is no need to `bake()` the
 #'  recipe to get the preprocessed training set.
 #'
-#'  `juice` will return the results of a recipes where _all steps_
+#'  `juice()` will return the results of a recipes where _all steps_
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
 #' @export
