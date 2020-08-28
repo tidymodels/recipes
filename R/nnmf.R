@@ -63,10 +63,11 @@
 #' #   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
 #' #   prep(training = biomass)
 #' #
-#' # juice(rec)
+#' # bake(rec, new_data = NULL)
 #' #
 #' # library(ggplot2)
-#' # ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+#' # bake(rec, new_data = NULL) %>%
+#' #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 #'
 #' @seealso [step_pca()], [step_ica()], [step_kpca()],
 #'   [step_isomap()], [recipe()], [prep.recipe()],
@@ -85,7 +86,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
-    recipes_pkg_check(nmf_pkg)
+    recipes_pkg_check(required_pkgs.step_nnmf())
     add_step(
       recipe,
       step_nnmf_new(
@@ -103,8 +104,6 @@ step_nnmf <-
       )
     )
   }
-
-nmf_pkg <- c("dimRed", "NMF")
 
 step_nnmf_new <-
   function(terms, role, trained, num_comp, num_run,
@@ -236,3 +235,12 @@ tunable.step_nnmf <- function(x, ...) {
     component_id = x$id
   )
 }
+
+
+nmf_pkg <- c("dimRed", "NMF")
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_nnmf <- function(x, ...) {
+  c("dimRed", "NMF")
+}
+

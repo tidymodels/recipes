@@ -49,7 +49,7 @@
 #'                     strings_as_factors = FALSE)
 #'
 #' # note that `diet` is a factor
-#' juice(make_factor) %>% head
+#' bake(make_factor, new_data = NULL) %>% head
 #' okc %>% head
 #' tidy(make_factor, number = 1)
 

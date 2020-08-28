@@ -34,7 +34,7 @@
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
-#' @param type For the `tidy()` method, either "coefs" (for the variable
+#' @param type For the `tidy()` method, either "coef" (for the variable
 #'  loadings per component) or "variance" (how much variance does each component
 #'  account for).
 #' @return An updated version of `recipe` with the new step

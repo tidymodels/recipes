@@ -218,7 +218,7 @@ prep.step_window <- function(x, training, info = NULL, ...) {
 }
 
 roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
-  recipes_pkg_check("RcppRoll")
+  recipes_pkg_check(required_pkgs.step_window())
 
   m <- length(x)
 
@@ -307,3 +307,9 @@ tunable.step_window <- function(x, ...) {
   )
 }
 
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_window <- function(x, ...) {
+  c("RcppRoll")
+}

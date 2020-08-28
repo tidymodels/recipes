@@ -77,7 +77,7 @@ dplyr_train <-
   slice(1:75) \%>\%
   slice(1:3)
 
-rec_train <- juice(prepped)
+rec_train <- bake(prepped, new_data = NULL)
 all.equal(dplyr_train, rec_train)
 
 dplyr_test <-

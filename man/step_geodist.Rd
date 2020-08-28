@@ -91,7 +91,7 @@ near_station <- recipe( ~ ., data = Smithsonian) \%>\%
                ref_lat = 38.8986312, ref_lon = -77.0062457) \%>\%
   prep(training = Smithsonian)
 
-juice(near_station) \%>\%
+bake(near_station, new_data = NULL) \%>\%
   arrange(geo_dist)
 
 tidy(near_station, number = 1)

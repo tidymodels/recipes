@@ -104,7 +104,8 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
   step_rollimpute(all_predictors(), window = 7) \%>\%
   prep(training = example_data)
 
-juice(seven_pt)
+# The training set:
+bake(seven_pt, new_data = NULL)
 }
 \concept{imputation}
 \concept{preprocessing}

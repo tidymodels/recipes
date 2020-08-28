@@ -47,7 +47,7 @@
 #'   slice(1:75) %>%
 #'   dplyr::filter(Sepal.Length > 4.5, Species == "setosa")
 #'
-#' rec_train <- juice(prepped)
+#' rec_train <- bake(prepped, new_data = NULL)
 #' all.equal(dplyr_train, rec_train)
 #'
 #' dplyr_test <-

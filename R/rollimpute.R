@@ -63,7 +63,8 @@
 #'   step_rollimpute(all_predictors(), window = 7) %>%
 #'   prep(training = example_data)
 #'
-#' juice(seven_pt)
+#' # The training set:
+#' bake(seven_pt, new_data = NULL)
 
 step_rollimpute <-
   function(recipe,

@@ -4,8 +4,8 @@
 #' will replace the elements of the same name in the actual step.
 #'
 #' For a step to be updated, it must not already have been trained. Otherwise,
-#' conflicting information can arise between the data returned from [juice()]
-#' and the information in the step.
+#' conflicting information can arise between the data returned from
+#' `bake(object, new_data = NULL)` and the information in the step.
 #'
 #'
 #' @param object A recipe `step`.
@@ -35,8 +35,8 @@
 #' rec2_prepped <- prep(rec2, training = biomass_tr)
 #'
 #' # Juice both to see what changed
-#' juice(rec_prepped)
-#' juice(rec2_prepped)
+#' bake(rec_prepped,  new_data = NULL)
+#' bake(rec2_prepped, new_data = NULL)
 #'
 #' # Cannot update a recipe step that has been trained!
 #' \dontrun{

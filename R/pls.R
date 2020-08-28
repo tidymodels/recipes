@@ -139,7 +139,7 @@ step_pls <-
       rlang::abort("`outcome` should select at least one column.")
     }
 
-    recipes_pkg_check("mixOmics")
+    recipes_pkg_check(required_pkgs.step_pls())
 
     add_step(
       recipe,
@@ -412,4 +412,11 @@ tunable.step_pls <- function(x, ...) {
     component = "step_pls",
     component_id = x$id
   )
+}
+
+
+#' @rdname required_pkgs.step
+#' @export
+required_pkgs.step_pls <- function(x, ...) {
+  c("mixOmics")
 }

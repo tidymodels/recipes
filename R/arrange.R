@@ -39,7 +39,7 @@
 #'   slice(1:75) %>%
 #'   dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
 #'
-#' rec_train <- juice(prepped)
+#' rec_train <- bake(prepped, new_data = NULL)
 #' all.equal(dplyr_train, rec_train)
 #'
 #' dplyr_test <-
