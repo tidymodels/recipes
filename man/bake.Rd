@@ -41,14 +41,13 @@ For a recipe with at least one preprocessing operations that has been trained by
 \code{\link[=bake]{bake()}} takes a trained recipe and applies the
 operations to a data set to create a design matrix.
 
-If the original data used to train the data are to be
-processed, time can be saved by using the \code{retain = TRUE} option
-of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
-option set, \code{bake(object, new_data = NULL)} can be used to return the
-existing, processed version of the training data.
+If the data set is not too large, time can be saved by using the
+\code{retain = TRUE} option of \code{\link[=prep]{prep()}}. This stores the processed version of the
+training set. With this option set, \code{bake(object, new_data = NULL)}
+will return it for free.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the
-data when \code{bake} is invoked with a data in \code{new_data}.
+data when \code{bake()} is invoked with a data set in \code{new_data}.
 \code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \examples{

@@ -471,7 +471,7 @@ prep.recipe <-
 #
 # `final_vars()` follows this logic:
 #
-#  - During `bake(new_data = NULL)` it determines which if the selected columns
+#  - During `bake(new_data = NULL)` it determines which of the selected columns
 #    are consistent with `term_info$variables` and returns them.
 #  - During `bake()`, the selected columns are subsetted with the names of the
 #    processed data.
@@ -542,14 +542,13 @@ bake <- function(object, ...)
 #' @details [bake()] takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
 #'
-#' If the original data used to train the data are to be
-#'  processed, time can be saved by using the `retain = TRUE` option
-#'  of [prep()] to avoid duplicating the same operations. With this
-#'  option set, `bake(object, new_data = NULL)` can be used to return the
-#'  existing, processed version of the training data.
+#' If the data set is not too large, time can be saved by using the
+#'  `retain = TRUE` option of [prep()]. This stores the processed version of the
+#'  training set. With this option set, `bake(object, new_data = NULL)`
+#'  will return it for free.
 #'
 #' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when `bake` is invoked with a data in `new_data`.
+#'   data when `bake()` is invoked with a data set in `new_data`.
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
