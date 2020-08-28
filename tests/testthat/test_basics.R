@@ -6,6 +6,8 @@ context("Testing basic functionalities")
 
 library(modeldata)
 data(biomass)
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
 
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
@@ -105,11 +107,11 @@ test_that("bake without prep", {
     step_spatialsign(all_predictors())
   expect_error(
     bake(sp_signed, new_data = biomass_te),
-    "At least one step has not been trained. Please run `prep`."
+    "At least one step has not been trained. Please run."
   )
   expect_error(
     juice(sp_signed),
-    "At least one step has not been trained. Please run `prep`."
+    "At least one step has not been trained. Please run."
   )
 })
 
@@ -155,3 +157,21 @@ test_that("tunable arguments at prep-time", {
    "'deg_free'. Do you want "
  )
 })
+
+test_that("`bake(new_data = NULL)` same as `juice()`", {
+  rec <-
+    recipe(mpg ~ ., data = mtcars) %>%
+    step_filter(gear == 4) %>%
+    step_center(all_predictors()) %>%
+    prep()
+
+  juiced <- juice(rec)
+  baked <- bake(rec, new_data = NULL)
+  expect_equal(juiced, baked)
+
+  # make sure that filter is skipped on training data this way
+  roasted <- bake(rec, new_data = mtcars)
+  expect_equal(nrow(roasted), 32)
+
+})
+

@@ -47,7 +47,7 @@
 #'     levels = amnt
 #'   )
 #'
-#' encoded <- rec %>% prep() %>% juice()
+#' encoded <- rec %>% prep() %>% bake(new_data = NULL)
 #'
 #' table(encoded$StockOptionLevel, attrition$StockOptionLevel)
 #'
@@ -72,7 +72,7 @@
 #'   ) %>%
 #'   prep()
 #'
-#' encoded <- juice(rec)
+#' encoded <- bake(rec, new_data = NULL)
 #'
 #' table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
 #'

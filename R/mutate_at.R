@@ -24,14 +24,14 @@
 #' recipe(~ ., data = iris) %>%
 #'   step_mutate_at(contains("Length"), fn = ~ 1/.) %>%
 #'   prep() %>%
-#'   juice() %>%
+#'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #'
 #' recipe(~ ., data = iris) %>%
 #'   # leads to more columns being created.
 #'   step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) %>%
 #'   prep() %>%
-#'   juice() %>%
+#'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #' @export
 step_mutate_at <- function(

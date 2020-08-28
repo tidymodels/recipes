@@ -23,40 +23,22 @@ called \strong{after} any selectors and the selectors should only
 resolve to numeric columns (otherwise an error is thrown).}
 }
 \description{
-As steps are estimated by \code{prep}, these operations are
-applied to the training set. Rather than running \code{bake}
-to duplicate this processing, this function will return
-variables from the processed training set.
+As of \code{recipes} version 0.1.14, \strong{\code{juice()} is superseded} in favor of
+\code{bake(object, new_data = NULL)}.
 }
 \details{
+As steps are estimated by \code{prep}, these operations are
+applied to the training set. Rather than running \code{bake()}
+to duplicate this processing, this function will return
+variables from the processed training set.
+
 When preparing a recipe, if the training data set is
-retained using \code{retain = TRUE}, there is no need to \code{bake} the
+retained using \code{retain = TRUE}, there is no need to \code{bake()} the
 recipe to get the preprocessed training set.
 
-\code{juice} will return the results of a recipes where \emph{all steps}
+\code{juice()} will return the results of a recipes where \emph{all steps}
 have been applied to the data, irrespective of the value of
 the step's \code{skip} argument.
-}
-\examples{
-library(modeldata)
-data(biomass)
-
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
-
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
-
-sp_signed <- rec \%>\%
-  step_normalize(all_predictors()) \%>\%
-  step_spatialsign(all_predictors())
-
-sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-
-tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
-og_values <- juice(sp_signed_trained, all_predictors())
-
-all.equal(tr_values, og_values)
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}

@@ -88,7 +88,7 @@ dplyr_train <-
     half_length = Sepal.Length / 2
   )
 
-rec_train <- juice(prepped)
+rec_train <- bake(prepped, new_data = NULL)
 all.equal(dplyr_train, rec_train)
 
 dplyr_test <-
@@ -113,7 +113,7 @@ qq_rec <-
   ) \%>\%
   prep(training = iris)
 
-juice(qq_rec, contains("appro")) \%>\% slice(1:4)
+bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 
 # The difference:
 tidy(qq_rec, number = 1)

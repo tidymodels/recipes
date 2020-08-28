@@ -60,7 +60,7 @@ or NaN values.
 recipe(Ozone ~ ., data = airquality) \%>\%
   step_naomit(Solar.R) \%>\%
   prep(airquality, verbose = FALSE) \%>\%
-  juice()
+  bake(new_data = NULL)
 
 }
 \seealso{

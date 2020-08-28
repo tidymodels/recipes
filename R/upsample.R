@@ -33,11 +33,11 @@
 #'  `tidy` method, a tibble with columns `terms` which is
 #'  the variable used to sample.
 #' @details
-#' Up-sampling is intended to be performed on the _training_ set
-#'  alone. For this reason, the default is `skip = TRUE`. It is
-#'  advisable to use `prep(recipe, retain = TRUE)` when preparing
-#'  the recipe; in this way [juice()] can be used to obtain the
-#'  up-sampled version of the data.
+#' Up-sampling is intended to be performed on the _training_ set alone. For
+#'  this reason, the default is `skip = TRUE`. It is advisable to use
+#'  `prep(recipe, retain = TRUE)` when preparing the recipe; in this way
+#'  `bake(object, new_data = NULL)` can be used to obtain the up-sampled version
+#'  of the data.
 #'
 #' If there are missing values in the factor variable that is used
 #'  to define the sampling, missing data are selected at random in
@@ -48,8 +48,7 @@
 #' For any data with factor levels occurring with the same
 #'  frequency as the majority level, all data will be retained.
 #'
-#' All columns in the data are sampled and returned by [juice()]
-#'  and [bake()].
+#' All columns in the data are sampled and returned by [bake()].
 #'
 #' When used in modeling, users should strongly consider using the
 #'  option `skip = TRUE` so that the extra sampling is _not_
@@ -73,7 +72,7 @@
 #'   step_upsample(diet, over_ratio = 0.0121) %>%
 #'   prep(training = okc)
 #'
-#' training <- table(juice(up_rec)$diet, useNA = "always")
+#' training <- table(bake(up_rec, new_data = NULL)$diet, useNA = "always")
 #'
 #' # Since `skip` defaults to TRUE, baking the step has no effect
 #' baked_okc <- bake(up_rec, new_data = okc)

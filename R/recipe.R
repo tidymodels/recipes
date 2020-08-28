@@ -455,23 +455,24 @@ prep.recipe <-
   }
 
 # For columns that should be retained (based on the selectors used in `bake()`
-# or `juice()`), match those to the existing columns in the data.
+# or `bake(new_data = NULL)`), match those to the existing columns in the data.
 #
 # Some details:
-#  1. When running `juice()`, the resulting columns should be consistent with the
-#  variables in `term_info$variables`. If selectors are used, the final columns
-#  that are returned should be a subset of those.
+#  1. When running `bake(new_data = NULL)`, the resulting columns should be
+#  consistent with the variables in `term_info$variables`. If selectors are
+#  used, the final columns that are returned should be a subset of those.
 #  2. `term_info$variables` is consistent with a recipe when _no_ steps are
 #  skipped.
-#  3. If a step is skipped, its effect is only seen in `bake()`. Also, if a
+#  3. If a step is skipped, its effect is only seen in `bake()` when a data
+#  frame is given to `new_data`. Also, if a
 #  step is skipped, the columns names that should be returned are possibly
 #  inconsistent with what is in `term_info$variables`. The results might be that
-#  there are more/less/different columns between `bake()` and `juice()`.
+#  there are more/less/different columns between `bake()` and `bake(new_data = NULL)`.
 #
 # `final_vars()` follows this logic:
 #
-#  - During `juice()` it determines which if the selected columns are consistent
-#    with `term_info$variables` and returns them.
+#  - During `bake(new_data = NULL)` it determines which of the selected columns
+#    are consistent with `term_info$variables` and returns them.
 #  - During `bake()`, the selected columns are subsetted with the names of the
 #    processed data.
 #
@@ -480,12 +481,13 @@ prep.recipe <-
 # end of the tibble. This seems reasonable but might lead to unexpected (but
 # consistent) results.
 #
-# Consider a recipe for the iris data with a single step:
-#     `step_rm(Sepal.Length, skip = TRUE)`
-# is used. For `juice()`, only three columns are returned. However, when `bake()`
-# is run on the recipe, it should return all five. However, when `bake()` is
-# run, `Sepal.Length` is not included in `term_info$variables` so this column
-# would come at the end (instead of first as it is in `iris`).
+# Consider a recipe for the `mtcars` data with a single step:
+#     `step_rm(cyl, skip = TRUE)`
+# is used. For `bake(new_data = NULL)`, only ten columns are returned. However,
+# when `bake()` is run on the recipe with new data, it should return all eleven.
+# When `bake()` is run, `cyl` is not included in `term_info$variables` so this
+# column would come at the end (instead of as the second column as it is in
+# `mtcars`).
 
 final_vars <- function(nms, vars, trms, baking) {
   # In case there are multiple roles for a column:
@@ -519,12 +521,13 @@ bake <- function(object, ...)
 
 #' Apply a Trained Data Recipe
 #'
-#' For a recipe with at least one preprocessing operations that has been trained by
+#' For a recipe with at least one preprocessing operation that has been trained by
 #'   [prep.recipe()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
 #' @param new_data A data frame or tibble for whom the preprocessing will be
-#'   applied.
+#'   applied. If `NULL` is given to `new_data`, the pre-processed _training
+#'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
@@ -540,19 +543,44 @@ bake <- function(object, ...)
 #' @details [bake()] takes a trained recipe and applies the
 #'   operations to a data set to create a design matrix.
 #'
-#' If the original data used to train the data are to be
-#'  processed, time can be saved by using the `retain = TRUE` option
-#'  of [prep()] to avoid duplicating the same operations. With this
-#'  option set, [juice()] can be used instead of `bake` with
-#'  `new_data` equal to the training set.
+#' If the data set is not too large, time can be saved by using the
+#'  `retain = TRUE` option of [prep()]. This stores the processed version of the
+#'  training set. With this option set, `bake(object, new_data = NULL)`
+#'  will return it for free.
 #'
 #' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when `bake` is invoked. [juice()] will always have all
-#'   of the steps applied.
-#' @seealso [recipe()], [juice()], [prep()]
+#'   data when `bake()` is invoked with a data set in `new_data`.
+#'   `bake(object, new_data = NULL)` will always have all of the steps applied.
+#' @seealso [recipe()], [prep()]
 #' @rdname bake
+#' @examples
+#' data(ames, package = "modeldata")
+#'
+#' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+#'
+#' ames_rec <-
+#'   recipe(Sale_Price ~ ., data = ames[-(1:6), ]) %>%
+#'   step_other(Neighborhood, threshold = 0.05) %>%
+#'   step_dummy(all_nominal()) %>%
+#'   step_interact(~ starts_with("Central_Air"):Year_Built) %>%
+#'   step_ns(Longitude, Latitude, deg_free = 2) %>%
+#'   step_zv(all_predictors()) %>%
+#'   prep()
+#'
+#' # return the training set (already embedded in ames_rec)
+#' ames_train <- bake(ames_rec, new_data = NULL)
+#'
+#' # apply processing to other data:
+#' ames_new <- bake(ames_rec, new_data = head(ames))
 #' @export
-bake.recipe <- function(object, new_data = NULL, ..., composition = "tibble") {
+bake.recipe <- function(object, new_data, ..., composition = "tibble") {
+  if (rlang::is_missing(new_data)) {
+    rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
+  }
+  if (is.null(new_data)) {
+    return(juice(object, ..., composition = composition))
+  }
+
   if (!fully_trained(object)) {
     rlang::abort("At least one step has not been trained. Please run `prep`.")
   }
@@ -729,51 +757,33 @@ summary.recipe <- function(object, original = FALSE, ...) {
 
 #' Extract Finalized Training Set
 #'
+#' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
+#' `bake(object, new_data = NULL)`.
+#'
 #' As steps are estimated by `prep`, these operations are
-#'  applied to the training set. Rather than running `bake`
+#'  applied to the training set. Rather than running `bake()`
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set.
 #' @inheritParams bake.recipe
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
 #' @details When preparing a recipe, if the training data set is
-#'  retained using `retain = TRUE`, there is no need to `bake` the
+#'  retained using `retain = TRUE`, there is no need to `bake()` the
 #'  recipe to get the preprocessed training set.
 #'
-#'  `juice` will return the results of a recipes where _all steps_
+#'  `juice()` will return the results of a recipes where _all steps_
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
-#'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
-#'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
-#'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#'
-#' sp_signed <- rec %>%
-#'   step_normalize(all_predictors()) %>%
-#'   step_spatialsign(all_predictors())
-#'
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-#'
-#' tr_values <- bake(sp_signed_trained, new_data = biomass_tr, all_predictors())
-#' og_values <- juice(sp_signed_trained, all_predictors())
-#'
-#' all.equal(tr_values, og_values)
 #' @export
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep`.")
+    rlang::abort("At least one step has not been trained. Please run `prep()`.")
   }
 
   if (!isTRUE(object$retained)) {
     rlang::abort(
-      paste0("Use `retain = TRUE` in `prep` to be able ",
+      paste0("Use `retain = TRUE` in `prep()` to be able ",
              "to extract the training set"
              )
     )

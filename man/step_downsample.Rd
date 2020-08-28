@@ -80,11 +80,11 @@ rows of a data set to make the occurrence of levels in a specific factor
 level equal.
 }
 \details{
-Down-sampling is intended to be performed on the \emph{training} set
-alone. For this reason, the default is \code{skip = TRUE}. It is
-advisable to use \code{prep(recipe, retain = TRUE)} when preparing
-the recipe; in this way \code{\link[=juice]{juice()}} can be used to obtain the
-down-sampled version of the data.
+Down-sampling is intended to be performed on the \emph{training} set alone. For
+this reason, the default is \code{skip = TRUE}. It is advisable to use
+\code{prep(recipe, retain = TRUE)} when preparing the recipe; in this way
+\code{bake(object, new_data = NULL)} can be used to obtain the down-sampled
+version of the data.
 
 If there are missing values in the factor variable that is used
 to define the sampling, missing data are selected at random in
@@ -95,8 +95,7 @@ minority level
 For any data with factor levels occurring with the same
 frequency as the minority level, all data will be retained.
 
-All columns in the data are sampled and returned by \code{\link[=juice]{juice()}}
-and \code{\link[=bake]{bake()}}.
+All columns in the data are sampled and returned by \code{\link[=bake]{bake()}}.
 
 Keep in mind that the location of down-sampling in the step
 may have effects. For example, if centering and scaling,
@@ -117,7 +116,7 @@ ds_rec <- recipe( ~ ., data = okc) \%>\%
   step_downsample(diet) \%>\%
   prep(training = okc)
 
-table(juice(ds_rec)$diet, useNA = "always")
+table(bake(ds_rec, new_data = NULL)$diet, useNA = "always")
 
 # since `skip` defaults to TRUE, baking the step has no effect
 baked_okc <- bake(ds_rec, new_data = okc)

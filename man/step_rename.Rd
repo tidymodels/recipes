@@ -68,7 +68,7 @@ expression (to be portable between sessions).
 recipe( ~ ., data = iris) \%>\%
   step_rename(Sepal_Width = Sepal.Width) \%>\%
   prep() \%>\%
-  juice() \%>\%
+  bake(new_data = NULL) \%>\%
   slice(1:5)
 
 vars <- c(var1 = "cyl", var2 = "am")
@@ -78,7 +78,7 @@ car_rec <-
 
 car_rec \%>\%
   prep() \%>\%
-  juice()
+  bake(new_data = NULL)
 
 car_rec \%>\%
   tidy(number = 1)

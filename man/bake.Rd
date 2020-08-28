@@ -7,7 +7,7 @@
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, new_data = NULL, ..., composition = "tibble")
+\method{bake}{recipe}(object, new_data, ..., composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
@@ -19,7 +19,8 @@ If no selectors are given, the default is to use
 \code{\link[=everything]{everything()}}.}
 
 \item{new_data}{A data frame or tibble for whom the preprocessing will be
-applied.}
+applied. If \code{NULL} is given to \code{new_data}, the pre-processed \emph{training
+data} will be returned (assuming that \code{prep(retain = TRUE)} was used).}
 
 \item{composition}{Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
@@ -33,25 +34,44 @@ A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in \code{new_data}.
 }
 \description{
-For a recipe with at least one preprocessing operations that has been trained by
+For a recipe with at least one preprocessing operation that has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
 }
 \details{
 \code{\link[=bake]{bake()}} takes a trained recipe and applies the
 operations to a data set to create a design matrix.
 
-If the original data used to train the data are to be
-processed, time can be saved by using the \code{retain = TRUE} option
-of \code{\link[=prep]{prep()}} to avoid duplicating the same operations. With this
-option set, \code{\link[=juice]{juice()}} can be used instead of \code{bake} with
-\code{new_data} equal to the training set.
+If the data set is not too large, time can be saved by using the
+\code{retain = TRUE} option of \code{\link[=prep]{prep()}}. This stores the processed version of the
+training set. With this option set, \code{bake(object, new_data = NULL)}
+will return it for free.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the
-data when \code{bake} is invoked. \code{\link[=juice]{juice()}} will always have all
-of the steps applied.
+data when \code{bake()} is invoked with a data set in \code{new_data}.
+\code{bake(object, new_data = NULL)} will always have all of the steps applied.
+}
+\examples{
+data(ames, package = "modeldata")
+
+ames <- mutate(ames, Sale_Price = log10(Sale_Price))
+
+ames_rec <-
+  recipe(Sale_Price ~ ., data = ames[-(1:6), ]) \%>\%
+  step_other(Neighborhood, threshold = 0.05) \%>\%
+  step_dummy(all_nominal()) \%>\%
+  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
+  step_ns(Longitude, Latitude, deg_free = 2) \%>\%
+  step_zv(all_predictors()) \%>\%
+  prep()
+
+# return the training set (already embedded in ames_rec)
+ames_train <- bake(ames_rec, new_data = NULL)
+
+# apply processing to other data:
+ames_new <- bake(ames_rec, new_data = head(ames))
 }
 \seealso{
-\code{\link[=recipe]{recipe()}}, \code{\link[=juice]{juice()}}, \code{\link[=prep]{prep()}}
+\code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}
 }
 \author{
 Max Kuhn
