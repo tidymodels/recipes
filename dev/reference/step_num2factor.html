@@ -97,7 +97,7 @@ integers." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -266,7 +266,8 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 
 <span class='kw'>attrition</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>StockOptionLevel</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 2</span><span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span>()
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 2</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   StockOptionLevel [4]</span><span>
 #&gt;   StockOptionLevel     n
 #&gt;              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -284,9 +285,10 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
     levels = <span class='kw'>amnt</span>
   )
 
-<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span> <span class='fu'><a href='juice.html'>juice</a></span>()
+<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span> <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>, <span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>)</div><div class='output co'>#&gt;          
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>, <span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>StockOptionLevel</span>)
+</div><div class='output co'>#&gt;          
 #&gt;             0   1   2   3
 #&gt;   nothin  631   0   0   0
 #&gt;   meh       0 596   0   0
@@ -313,9 +315,10 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
   ) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>rec</span>)
+<span class='kw'>encoded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, new_data = <span class='kw'>NULL</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>, <span class='fu'>binner</span>(<span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>))</div><div class='output co'>#&gt;       
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>encoded</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>, <span class='fu'>binner</span>(<span class='kw'>attrition</span><span class='op'>$</span><span class='kw'>MonthlyIncome</span>))
+</div><div class='output co'>#&gt;       
 #&gt;          1   2   3
 #&gt;   low  749   0   0
 #&gt;   med    0 440   0
@@ -323,7 +326,8 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='co'># What happens when a value is out of range?</span>
 <span class='kw'>ceo</span> <span class='op'>&lt;-</span> <span class='kw'>attrition</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(MonthlyIncome = <span class='fl'>10</span><span class='op'>^</span><span class='fl'>10</span>)
 
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>ceo</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>ceo</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   MonthlyIncome Attrition
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Yes      </div></span></pre>

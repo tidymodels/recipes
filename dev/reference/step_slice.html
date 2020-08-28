@@ -96,7 +96,7 @@ that will filter rows using dplyr::slice()." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -253,7 +253,8 @@ be portable between sessions). See the examples.</p>
   <span class='fu'>step_slice</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>)
 
 <span class='kw'>prepped</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span>))
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>prepped</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>prepped</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> 1:3   slice_FPmAy</div><div class='input'>
@@ -265,15 +266,17 @@ be portable between sessions). See the examples.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>)
 
-<span class='kw'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>prepped</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_train</span>, <span class='kw'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='kw'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>prepped</span>, new_data = <span class='kw'>NULL</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_train</span>, <span class='kw'>rec_train</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='kw'>dplyr_test</span> <span class='op'>&lt;-</span>
   <span class='kw'>iris</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>)
 <span class='kw'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>prepped</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_test</span>, <span class='kw'>rec_test</span>)</div><div class='output co'>#&gt; [1] "Attributes: &lt; Component “row.names”: Numeric: lengths (3, 75) differ &gt;" 
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_test</span>, <span class='kw'>rec_test</span>)
+</div><div class='output co'>#&gt; [1] "Attributes: &lt; Component “row.names”: Numeric: lengths (3, 75) differ &gt;" 
 #&gt; [2] "Component “Sepal.Length”: Numeric: lengths (3, 75) differ"              
 #&gt; [3] "Component “Sepal.Width”: Numeric: lengths (3, 75) differ"               
 #&gt; [4] "Component “Petal.Length”: Numeric: lengths (3, 75) differ"              
@@ -291,7 +294,8 @@ be portable between sessions). See the examples.</p>
   <span class='fu'>step_slice</span>(<span class='op'>!</span><span class='op'>!</span><span class='kw'>keep_rows</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>qq_rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>qq_rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> 1:6   slice_xhh4Y</div></span></pre>

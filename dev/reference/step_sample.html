@@ -97,7 +97,7 @@ dplyr::sample_frac()." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -255,24 +255,28 @@ and <code>id</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Uses `sample_n`</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_sample</span>(size = <span class='fl'>1</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
+</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 <span class='co'># Uses `sample_frac`</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_sample</span>(size = <span class='fl'>0.9999</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 150</div><div class='input'>
-<span class='co'># Uses `sample_n` and returns _at maximum_ 120 samples.</span>
-<span class='kw'>smaller_iris</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
+</div><div class='output co'>#&gt; [1] 32</div><div class='input'>
+<span class='co'># Uses `sample_n` and returns _at maximum_ 20 samples.</span>
+<span class='kw'>smaller_cars</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_sample</span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span>))
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span>))
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>smaller_iris</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 120</div><div class='input'><span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>smaller_iris</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>121</span><span class='op'>:</span><span class='fl'>150</span>)) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()</div><div class='output co'>#&gt; [1] 30</div></pre>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>smaller_cars</span>, new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
+</div><div class='output co'>#&gt; [1] 20</div><div class='input'><span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>smaller_cars</span>, new_data = <span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>21</span><span class='op'>:</span><span class='fl'>32</span>)) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
+</div><div class='output co'>#&gt; [1] 12</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

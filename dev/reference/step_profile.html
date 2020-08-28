@@ -99,7 +99,7 @@ models." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -304,7 +304,8 @@ based on the fixed and profiled variable's information.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>height</span> <span class='op'>+</span> <span class='kw'>date</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_profile</span>(<span class='op'>-</span><span class='kw'>date</span>, profile = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>)) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>juice</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 3</span><span>
+  <span class='kw'>juice</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 3</span><span>
 #&gt;    diet     height date      
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> anything     68 2011-06-27
@@ -340,25 +341,27 @@ based on the fixed and profiled variable's information.</p>
   ) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>mtcars</span>)
 
-<span class='kw'>grid_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>disp_grid</span>)
+<span class='kw'>grid_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>disp_grid</span>, new_data = <span class='kw'>NULL</span>)
 <span class='kw'>grid_data</span> <span class='op'>&lt;-</span> <span class='kw'>grid_data</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(pred = <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>lin_mod</span>, <span class='kw'>grid_data</span>),
          method = <span class='st'>"grid"</span>)
 
-<span class='kw'>pctl_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>disp_pctl</span>)
+<span class='kw'>pctl_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>disp_pctl</span>, new_data = <span class='kw'>NULL</span>)
 <span class='kw'>pctl_data</span> <span class='op'>&lt;-</span> <span class='kw'>pctl_data</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(pred = <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>lin_mod</span>, <span class='kw'>pctl_data</span>),
          method = <span class='st'>"percentile"</span>)
 
 <span class='kw'>plot_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='kw'>grid_data</span>, <span class='kw'>pctl_data</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    alpha</span></div><div class='input'>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>plot_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x = <span class='kw'>disp</span>, y = <span class='kw'>pred</span>)) <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(alpha = <span class='fl'>.5</span>, cex = <span class='fl'>1</span>) <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(<span class='op'>~</span> <span class='kw'>method</span>)</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></span></pre>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(<span class='op'>~</span> <span class='kw'>method</span>)
+</div><div class='img'><img src='step_profile-1.png' alt='' width='768' height='552' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

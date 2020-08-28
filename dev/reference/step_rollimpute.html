@@ -97,7 +97,7 @@ variables by the a measure of location (e.g. median) within a moving window." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -293,7 +293,9 @@ prior to the current point.</p>
   <span class='fu'>step_rollimpute</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), window = <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>example_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>seven_pt</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 4</span><span>
+<span class='co'># The training set:</span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>seven_pt</span>, new_data = <span class='kw'>NULL</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 4</span><span>
 #&gt;    day           x1    x2    x3
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 2012-06-08  0.89 0.79  0.580

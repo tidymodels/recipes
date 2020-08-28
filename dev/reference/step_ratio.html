@@ -97,7 +97,7 @@ variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -289,7 +289,8 @@ selectors or variables selected) and <code>denom</code>.</p>
 <span class='kw'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>ratio_recipe</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>ratio_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ratio_recipe</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>ratio_data</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 7</span><span>
+<span class='kw'>ratio_data</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 7</span><span>
 #&gt;    total   HHV carbon_o_total hydrogen_o_total oxygen_o_total nitrogen_o_total
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>  99.7  18.3          0.465           0.056</span><span style='text-decoration: underline;'>8</span><span>          0.473          0.003</span><span style='text-decoration: underline;'>01</span><span>

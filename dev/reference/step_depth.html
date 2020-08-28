@@ -98,7 +98,7 @@ class variable." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -319,7 +319,8 @@ naming format can be changed using the <code>prefix</code> argument.</p>
 <span class='kw'>rec_dists</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>iris</span>)
 
 <span class='kw'>dists_to_species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec_dists</span>, new_data = <span class='kw'>iris</span>)
-<span class='kw'>dists_to_species</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 8</span><span>
+<span class='kw'>dists_to_species</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 8</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species zonoid_setosa
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2 setosa         0.559 
@@ -334,10 +335,12 @@ naming format can be changed using the <code>prefix</code> argument.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span>          4.9         3.1          1.5         0.1 setosa         0.020</span><span style='text-decoration: underline;'>0</span><span>
 #&gt; </span><span style='color: #555555;'># … with 140 more rows, and 2 more variables: zonoid_versicolor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   zonoid_virginica </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms            class id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>    depth_vUNsj</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec_dists</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 3</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>    depth_vUNsj</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec_dists</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 3</span><span>
 #&gt;   terms        class   id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> Sepal.Length Species depth_vUNsj

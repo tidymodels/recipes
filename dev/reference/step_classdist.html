@@ -98,7 +98,7 @@ each value of a categorical class variable." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -315,7 +315,8 @@ overall.</p>
 <span class='kw'>dists_to_species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec_dists</span>, new_data = <span class='kw'>iris</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
 <span class='co'>## on log scale:</span>
 <span class='kw'>dist_cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"classdist"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dists_to_species</span>), value = <span class='fl'>TRUE</span>)
-<span class='kw'>dists_to_species</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='kw'>dist_cols</span>)]</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 4</span><span>
+<span class='kw'>dists_to_species</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='kw'>dist_cols</span>)]
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 4</span><span>
 #&gt;    Species classdist_setosa classdist_versicolor classdist_virginica
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> setosa            -</span><span style='color: #BB0000;'>0.800</span><span>                 4.74                5.21
@@ -329,10 +330,12 @@ overall.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> setosa             1.10                  4.30                4.89
 #&gt; </span><span style='color: #555555;'>10</span><span> setosa             1.16                  4.54                5.05
 #&gt; </span><span style='color: #555555;'># … with 140 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms            value class id             
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    classdist_wcZDL</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec_dists</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    classdist_wcZDL</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec_dists</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 4</span><span>
 #&gt;    terms        value class      id             
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'> 1</span><span> Sepal.Length 5.01  setosa     classdist_wcZDL

@@ -97,7 +97,7 @@ between two or more variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -310,16 +310,20 @@ all two-way interactions are created.</p>
 <span class='kw'>dat_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>int_mod_1</span>, <span class='kw'>biomass_te</span>)
 <span class='kw'>dat_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>int_mod_2</span>, <span class='kw'>biomass_te</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_1</span>)</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_1</span>)
+</div><div class='output co'>#&gt; [1] "carbon"            "hydrogen"          "oxygen"           
 #&gt; [4] "nitrogen"          "sulfur"            "HHV"              
-#&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_2</span>)</div><div class='output co'>#&gt;  [1] "carbon"              "hydrogen"            "oxygen"             
+#&gt; [7] "carbon_x_hydrogen"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dat_2</span>)
+</div><div class='output co'>#&gt;  [1] "carbon"              "hydrogen"            "oxygen"             
 #&gt;  [4] "nitrogen"            "sulfur"              "HHV"                
 #&gt;  [7] "hydrogen_x_oxygen"   "hydrogen_x_nitrogen" "hydrogen_x_sulfur"  
 #&gt; [10] "oxygen_x_nitrogen"   "oxygen_x_sulfur"     "nitrogen_x_sulfur"  </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_1</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_1</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms           id            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'>1</span><span> carbon:hydrogen interact_5lKMY</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_2</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 2</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> carbon:hydrogen interact_5lKMY</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>int_mod_2</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 2</span><span>
 #&gt;   terms             id            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
 #&gt; </span><span style='color: #555555;'>1</span><span> hydrogen:oxygen   interact_0DreN

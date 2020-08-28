@@ -50,7 +50,7 @@
 
 
 <meta property="og:title" content="Apply a Trained Data Recipe — bake" />
-<meta property="og:description" content="For a recipe with at least one preprocessing operations that has been trained by
+<meta property="og:description" content="For a recipe with at least one preprocessing operation that has been trained by
 prep.recipe(), apply the computations to new data." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -96,7 +96,7 @@ prep.recipe(), apply the computations to new data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -169,14 +169,14 @@ prep.recipe(), apply the computations to new data." />
     </div>
 
     <div class="ref-description">
-    <p>For a recipe with at least one preprocessing operations that has been trained by
+    <p>For a recipe with at least one preprocessing operation that has been trained by
 <code><a href='prep.html'>prep.recipe()</a></code>, apply the computations to new data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bake</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>bake</span>(<span class='kw'>object</span>, new_data = <span class='kw'>NULL</span>, <span class='kw'>...</span>, composition = <span class='st'>"tibble"</span>)</pre>
+<span class='fu'>bake</span>(<span class='kw'>object</span>, <span class='kw'>new_data</span>, <span class='kw'>...</span>, composition = <span class='st'>"tibble"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,7 +196,8 @@ If no selectors are given, the default is to use
     <tr>
       <th>new_data</th>
       <td><p>A data frame or tibble for whom the preprocessing will be
-applied.</p></td>
+applied. If <code>NULL</code> is given to <code>new_data</code>, the pre-processed <em>training
+data</em> will be returned (assuming that <code><a href='prep.html'>prep(retain = TRUE)</a></code> was used).</p></td>
     </tr>
     <tr>
       <th>composition</th>
@@ -217,21 +218,40 @@ columns than the original columns in <code>new_data</code>.</p>
 
     <p><code>bake()</code> takes a trained recipe and applies the
 operations to a data set to create a design matrix.</p>
-<p>If the original data used to train the data are to be
-processed, time can be saved by using the <code>retain = TRUE</code> option
-of <code><a href='prep.html'>prep()</a></code> to avoid duplicating the same operations. With this
-option set, <code><a href='juice.html'>juice()</a></code> can be used instead of <code>bake</code> with
-<code>new_data</code> equal to the training set.</p>
+<p>If the data set is not too large, time can be saved by using the
+<code>retain = TRUE</code> option of <code><a href='prep.html'>prep()</a></code>. This stores the processed version of the
+training set. With this option set, <code>bake(object, new_data = NULL)</code>
+will return it for free.</p>
 <p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
-data when <code>bake</code> is invoked. <code><a href='juice.html'>juice()</a></code> will always have all
-of the steps applied.</p>
+data when <code>bake()</code> is invoked with a data set in <code>new_data</code>.
+<code>bake(object, new_data = NULL)</code> will always have all of the steps applied.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='juice.html'>juice()</a></code>, <code><a href='prep.html'>prep()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep()</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Max Kuhn</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>ames</span>, package = <span class='st'>"modeldata"</span>)
+
+<span class='kw'>ames</span> <span class='op'>&lt;-</span> <span class='fu'>mutate</span>(<span class='kw'>ames</span>, Sale_Price = <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span>(<span class='kw'>Sale_Price</span>))
+
+<span class='kw'>ames_rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Sale_Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>ames</span>[<span class='op'>-</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>), ]) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_other.html'>step_other</a></span>(<span class='kw'>Neighborhood</span>, threshold = <span class='fl'>0.05</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_interact.html'>step_interact</a></span>(<span class='op'>~</span> <span class='fu'>starts_with</span>(<span class='st'>"Central_Air"</span>)<span class='op'>:</span><span class='kw'>Year_Built</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_ns.html'>step_ns</a></span>(<span class='kw'>Longitude</span>, <span class='kw'>Latitude</span>, deg_free = <span class='fl'>2</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_zv.html'>step_zv</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>()
+
+<span class='co'># return the training set (already embedded in ames_rec)</span>
+<span class='kw'>ames_train</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span>(<span class='kw'>ames_rec</span>, new_data = <span class='kw'>NULL</span>)
+
+<span class='co'># apply processing to other data:</span>
+<span class='kw'>ames_new</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span>(<span class='kw'>ames_rec</span>, new_data = <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>ames</span>))
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -97,7 +97,7 @@ components." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -309,10 +309,12 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 <span class='co'>#   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %&gt;%</span>
 <span class='co'>#   prep(training = biomass)</span>
 <span class='co'>#</span>
-<span class='co'># juice(rec)</span>
+<span class='co'># bake(rec, new_data = NULL)</span>
 <span class='co'>#</span>
 <span class='co'># library(ggplot2)</span>
-<span class='co'># ggplot(juice(rec), aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()</span>
+<span class='co'># bake(rec, new_data = NULL) %&gt;%</span>
+<span class='co'>#  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

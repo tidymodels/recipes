@@ -96,7 +96,7 @@ that will remove rows using dplyr::filter()." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -265,15 +265,17 @@ between sessions). See the examples.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span>) <span class='op'>%&gt;%</span>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='kw'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span>)
 
-<span class='kw'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>prepped</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_train</span>, <span class='kw'>rec_train</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='kw'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>prepped</span>, new_data = <span class='kw'>NULL</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_train</span>, <span class='kw'>rec_train</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='kw'>dplyr_test</span> <span class='op'>&lt;-</span>
   <span class='kw'>iris</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>) <span class='op'>%&gt;%</span>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='kw'>Species</span> != <span class='st'>"setosa"</span>)
 <span class='kw'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>prepped</span>, <span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_test</span>, <span class='kw'>rec_test</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>dplyr_test</span>, <span class='kw'>rec_test</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='kw'>values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"versicolor"</span>, <span class='st'>"virginica"</span>)
 
 <span class='kw'>qq_rec</span> <span class='op'>&lt;-</span>
@@ -281,7 +283,8 @@ between sessions). See the examples.</p>
   <span class='co'># Embed the `values` object in the call using !!</span>
   <span class='fu'>step_filter</span>(<span class='kw'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='kw'>Species</span>  <span class='op'>%in%</span> <span class='op'>!</span><span class='op'>!</span><span class='kw'>values</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>qq_rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>qq_rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms                                           id          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>Sepal.Length &gt; 4.5</span><span style='color: #555555;'>"</span><span>                            filter_GyP2S

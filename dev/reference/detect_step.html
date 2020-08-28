@@ -95,7 +95,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -195,7 +195,8 @@ to check if <code>step_intercept</code> is present, use <code>name = intercept</
     <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_intercept.html'>step_intercept</a></span>()
 
-<span class='fu'>detect_step</span>(<span class='kw'>rec</span>, <span class='st'>"step_intercept"</span>)</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+<span class='fu'>detect_step</span>(<span class='kw'>rec</span>, <span class='st'>"step_intercept"</span>)
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

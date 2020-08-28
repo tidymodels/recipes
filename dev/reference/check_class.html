@@ -96,7 +96,7 @@ check that will check if a variable is of a designated class." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -284,7 +284,8 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>train</span>, <span class='kw'>age</span> <span class='op'>~</span> <span class='kw'>.</span> ) <span class='op'>%&gt;%</span>
   <span class='fu'>check_class</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>()) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>train</span>, strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
@@ -304,7 +305,8 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, class_nm = <span class='st'>"character"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>check_class</span>(<span class='kw'>date</span>, class_nm = <span class='st'>"Date"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>train</span>, strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
@@ -321,7 +323,8 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 <span class='co'># By default only the classes that are specified</span>
 <span class='co'>#   are allowed.</span>
 <span class='kw'>x_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(time = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() <span class='op'>-</span> <span class='fl'>60</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>()))
-<span class='kw'>x_df</span><span class='op'>$</span><span class='kw'>time</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>()</div><div class='output co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>x_df</span><span class='op'>$</span><span class='kw'>time</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>()
+</div><div class='output co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>check_class</span>(<span class='kw'>time</span>, class_nm = <span class='st'>"POSIXt"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
@@ -332,11 +335,13 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>check_class</span>(<span class='kw'>time</span>, class_nm = <span class='st'>"POSIXt"</span>, allow_additional = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>x_df</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 1</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>x_df</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 1</span><span>
 #&gt;   time               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span> 2020-08-25 </span><span style='color: #555555;'>14:06:30</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> 2020-08-25 </span><span style='color: #555555;'>14:07:30</span><span></div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> 2020-08-28 </span><span style='color: #555555;'>22:13:24</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> 2020-08-28 </span><span style='color: #555555;'>22:14:24</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

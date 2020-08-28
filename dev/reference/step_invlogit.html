@@ -97,7 +97,7 @@ zero and one." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -273,7 +273,8 @@ the function <code>f(x) = 1/(1+exp(-x))</code>.</p>
 <span class='kw'>ilogit_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>ilogit_trans</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ilogit_obj</span>, <span class='kw'>biomass_te</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>carbon</span>)</div><div class='img'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>carbon</span>)
+</div><div class='img'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -97,7 +97,7 @@ components." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -330,13 +330,15 @@ Analysis</em>. Springer.</p>
 
 <span class='kw'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC1</span>, <span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC2</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC1</span>, <span class='kw'>pca_data</span><span class='op'>$</span><span class='kw'>PC2</span>,
-     xlim = <span class='kw'>rng</span>, ylim = <span class='kw'>rng</span>)</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
+     xlim = <span class='kw'>rng</span>, ylim = <span class='kw'>rng</span>)
+</div><div class='img'><img src='step_pca-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='kw'>with_thresh</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>()) <span class='op'>%&gt;%</span>
   <span class='fu'>step_pca</span>(<span class='fu'><a href='has_role.html'>all_numeric</a></span>(), threshold = <span class='fl'>.99</span>)
 <span class='kw'>with_thresh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>with_thresh</span>, training = <span class='kw'>USArrests</span>)
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>with_thresh</span>, <span class='kw'>USArrests</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 4</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>with_thresh</span>, <span class='kw'>USArrests</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 4</span><span>
 #&gt;        PC1     PC2     PC3      PC4
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> -</span><span style='color: #BB0000;'>0.976</span><span>   1.12   -</span><span style='color: #BB0000;'>0.440</span><span>   0.155  
@@ -350,10 +352,12 @@ Analysis</em>. Springer.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> -</span><span style='color: #BB0000;'>2.98</span><span>    0.038</span><span style='text-decoration: underline;'>8</span><span> -</span><span style='color: #BB0000;'>0.571</span><span>  -</span><span style='color: #BB0000;'>0.095</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span> 
 #&gt; </span><span style='color: #555555;'>10</span><span> -</span><span style='color: #BB0000;'>1.62</span><span>    1.27   -</span><span style='color: #BB0000;'>0.339</span><span>   1.07   
 #&gt; </span><span style='color: #555555;'># … with 40 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_trans</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_trans</span>, number = <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
 #&gt;   terms         value component id       
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_estimates</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        pca_YT48I</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>pca_estimates</span>, number = <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16 x 4</span><span>
 #&gt;    terms      value component id       
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> Murder   -</span><span style='color: #BB0000;'>0.536</span><span>  PC1       pca_YT48I

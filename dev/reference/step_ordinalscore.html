@@ -97,7 +97,7 @@ numeric scores." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -269,7 +269,8 @@ functions can also be used (see the example below).</p>
                                     levels = <span class='kw'>fail_lvls</span>,
                                     ordered = <span class='fl'>TRUE</span>))
 
-<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='op'>~</span><span class='kw'>fail_severity</span>, data = <span class='kw'>ord_data</span>)</div><div class='output co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
+<span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='op'>~</span><span class='kw'>fail_severity</span>, data = <span class='kw'>ord_data</span>)
+</div><div class='output co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
 #&gt; 1           1   -7.071068e-01       0.4082483
 #&gt; 2           1   -7.850462e-17      -0.8164966
 #&gt; 3           1    7.071068e-01       0.4082483
@@ -285,7 +286,8 @@ functions can also be used (see the example below).</p>
 
 <span class='kw'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>linear_values</span>, training = <span class='kw'>ord_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>linear_values</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>linear_values</span>, new_data = <span class='kw'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>             1              1            0
@@ -300,19 +302,22 @@ functions can also be used (see the example below).</p>
   <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='kw'>item</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_ordinalscore</span>(<span class='kw'>fail_severity</span>, convert = <span class='kw'>custom</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms         id                
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
 #&gt; </span><span style='color: #555555;'>1</span><span> fail_severity ordinalscore_qIB0v</div><div class='input'>
 <span class='kw'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>nonlin_scores</span>, training = <span class='kw'>ord_data</span>)
 
-<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>nonlin_scores</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>nonlin_scores</span>, new_data = <span class='kw'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>())
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
 #&gt;   fail_severity item_paperclip item_twitter
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>             1              1            0
 #&gt; </span><span style='color: #555555;'>2</span><span>             3              0            1
 #&gt; </span><span style='color: #555555;'>3</span><span>             7              0            0</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>nonlin_scores</span>, number = <span class='fl'>2</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms         id                
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
 #&gt; </span><span style='color: #555555;'>1</span><span> fail_severity ordinalscore_qIB0v</div></span></pre>

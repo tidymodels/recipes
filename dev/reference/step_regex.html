@@ -96,7 +96,7 @@ create a new dummy variable based on a regular expression." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -276,7 +276,8 @@ new column name).</p>
   <span class='fu'>step_regex</span>(<span class='kw'>description</span>, pattern = <span class='st'>"ratake families"</span>)
 
 <span class='kw'>rec2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>covers</span>)
-<span class='kw'>rec2</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>rec2</span>
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -290,7 +291,8 @@ new column name).</p>
 #&gt; Regular expression dummy variable using `(rock|stony)` [trained]
 #&gt; Regular expression dummy variable using `ratake families` [trained]</div><div class='input'>
 <span class='kw'>with_dummies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec2</span>, new_data = <span class='kw'>covers</span>)
-<span class='kw'>with_dummies</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 40 x 3</span><span>
+<span class='kw'>with_dummies</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 40 x 3</span><span>
 #&gt;    description                                             rocks ratake.families
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 1,cathedral family,rock outcrop complex,extremely stony     1               0
@@ -303,10 +305,12 @@ new column name).</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> 8,supervisor,limber families complex                        0               0
 #&gt; </span><span style='color: #555555;'> 9</span><span> 9,troutville family,very stony                              1               0
 #&gt; </span><span style='color: #555555;'>10</span><span> 10,bullwark,catamount families,rock outcrop complex,ru…     1               0
-#&gt; </span><span style='color: #555555;'># … with 30 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+#&gt; </span><span style='color: #555555;'># … with 30 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms       result id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> description </span><span style='color: #BB0000;'>NA</span><span>     regex_dLN9J</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec2</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> description </span><span style='color: #BB0000;'>NA</span><span>     regex_dLN9J</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec2</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms       result id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> description rocks  regex_dLN9J</div></span></pre>

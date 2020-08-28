@@ -97,7 +97,7 @@ or NaN values." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -250,7 +250,8 @@ new step added to the sequence of existing steps (if any).</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Ozone</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>airquality</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_naomit</span>(<span class='kw'>Solar.R</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>airquality</span>, verbose = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
 #&gt;    Solar.R  Wind  Temp Month   Day Ozone
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>     190   7.4    67     5     1    41
@@ -263,7 +264,8 @@ new step added to the sequence of existing steps (if any).</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span>     194   8.6    69     5    10    </span><span style='color: #BB0000;'>NA</span><span>
 #&gt; </span><span style='color: #555555;'> 9</span><span>     256   9.7    69     5    12    16
 #&gt; </span><span style='color: #555555;'>10</span><span>     290   9.2    66     5    13    11
-#&gt; </span><span style='color: #555555;'># … with 136 more rows</span><span></div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 136 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

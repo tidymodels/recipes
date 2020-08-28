@@ -97,7 +97,7 @@ variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -255,7 +255,8 @@ is the columns that will be affected.</p>
 <span class='kw'>rand_set</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>integers</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>5377</span>)
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rand_set</span>, <span class='kw'>integers</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 3</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rand_set</span>, <span class='kw'>integers</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 12 x 3</span><span>
 #&gt;        A     B     C
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>     5    13    25
@@ -270,15 +271,17 @@ is the columns that will be affected.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span>     7    15    34
 #&gt; </span><span style='color: #555555;'>11</span><span>     2    17    35
 #&gt; </span><span style='color: #555555;'>12</span><span>     8    20    36</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'>1</span><span> A     shuffle_Xr6aP
-#&gt; </span><span style='color: #555555;'>2</span><span> B     shuffle_Xr6aP</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rand_set</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> A     shuffle_VprbC
+#&gt; </span><span style='color: #555555;'>2</span><span> B     shuffle_VprbC</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rand_set</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'>1</span><span> A     shuffle_Xr6aP
-#&gt; </span><span style='color: #555555;'>2</span><span> B     shuffle_Xr6aP</div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> A     shuffle_VprbC
+#&gt; </span><span style='color: #555555;'>2</span><span> B     shuffle_VprbC</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

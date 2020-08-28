@@ -97,7 +97,7 @@ unit sphere." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -283,13 +283,17 @@ Chemical Information and Modeling</em>, 46(3), 1402-1409.</p>
 
 <span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ss_obj</span>, <span class='kw'>biomass_te</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)</div><div class='img'><img src='step_spatialsign-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)</div><div class='img'><img src='step_spatialsign-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_trans</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)
+</div><div class='img'><img src='step_spatialsign-1.png' alt='' width='768' height='552' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)
+</div><div class='img'><img src='step_spatialsign-2.png' alt='' width='768' height='552' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_trans</span>, number = <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms    id               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   spatialsign_rfFce
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen spatialsign_rfFce</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_obj</span>, number = <span class='fl'>3</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen spatialsign_rfFce</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_obj</span>, number = <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms    id               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   spatialsign_rfFce

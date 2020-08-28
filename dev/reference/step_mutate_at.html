@@ -96,7 +96,7 @@ the selected variables using a common function." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -247,8 +247,9 @@ columns <code>terms</code> which contains the columns being transformed.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_mutate_at</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"Length"</span>), fn = <span class='op'>~</span> <span class='fl'>1</span><span class='op'>/</span><span class='kw'>.</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 5</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  
 #&gt; </span><span style='color: #555555;'> 1</span><span>        0.196         3.5        0.714         0.2 setosa 
@@ -265,8 +266,9 @@ columns <code>terms</code> which contains the columns being transformed.</p>
   <span class='co'># leads to more columns being created.</span>
   <span class='fu'>step_mutate_at</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"Length"</span>), fn = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(log = <span class='kw'>log</span>, sqrt = <span class='kw'>sqrt</span>)) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 9</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 9</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Length_log
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2 setosa              1.63

@@ -100,7 +100,7 @@ argument." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -274,7 +274,8 @@ order</em> for lagging.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>df</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_lag</span>(<span class='kw'>index</span>, <span class='kw'>day</span>, lag = <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 7</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 7</span><span>
 #&gt;        x index day        lag_2_index lag_2_day  lag_3_index lag_3_day 
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'> 1</span><span> 0.262     1 1999-01-01          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
@@ -286,7 +287,8 @@ order</em> for lagging.</p>
 #&gt; </span><span style='color: #555555;'> 7</span><span> 0.453     7 1999-01-07           5 1999-01-05           4 1999-01-04
 #&gt; </span><span style='color: #555555;'> 8</span><span> 0.628     8 1999-01-08           6 1999-01-06           5 1999-01-05
 #&gt; </span><span style='color: #555555;'> 9</span><span> 0.620     9 1999-01-09           7 1999-01-07           6 1999-01-06
-#&gt; </span><span style='color: #555555;'>10</span><span> 0.515    10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'>10</span><span> 0.515    10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

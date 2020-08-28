@@ -97,7 +97,7 @@ variables using B-splines." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -290,7 +290,8 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 <span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>with_splines</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>with_splines</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>expanded</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 10</span><span>
+<span class='kw'>expanded</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 10</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>   47.2     0.3    0.22  18.3       0.437      0.273      0.056</span><span style='text-decoration: underline;'>8</span><span> 

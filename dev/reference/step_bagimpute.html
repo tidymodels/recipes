@@ -96,7 +96,7 @@ create bagged tree models to impute missing data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -293,7 +293,8 @@ Springer Verlag.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"credit_data"</span>)
 
 <span class='co'>## missing data per column</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='kw'>credit_data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(num = <span class='fl'>0</span>))</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span>(<span class='kw'>credit_data</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>x</span>)), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(num = <span class='fl'>0</span>))
+</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
 #&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
 #&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
@@ -338,7 +339,8 @@ Springer Verlag.</p>
 
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>impute_rec</span>, number = <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>imp_models</span>, number = <span class='fl'>1</span>)
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

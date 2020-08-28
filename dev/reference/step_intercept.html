@@ -100,7 +100,7 @@ all_predictors." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -264,7 +264,8 @@ new step added to the sequence of existing steps (if any).</p>
 <span class='kw'>rec_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec_trans</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>with_intercept</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec_obj</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>with_intercept</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 7</span><span>
+<span class='kw'>with_intercept</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 7</span><span>
 #&gt;    intercept carbon hydrogen oxygen nitrogen sulfur   HHV
 #&gt;        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>         2   4.45     5.67   47.2     0.3    0.22  18.3
@@ -277,7 +278,8 @@ new step added to the sequence of existing steps (if any).</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span>         2   4.04     4.66   33.8     0.95   0.2   16.2
 #&gt; </span><span style='color: #555555;'> 9</span><span>         2   2.81     4.4    31.1     0.14   4.9   11.1
 #&gt; </span><span style='color: #555555;'>10</span><span>         2   2.67     3.77   23.7     4.63   1.05  10.8
-#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

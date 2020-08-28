@@ -96,7 +96,7 @@ vectors to strings." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -266,7 +266,8 @@ to factors after all of the steps have been prepped.</p>
        strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
   <span class='kw'>juice</span>
 <span class='co'># diet is a</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>factor_test</span><span class='op'>$</span><span class='kw'>diet</span>)</div><div class='output co'>#&gt; [1] "factor"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>factor_test</span><span class='op'>$</span><span class='kw'>diet</span>)
+</div><div class='output co'>#&gt; [1] "factor"</div><div class='input'>
 <span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'>step_factor2string</span>(<span class='kw'>diet</span>)
 
@@ -275,8 +276,10 @@ to factors after all of the steps have been prepped.</p>
        strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
   <span class='kw'>juice</span>
 <span class='co'># diet is a</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>string_test</span><span class='op'>$</span><span class='kw'>diet</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>string_test</span><span class='op'>$</span><span class='kw'>diet</span>)
+</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms ordered id                 
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
 #&gt; </span><span style='color: #555555;'>1</span><span> diet  FALSE   string2factor_fCgON</div></span></pre>

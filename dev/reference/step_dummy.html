@@ -98,7 +98,7 @@ the original data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -300,9 +300,8 @@ corresponding dummy variables are also missing.</p>
 <p>When data to be processed contains novel levels (i.e., not
 contained in the training set), a missing value is assigned to
 the results. See <code><a href='step_other.html'>step_other()</a></code> for an alternative.</p>
-<p>If no columns are selected (perhaps due to an earlier <code><a href='step_zv.html'>step_zv()</a></code>), the
-<code><a href='bake.html'>bake()</a></code> and <code><a href='juice.html'>juice()</a></code> functions will return the data as-is (e.g. with no
-dummy variables).</p>
+<p>If no columns are selected (perhaps due to an earlier <code><a href='step_zv.html'>step_zv()</a></code>),
+<code><a href='bake.html'>bake()</a></code> will return the data as-is (e.g. with no dummy variables).</p>
 <p>The <a href='https://tidymodels.github.io/recipes/articles/Dummies.html'>package vignette for dummy variables</a>
 and interactions has more information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -324,12 +323,14 @@ and interactions has more information.</p>
 
 <span class='kw'>dummy_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>dummies</span>, new_data = <span class='kw'>okc</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>)</div><div class='output co'>#&gt;  [1] "strictly anything"   "mostly other"        "anything"           
+<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>)
+</div><div class='output co'>#&gt;  [1] "strictly anything"   "mostly other"        "anything"           
 #&gt;  [4] "vegetarian"          "mostly anything"     "mostly vegetarian"  
 #&gt;  [7] "strictly vegan"      "strictly vegetarian" "mostly vegan"       
 #&gt; [10] "strictly other"      "mostly halal"        "other"              
 #&gt; [13] "vegan"               "mostly kosher"       "strictly halal"     
-#&gt; [16] "halal"               "strictly kosher"     "kosher"             </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dummy_data</span>), value = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "diet_halal"               "diet_kosher"             
+#&gt; [16] "halal"               "strictly kosher"     "kosher"             </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dummy_data</span>), value = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;  [1] "diet_halal"               "diet_kosher"             
 #&gt;  [3] "diet_mostly.anything"     "diet_mostly.halal"       
 #&gt;  [5] "diet_mostly.kosher"       "diet_mostly.other"       
 #&gt;  [7] "diet_mostly.vegan"        "diet_mostly.vegetarian"  
@@ -342,14 +343,18 @@ and interactions has more information.</p>
 <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'>step_dummy</span>(<span class='kw'>diet</span>, one_hot = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='juice.html'>juice</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"diet"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"diet"</span>)) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>))</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
+  <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()
+</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>))
+</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
 <span class='co'># Without one_hot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dummy_data</span>), value = <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dummy_data</span>), value = <span class='fl'>TRUE</span>))
+</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>dummies</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>dummies</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
 #&gt;    terms columns             id         
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'> 1</span><span> diet  anything            dummy_CL8hh

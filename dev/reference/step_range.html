@@ -97,7 +97,7 @@ range of values." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -280,7 +280,8 @@ the training set, the new values are truncated at <code>min</code> or
 
 <span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ranged_obj</span>, <span class='kw'>biomass_te</span>)
 
-<span class='kw'>biomass_te</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>transformed_te</span>)]</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+<span class='kw'>biomass_te</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>transformed_te</span>)]
+</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
 #&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
 #&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
 #&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
@@ -290,7 +291,8 @@ the training set, the new values are truncated at <code>min</code> or
 #&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='kw'>transformed_te</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 6</span><span>
+#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='kw'>transformed_te</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 6</span><span>
 #&gt;    carbon hydrogen oxygen nitrogen sulfur   HHV
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>  0.384    0.490   47.2     0.3    0.22  18.3
@@ -304,11 +306,13 @@ the training set, the new values are truncated at <code>min</code> or
 #&gt; </span><span style='color: #555555;'> 9</span><span>  0.177    0.379   31.1     0.14   4.9   11.1
 #&gt; </span><span style='color: #555555;'>10</span><span>  0.160    0.325   23.7     4.63   1.05  10.8
 #&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ranged_trans</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ranged_trans</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms      min   max id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon      </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span> range_mkCFm
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span> range_mkCFm</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ranged_obj</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span> range_mkCFm</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ranged_obj</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms      min   max id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   14.6   97.2 range_mkCFm

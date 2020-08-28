@@ -99,7 +99,7 @@ level equal." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -276,11 +276,11 @@ added to the sequence of existing steps (if any). For the
 the variable used to sample.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Down-sampling is intended to be performed on the <em>training</em> set
-alone. For this reason, the default is <code>skip = TRUE</code>. It is
-advisable to use <code><a href='prep.html'>prep(recipe, retain = TRUE)</a></code> when preparing
-the recipe; in this way <code><a href='juice.html'>juice()</a></code> can be used to obtain the
-down-sampled version of the data.</p>
+    <p>Down-sampling is intended to be performed on the <em>training</em> set alone. For
+this reason, the default is <code>skip = TRUE</code>. It is advisable to use
+<code><a href='prep.html'>prep(recipe, retain = TRUE)</a></code> when preparing the recipe; in this way
+<code><a href='bake.html'>bake(object, new_data = NULL)</a></code> can be used to obtain the down-sampled
+version of the data.</p>
 <p>If there are missing values in the factor variable that is used
 to define the sampling, missing data are selected at random in
 the same way that the other factor levels are sampled. Missing
@@ -288,8 +288,7 @@ values are not used to determine the amount of data in the
 minority level</p>
 <p>For any data with factor levels occurring with the same
 frequency as the minority level, all data will be retained.</p>
-<p>All columns in the data are sampled and returned by <code><a href='juice.html'>juice()</a></code>
-and <code><a href='bake.html'>bake()</a></code>.</p>
+<p>All columns in the data are sampled and returned by <code><a href='bake.html'>bake()</a></code>.</p>
 <p>Keep in mind that the location of down-sampling in the step
 may have effects. For example, if centering and scaling,
 it is not clear whether those operations should be conducted
@@ -302,7 +301,8 @@ conducted outside of the training set.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>))
+</div><div class='output co'>#&gt; 
 #&gt;               halal              kosher      strictly halal     strictly kosher 
 #&gt;                  11                  11                  18                  18 
 #&gt;        mostly halal       mostly kosher               vegan      strictly vegan 
@@ -315,11 +315,13 @@ conducted outside of the training set.</p>
 #&gt;                6174               16562               24360 </div><div class='input'>
 <span class='kw'>ds_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>step_downsample</span>(<span class='kw'>diet</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>okc</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_downsample()` is deprecated as of recipes 0.1.13.</span>
+  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>okc</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_downsample()` is deprecated as of recipes 0.1.13.</span>
 #&gt; <span class='warning'>Please use `themis::step_downsample()` instead.</span>
 #&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
 #&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='juice.html'>juice</a></span>(<span class='kw'>ds_rec</span>)<span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ds_rec</span>, new_data = <span class='kw'>NULL</span>)<span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
+</div><div class='output co'>#&gt; 
 #&gt;            anything               halal              kosher     mostly anything 
 #&gt;                  11                  11                  11                  11 
 #&gt;        mostly halal       mostly kosher        mostly other        mostly vegan 
@@ -332,7 +334,8 @@ conducted outside of the training set.</p>
 #&gt;                  11                  11                  11 </div><div class='input'>
 <span class='co'># since `skip` defaults to TRUE, baking the step has no effect</span>
 <span class='kw'>baked_okc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ds_rec</span>, new_data = <span class='kw'>okc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>baked_okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>baked_okc</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
+</div><div class='output co'>#&gt; 
 #&gt;            anything               halal              kosher     mostly anything 
 #&gt;                6174                  11                  11               16562 
 #&gt;        mostly halal       mostly kosher        mostly other        mostly vegan 

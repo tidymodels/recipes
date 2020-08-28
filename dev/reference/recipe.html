@@ -96,7 +96,7 @@ order to get it ready for data analysis." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -294,7 +294,8 @@ data set to save time and memory.</p>
 <span class='kw'>sp_signed</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
-<span class='kw'>sp_signed</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>sp_signed</span>
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -308,7 +309,8 @@ data set to save time and memory.</p>
 #&gt; Spatial sign on  all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
 <span class='kw'>sp_signed_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>sp_signed</span>, training = <span class='kw'>biomass_tr</span>)
-<span class='kw'>sp_signed_trained</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>sp_signed_trained</span>
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -354,7 +356,8 @@ data set to save time and memory.</p>
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>HHV</span>, new_role = <span class='st'>"outcome"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>sample</span>, new_role = <span class='st'>"id variable"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>dataset</span>, new_role = <span class='st'>"splitting indicator"</span>)
-<span class='kw'>rec</span></div><div class='output co'>#&gt; Data Recipe
+<span class='kw'>rec</span>
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 

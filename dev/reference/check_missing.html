@@ -96,7 +96,7 @@ operation that will check if variables contain missing values." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -250,7 +250,8 @@ to the data.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>credit_data</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>credit_data</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span>()</div><div class='output co'>#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job 
+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>credit_data</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span>()
+</div><div class='output co'>#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job 
 #&gt;         0         0         6         0         0         1         0         2 
 #&gt;  Expenses    Income    Assets      Debt    Amount     Price 
 #&gt;         0       381        47        18         0         0 </div><div class='input'>
@@ -258,7 +259,8 @@ to the data.</p>
 <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>credit_data</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>check_missing</span>(<span class='kw'>Age</span>, <span class='kw'>Expenses</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
+  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>credit_data</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,454 x 14</span><span>
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> good           9 rent     60    30 married no      free…       73    129
@@ -290,7 +292,8 @@ to the data.</p>
   <span class='fu'>check_missing</span>(<span class='kw'>Income</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span>()
 
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rp</span>, <span class='kw'>train_data</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,338 x 14</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rp</span>, <span class='kw'>train_data</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,338 x 14</span><span>
 #&gt;    Status Seniority Home   Time   Age Marital Records Job   Expenses Income
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> bad           10 owner    36    46 married yes     free…       90    200
@@ -306,7 +309,8 @@ to the data.</p>
 #&gt; </span><span style='color: #555555;'># … with 1,328 more rows, and 4 more variables: Assets </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Debt </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   Amount </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Price </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rp</span>, <span class='kw'>test_data</span>)
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -97,7 +97,7 @@ indicator variables for common holidays." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -274,7 +274,8 @@ the columns that will be affected and <code>holiday</code>.</p>
 
 <span class='kw'>holiday_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>holiday_rec</span>, training = <span class='kw'>examples</span>)
 <span class='kw'>holiday_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>holiday_rec</span>, new_data = <span class='kw'>examples</span>)
-<span class='kw'>holiday_values</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 41 x 4</span><span>
+<span class='kw'>holiday_values</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 41 x 4</span><span>
 #&gt;    someday    someday_LaborDay someday_NewYearsDay someday_ChristmasDay
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 2000-12-20                0                   0                    0

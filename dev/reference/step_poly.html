@@ -97,7 +97,7 @@ variables using orthogonal polynomials." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -287,7 +287,8 @@ for the new variables is <code>varname_poly_1</code> and so on.</p>
 <span class='kw'>quadratic</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>quadratic</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>quadratic</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>expanded</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 8</span><span>
+<span class='kw'>expanded</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 8</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_poly_1 carbon_poly_2 hydrogen_poly_1
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>   47.2     0.3    0.22  18.3      -</span><span style='color: #BB0000;'>0.009</span><span style='color: #BB0000;text-decoration: underline;'>03</span><span>      -</span><span style='color: #BB0000;'>0.012</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>          0.008</span><span style='text-decoration: underline;'>26</span><span>
@@ -301,7 +302,8 @@ for the new variables is <code>varname_poly_1</code> and so on.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span>   31.1     0.14   4.9   11.1      -</span><span style='color: #BB0000;'>0.086</span><span style='color: #BB0000;text-decoration: underline;'>3</span><span>        0.125          -</span><span style='color: #BB0000;'>0.041</span><span style='color: #BB0000;text-decoration: underline;'>5</span><span> 
 #&gt; </span><span style='color: #555555;'>10</span><span>   23.7     4.63   1.05  10.8      -</span><span style='color: #BB0000;'>0.092</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>        0.142          -</span><span style='color: #BB0000;'>0.066</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> 
 #&gt; </span><span style='color: #555555;'># … with 70 more rows, and 1 more variable: hydrogen_poly_2 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>quadratic</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>quadratic</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   terms    degree id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon        2 poly_9HPWv

@@ -97,7 +97,7 @@ absolute correlations with other variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.13.9001</span>
         </div>
       </div>
     </div>
@@ -304,22 +304,26 @@ function.</p>
 <span class='kw'>filter_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>corr_filter</span>, training = <span class='kw'>biomass_tr</span>)
 
 <span class='kw'>filtered_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>filter_obj</span>, <span class='kw'>biomass_te</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='kw'>biomass_tr</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='kw'>biomass_tr</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span>, <span class='fl'>9</span>)])), <span class='fl'>2</span>)
+</div><div class='output co'>#&gt;           carbon hydrogen oxygen nitrogen sulfur duplicate
 #&gt; carbon      1.00     0.32   0.63     0.15   0.09      1.00
 #&gt; hydrogen    0.32     1.00   0.54     0.07   0.19      0.31
 #&gt; oxygen      0.63     0.54   1.00     0.18   0.31      0.63
 #&gt; nitrogen    0.15     0.07   0.18     1.00   0.27      0.15
 #&gt; sulfur      0.09     0.19   0.31     0.27   1.00      0.10
-#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='kw'>filtered_te</span>)), <span class='fl'>2</span>)</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur duplicate  HHV
+#&gt; duplicate   1.00     0.31   0.63     0.15   0.10      1.00</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='kw'>filtered_te</span>)), <span class='fl'>2</span>)
+</div><div class='output co'>#&gt;           hydrogen nitrogen sulfur duplicate  HHV
 #&gt; hydrogen      1.00     0.11   0.26      0.20 0.10
 #&gt; nitrogen      0.11     1.00   0.16      0.13 0.11
 #&gt; sulfur        0.26     0.16   1.00      0.13 0.08
 #&gt; duplicate     0.20     0.13   0.13      1.00 0.94
 #&gt; HHV           0.10     0.11   0.08      0.94 1.00</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>corr_filter</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>corr_filter</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>    corr_ubc7G</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>filter_obj</span>, number = <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>    corr_ubc7G</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>filter_obj</span>, number = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms  id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
 #&gt; </span><span style='color: #555555;'>1</span><span> oxygen corr_ubc7G
