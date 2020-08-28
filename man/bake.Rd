@@ -34,7 +34,7 @@ A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in \code{new_data}.
 }
 \description{
-For a recipe with at least one preprocessing operations that has been trained by
+For a recipe with at least one preprocessing operation that has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
 }
 \details{
