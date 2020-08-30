@@ -30,7 +30,7 @@ used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
 
-\item{name}{Character name for new added column}
+\item{name}{Character name for newly added column}
 
 \item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
 

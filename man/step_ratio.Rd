@@ -28,7 +28,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used in the \emph{numerator} of the ratio.
-When used with \code{denom_vars}, the dots indicates which
+When used with \code{denom_vars}, the dots indicate which
 variables are used in the \emph{denominator}. See
 \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
@@ -73,7 +73,7 @@ added to the sequence of existing steps (if any). For the
 selectors or variables selected) and \code{denom}.
 }
 \description{
-\code{step_ratio} creates a a \emph{specification} of a recipe
+\code{step_ratio} creates a \emph{specification} of a recipe
 step that will create one or more ratios out of numeric
 variables.
 }

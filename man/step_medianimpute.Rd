@@ -32,7 +32,7 @@ preprocessing have been estimated.}
 
 \item{medians}{A named numeric vector of medians. This is \code{NULL} until
 computed by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers,
-the median will be converted to an integer to maintain the same a data type.}
+the median will be converted to an integer to maintain the same data type.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -59,7 +59,7 @@ those variables.
 \details{
 \code{step_medianimpute} estimates the variable medians from the data
 used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies
-the new values to new data sets using these medians
+the new values to new data sets using these medians.
 }
 \examples{
 library(modeldata)

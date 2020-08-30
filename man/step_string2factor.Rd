@@ -23,7 +23,7 @@ step_string2factor(
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will converted to factors. See
+variables will be converted to factors. See
 \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 

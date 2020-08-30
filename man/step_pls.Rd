@@ -58,7 +58,7 @@ arguments).}
 retained along with the new features?}
 
 \item{res}{A list of results are stored here once this preprocessing step
-has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+has been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}

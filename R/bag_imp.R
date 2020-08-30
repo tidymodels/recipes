@@ -8,7 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For
 #'  `step_bagimpute`, this indicates the variables to be imputed. When used with
-#'  `imp_vars`, the dots indicates which variables are used to predict the
+#'  `imp_vars`, the dots indicate which variables are used to predict the
 #'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are created.
@@ -18,11 +18,11 @@
 #'  by commas or different selectors (see [selections()]). If a column is
 #'  included in both lists to be imputed and to be an imputation predictor, it
 #'  will be removed from the latter and not used to impute itself.
-#' @param trees An integer for the number bagged trees to use in each model.
+#' @param trees An integer for the number of bagged trees to use in each model.
 #' @param options A list of options to [ipred::ipredbagg()]. Defaults are set
 #'  for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
 #'  that the arguments `X` and `y` should not be passed here.
-#' @param seed_val A integer used to create reproducible models. The same seed
+#' @param seed_val An integer used to create reproducible models. The same seed
 #'  is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
 #'  bagged trees have be trained by [prep.recipe()].
@@ -34,7 +34,7 @@
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details For each variables requiring imputation, a bagged tree is created
+#' @details For each variable requiring imputation, a bagged tree is created
 #'  where the outcome is the variable of interest and the predictors are any
 #'  other variables listed in the `impute_with` formula. One advantage to the
 #'  bagged tree is that is can accept predictors that have missing values

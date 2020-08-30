@@ -1,6 +1,6 @@
 #' Check for Missing Values
 #'
-#' `check_missing` creates a a *specification* of a recipe
+#' `check_missing` creates a *specification* of a recipe
 #'  operation that will check if variables contain missing values.
 #'
 #' @param recipe A recipe object. The check will be added to the

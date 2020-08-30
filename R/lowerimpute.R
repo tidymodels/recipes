@@ -13,7 +13,7 @@
 #'  currently used.
 #' @param role Not used by this step since no new variables are
 #'  created.
-#' @param threshold A named numeric vector of lower bounds This is
+#' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the

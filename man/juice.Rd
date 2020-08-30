@@ -36,7 +36,7 @@ When preparing a recipe, if the training data set is
 retained using \code{retain = TRUE}, there is no need to \code{bake()} the
 recipe to get the preprocessed training set.
 
-\code{juice()} will return the results of a recipes where \emph{all steps}
+\code{juice()} will return the results of a recipe where \emph{all steps}
 have been applied to the data, irrespective of the value of
 the step's \code{skip} argument.
 }

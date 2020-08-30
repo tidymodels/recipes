@@ -56,7 +56,7 @@ added to the sequence of existing operations (if any). For the
 selectors or variables selected).
 }
 \description{
-\code{check_new_values} creates a a \emph{specification} of a recipe
+\code{check_new_values} creates a \emph{specification} of a recipe
 operation that will check if variables contain new values.
 }
 \details{

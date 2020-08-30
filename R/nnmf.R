@@ -24,7 +24,7 @@
 #'  `NNMF()` function in the `dimRed` package. **Note** that the arguments
 #'  `data` and `ndim` should not be passed here.
 #' @param res The `NNMF()` object is stored
-#'  here once this preprocessing step has be trained by
+#'  here once this preprocessing step has been trained by
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.

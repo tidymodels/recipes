@@ -7,7 +7,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will permuted. See [selections()] for more
+#'  variables will be permuted. See [selections()] for more
 #'  details. For the `tidy` method, these are not
 #'  currently used.
 #' @param role Not used by this step since no new variables are

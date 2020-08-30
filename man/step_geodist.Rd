@@ -72,7 +72,7 @@ method, a tibble with columns echoing the values of \code{lat},
 \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{name}, and \code{id}.
 }
 \description{
-\code{step_geodist} creates a a \emph{specification} of a
+\code{step_geodist} creates a \emph{specification} of a
 recipe step that will calculate the distance between
 points on a map to a reference location.
 }

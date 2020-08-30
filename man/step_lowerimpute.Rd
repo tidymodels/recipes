@@ -32,7 +32,7 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A named numeric vector of lower bounds This is
+\item{threshold}{A named numeric vector of lower bounds. This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the

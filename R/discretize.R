@@ -208,7 +208,7 @@ print.discretize <-
 
 #' Discretize Numeric Variables
 #'
-#' `step_discretize` creates a a *specification* of a recipe
+#' `step_discretize` creates a *specification* of a recipe
 #'  step that will convert numeric data into a factor with
 #'  bins having approximately the same number of data points (based
 #'  on a training set).
@@ -226,7 +226,7 @@ print.discretize <-
 #'  here once the recipe has be trained by
 #'  [prep.recipe()].
 #' @param options A list of options to [discretize()]. A
-#'  defaults is set for the argument `x`. Note that the using
+#'  default is set for the argument `x`. Note that using
 #'  the options `prefix` and `labels` when more than one
 #'  variable is being transformed might be problematic as all
 #'  variables inherit those values.

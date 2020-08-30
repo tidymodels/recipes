@@ -7,7 +7,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For
 #'  `step_knnimpute`, this indicates the variables to be imputed. When used with
-#'  `imp_vars`, the dots indicates which variables are used to predict the
+#'  `imp_vars`, the dots indicate which variables are used to predict the
 #'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are created.

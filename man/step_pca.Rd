@@ -97,7 +97,7 @@ original variables. Also, the components are statistically
 independent from one another. This means that they can be used
 to combat large inter-variables correlations in a data set.
 
-It is advisable to standardized the variables prior to running
+It is advisable to standardize the variables prior to running
 PCA. Here, each variable will be centered and scaled prior to
 the PCA calculation. This can be changed using the
 \code{options} argument or by using \code{\link[=step_center]{step_center()}}

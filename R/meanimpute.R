@@ -11,7 +11,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
 #'  by [prep.recipe()]. Note that, if the original data are integers, the mean
-#'  will be converted to an integer to maintain the same a data type.
+#'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.

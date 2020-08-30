@@ -11,7 +11,7 @@
 #' @param role Not used by this step since no new variables are created.
 #' @param medians A named numeric vector of medians. This is `NULL` until
 #'  computed by [prep.recipe()]. Note that, if the original data are integers,
-#'  the median will be converted to an integer to maintain the same a data type.
+#'  the median will be converted to an integer to maintain the same data type.
 #' @return An updated version of `recipe` with the new step added to the
 #'  sequence of existing steps (if any). For the `tidy` method, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
@@ -22,7 +22,7 @@
 #' @export
 #' @details `step_medianimpute` estimates the variable medians from the data
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
-#'  the new values to new data sets using these medians
+#'  the new values to new data sets using these medians.
 #' @examples
 #' library(modeldata)
 #' data("credit_data")

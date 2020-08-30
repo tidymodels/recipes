@@ -45,7 +45,7 @@
 #'  The process starts with the center justified window calculations
 #'  and the beginning and ending parts of the rolling values are
 #'  determined using the first and last rolling values,
-#'  respectively. For example if a column `x` with 12 values is
+#'  respectively. For example, if a column `x` with 12 values is
 #'  smoothed with a 5-point moving median, the first three smoothed
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.

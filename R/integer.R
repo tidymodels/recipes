@@ -1,6 +1,6 @@
 #' Convert values to predefined integers
 #'
-#' `step_integer` creates a a *specification* of a recipe
+#' `step_integer` creates a *specification* of a recipe
 #'  step that will convert new data into a set of integers based
 #'  on the original data values.
 #'

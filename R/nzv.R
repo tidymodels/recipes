@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables that will evaluated by the filtering. See
+#'  variables that will be evaluated by the filtering. See
 #'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role Not used by this step since no new variables are
@@ -28,8 +28,8 @@
 #' @export
 #'
 #' @details This step diagnoses predictors that have one unique
-#'  value (i.e. are zero variance predictors) or predictors that are
-#'  have both of the following characteristics:
+#'  value (i.e. are zero variance predictors) or predictors that have
+#'  both of the following characteristics:
 #' \enumerate{
 #'   \item they have very few unique values relative to the number
 #'    of samples and
@@ -37,11 +37,11 @@
 #'    the frequency of the second most common value is large.
 #' }
 #'
-#' For example, an example of near zero variance predictor is one
+#' For example, an example of near-zero variance predictor is one
 #'  that, for 1000 samples, has two distinct values and 999 of them
 #'  are a single value.
 #'
-#' To be flagged, first the frequency of the most prevalent value
+#' To be flagged, first, the frequency of the most prevalent value
 #'  over the second most frequent value (called the "frequency
 #'  ratio") must be above `freq_cut`. Secondly, the "percent of
 #'  unique values," the number of unique values divided by the total

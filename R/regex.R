@@ -13,7 +13,7 @@
 #' @param role For a variable created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dummy variable column created by the original
-#'  variable will be used as a predictors in a model.
+#'  variable will be used as a predictor in a model.
 #' @param pattern A character string containing a regular
 #'  expression (or character string for `fixed = TRUE`) to be
 #'  matched in the given character vector. Coerced by
