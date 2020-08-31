@@ -202,7 +202,7 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables that will evaluated by the filtering. See
+variables that will be evaluated by the filtering. See
 <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
@@ -260,18 +260,18 @@ is the columns that will be removed.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This step diagnoses predictors that have one unique
-value (i.e. are zero variance predictors) or predictors that are
-have both of the following characteristics:</p><ol>
+value (i.e. are zero variance predictors) or predictors that have
+both of the following characteristics:</p><ol>
 <li><p>they have very few unique values relative to the number
 of samples and</p></li>
 <li><p>the ratio of the frequency of the most common value to
 the frequency of the second most common value is large.</p></li>
 </ol>
 
-<p>For example, an example of near zero variance predictor is one
+<p>For example, an example of near-zero variance predictor is one
 that, for 1000 samples, has two distinct values and 999 of them
 are a single value.</p>
-<p>To be flagged, first the frequency of the most prevalent value
+<p>To be flagged, first, the frequency of the most prevalent value
 over the second most frequent value (called the "frequency
 ratio") must be above <code>freq_cut</code>. Secondly, the "percent of
 unique values," the number of unique values divided by the total

@@ -204,7 +204,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose variables. For
 <code>step_bagimpute</code>, this indicates the variables to be imputed. When used with
-<code>imp_vars</code>, the dots indicates which variables are used to predict the
+<code>imp_vars</code>, the dots indicate which variables are used to predict the
 missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
 <code>tidy</code> method, these are not currently used.</p></td>
     </tr>
@@ -227,7 +227,7 @@ will be removed from the latter and not used to impute itself.</p></td>
     </tr>
     <tr>
       <th>trees</th>
-      <td><p>An integer for the number bagged trees to use in each model.</p></td>
+      <td><p>An integer for the number of bagged trees to use in each model.</p></td>
     </tr>
     <tr>
       <th>models</th>
@@ -242,7 +242,7 @@ that the arguments <code>X</code> and <code>y</code> should not be passed here.<
     </tr>
     <tr>
       <th>seed_val</th>
-      <td><p>A integer used to create reproducible models. The same seed
+      <td><p>An integer used to create reproducible models. The same seed
 is used across all imputation models.</p></td>
     </tr>
     <tr>
@@ -272,7 +272,7 @@ columns <code>terms</code> (the selectors or variables selected) and <code>model
 bagged tree object).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For each variables requiring imputation, a bagged tree is created
+    <p>For each variable requiring imputation, a bagged tree is created
 where the outcome is the variable of interest and the predictors are any
 other variables listed in the <code>impute_with</code> formula. One advantage to the
 bagged tree is that is can accept predictors that have missing values
