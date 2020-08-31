@@ -1,6 +1,6 @@
 #' Holiday Feature Generator
 #'
-#' `step_holiday` creates a a *specification* of a
+#' `step_holiday` creates a *specification* of a
 #'  recipe step that will convert date data into one or more binary
 #'  indicator variables for common holidays.
 #'

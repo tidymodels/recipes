@@ -1,6 +1,6 @@
 #' Ratio Variable Creation
 #'
-#' `step_ratio` creates a a *specification* of a recipe
+#' `step_ratio` creates a *specification* of a recipe
 #'  step that will create one or more ratios out of numeric
 #'  variables.
 #'
@@ -8,7 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used in the *numerator* of the ratio.
-#'  When used with `denom_vars`, the dots indicates which
+#'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
 #'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.

@@ -52,7 +52,7 @@ to obtain a consensus projection.}
 \code{data} and \code{ndim} should not be passed here.}
 
 \item{res}{The \code{NNMF()} object is stored
-here once this preprocessing step has be trained by
+here once this preprocessing step has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the

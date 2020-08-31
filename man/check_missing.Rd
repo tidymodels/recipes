@@ -53,7 +53,7 @@ added to the sequence of existing operations (if any). For the
 selectors or variables selected).
 }
 \description{
-\code{check_missing} creates a a \emph{specification} of a recipe
+\code{check_missing} creates a \emph{specification} of a recipe
 operation that will check if variables contain missing values.
 }
 \details{

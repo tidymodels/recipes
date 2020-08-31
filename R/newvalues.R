@@ -1,6 +1,6 @@
 #' Check for New Values
 #'
-#' `check_new_values` creates a a *specification* of a recipe
+#' `check_new_values` creates a *specification* of a recipe
 #'  operation that will check if variables contain new values.
 #'
 #' @param recipe A recipe object. The check will be added to the

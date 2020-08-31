@@ -800,7 +800,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  retained using `retain = TRUE`, there is no need to `bake()` the
 #'  recipe to get the preprocessed training set.
 #'
-#'  `juice()` will return the results of a recipes where _all steps_
+#'  `juice()` will return the results of a recipe where _all steps_
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
 #' @export

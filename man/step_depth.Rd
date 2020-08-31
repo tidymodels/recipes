@@ -79,7 +79,7 @@ added to the sequence of existing steps (if any). For the
 selectors or variables selected) and \code{class}.
 }
 \description{
-\code{step_depth} creates a a \emph{specification} of a recipe
+\code{step_depth} creates a \emph{specification} of a recipe
 step that will convert numeric data into measurement of
 \emph{data depth}. This is done for each value of a categorical
 class variable.

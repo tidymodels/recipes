@@ -16,7 +16,7 @@
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
-#'  continous predictors can be interpreted the same way as with
+#'  continuous predictors can be interpreted the same way as with
 #'  binary inputs. Defaults to `1`. More in reference below.
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.

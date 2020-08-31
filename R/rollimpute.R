@@ -2,7 +2,7 @@
 #'
 #' `step_rollimpute` creates a *specification* of a
 #'  recipe step that will substitute missing values of numeric
-#'  variables by the a measure of location (e.g. median) within a moving window.
+#'  variables by the measure of location (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which

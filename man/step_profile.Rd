@@ -26,7 +26,7 @@ step_profile(
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will fixed to a single value. See \code{\link[=selections]{selections()}} for
+variables will be fixed to a single value. See \code{\link[=selections]{selections()}} for
 more details. For the \code{tidy} method, these are not currently
 used.}
 

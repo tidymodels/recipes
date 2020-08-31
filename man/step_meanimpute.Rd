@@ -33,7 +33,7 @@ preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until computed
 by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers, the mean
-will be converted to an integer to maintain the same a data type.}
+will be converted to an integer to maintain the same data type.}
 
 \item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
 end of the variables before the mean is computed. Values of trim outside

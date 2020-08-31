@@ -71,7 +71,7 @@ selectors or original variables selected) and \code{columns} (the
 list of corresponding binary columns).
 }
 \description{
-\code{step_dummy} creates a a \emph{specification} of a recipe
+\code{step_dummy} creates a \emph{specification} of a recipe
 step that will convert nominal data (e.g. character or factors)
 into one or more numeric binary model terms for the levels of
 the original data.

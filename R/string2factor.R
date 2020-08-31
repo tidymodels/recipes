@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
-#'  variables will converted to factors. See
+#'  variables will be converted to factors. See
 #'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 

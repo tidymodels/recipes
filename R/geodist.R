@@ -1,6 +1,6 @@
 #' Distance between two locations
 #'
-#' `step_geodist` creates a a *specification* of a
+#' `step_geodist` creates a *specification* of a
 #'  recipe step that will calculate the distance between
 #'  points on a map to a reference location.
 #'

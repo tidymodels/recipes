@@ -30,7 +30,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables. For
 \code{step_bagimpute}, this indicates the variables to be imputed. When used with
-\code{imp_vars}, the dots indicates which variables are used to predict the
+\code{imp_vars}, the dots indicate which variables are used to predict the
 missing data in each variable. See \code{\link[=selections]{selections()}} for more details. For the
 \code{tidy} method, these are not currently used.}
 
@@ -45,7 +45,7 @@ by commas or different selectors (see \code{\link[=selections]{selections()}}). 
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.}
 
-\item{trees}{An integer for the number bagged trees to use in each model.}
+\item{trees}{An integer for the number of bagged trees to use in each model.}
 
 \item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
 bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
@@ -54,7 +54,7 @@ bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
 that the arguments \code{X} and \code{y} should not be passed here.}
 
-\item{seed_val}{A integer used to create reproducible models. The same seed
+\item{seed_val}{An integer used to create reproducible models. The same seed
 is used across all imputation models.}
 
 \item{skip}{A logical. Should the step be skipped when the
@@ -79,7 +79,7 @@ bagged tree object).
 create bagged tree models to impute missing data.
 }
 \details{
-For each variables requiring imputation, a bagged tree is created
+For each variable requiring imputation, a bagged tree is created
 where the outcome is the variable of interest and the predictors are any
 other variables listed in the \code{impute_with} formula. One advantage to the
 bagged tree is that is can accept predictors that have missing values

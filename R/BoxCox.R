@@ -16,7 +16,7 @@
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer where data that have less possible
-#'  values will not be evaluate for a transformation.
+#'  values will not be evaluated for a transformation.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the

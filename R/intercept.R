@@ -18,7 +18,7 @@
 #'  used as predictors in a model.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
-#' @param name Character name for new added column
+#' @param name Character name for newly added column
 #' @param value A numeric constant to fill the intercept column. Defaults to 1.
 #'
 #' @return An updated version of `recipe` with the

@@ -22,7 +22,7 @@ step_zv(
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables that will evaluated by the filtering. See
+variables that will be evaluated by the filtering. See
 \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
 method, these are not currently used.}
 

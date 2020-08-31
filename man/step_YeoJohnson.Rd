@@ -42,7 +42,7 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 compute the transformation parameter lambda.}
 
 \item{num_unique}{An integer where data that have less possible
-values will not be evaluate for a transformation.}
+values will not be evaluated for a transformation.}
 
 \item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}

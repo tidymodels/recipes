@@ -125,7 +125,7 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #'  levels.
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
-#'  `lvl`,
+#'  `lvl`.
 #' @keywords datagen
 #' @concept string_functions
 #' @concept naming_functions

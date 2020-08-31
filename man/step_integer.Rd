@@ -66,7 +66,7 @@ variables selected) and \code{value} is a \emph{list column} with the
 conversion key.
 }
 \description{
-\code{step_integer} creates a a \emph{specification} of a recipe
+\code{step_integer} creates a \emph{specification} of a recipe
 step that will convert new data into a set of integers based
 on the original data values.
 }

@@ -49,7 +49,7 @@ here once the recipe has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{options}{A list of options to \code{\link[=discretize]{discretize()}}. A
-defaults is set for the argument \code{x}. Note that the using
+default is set for the argument \code{x}. Note that using
 the options \code{prefix} and \code{labels} when more than one
 variable is being transformed might be problematic as all
 variables inherit those values.}
@@ -73,7 +73,7 @@ with columns \code{terms} (the selectors or variables selected)
 and \code{value} (the breaks).
 }
 \description{
-\code{step_discretize} creates a a \emph{specification} of a recipe
+\code{step_discretize} creates a \emph{specification} of a recipe
 step that will convert numeric data into a factor with
 bins having approximately the same number of data points (based
 on a training set).

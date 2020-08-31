@@ -29,7 +29,7 @@ levels.}
 \value{
 \code{names0} returns a character string of length \code{num} and
 \code{dummy_names} generates a character vector the same length as
-\code{lvl},
+\code{lvl}.
 }
 \description{
 \code{names0} creates a series of \code{num} names with a common prefix.

@@ -22,7 +22,7 @@ step_shuffle(
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will permuted. See \code{\link[=selections]{selections()}} for more
+variables will be permuted. See \code{\link[=selections]{selections()}} for more
 details. For the \code{tidy} method, these are not
 currently used.}
 

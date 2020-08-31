@@ -83,7 +83,7 @@ For the \code{tidy} method, a tibble with columns \code{terms}
 names), and \code{ordinal} (a logical).
 }
 \description{
-\code{step_date} creates a a \emph{specification} of a recipe
+\code{step_date} creates a \emph{specification} of a recipe
 step that will convert date data into one or more factor or
 numeric variables.
 }

@@ -62,7 +62,7 @@ added to the sequence of existing steps (if any). For the
 the columns that will be affected and \code{holiday}.
 }
 \description{
-\code{step_holiday} creates a a \emph{specification} of a
+\code{step_holiday} creates a \emph{specification} of a
 recipe step that will convert date data into one or more binary
 indicator variables for common holidays.
 }
