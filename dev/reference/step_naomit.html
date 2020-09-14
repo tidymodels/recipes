@@ -51,7 +51,7 @@
 
 <meta property="og:title" content="Remove observations with missing values — step_naomit" />
 <meta property="og:description" content="step_naomit creates a specification of a recipe step that
-will add remove observations (rows of data) if they contain NA
+will remove observations (rows of data) if they contain NA
 or NaN values." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -171,8 +171,8 @@ or NaN values." />
 
     <div class="ref-description">
     <p><code>step_naomit</code> creates a <em>specification</em> of a recipe step that
-will add remove observations (rows of data) if they contain NA
-or NaN values.</p>
+will remove observations (rows of data) if they contain <code>NA</code>
+or <code>NaN</code> values.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_naomit</span>(
@@ -199,9 +199,8 @@ operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables will be used to create the dummy variables. See
-<code><a href='selections.html'>selections()</a></code> for more details. The selected
-variables must be factors.</p></td>
+variables will be used to remove observations containing <code>NA</code> or <code>NaN</code>
+values. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
