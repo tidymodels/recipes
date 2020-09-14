@@ -1,15 +1,14 @@
 #' Remove observations with missing values
 #'
 #' `step_naomit` creates a *specification* of a recipe step that
-#'   will add remove observations (rows of data) if they contain NA
-#'   or NaN values.
+#'   will remove observations (rows of data) if they contain `NA`
+#'   or `NaN` values.
 #'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which
-#'  variables will be used to create the dummy variables. See
-#'  [selections()] for more details. The selected
-#'  variables must be factors.
+#'  variables will be used to remove observations containing `NA` or `NaN`
+#'   values. See [selections()] for more details.
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.

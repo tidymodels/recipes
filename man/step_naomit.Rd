@@ -22,9 +22,8 @@ step_naomit(
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
-variables will be used to create the dummy variables. See
-\code{\link[=selections]{selections()}} for more details. The selected
-variables must be factors.}
+variables will be used to remove observations containing \code{NA} or \code{NaN}
+values. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Unused, include for consistency with other steps.}
 
@@ -52,8 +51,8 @@ new step added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_naomit} creates a \emph{specification} of a recipe step that
-will add remove observations (rows of data) if they contain NA
-or NaN values.
+will remove observations (rows of data) if they contain \code{NA}
+or \code{NaN} values.
 }
 \examples{
 
