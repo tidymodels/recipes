@@ -65,7 +65,7 @@ step_lincomb <-
            max_steps = 5,
            removals = NULL,
            skip = FALSE,
-           id = rand_id("lincomp")) {
+           id = rand_id("lincomb")) {
     add_step(
       recipe,
       step_lincomb_new(

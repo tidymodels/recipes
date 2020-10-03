@@ -13,7 +13,7 @@ step_lincomb(
   max_steps = 5,
   removals = NULL,
   skip = FALSE,
-  id = rand_id("lincomp")
+  id = rand_id("lincomb")
 )
 
 \method{tidy}{step_lincomb}(x, ...)
