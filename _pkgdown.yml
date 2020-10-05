@@ -34,7 +34,6 @@ reference:
     - current_info
     - add_role
     - tidy.recipe
-    - prepper
   - title: Step Functions - Imputation
     contents:
     - matches("impute")
@@ -92,6 +91,7 @@ reference:
     - step_geodist
     - step_ica
     - step_isomap
+    - step_kpca
     - step_kpca_poly
     - step_kpca_rbf
     - step_mutate_at
@@ -129,6 +129,15 @@ reference:
   - title: Check Functions
     contents:
     - matches("^check_")
+  - title: Internal Step Handling
+    contents:
+    - add_step
+    - detect_step
+    - fully_trained
+    - names0
+    - prepper
+    - terms_select
+    - update.step
 
 
 navbar:
