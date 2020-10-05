@@ -175,18 +175,18 @@ will remove observations (rows of data) if they contain <code>NA</code>
 or <code>NaN</code> values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_naomit</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='fl'>NA</span>,
-  trained = <span class='fl'>FALSE</span>,
-  columns = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"naomit"</span>)
-)
+    <pre class="usage"><span class='fu'>step_naomit</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='cn'>NA</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"naomit"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_naomit</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -246,10 +246,10 @@ new step added to the sequence of existing steps (if any).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Ozone</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>airquality</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_naomit</span>(<span class='kw'>Solar.R</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>airquality</span>, verbose = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(new_data = <span class='kw'>NULL</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Ozone</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>airquality</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_naomit</span><span class='op'>(</span><span class='va'>Solar.R</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>airquality</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 146 x 6</span><span>
 #&gt;    Solar.R  Wind  Temp Month   Day Ozone
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>

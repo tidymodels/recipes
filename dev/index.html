@@ -135,14 +135,13 @@
 <p>While R already has long-standing methods for creating these matrices (e.g. <a href="https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/">formulas</a> and <code>model.matrix</code>), there are some <a href="https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/">limitations to what the existing infrastructure can do</a>.</p>
 <p>The idea of the <code>recipes</code> package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. “feature engineering”). For example, to create a simple recipe containing only an outcome and predictors and have the predictors centered and scaled:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">mlbench</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">Sonar</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Sonar</span><span class="op">)</span>
 
-<span class="kw">sonar_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span>(<span class="kw">Class</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">Sonar</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/step_center.html">step_center</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>()) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/step_scale.html">step_scale</a></span>(<span class="fu"><a href="reference/has_role.html">all_predictors</a></span>())
-</pre></div>
+<span class="va">sonar_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Sonar</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>More information on <code>recipes</code> can be found at the <a href="https://www.tidymodels.org/start/recipes/"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org"><code>tidymodels.org</code></a>.</p>
 </div>
 <div id="installation" class="section level2">
@@ -150,12 +149,11 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install this package, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"recipes"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"recipes"</span><span class="op">)</span>
 
 <span class="co">## for development version:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)
-<span class="fu">install_github</span>(<span class="st">"tidymodels/recipes"</span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">install_github</span><span class="op">(</span><span class="st">"tidymodels/recipes"</span><span class="op">)</span></pre></div>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">

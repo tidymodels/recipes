@@ -191,8 +191,7 @@ run <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></
 <a href="#minimal-reproducible-dataset" class="anchor"></a><em>Minimal</em> Reproducible Dataset:</h4>
 <p>If you are not using a data set in a package then use e.g. <code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> to give us something that can be put in R immediately, e.g. </p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">iris</span>,<span class="fl">4</span>))
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Without a dataset, there usually isn’t much that we can do to help.</p>
 <p>If your data frame has a factor with many levels, the <code>dput</code> output can be unwieldy because it will still list all the possible factor levels even if they aren’t present in the the subset of your data. To solve this issue, you can use the <code><a href="https://rdrr.io/r/base/droplevels.html">droplevels()</a></code> function. Notice below how species is a factor with only one level: <code><a href="https://rdrr.io/r/base/dput.html">dput(droplevels(head(iris, 4)))</a></code>.</p>
 </div>
@@ -200,32 +199,30 @@ run <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></
 <h4 class="hasAnchor">
 <a href="#minimal-runnable-code" class="anchor"></a>Minimal, runnable code:</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">biomass</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span>
 
-<span class="kw">biomass_tr</span> <span class="op">&lt;-</span> <span class="kw">biomass</span>[<span class="kw">biomass</span><span class="op">$</span><span class="kw">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>,]
-<span class="kw">biomass_te</span> <span class="op">&lt;-</span> <span class="kw">biomass</span>[<span class="kw">biomass</span><span class="op">$</span><span class="kw">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>,]
+<span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>,<span class="op">]</span>
+<span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>,<span class="op">]</span>
 
-<span class="kw">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span>(<span class="kw">HHV</span> <span class="op">~</span> <span class="kw">carbon</span> <span class="op">+</span> <span class="kw">hydrogen</span> <span class="op">+</span> <span class="kw">oxygen</span> <span class="op">+</span> <span class="kw">nitrogen</span> <span class="op">+</span> <span class="kw">sulfur</span>,
-              data = <span class="kw">biomass_tr</span>)
+<span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,
+              data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span>
 
-<span class="kw">center_trans</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/step_center.html">step_center</a></span>(<span class="kw">carbon</span>, <span class="fu">contains</span>(<span class="st">"gen"</span>), <span class="op">-</span><span class="kw">hydrogen</span>)
+<span class="va">center_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/step_center.html">step_center</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"gen"</span><span class="op">)</span>, <span class="op">-</span><span class="va">hydrogen</span><span class="op">)</span>
 
-<span class="kw">center_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prep.html">prep</a></span>(<span class="kw">center_trans</span>, training = <span class="kw">biomass_tr</span>)
+<span class="va">center_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prep.html">prep</a></span><span class="op">(</span><span class="va">center_trans</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span>
 
-<span class="kw">transformed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bake.html">bake</a></span>(<span class="kw">center_obj</span>, <span class="kw">biomass_te</span>) 
-</pre></div>
+<span class="va">transformed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bake.html">bake</a></span><span class="op">(</span><span class="va">center_obj</span>, <span class="va">biomass_te</span><span class="op">)</span> </pre></div>
 </div>
 </div>
 <div id="session-info" class="section level3">
 <h3 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info:</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
+<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co"># or sessioninfo::session_info()</span>
-</pre></div>
+<span class="co"># or sessioninfo::session_info()</span></pre></div>
 <p>Be sure to test your chunks of code in an empty R session before submitting your issue!</p>
 </div>
 

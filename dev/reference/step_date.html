@@ -175,22 +175,22 @@ step that will convert date data into one or more factor or
 numeric variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_date</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='st'>"predictor"</span>,
-  trained = <span class='fl'>FALSE</span>,
-  features = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span>),
-  abbr = <span class='fl'>TRUE</span>,
-  label = <span class='fl'>TRUE</span>,
-  ordinal = <span class='fl'>FALSE</span>,
-  columns = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"date"</span>)
-)
+    <pre class="usage"><span class='fu'>step_date</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='st'>"predictor"</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dow"</span>, <span class='st'>"month"</span>, <span class='st'>"year"</span><span class='op'>)</span>,
+  abbr <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  label <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ordinal <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_date</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -293,27 +293,27 @@ used for this purpose.</p>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://lubridate.tidyverse.org'>lubridate</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    date, intersect, setdiff, union</span></div><div class='input'>
-<span class='kw'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(Dan = <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2002-03-04"</span>) <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>),
-                       Stefan = <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span>(<span class='st'>"2006-01-13"</span>) <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>))
-<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>Dan</span> <span class='op'>+</span> <span class='kw'>Stefan</span>, <span class='kw'>examples</span>) <span class='op'>%&gt;%</span>
-   <span class='fu'>step_date</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>Dan <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2002-03-04"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>,
+                       Stefan <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2006-01-13"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Dan</span> <span class='op'>+</span> <span class='va'>Stefan</span>, <span class='va'>examples</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'>step_date</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>date_rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   terms            value ordinal id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
 #&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() dow   FALSE   date_4kbnH
 #&gt; </span><span style='color: #555555;'>2</span><span> all_predictors() month FALSE   date_4kbnH
 #&gt; </span><span style='color: #555555;'>3</span><span> all_predictors() year  FALSE   date_4kbnH</div><div class='input'>
-<span class='kw'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>date_rec</span>, training = <span class='kw'>examples</span>)
+<span class='va'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>date_rec</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 
-<span class='kw'>date_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>date_rec</span>, new_data = <span class='kw'>examples</span>)
-<span class='kw'>date_values</span>
+<span class='va'>date_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>date_rec</span>, new_data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
+<span class='va'>date_values</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt;    Dan        Stefan     Dan_dow Dan_month Dan_year Stefan_dow Stefan_month
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       
@@ -328,7 +328,7 @@ used for this purpose.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> 2002-03-13 2006-01-22 Wed     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sun        Jan         
 #&gt; </span><span style='color: #555555;'>10</span><span> 2002-03-14 2006-01-23 Thu     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Mon        Jan         
 #&gt; </span><span style='color: #555555;'># … with 1 more variable: Stefan_year </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>date_rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   terms  value ordinal id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     

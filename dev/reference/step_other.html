@@ -175,20 +175,20 @@ step that will potentially pool infrequently occurring values
 into an "other" category.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_other</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='fl'>NA</span>,
-  trained = <span class='fl'>FALSE</span>,
-  threshold = <span class='fl'>0.05</span>,
-  other = <span class='st'>"other"</span>,
-  objects = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"other"</span>)
-)
+    <pre class="usage"><span class='fu'>step_other</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='cn'>NA</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0.05</span>,
+  other <span class='op'>=</span> <span class='st'>"other"</span>,
+  objects <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"other"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_other</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -285,24 +285,24 @@ contained in the training set), the other category is assigned.</p>
 <code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>19</span>)
-<span class='kw'>in_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>okc</span>), size = <span class='fl'>30000</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span>
+<span class='va'>in_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>)</span>
 
-<span class='kw'>okc_tr</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[ <span class='kw'>in_train</span>,]
-<span class='kw'>okc_te</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='op'>-</span><span class='kw'>in_train</span>,]
+<span class='va'>okc_tr</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span> <span class='va'>in_train</span>,<span class='op'>]</span>
+<span class='va'>okc_te</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='op'>-</span><span class='va'>in_train</span>,<span class='op'>]</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_other</span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, threshold = <span class='fl'>.1</span>, other = <span class='st'>"other values"</span>)
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>okc_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>.1</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
-<span class='kw'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>okc_te</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>okc_te</span><span class='op'>$</span><span class='kw'>diet</span>, <span class='kw'>collapsed</span><span class='op'>$</span><span class='kw'>diet</span>, useNA = <span class='st'>"always"</span>)
+<span class='va'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span>, <span class='va'>collapsed</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                      
 #&gt;                       anything mostly anything strictly anything other values
 #&gt;   anything                3128               0                 0            0
@@ -345,7 +345,7 @@ contained in the training set), the other category is assigned.</p>
 #&gt;   vegan                   0
 #&gt;   vegetarian              0
 #&gt;   &lt;NA&gt;                12145</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 3</span><span>
 #&gt;   terms    retained          id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
@@ -355,21 +355,21 @@ contained in the training set), the other category is assigned.</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> location oakland           other_ez6XT
 #&gt; </span><span style='color: #555555;'>5</span><span> location san francisco     other_ez6XT</div><div class='input'>
 <span class='co'># novel levels are also "othered"</span>
-<span class='kw'>tahiti</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='fl'>1</span>,]
-<span class='kw'>tahiti</span><span class='op'>$</span><span class='kw'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span>
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, <span class='kw'>tahiti</span>)
+<span class='va'>tahiti</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
+<span class='va'>tahiti</span><span class='op'>$</span><span class='va'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span>
+<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>tahiti</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   diet              location    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> strictly anything other values</div><div class='input'>
 <span class='co'># threshold as a frequency</span>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_other</span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, threshold = <span class='fl'>2000</span>, other = <span class='st'>"other values"</span>)
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>rec</span>, training = <span class='kw'>okc_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>2000</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 3</span><span>
 #&gt;   terms    retained          id         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      

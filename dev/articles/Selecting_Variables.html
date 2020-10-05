@@ -138,11 +138,11 @@
 <p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and <code><a href="../reference/has_role.html">?has_role</a></code> have details about the available selection methods.</p>
 <p>To illustrate this, the credit data will be used:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidymodels/recipes">recipes</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://modeldata.tidymodels.org">modeldata</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"credit_data"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">credit_data</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"credit_data"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    4454 obs. of  14 variables:</span>
 <span class="co">#&gt;  $ Status   : Factor w/ 2 levels "bad","good": 2 2 1 2 2 2 2 2 2 1 ...</span>
 <span class="co">#&gt;  $ Seniority: int  9 17 10 0 0 1 29 9 0 0 ...</span>
@@ -159,19 +159,18 @@
 <span class="co">#&gt;  $ Amount   : int  800 1000 2000 900 310 650 1600 200 1200 1200 ...</span>
 <span class="co">#&gt;  $ Price    : int  846 1658 2985 1325 910 1645 1800 1093 1957 1468 ...</span>
 
-<span class="kw">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span>(<span class="kw">Status</span> <span class="op">~</span> <span class="kw">Seniority</span> <span class="op">+</span> <span class="kw">Time</span> <span class="op">+</span> <span class="kw">Age</span> <span class="op">+</span> <span class="kw">Records</span>, data = <span class="kw">credit_data</span>)
-<span class="kw">rec</span>
+<span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">Seniority</span> <span class="op">+</span> <span class="va">Time</span> <span class="op">+</span> <span class="va">Age</span> <span class="op">+</span> <span class="va">Records</span>, data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
+<span class="va">rec</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;       role #variables</span>
 <span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor          4</span>
-</pre></div>
+<span class="co">#&gt;  predictor          4</span></pre></div>
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">rec</span>, original = <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 4</span>
 <span class="co">#&gt;   variable  type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -179,23 +178,20 @@
 <span class="co">#&gt; 2 Time      numeric predictor original</span>
 <span class="co">#&gt; 3 Age       numeric predictor original</span>
 <span class="co">#&gt; 4 Records   nominal predictor original</span>
-<span class="co">#&gt; 5 Status    nominal outcome   original</span>
-</pre></div>
+<span class="co">#&gt; 5 Status    nominal outcome   original</span></pre></div>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">dummied</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="fu"><a href="../reference/has_role.html">all_nominal</a></span>())
-</pre></div>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>This will capture <em>any</em> variables that are either character strings or factors: <code>Status</code> and <code>Records</code>. However, since <code>Status</code> is our outcome, we might want to keep it as a factor so we can <em>subtract</em> that variable out either by name or by role:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">dummied</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="kw">Records</span>) <span class="co"># or</span>
-<span class="kw">dummied</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="fu"><a href="../reference/has_role.html">all_nominal</a></span>(), <span class="op">-</span> <span class="kw">Status</span>) <span class="co"># or</span>
-<span class="kw">dummied</span> <span class="op">&lt;-</span> <span class="kw">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span>(<span class="fu"><a href="../reference/has_role.html">all_nominal</a></span>(), <span class="op">-</span> <span class="fu"><a href="../reference/has_role.html">all_outcomes</a></span>()) 
-</pre></div>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Records</span><span class="op">)</span> <span class="co"># or</span>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">Status</span><span class="op">)</span> <span class="co"># or</span>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="fu"><a href="../reference/has_role.html">all_outcomes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </pre></div>
 <p>Using the last definition:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span>(<span class="kw">dummied</span>, training = <span class="kw">credit_data</span>)
-<span class="kw">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span>(<span class="kw">dummied</span>, new_data = <span class="kw">credit_data</span>)
-<span class="kw">with_dummy</span>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
+<span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
+<span class="va">with_dummy</span>
 <span class="co">#&gt; # A tibble: 4,454 x 5</span>
 <span class="co">#&gt;    Seniority  Time   Age Status Records_yes</span>
 <span class="co">#&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;        &lt;dbl&gt;</span>
@@ -209,8 +205,7 @@
 <span class="co">#&gt;  8         9    12    27 good             0</span>
 <span class="co">#&gt;  9         0    60    32 good             0</span>
 <span class="co">#&gt; 10         0    48    41 bad              0</span>
-<span class="co">#&gt; # … with 4,444 more rows</span>
-</pre></div>
+<span class="co">#&gt; # … with 4,444 more rows</span></pre></div>
 <p><code>Status</code> is unaffected.</p>
 <p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>
   </div>

@@ -173,19 +173,19 @@ order to get it ready for data analysis." />
 order to get it ready for data analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>recipe</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>recipe</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>recipe</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+<span class='fu'>recipe</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>recipe</span>(<span class='kw'>x</span>, formula = <span class='kw'>NULL</span>, <span class='kw'>...</span>, vars = <span class='kw'>NULL</span>, roles = <span class='kw'>NULL</span>)
+<span class='fu'>recipe</span><span class='op'>(</span><span class='va'>x</span>, formula <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, roles <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='co'># S3 method for formula</span>
-<span class='fu'>recipe</span>(<span class='kw'>formula</span>, <span class='kw'>data</span>, <span class='kw'>...</span>)
+<span class='fu'>recipe</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>recipe</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>recipe</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -278,23 +278,23 @@ data set to save time and memory.</p>
     <pre class="examples"><div class='input'>
 <span class='co'>###############################################</span>
 <span class='co'># simple example:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
 
 <span class='co'># split data</span>
-<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
-<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
+<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
+<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
 
 <span class='co'># When only predictors and outcomes, a simplified formula can be used.</span>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
-              data = <span class='kw'>biomass_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
+              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
 <span class='co'># Now add preprocessing steps to the recipe.</span>
 
-<span class='kw'>sp_signed</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
-<span class='kw'>sp_signed</span>
+<span class='va'>sp_signed</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>sp_signed</span>
 </div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -308,8 +308,8 @@ data set to save time and memory.</p>
 #&gt; Centering and scaling for all_predictors()
 #&gt; Spatial sign on  all_predictors()</div><div class='input'>
 <span class='co'># now estimate required parameters</span>
-<span class='kw'>sp_signed_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>sp_signed</span>, training = <span class='kw'>biomass_tr</span>)
-<span class='kw'>sp_signed_trained</span>
+<span class='va'>sp_signed_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>sp_signed</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
+<span class='va'>sp_signed_trained</span>
 </div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -325,38 +325,38 @@ data set to save time and memory.</p>
 #&gt; Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 #&gt; Spatial sign on  carbon, hydrogen, oxygen, nitrogen, sulfur [trained]</div><div class='input'>
 <span class='co'># apply the preprocessing to a data set</span>
-<span class='kw'>test_set_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>sp_signed_trained</span>, new_data = <span class='kw'>biomass_te</span>)
+<span class='va'>test_set_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>sp_signed_trained</span>, new_data <span class='op'>=</span> <span class='va'>biomass_te</span><span class='op'>)</span>
 
 <span class='co'># or use pipes for the entire workflow:</span>
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='kw'>biomass_tr</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>recipe</span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>biomass_tr</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>###############################################</span>
 <span class='co'># multivariate example</span>
 
 <span class='co'># no need for `cbind(carbon, hydrogen)` for left-hand side</span>
-<span class='kw'>multi_y</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span>(<span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>~</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
-                  data = <span class='kw'>biomass_tr</span>)
-<span class='kw'>multi_y</span> <span class='op'>&lt;-</span> <span class='kw'>multi_y</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='fu'><a href='has_role.html'>all_outcomes</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>())
+<span class='va'>multi_y</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>~</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
+                  data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
+<span class='va'>multi_y</span> <span class='op'>&lt;-</span> <span class='va'>multi_y</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>multi_y_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>multi_y</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='va'>multi_y_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>multi_y</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>multi_y_trained</span>, <span class='kw'>biomass_te</span>)
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>multi_y_trained</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
 <span class='co'>###############################################</span>
 <span class='co'># Creating a recipe manually with different roles</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span>(<span class='kw'>biomass_tr</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>, <span class='kw'>oxygen</span>, <span class='kw'>nitrogen</span>, <span class='kw'>sulfur</span>,
-           new_role = <span class='st'>"predictor"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>HHV</span>, new_role = <span class='st'>"outcome"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>sample</span>, new_role = <span class='st'>"id variable"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>dataset</span>, new_role = <span class='st'>"splitting indicator"</span>)
-<span class='kw'>rec</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>biomass_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span>, <span class='va'>oxygen</span>, <span class='va'>nitrogen</span>, <span class='va'>sulfur</span>,
+           new_role <span class='op'>=</span> <span class='st'>"predictor"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>HHV</span>, new_role <span class='op'>=</span> <span class='st'>"outcome"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>sample</span>, new_role <span class='op'>=</span> <span class='st'>"id variable"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>dataset</span>, new_role <span class='op'>=</span> <span class='st'>"splitting indicator"</span><span class='op'>)</span>
+<span class='va'>rec</span>
 </div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:

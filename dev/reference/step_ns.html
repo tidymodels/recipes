@@ -175,20 +175,20 @@ that will create new columns that are basis expansions of
 variables using natural splines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_ns</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='st'>"predictor"</span>,
-  trained = <span class='fl'>FALSE</span>,
-  objects = <span class='kw'>NULL</span>,
-  deg_free = <span class='fl'>2</span>,
-  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"ns"</span>)
-)
+    <pre class="usage"><span class='fu'>step_ns</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='st'>"predictor"</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  objects <span class='op'>=</span> <span class='cn'>NULL</span>,
+  deg_free <span class='op'>=</span> <span class='fl'>2</span>,
+  options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"ns"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_ns</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,21 +271,21 @@ for the new variables is <code>varname_ns_1</code> and so on.</p>
 <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
 
-<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
-<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
+<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
+<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
-              data = <span class='kw'>biomass_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
+              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_ns</span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
-<span class='kw'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>with_splines</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_ns</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
+<span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>with_splines</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>with_splines</span>, <span class='kw'>biomass_te</span>)
-<span class='kw'>expanded</span>
+<span class='va'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>with_splines</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
+<span class='va'>expanded</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 80 x 8</span><span>
 #&gt;    oxygen nitrogen sulfur   HHV carbon_ns_1 carbon_ns_2 hydrogen_ns_1
 #&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

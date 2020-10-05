@@ -171,7 +171,7 @@
     <p>Detect if a particular step or check is used in a recipe</p>
     </div>
 
-    <pre class="usage"><span class='fu'>detect_step</span>(<span class='kw'>recipe</span>, <span class='kw'>name</span>)</pre>
+    <pre class="usage"><span class='fu'>detect_step</span><span class='op'>(</span><span class='va'>recipe</span>, <span class='va'>name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,10 +192,10 @@ to check if <code>step_intercept</code> is present, use <code>name = intercept</
     <p>Logical indicating if recipes contains given step.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Species</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>iris</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_intercept.html'>step_intercept</a></span>()
+    <pre class="examples"><div class='input'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_intercept.html'>step_intercept</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>detect_step</span>(<span class='kw'>rec</span>, <span class='st'>"step_intercept"</span>)
+<span class='fu'>detect_step</span><span class='op'>(</span><span class='va'>rec</span>, <span class='st'>"step_intercept"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

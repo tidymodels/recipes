@@ -173,20 +173,20 @@ check that will check if a variable is of a designated class." />
 check that will check if a variable is of a designated class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_class</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='fl'>NA</span>,
-  trained = <span class='fl'>FALSE</span>,
-  class_nm = <span class='kw'>NULL</span>,
-  allow_additional = <span class='fl'>FALSE</span>,
-  skip = <span class='fl'>FALSE</span>,
-  class_list = <span class='kw'>NULL</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"class"</span>)
-)
+    <pre class="usage"><span class='fu'>check_class</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='cn'>NA</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  class_nm <span class='op'>=</span> <span class='cn'>NULL</span>,
+  allow_additional <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  class_list <span class='op'>=</span> <span class='cn'>NULL</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"class"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for check_class</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -274,17 +274,17 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>
 
 <span class='co'># Learn the classes on the train set</span>
-<span class='kw'>train</span> <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>, ]
-<span class='kw'>test</span>  <span class='op'>&lt;-</span> <span class='kw'>okc</span>[<span class='fl'>1001</span><span class='op'>:</span><span class='fl'>2000</span>, ]
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>train</span>, <span class='kw'>age</span> <span class='op'>~</span> <span class='kw'>.</span> ) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>train</span>, strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)
+<span class='va'>train</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>, <span class='op'>]</span>
+<span class='va'>test</span>  <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1001</span><span class='op'>:</span><span class='fl'>2000</span>, <span class='op'>]</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -300,12 +300,12 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 #&gt; </span><span style='color: #555555;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
 #&gt; </span><span style='color: #555555;'># … with 990 more rows</span><span></div><div class='input'>
 <span class='co'># Manual specification</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>train</span>, <span class='kw'>age</span> <span class='op'>~</span> <span class='kw'>.</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='kw'>age</span>, class_nm = <span class='st'>"integer"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='kw'>diet</span>, <span class='kw'>location</span>, class_nm = <span class='st'>"character"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='kw'>date</span>, class_nm = <span class='st'>"Date"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>train</span>, strings_as_factors = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>test</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>age</span>, class_nm <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, class_nm <span class='op'>=</span> <span class='st'>"character"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>date</span>, class_nm <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -322,25 +322,25 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 #&gt; </span><span style='color: #555555;'># … with 990 more rows</span><span></div><div class='input'>
 <span class='co'># By default only the classes that are specified</span>
 <span class='co'>#   are allowed.</span>
-<span class='kw'>x_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(time = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() <span class='op'>-</span> <span class='fl'>60</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>()))
-<span class='kw'>x_df</span><span class='op'>$</span><span class='kw'>time</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>()
-</div><div class='output co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='kw'>time</span>, class_nm = <span class='st'>"POSIXt"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>bake_</span>(<span class='kw'>x_df</span>)
-}
+<span class='va'>x_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>time <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>60</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x_df</span><span class='op'>$</span><span class='va'>time</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>bake_</span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># Use allow_additional = TRUE if you are fine with it</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span>(<span class='kw'>time</span>, class_nm = <span class='st'>"POSIXt"</span>, allow_additional = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>x_df</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>x_df</span>)
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span>, allow_additional <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 1</span><span>
 #&gt;   time               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span> 2020-09-14 </span><span style='color: #555555;'>19:47:59</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> 2020-09-14 </span><span style='color: #555555;'>19:48:59</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>1</span><span> 2020-10-05 </span><span style='color: #555555;'>15:19:27</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> 2020-10-05 </span><span style='color: #555555;'>15:20:27</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

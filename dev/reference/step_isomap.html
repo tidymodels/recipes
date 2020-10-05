@@ -175,22 +175,22 @@ step that will convert numeric data into one or more new
 dimensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_isomap</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='st'>"predictor"</span>,
-  trained = <span class='fl'>FALSE</span>,
-  num_terms = <span class='fl'>5</span>,
-  neighbors = <span class='fl'>50</span>,
-  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(.mute = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"message"</span>, <span class='st'>"output"</span>)),
-  res = <span class='kw'>NULL</span>,
-  prefix = <span class='st'>"Isomap"</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"isomap"</span>)
-)
+    <pre class="usage"><span class='fu'>step_isomap</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='st'>"predictor"</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  num_terms <span class='op'>=</span> <span class='fl'>5</span>,
+  neighbors <span class='op'>=</span> <span class='fl'>50</span>,
+  options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>.mute <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"message"</span>, <span class='st'>"output"</span><span class='op'>)</span><span class='op'>)</span>,
+  res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prefix <span class='op'>=</span> <span class='st'>"Isomap"</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"isomap"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_isomap</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -308,33 +308,33 @@ https://github.com/gdkrmr</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
 
-<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
-<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
+<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
+<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
-              data = <span class='kw'>biomass_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
+              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>im_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_isomap</span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>(), neighbors = <span class='fl'>100</span>, num_terms = <span class='fl'>2</span>)
+<span class='va'>im_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_isomap</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, neighbors <span class='op'>=</span> <span class='fl'>100</span>, num_terms <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/gdkrmr/dimRed'>dimRed</a></span>) <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/yixuan/RSpectra'>RSpectra</a></span>)) {
-  <span class='kw'>im_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>im_trans</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/gdkrmr/dimRed'>dimRed</a></span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/yixuan/RSpectra'>RSpectra</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>im_estimates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>im_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-  <span class='kw'>im_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>im_estimates</span>, <span class='kw'>biomass_te</span>)
+  <span class='va'>im_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>im_estimates</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
-  <span class='kw'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>im_te</span><span class='op'>$</span><span class='kw'>Isomap1</span>, <span class='kw'>im_te</span><span class='op'>$</span><span class='kw'>Isomap2</span>))
-  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>im_te</span><span class='op'>$</span><span class='kw'>Isomap1</span>, <span class='kw'>im_te</span><span class='op'>$</span><span class='kw'>Isomap2</span>,
-       xlim = <span class='kw'>rng</span>, ylim = <span class='kw'>rng</span>)
+  <span class='va'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>im_te</span><span class='op'>$</span><span class='va'>Isomap1</span>, <span class='va'>im_te</span><span class='op'>$</span><span class='va'>Isomap2</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>im_te</span><span class='op'>$</span><span class='va'>Isomap1</span>, <span class='va'>im_te</span><span class='op'>$</span><span class='va'>Isomap2</span>,
+       xlim <span class='op'>=</span> <span class='va'>rng</span>, ylim <span class='op'>=</span> <span class='va'>rng</span><span class='op'>)</span>
 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>im_trans</span>, number = <span class='fl'>3</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>im_estimates</span>, number = <span class='fl'>3</span>)
-}
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: RSpectra</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:19: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:20: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: DONE</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: embedding</span></div><div class='output co'>#&gt; <span class='message'>2020-09-14 19:49:21: DONE</span></div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>im_trans</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>im_estimates</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: RSpectra</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:49: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:49: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:50: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:50: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:50: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:50: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:50: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:51: embedding</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:51: DONE</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:51: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:51: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:51: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:52: embedding</span></div><div class='output co'>#&gt; <span class='message'>2020-10-05 15:20:52: DONE</span></div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
 #&gt;   terms    id          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   isomap_u8gfY

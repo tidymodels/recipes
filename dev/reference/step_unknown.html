@@ -173,19 +173,19 @@ step that will assign a missing value in a factor level to&quot;unknown&quot;." 
 step that will assign a missing value in a factor level to"unknown".</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_unknown</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='fl'>NA</span>,
-  trained = <span class='fl'>FALSE</span>,
-  new_level = <span class='st'>"unknown"</span>,
-  objects = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"unknown"</span>)
-)
+    <pre class="usage"><span class='fu'>step_unknown</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='cn'>NA</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  new_level <span class='op'>=</span> <span class='st'>"unknown"</span>,
+  objects <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"unknown"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_unknown</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -264,20 +264,20 @@ is thrown.</p>
 <code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_other.html'>step_other()</a></code>, <code><a href='step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>okc</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='op'>~</span> <span class='kw'>diet</span> <span class='op'>+</span> <span class='kw'>location</span>, data = <span class='kw'>okc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_unknown</span>(<span class='kw'>diet</span>, new_level = <span class='st'>"unknown diet"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_unknown</span>(<span class='kw'>location</span>, new_level = <span class='st'>"unknown location"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()
+<span class='va'>rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_unknown</span><span class='op'>(</span><span class='va'>diet</span>, new_level <span class='op'>=</span> <span class='st'>"unknown diet"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_unknown</span><span class='op'>(</span><span class='va'>location</span>, new_level <span class='op'>=</span> <span class='st'>"unknown location"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>rec</span>, new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>diet</span>),
-      <span class='kw'>okc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>diet</span>),
-      useNA = <span class='st'>"always"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span>() <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>Freq</span> <span class='op'>&gt;</span> <span class='fl'>0</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span>,
+      <span class='va'>okc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span>,
+      useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Freq</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                   Var1                Var2  Freq
 #&gt; 1             anything            anything  6174
 #&gt; 2                halal               halal    11
@@ -298,7 +298,7 @@ is thrown.</p>
 #&gt; 17               vegan               vegan   136
 #&gt; 18          vegetarian          vegetarian   665
 #&gt; 19        unknown diet                &lt;NA&gt; 24360</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>rec</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   terms value        id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        

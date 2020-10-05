@@ -181,11 +181,11 @@ multiple roles.</p>
 <p><code>remove_role()</code> eliminates a single existing role in the recipe.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_role</span>(<span class='kw'>recipe</span>, <span class='kw'>...</span>, new_role = <span class='st'>"predictor"</span>, new_type = <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_role</span><span class='op'>(</span><span class='va'>recipe</span>, <span class='va'>...</span>, new_role <span class='op'>=</span> <span class='st'>"predictor"</span>, new_type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>update_role</span>(<span class='kw'>recipe</span>, <span class='kw'>...</span>, new_role = <span class='st'>"predictor"</span>, old_role = <span class='kw'>NULL</span>)
+<span class='fu'>update_role</span><span class='op'>(</span><span class='va'>recipe</span>, <span class='va'>...</span>, new_role <span class='op'>=</span> <span class='st'>"predictor"</span>, old_role <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>remove_role</span>(<span class='kw'>recipe</span>, <span class='kw'>...</span>, <span class='kw'>old_role</span>)</pre>
+<span class='fu'>remove_role</span><span class='op'>(</span><span class='va'>recipe</span>, <span class='va'>...</span>, <span class='va'>old_role</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -235,13 +235,13 @@ on all of the variables that have a custom role with the selector
 <code><a href='has_role.html'>has_role()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
 
 <span class='co'># Using the formula method, roles are created for any outcomes and predictors:</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role      source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -255,10 +255,10 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>8</span><span> HHV      numeric outcome   original</div><div class='input'>
 <span class='co'># However `sample` and `dataset` aren't predictors. Since they already have</span>
 <span class='co'># roles, `update_role()` can be used to make changes:</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>update_role</span>(<span class='kw'>sample</span>, new_role = <span class='st'>"id variable"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>update_role</span>(<span class='kw'>dataset</span>, new_role = <span class='st'>"splitting variable"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>sample</span>, new_role <span class='op'>=</span> <span class='st'>"id variable"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>dataset</span>, new_role <span class='op'>=</span> <span class='st'>"splitting variable"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role               source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -271,18 +271,18 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>7</span><span> sulfur   numeric predictor          original
 #&gt; </span><span style='color: #555555;'>8</span><span> HHV      numeric outcome            original</div><div class='input'>
 <span class='co'># `update_role()` cannot set a role to NA, use `remove_role()` for that</span>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>update_role</span>(<span class='kw'>sample</span>, new_role = <span class='fl'>NA_character_</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>sample</span>, new_role <span class='op'>=</span> <span class='cn'>NA_character_</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># ------------------------------------------------------------------------------</span>
 
 <span class='co'># Variables can have more than one role. `add_role()` can be used</span>
 <span class='co'># if the column already has at least one role:</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_role</span>(<span class='kw'>carbon</span>, <span class='kw'>sulfur</span>, new_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_role</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>sulfur</span>, new_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 4</span><span>
 #&gt;    variable type    role      source  
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -298,10 +298,10 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>10</span><span> HHV      numeric outcome   original</div><div class='input'>
 <span class='co'># `update_role()` has an argument called `old_role` that is required to</span>
 <span class='co'># unambiguously update a role when the column currently has multiple roles.</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_role</span>(<span class='kw'>carbon</span>, new_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>update_role</span>(<span class='kw'>carbon</span>, new_role = <span class='st'>"something else"</span>, old_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_role</span><span class='op'>(</span><span class='va'>carbon</span>, new_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>carbon</span>, new_role <span class='op'>=</span> <span class='st'>"something else"</span>, old_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9 x 4</span><span>
 #&gt;   variable type    role           source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -316,19 +316,19 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>9</span><span> HHV      numeric outcome        original</div><div class='input'>
 <span class='co'># `carbon` has two roles at the end, so the last `update_roles()` fails since</span>
 <span class='co'># `old_role` was not given.</span>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_role</span>(<span class='kw'>carbon</span>, <span class='kw'>sulfur</span>, new_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>update_role</span>(<span class='kw'>carbon</span>, new_role = <span class='st'>"something else"</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_role</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>sulfur</span>, new_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>carbon</span>, new_role <span class='op'>=</span> <span class='st'>"something else"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># ------------------------------------------------------------------------------</span>
 
 <span class='co'># To remove a role, `remove_role()` can be used to remove a single role.</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_role</span>(<span class='kw'>carbon</span>, new_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>remove_role</span>(<span class='kw'>carbon</span>, old_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_role</span><span class='op'>(</span><span class='va'>carbon</span>, new_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>remove_role</span><span class='op'>(</span><span class='va'>carbon</span>, old_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role      source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -341,11 +341,11 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>7</span><span> sulfur   numeric predictor original
 #&gt; </span><span style='color: #555555;'>8</span><span> HHV      numeric outcome   original</div><div class='input'>
 <span class='co'># To remove all roles, call `remove_role()` multiple times to reset to `NA`</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_role</span>(<span class='kw'>carbon</span>, new_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>remove_role</span>(<span class='kw'>carbon</span>, old_role = <span class='st'>"something"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>remove_role</span>(<span class='kw'>carbon</span>, old_role = <span class='st'>"predictor"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_role</span><span class='op'>(</span><span class='va'>carbon</span>, new_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>remove_role</span><span class='op'>(</span><span class='va'>carbon</span>, old_role <span class='op'>=</span> <span class='st'>"something"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>remove_role</span><span class='op'>(</span><span class='va'>carbon</span>, old_role <span class='op'>=</span> <span class='st'>"predictor"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role      source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -360,8 +360,8 @@ on all of the variables that have a custom role with the selector
 <span class='co'># ------------------------------------------------------------------------------</span>
 
 <span class='co'># If the formula method is not used, all columns have a missing role:</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>biomass</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>()
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role  source  
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   

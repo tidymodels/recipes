@@ -175,19 +175,19 @@ step that will convert numeric data into a projection on to a
 unit sphere.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_spatialsign</span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='st'>"predictor"</span>,
-  na_rm = <span class='fl'>TRUE</span>,
-  trained = <span class='fl'>FALSE</span>,
-  columns = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"spatialsign"</span>)
-)
+    <pre class="usage"><span class='fu'>step_spatialsign</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='st'>"predictor"</span>,
+  na_rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"spatialsign"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_spatialsign</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,34 +265,34 @@ moderate robustness to multivariate estimators. <em>Journal of
 Chemical Information and Modeling</em>, 46(3), 1402-1409.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>biomass</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
 
-<span class='kw'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,]
-<span class='kw'>biomass_te</span> <span class='op'>&lt;-</span> <span class='kw'>biomass</span>[<span class='kw'>biomass</span><span class='op'>$</span><span class='kw'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,]
+<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
+<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
 
-<span class='kw'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>HHV</span> <span class='op'>~</span> <span class='kw'>carbon</span> <span class='op'>+</span> <span class='kw'>hydrogen</span> <span class='op'>+</span> <span class='kw'>oxygen</span> <span class='op'>+</span> <span class='kw'>nitrogen</span> <span class='op'>+</span> <span class='kw'>sulfur</span>,
-              data = <span class='kw'>biomass_tr</span>)
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
+              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>ss_trans</span> <span class='op'>&lt;-</span> <span class='kw'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_spatialsign</span>(<span class='kw'>carbon</span>, <span class='kw'>hydrogen</span>)
+<span class='va'>ss_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_scale.html'>step_scale</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_spatialsign</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
 
-<span class='kw'>ss_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span>(<span class='kw'>ss_trans</span>, training = <span class='kw'>biomass_tr</span>)
+<span class='va'>ss_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ss_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='kw'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>ss_obj</span>, <span class='kw'>biomass_te</span>)
+<span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ss_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>biomass_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span>, <span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>hydrogen</span><span class='op'>)</span>
 </div><div class='img'><img src='step_spatialsign-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span>(<span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>carbon</span>, <span class='kw'>transformed_te</span><span class='op'>$</span><span class='kw'>hydrogen</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>carbon</span>, <span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>hydrogen</span><span class='op'>)</span>
 </div><div class='img'><img src='step_spatialsign-2.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_trans</span>, number = <span class='fl'>3</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ss_trans</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms    id               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   spatialsign_rfFce
-#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen spatialsign_rfFce</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>ss_obj</span>, number = <span class='fl'>3</span>)
+#&gt; </span><span style='color: #555555;'>2</span><span> hydrogen spatialsign_rfFce</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ss_obj</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 2</span><span>
 #&gt;   terms    id               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            

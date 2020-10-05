@@ -175,19 +175,19 @@ parameters from a training set that can be later applied to other data
 sets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prep</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>prep</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>prep</span>(
-  <span class='kw'>x</span>,
-  training = <span class='kw'>NULL</span>,
-  fresh = <span class='fl'>FALSE</span>,
-  verbose = <span class='fl'>FALSE</span>,
-  retain = <span class='fl'>TRUE</span>,
-  log_changes = <span class='fl'>FALSE</span>,
-  strings_as_factors = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>prep</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  training <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fresh <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  retain <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  log_changes <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  strings_as_factors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,23 +265,23 @@ data, the step for scaling is given the centered data.</p>
     <p>Max Kuhn</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>ames</span>, package = <span class='st'>"modeldata"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 
-<span class='kw'>ames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>ames</span>, Sale_Price = <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span>(<span class='kw'>Sale_Price</span>))
+<span class='va'>ames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>ames</span>, Sale_Price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span><span class='op'>(</span><span class='va'>Sale_Price</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>ames_rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(
-    <span class='kw'>Sale_Price</span> <span class='op'>~</span> <span class='kw'>Longitude</span> <span class='op'>+</span> <span class='kw'>Latitude</span> <span class='op'>+</span> <span class='kw'>Neighborhood</span> <span class='op'>+</span> <span class='kw'>Year_Built</span> <span class='op'>+</span> <span class='kw'>Central_Air</span>,
-    data = <span class='kw'>ames</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_other.html'>step_other</a></span>(<span class='kw'>Neighborhood</span>, threshold = <span class='fl'>0.05</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_interact.html'>step_interact</a></span>(<span class='op'>~</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"Central_Air"</span>)<span class='op'>:</span><span class='kw'>Year_Built</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_ns.html'>step_ns</a></span>(<span class='kw'>Longitude</span>, <span class='kw'>Latitude</span>, deg_free = <span class='fl'>5</span>)
+<span class='va'>ames_rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span>
+    <span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>Longitude</span> <span class='op'>+</span> <span class='va'>Latitude</span> <span class='op'>+</span> <span class='va'>Neighborhood</span> <span class='op'>+</span> <span class='va'>Year_Built</span> <span class='op'>+</span> <span class='va'>Central_Air</span>,
+    data <span class='op'>=</span> <span class='va'>ames</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_other.html'>step_other</a></span><span class='op'>(</span><span class='va'>Neighborhood</span>, threshold <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_nominal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_interact.html'>step_interact</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Central_Air"</span><span class='op'>)</span><span class='op'>:</span><span class='va'>Year_Built</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_ns.html'>step_ns</a></span><span class='op'>(</span><span class='va'>Longitude</span>, <span class='va'>Latitude</span>, deg_free <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 
-<span class='fu'>prep</span>(<span class='kw'>ames_rec</span>, verbose = <span class='fl'>TRUE</span>)
+<span class='fu'>prep</span><span class='op'>(</span><span class='va'>ames_rec</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; oper 1 step other [training] 
 #&gt; oper 2 step dummy [training] 
 #&gt; oper 3 step interact [training] 
@@ -303,7 +303,7 @@ data, the step for scaling is given the centered data.</p>
 #&gt; Dummy variables from Neighborhood, Central_Air [trained]
 #&gt; Interactions with Central_Air_Y:Year_Built [trained]
 #&gt; Natural Splines on Longitude, Latitude [trained]</div><div class='input'>
-<span class='fu'>prep</span>(<span class='kw'>ames_rec</span>, log_changes = <span class='fl'>TRUE</span>)
+<span class='fu'>prep</span><span class='op'>(</span><span class='va'>ames_rec</span>, log_changes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; step_other (other_LGGmr): same number of columns
 #&gt; 
 #&gt; step_dummy (dummy_Fe2kG): 

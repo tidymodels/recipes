@@ -175,23 +175,23 @@ recipe step that will calculate the distance between
 points on a map to a reference location.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_geodist</span>(
-  <span class='kw'>recipe</span>,
-  lat = <span class='kw'>NULL</span>,
-  lon = <span class='kw'>NULL</span>,
-  role = <span class='st'>"predictor"</span>,
-  trained = <span class='fl'>FALSE</span>,
-  ref_lat = <span class='kw'>NULL</span>,
-  ref_lon = <span class='kw'>NULL</span>,
-  log = <span class='fl'>FALSE</span>,
-  name = <span class='st'>"geo_dist"</span>,
-  columns = <span class='kw'>NULL</span>,
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='rand_id.html'>rand_id</a></span>(<span class='st'>"geodist"</span>)
-)
+    <pre class="usage"><span class='fu'>step_geodist</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  lat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lon <span class='op'>=</span> <span class='cn'>NULL</span>,
+  role <span class='op'>=</span> <span class='st'>"predictor"</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ref_lat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ref_lon <span class='op'>=</span> <span class='cn'>NULL</span>,
+  log <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  name <span class='op'>=</span> <span class='st'>"geo_dist"</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"geodist"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_geodist</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -276,18 +276,18 @@ method, a tibble with columns echoing the values of <code>lat</code>,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>Smithsonian</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Smithsonian</span><span class='op'>)</span>
 
 <span class='co'># How close are the museums to Union Station?</span>
-<span class='kw'>near_station</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span>( <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>Smithsonian</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='roles.html'>update_role</a></span>(<span class='kw'>name</span>, new_role = <span class='st'>"location"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>step_geodist</span>(lat = <span class='kw'>latitude</span>, lon = <span class='kw'>longitude</span>, log = <span class='fl'>FALSE</span>,
-               ref_lat = <span class='fl'>38.8986312</span>, ref_lon = <span class='op'>-</span><span class='fl'>77.0062457</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>(training = <span class='kw'>Smithsonian</span>)
+<span class='va'>near_station</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>Smithsonian</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>name</span>, new_role <span class='op'>=</span> <span class='st'>"location"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_geodist</span><span class='op'>(</span>lat <span class='op'>=</span> <span class='va'>latitude</span>, lon <span class='op'>=</span> <span class='va'>longitude</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span>,
+               ref_lat <span class='op'>=</span> <span class='fl'>38.8986312</span>, ref_lon <span class='op'>=</span> <span class='op'>-</span><span class='fl'>77.0062457</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>Smithsonian</span><span class='op'>)</span>
 
-<span class='fu'><a href='bake.html'>bake</a></span>(<span class='kw'>near_station</span>, new_data = <span class='kw'>NULL</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='kw'>geo_dist</span>)
+<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>near_station</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>geo_dist</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 20 x 4</span><span>
 #&gt;    name                                              latitude longitude geo_dist
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -311,7 +311,7 @@ method, a tibble with columns echoing the values of <code>lat</code>,
 #&gt; </span><span style='color: #555555;'>18</span><span> Steven F. Udvar-Hazy Center                           38.9     -</span><span style='color: #BB0000;'>77.4</span><span>  0.440  
 #&gt; </span><span style='color: #555555;'>19</span><span> George Gustav Heye Center                             40.7     -</span><span style='color: #BB0000;'>74.0</span><span>  3.49   
 #&gt; </span><span style='color: #555555;'>20</span><span> Cooper Hewitt, Smithsonian Design Museum              40.8     -</span><span style='color: #BB0000;'>74.0</span><span>  3.58   </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>near_station</span>, number = <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>near_station</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
 #&gt;   latitude longitude ref_latitude ref_longitude name     id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        

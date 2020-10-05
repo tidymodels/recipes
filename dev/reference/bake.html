@@ -173,10 +173,10 @@ prep.recipe(), apply the computations to new data." />
 <code><a href='prep.html'>prep.recipe()</a></code>, apply the computations to new data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bake</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>bake</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for recipe</span>
-<span class='fu'>bake</span>(<span class='kw'>object</span>, <span class='kw'>new_data</span>, <span class='kw'>...</span>, composition = <span class='st'>"tibble"</span>)</pre>
+<span class='fu'>bake</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>new_data</span>, <span class='va'>...</span>, composition <span class='op'>=</span> <span class='st'>"tibble"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,24 +233,24 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
     <p>Max Kuhn</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>ames</span>, package = <span class='st'>"modeldata"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span>
 
-<span class='kw'>ames</span> <span class='op'>&lt;-</span> <span class='fu'>mutate</span>(<span class='kw'>ames</span>, Sale_Price = <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span>(<span class='kw'>Sale_Price</span>))
+<span class='va'>ames</span> <span class='op'>&lt;-</span> <span class='fu'>mutate</span><span class='op'>(</span><span class='va'>ames</span>, Sale_Price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span><span class='op'>(</span><span class='va'>Sale_Price</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>ames_rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span>(<span class='kw'>Sale_Price</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>ames</span>[<span class='op'>-</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>), ]) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_other.html'>step_other</a></span>(<span class='kw'>Neighborhood</span>, threshold = <span class='fl'>0.05</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='has_role.html'>all_nominal</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_interact.html'>step_interact</a></span>(<span class='op'>~</span> <span class='fu'>starts_with</span>(<span class='st'>"Central_Air"</span>)<span class='op'>:</span><span class='kw'>Year_Built</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_ns.html'>step_ns</a></span>(<span class='kw'>Longitude</span>, <span class='kw'>Latitude</span>, deg_free = <span class='fl'>2</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_zv.html'>step_zv</a></span>(<span class='fu'><a href='has_role.html'>all_predictors</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span>()
+<span class='va'>ames_rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>ames</span><span class='op'>[</span><span class='op'>-</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_other.html'>step_other</a></span><span class='op'>(</span><span class='va'>Neighborhood</span>, threshold <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_nominal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_interact.html'>step_interact</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"Central_Air"</span><span class='op'>)</span><span class='op'>:</span><span class='va'>Year_Built</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_ns.html'>step_ns</a></span><span class='op'>(</span><span class='va'>Longitude</span>, <span class='va'>Latitude</span>, deg_free <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_zv.html'>step_zv</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># return the training set (already embedded in ames_rec)</span>
-<span class='kw'>ames_train</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span>(<span class='kw'>ames_rec</span>, new_data = <span class='kw'>NULL</span>)
+<span class='va'>ames_train</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='co'># apply processing to other data:</span>
-<span class='kw'>ames_new</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span>(<span class='kw'>ames_rec</span>, new_data = <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>ames</span>))
+<span class='va'>ames_new</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
