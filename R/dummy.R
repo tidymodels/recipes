@@ -76,7 +76,7 @@
 #' If no columns are selected (perhaps due to an earlier `step_zv()`),
 #'  `bake()` will return the data as-is (e.g. with no dummy variables).
 #'
-#' The [package vignette for dummy variables](https://tidymodels.github.io/recipes/articles/Dummies.html)
+#' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
