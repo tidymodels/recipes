@@ -199,13 +199,13 @@ could be used.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f9ca30c7008&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x7ff463f74ba8&gt;</div><div class='input'>
 <span class='va'>iris_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>iris_rec</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#&gt; &lt;environment: 0x7f9ca3c7da18&gt;</div></pre>
+#&gt; &lt;environment: 0x7ff4655f51b8&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
