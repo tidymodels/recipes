@@ -6,6 +6,8 @@
 
 * To reduce confusion between `bake()` and `juice()`, the latter is superseded in favor of using `bake(object, new_data = NULL)`. The `new_data` argument now has no default, so a `NULL` value must be explicitly used in order to emulate the results of `juice()`. `juice()` will remain in the package (and used internally) but most communication and training will use  `bake(object, new_data = NULL)`. (#543)
 
+* Tim Zhou added a step to use linear models for imputation (#555)
+
 # recipes 0.1.13
 
 ## Breaking Changes

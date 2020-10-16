@@ -1,6 +1,6 @@
 #' @importFrom stats sd predict complete.cases median quantile as.formula model.frame
 #' @importFrom stats binomial prcomp model.matrix terms poly cov var optimize
-#' @importFrom stats mahalanobis runif cor na.pass
+#' @importFrom stats mahalanobis runif cor na.pass na.omit lm
 #' @importFrom purrr map map_dbl map_lgl map_chr map_df map2_df map_dfc reduce
 #' @importFrom purrr map_dfr map_if
 #' @importFrom ipred ipredbagg
