@@ -175,6 +175,7 @@
 <ul>
 <li><p><code><a href="../reference/prep.html">prep()</a></code> gained an option to print a summary of which columns were added and/or removed during execution.</p></li>
 <li><p>To reduce confusion between <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code>, the latter is superseded in favor of using <code><a href="../reference/bake.html">bake(object, new_data = NULL)</a></code>. The <code>new_data</code> argument now has no default, so a <code>NULL</code> value must be explicitly used in order to emulate the results of <code><a href="../reference/juice.html">juice()</a></code>. <code><a href="../reference/juice.html">juice()</a></code> will remain in the package (and used internally) but most communication and training will use <code><a href="../reference/bake.html">bake(object, new_data = NULL)</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/543'>#543</a>)</p></li>
+<li><p>Tim Zhou added a step to use linear models for imputation (<a href='https://github.com/tidymodels/recipes/issues/555'>#555</a>)</p></li>
 </ul>
 </div>
 </div>

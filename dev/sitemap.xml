@@ -163,6 +163,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_ica.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_impute_linear.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_integer.html</loc>
   </url>
   <url>
