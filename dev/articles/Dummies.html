@@ -188,7 +188,7 @@
 <blockquote>
 <p><code>contr.helmert</code> returns Helmert contrasts, which contrast the second level with the first, the third with the average of the first two, and so on.</p>
 </blockquote>
-<p>To get this encoding, the global option for the contrasts can be changed and saved. <a href="https://tidymodels.github.io/recipes/reference/step_dummy.html"><code>step_dummy</code></a> picks up on this and makes the correct calculations:</p>
+<p>To get this encoding, the global option for the contrasts can be changed and saved. <a href="https://recipes.tidymodels.org/reference/step_dummy.html"><code>step_dummy</code></a> picks up on this and makes the correct calculations:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># change it:</span>
 <span class="va">go_helmert</span> <span class="op">&lt;-</span> <span class="va">param</span>
@@ -246,7 +246,7 @@
 <span class="co">#&gt; 5 Species                    nominal predictor original</span>
 <span class="co">#&gt; 6 original                   nominal predictor original</span>
 <span class="co">#&gt; 7 Sepal.Width_x_Sepal.Length numeric predictor derived</span></pre></div>
-<p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://tidymodels.github.io/recipes/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, but only the interactions are recorded as columns that needs to be created.</p>
+<p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html">R model formulae</a>, using a <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://recipes.tidymodels.org/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
@@ -269,7 +269,7 @@
 <span class="va">iris_rec</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species_versicolor</span><span class="op">:</span><span class="va">Sepal.Length</span> <span class="op">+</span> 
                    <span class="va">Species_virginica</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> </pre></div>
-<p>Note only is this a pain, but it may not be obvious what dummy variables are available (especially when <a href="https://tidymodels.github.io/recipes/reference/step_other.html"><code>step_other</code></a> is used).</p>
+<p>Note only is this a pain, but it may not be obvious what dummy variables are available (especially when <a href="https://recipes.tidymodels.org/reference/step_other.html"><code>step_other</code></a> is used).</p>
 <p>The solution is to use a selector:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="va">iris_int</span> <span class="op">&lt;-</span> 
@@ -401,7 +401,7 @@
 <a href="#novel-levels" class="anchor"></a>Novel Levels</h2>
 <p>When a recipe is used with new samples, some factors may have acquired new levels that were not present when <code>prep</code> was run. If <code>step_dummy</code> encounters this situation, a warning is issues (“There are new levels in a factor”) and the indicator variables that correspond to the factor are assigned missing values.</p>
 <p>One way around this is to use <code>step_other</code>. This step can convert infrequently occurring levels to a new category (that defaults to “other”). This step can also be used to convert new factor levels to “other” also.</p>
-<p>Also, <code>step_integer</code> has functionality similar to <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a> and encodes new values as zero.</p>
+<p>Also, <code>step_integer</code> has functionality similar to <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><code>LabelEncoder</code></a> and encodes new values as zero.</p>
 <p>The <a href="https://github.com/tidymodels/embed"><code>embed</code></a> package can also handle novel factors levels within a recipe. <code>step_embed</code> and <code>step_tfembed</code> assign a common numeric score to novel levels.</p>
 </div>
 <div id="other-steps-related-to-dummy-variables" class="section level2">
@@ -410,28 +410,28 @@
 <p>There are a bunch of steps related to going in-between factors and dummy variables:</p>
 <ul>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_unknown.html"><code>step_unknown</code></a> assigns missing factor values into an <code>'unknown'</code> category.</li>
+<a href="https://recipes.tidymodels.org/reference/step_unknown.html"><code>step_unknown</code></a> assigns missing factor values into an <code>'unknown'</code> category.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_other.html"><code>step_other</code></a> can collapse infrequently occurring levels into <code>'other'</code>.</li>
+<a href="https://recipes.tidymodels.org/reference/step_other.html"><code>step_other</code></a> can collapse infrequently occurring levels into <code>'other'</code>.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_regex.html"><code>step_regex</code></a> will create a single dummy variable based on applying a regular expression to a text field. Similarly, <a href="https://tidymodels.github.io/recipes/reference/step_count.html"><code>step_count</code></a> does the same but counts the occurrences of the pattern in the string.</li>
+<a href="https://recipes.tidymodels.org/reference/step_regex.html"><code>step_regex</code></a> will create a single dummy variable based on applying a regular expression to a text field. Similarly, <a href="https://recipes.tidymodels.org/reference/step_count.html"><code>step_count</code></a> does the same but counts the occurrences of the pattern in the string.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_holiday.html"><code>step_holiday</code></a> creates dummy variables from date fields to capture holidays.</li>
+<a href="https://recipes.tidymodels.org/reference/step_holiday.html"><code>step_holiday</code></a> creates dummy variables from date fields to capture holidays.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_lincomb.html"><code>step_lincomb</code></a> can be useful if you <em>over-specify</em> interactions and need to remove linear dependencies.</li>
+<a href="https://recipes.tidymodels.org/reference/step_lincomb.html"><code>step_lincomb</code></a> can be useful if you <em>over-specify</em> interactions and need to remove linear dependencies.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_zv.html"><code>step_zv</code></a> can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).</li>
+<a href="https://recipes.tidymodels.org/reference/step_zv.html"><code>step_zv</code></a> can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_bin2factor.html"><code>step_bin2factor</code></a> takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models.</li>
+<a href="https://recipes.tidymodels.org/reference/step_bin2factor.html"><code>step_bin2factor</code></a> takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models.</li>
 <li>
 <code>step_embed</code>, <code>step_lencode_glm</code>, <code>step_lencode_bayes</code> and others in the <a href="https://github.com/tidymodels/embed"><code>embed</code></a> package can use one or more (non-binary) values to encode factor predictors into a numeric form.</li>
 </ul>
-<p><a href="https://tidymodels.github.io/recipes/reference/step_dummy.html"><code>step_dummy</code></a> also works with <em>ordered factors</em>. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:</p>
+<p><a href="https://recipes.tidymodels.org/reference/step_dummy.html"><code>step_dummy</code></a> also works with <em>ordered factors</em>. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:</p>
 <ul>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_ordinalscore.html"><code>step_ordinalscore</code></a> can translate the levels to a single numeric score.</li>
+<a href="https://recipes.tidymodels.org/reference/step_ordinalscore.html"><code>step_ordinalscore</code></a> can translate the levels to a single numeric score.</li>
 <li>
-<a href="https://tidymodels.github.io/recipes/reference/step_unorder.html"><code>step_unorder</code></a> can convert to an unordered factor.</li>
+<a href="https://recipes.tidymodels.org/reference/step_unorder.html"><code>step_unorder</code></a> can convert to an unordered factor.</li>
 </ul>
 </div>
   </div>
