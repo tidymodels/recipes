@@ -1,6 +1,4 @@
-# recipes (development version)
-
-## Other Changes
+# recipes 0.1.14
 
 * `prep()` gained an option to print a summary of which columns were added and/or removed during execution. 
 
@@ -212,7 +210,7 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 ## New Operations
 
- * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
+ * `step_integer` converts data to ordered integers similar to [`LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) [#123](https://github.com/tidymodels/recipes/issues/123) and [#185](https://github.com/tidymodels/recipes/issues/185)
  * `step_geodist` can be used to calculate the distance between geocodes and a single reference location. 
  * `step_arrange`, `step_filter`, `step_mutate`, `step_sample`, and `step_slice` implement their `dplyr` analogs. 
  * `step_nnmf` computes the non-negative matrix factorization for data. 
@@ -276,7 +274,7 @@ Small release driven by changes in `sample()` in the current r-devel.
 
 * Edwin Thoen suggested [adding validation checks](https://github.com/tidymodels/recipes/pull/104) for certain data characteristics. This fed into the existing notion of expanding `recipes` beyond steps (see the [non-step steps project](https://github.com/tidymodels/recipes/projects)). A new set of operations, called **`checks`**, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise. 
 
-* Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://tidymodels.github.io/recipes/articles/Skipping.html) for more information. 
+* Steps now have a `skip` option that will not apply preprocessing when `bake` is used. See the article [on skipping steps](https://recipes.tidymodels.org/articles/Skipping.html) for more information. 
 
 
 ## New Operations
@@ -349,5 +347,5 @@ First CRAN release.
 # `recipes` 0.0.1.9001
 
 * The class system for `recipe` objects was changed so that [pipes can be used to create the recipe with a formula](https://github.com/tidymodels/recipes/issues/46).
-* `process.recipe` lost the `role` argument in factor of a general set of [selectors](https://tidymodels.github.io/recipes/articles/Selecting_Variables.html). If no selector is used, all the predictors are returned. 
+* `process.recipe` lost the `role` argument in factor of a general set of [selectors](https://recipes.tidymodels.org/articles/Selecting_Variables.html). If no selector is used, all the predictors are returned. 
 * Two steps for simple imputation using the mean or mode were added. 
