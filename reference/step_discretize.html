@@ -50,7 +50,7 @@
 
 
 <meta property="og:title" content="Discretize Numeric Variables — step_discretize" />
-<meta property="og:description" content="step_discretize creates a a specification of a recipe
+<meta property="og:description" content="step_discretize creates a specification of a recipe
 step that will convert numeric data into a factor with
 bins having approximately the same number of data points (based
 on a training set)." />
@@ -98,7 +98,7 @@ on a training set)." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.13</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.14</span>
         </div>
       </div>
     </div>
@@ -171,27 +171,27 @@ on a training set)." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_discretize</code> creates a a <em>specification</em> of a recipe
+    <p><code>step_discretize</code> creates a <em>specification</em> of a recipe
 step that will convert numeric data into a factor with
 bins having approximately the same number of data points (based
 on a training set).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_discretize.html'>step_discretize</a></span>(
-  <span class='kw'>recipe</span>,
-  <span class='kw'>...</span>,
-  role = <span class='fl'>NA</span>,
-  trained = <span class='fl'>FALSE</span>,
-  num_breaks = <span class='fl'>4</span>,
-  min_unique = <span class='fl'>10</span>,
-  objects = <span class='kw'>NULL</span>,
-  options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  skip = <span class='fl'>FALSE</span>,
-  id = <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/rand_id.html'>rand_id</a></span>(<span class='st'>"discretize"</span>)
-)
+    <pre class="usage"><span class='fu'>step_discretize</span><span class='op'>(</span>
+  <span class='va'>recipe</span>,
+  <span class='va'>...</span>,
+  role <span class='op'>=</span> <span class='cn'>NA</span>,
+  trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  num_breaks <span class='op'>=</span> <span class='fl'>4</span>,
+  min_unique <span class='op'>=</span> <span class='fl'>10</span>,
+  objects <span class='op'>=</span> <span class='cn'>NULL</span>,
+  options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"discretize"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for step_discretize</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>For <code>step_discretize</code>, the dots specify
 one or more selector functions to choose which variables are
-affected by the step. See <code><a href='https://rdrr.io/pkg/recipes/man/selections.html'>selections()</a></code> for more
+affected by the step. See <code><a href='selections.html'>selections()</a></code> for more
 details. For the <code>tidy</code> method, these are not currently
 used.</p></td>
     </tr>
@@ -233,14 +233,14 @@ discretization takes place.</p></td>
     </tr>
     <tr>
       <th>objects</th>
-      <td><p>The <code><a href='https://rdrr.io/pkg/recipes/man/discretize.html'>discretize()</a></code> objects are stored
+      <td><p>The <code><a href='discretize.html'>discretize()</a></code> objects are stored
 here once the recipe has be trained by
-<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>options</th>
-      <td><p>A list of options to <code><a href='https://rdrr.io/pkg/recipes/man/discretize.html'>discretize()</a></code>. A
-defaults is set for the argument <code>x</code>. Note that the using
+      <td><p>A list of options to <code><a href='discretize.html'>discretize()</a></code>. A
+default is set for the argument <code>x</code>. Note that using
 the options <code>prefix</code> and <code>labels</code> when more than one
 variable is being transformed might be problematic as all
 variables inherit those values.</p></td>
@@ -248,8 +248,8 @@ variables inherit those values.</p></td>
     <tr>
       <th>skip</th>
       <td><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>bake.recipe()</a></code>? While all operations are baked
-when <code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
+when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations</p></td>

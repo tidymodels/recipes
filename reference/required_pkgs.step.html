@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>tunable methods for recipes — tunable.step_bagimpute • recipes</title>
+<title>S3 methods for tracking which additional packages are needed for steps. — required_pkgs.step_depth • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,10 +49,8 @@
 
 
 
-<meta property="og:title" content="tunable methods for recipes — tunable.step_bagimpute" />
-<meta property="og:description" content="These functions define what parameters can be tuned for specific steps.
-They also define the recommended objects from the dials package that can
-be used to generate new parameter values and other characteristics." />
+<meta property="og:title" content="S3 methods for tracking which additional packages are needed for steps. — required_pkgs.step_depth" />
+<meta property="og:description" content="S3 methods for tracking which additional packages are needed for steps." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -164,79 +162,45 @@ be used to generate new parameter values and other characteristics." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>tunable methods for recipes</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/bag_imp.R'><code>R/bag_imp.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/bs.R'><code>R/bs.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/corr.R'><code>R/corr.R</code></a>, and 19 more</small>
-    <div class="hidden name"><code>tunable.step.Rd</code></div>
+    <h1>S3 methods for tracking which additional packages are needed for steps.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/ica.R'><code>R/ica.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/isomap.R'><code>R/isomap.R</code></a>, and 6 more</small>
+    <div class="hidden name"><code>required_pkgs.step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions define what parameters <em>can</em> be tuned for specific steps.
-They also define the recommended objects from the <code>dials</code> package that can
-be used to generate new parameter values and other characteristics.</p>
+    <p>S3 methods for tracking which additional packages are needed for steps.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tunable.step_bagimpute</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>required_pkgs.step_depth</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_bs</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_ica</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_corr</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_isomap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_discretize</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_kpca</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_downsample</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_kpca_poly</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_ica</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_kpca_rbf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_isomap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_nnmf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_knnimpute</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>required_pkgs.step_pls</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tunable.step_kpca_poly</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_kpca_rbf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_meanimpute</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_nnmf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_ns</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_nzv</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_other</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_pca</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_pls</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_poly</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_rollimpute</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.check</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_upsample</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>tunable.step_window</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>required_pkgs.step_window</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A recipe step object</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Not used.</p></td>
+      <td><p>A recipe step</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble object.</p>
+    <p>A character vector</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
