@@ -3,6 +3,7 @@
 #' `step_slice` creates a *specification* of a recipe step
 #'  that will filter rows using [dplyr::slice()].
 #'
+#' @template row-ops
 #' @inheritParams step_center
 #' @param ... Integer row values. See
 #'  [dplyr::slice()] for more details. For the `tidy`
@@ -14,9 +15,7 @@
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`; in most instances that
-#'  affect the rows of the data being predicted, this step probably should not
-#'  be applied.
+#'  Care should be taken when using `skip = FALSE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which
@@ -67,6 +66,7 @@
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
+#' @seealso [step_filter()] [step_naomit()] [step_sample()]
 
 step_slice <- function(
   recipe, ...,
