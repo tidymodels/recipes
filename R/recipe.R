@@ -283,7 +283,7 @@ form2args <- function(formula, data, ...) {
 #' @concept preprocessing
 #' @concept model_specification
 #' @export
-prep   <- function(x, ...)
+prep <- function(x, ...)
   UseMethod("prep")
 
 #' Train a Data Recipe

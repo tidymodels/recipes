@@ -101,6 +101,7 @@ step_center_new <-
     )
   }
 
+#' @export
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info = info)
   check_type(training[, col_names])
@@ -118,6 +119,7 @@ prep.step_center <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_center <- function(object, new_data, ...) {
   res <-
     sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
