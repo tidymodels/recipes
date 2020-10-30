@@ -7,12 +7,12 @@ data(okc)
 
 x1 <- rnorm(3)
 x2 <- as.POSIXct(1:3, origin = "1970-01-01", tz = "CET")
-x <- data_frame(x1, x2)
+x <- tibble(x1, x2)
 x_newdata <- tibble(x1 = as.character(x1), x2)
 
 x3 <- x2
 class(x3) <- c(class(x3), "Julian")
-x_newdata_2 <- data_frame(x1 = x1, x2 = x3)
+x_newdata_2 <- tibble(x1 = x1, x2 = x3)
 
 err1 <- "x1 should have the class(es) character but has the class(es) numeric." #nolint
 err2 <- "x2 should have the class(es) POSIXct, Julian but has the class(es) POSIXct, POSIXt." #nolint
