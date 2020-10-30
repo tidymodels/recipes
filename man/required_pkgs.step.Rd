@@ -13,23 +13,23 @@
 \alias{required_pkgs.step_window}
 \title{S3 methods for tracking which additional packages are needed for steps.}
 \usage{
-required_pkgs.step_depth(x, ...)
+\method{required_pkgs}{step_depth}(x, ...)
 
-required_pkgs.step_ica(x, ...)
+\method{required_pkgs}{step_ica}(x, ...)
 
-required_pkgs.step_isomap(x, ...)
+\method{required_pkgs}{step_isomap}(x, ...)
 
-required_pkgs.step_kpca(x, ...)
+\method{required_pkgs}{step_kpca}(x, ...)
 
-required_pkgs.step_kpca_poly(x, ...)
+\method{required_pkgs}{step_kpca_poly}(x, ...)
 
-required_pkgs.step_kpca_rbf(x, ...)
+\method{required_pkgs}{step_kpca_rbf}(x, ...)
 
-required_pkgs.step_nnmf(x, ...)
+\method{required_pkgs}{step_nnmf}(x, ...)
 
-required_pkgs.step_pls(x, ...)
+\method{required_pkgs}{step_pls}(x, ...)
 
-required_pkgs.step_window(x, ...)
+\method{required_pkgs}{step_window}(x, ...)
 }
 \arguments{
 \item{x}{A recipe step}

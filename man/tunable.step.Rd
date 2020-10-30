@@ -29,51 +29,51 @@
 \alias{tunable.step_window}
 \title{tunable methods for recipes}
 \usage{
-tunable.step_bagimpute(x, ...)
+\method{tunable}{step_bagimpute}(x, ...)
 
-tunable.step_bs(x, ...)
+\method{tunable}{step_bs}(x, ...)
 
-tunable.step_corr(x, ...)
+\method{tunable}{step_corr}(x, ...)
 
-tunable.step_discretize(x, ...)
+\method{tunable}{step_discretize}(x, ...)
 
-tunable.step_downsample(x, ...)
+\method{tunable}{step_downsample}(x, ...)
 
-tunable.step_ica(x, ...)
+\method{tunable}{step_ica}(x, ...)
 
-tunable.step_isomap(x, ...)
+\method{tunable}{step_isomap}(x, ...)
 
-tunable.step_knnimpute(x, ...)
+\method{tunable}{step_knnimpute}(x, ...)
 
-tunable.step_kpca_poly(x, ...)
+\method{tunable}{step_kpca_poly}(x, ...)
 
-tunable.step_kpca_rbf(x, ...)
+\method{tunable}{step_kpca_rbf}(x, ...)
 
-tunable.step_meanimpute(x, ...)
+\method{tunable}{step_meanimpute}(x, ...)
 
-tunable.step_nnmf(x, ...)
+\method{tunable}{step_nnmf}(x, ...)
 
-tunable.step_ns(x, ...)
+\method{tunable}{step_ns}(x, ...)
 
-tunable.step_nzv(x, ...)
+\method{tunable}{step_nzv}(x, ...)
 
-tunable.step_other(x, ...)
+\method{tunable}{step_other}(x, ...)
 
-tunable.step_pca(x, ...)
+\method{tunable}{step_pca}(x, ...)
 
-tunable.step_pls(x, ...)
+\method{tunable}{step_pls}(x, ...)
 
-tunable.step_poly(x, ...)
+\method{tunable}{step_poly}(x, ...)
 
-tunable.step_rollimpute(x, ...)
+\method{tunable}{step_rollimpute}(x, ...)
 
-tunable.step(x, ...)
+\method{tunable}{step}(x, ...)
 
-tunable.check(x, ...)
+\method{tunable}{check}(x, ...)
 
-tunable.step_upsample(x, ...)
+\method{tunable}{step_upsample}(x, ...)
 
-tunable.step_window(x, ...)
+\method{tunable}{step_window}(x, ...)
 }
 \arguments{
 \item{x}{A recipe step object}

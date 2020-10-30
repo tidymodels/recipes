@@ -6,10 +6,10 @@
 }
 
 # This package has specific methods for the `tunable()` and `required_pkgs()`
-# generic. That generic is defined in the `tune` package. As of R 4.0, we need to register them.
+# generic. That generic is defined in the `generics` package. As of R 4.0, we need to register them.
 maybe_register_S3_methods <- function() {
 
-  ns <- asNamespace("recipes")
+  ns <- rlang::ns_env("recipes")
   names <- names(ns)
 
   # ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@ maybe_register_S3_methods <- function() {
 
   for (i in seq_along(tunable_names)) {
     class <- tunable_classes[[i]]
-    s3_register("tune::tunable", class)
+    s3_register("generics::tunable", class)
   }
 
   # ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ maybe_register_S3_methods <- function() {
 
     for (i in seq_along(req_pkgs_names)) {
       class <- req_pkgs_classes[[i]]
-      s3_register("tune::required_pkgs", class)
+      s3_register("generics::required_pkgs", class)
     }
   }
 
