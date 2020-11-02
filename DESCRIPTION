@@ -59,5 +59,3 @@ LazyData: true
 RoxygenNote: 7.1.1.9000
 Roxygen: list(markdown = TRUE)
 RdMacros: lifecycle
-Remotes:
-    r-lib/generics
