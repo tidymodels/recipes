@@ -17,7 +17,7 @@ Depends:
     R (>= 3.1),
     dplyr
 Imports: 
-    generics,
+    generics (>= 0.1.0),
     glue,
     gower,
     ipred,
