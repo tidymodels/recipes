@@ -14,19 +14,6 @@ maybe_register_S3_methods <- function() {
 
   # ----------------------------------------------------------------------------
 
-  tunable_names <- c(
-    grep("tunable.step",  names, fixed = TRUE, value = TRUE),
-    grep("tunable.check", names, fixed = TRUE, value = TRUE)
-  )
-  tunable_classes <- gsub("tunable.", "", tunable_names)
-
-  for (i in seq_along(tunable_names)) {
-    class <- tunable_classes[[i]]
-    s3_register("generics::tunable", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
   tidy_names <- c(
     grep("tidy.step",  names, fixed = TRUE, value = TRUE),
     grep("tidy.check", names, fixed = TRUE, value = TRUE)
@@ -50,17 +37,6 @@ maybe_register_S3_methods <- function() {
   }
 
   # ----------------------------------------------------------------------------
-
-  if (rlang::is_installed("tune") && utils::packageVersion("tune") >= "0.1.1.9000") {
-
-    req_pkgs_names <- grep("^required_pkgs\\.", names, value = TRUE)
-    req_pkgs_classes <- gsub("required_pkgs.", "", req_pkgs_names)
-
-    for (i in seq_along(req_pkgs_names)) {
-      class <- req_pkgs_classes[[i]]
-      s3_register("generics::required_pkgs", class)
-    }
-  }
 
   invisible()
 }
