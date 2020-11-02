@@ -5,8 +5,6 @@
   maybe_register_S3_methods()
 }
 
-# This package has specific methods for the `tunable()` and `required_pkgs()`
-# generic. That generic is defined in the `generics` package. As of R 4.0, we need to register them.
 maybe_register_S3_methods <- function() {
 
   ns <- rlang::ns_env("recipes")
