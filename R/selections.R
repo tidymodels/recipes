@@ -127,11 +127,21 @@ type_selectors <- c("has_type", "all_numeric", "all_nominal")
 selectors <-
   unique(c(name_selectors, role_selectors, type_selectors))
 
+# - Can't include these in `selectors`. If we did, `step_interact()` would break
+#   since it differentiates between named selector functions and formula ops
+#   like `-`.
+# - `:` is not included here. We select using `info$variable` of the term info,
+#   and I am not sure that the ordering given there always matches the order
+#   of columns in the training data.
+ops_tidyselect <- c("&", "|", "!", "-")
+ops_formula <- c("~", "+", "-")
+
 ## This flags formulas that are not allowed. When called from `recipe.formula`
 ## `allowed` is NULL.
 element_check <- function(x, allowed = selectors) {
   funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
+  funs <- funs[!(funs %in% ops_formula)]
+  funs <- funs[!(funs %in% ops_tidyselect)]
   # i.e. tidyselect::matches()
   funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
   if (!is.null(allowed)) {
