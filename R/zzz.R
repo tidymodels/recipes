@@ -2,41 +2,6 @@
 
 .onLoad <- function(libname, pkgname) {
   s3_register("stats::update", "step")
-  maybe_register_S3_methods()
-}
-
-maybe_register_S3_methods <- function() {
-
-  ns <- rlang::ns_env("recipes")
-  names <- names(ns)
-
-  # ----------------------------------------------------------------------------
-
-  tidy_names <- c(
-    grep("tidy.step",  names, fixed = TRUE, value = TRUE),
-    grep("tidy.check", names, fixed = TRUE, value = TRUE)
-  )
-
-  tidy_classes <- gsub("tidy.", "", tidy_names)
-
-  for (i in seq_along(tidy_names)) {
-    class <- tidy_classes[[i]]
-    s3_register("generics::tidy", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  tidy_check_names <- grep("tidy.check", names, fixed = TRUE, value = TRUE)
-  tidy_check_classes <- gsub("tidy.", "", tidy_check_names)
-
-  for (i in seq_along(tidy_check_names)) {
-    class <- tidy_check_classes[[i]]
-    s3_register("generics::tidy", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  invisible()
 }
 
 # vctrs:::s3_register()
