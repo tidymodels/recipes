@@ -190,7 +190,7 @@ numeric variables.</p>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for step_date</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -303,7 +303,7 @@ used for this purpose.</p>
 <span class='va'>date_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Dan</span> <span class='op'>+</span> <span class='va'>Stefan</span>, <span class='va'>examples</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
    <span class='fu'>step_date</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 4</span><span>
 #&gt;   terms            value ordinal id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
@@ -328,7 +328,7 @@ used for this purpose.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span> 2002-03-13 2006-01-22 Wed     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Sun        Jan         
 #&gt; </span><span style='color: #555555;'>10</span><span> 2002-03-14 2006-01-23 Thu     Mar           </span><span style='text-decoration: underline;'>2</span><span>002 Mon        Jan         
 #&gt; </span><span style='color: #555555;'># … with 1 more variable: Stefan_year </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   terms  value ordinal id        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     

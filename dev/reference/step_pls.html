@@ -190,7 +190,7 @@ convert numeric data into one or more new dimensions.</p>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for step_pls</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -299,11 +299,11 @@ each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. <code>step_pls()</code> converts this
 proportion to determine the <code>keepX</code> parameter in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> and
 <code><a href='https://rdrr.io/pkg/mixOmics/man/splsda.html'>mixOmics::splsda()</a></code>. See the references in <code><a href='https://rdrr.io/pkg/mixOmics/man/spls.html'>mixOmics::spls()</a></code> for details.</p>
-<p>The <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> method returns the coefficients that are usually defined as</p>
+<p>The <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> method returns the coefficients that are usually defined as</p>
 <p>$$W(P'W)^{-1}$$</p>
 <p>(See the Wikipedia article below)</p>
 <p>When applied to data, these values are usually scaled by a column-specific
-norm. The <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> method applies this same norm to the coefficients shown
+norm. The <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> method applies this same norm to the coefficients shown
 above.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
