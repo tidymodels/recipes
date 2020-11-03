@@ -320,7 +320,7 @@
 <li><p><code><a href="../reference/step_downsample.html">step_downsample()</a></code> will replace the <code>ratio</code> argument with <code>under_ratio</code> and <code><a href="../reference/step_upsample.html">step_upsample()</a></code> will replace it with <code>over_ratio</code>. <code>ratio</code> still works (for now) but issues a deprecation message.</p></li>
 <li><p><code><a href="../reference/step_discretize.html">step_discretize()</a></code> has arguments moved out of <code>options</code> too; the main arguments are now <code>num_breaks</code> (instead of <code>cuts</code>) and <code>min_unique</code>. Again, deprecation messages are issued with the old argument structure.</p></li>
 <li><p>Models using the <code>dimRed</code> package (<code><a href="../reference/step_kpca.html">step_kpca()</a></code>, <code><a href="../reference/step_isomap.html">step_isomap()</a></code>, and <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code>) would silently fail if the projection method failed. An error is issued now.</p></li>
-<li><p>Methods were added for a future generic called <code>tunable()</code>. This outlines which parameters in a step can/could be tuned.</p></li>
+<li><p>Methods were added for a future generic called <code><a href="https://generics.r-lib.org/reference/tunable.html">tunable()</a></code>. This outlines which parameters in a step can/could be tuned.</p></li>
 </ul>
 </div>
 </div>

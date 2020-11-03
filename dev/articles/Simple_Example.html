@@ -202,12 +202,9 @@
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"impute$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "step_bagimpute"          "step_knnimpute"         </span>
-<span class="co">#&gt;  [3] "step_lowerimpute"        "step_meanimpute"        </span>
-<span class="co">#&gt;  [5] "step_medianimpute"       "step_modeimpute"        </span>
-<span class="co">#&gt;  [7] "step_rollimpute"         "tunable.step_bagimpute" </span>
-<span class="co">#&gt;  [9] "tunable.step_knnimpute"  "tunable.step_meanimpute"</span>
-<span class="co">#&gt; [11] "tunable.step_rollimpute"</span></pre></div>
+<span class="co">#&gt; [1] "step_bagimpute"    "step_knnimpute"    "step_lowerimpute" </span>
+<span class="co">#&gt; [4] "step_meanimpute"   "step_medianimpute" "step_modeimpute"  </span>
+<span class="co">#&gt; [7] "step_rollimpute"</span></pre></div>
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">%&gt;%</span>
