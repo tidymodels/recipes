@@ -37,9 +37,7 @@ preprocessing have been estimated.}
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = FALSE}; in most instances that
-affect the rows of the data being predicted, this step probably should not
-be applied.}
+Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 
@@ -62,6 +60,18 @@ it is a good idea to use quasiquotation (e.g. \verb{!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
+\section{Row Filtering}{
+
+
+This step can entirely remove observations (rows of data), which can have
+unintended and/or problematic consequences when applying the step to new
+data later via \code{\link[=bake.recipe]{bake.recipe()}}. Consider whether \code{skip = TRUE} or
+\code{skip = FALSE} is more appropriate in any given use case. In most instances
+that affect the rows of the data being predicted, this step probably should
+not be applied at all; instead, execute operations like this outside and
+before starting a preprocessing \code{\link[=recipe]{recipe()}}.
+}
+
 \examples{
 rec <- recipe( ~ ., data = iris) \%>\%
   step_slice(1:3)
@@ -100,6 +110,9 @@ qq_rec <-
   prep(training = iris)
 
 tidy(qq_rec, number = 1)
+}
+\seealso{
+\code{\link[=step_filter]{step_filter()}} \code{\link[=step_naomit]{step_naomit()}} \code{\link[=step_sample]{step_sample()}}
 }
 \concept{preprocessing}
 \keyword{datagen}

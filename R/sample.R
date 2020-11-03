@@ -4,6 +4,7 @@
 #'  that will sample rows using [dplyr::sample_n()] or
 #'  [dplyr::sample_frac()].
 #'
+#' @template row-ops
 #' @inheritParams step_center
 #' @param ... Argument ignored; included for consistency with other step
 #'  specification functions. For the `tidy`
@@ -19,9 +20,7 @@
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`; in most instances that
-#'  affect the rows of the data being predicted, this step probably should not
-#'  be applied.
+#'  Care should be taken when using `skip = FALSE`.
 #' @param replace Sample with or without replacement?
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
@@ -54,7 +53,7 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-
+#' @seealso [step_filter()] [step_naomit()] [step_slice()]
 
 step_sample <- function(
   recipe, ...,
