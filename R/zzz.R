@@ -2,67 +2,6 @@
 
 .onLoad <- function(libname, pkgname) {
   s3_register("stats::update", "step")
-  maybe_register_S3_methods()
-}
-
-# This package has specific methods for the `tunable()` and `required_pkgs()`
-# generic. That generic is defined in the `tune` package. As of R 4.0, we need to register them.
-maybe_register_S3_methods <- function() {
-
-  ns <- asNamespace("recipes")
-  names <- names(ns)
-
-  # ----------------------------------------------------------------------------
-
-  tunable_names <- c(
-    grep("tunable.step",  names, fixed = TRUE, value = TRUE),
-    grep("tunable.check", names, fixed = TRUE, value = TRUE)
-  )
-  tunable_classes <- gsub("tunable.", "", tunable_names)
-
-  for (i in seq_along(tunable_names)) {
-    class <- tunable_classes[[i]]
-    s3_register("tune::tunable", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  tidy_names <- c(
-    grep("tidy.step",  names, fixed = TRUE, value = TRUE),
-    grep("tidy.check", names, fixed = TRUE, value = TRUE)
-  )
-
-  tidy_classes <- gsub("tidy.", "", tidy_names)
-
-  for (i in seq_along(tidy_names)) {
-    class <- tidy_classes[[i]]
-    s3_register("generics::tidy", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  tidy_check_names <- grep("tidy.check", names, fixed = TRUE, value = TRUE)
-  tidy_check_classes <- gsub("tidy.", "", tidy_check_names)
-
-  for (i in seq_along(tidy_check_names)) {
-    class <- tidy_check_classes[[i]]
-    s3_register("generics::tidy", class)
-  }
-
-  # ----------------------------------------------------------------------------
-
-  if (rlang::is_installed("tune") && utils::packageVersion("tune") >= "0.1.1.9000") {
-
-    req_pkgs_names <- grep("^required_pkgs\\.", names, value = TRUE)
-    req_pkgs_classes <- gsub("required_pkgs.", "", req_pkgs_names)
-
-    for (i in seq_along(req_pkgs_names)) {
-      class <- req_pkgs_classes[[i]]
-      s3_register("tune::required_pkgs", class)
-    }
-  }
-
-  invisible()
 }
 
 # vctrs:::s3_register()

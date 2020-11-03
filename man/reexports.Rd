@@ -4,6 +4,8 @@
 \name{reexports}
 \alias{reexports}
 \alias{tidy}
+\alias{required_pkgs}
+\alias{tunable}
 \alias{\%>\%}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -12,7 +14,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{generics}{\code{\link[generics]{tidy}}}
+  \item{generics}{\code{\link[generics]{required_pkgs}}, \code{\link[generics]{tidy}}, \code{\link[generics]{tunable}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 }}
