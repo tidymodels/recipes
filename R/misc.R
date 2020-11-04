@@ -61,7 +61,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or embedded functions like `Sepal.Length + poly(Sepal.Width)`.
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
-  ## `element_check` stops when in-line functions are used.
+  ## `inline_check` stops when in-line functions are used.
   data_info <- attr(model.frame(formula, data), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))

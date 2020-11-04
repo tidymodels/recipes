@@ -244,8 +244,9 @@ recipe.matrix <- function(x, ...) {
 form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
+
   ## check for in-line formulas
-  element_check(formula, allowed = NULL)
+  inline_check(formula)
 
   if (!is_tibble(data))
     data <- as_tibble(data)
@@ -271,6 +272,20 @@ form2args <- function(formula, data, ...) {
   ## pass to recipe.default with vars and roles
 
   list(x = data, vars = vars, roles = roles)
+}
+
+inline_check <- function(x) {
+  funs <- fun_calls(x)
+  funs <- funs[!(funs %in% c("~", "+", "-"))]
+
+  if (length(funs) > 0) {
+    rlang::abort(paste0(
+      "No in-line functions should be used here; ",
+      "use steps to define baking actions."
+    ))
+  }
+
+  invisible(x)
 }
 
 
