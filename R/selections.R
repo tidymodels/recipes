@@ -3,7 +3,9 @@
 #' @name selections
 #' @aliases selections
 #' @aliases selection
-#' @title Methods for Select Variables in Step Functions
+#'
+#' @title Methods for Selecting Variables in Step Functions
+#'
 #' @description When selecting variables or model terms in `step`
 #'  functions, `dplyr`-like tools are used. The *selector* functions
 #'  can choose variables based on their name, current role, data
@@ -13,29 +15,24 @@
 #'
 #' \preformatted{
 #'   recipe( ~ ., data = USArrests) \%>\%
-#'     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
+#'     step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 #' }
 #'
-#'   The first four arguments indicate which variables should be
+#'  The first four arguments indicate which variables should be
 #'  used in the PCA while the last argument is a specific argument
 #'  to [step_pca()].
 #'
 #' Note that:
 #'
 #'   \enumerate{
-#'   \item The selector arguments should not contain functions
-#'    beyond those supported (see below).
 #'   \item These arguments are not evaluated until the `prep`
 #'    function for the step is executed.
-
 #'   \item The `dplyr`-like syntax allows for negative signs to
 #'    exclude variables (e.g. `-Murder`) and the set of selectors will
 #'    processed in order.
-
 #'   \item A leading exclusion in these arguments (e.g. `-Murder`)
 #'   has the effect of adding all variables to the list except the
 #'   excluded variable(s).
-
 #'   }
 #'
 #' Also, select helpers from the `tidyselect` package can also be used:
@@ -44,7 +41,8 @@
 #'   [tidyselect::num_range()], [tidyselect::everything()],
 #'   [tidyselect::one_of()], [tidyselect::all_of()], and
 #'   [tidyselect::any_of()]
-#'   For example:
+#'
+#' For example:
 #'
 #' \preformatted{
 #'   recipe(Species ~ ., data = iris) \%>\%
@@ -53,25 +51,20 @@
 #'
 #' would only select `Sepal.Length`
 #'
-#' **Inline** functions that specify computations, such as
-#'  `log(x)`, should not be used in selectors and will produce an
-#'  error. A list of allowed selector functions is below.
-#'
 #' Columns of the design matrix that may not exist when the step
-#'  is coded can also be selected. For example, when using
-#'  `step_pca`, the number of columns created by feature extraction
-#'  may not be known when subsequent steps are defined. In this
-#'  case, using `matches("^PC")` will select all of the columns
-#'  whose names start with "PC" *once those columns are created*.
+#' is coded can also be selected. For example, when using
+#' `step_pca()`, the number of columns created by feature extraction
+#' may not be known when subsequent steps are defined. In this
+#' case, using `matches("^PC")` will select all of the columns
+#' whose names start with "PC" *once those columns are created*.
 #'
-#' There are sets of functions that can be used to select
-#'  variables based on their role or type: [has_role()] and
-#'  [has_type()]. For convenience, there are also functions that are
-#'  more specific: [all_numeric()], [all_nominal()],
-#'  [all_predictors()], and [all_outcomes()]. These can be used in
-#'  conjunction with the previous functions described for selecting
-#'  variables using their names:
-
+#' There are sets of recipes specific functions that can be used to select
+#' variables based on their role or type: [has_role()] and
+#' [has_type()]. For convenience, there are also functions that are
+#' more specific: [all_numeric()], [all_nominal()],
+#' [all_predictors()], and [all_outcomes()]. These can be used in
+#' conjunction with the previous functions described for selecting
+#' variables using their names:
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -79,31 +72,24 @@
 #'     step_center(all_numeric(), -all_outcomes())
 #' }
 #'
-#'   This results in all the numeric predictors: carbon, hydrogen,
-#'  oxygen, nitrogen, and sulfur.
+#' This results in all the numeric predictors: carbon, hydrogen,
+#' oxygen, nitrogen, and sulfur.
 #'
-#'   If a role for a variable has not been defined, it will never be
-#'  selected using role-specific selectors.
+#' If a role for a variable has not been defined, it will never be
+#' selected using role-specific selectors.
 #'
 #' Selectors can be used in [step_interact()] in similar ways but
-#'  must be embedded in a model formula (as opposed to a sequence
-#'  of selectors). For example, the interaction specification
-#'  could be `~ starts_with("Species"):Sepal.Width`. This can be
-#'  useful if `Species` was converted to dummy variables
-#'  previously using [step_dummy()].
-#'
-#' The complete list of allowable functions in steps:
-#'
-#'   \itemize{
-#'     \item **By name**: [tidyselect::starts_with()],
-#'       [tidyselect::ends_with()], [tidyselect::contains()],
-#'       [tidyselect::matches()], [tidyselect::num_range()],
-#'       [tidyselect::everything()]
-#'     \item **By role**: [has_role()],
-#'       [all_predictors()], and [all_outcomes()]
-#'     \item **By type**: [has_type()], [all_numeric()],
-#'       and [all_nominal()]
-#'   }
+#' must be embedded in a model formula (as opposed to a sequence
+#' of selectors). For example, the interaction specification
+#' could be `~ starts_with("Species"):Sepal.Width`. This can be
+#' useful if `Species` was converted to dummy variables
+#' previously using [step_dummy()]. The implementation of
+#' `step_interact()` is special, and is more restricted than
+#' the other step functions. Only the selector functions from
+#' recipes and tidyselect are allowed. User defined selector functions
+#' will not be recognized. Additionally, the tidyselect domain specific
+#' language is not recognized here, meaning that `&`, `|`, `!`, and `-`
+#' will not work.
 NULL
 
 
