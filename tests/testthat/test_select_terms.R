@@ -122,25 +122,6 @@ test_that('namespaced selectors', {
   )
 })
 
-test_that("tidyselect ops &, |, !, - work", {
-  x <- c("age", "diet")
-
-  expect_identical(
-    terms_select(info = info1, quos(all_of(x) | all_nominal())),
-    c("age", "diet", "location", "Class")
-  )
-
-  expect_identical(
-    terms_select(info = info1, quos(all_of(x), -all_nominal())),
-    "age"
-  )
-
-  expect_identical(
-    terms_select(info = info1, quos(all_predictors() & !all_nominal())),
-    c("age", "height", "date")
-  )
-})
-
 test_that('new dplyr selectors', {
   skip_if(tidyselect_pre_1.0.0())
 
