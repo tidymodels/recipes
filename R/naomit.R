@@ -69,7 +69,7 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = terms_select(x$terms, info = info),
+    columns = eval_step_select(x$terms, training, info),
     skip = x$skip,
     id = x$id
   )

@@ -159,6 +159,7 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     impute_var_lists(
       to_impute = x$terms,
       impute_using = x$impute_with,
+      training = training,
       info = info
     )
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))

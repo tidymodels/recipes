@@ -295,8 +295,9 @@ prop2int <- function(x, p) {
 
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
-  x_names <- terms_select(x$terms,   info = info)
-  y_names <- terms_select(x$outcome, info = info)
+  x_names <- eval_step_select(x$terms, training, info)
+  y_names <- eval_step_select(x$outcome, training, info)
+
   check_type(training[, x_names])
   if (length(y_names) > 1 ) {
     rlang::abort("`step_pls()` only supports univariate models.")
