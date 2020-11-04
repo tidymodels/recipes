@@ -129,11 +129,17 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   terms <- quos(...)
 
-  if (is_empty(terms)) {
-    rlang::warn("No selectors were found")
-  }
+  # Roles can only be changed on the original data supplied to `recipe()`,
+  # so this is safe
+  data <- recipe$template
+  info <- recipe$var_info
 
-  vars <- terms_select(terms = terms, info = summary(recipe))
+  vars <- eval_select_recipes(terms, data, info)
+
+  if (length(vars) == 0L) {
+    rlang::warn("No columns were selected in `add_role()`.")
+    return(recipe)
+  }
 
   # Check to see if role already exists
   # remove variables where the role already exists
@@ -214,17 +220,22 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
   terms <- quos(...)
 
-  if (is_empty(terms)) {
-    rlang::warn("No selectors were found")
-  }
+  # Roles can only be changed on the original data supplied to `recipe()`,
+  # so this is safe
+  data <- recipe$template
+  info <- recipe$var_info
 
-  rec_vars <- summary(recipe)
-  vars <- terms_select(terms = terms, info = rec_vars)
+  vars <- eval_select_recipes(terms, data, info)
+
+  if (length(vars) == 0L) {
+    rlang::warn("No columns were selected in `update_role()`.")
+    return(recipe)
+  }
 
   # check to see if any variables have multiple roles
   if (is.null(old_role)) {
     var_counts <-
-      rec_vars %>%
+      info %>%
       dplyr::filter(variable %in% vars) %>%
       dplyr::group_by(variable) %>%
       dplyr::count()
@@ -258,27 +269,30 @@ remove_role <- function(recipe, ..., old_role) {
   single_chr(old_role, "old_")
 
   terms <- quos(...)
-  if (is_empty(terms)) {
-    rlang::warn("No selectors were found")
-  }
-  vars <- terms_select(terms = terms, info = summary(recipe))
-  if (length(vars) == 0) {
-    rlang::warn("No columns were selected for role removal.")
+
+  # Roles can only be changed on the original data supplied to `recipe()`,
+  # so this is safe
+  data <- recipe$template
+  info <- recipe$var_info
+
+  vars <- eval_select_recipes(terms, data, info)
+
+  if (length(vars) == 0L) {
+    rlang::warn("No columns were selected in `remove_role()`.")
+    return(recipe)
   }
 
-  term_info <- summary(recipe)
-
-  term_info <-
-    term_info %>%
-    mutate(.orig_order = 1:nrow(term_info)) %>%
+  info <- info %>%
+    mutate(.orig_order = 1:nrow(info)) %>%
     group_by(variable) %>%
     do(role_rm_machine(., role = old_role, var = vars)) %>%
     ungroup() %>%
     arrange(.orig_order) %>%
     dplyr::select(-.orig_order)
 
-  recipe$var_info <- term_info
+  recipe$var_info <- info
   recipe$term_info <- recipe$var_info
+
   recipe
 }
 

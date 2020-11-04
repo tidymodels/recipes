@@ -233,19 +233,102 @@ test_that('New type for an existing role can be added', {
 
 })
 
+test_that("can use tidyselect ops in role selection", {
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_center(all_predictors())
+
+  # Swap "predictor" for "foo"
+  rec <- update_role(
+    rec,
+    starts_with("c") & !carb,
+    new_role = "foo",
+    old_role = "predictor"
+  )
+
+  expect_identical(
+    rec$term_info$role[rec$term_info$variable == "cyl"],
+    "foo"
+  )
+
+  # Add "predictor" back
+  rec <- add_role(
+    rec,
+    starts_with("c") & !carb,
+    new_role = "predictor"
+  )
+
+  expect_identical(
+    rec$term_info$role[rec$term_info$variable == "cyl"],
+    c("foo", "predictor")
+  )
+
+  # Remove "foo"
+  rec <- remove_role(
+    rec,
+    starts_with("c") & !carb,
+    old_role = "foo"
+  )
+
+  expect_identical(
+    rec$term_info$role[rec$term_info$variable == "cyl"],
+    "predictor"
+  )
+})
+
+
+test_that("empty dots and zero column selections return input with a warning", {
+  rec <- recipe(x = biomass)
+
+  expect_identical(
+    expect_warning(
+      add_role(rec),
+      "No columns were selected in `add_role[(][)]`"
+    ),
+    rec
+  )
+  expect_identical(
+    expect_warning(
+      update_role(rec),
+      "No columns were selected in `update_role[(][)]`"
+    ),
+    rec
+  )
+  expect_identical(
+    expect_warning(
+      remove_role(rec, old_role = "foo"),
+      "No columns were selected in `remove_role[(][)]`"
+    ),
+    rec
+  )
+
+  expect_identical(
+    expect_warning(
+      add_role(rec, starts_with("foobar")),
+      "No columns were selected in `add_role[(][)]`"
+    ),
+    rec
+  )
+  expect_identical(
+    expect_warning(
+      update_role(rec, starts_with("foobar")),
+      "No columns were selected in `update_role[(][)]`"
+    ),
+    rec
+  )
+  expect_identical(
+    expect_warning(
+      remove_role(rec, starts_with("foobar"), old_role = "foo"),
+      "No columns were selected in `remove_role[(][)]`"
+    ),
+    rec
+  )
+})
+
 test_that('bad args', {
   expect_error(
     recipe(x = biomass) %>%
       add_role(carbon, new_role = letters[1:2]),
     "`new_role` must have length 1."
-  )
-
-  expect_error(
-    expect_warning(
-      recipe(x = biomass) %>%
-        add_role(new_role = "some other role")
-    ),
-    "At least one selector"
   )
 
   expect_error(
