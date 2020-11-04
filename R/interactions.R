@@ -136,9 +136,13 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   form_sel <- find_selectors(x$terms)
 
+  # Use formula environment as quosure env
+  env <- rlang::f_env(x$terms)
+
   eval_select_recipes_expr <- function(expr) {
     # Wrap `expr` into a list-of-quos as `eval_select_recipes()` expects
-    quos <- enquos(expr)
+    quo <- new_quosure(expr, env)
+    quos <- list(quo)
     eval_select_recipes(quos, data = training, info = info)
   }
 
@@ -373,6 +377,7 @@ intersect_selectors <- c(
   "all_of",
   "any_of",
   "c",
+  "where",
 
   "has_role",
   "all_predictors",
