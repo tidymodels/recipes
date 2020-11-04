@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* If steps that drop/add variables are skipped when baking the test set, the resulting column ordering of the baked test set will now be relative to the original recipe specification rather than relative to the baked training set. This is often more intuitive.
+
 # recipes 0.1.14
 
 * `prep()` gained an option to print a summary of which columns were added and/or removed during execution. 
