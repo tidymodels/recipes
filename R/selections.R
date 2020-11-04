@@ -208,15 +208,9 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
 
   # Set current_info so available to helpers
 
-  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
-  if (tidyr_new_interface()) {
-    nested_info <- tidyr::nest(info, data = -variable)
-  } else {
-    nested_info <- tidyr::nest(info, -variable)
-  }
+  nested_info <- nest_current_info(info)
 
-  old_info <- set_current_info(nested_info)
-  on.exit(set_current_info(old_info), add = TRUE)
+  local_current_info(nested_info)
 
   # `terms` might be a single call (like in step_interact()),
   # or it could be a list of quosures.
@@ -239,6 +233,49 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
 abort_selection <- exiting(function(cnd) {
   abort("No variables or terms were selected.")
 })
+
+eval_step_select <- function(quos, data, info) {
+  nested_info <- nest_current_info(info)
+
+  local_current_info(nested_info)
+
+  expr <- expr(c(!!!quos))
+
+  # FIXME: Ideally this is `FALSE`, but empty selections incorrectly throw an
+  # error when this is false due to the following bug:
+  # https://github.com/r-lib/tidyselect/issues/221
+  allow_rename <- TRUE
+
+  sel <- tidyselect::eval_select(
+    expr = expr,
+    data = data,
+    allow_rename = allow_rename
+  )
+
+  # Return names not positions, as these names are
+  # used for both the training and test set and their positions
+  # may have changed. `sel` won't be named because when `allow_rename = FALSE`,
+  # `eval_select()` returns an unnamed vector.
+  out <- names(data)[sel]
+
+  # FIXME: Remove this check when the following issue is fixed,
+  # i.e. when we can use `allow_rename = FALSE`
+  # https://github.com/r-lib/tidyselect/issues/221
+  if (!identical(out, names(sel))) {
+    abort("Can't rename variables in this context.")
+  }
+
+  out
+}
+
+nest_current_info <- function(info) {
+  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
+  if (tidyr_new_interface()) {
+    tidyr::nest(info, data = -variable)
+  } else {
+    tidyr::nest(info, -variable)
+  }
+}
 
 #' Role Selection
 #'
@@ -344,14 +381,15 @@ peek_info <- function(col) {
 ## dplyr versions
 
 #' @import rlang
-cur_info_env <- child_env(empty_env())
+cur_info_env <- env(empty_env())
 
-set_current_info <- function(x) {
-  old <- cur_info_env
-  cur_info_env$vars <- x$variable
-  cur_info_env$data <- x$data
-
-  invisible(old)
+local_current_info <- function(nested_info, frame = parent.frame()) {
+  local_bindings(
+    vars = nested_info$variable,
+    data = nested_info$data,
+    .env = cur_info_env,
+    .frame = frame
+  )
 }
 
 #' @export
