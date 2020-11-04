@@ -234,7 +234,7 @@ abort_selection <- exiting(function(cnd) {
   abort("No variables or terms were selected.")
 })
 
-eval_step_select <- function(quos, data, info) {
+eval_select_recipes <- function(quos, data, info) {
   nested_info <- nest_current_info(info)
 
   local_current_info(nested_info)

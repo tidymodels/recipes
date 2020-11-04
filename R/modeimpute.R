@@ -90,7 +90,7 @@ step_modeimpute_new <-
 
 #' @export
 prep.step_modeimpute <- function(x, training, info = NULL, ...) {
-  col_names <- eval_step_select(x$terms, training, info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   modes <- vapply(training[, col_names], mode_est, c(mode = ""))
   step_modeimpute_new(
     terms = x$terms,

@@ -69,7 +69,7 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = eval_step_select(x$terms, training, info),
+    columns = eval_select_recipes(x$terms, training, info),
     skip = x$skip,
     id = x$id
   )

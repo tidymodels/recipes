@@ -135,7 +135,7 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 #' @export
 prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
-  x_names <- eval_step_select(x$terms, training, info)
+  x_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, x_names])
 
   x_dat <-

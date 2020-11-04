@@ -105,8 +105,8 @@ step_geodist_new <-
 
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
-  lon_name <- eval_step_select(x$lon, training, info)
-  lat_name <- eval_step_select(x$lat, training, info)
+  lon_name <- eval_select_recipes(x$lon, training, info)
+  lat_name <- eval_select_recipes(x$lat, training, info)
 
   if (length(lon_name) > 1)
     rlang::abort("`lon` should resolve to a single column name.")

@@ -161,8 +161,8 @@ step_profile_new <-
 
 #' @export
 prep.step_profile <- function(x, training, info = NULL, ...) {
-  fixed_names <- eval_step_select(x$terms, training, info)
-  profile_name <- eval_step_select(x$profile, training, info)
+  fixed_names <- eval_select_recipes(x$terms, training, info)
+  profile_name <- eval_select_recipes(x$profile, training, info)
 
   if(length(fixed_names) == 0)
     rlang::abort("At least one variable should be fixed")

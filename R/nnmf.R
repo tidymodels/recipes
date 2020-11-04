@@ -126,7 +126,7 @@ step_nnmf_new <-
 
 #' @export
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
-  col_names <- eval_step_select(x$terms, training, info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   check_type(training[, col_names])
 

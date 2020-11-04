@@ -91,7 +91,7 @@ one_unique <- function(x) {
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
-  col_names <- eval_step_select(x$terms, training, info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   filter <- vapply(training[, col_names], one_unique, logical(1))
 
   step_zv_new(

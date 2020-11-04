@@ -112,7 +112,7 @@ step_regex_new <-
 
 #' @export
 prep.step_regex <- function(x, training, info = NULL, ...) {
-  col_name <- eval_step_select(x$terms, training, info)
+  col_name <- eval_select_recipes(x$terms, training, info)
 
   if (length(col_name) != 1)
     rlang::abort("The selector should only select a single variable")

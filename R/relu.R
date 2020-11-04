@@ -131,7 +131,7 @@ step_relu_new <-
 
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
-  columns <- eval_step_select(x$terms, training, info)
+  columns <- eval_select_recipes(x$terms, training, info)
   check_type(training[, columns])
 
   step_relu_new(

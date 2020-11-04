@@ -110,8 +110,8 @@ step_ratio_new <-
 #' @export
 prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
-    top = eval_step_select(x$terms, training, info),
-    bottom = eval_step_select(x$denom, training, info),
+    top = eval_select_recipes(x$terms, training, info),
+    bottom = eval_select_recipes(x$denom, training, info),
     stringsAsFactors = FALSE
   )
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
