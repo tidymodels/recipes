@@ -238,7 +238,7 @@ eval_select_recipes <- function(quos, data, info) {
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
   data_info <- tibble(variable = names(data))
-  data_info <- left_join(data_info, info, by = "variable")
+  data_info <- dplyr::left_join(data_info, info, by = "variable")
 
   nested_info <- nest_current_info(data_info)
 
