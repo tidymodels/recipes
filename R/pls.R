@@ -353,10 +353,19 @@ bake.step_pls <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
 
     new_data <- bind_cols(new_data, as_tibble(comps))
-    if (!use_old_pls(object$res) && !object$preserve) {
+
+    # Old pls never preserved original columns,
+    # but didn't have the `preserve` option
+    if (use_old_pls(object$res)) {
+      pls_vars <- rownames(object$res$projection)
+      keep_vars <- !(colnames(new_data) %in% pls_vars)
+      new_data <- new_data[, keep_vars, drop = FALSE]
+    } else if (!object$preserve) {
       pls_vars <- names(object$res$mu)
-      new_data <- new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+      keep_vars <- !(colnames(new_data) %in% pls_vars)
+      new_data <- new_data[, keep_vars, drop = FALSE]
     }
+
     if (!is_tibble(new_data)) {
       new_data <- as_tibble(new_data)
     }
