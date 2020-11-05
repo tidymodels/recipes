@@ -1,3 +1,7 @@
+#' @importFrom stats update
+#' @export
+stats::update
+
 #' Update a recipe step
 #'
 #' This `step` method for `update()` takes named arguments as `...` who's values
