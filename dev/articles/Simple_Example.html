@@ -115,8 +115,7 @@
 
       
 
-      </header><script src="Simple_Example_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Simple_Example_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="Simple_Example_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="Simple_Example_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basic Recipes</h1>
@@ -142,8 +141,8 @@
 <h2 class="hasAnchor">
 <a href="#an-example" class="anchor"></a>An Example</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org">rsample</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span>
 
@@ -153,14 +152,14 @@
 <span class="va">train_test_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span>
 
 <span class="va">credit_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">training</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span>
-<span class="va">credit_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></pre></div>
+<span class="va">credit_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></code></pre></div>
 <p>Note that there are some missing values in these data:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job </span>
 <span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000     1.000 </span>
 <span class="co">#&gt;  Expenses    Income    Assets      Debt    Amount     Price </span>
-<span class="co">#&gt;     1.000     0.919     0.988     0.996     1.000     1.000</span></pre></div>
+<span class="co">#&gt;     1.000     0.919     0.988     0.996     1.000     1.000</span></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
@@ -170,8 +169,8 @@
 <p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">rec_obj</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
@@ -179,7 +178,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;       role #variables</span>
 <span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span></pre></div>
+<span class="co">#&gt;  predictor         13</span></code></pre></div>
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
 <p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
@@ -200,14 +199,14 @@
 </ul>
 <p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"impute$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"impute$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "step_bagimpute"    "step_knnimpute"    "step_lowerimpute" </span>
 <span class="co">#&gt; [4] "step_meanimpute"   "step_medianimpute" "step_modeimpute"  </span>
-<span class="co">#&gt; [7] "step_rollimpute"</span></pre></div>
+<span class="co">#&gt; [7] "step_rollimpute"</span></code></pre></div>
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_knnimpute.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">imputed</span>
 <span class="co">#&gt; Data Recipe</span>
@@ -220,11 +219,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></pre></div>
+<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code>step_dummy</code>. To do this, the step selects all predictors then removes those that are numeric:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">ind_vars</span>
 <span class="co">#&gt; Data Recipe</span>
@@ -238,10 +237,10 @@
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
-<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span></pre></div>
+<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">standardized</span>
@@ -258,10 +257,10 @@
 <span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
 <span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span>
 <span class="co">#&gt; Centering for all_predictors()</span>
-<span class="co">#&gt; Scaling for all_predictors()</span></pre></div>
+<span class="co">#&gt; Scaling for all_predictors()</span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">trained_rec</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
@@ -278,15 +277,15 @@
 <span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span>
 <span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span>
 <span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span>
-<span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></pre></div>
+<span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
-<span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_test</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
+<span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_test</span><span class="op">)</span></code></pre></div>
 <p><code>bake</code> returns a tibble that, by default, includes all of the variables:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
 <span class="va">test_data</span>
 <span class="co">#&gt; # A tibble: 1,113 x 23</span>
@@ -319,7 +318,7 @@
 <span class="co">#&gt; Marital_separated    Marital_single     Marital_widow       Records_yes </span>
 <span class="co">#&gt;                 1                 1                 1                 1 </span>
 <span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span>
-<span class="co">#&gt;                 1                 1                 1</span></pre></div>
+<span class="co">#&gt;                 1                 1                 1</span></code></pre></div>
 <p>Selectors can also be used. For example, if only the predictors are needed, you can use <code><a href="../reference/bake.html">bake(object, new_data, all_predictors())</a></code>.</p>
 <p>There are a number of other steps included in the package:</p>
 <pre><code>#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   
@@ -354,9 +353,9 @@
 <a href="#checks" class="anchor"></a>Checks</h2>
 <p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
 <p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
 <pre><code>#&gt; [1] "check_class"      "check_cols"       "check_missing"    "check_name"      
 #&gt; [5] "check_new_values" "check_range"      "check_type"</code></pre>

@@ -115,8 +115,7 @@
 
       
 
-      </header><script src="Selecting_Variables_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Selecting_Variables_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="Selecting_Variables_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="Selecting_Variables_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Selecting Variables</h1>
@@ -138,8 +137,8 @@
 </ul>
 <p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and <code><a href="../reference/has_role.html">?has_role</a></code> have details about the available selection methods.</p>
 <p>To illustrate this, the credit data will be used:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"credit_data"</span><span class="op">)</span>
@@ -168,10 +167,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;       role #variables</span>
 <span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor          4</span></pre></div>
+<span class="co">#&gt;  predictor          4</span></code></pre></div>
 <p>Before any steps are used the information on the original variables is:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 4</span>
 <span class="co">#&gt;   variable  type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
@@ -179,18 +178,18 @@
 <span class="co">#&gt; 2 Time      numeric predictor original</span>
 <span class="co">#&gt; 3 Age       numeric predictor original</span>
 <span class="co">#&gt; 4 Records   nominal predictor original</span>
-<span class="co">#&gt; 5 Status    nominal outcome   original</span></pre></div>
+<span class="co">#&gt; 5 Status    nominal outcome   original</span></code></pre></div>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>This will capture <em>any</em> variables that are either character strings or factors: <code>Status</code> and <code>Records</code>. However, since <code>Status</code> is our outcome, we might want to keep it as a factor so we can <em>subtract</em> that variable out either by name or by role:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Records</span><span class="op">)</span> <span class="co"># or</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Records</span><span class="op">)</span> <span class="co"># or</span>
 <span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">Status</span><span class="op">)</span> <span class="co"># or</span>
-<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="fu"><a href="../reference/has_role.html">all_outcomes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </pre></div>
+<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="fu"><a href="../reference/has_role.html">all_outcomes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <p>Using the last definition:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span>
 <span class="co">#&gt; # A tibble: 4,454 x 5</span>
@@ -206,7 +205,7 @@
 <span class="co">#&gt;  8         9    12    27 good             0</span>
 <span class="co">#&gt;  9         0    60    32 good             0</span>
 <span class="co">#&gt; 10         0    48    41 bad              0</span>
-<span class="co">#&gt; # … with 4,444 more rows</span></pre></div>
+<span class="co">#&gt; # … with 4,444 more rows</span></code></pre></div>
 <p><code>Status</code> is unaffected.</p>
 <p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>
   </div>
