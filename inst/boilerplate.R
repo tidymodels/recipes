@@ -119,7 +119,7 @@ create_generator <- function(name, which) {
 create_prep_method <- function(name, which) {
   glue('
 prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
 
   <prepping action here>

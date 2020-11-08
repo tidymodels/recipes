@@ -94,7 +94,7 @@ step_bin2factor_new <-
 
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   if (length(col_names) < 1)
     rlang::abort("The selector should only select at least one variable")
   if (any(info$type[info$variable %in% col_names] != "numeric"))

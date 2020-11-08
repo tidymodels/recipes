@@ -144,7 +144,8 @@ step_upsample_new <-
 
 #' @export
 prep.step_upsample <- function(x, training, info = NULL, ...) {
-  col_name <- terms_select(x$terms, info = info)
+  col_name <- eval_select_recipes(x$terms, training, info)
+
   if (length(col_name) != 1)
     rlang::abort("Please select a single factor variable.")
   if (!is.factor(training[[col_name]]))

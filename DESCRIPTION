@@ -30,7 +30,7 @@ Imports:
     stats,
     tibble,
     tidyr (>= 1.0.0),
-    tidyselect (>= 0.2.5),
+    tidyselect (>= 1.1.0),
     timeDate,
     utils,
     withr

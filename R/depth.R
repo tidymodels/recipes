@@ -142,7 +142,7 @@ step_depth_new <-
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
-  x_names <- terms_select(x$terms, info = info)
+  x_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, x_names])
 
   x_dat <-

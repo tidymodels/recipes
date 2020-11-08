@@ -122,8 +122,10 @@ new_values_func <- function(x,
 }
 
 prep.check_new_values <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
+
   values <- lapply(training[ ,col_names], unique)
+
   check_new_values_new(
     terms   = x$terms,
     role    = x$role,

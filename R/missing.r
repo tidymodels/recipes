@@ -96,7 +96,8 @@ check_missing_new <-
   }
 
 prep.check_missing <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
+
   check_missing_new(terms = x$terms,
                     role  = x$role,
                     trained = TRUE,

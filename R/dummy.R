@@ -165,7 +165,7 @@ passover <- function(cmd) {
 
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info, empty_fun = passover)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   if (length(col_names) > 0) {
     fac_check <- vapply(training[, col_names], is.factor, logical(1))

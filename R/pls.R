@@ -295,8 +295,9 @@ prop2int <- function(x, p) {
 
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
-  x_names <- terms_select(x$terms,   info = info)
-  y_names <- terms_select(x$outcome, info = info)
+  x_names <- eval_select_recipes(x$terms, training, info)
+  y_names <- eval_select_recipes(x$outcome, training, info)
+
   check_type(training[, x_names])
   if (length(y_names) > 1 ) {
     rlang::abort("`step_pls()` only supports univariate models.")
@@ -352,10 +353,19 @@ bake.step_pls <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
 
     new_data <- bind_cols(new_data, as_tibble(comps))
-    if (!use_old_pls(object$res) && !object$preserve) {
+
+    # Old pls never preserved original columns,
+    # but didn't have the `preserve` option
+    if (use_old_pls(object$res)) {
+      pls_vars <- rownames(object$res$projection)
+      keep_vars <- !(colnames(new_data) %in% pls_vars)
+      new_data <- new_data[, keep_vars, drop = FALSE]
+    } else if (!object$preserve) {
       pls_vars <- names(object$res$mu)
-      new_data <- new_data[, !(colnames(new_data) %in% pls_vars), drop = FALSE]
+      keep_vars <- !(colnames(new_data) %in% pls_vars)
+      new_data <- new_data[, keep_vars, drop = FALSE]
     }
+
     if (!is_tibble(new_data)) {
       new_data <- as_tibble(new_data)
     }

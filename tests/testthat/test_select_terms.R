@@ -122,8 +122,6 @@ test_that('namespaced selectors', {
   )
 })
 
-
-
 test_that('new dplyr selectors', {
   skip_if(tidyselect_pre_1.0.0())
 

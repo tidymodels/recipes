@@ -133,9 +133,9 @@ check_class_new <-
 
 prep.check_class <- function(x,
                              training,
-                             info = NULL, # info is an argument to terms_select
+                             info = NULL,
                              ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   # vapply requires a very specific return here
   # class can give back multiple values, return shape

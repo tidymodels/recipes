@@ -34,7 +34,7 @@ row in the summary tibble.
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 summary(rec)
-rec <- step_pca(rec, all_numeric(), num = 3)
+rec <- step_pca(rec, all_numeric(), num_comp = 3)
 summary(rec) # still the same since not yet trained
 rec <- prep(rec, training = USArrests)
 summary(rec)

@@ -244,8 +244,9 @@ recipe.matrix <- function(x, ...) {
 form2args <- function(formula, data, ...) {
   if (!is_formula(formula))
     formula <- as.formula(formula)
+
   ## check for in-line formulas
-  element_check(formula, allowed = NULL)
+  inline_check(formula)
 
   if (!is_tibble(data))
     data <- as_tibble(data)
@@ -271,6 +272,20 @@ form2args <- function(formula, data, ...) {
   ## pass to recipe.default with vars and roles
 
   list(x = data, vars = vars, roles = roles)
+}
+
+inline_check <- function(x) {
+  funs <- fun_calls(x)
+  funs <- funs[!(funs %in% c("~", "+", "-"))]
+
+  if (length(funs) > 0) {
+    rlang::abort(paste0(
+      "No in-line functions should be used here; ",
+      "use steps to define baking actions."
+    ))
+  }
+
+  invisible(x)
 }
 
 
@@ -483,61 +498,6 @@ prep.recipe <-
     x
   }
 
-# For columns that should be retained (based on the selectors used in `bake()`
-# or `bake(new_data = NULL)`), match those to the existing columns in the data.
-#
-# Some details:
-#  1. When running `bake(new_data = NULL)`, the resulting columns should be
-#  consistent with the variables in `term_info$variables`. If selectors are
-#  used, the final columns that are returned should be a subset of those.
-#  2. `term_info$variables` is consistent with a recipe when _no_ steps are
-#  skipped.
-#  3. If a step is skipped, its effect is only seen in `bake()` when a data
-#  frame is given to `new_data`. Also, if a
-#  step is skipped, the columns names that should be returned are possibly
-#  inconsistent with what is in `term_info$variables`. The results might be that
-#  there are more/less/different columns between `bake()` and `bake(new_data = NULL)`.
-#
-# `final_vars()` follows this logic:
-#
-#  - During `bake(new_data = NULL)` it determines which of the selected columns
-#    are consistent with `term_info$variables` and returns them.
-#  - During `bake()`, the selected columns are subsetted with the names of the
-#    processed data.
-#
-# The column ordering is non-trivial. The approach here is to order the data
-# consistent with `term_info$variables` and to add other variables at the
-# end of the tibble. This seems reasonable but might lead to unexpected (but
-# consistent) results.
-#
-# Consider a recipe for the `mtcars` data with a single step:
-#     `step_rm(cyl, skip = TRUE)`
-# is used. For `bake(new_data = NULL)`, only ten columns are returned. However,
-# when `bake()` is run on the recipe with new data, it should return all eleven.
-# When `bake()` is run, `cyl` is not included in `term_info$variables` so this
-# column would come at the end (instead of as the second column as it is in
-# `mtcars`).
-
-final_vars <- function(nms, vars, trms, baking) {
-  # In case there are multiple roles for a column:
-  trms <- trms[!duplicated(trms$variable), ]
-
-  if (baking) {
-    possible <- nms[nms %in% vars]
-  } else {
-    possible <- trms$variable[trms$variable %in% vars]
-  }
-  possible <- possible[!is.na(possible)]
-  possible <- possible[!duplicated(possible)]
-  possible <-
-    tibble::tibble(variable = possible, .order_2 = seq_along(possible))
-  trms$.order_1 <- 1:nrow(trms)
-  both <-
-    dplyr::left_join(possible, trms, by = "variable") %>%
-    dplyr::arrange(.order_1, .order_2)
-  both$variable
-}
-
 #' @rdname bake
 #' @aliases bake bake.recipe
 #' @author Max Kuhn
@@ -643,49 +603,50 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   check_nominal_type(new_data, object$orig_lvls)
 
-  # Determine return variables. The context (ie. `info`) can
-  # change depending on whether a skip step was used. If so, we
-  # use an alternate info tibble that has all possible terms
-  # in it.
-  has_skip <- vapply(object$steps, function(x) x$skip, logical(1))
+  # Drop completely new columns from `new_data` and reorder columns that do
+  # still exist to match the ordering used when training
+  original_names <- names(new_data)
+  original_training_names <- unique(object$var_info$variable)
+  bakeable_names <- intersect(original_training_names, original_names)
+  new_data <- new_data[, bakeable_names]
 
-  if (any(has_skip)) {
-    keepers <-
-      terms_select(terms = terms,
-                   info = object$last_term_info,
-                   empty_fun = passover)
-  } else {
-    keepers <-
-      terms_select(terms = terms,
-                   info = object$term_info,
-                   empty_fun = passover)
+  n_steps <- length(object$steps)
+
+  for (i in seq_len(n_steps)) {
+    step <- object$steps[[i]]
+
+    if (is_skipable(step)) {
+      next
+    }
+
+    new_data <- bake(step, new_data = new_data)
+
+    if (!is_tibble(new_data)) {
+      new_data <- as_tibble(new_data)
+    }
   }
 
-  if (length(keepers) > 0) {
-    for (i in seq(along.with = object$steps)) {
-      if (!is_skipable(object$steps[[i]])) {
-        new_data <- bake(object$steps[[i]], new_data = new_data)
-        if (!is_tibble(new_data))
-          new_data <- as_tibble(new_data)
-      }
-    }
-    vars <- final_vars(names(new_data), keepers, object$term_info, baking = TRUE)
-    new_data <- new_data[, vars]
+  # Use `last_term_info`, which maintains info on all columns that got added
+  # and removed from the training data. This is important for skipped steps
+  # which might have resulted in columns not being added/removed in the test
+  # set.
+  info <- object$last_term_info
 
-    ## The levels are not null when no nominal data are present or
-    ## if strings_as_factors = FALSE in `prep`
-    if (!is.null(object$levels)) {
-      var_levels <- object$levels
-      var_levels <- var_levels[keepers]
-      check_values <-
-        vapply(var_levels, function(x)
-          (!all(is.na(x))), c(all = TRUE))
-      var_levels <- var_levels[check_values]
-      if (length(var_levels) > 0)
-        new_data <- strings2factors(new_data, var_levels)
-    }
-  } else {
-    new_data <- tibble(.rows = nrow(new_data))
+  # Now reduce to only user selected columns
+  out_names <- eval_select_recipes(terms, new_data, info)
+  new_data <- new_data[, out_names]
+
+  ## The levels are not null when no nominal data are present or
+  ## if strings_as_factors = FALSE in `prep`
+  if (!is.null(object$levels)) {
+    var_levels <- object$levels
+    var_levels <- var_levels[out_names]
+    check_values <-
+      vapply(var_levels, function(x)
+        (!all(is.na(x))), c(all = TRUE))
+    var_levels <- var_levels[check_values]
+    if (length(var_levels) > 0)
+      new_data <- strings2factors(new_data, var_levels)
   }
 
   if (composition == "dgCMatrix") {
@@ -770,7 +731,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' summary(rec)
-#' rec <- step_pca(rec, all_numeric(), num = 3)
+#' rec <- step_pca(rec, all_numeric(), num_comp = 3)
 #' summary(rec) # still the same since not yet trained
 #' rec <- prep(rec, training = USArrests)
 #' summary(rec)
@@ -811,49 +772,39 @@ juice <- function(object, ..., composition = "tibble") {
   }
 
   if (!isTRUE(object$retained)) {
-    rlang::abort(
-      paste0("Use `retain = TRUE` in `prep()` to be able ",
-             "to extract the training set"
-             )
-    )
+    rlang::abort(paste0(
+      "Use `retain = TRUE` in `prep()` to be able ",
+      "to extract the training set"
+    ))
   }
 
   if (!any(composition == formats)) {
-    rlang::abort(
-      paste0("`composition` should be one of: ",
-         paste0("'", formats, "'", collapse = ",")
-         )
-      )
+    rlang::abort(paste0(
+      "`composition` should be one of: ",
+      paste0("'", formats, "'", collapse = ",")
+    ))
   }
 
   terms <- quos(...)
   if (is_empty(terms)) {
     terms <- quos(everything())
   }
-  keepers <-
-    terms_select(terms = terms,
-                 info = object$term_info,
-                 empty_fun = passover)
 
-  if (length(keepers) > 0) {
-    vars <- final_vars(names(object$template), keepers, object$term_info, baking = FALSE)
-    new_data <- object$template[, vars]
+  # Get user requested columns
+  new_data <- object$template
+  out_names <- eval_select_recipes(terms, new_data, object$term_info)
+  new_data <- new_data[, out_names]
 
-    ## Since most models require factors, do the conversion from character
-    if (!is.null(object$levels)) {
-      var_levels <- object$levels
-      var_levels <- var_levels[keepers]
-      check_values <-
-        vapply(var_levels, function(x)
-          (!all(is.na(x))), c(all = TRUE))
-      var_levels <- var_levels[check_values]
-      if (length(var_levels) > 0)
-        new_data <- strings2factors(new_data, var_levels)
-    }
-
-
-  } else {
-    new_data <- tibble(.rows = nrow(object$template))
+  ## Since most models require factors, do the conversion from character
+  if (!is.null(object$levels)) {
+    var_levels <- object$levels
+    var_levels <- var_levels[out_names]
+    check_values <-
+      vapply(var_levels, function(x)
+        (!all(is.na(x))), c(all = TRUE))
+    var_levels <- var_levels[check_values]
+    if (length(var_levels) > 0)
+      new_data <- strings2factors(new_data, var_levels)
   }
 
   if (composition == "dgCMatrix") {

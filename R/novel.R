@@ -116,8 +116,10 @@ get_existing_values <- function(x) {
 
 #' @export
 prep.step_novel <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
+
   col_check <- dplyr::filter(info, variable %in% col_names)
+
   if (any(col_check$type != "nominal"))
     rlang::abort(
       paste0("Columns must be character or factor: ",

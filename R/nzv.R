@@ -137,7 +137,8 @@ step_nzv_new <-
 
 #' @export
 prep.step_nzv <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
+
   filter <- nzv(
     x = training[, col_names],
     freq_cut = x$freq_cut,

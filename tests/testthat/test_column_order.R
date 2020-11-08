@@ -48,10 +48,28 @@ test_that('skipped steps', {
     step_corr(all_predictors(), threshold = .6, skip = TRUE) %>%
     prep()
 
-  cols_1 <- c("hydrogen", "nitrogen", "sulfur", "HHV", "oxygen_o_carbon")
+  cols_1 <- c(
+    "hydrogen",
+    "nitrogen",
+    "sulfur",
+    "HHV",
+    "oxygen_o_carbon"
+  )
 
-  cols_2 <- c("hydrogen", "nitrogen", "sulfur", "HHV", "oxygen_o_carbon",
-              "carbon", "oxygen", "hydrogen_o_carbon", "nitrogen_o_carbon")
+  # Ordering relative to the original specification of the recipe is
+  # preserved (i.e. carbon was the first column specified, and since we
+  # skipped the step that would drop it, it appears first in the result)
+  cols_2 <- c(
+    "carbon",
+    "hydrogen",
+    "oxygen",
+    "nitrogen",
+    "sulfur",
+    "HHV",
+    "hydrogen_o_carbon",
+    "oxygen_o_carbon",
+    "nitrogen_o_carbon"
+  )
 
   expect_equal(
     names(juice(rec_2)),

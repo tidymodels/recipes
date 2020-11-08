@@ -188,7 +188,7 @@ step_window_new <-
 
 #' @export
 prep.step_window <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     rlang::abort("The selected variables should be numeric")

@@ -119,9 +119,9 @@ check_range_new <-
 
 prep.check_range <- function(x,
                              training,
-                             info = NULL, # info is an argument to terms_select
+                             info = NULL,
                              ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   ## TODO add informative error for nonnumerics
 

@@ -84,8 +84,10 @@ step_relevel_new <-
 
 #' @export
 prep.step_relevel <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
+
   col_check <- dplyr::filter(info, .data$variable %in% col_names)
+
   if (any(col_check$type != "nominal")) {
     rlang::abort(
       "Columns must be character or factor: ",

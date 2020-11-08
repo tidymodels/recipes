@@ -76,7 +76,7 @@ step_sqrt_new <-
 
 #' @export
 prep.step_sqrt <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
 
   step_sqrt_new(

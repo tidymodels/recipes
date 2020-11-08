@@ -114,7 +114,7 @@ bs_wrapper <- function(x, args) {
 
 #' @export
 prep.step_bs <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
 
   opt <- x$options

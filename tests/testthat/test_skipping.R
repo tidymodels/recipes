@@ -67,15 +67,31 @@ test_that('skips for steps that remove columns (#239)', {
   prep_simple <- prep(simple_ex, iris)
   simple_juiced <- juice(prep_simple)
   simple_baked <- bake(prep_simple, new_data = iris)
+
   expect_equal(
     names(simple_juiced),
-    c("Sepal.Width", "Petal.Length", "Petal.Width", "Species",
-      "Sepal.Length_x_Sepal.Width")
+    c(
+      "Sepal.Width",
+      "Petal.Length",
+      "Petal.Width",
+      "Species",
+      "Sepal.Length_x_Sepal.Width"
+    )
   )
+
+  # Ordering relative to the original specification of the recipe is
+  # preserved (i.e. Sepal.Length was the first column specified, and since we
+  # skipped the step that would drop it, it appears first in the result)
   expect_equal(
     names(simple_baked),
-    c("Sepal.Width", "Petal.Length", "Petal.Width", "Species",
-      "Sepal.Length_x_Sepal.Width", "Sepal.Length")
+    c(
+      "Sepal.Length",
+      "Sepal.Width",
+      "Petal.Length",
+      "Petal.Width",
+      "Species",
+      "Sepal.Length_x_Sepal.Width"
+    )
   )
 
   complex_ex <-
@@ -95,7 +111,7 @@ test_that('skips for steps that remove columns (#239)', {
   )
   expect_equal(
     names(complex_baked),
-    c("Petal.Length", "Petal.Width", "Species", "PC2", "PC1")
+    c("Petal.Length", "Petal.Width", "Species", "PC1", "PC2")
   )
 
   iris_dups <-
@@ -116,6 +132,19 @@ test_that('skips for steps that remove columns (#239)', {
   expect_equal(
     names(corr_juiced),
     c('Sepal.Length', 'Petal.Width', 'dup_2', 'Species')
+  )
+
+  expect_equal(
+    names(corr_baked),
+    c(
+      'Sepal.Length',
+      'Sepal.Width',
+      'Petal.Length',
+      'Petal.Width',
+      'dup_1',
+      'dup_2',
+      'Species'
+    )
   )
 
   expect_equal(

@@ -136,11 +136,20 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   form_sel <- find_selectors(x$terms)
 
+  # Use formula environment as quosure env
+  env <- rlang::f_env(x$terms)
+
+  eval_select_recipes_expr <- function(expr) {
+    # Wrap `expr` into a list-of-quos as `eval_select_recipes()` expects
+    quo <- new_quosure(expr, env)
+    quos <- list(quo)
+    eval_select_recipes(quos, data = training, info = info)
+  }
+
   ## Resolve the selectors to a expression containing an additive
   ## function of the variables
-
   if(length(form_sel) > 0) {
-    form_res <- map(form_sel, terms_select, info = info)
+    form_res <- map(form_sel, eval_select_recipes_expr)
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
     ## formula.
@@ -328,7 +337,7 @@ find_selectors <- function (f) {
   }
   else if (is.call(f)) {
     fname <- as.character(f[[1]])
-    res <- if (fname %in% selectors) f else list()
+    res <- if (fname %in% intersect_selectors) f else list()
     c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
   }
   else if (is.name(f) || is.atomic(f)) {
@@ -356,6 +365,28 @@ replace_selectors <- function(x, elem, value) {
     rlang::abort(paste0("Don't know how to handle type ", typeof(x), "."))
   }
 }
+
+intersect_selectors <- c(
+  "starts_with",
+  "ends_with",
+  "contains",
+  "matches",
+  "num_range",
+  "everything",
+  "one_of",
+  "all_of",
+  "any_of",
+  "c",
+  "where",
+
+  "has_role",
+  "all_predictors",
+  "all_outcomes",
+
+  "has_type",
+  "all_numeric",
+  "all_nominal"
+)
 
 plus_call <- function(x, y) call("+", x, y)
 

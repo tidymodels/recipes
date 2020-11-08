@@ -3,7 +3,7 @@
 \name{selections}
 \alias{selections}
 \alias{selection}
-\title{Methods for Select Variables in Step Functions}
+\title{Methods for Selecting Variables in Step Functions}
 \description{
 When selecting variables or model terms in \code{step}
 functions, \code{dplyr}-like tools are used. The \emph{selector} functions
@@ -14,7 +14,7 @@ stated in the step function, this might be similar to:
 
 \preformatted{
   recipe( ~ ., data = USArrests) \%>\%
-    step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
+    step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 }
 
 The first four arguments indicate which variables should be
@@ -24,8 +24,6 @@ to \code{\link[=step_pca]{step_pca()}}.
 Note that:
 
 \enumerate{
-\item The selector arguments should not contain functions
-beyond those supported (see below).
 \item These arguments are not evaluated until the \code{prep}
 function for the step is executed.
 \item The \code{dplyr}-like syntax allows for negative signs to
@@ -42,6 +40,7 @@ Also, select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:starts_with]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}},
 \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
 \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
+
 For example:
 
 \preformatted{
@@ -51,18 +50,14 @@ For example:
 
 would only select \code{Sepal.Length}
 
-\strong{Inline} functions that specify computations, such as
-\code{log(x)}, should not be used in selectors and will produce an
-error. A list of allowed selector functions is below.
-
 Columns of the design matrix that may not exist when the step
 is coded can also be selected. For example, when using
-\code{step_pca}, the number of columns created by feature extraction
+\code{step_pca()}, the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
 case, using \code{matches("^PC")} will select all of the columns
 whose names start with "PC" \emph{once those columns are created}.
 
-There are sets of functions that can be used to select
+There are sets of recipes specific functions that can be used to select
 variables based on their role or type: \code{\link[=has_role]{has_role()}} and
 \code{\link[=has_type]{has_type()}}. For convenience, there are also functions that are
 more specific: \code{\link[=all_numeric]{all_numeric()}}, \code{\link[=all_nominal]{all_nominal()}},
@@ -87,18 +82,11 @@ must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
 could be \code{~ starts_with("Species"):Sepal.Width}. This can be
 useful if \code{Species} was converted to dummy variables
-previously using \code{\link[=step_dummy]{step_dummy()}}.
-
-The complete list of allowable functions in steps:
-
-\itemize{
-\item \strong{By name}: \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}},
-\code{\link[tidyselect:starts_with]{tidyselect::ends_with()}}, \code{\link[tidyselect:starts_with]{tidyselect::contains()}},
-\code{\link[tidyselect:starts_with]{tidyselect::matches()}}, \code{\link[tidyselect:starts_with]{tidyselect::num_range()}},
-\code{\link[tidyselect:everything]{tidyselect::everything()}}
-\item \strong{By role}: \code{\link[=has_role]{has_role()}},
-\code{\link[=all_predictors]{all_predictors()}}, and \code{\link[=all_outcomes]{all_outcomes()}}
-\item \strong{By type}: \code{\link[=has_type]{has_type()}}, \code{\link[=all_numeric]{all_numeric()}},
-and \code{\link[=all_nominal]{all_nominal()}}
-}
+previously using \code{\link[=step_dummy]{step_dummy()}}. The implementation of
+\code{step_interact()} is special, and is more restricted than
+the other step functions. Only the selector functions from
+recipes and tidyselect are allowed. User defined selector functions
+will not be recognized. Additionally, the tidyselect domain specific
+language is not recognized here, meaning that \code{&}, \code{|}, \code{!}, and \code{-}
+will not work.
 }

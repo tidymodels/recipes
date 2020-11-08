@@ -95,6 +95,38 @@ test_that('using selectors', {
   expect_equivalent(te_og, te_new)
 })
 
+test_that("using where() works", {
+  ex_rec <- rec %>%
+    step_dummy(z) %>%
+    step_interact( ~ where(is.numeric):x1)
+
+  x <- prep(ex_rec, dat_tr)
+
+  expr <- x$steps[[2]]$terms[[2]]
+  expect <- expr((x1 + x2 + x3 + x4 + x5 + y + z_b + z_c):x1)
+
+  expect_equal(
+    expr,
+    expect
+  )
+})
+
+test_that("using all_of() works", {
+  xvars <- c("x2", "x3")
+
+  ex_rec <- rec %>%
+    step_interact( ~ all_of(xvars):x1)
+
+  x <- prep(ex_rec, dat_tr)
+
+  expr <- x$steps[[1]]$terms[[2]]
+  expect <- expr((x2 + x3):x1)
+
+  expect_equal(
+    expr,
+    expect
+  )
+})
 
 test_that('printing', {
   int_rec <- rec %>% step_interact(~x1:x2)

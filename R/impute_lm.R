@@ -152,6 +152,7 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
     impute_var_lists(
       to_impute = x$terms,
       impute_using = x$impute_with,
+      training = training,
       info = info
     )
 

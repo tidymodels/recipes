@@ -3,7 +3,9 @@
 #' @name selections
 #' @aliases selections
 #' @aliases selection
-#' @title Methods for Select Variables in Step Functions
+#'
+#' @title Methods for Selecting Variables in Step Functions
+#'
 #' @description When selecting variables or model terms in `step`
 #'  functions, `dplyr`-like tools are used. The *selector* functions
 #'  can choose variables based on their name, current role, data
@@ -13,29 +15,24 @@
 #'
 #' \preformatted{
 #'   recipe( ~ ., data = USArrests) \%>\%
-#'     step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
+#'     step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 #' }
 #'
-#'   The first four arguments indicate which variables should be
+#'  The first four arguments indicate which variables should be
 #'  used in the PCA while the last argument is a specific argument
 #'  to [step_pca()].
 #'
 #' Note that:
 #'
 #'   \enumerate{
-#'   \item The selector arguments should not contain functions
-#'    beyond those supported (see below).
 #'   \item These arguments are not evaluated until the `prep`
 #'    function for the step is executed.
-
 #'   \item The `dplyr`-like syntax allows for negative signs to
 #'    exclude variables (e.g. `-Murder`) and the set of selectors will
 #'    processed in order.
-
 #'   \item A leading exclusion in these arguments (e.g. `-Murder`)
 #'   has the effect of adding all variables to the list except the
 #'   excluded variable(s).
-
 #'   }
 #'
 #' Also, select helpers from the `tidyselect` package can also be used:
@@ -44,7 +41,8 @@
 #'   [tidyselect::num_range()], [tidyselect::everything()],
 #'   [tidyselect::one_of()], [tidyselect::all_of()], and
 #'   [tidyselect::any_of()]
-#'   For example:
+#'
+#' For example:
 #'
 #' \preformatted{
 #'   recipe(Species ~ ., data = iris) \%>\%
@@ -53,25 +51,20 @@
 #'
 #' would only select `Sepal.Length`
 #'
-#' **Inline** functions that specify computations, such as
-#'  `log(x)`, should not be used in selectors and will produce an
-#'  error. A list of allowed selector functions is below.
-#'
 #' Columns of the design matrix that may not exist when the step
-#'  is coded can also be selected. For example, when using
-#'  `step_pca`, the number of columns created by feature extraction
-#'  may not be known when subsequent steps are defined. In this
-#'  case, using `matches("^PC")` will select all of the columns
-#'  whose names start with "PC" *once those columns are created*.
+#' is coded can also be selected. For example, when using
+#' `step_pca()`, the number of columns created by feature extraction
+#' may not be known when subsequent steps are defined. In this
+#' case, using `matches("^PC")` will select all of the columns
+#' whose names start with "PC" *once those columns are created*.
 #'
-#' There are sets of functions that can be used to select
-#'  variables based on their role or type: [has_role()] and
-#'  [has_type()]. For convenience, there are also functions that are
-#'  more specific: [all_numeric()], [all_nominal()],
-#'  [all_predictors()], and [all_outcomes()]. These can be used in
-#'  conjunction with the previous functions described for selecting
-#'  variables using their names:
-
+#' There are sets of recipes specific functions that can be used to select
+#' variables based on their role or type: [has_role()] and
+#' [has_type()]. For convenience, there are also functions that are
+#' more specific: [all_numeric()], [all_nominal()],
+#' [all_predictors()], and [all_outcomes()]. These can be used in
+#' conjunction with the previous functions described for selecting
+#' variables using their names:
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -79,156 +72,74 @@
 #'     step_center(all_numeric(), -all_outcomes())
 #' }
 #'
-#'   This results in all the numeric predictors: carbon, hydrogen,
-#'  oxygen, nitrogen, and sulfur.
+#' This results in all the numeric predictors: carbon, hydrogen,
+#' oxygen, nitrogen, and sulfur.
 #'
-#'   If a role for a variable has not been defined, it will never be
-#'  selected using role-specific selectors.
+#' If a role for a variable has not been defined, it will never be
+#' selected using role-specific selectors.
 #'
 #' Selectors can be used in [step_interact()] in similar ways but
-#'  must be embedded in a model formula (as opposed to a sequence
-#'  of selectors). For example, the interaction specification
-#'  could be `~ starts_with("Species"):Sepal.Width`. This can be
-#'  useful if `Species` was converted to dummy variables
-#'  previously using [step_dummy()].
-#'
-#' The complete list of allowable functions in steps:
-#'
-#'   \itemize{
-#'     \item **By name**: [tidyselect::starts_with()],
-#'       [tidyselect::ends_with()], [tidyselect::contains()],
-#'       [tidyselect::matches()], [tidyselect::num_range()],
-#'       [tidyselect::everything()]
-#'     \item **By role**: [has_role()],
-#'       [all_predictors()], and [all_outcomes()]
-#'     \item **By type**: [has_type()], [all_numeric()],
-#'       and [all_nominal()]
-#'   }
+#' must be embedded in a model formula (as opposed to a sequence
+#' of selectors). For example, the interaction specification
+#' could be `~ starts_with("Species"):Sepal.Width`. This can be
+#' useful if `Species` was converted to dummy variables
+#' previously using [step_dummy()]. The implementation of
+#' `step_interact()` is special, and is more restricted than
+#' the other step functions. Only the selector functions from
+#' recipes and tidyselect are allowed. User defined selector functions
+#' will not be recognized. Additionally, the tidyselect domain specific
+#' language is not recognized here, meaning that `&`, `|`, `!`, and `-`
+#' will not work.
 NULL
 
-## These are the allowable functions for formulas in the the `terms` arguments
-## to the steps or to `recipes.formula`.
-name_selectors <- c("starts_with",
-                    "ends_with",
-                    "contains",
-                    "matches",
-                    "num_range",
-                    "everything",
-                    "one_of",
-                    "all_of",
-                    "any_of",
-                    "c")
 
-role_selectors <-
-  c("has_role", "all_predictors", "all_outcomes")
+eval_select_recipes <- function(quos, data, info) {
+  # Maintain ordering between `data` column names and `info$variable` so
+  # `eval_select()` and recipes selectors return compatible positions
+  data_info <- tibble(variable = names(data))
+  data_info <- dplyr::left_join(data_info, info, by = "variable")
 
-type_selectors <- c("has_type", "all_numeric", "all_nominal")
+  nested_info <- nest_current_info(data_info)
 
-selectors <-
-  unique(c(name_selectors, role_selectors, type_selectors))
+  local_current_info(nested_info)
 
-## This flags formulas that are not allowed. When called from `recipe.formula`
-## `allowed` is NULL.
-element_check <- function(x, allowed = selectors) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
-  # i.e. tidyselect::matches()
-  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
-  if (!is.null(allowed)) {
-    # when called from a step
-    not_good <- funs[!(funs %in% allowed)]
-    if (length(not_good) > 0)
-      rlang::abort(
-          paste0(
-          "Not all functions are allowed in step function selectors (e.g. ",
-          paste0("`", not_good, "`", collapse = ", "),
-          "). See ?selections."
-        )
-      )
-  } else {
-    # when called from formula.recipe
-    if (length(funs) > 0)
-      rlang::abort(
-        paste0(
-          "No in-line functions should be used here; use steps to define ",
-          "baking actions"
-        )
-      )
+  expr <- expr(c(!!!quos))
+
+  # FIXME: Ideally this is `FALSE`, but empty selections incorrectly throw an
+  # error when this is false due to the following bug:
+  # https://github.com/r-lib/tidyselect/issues/221
+  allow_rename <- TRUE
+
+  sel <- tidyselect::eval_select(
+    expr = expr,
+    data = data,
+    allow_rename = allow_rename
+  )
+
+  # Return names not positions, as these names are
+  # used for both the training and test set and their positions
+  # may have changed. `sel` won't be named because when `allow_rename = FALSE`,
+  # `eval_select()` returns an unnamed vector.
+  out <- names(data)[sel]
+
+  # FIXME: Remove this check when the following issue is fixed,
+  # i.e. when we can use `allow_rename = FALSE`
+  # https://github.com/r-lib/tidyselect/issues/221
+  if (!identical(out, names(sel))) {
+    abort("Can't rename variables in this context.")
   }
-  invisible(NULL)
+
+  out
 }
 
-#' Select Terms in a Step Function.
-#'
-#' This function bakes the step function selectors and might be
-#'  useful when creating custom steps.
-#'
-#' @param info A tibble with columns `variable`, `type`, `role`,
-#'  and `source` that represent the current state of the data. The
-#'  function [summary.recipe()] can be used to get this information
-#'  from a recipe.
-#' @param terms A list of formulas whose right-hand side contains
-#'  quoted expressions. See [rlang::quos()] for examples.
-#' @param empty_fun A function to execute when no terms are selected by the
-#'  step. The default function throws an error with a message.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A character string of column names or an error of there
-#'  are no selectors or if no variables are selected.
-#' @seealso [recipe()] [summary.recipe()]
-#'   [prep.recipe()]
-#' @export
-#' @examples
-#' library(rlang)
-#' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~ ., data = okc)
-#' info <- summary(rec)
-#' terms_select(info = info, quos(all_predictors()))
-terms_select <- function(terms, info, empty_fun = abort_selection) {
-  # unique in case a variable has multiple roles
-  vars <- unique(info$variable)
-
-  if (is_empty(terms)) {
-    rlang::abort("At least one selector should be used")
-  }
-
-  ## check arguments against whitelist
-  lapply(terms, element_check)
-
-  # Set current_info so available to helpers
-
+nest_current_info <- function(info) {
   # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
   if (tidyr_new_interface()) {
-    nested_info <- tidyr::nest(info, data = -variable)
+    tidyr::nest(info, data = -variable)
   } else {
-    nested_info <- tidyr::nest(info, -variable)
+    tidyr::nest(info, -variable)
   }
-
-  old_info <- set_current_info(nested_info)
-  on.exit(set_current_info(old_info), add = TRUE)
-
-  # `terms` might be a single call (like in step_interact()),
-  # or it could be a list of quosures.
-  # They have to be unquoted differently
-  if (is.call(terms)) {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !! terms),
-      tidyselect_empty = empty_fun
-    )
-  } else {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !!! terms),
-      tidyselect_empty = empty_fun
-    )
-  }
-
-  unname(sel)
 }
-
-abort_selection <- exiting(function(cnd) {
-  abort("No variables or terms were selected.")
-})
 
 #' Role Selection
 #'
@@ -334,14 +245,15 @@ peek_info <- function(col) {
 ## dplyr versions
 
 #' @import rlang
-cur_info_env <- child_env(empty_env())
+cur_info_env <- env(empty_env())
 
-set_current_info <- function(x) {
-  old <- cur_info_env
-  cur_info_env$vars <- x$variable
-  cur_info_env$data <- x$data
-
-  invisible(old)
+local_current_info <- function(nested_info, frame = parent.frame()) {
+  local_bindings(
+    vars = nested_info$variable,
+    data = nested_info$data,
+    .env = cur_info_env,
+    .frame = frame
+  )
 }
 
 #' @export
@@ -349,3 +261,123 @@ set_current_info <- function(x) {
 current_info <- function() {
   cur_info_env %||% rlang::abort("Variable context not set")
 }
+
+# ------------------------------------------------------------------------------
+# Old method for selection. This has been completely superseded by
+# `eval_select_recipes()`, and should no longer be used in recipes, but we
+# have exported it so we continue to support it here.
+
+# This flags formulas that are not allowed
+element_check <- function(x) {
+  funs <- fun_calls(x)
+  funs <- funs[!(funs %in% c("~", "+", "-"))]
+
+  # i.e. tidyselect::matches()
+  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
+
+  name_selectors <- c(
+    "starts_with",
+    "ends_with",
+    "contains",
+    "matches",
+    "num_range",
+    "everything",
+    "one_of",
+    "all_of",
+    "any_of",
+    "c"
+  )
+  role_selectors <- c(
+    "has_role",
+    "all_predictors",
+    "all_outcomes"
+  )
+  type_selectors <- c(
+    "has_type",
+    "all_numeric",
+    "all_nominal"
+  )
+  selectors <- c(
+    name_selectors,
+    role_selectors,
+    type_selectors
+  )
+
+  not_good <- funs[!(funs %in% selectors)]
+
+  if (length(not_good) > 0) {
+    rlang::abort(paste0(
+      "Not all functions are allowed in step function selectors (e.g. ",
+      paste0("`", not_good, "`", collapse = ", "),
+      "). See ?selections."
+    ))
+  }
+
+  invisible(NULL)
+}
+
+#' Select Terms in a Step Function.
+#'
+#' This function bakes the step function selectors and might be
+#'  useful when creating custom steps.
+#'
+#' @param info A tibble with columns `variable`, `type`, `role`,
+#'  and `source` that represent the current state of the data. The
+#'  function [summary.recipe()] can be used to get this information
+#'  from a recipe.
+#' @param terms A list of formulas whose right-hand side contains
+#'  quoted expressions. See [rlang::quos()] for examples.
+#' @param empty_fun A function to execute when no terms are selected by the
+#'  step. The default function throws an error with a message.
+#' @keywords datagen
+#' @concept preprocessing
+#' @return A character string of column names or an error of there
+#'  are no selectors or if no variables are selected.
+#' @seealso [recipe()] [summary.recipe()]
+#'   [prep.recipe()]
+#' @export
+#' @examples
+#' library(rlang)
+#' library(modeldata)
+#' data(okc)
+#' rec <- recipe(~ ., data = okc)
+#' info <- summary(rec)
+#' terms_select(info = info, quos(all_predictors()))
+terms_select <- function(terms, info, empty_fun = abort_selection) {
+  # unique in case a variable has multiple roles
+  vars <- unique(info$variable)
+
+  if (is_empty(terms)) {
+    rlang::abort("At least one selector should be used")
+  }
+
+  ## check arguments against whitelist
+  lapply(terms, element_check)
+
+  # Set current_info so available to helpers
+
+  nested_info <- nest_current_info(info)
+
+  local_current_info(nested_info)
+
+  # `terms` might be a single call (like in step_interact()),
+  # or it could be a list of quosures.
+  # They have to be unquoted differently
+  if (is.call(terms)) {
+    sel <- with_handlers(
+      tidyselect::vars_select(vars, !! terms),
+      tidyselect_empty = empty_fun
+    )
+  } else {
+    sel <- with_handlers(
+      tidyselect::vars_select(vars, !!! terms),
+      tidyselect_empty = empty_fun
+    )
+  }
+
+  unname(sel)
+}
+
+abort_selection <- exiting(function(cnd) {
+  abort("No variables or terms were selected.")
+})

@@ -117,7 +117,7 @@ step_corr_new <-
 
 #' @export
 prep.step_corr <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info = info)
+  col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
 
   if (length(col_names) > 1) {
