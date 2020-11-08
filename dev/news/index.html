@@ -169,6 +169,10 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor"></a>recipes (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li><p>The full tidyselect DSL is now allowed inside recipes <code>step_*()</code> functions. This includes the operators <code><a href="https://rdrr.io/r/base/Logic.html">&amp;</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html">!</a></code> and the new <code>where()</code> function. Additionally, the restriction preventing user defined selectors from being used has been lifted (<a href='https://github.com/tidymodels/recipes/issues/572'>#572</a>).</p></li>
+<li><p>If steps that drop/add variables are skipped when baking the test set, the resulting column ordering of the baked test set will now be relative to the original recipe specification rather than relative to the baked training set. This is often more intuitive.</p></li>
+</ul>
 </div>
     <div id="recipes-0114" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.14">

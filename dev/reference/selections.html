@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Methods for Select Variables in Step Functions — selections • recipes</title>
+<title>Methods for Selecting Variables in Step Functions — selections • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Methods for Select Variables in Step Functions — selections" />
+<meta property="og:title" content="Methods for Selecting Variables in Step Functions — selections" />
 <meta property="og:description" content="When selecting variables or model terms in step
 functions, dplyr-like tools are used. The selector functions
 can choose variables based on their name, current role, data
@@ -58,7 +58,7 @@ any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:
 
   recipe( ~ ., data = USArrests) %&amp;gt;%
-    step_pca(Murder, Assault, UrbanPop, Rape, num = 3)
+    step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 
 
 The first four arguments indicate which variables should be
@@ -66,8 +66,6 @@ used in the PCA while the last argument is a specific argument
 to step_pca().
 Note that:
 
-The selector arguments should not contain functions
-beyond those supported (see below).
 These arguments are not evaluated until the prep
 function for the step is executed.
 The dplyr-like syntax allows for negative signs to
@@ -91,16 +89,13 @@ For example:
 
 
 would only select Sepal.Length
-Inline functions that specify computations, such as
-log(x), should not be used in selectors and will produce an
-error. A list of allowed selector functions is below.
 Columns of the design matrix that may not exist when the step
 is coded can also be selected. For example, when using
-step_pca, the number of columns created by feature extraction
+step_pca(), the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
 case, using matches(&quot;^PC&quot;) will select all of the columns
 whose names start with &quot;PC&quot; once those columns are created.
-There are sets of functions that can be used to select
+There are sets of recipes specific functions that can be used to select
 variables based on their role or type: has_role() and
 has_type(). For convenience, there are also functions that are
 more specific: all_numeric(), all_nominal(),
@@ -122,19 +117,13 @@ must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
 could be ~ starts_with(&quot;Species&quot;):Sepal.Width. This can be
 useful if Species was converted to dummy variables
-previously using step_dummy().
-The complete list of allowable functions in steps:
-
-By name: tidyselect::starts_with(),
-tidyselect::ends_with(), tidyselect::contains(),
-tidyselect::matches(), tidyselect::num_range(),
-tidyselect::everything()
-By role: has_role(),
-all_predictors(), and all_outcomes()
-By type: has_type(), all_numeric(),
-and all_nominal()
-
-" />
+previously using step_dummy(). The implementation of
+step_interact() is special, and is more restricted than
+the other step functions. Only the selector functions from
+recipes and tidyselect are allowed. User defined selector functions
+will not be recognized. Additionally, the tidyselect domain specific
+language is not recognized here, meaning that &amp;amp;, |, !, and -
+will not work." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -246,7 +235,7 @@ and all_nominal()
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Methods for Select Variables in Step Functions</h1>
+    <h1>Methods for Selecting Variables in Step Functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/selections.R'><code>R/selections.R</code></a></small>
     <div class="hidden name"><code>selections.Rd</code></div>
     </div>
@@ -260,7 +249,7 @@ any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:</p>
 <pre>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='va'>Murder</span>, <span class='va'>Assault</span>, <span class='va'>UrbanPop</span>, <span class='va'>Rape</span>, num <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+    <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='va'>Murder</span>, <span class='va'>Assault</span>, <span class='va'>UrbanPop</span>, <span class='va'>Rape</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </pre>
 
 <p>The first four arguments indicate which variables should be
@@ -268,8 +257,6 @@ used in the PCA while the last argument is a specific argument
 to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
 <p>Note that:</p>
 <ol>
-<li><p>The selector arguments should not contain functions
-beyond those supported (see below).</p></li>
 <li><p>These arguments are not evaluated until the <code>prep</code>
 function for the step is executed.</p></li>
 <li><p>The <code>dplyr</code>-like syntax allows for negative signs to
@@ -285,24 +272,21 @@ excluded variable(s).</p></li>
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::all_of()</a></code>, and
-<code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code>
-For example:</p>
+<code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code></p>
+<p>For example:</p>
 <pre>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"Width"</span><span class='op'>)</span><span class='op'>)</span>
 </pre>
 
 <p>would only select <code>Sepal.Length</code></p>
-<p><strong>Inline</strong> functions that specify computations, such as
-<code><a href='https://rdrr.io/r/base/Log.html'>log(x)</a></code>, should not be used in selectors and will produce an
-error. A list of allowed selector functions is below.</p>
 <p>Columns of the design matrix that may not exist when the step
 is coded can also be selected. For example, when using
-<code>step_pca</code>, the number of columns created by feature extraction
+<code><a href='step_pca.html'>step_pca()</a></code>, the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
 case, using <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches("^PC")</a></code> will select all of the columns
 whose names start with "PC" <em>once those columns are created</em>.</p>
-<p>There are sets of functions that can be used to select
+<p>There are sets of recipes specific functions that can be used to select
 variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
 <code><a href='has_role.html'>has_type()</a></code>. For convenience, there are also functions that are
 more specific: <code><a href='has_role.html'>all_numeric()</a></code>, <code><a href='has_role.html'>all_nominal()</a></code>,
@@ -324,19 +308,13 @@ must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
 could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be
 useful if <code>Species</code> was converted to dummy variables
-previously using <code><a href='step_dummy.html'>step_dummy()</a></code>.</p>
-<p>The complete list of allowable functions in steps:</p>
-<ul>
-<li><p><strong>By name</strong>: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>tidyselect::num_range()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/everything.html'>tidyselect::everything()</a></code></p></li>
-<li><p><strong>By role</strong>: <code><a href='has_role.html'>has_role()</a></code>,
-<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code></p></li>
-<li><p><strong>By type</strong>: <code><a href='has_role.html'>has_type()</a></code>, <code><a href='has_role.html'>all_numeric()</a></code>,
-and <code><a href='has_role.html'>all_nominal()</a></code></p></li>
-</ul>
-
+previously using <code><a href='step_dummy.html'>step_dummy()</a></code>. The implementation of
+<code><a href='step_interact.html'>step_interact()</a></code> is special, and is more restricted than
+the other step functions. Only the selector functions from
+recipes and tidyselect are allowed. User defined selector functions
+will not be recognized. Additionally, the tidyselect domain specific
+language is not recognized here, meaning that <code>&amp;</code>, <code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>, <code><a href='https://rdrr.io/r/base/Logic.html'>!</a></code>, and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>
+will not work.</p>
     </div>
 
 
