@@ -870,3 +870,24 @@ juice <- function(object, ..., composition = "tibble") {
 formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
 
 utils::globalVariables(c("number"))
+
+# ------------------------------------------------------------------------------
+
+#' @rdname required_pkgs
+#' @export
+required_pkgs.recipe <- function(x, infra = TRUE, ...) {
+  res <- purrr::map(x$steps, required_pkgs)
+  res <- unique(unlist(res))
+  if (infra) {
+    res <- c("recipes", res)
+  }
+  res <- unique(res)
+  res <- res[length(res) != 0]
+  res
+}
+
+#' @rdname required_pkgs
+#' @export
+required_pkgs.step <- function(x, ...) {
+  character(0)
+}
