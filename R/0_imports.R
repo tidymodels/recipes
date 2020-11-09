@@ -16,7 +16,7 @@
 #' @importFrom lubridate year yday week decimal_date quarter semester wday month
 #' @importFrom lubridate is.Date
 #' @importFrom utils stack globalVariables packageVersion object.size install.packages
-#' @importFrom tidyselect everything
+#' @importFrom dplyr everything
 #' @importFrom withr with_seed
 #' @importFrom splines ns bs
 

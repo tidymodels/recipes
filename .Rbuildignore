@@ -17,3 +17,4 @@ tests/testthat/NMF*
 ^\.github/workflows/pr-commands\.yaml$
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
+^man-roxygen$

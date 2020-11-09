@@ -2,126 +2,14 @@
 % Please edit documentation in R/downsample.R
 \name{step_downsample}
 \alias{step_downsample}
-\alias{tidy.step_downsample}
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
-step_downsample(
-  recipe,
-  ...,
-  under_ratio = 1,
-  ratio = NA,
-  role = NA,
-  trained = FALSE,
-  column = NULL,
-  target = NA,
-  skip = TRUE,
-  seed = sample.int(10^5, 1),
-  id = rand_id("downsample")
-)
-
-\method{tidy}{step_downsample}(x, ...)
+step_downsample(...)
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
-
-\item{...}{One or more selector functions to choose which
-variable is used to sample the data. See \code{\link[=selections]{selections()}}
-for more details. The selection should result in \emph{single
-factor variable}. For the \code{tidy} method, these are not
-currently used.}
-
-\item{under_ratio}{A numeric value for the ratio of the
-minority-to-majority frequencies. The default value (1) means
-that all other levels are sampled down to have the same
-frequency as the least occurring level. A value of 2 would mean
-that the majority levels will have (at most) (approximately)
-twice as many rows than the minority level.}
-
-\item{ratio}{Deprecated argument; same as \code{under_ratio}}
-
-\item{role}{Not used by this step since no new variables are
-created.}
-
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
-
-\item{column}{A character string of the variable name that will
-be populated (eventually) by the \code{...} selectors.}
-
-\item{target}{An integer that will be used to subsample. This
-should not be set by the user and will be populated by \code{prep}.}
-
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
-
-\item{seed}{An integer that will be used as the seed when downsampling.}
-
-\item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_downsample} object.}
-}
-\value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which is
-the variable used to sample.
+\item{...}{Arguments.}
 }
 \description{
-\if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
-
-\code{step_downsample} is now available as \code{themis::step_downsample()}. This
-function creates a \emph{specification} of a recipe step that will remove
-rows of a data set to make the occurrence of levels in a specific factor
-level equal.
+This function is not located in the \pkg{themis} package.
 }
-\details{
-Down-sampling is intended to be performed on the \emph{training} set alone. For
-this reason, the default is \code{skip = TRUE}. It is advisable to use
-\code{prep(recipe, retain = TRUE)} when preparing the recipe; in this way
-\code{bake(object, new_data = NULL)} can be used to obtain the down-sampled
-version of the data.
-
-If there are missing values in the factor variable that is used
-to define the sampling, missing data are selected at random in
-the same way that the other factor levels are sampled. Missing
-values are not used to determine the amount of data in the
-minority level
-
-For any data with factor levels occurring with the same
-frequency as the minority level, all data will be retained.
-
-All columns in the data are sampled and returned by \code{\link[=bake]{bake()}}.
-
-Keep in mind that the location of down-sampling in the step
-may have effects. For example, if centering and scaling,
-it is not clear whether those operations should be conducted
-\emph{before} or \emph{after} rows are removed.
-
-When used in modeling, users should strongly consider using the
-option \code{skip = TRUE} so that the extra sampling is \emph{not}
-conducted outside of the training set.
-}
-\examples{
-library(modeldata)
-data(okc)
-
-sort(table(okc$diet, useNA = "always"))
-
-ds_rec <- recipe( ~ ., data = okc) \%>\%
-  step_downsample(diet) \%>\%
-  prep(training = okc)
-
-table(bake(ds_rec, new_data = NULL)$diet, useNA = "always")
-
-# since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(ds_rec, new_data = okc)
-table(baked_okc$diet, useNA = "always")
-}
-\concept{preprocessing}
-\concept{subsampling}
 \keyword{datagen}

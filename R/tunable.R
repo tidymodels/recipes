@@ -51,6 +51,7 @@ tunable.recipe <- function(x, ...) {
   res
 }
 
+#' tunable S3 methods
 #' @rdname tunable.recipe
 #' @export
 tunable.step <- function(x, ...) {
