@@ -5,7 +5,6 @@ library(tibble)
 
 context("Date features")
 
-
 examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
                        Stefan = ymd("2006-01-13") + days(1:10))
 
@@ -17,6 +16,8 @@ date_rec <- recipe(~ Dan + Stefan, examples) %>%
 feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "month")
 
 test_that('default option', {
+  # Temp skip, see https://github.com/tidyverse/lubridate/issues/928
+  skip_on_os("mac")
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
 
@@ -53,6 +54,8 @@ test_that('default option', {
 
 
 test_that('nondefault options', {
+  # Temp skip, see https://github.com/tidyverse/lubridate/issues/928
+  skip_on_os("mac")
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
 
@@ -73,6 +76,8 @@ test_that('nondefault options', {
 
 
 test_that('ordinal values', {
+  # Temp skip, see https://github.com/tidyverse/lubridate/issues/928
+  skip_on_os("mac")
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
 
@@ -93,6 +98,8 @@ test_that('ordinal values', {
 
 
 test_that('printing', {
+  # Temp skip, see https://github.com/tidyverse/lubridate/issues/928
+  skip_on_os("mac")
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   expect_output(print(date_rec))
