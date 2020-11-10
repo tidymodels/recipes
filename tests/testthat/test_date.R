@@ -17,6 +17,9 @@ date_rec <- recipe(~ Dan + Stefan, examples) %>%
 feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "month")
 
 test_that('default option', {
+  # because of https://github.com/tidyverse/lubridate/issues/928
+  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
+
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
 
@@ -53,6 +56,9 @@ test_that('default option', {
 
 
 test_that('nondefault options', {
+  # because of https://github.com/tidyverse/lubridate/issues/928
+  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
+
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
 
@@ -73,6 +79,9 @@ test_that('nondefault options', {
 
 
 test_that('ordinal values', {
+  # because of https://github.com/tidyverse/lubridate/issues/928
+  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
+
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
 
@@ -93,6 +102,9 @@ test_that('ordinal values', {
 
 
 test_that('printing', {
+  # because of https://github.com/tidyverse/lubridate/issues/928
+  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
+
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   expect_output(print(date_rec))
