@@ -13,6 +13,7 @@ iris2$Species3 <- as.character(sample(iris2$Species))
 rec <- recipe( ~ ., data = iris2)
 
 test_that('basic usage', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   rec1 <- rec %>%
     step_upsample(matches("Species$"), id = "")
 
@@ -43,6 +44,7 @@ test_that('basic usage', {
 })
 
 test_that('ratio value', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   rec2 <- rec %>%
     step_upsample(matches("Species$"), ratio = .25)
 
@@ -60,6 +62,7 @@ test_that('ratio value', {
 
 
 test_that('no skipping', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   rec3 <- rec %>%
     step_upsample(matches("Species$"), skip = FALSE)
 
@@ -76,6 +79,7 @@ test_that('no skipping', {
 
 
 test_that('bad data', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   expect_error(
     rec %>%
       step_upsample(Sepal.Width) %>%
@@ -94,6 +98,7 @@ test_that('bad data', {
 })
 
 test_that('printing', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   rec4 <- rec %>%
     step_upsample(Species)
 
@@ -102,6 +107,7 @@ test_that('printing', {
 })
 
 test_that('`seed` produces identical sampling', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
 
   upsample_with_seed <- function(rec, seed = sample.int(10^5, 1)) {
     rec %>%
@@ -121,7 +127,7 @@ test_that('`seed` produces identical sampling', {
 
 
 test_that('ratio deprecation', {
-
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   expect_message(
     new_rec <-
       rec %>%
@@ -134,6 +140,7 @@ test_that('ratio deprecation', {
 
 
 test_that('tunable', {
+  skip_if(utils::packageVersion("recipes") > "0.1.13")
   rec <-
     recipe(~ ., data = iris) %>%
     step_upsample(all_predictors())
