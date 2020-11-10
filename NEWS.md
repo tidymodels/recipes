@@ -6,6 +6,8 @@
 
 * More infrastructure work to make parallel processing on Windows less buggy with PSOCK clusters
 
+* `fully_trained()` now returns `FALSE` when an unprepped recipe is used. 
+
 # recipes 0.1.14
 
 * `prep()` gained an option to print a summary of which columns were added and/or removed during execution. 

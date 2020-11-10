@@ -12,7 +12,7 @@ fully_trained(x)
 \value{
 A logical which is true if all of the recipe steps have been run
 through \code{prep}. If no steps have been added to the recipe, \code{TRUE} is
-returned.
+returned only if the recipe has been prepped.
 }
 \description{
 Check to see if a recipe is trained/prepared
@@ -21,7 +21,8 @@ Check to see if a recipe is trained/prepared
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_center(all_numeric())
 
-rec \%>\% fully_trained
+rec \%>\% fully_trained()
 
-rec \%>\% prep(training = iris) \%>\% fully_trained
+
+rec \%>\% prep(training = iris) \%>\% fully_trained()
 }

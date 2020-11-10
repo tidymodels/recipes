@@ -7,7 +7,7 @@
 \method{formula}{recipe}(x, ...)
 }
 \arguments{
-\item{x}{A recipe object where all steps have been prepared.}
+\item{x}{A recipe object that has been prepared.}
 
 \item{...}{Note currently used.}
 }
@@ -21,10 +21,10 @@ could be used.
 }
 \examples{
 
-formula(recipe(Species + Sepal.Length ~ ., data = iris))
+formula(recipe(Species + Sepal.Length ~ ., data = iris) \%>\% prep())
 
 iris_rec <- recipe(Species ~ ., data = iris) \%>\%
   step_center(all_numeric()) \%>\%
-  prep(training = iris)
+  prep()
 formula(iris_rec)
 }
