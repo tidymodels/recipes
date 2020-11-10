@@ -6,7 +6,8 @@ context("Formula stuff")
 
 test_that('is trained?', {
   rec1 <- recipe(~ ., data = iris)
-  expect_true(fully_trained(rec1))
+  expect_false(fully_trained(rec1))
+  expect_true(fully_trained(rec1 %>% prep()))
 
   rec2 <- rec1 %>%
     step_sqrt(all_numeric()) %>%
@@ -25,7 +26,7 @@ test_that('is trained?', {
 })
 
 test_that('formulas', {
-  rec6 <- recipe(Species ~ ., data = iris)
+  rec6 <- recipe(Species ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec6),
     as.formula(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width)
@@ -37,13 +38,13 @@ test_that('formulas', {
     as.formula(Species ~ Petal.Length + Petal.Width)
   )
 
-  rec8 <- recipe(~ ., data = iris)
+  rec8 <- recipe(~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec8),
     as.formula( ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species)
   )
 
-  rec9 <- recipe(Species + Sepal.Length ~ ., data = iris)
+  rec9 <- recipe(Species + Sepal.Length ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec9),
     as.formula(Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width)
