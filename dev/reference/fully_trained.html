@@ -186,15 +186,16 @@
 
     <p>A logical which is true if all of the recipe steps have been run
 through <code>prep</code>. If no steps have been added to the recipe, <code>TRUE</code> is
-returned.</p>
+returned only if the recipe has been prepped.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>rec</span> <span class='op'>%&gt;%</span> <span class='va'>fully_trained</span>
+<span class='va'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'>fully_trained</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='va'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>fully_trained</span>
+
+<span class='va'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>fully_trained</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
