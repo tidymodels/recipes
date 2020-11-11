@@ -94,7 +94,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.14</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
         </div>
       </div>
     </div>
@@ -165,6 +165,17 @@
       <small>Source: <a href='https://github.com/tidymodels/recipes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="recipes-0115" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.15">
+<a href="#recipes-0115" class="anchor"></a>recipes 0.1.15<small> 2020-11-11 </small>
+</h1>
+<ul>
+<li><p>The full tidyselect DSL is now allowed inside recipes <code>step_*()</code> functions. This includes the operators <code><a href="https://rdrr.io/r/base/Logic.html">&amp;</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html">!</a></code> and the new <code>where()</code> function. Additionally, the restriction preventing user defined selectors from being used has been lifted (<a href='https://github.com/tidymodels/recipes/issues/572'>#572</a>).</p></li>
+<li><p>If steps that drop/add variables are skipped when baking the test set, the resulting column ordering of the baked test set will now be relative to the original recipe specification rather than relative to the baked training set. This is often more intuitive.</p></li>
+<li><p>More infrastructure work to make parallel processing on Windows less buggy with PSOCK clusters</p></li>
+<li><p><code><a href="../reference/fully_trained.html">fully_trained()</a></code> now returns <code>FALSE</code> when an unprepped recipe is used.</p></li>
+</ul>
+</div>
     <div id="recipes-0114" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.14">
 <a href="#recipes-0114" class="anchor"></a>recipes 0.1.14<small> 2020-10-17 </small>
@@ -315,7 +326,7 @@
 <li><p><code><a href="../reference/step_downsample.html">step_downsample()</a></code> will replace the <code>ratio</code> argument with <code>under_ratio</code> and <code><a href="../reference/step_upsample.html">step_upsample()</a></code> will replace it with <code>over_ratio</code>. <code>ratio</code> still works (for now) but issues a deprecation message.</p></li>
 <li><p><code><a href="../reference/step_discretize.html">step_discretize()</a></code> has arguments moved out of <code>options</code> too; the main arguments are now <code>num_breaks</code> (instead of <code>cuts</code>) and <code>min_unique</code>. Again, deprecation messages are issued with the old argument structure.</p></li>
 <li><p>Models using the <code>dimRed</code> package (<code><a href="../reference/step_kpca.html">step_kpca()</a></code>, <code><a href="../reference/step_isomap.html">step_isomap()</a></code>, and <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code>) would silently fail if the projection method failed. An error is issued now.</p></li>
-<li><p>Methods were added for a future generic called <code>tunable()</code>. This outlines which parameters in a step can/could be tuned.</p></li>
+<li><p>Methods were added for a future generic called <code><a href="https://generics.r-lib.org/reference/tunable.html">tunable()</a></code>. This outlines which parameters in a step can/could be tuned.</p></li>
 </ul>
 </div>
 </div>
