@@ -1,12 +1,10 @@
 
 # recipes <a href='https://recipes.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-[![R build
-status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/recipes)](http://cran.r-project.org/web/packages/recipes/)
-[![Downloads](http://cranlogs.r-pkg.org/badges/recipes)](http://cran.rstudio.com/package=recipes)
+[![R build status](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
+[![Downloads](https://cranlogs.r-pkg.org/badges/recipes)](https://CRAN.R-project.org/package=recipes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 ## Introduction
