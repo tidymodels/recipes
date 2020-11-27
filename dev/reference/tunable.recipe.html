@@ -224,8 +224,8 @@ the source of the function (e.g. the <code>dials</code> package).</p>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   name      call_info        source component      component_id   
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> neighbors </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_knnimpute knnimpute_nADLd
-#&gt; </span><span style='color: #555555;'>2</span><span> num_comp  </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_pca       pca_hw1Dj      </div><div class='input'>
+#&gt; </span><span style='color: #555555;'>1</span><span> neighbors </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_knnimpute knnimpute_hw1Dj
+#&gt; </span><span style='color: #555555;'>2</span><span> num_comp  </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_pca       pca_nADLd      </div><div class='input'>
 <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='op'>)</span>
