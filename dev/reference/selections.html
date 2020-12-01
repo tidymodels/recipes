@@ -98,10 +98,11 @@ whose names start with &quot;PC&quot; once those columns are created.
 There are sets of recipes specific functions that can be used to select
 variables based on their role or type: has_role() and
 has_type(). For convenience, there are also functions that are
-more specific: all_numeric(), all_nominal(),
-all_predictors(), and all_outcomes(). These can be used in
-conjunction with the previous functions described for selecting
-variables using their names:
+more specific. The functions all_numeric() and all_nominal() select
+based on type, with nominal variables including both character and factor;
+the functions all_predictors() and all_outcomes() select based on role.
+Any can be used in conjunction with the previous functions described for
+selecting variables using their names:
 
   data(biomass)
   recipe(HHV ~ ., data = biomass) %&amp;gt;%
@@ -289,10 +290,11 @@ whose names start with "PC" <em>once those columns are created</em>.</p>
 <p>There are sets of recipes specific functions that can be used to select
 variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
 <code><a href='has_role.html'>has_type()</a></code>. For convenience, there are also functions that are
-more specific: <code><a href='has_role.html'>all_numeric()</a></code>, <code><a href='has_role.html'>all_nominal()</a></code>,
-<code><a href='has_role.html'>all_predictors()</a></code>, and <code><a href='has_role.html'>all_outcomes()</a></code>. These can be used in
-conjunction with the previous functions described for selecting
-variables using their names:</p>
+more specific. The functions <code><a href='has_role.html'>all_numeric()</a></code> and <code><a href='has_role.html'>all_nominal()</a></code> select
+based on type, with nominal variables including both character and factor;
+the functions <code><a href='has_role.html'>all_predictors()</a></code> and <code><a href='has_role.html'>all_outcomes()</a></code> select based on role.
+Any can be used in conjunction with the previous functions described for
+selecting variables using their names:</p>
 <pre>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
