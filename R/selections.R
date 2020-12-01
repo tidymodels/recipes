@@ -61,10 +61,11 @@
 #' There are sets of recipes specific functions that can be used to select
 #' variables based on their role or type: [has_role()] and
 #' [has_type()]. For convenience, there are also functions that are
-#' more specific: [all_numeric()], [all_nominal()],
-#' [all_predictors()], and [all_outcomes()]. These can be used in
-#' conjunction with the previous functions described for selecting
-#' variables using their names:
+#' more specific. The functions [all_numeric()] and [all_nominal()] select
+#' based on type, with nominal variables including both character and factor;
+#' the functions [all_predictors()] and [all_outcomes()] select based on role.
+#' Any can be used in conjunction with the previous functions described for
+#' selecting variables using their names:
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -148,7 +149,8 @@ nest_current_info <- function(info) {
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
 #'  Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used
-#'  to select columns based on their data type.
+#'  to select columns based on their data type. Nominal variables include both
+#'  character and factor.
 #'
 #'  See `?selections` for more details.
 #'
