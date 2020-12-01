@@ -37,7 +37,8 @@ Selector functions return an integer vector.
 \code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
 select variables in a formula that have certain roles.
 Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used
-to select columns based on their data type.
+to select columns based on their data type. Nominal variables include both
+character and factor.
 
 See \code{?selections} for more details.
 

@@ -60,10 +60,11 @@ whose names start with "PC" \emph{once those columns are created}.
 There are sets of recipes specific functions that can be used to select
 variables based on their role or type: \code{\link[=has_role]{has_role()}} and
 \code{\link[=has_type]{has_type()}}. For convenience, there are also functions that are
-more specific: \code{\link[=all_numeric]{all_numeric()}}, \code{\link[=all_nominal]{all_nominal()}},
-\code{\link[=all_predictors]{all_predictors()}}, and \code{\link[=all_outcomes]{all_outcomes()}}. These can be used in
-conjunction with the previous functions described for selecting
-variables using their names:
+more specific. The functions \code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select
+based on type, with nominal variables including both character and factor;
+the functions \code{\link[=all_predictors]{all_predictors()}} and \code{\link[=all_outcomes]{all_outcomes()}} select based on role.
+Any can be used in conjunction with the previous functions described for
+selecting variables using their names:
 
 \preformatted{
   data(biomass)
