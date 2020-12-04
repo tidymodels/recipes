@@ -29,7 +29,8 @@ used).}
 (e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types of
 transformations should be enacted using \code{step} functions in this package.
 Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-\code{cbind}; see Examples).}
+\code{cbind}; see Examples). A model formula may not be the best choice for
+high-dimensional data with many columns, because of problems with memory.}
 
 \item{vars}{A character string of column names corresponding to variables
 that will be used in any context (see below)}
@@ -71,7 +72,9 @@ functions such as \code{log(x3)}. An example is given below.
 
 Alternatively, a \code{recipe} object can be created by first specifying
 which variables in a data set should be used and then sequentially
-defining their roles (see the last example).
+defining their roles (see the last example). This alternative is an
+excellent choice when the number of variables is very high, as the
+formula method is memory-inefficient with many variables.
 
 There are two different types of operations that can be
 sequentially added to a recipe. \strong{Steps}  can include common
@@ -147,7 +150,9 @@ multi_y_trained <- prep(multi_y, training = biomass_tr)
 results <- bake(multi_y_trained, biomass_te)
 
 ###############################################
-# Creating a recipe manually with different roles
+# example with manually updating different roles
+
+# best choice for high-dimensional data:
 
 rec <- recipe(biomass_tr) \%>\%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,

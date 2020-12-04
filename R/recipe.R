@@ -30,7 +30,8 @@ recipe.default <- function(x, ...)
 #'  (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types of
 #'  transformations should be enacted using `step` functions in this package.
 #'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-#'  `cbind`; see Examples).
+#'  `cbind`; see Examples). A model formula may not be the best choice for
+#'  high-dimensional data with many columns, because of problems with memory.
 #' @param x,data A data frame or tibble of the *template* data set
 #'   (see below).
 #' @return An object of class `recipe` with sub-objects:
@@ -59,7 +60,9 @@ recipe.default <- function(x, ...)
 #'
 #' Alternatively, a `recipe` object can be created by first specifying
 #'   which variables in a data set should be used and then sequentially
-#'   defining their roles (see the last example).
+#'   defining their roles (see the last example). This alternative is an
+#'   excellent choice when the number of variables is very high, as the
+#'   formula method is memory-inefficient with many variables.
 #'
 #' There are two different types of operations that can be
 #'  sequentially added to a recipe. **Steps**  can include common
@@ -136,7 +139,9 @@ recipe.default <- function(x, ...)
 #' results <- bake(multi_y_trained, biomass_te)
 #'
 #' ###############################################
-#' # Creating a recipe manually with different roles
+#' # example with manually updating different roles
+#'
+#' # best choice for high-dimensional data:
 #'
 #' rec <- recipe(biomass_tr) %>%
 #'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
