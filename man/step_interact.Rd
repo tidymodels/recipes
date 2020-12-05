@@ -104,6 +104,7 @@ all two-way interactions are created.
 \examples{
 library(modeldata)
 data(okc)
+okc <- okc[complete.cases(okc),]
 
 rec <- recipe(~ diet + age + height, data = okc)
 
