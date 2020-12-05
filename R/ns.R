@@ -13,7 +13,9 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
-#' @param deg_free The degrees of freedom.
+#' @param deg_free The degrees of freedom for the natural spline. As the
+#'  degrees of freedom for a natural spline increase, more flexible and
+#'  complex curves can be generated.
 #' @param objects A list of [splines::ns()] objects
 #'  created once the step has been trained.
 #' @param options A list of options for [splines::ns()]
