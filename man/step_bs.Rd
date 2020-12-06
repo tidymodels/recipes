@@ -37,7 +37,10 @@ used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{deg_free}{The degrees of freedom.}
+\item{deg_free}{The degrees of freedom for the spline. As the
+degrees of freedom for a spline increase, more flexible and
+complex curves can be generated. When a single degree of freedom is used,
+the result is a rescaled version of the original data.}
 
 \item{degree}{Degree of polynomial spline (integer).}
 

@@ -41,7 +41,8 @@ created once the step has been trained.}
 
 \item{deg_free}{The degrees of freedom for the natural spline. As the
 degrees of freedom for a natural spline increase, more flexible and
-complex curves can be generated.}
+complex curves can be generated. When a single degree of freedom is used,
+the result is a rescaled version of the original data.}
 
 \item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}}
 which should not include \code{x} or \code{df}.}
