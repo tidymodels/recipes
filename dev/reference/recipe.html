@@ -206,7 +206,8 @@ used).</p></td>
 (e.g. <code><a href='https://rdrr.io/r/base/Log.html'>log(x)</a></code>, <code>x:y</code>, etc.) and minus signs are not allowed. These types of
 transformations should be enacted using <code>step</code> functions in this package.
 Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-<code>cbind</code>; see Examples).</p></td>
+<code>cbind</code>; see Examples). A model formula may not be the best choice for
+high-dimensional data with many columns, because of problems with memory.</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -249,7 +250,9 @@ a simple formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline
 functions such as <code><a href='https://rdrr.io/r/base/Log.html'>log(x3)</a></code>. An example is given below.</p>
 <p>Alternatively, a <code>recipe</code> object can be created by first specifying
 which variables in a data set should be used and then sequentially
-defining their roles (see the last example).</p>
+defining their roles (see the last example). This alternative is an
+excellent choice when the number of variables is very high, as the
+formula method is memory-inefficient with many variables.</p>
 <p>There are two different types of operations that can be
 sequentially added to a recipe. <strong>Steps</strong>  can include common
 operations like logging a variable, creating dummy variables or
@@ -348,7 +351,9 @@ data set to save time and memory.</p>
 <span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>multi_y_trained</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
 <span class='co'>###############################################</span>
-<span class='co'># Creating a recipe manually with different roles</span>
+<span class='co'># example with manually updating different roles</span>
+
+<span class='co'># best choice for high-dimensional data:</span>
 
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>biomass_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span>, <span class='va'>oxygen</span>, <span class='va'>nitrogen</span>, <span class='va'>sulfur</span>,
