@@ -15,7 +15,10 @@
 #'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
-#' @param deg_free The degrees of freedom.
+#' @param deg_free The degrees of freedom for the spline. As the
+#'  degrees of freedom for a spline increase, more flexible and
+#'  complex curves can be generated. When a single degree of freedom is used,
+#'  the result is a rescaled version of the original data.
 #' @param degree Degree of polynomial spline (integer).
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
