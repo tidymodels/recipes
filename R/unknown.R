@@ -135,9 +135,20 @@ bake.step_unknown <- function(object, new_data, ...) {
     new_data[[i]] <-
       ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
 
+    new_levels <- c(object$object[[i]], object$new_level)
+
+    if (!all(new_data[[i]] %in% new_levels)) {
+      warn_new_levels(
+        new_data[[i]],
+        new_levels,
+        paste0("\nNew levels will be coerced to `NA` by `step_unknown()`.",
+               "\nConsider using `step_novel()` before `step_unknown()`.")
+      )
+    }
+
     new_data[[i]] <-
       factor(new_data[[i]],
-             levels = c(object$object[[i]], object$new_level),
+             levels = new_levels,
              ordered = attributes(object$object[[i]])$is_ordered)
   }
   if (!is_tibble(new_data)) {
