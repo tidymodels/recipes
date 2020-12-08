@@ -141,8 +141,8 @@ bake.step_unknown <- function(object, new_data, ...) {
       warn_new_levels(
         new_data[[i]],
         new_levels,
-        paste0("\nNew levels will be coerced to `NA` by `step_unknown()`",
-               "\nConsider using `step_novel()` before `step_unknown()`")
+        paste0("\nNew levels will be coerced to `NA` by `step_unknown()`.",
+               "\nConsider using `step_novel()` before `step_unknown()`.")
       )
     }
 
