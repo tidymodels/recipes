@@ -29,7 +29,10 @@ test_that('basic functionality', {
   expect_equal(loc_lvl, levels(tr_1$location))
 
 
-  te_1 <- bake(rec_1, okc_te)
+  expect_warning(
+    te_1 <- bake(rec_1, okc_te),
+    "There are new levels in a factor: port costa"
+  )
   te_diet <- te_1$diet[is.na(okc_te$diet)]
   te_diet <- unique(as.character(te_diet))
   expect_true(all(te_diet == "unknown"))
