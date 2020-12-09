@@ -318,7 +318,7 @@ tunable.step_pca <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "threshold"),
     call_info = list(
-      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L))
+      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
       list(pkg = "dials", fun = "threshold")
     ),
     source = "recipe",
