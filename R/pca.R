@@ -316,8 +316,11 @@ tidy.step_pca <- function(x, type = "coef", ...) {
 #' @export
 tunable.step_pca <- function(x, ...) {
   tibble::tibble(
-    name = "num_comp",
-    call_info = list(list(pkg = "dials", fun = "num_comp", range = c(1L, 4L))),
+    name = c("num_comp", "threshold"),
+    call_info = list(
+      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L))
+      list(pkg = "dials", fun = "threshold")
+    ),
     source = "recipe",
     component = "step_pca",
     component_id = x$id
