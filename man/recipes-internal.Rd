@@ -16,8 +16,12 @@ estimate_yj(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE)
 
 ellipse_check(...)
 
-printer(tr_obj = NULL, untr_obj = NULL, trained = FALSE,
-  width = max(20, options()$width - 30))
+printer(
+  tr_obj = NULL,
+  untr_obj = NULL,
+  trained = FALSE,
+  width = max(20, options()$width - 30)
+)
 
 prepare(x, ...)
 
@@ -26,7 +30,7 @@ is_trained(x)
 sel2char(x)
 }
 \arguments{
-\item{x}{a step object.}
+\item{x}{A list of selectors}
 
 \item{...}{Arguments pass in from a call to \code{step}}
 
@@ -40,8 +44,6 @@ recipe (e.g. \code{terms} in most steps).}
 \item{trained}{A logical for whether the step has been trained.}
 
 \item{width}{An integer denoting where the output should be wrapped.}
-
-\item{x}{A list of selectors}
 }
 \value{
 If not empty, a list of quosures. If empty, an error is thrown.

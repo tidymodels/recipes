@@ -5,9 +5,19 @@
 \alias{tidy.step_pca}
 \title{PCA Signal Extraction}
 \usage{
-step_pca(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 5, threshold = NA, options = list(), res = NULL,
-  prefix = "PC", skip = FALSE, id = rand_id("pca"))
+step_pca(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 5,
+  threshold = NA,
+  options = list(),
+  res = NULL,
+  prefix = "PC",
+  skip = FALSE,
+  id = rand_id("pca")
+)
 
 \method{tidy}{step_pca}(x, ...)
 }
@@ -35,7 +45,7 @@ used.}
 
 \item{threshold}{A fraction of the total variance that should
 be covered by the components. For example, \code{threshold = .75} means that \code{step_pca} should generate enough
-components to capture 75\% of the variability in the variables.
+components to capture 75\\% of the variability in the variables.
 Note: using this argument will override and resent any value
 given to \code{num_comp}.}
 

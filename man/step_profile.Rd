@@ -5,9 +5,19 @@
 \alias{tidy.step_profile}
 \title{Create a Profiling Version of a Data Set}
 \usage{
-step_profile(recipe, ..., profile = NULL, pct = 0.5, index = 1,
-  grid = list(pctl = TRUE, len = 100), columns = NULL, role = NA,
-  trained = FALSE, skip = FALSE, id = rand_id("profile"))
+step_profile(
+  recipe,
+  ...,
+  profile = NULL,
+  pct = 0.5,
+  index = 1,
+  grid = list(pctl = TRUE, len = 100),
+  columns = NULL,
+  role = NA,
+  trained = FALSE,
+  skip = FALSE,
+  id = rand_id("profile")
+)
 
 \method{tidy}{step_profile}(x, ...)
 }

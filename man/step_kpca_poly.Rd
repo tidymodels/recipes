@@ -5,10 +5,20 @@
 \alias{tidy.step_kpca_poly}
 \title{Polynomial Kernel PCA Signal Extraction}
 \usage{
-step_kpca_poly(recipe, ..., role = "predictor", trained = FALSE,
-  num_comp = 5, res = NULL, degree = 2, scale_factor = 1,
-  offset = 1, prefix = "kPC", skip = FALSE,
-  id = rand_id("kpca_poly"))
+step_kpca_poly(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 5,
+  res = NULL,
+  degree = 2,
+  scale_factor = 1,
+  offset = 1,
+  prefix = "kPC",
+  skip = FALSE,
+  id = rand_id("kpca_poly")
+)
 
 \method{tidy}{step_kpca_poly}(x, ...)
 }

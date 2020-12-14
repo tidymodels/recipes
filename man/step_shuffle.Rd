@@ -5,8 +5,15 @@
 \alias{tidy.step_shuffle}
 \title{Shuffle Variables}
 \usage{
-step_shuffle(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = rand_id("shuffle"))
+step_shuffle(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("shuffle")
+)
 
 \method{tidy}{step_shuffle}(x, ...)
 }

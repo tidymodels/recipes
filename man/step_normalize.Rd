@@ -5,9 +5,17 @@
 \alias{tidy.step_normalize}
 \title{Center and scale numeric data}
 \usage{
-step_normalize(recipe, ..., role = NA, trained = FALSE, means = NULL,
-  sds = NULL, na_rm = TRUE, skip = FALSE,
-  id = rand_id("normalize"))
+step_normalize(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  means = NULL,
+  sds = NULL,
+  na_rm = TRUE,
+  skip = FALSE,
+  id = rand_id("normalize")
+)
 
 \method{tidy}{step_normalize}(x, ...)
 }
