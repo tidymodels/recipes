@@ -25,41 +25,37 @@ step_pca(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to compute the components. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\item{...}{One or more selector functions to choose which variables will be
+used to compute the components. See \code{\link[=selections]{selections()}} for more details. For the
+\code{tidy} method, these are not currently used.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new principal component columns created by the original
-variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the function assumes that the new principal
+component columns created by the original variables will be used as
+predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of PCA components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used.}
 
-\item{threshold}{A fraction of the total variance that should
-be covered by the components. For example, \code{threshold = .75} means that \code{step_pca} should generate enough
-components to capture 75\\% of the variability in the variables.
-Note: using this argument will override and resent any value
-given to \code{num_comp}.}
+\item{threshold}{A fraction of the total variance that should be covered by
+the components. For example, \code{threshold = .75} means that \code{step_pca} should
+generate enough components to capture 75 percent of the variability in the
+variables. Note: using this argument will override and reset any value given
+to \code{num_comp}.}
 
 \item{options}{A list of options to the default method for
-\code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to
-\code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument
-\code{x} should not be passed here (or at all).}
+\code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x}
+should not be passed here (or at all).}
 
-\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is
-stored here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
+preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below.}
+\item{prefix}{A character string that will be the prefix to the resulting
+new variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -77,16 +73,14 @@ loadings per component) or "variance" (how much variance does each component
 account for).}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the
+An updated version of \code{recipe} with the new step added to the
+sequence of existing steps (if any). For the \code{tidy} method, a tibble with
+columns \code{terms} (the selectors or variables selected), \code{value} (the
 loading), and \code{component}.
 }
 \description{
-\code{step_pca} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more principal
-components.
+\code{step_pca} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more principal components.
 }
 \details{
 Principal component analysis (PCA) is a transformation of a
@@ -119,8 +113,7 @@ fraction of the total variance in the variables.
 \examples{
 rec <- recipe( ~ ., data = USArrests)
 pca_trans <- rec \%>\%
-  step_center(all_numeric()) \%>\%
-  step_scale(all_numeric()) \%>\%
+  step_normalize(all_numeric()) \%>\%
   step_pca(all_numeric(), num_comp = 3)
 pca_estimates <- prep(pca_trans, training = USArrests)
 pca_data <- bake(pca_estimates, USArrests)
@@ -130,14 +123,13 @@ plot(pca_data$PC1, pca_data$PC2,
      xlim = rng, ylim = rng)
 
 with_thresh <- rec \%>\%
-  step_center(all_numeric()) \%>\%
-  step_scale(all_numeric()) \%>\%
+  step_normalize(all_numeric()) \%>\%
   step_pca(all_numeric(), threshold = .99)
 with_thresh <- prep(with_thresh, training = USArrests)
 bake(with_thresh, USArrests)
 
-tidy(pca_trans, number = 3)
-tidy(pca_estimates, number = 3)
+tidy(pca_trans, number = 2)
+tidy(pca_estimates, number = 2)
 }
 \references{
 Jolliffe, I. T. (2010). \emph{Principal Component

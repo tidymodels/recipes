@@ -1,46 +1,39 @@
 #' PCA Signal Extraction
 #'
-#' `step_pca` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more principal
-#'  components.
+#' `step_pca` creates a *specification* of a recipe step that will convert
+#'  numeric data into one or more principal components.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the components. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new principal component columns created by the original
-#'  variables will be used as predictors in a model.
-#' @param num_comp The number of PCA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
-#' @param threshold A fraction of the total variance that should
-#'  be covered by the components. For example, `threshold =
-#'  .75` means that `step_pca` should generate enough
-#'  components to capture 75\% of the variability in the variables.
-#'  Note: using this argument will override and resent any value
-#'  given to `num_comp`.
+#' @param ... One or more selector functions to choose which variables will be
+#'  used to compute the components. See [selections()] for more details. For the
+#'  `tidy` method, these are not currently used.
+#' @param role For model terms created by this step, what analysis role should
+#'  they be assigned?. By default, the function assumes that the new principal
+#'  component columns created by the original variables will be used as
+#'  predictors in a model.
+#' @param num_comp The number of PCA components to retain as new predictors.
+#'  If `num_comp` is greater than the number of columns or the number of
+#'  possible components, a smaller value will be used.
+#' @param threshold A fraction of the total variance that should be covered by
+#'  the components. For example, `threshold = .75` means that `step_pca` should
+#'  generate enough components to capture 75 percent of the variability in the
+#'  variables. Note: using this argument will override and reset any value given
+#'  to `num_comp`.
 #' @param options A list of options to the default method for
-#'  [stats::prcomp()]. Argument defaults are set to
-#'  `retx = FALSE`, `center = FALSE`, `scale. =
-#'  FALSE`, and `tol = NULL`. **Note** that the argument
-#'  `x` should not be passed here (or at all).
-#' @param res The [stats::prcomp.default()] object is
-#'  stored here once this preprocessing step has be trained by
-#'  [prep.recipe()].
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
+#'  [stats::prcomp()]. Argument defaults are set to `retx = FALSE`, `center =
+#'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
+#'  should not be passed here (or at all).
+#' @param res The [stats::prcomp.default()] object is stored here once this
+#'  preprocessing step has be trained by [prep.recipe()].
+#' @param prefix A character string that will be the prefix to the resulting
+#'  new variables. See notes below.
 #' @param type For the `tidy()` method, either "coef" (for the variable
 #'  loadings per component) or "variance" (how much variance does each component
 #'  account for).
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the
+#' @return An updated version of `recipe` with the new step added to the
+#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  columns `terms` (the selectors or variables selected), `value` (the
 #'  loading), and `component`.
 #' @keywords datagen
 #' @concept preprocessing
@@ -81,8 +74,7 @@
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
 #' pca_trans <- rec %>%
-#'   step_center(all_numeric()) %>%
-#'   step_scale(all_numeric()) %>%
+#'   step_normalize(all_numeric()) %>%
 #'   step_pca(all_numeric(), num_comp = 3)
 #' pca_estimates <- prep(pca_trans, training = USArrests)
 #' pca_data <- bake(pca_estimates, USArrests)
@@ -92,14 +84,13 @@
 #'      xlim = rng, ylim = rng)
 #'
 #' with_thresh <- rec %>%
-#'   step_center(all_numeric()) %>%
-#'   step_scale(all_numeric()) %>%
+#'   step_normalize(all_numeric()) %>%
 #'   step_pca(all_numeric(), threshold = .99)
 #' with_thresh <- prep(with_thresh, training = USArrests)
 #' bake(with_thresh, USArrests)
 #'
-#' tidy(pca_trans, number = 3)
-#' tidy(pca_estimates, number = 3)
+#' tidy(pca_trans, number = 2)
+#' tidy(pca_estimates, number = 2)
 #' @seealso [step_ica()] [step_kpca()]
 #'   [step_isomap()] [recipe()] [prep.recipe()]
 #'   [bake.recipe()]
