@@ -222,7 +222,10 @@ variables have only a single role.</p></td>
     <p>An updated recipe object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>update_role()</code> should be used when a variable doesn't currently have a role
+    <p>Variables can have any arbitrary role (see the examples) but there are two
+special standard roles, <code>"predictor"</code> and <code>"outcome"</code>. These two roles are
+typically required when fitting a model.</p>
+<p><code>update_role()</code> should be used when a variable doesn't currently have a role
 in the recipe, or to replace an <code>old_role</code> with a <code>new_role</code>. <code>add_role()</code>
 only adds additional roles to variables that already have roles and will
 throw an error when the current role is missing (i.e. <code>NA</code>).</p>
@@ -254,7 +257,7 @@ on all of the variables that have a custom role with the selector
 #&gt; </span><span style='color: #555555;'>7</span><span> sulfur   numeric predictor original
 #&gt; </span><span style='color: #555555;'>8</span><span> HHV      numeric outcome   original</div><div class='input'>
 <span class='co'># However `sample` and `dataset` aren't predictors. Since they already have</span>
-<span class='co'># roles, `update_role()` can be used to make changes:</span>
+<span class='co'># roles, `update_role()` can be used to make changes, to any arbitrary role:</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>sample</span>, new_role <span class='op'>=</span> <span class='st'>"id variable"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>update_role</span><span class='op'>(</span><span class='va'>dataset</span>, new_role <span class='op'>=</span> <span class='st'>"splitting variable"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
