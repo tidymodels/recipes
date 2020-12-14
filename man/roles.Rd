@@ -43,6 +43,10 @@ multiple roles.
 \code{remove_role()} eliminates a single existing role in the recipe.
 }
 \details{
+Variables can have any arbitrary role (see the examples) but there are two
+special standard roles, \code{"predictor"} and \code{"outcome"}. These two roles are
+typically required when fitting a model.
+
 \code{update_role()} should be used when a variable doesn't currently have a role
 in the recipe, or to replace an \code{old_role} with a \code{new_role}. \code{add_role()}
 only adds additional roles to variables that already have roles and will
@@ -67,7 +71,7 @@ recipe(HHV ~ ., data = biomass) \%>\%
   summary()
 
 # However `sample` and `dataset` aren't predictors. Since they already have
-# roles, `update_role()` can be used to make changes:
+# roles, `update_role()` can be used to make changes, to any arbitrary role:
 recipe(HHV ~ ., data = biomass) \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting variable") \%>\%
