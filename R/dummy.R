@@ -67,7 +67,8 @@
 #' contrast option via `options`.
 #'
 #' When the factor being converted has a missing value, all of the
-#'  corresponding dummy variables are also missing.
+#'  corresponding dummy variables are also missing. See [step_unknown()] for
+#'  a solution.
 #'
 #' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), a missing value is assigned to

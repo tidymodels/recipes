@@ -106,7 +106,8 @@ To change the type of contrast being used, change the global
 contrast option via \code{options}.
 
 When the factor being converted has a missing value, all of the
-corresponding dummy variables are also missing.
+corresponding dummy variables are also missing. See \code{\link[=step_unknown]{step_unknown()}} for
+a solution.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), a missing value is assigned to
