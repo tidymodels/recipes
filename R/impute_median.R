@@ -136,6 +136,9 @@ prep.step_impute_median <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+prep.step_medianimpute <- prep.step_impute_median
+
+#' @export
 bake.step_impute_median <- function(object, new_data, ...) {
   for (i in names(object$medians)) {
     if (any(is.na(new_data[[i]])))
@@ -144,12 +147,19 @@ bake.step_impute_median <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_medianimpute <- bake.step_impute_median
+
+#' @export
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Median Imputation for ", sep = "")
     printer(names(x$medians), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_medianimpute <- print.step_impute_median
 
 #' @rdname step_impute_median
 #' @param x A `step_impute_median` object.
@@ -165,3 +175,6 @@ tidy.step_impute_median <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+tidy.step_medianimpute <- tidy.step_impute_median

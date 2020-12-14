@@ -216,6 +216,9 @@ prep.step_impute_knn <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
+prep.step_knnimpute <- prep.step_impute_knn
+
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
     ref_data[, vars],
@@ -270,7 +273,10 @@ bake.step_impute_knn <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
+bake.step_knnimpute <- bake.step_impute_knn
 
+#' @export
 print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
@@ -279,6 +285,9 @@ print.step_impute_knn <-
     printer(all_x_vars, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_knnimpute <- print.step_impute_knn
 
 #' @rdname step_impute_knn
 #' @param x A `step_impute_knn` object.
@@ -303,6 +312,8 @@ tidy.step_impute_knn <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_knnimpute <- tidy.step_impute_knn
 
 #' @rdname tunable.step
 #' @export
@@ -315,3 +326,6 @@ tunable.step_impute_knn <- function(x, ...) {
     component_id = x$id
   )
 }
+
+#' @export
+tunable.step_knnimpute <- tunable.step_impute_knn

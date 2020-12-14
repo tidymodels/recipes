@@ -150,6 +150,9 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+prep.step_lowerimpute <- prep.step_impute_lower
+
+#' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
   for (i in names(object$threshold)) {
     affected <- which(new_data[[i]] <= object$threshold[[i]])
@@ -160,12 +163,19 @@ bake.step_impute_lower <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_lowerimpute <- bake.step_impute_lower
+
+#' @export
 print.step_impute_lower <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Lower Bound Imputation for ", sep = "")
     printer(names(x$threshold), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_lowerimpute <- print.step_impute_lower
 
 #' @rdname step_impute_lower
 #' @param x A `step_impute_lower` object.
@@ -181,3 +191,6 @@ tidy.step_impute_lower <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+tidy.step_lowerimpute <- tidy.step_impute_lower

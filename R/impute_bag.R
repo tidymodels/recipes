@@ -248,6 +248,9 @@ prep.step_impute_bag <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+prep.step_bagimpute <- prep.step_impute_bag
+
+#' @export
 bake.step_impute_bag <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
@@ -274,13 +277,19 @@ bake.step_impute_bag <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_bagimpute <- bake.step_impute_bag
 
+#' @export
 print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
     cat("Bagged tree imputation for ", sep = "")
     printer(names(x$models), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_bagimpute <- print.step_impute_bag
 
 #' @export
 #' @rdname step_impute_bag
@@ -301,6 +310,8 @@ tidy.step_impute_bag <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_bagimpute <- tidy.step_impute_bag
 
 # ------------------------------------------------------------------------------
 
@@ -315,3 +326,5 @@ tunable.step_impute_bag <- function(x, ...) {
     component_id = x$id
   )
 }
+
+tunable.step_bagimpute <- tunable.step_impute_bag

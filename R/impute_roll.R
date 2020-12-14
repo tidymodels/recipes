@@ -168,6 +168,9 @@ prep.step_impute_roll <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
+prep.step_rollimpute <- prep.step_impute_roll
+
 get_window_ind <- function(i, n, k) {
   sides <- (k - 1) / 2
   if (i - sides >= 1 & i + sides <= n)
@@ -213,12 +216,19 @@ bake.step_impute_roll <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_rollimpute <- bake.step_impute_roll
+
+#' @export
 print.step_impute_roll <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Rolling Imputation for ", sep = "")
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_rollimpute <- print.step_impute_roll
 
 #' @rdname step_impute_roll
 #' @param x A `step_impute_roll` object.
@@ -234,6 +244,8 @@ tidy.step_impute_roll <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_rollimpute <- tidy.step_impute_roll
 
 #' @rdname tunable.step
 #' @export
@@ -249,3 +261,6 @@ tunable.step_impute_roll <- function(x, ...) {
     component_id = x$id
   )
 }
+
+#' @export
+tunable.step_rollimpute <- tunable.step_impute_roll

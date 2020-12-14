@@ -134,6 +134,9 @@ prep.step_impute_mode <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+prep.step_modeimpute <- prep.step_impute_mode
+
+#' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
@@ -144,12 +147,19 @@ bake.step_impute_mode <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_modeimpute <- bake.step_impute_mode
+
+#' @export
 print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Mode Imputation for ", sep = "")
     printer(names(x$modes), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_modeimpute <- print.step_impute_mode
 
 mode_est <- function(x) {
   if (!is.character(x) & !is.factor(x))
@@ -173,3 +183,6 @@ tidy.step_impute_mode <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+tidy.step_modeimpute <- tidy.step_impute_mode

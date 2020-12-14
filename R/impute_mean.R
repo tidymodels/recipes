@@ -145,6 +145,9 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+prep.step_meanimpute <- prep.step_impute_mean
+
+#' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
     if (any(is.na(new_data[[i]])))
@@ -153,12 +156,19 @@ bake.step_impute_mean <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_meanimpute <- bake.step_impute_mean
+
+#' @export
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Mean Imputation for ", sep = "")
     printer(names(x$means), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_meanimpute <- print.step_impute_mean
 
 #' @rdname step_impute_mean
 #' @param x A `step_impute_mean` object.
@@ -175,6 +185,8 @@ tidy.step_impute_mean <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_meanimpute <-tidy.step_impute_mean
 
 #' @rdname tunable.step
 #' @export
@@ -189,3 +201,6 @@ tunable.step_impute_mean <- function(x, ...) {
     component_id = x$id
   )
 }
+
+#' @export
+tunable.step_meanimpute <- tunable.step_impute_mean
