@@ -347,8 +347,10 @@ print.step_dummy <-
   }
 
 
-get_dummy_columns <- function(x) {
-  tibble(columns = attr(x, "values"))
+get_dummy_columns <- function(x, one_hot) {
+  x <- attr(x, "values")
+  if (!one_hot) x <- x[-1]
+  tibble(columns = x)
 }
 
 
@@ -358,10 +360,7 @@ get_dummy_columns <- function(x) {
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, get_dummy_columns, .id = "terms")
-      if (!x$one_hot) {
-        res <- dplyr::slice(res, -1)
-      }
+      res <- purrr::map_dfr(x$levels, get_dummy_columns, x$one_hot, .id = "terms")
     } else {
       res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
     }
