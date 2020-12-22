@@ -84,7 +84,7 @@ test_that('dummy variables with non-factor inputs', {
 
 test_that('create all dummy variables', {
   rec <- recipe(age ~ location + diet + height, data = okc_fac)
-  dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE)
+  dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE, id = "")
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
   dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
@@ -101,6 +101,26 @@ test_that('create all dummy variables', {
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
   expect_equivalent(dummy_pred, exp_res)
+
+  dum_tibble <-
+    tibble(terms = c("diet", "location"), columns = rep(rlang::na_chr, 2), id = "")
+  dum_tibble_prepped_1 <-
+    tibble(
+      terms = "diet",
+      columns = attributes(dummy_trained$steps[[1]]$levels$diet)$values,
+      id = ""
+    )
+  dum_tibble_prepped_2 <-
+    tibble(
+      terms = "location",
+      columns = attributes(dummy_trained$steps[[1]]$levels$location)$values,
+      id = ""
+    )
+  expect_equal(
+    tidy(dummy_trained, 1),
+    bind_rows(dum_tibble_prepped_1, dum_tibble_prepped_2)
+  )
+
 })
 
 test_that('tests for issue #91', {
