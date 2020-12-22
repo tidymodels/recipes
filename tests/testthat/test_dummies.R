@@ -46,13 +46,13 @@ test_that('dummy variables with factor inputs', {
       terms = "diet",
       columns = attributes(dummy_trained$steps[[1]]$levels$diet)$values,
       id = ""
-    )
+    ) %>% slice(-1)
   dum_tibble_prepped_2 <-
     tibble(
       terms = "location",
       columns = attributes(dummy_trained$steps[[1]]$levels$location)$values,
       id = ""
-    )
+    ) %>% slice(-1)
   expect_equal(tidy(dummy, 1), dum_tibble)
   expect_equal(
     tidy(dummy_trained, 1),
