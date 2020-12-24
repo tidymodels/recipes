@@ -1,9 +1,11 @@
 #' Create Missing Data Column Indicators
 #'
 #' `step_indicate_na` creates a *specification* of a recipe step that will
-#'  create and append additional binary columns to the dataset, to indicate
+#'  create and append additional binary columns to the dataset to indicate
 #'  which observations are missing.
 #'
+#' @param recipe A recipe object. The check will be added to the
+#'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
 #'  affected by the step. See [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
@@ -17,6 +19,13 @@
 #'  be populated (eventually) by the terms argument.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
+#' @param skip A logical. Should the check be skipped when the
+#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  conducted on new data (e.g. processing the outcome variable(s)).
+#'  Care should be taken when using `skip = TRUE` as it may affect
+#'  the computations for subsequent operations.
+#' @param id A character string that is unique to this step to identify it.
 #' @return An updated version of `recipe` with the new step added to the
 #'  sequence of existing steps (if any). For the `tidy` method, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
@@ -30,7 +39,7 @@
 #' data("credit_data")
 #'
 #' ## missing data per column
-#' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
+#' purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
 #'
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
@@ -91,9 +100,6 @@ step_indicate_na_new <-
 prep.step_indicate_na <- function(x, training, info = NULL, ...) {
   col_names <- terms_select(x$terms, info)
 
-  # TODO add other checks
-  # check_type(training[, col_names])
-
   step_indicate_na_new(
     terms = x$terms,
     role = x$role,
@@ -129,7 +135,7 @@ print.step_indicate_na <-
 #' @rdname step_indicate_na
 #' @param x A `step_indicate_na` object.
 #' @export
-tidy.step_shadow_missing <- function(x, ...) {
+tidy.step_indicate_na <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble::tibble(terms = x$columns)
   } else {

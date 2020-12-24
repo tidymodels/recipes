@@ -1,6 +1,7 @@
 # recipes (development version)
 
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
+* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623)
 
 # recipes 0.1.15
 
