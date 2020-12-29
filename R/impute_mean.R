@@ -1,6 +1,6 @@
 #' Impute Numeric Data Using the Mean
 #'
-#' `step_meanimpute` creates a *specification* of a recipe step that will
+#' `step_impute_mean` creates a *specification* of a recipe step that will
 #'  substitute missing values of numeric variables by the training set mean of
 #'  those variables.
 #'
@@ -23,9 +23,13 @@
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details `step_meanimpute` estimates the variable means from the data used
+#' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
 #'  new values to new data sets using these averages.
+#'
+#'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
+#'    to `step_impute_mean()`.
+#'
 #' @examples
 #' library(modeldata)
 #' data("credit_data")
@@ -43,7 +47,7 @@
 #' rec <- recipe(Price ~ ., data = credit_tr)
 #'
 #' impute_rec <- rec %>%
-#'   step_meanimpute(Income, Assets, Debt)
+#'   step_impute_mean(Income, Assets, Debt)
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
@@ -55,7 +59,7 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 
-step_meanimpute <-
+step_impute_mean <-
   function(recipe,
            ...,
            role = NA,
@@ -63,10 +67,10 @@ step_meanimpute <-
            means = NULL,
            trim = 0,
            skip = FALSE,
-           id = rand_id("meanimpute")) {
+           id = rand_id("impute_mean")) {
     add_step(
       recipe,
-      step_meanimpute_new(
+      step_impute_mean_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -78,10 +82,38 @@ step_meanimpute <-
     )
   }
 
-step_meanimpute_new <-
+#' @rdname step_impute_mean
+#' @export
+step_meanimpute <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           means = NULL,
+           trim = 0,
+           skip = FALSE,
+           id = rand_id("impute_mean")) {
+    lifecycle::deprecate_soft(
+      when = "0.1.16",
+      what = "recipes::step_meanimpute()",
+      with = "recipes::step_impute_mean()"
+    )
+    step_impute_mean(
+      recipe,
+      ...,
+      role = role,
+      trained = trained,
+      means = means,
+      trim = trim,
+      skip = skip,
+      id = id
+    )
+  }
+
+step_impute_mean_new <-
   function(terms, role, trained, means, trim, skip, id) {
     step(
-      subclass = "meanimpute",
+      subclass = "impute_mean",
       terms = terms,
       role = role,
       trained = trained,
@@ -93,7 +125,7 @@ step_meanimpute_new <-
   }
 
 #' @export
-prep.step_meanimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
   check_type(training[, col_names])
@@ -101,7 +133,7 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
   means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
   means <- purrr::map2(means, training[, col_names], cast)
 
-  step_meanimpute_new(
+  step_impute_mean_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -113,7 +145,10 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_meanimpute <- function(object, new_data, ...) {
+prep.step_meanimpute <- prep.step_impute_mean
+
+#' @export
+bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
     if (any(is.na(new_data[[i]])))
       new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
@@ -121,17 +156,24 @@ bake.step_meanimpute <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-print.step_meanimpute <-
+#' @export
+bake.step_meanimpute <- bake.step_impute_mean
+
+#' @export
+print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Mean Imputation for ", sep = "")
     printer(names(x$means), x$terms, x$trained, width = width)
     invisible(x)
   }
 
-#' @rdname step_meanimpute
-#' @param x A `step_meanimpute` object.
 #' @export
-tidy.step_meanimpute <- function(x, ...) {
+print.step_meanimpute <- print.step_impute_mean
+
+#' @rdname step_impute_mean
+#' @param x A `step_impute_mean` object.
+#' @export
+tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
                   model = unlist(x$means))
@@ -143,18 +185,22 @@ tidy.step_meanimpute <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_meanimpute <-tidy.step_impute_mean
 
 #' @rdname tunable.step
 #' @export
-tunable.step_meanimpute <- function(x, ...) {
+tunable.step_impute_mean <- function(x, ...) {
   tibble::tibble(
     name = "trim",
     call_info = list(
       list(pkg = "dials", fun = "trim_amount")
     ),
     source = "recipe",
-    component = "step_meanimpute",
+    component = "step_impute_mean",
     component_id = x$id
   )
 }
 
+#' @export
+tunable.step_meanimpute <- tunable.step_impute_mean

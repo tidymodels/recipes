@@ -204,7 +204,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-
+#' @export
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
     cat("Linear regression imputation for ", sep = "")

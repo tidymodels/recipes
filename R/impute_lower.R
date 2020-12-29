@@ -1,6 +1,6 @@
 #' Impute Numeric Data Below the Threshold of Measurement
 #'
-#' `step_lowerimpute` creates a *specification* of a recipe step
+#' `step_impute_lower` creates a *specification* of a recipe step
 #'  designed for cases where the non-negative numeric data cannot be
 #'  measured below a known value. In these cases, one method for
 #'  imputing the data is to substitute the truncated value by a
@@ -24,10 +24,14 @@
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details `step_lowerimpute` estimates the variable minimums
+#' @details `step_impute_lower` estimates the variable minimums
 #'  from the data used in the `training` argument of `prep.recipe`.
 #'  `bake.recipe` then simulates a value for any data at the minimum
 #'  with a random uniform value between zero and the minimum.
+#'
+#'  As of `recipes` 0.1.16, this function name changed from `step_lowerimpute()`
+#'    to `step_impute_lower()`.
+#'
 #' @examples
 #' library(recipes)
 #' library(modeldata)
@@ -46,7 +50,7 @@
 #'               data = biomass_tr)
 #'
 #' impute_rec <- rec %>%
-#'   step_lowerimpute(carbon, hydrogen)
+#'   step_impute_lower(carbon, hydrogen)
 #'
 #' tidy(impute_rec, number = 1)
 #'
@@ -59,18 +63,17 @@
 #' plot(transformed_te$carbon, biomass_te$carbon,
 #'      ylab = "pre-imputation", xlab = "imputed")
 
-
-step_lowerimpute <-
+step_impute_lower <-
   function(recipe,
            ...,
            role = NA,
            trained = FALSE,
            threshold = NULL,
            skip = FALSE,
-           id = rand_id("lowerimpute")) {
+           id = rand_id("impute_lower")) {
     add_step(
       recipe,
-      step_lowerimpute_new(
+      step_impute_lower_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -81,10 +84,35 @@ step_lowerimpute <-
     )
   }
 
-step_lowerimpute_new <-
+#' @rdname step_impute_lower
+#' @export
+step_lowerimpute <- function(recipe,
+                             ...,
+                             role = NA,
+                             trained = FALSE,
+                             threshold = NULL,
+                             skip = FALSE,
+                             id = rand_id("impute_lower")) {
+  lifecycle::deprecate_soft(
+    when = "0.1.16",
+    what = "recipes::step_lowerimpute()",
+    with = "recipes::step_impute_lower()"
+  )
+  step_impute_lower(
+    recipe,
+    ...,
+    role = role,
+    trained = trained,
+    threshold = threshold,
+    skip = skip,
+    id = id
+  )
+}
+
+step_impute_lower_new <-
   function(terms, role, trained, threshold, skip, id) {
     step(
-      subclass = "lowerimpute",
+      subclass = "impute_lower",
       terms = terms,
       role = role,
       trained = trained,
@@ -95,7 +123,7 @@ step_lowerimpute_new <-
   }
 
 #' @export
-prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_lower <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
 
@@ -111,7 +139,7 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
         "imputation is intended for data bounded at zero."
       )
     )
-  step_lowerimpute_new(
+  step_impute_lower_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -122,7 +150,10 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_lowerimpute <- function(object, new_data, ...) {
+prep.step_lowerimpute <- prep.step_impute_lower
+
+#' @export
+bake.step_impute_lower <- function(object, new_data, ...) {
   for (i in names(object$threshold)) {
     affected <- which(new_data[[i]] <= object$threshold[[i]])
     if (length(affected) > 0)
@@ -132,17 +163,24 @@ bake.step_lowerimpute <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-print.step_lowerimpute <-
+#' @export
+bake.step_lowerimpute <- bake.step_impute_lower
+
+#' @export
+print.step_impute_lower <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Lower Bound Imputation for ", sep = "")
     printer(names(x$threshold), x$terms, x$trained, width = width)
     invisible(x)
   }
 
-#' @rdname step_lowerimpute
-#' @param x A `step_lowerimpute` object.
 #' @export
-tidy.step_lowerimpute <- function(x, ...) {
+print.step_lowerimpute <- print.step_impute_lower
+
+#' @rdname step_impute_lower
+#' @param x A `step_impute_lower` object.
+#' @export
+tidy.step_impute_lower <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$threshold),
                   value = unname(x$threshold))
@@ -153,3 +191,6 @@ tidy.step_lowerimpute <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+tidy.step_lowerimpute <- tidy.step_impute_lower

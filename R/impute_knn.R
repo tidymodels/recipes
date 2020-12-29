@@ -1,13 +1,13 @@
 #' Imputation via K-Nearest Neighbors
 #'
-#' `step_knnimpute` creates a *specification* of a recipe step that will
+#' `step_impute_knn` creates a *specification* of a recipe step that will
 #'  impute missing data using nearest neighbors.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For
-#'  `step_knnimpute`, this indicates the variables to be imputed. When used with
-#'  `imp_vars`, the dots indicate which variables are used to predict the
+#'  `step_impute_knn`, this indicates the variables to be imputed. When used
+#'  with `imp_vars`, the dots indicate which variables are used to predict the
 #'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are created.
@@ -46,6 +46,9 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
+#' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
+#'    to `step_impute_knn()`.
+#'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
 #' @examples
@@ -69,7 +72,7 @@
 #'               data = biomass_tr)
 #'
 #' ratio_recipe <- rec %>%
-#'   step_knnimpute(all_predictors(), neighbors = 3)
+#'   step_impute_knn(all_predictors(), neighbors = 3)
 #' ratio_recipe2 <- prep(ratio_recipe, training = biomass_tr)
 #' imputed <- bake(ratio_recipe2, biomass_te)
 #'
@@ -85,7 +88,7 @@
 #' tidy(ratio_recipe, number = 1)
 #' tidy(ratio_recipe2, number = 1)
 
-step_knnimpute <-
+step_impute_knn <-
   function(recipe,
            ...,
            role = NA,
@@ -96,7 +99,7 @@ step_knnimpute <-
            ref_data = NULL,
            columns = NULL,
            skip = FALSE,
-           id = rand_id("knnimpute")) {
+           id = rand_id("impute_knn")) {
     if (is.null(impute_with)) {
       rlang::abort("Please list some variables in `impute_with`")
     }
@@ -120,7 +123,7 @@ step_knnimpute <-
 
     add_step(
       recipe,
-      step_knnimpute_new(
+      step_impute_knn_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -135,11 +138,45 @@ step_knnimpute <-
     )
   }
 
-step_knnimpute_new <-
+#' @rdname step_impute_knn
+#' @export
+step_knnimpute <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           neighbors = 5,
+           impute_with = imp_vars(all_predictors()),
+           options = list(nthread = 1, eps = 1e-08),
+           ref_data = NULL,
+           columns = NULL,
+           skip = FALSE,
+           id = rand_id("impute_knn")) {
+    lifecycle::deprecate_soft(
+      when = "0.1.16",
+      what = "recipes::step_knnimpute()",
+      with = "recipes::step_impute_knn()"
+    )
+    step_impute_knn(
+      recipe,
+      ...,
+      role = role,
+      trained = trained,
+      neighbors = neighbors,
+      impute_with = impute_with,
+      options = options,
+      ref_data = ref_data,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  }
+
+step_impute_knn_new <-
   function(terms, role, trained, neighbors, impute_with, ref_data, options,
            columns, skip, id) {
     step(
-      subclass = "knnimpute",
+      subclass = "impute_knn",
       terms = terms,
       role = role,
       trained = trained,
@@ -154,7 +191,7 @@ step_knnimpute_new <-
   }
 
 #' @export
-prep.step_knnimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_knn <- function(x, training, info = NULL, ...) {
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -165,7 +202,7 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   all_x_vars <- lapply(var_lists, function(x) c(x$x, x$y))
   all_x_vars <- unique(unlist(all_x_vars))
 
-  step_knnimpute_new(
+  step_impute_knn_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -178,6 +215,9 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     id = x$id
   )
 }
+
+#' @export
+prep.step_knnimpute <- prep.step_impute_knn
 
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
@@ -202,7 +242,7 @@ nn_pred <- function(index, dat) {
 
 
 #' @export
-bake.step_knnimpute <- function(object, new_data, ...) {
+bake.step_impute_knn <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
     return(new_data)
@@ -233,8 +273,11 @@ bake.step_knnimpute <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
+bake.step_knnimpute <- bake.step_impute_knn
 
-print.step_knnimpute <-
+#' @export
+print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
@@ -243,10 +286,13 @@ print.step_knnimpute <-
     invisible(x)
   }
 
-#' @rdname step_knnimpute
-#' @param x A `step_knnimpute` object.
 #' @export
-tidy.step_knnimpute <- function(x, ...) {
+print.step_knnimpute <- print.step_impute_knn
+
+#' @rdname step_impute_knn
+#' @param x A `step_impute_knn` object.
+#' @export
+tidy.step_impute_knn <- function(x, ...) {
   if (is_trained(x)) {
     res <- purrr::map_df(x$columns,
                          function(x)
@@ -266,15 +312,20 @@ tidy.step_knnimpute <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_knnimpute <- tidy.step_impute_knn
 
 #' @rdname tunable.step
 #' @export
-tunable.step_knnimpute <- function(x, ...) {
+tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(
     name = "neighbors",
     call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))),
     source = "recipe",
-    component = "step_knnimpute",
+    component = "step_impute_knn",
     component_id = x$id
   )
 }
+
+#' @export
+tunable.step_knnimpute <- tunable.step_impute_knn

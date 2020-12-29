@@ -1,6 +1,6 @@
 #' Impute Numeric Data Using a Rolling Window Statistic
 #'
-#' `step_rollimpute` creates a *specification* of a
+#' `step_impute_roll` creates a *specification* of a
 #'  recipe step that will substitute missing values of numeric
 #'  variables by the measure of location (e.g. median) within a moving window.
 #'
@@ -43,6 +43,9 @@
 #'  does not know anything about previous imputations in the series
 #'  prior to the current point.
 #'
+#'  As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`
+#'    to `step_impute_roll()`.
+#'
 #' @examples
 #' library(lubridate)
 #'
@@ -60,13 +63,13 @@
 #' library(recipes)
 #' seven_pt <- recipe(~ . , data = example_data) %>%
 #'   update_role(day, new_role = "time_index") %>%
-#'   step_rollimpute(all_predictors(), window = 7) %>%
+#'   step_impute_roll(all_predictors(), window = 7) %>%
 #'   prep(training = example_data)
 #'
 #' # The training set:
 #' bake(seven_pt, new_data = NULL)
 
-step_rollimpute <-
+step_impute_roll <-
   function(recipe,
            ...,
            role = NA,
@@ -75,7 +78,7 @@ step_rollimpute <-
            statistic = median,
            window = 5,
            skip = FALSE,
-           id = rand_id("rollimpute")) {
+           id = rand_id("impute_roll")) {
 
     if (!is_tune(window) & !is_varying(window)) {
       if (window < 3 | window %% 2 != 1) {
@@ -86,7 +89,7 @@ step_rollimpute <-
 
     add_step(
       recipe,
-      step_rollimpute_new(
+      step_impute_roll_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -99,10 +102,41 @@ step_rollimpute <-
     )
   }
 
-step_rollimpute_new <-
+
+#' @rdname step_impute_roll
+#' @export
+step_rollimpute <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           columns = NULL,
+           statistic = median,
+           window = 5,
+           skip = FALSE,
+           id = rand_id("impute_roll")) {
+    lifecycle::deprecate_soft(
+      when = "0.1.16",
+      what = "recipes::step_rollimpute()",
+      with = "recipes::step_impute_roll()"
+    )
+    step_impute_roll(
+      recipe,
+      ...,
+      role = role,
+      trained = trained,
+      columns = columns,
+      statistic = statistic,
+      window = window,
+      skip = skip,
+      id = id
+    )
+  }
+
+step_impute_roll_new <-
   function(terms, role, trained, columns, statistic, window, skip, id) {
     step(
-      subclass = "rollimpute",
+      subclass = "impute_roll",
       terms = terms,
       role = role,
       trained = trained,
@@ -115,14 +149,14 @@ step_rollimpute_new <-
   }
 
 #' @export
-prep.step_rollimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_roll <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
   dbl_check <- vapply(training[, col_names], is.double, logical(1))
   if (any(!dbl_check))
     rlang::abort("All columns must be double precision for rolling imputation")
 
-  step_rollimpute_new(
+  step_impute_roll_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -133,6 +167,9 @@ prep.step_rollimpute <- function(x, training, info = NULL, ...) {
     id = x$id
   )
 }
+
+#' @export
+prep.step_rollimpute <- prep.step_impute_roll
 
 get_window_ind <- function(i, n, k) {
   sides <- (k - 1) / 2
@@ -162,7 +199,7 @@ impute_rolling <- function(inds, x, statfun) {
 }
 
 #' @export
-bake.step_rollimpute <- function(object, new_data, ...) {
+bake.step_impute_roll <- function(object, new_data, ...) {
   n <- nrow(new_data)
   missing_ind <- lapply(new_data[, object$columns],
                         function(x) which(is.na(x)))
@@ -179,17 +216,24 @@ bake.step_rollimpute <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-print.step_rollimpute <-
+#' @export
+bake.step_rollimpute <- bake.step_impute_roll
+
+#' @export
+print.step_impute_roll <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Rolling Imputation for ", sep = "")
     printer(x$columns, x$terms, x$trained, width = width)
     invisible(x)
   }
 
-#' @rdname step_rollimpute
-#' @param x A `step_rollimpute` object.
 #' @export
-tidy.step_rollimpute <- function(x, ...) {
+print.step_rollimpute <- print.step_impute_roll
+
+#' @rdname step_impute_roll
+#' @param x A `step_impute_roll` object.
+#' @export
+tidy.step_impute_roll <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns, window = x$window)
   } else {
@@ -200,10 +244,12 @@ tidy.step_rollimpute <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_rollimpute <- tidy.step_impute_roll
 
 #' @rdname tunable.step
 #' @export
-tunable.step_rollimpute <- function(x, ...) {
+tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(
     name = c("statistic", "window"),
     call_info = list(
@@ -211,7 +257,10 @@ tunable.step_rollimpute <- function(x, ...) {
       list(pkg = "dials", fun = "window")
     ),
     source = "recipe",
-    component = "step_rollimpute",
+    component = "step_impute_roll",
     component_id = x$id
   )
 }
+
+#' @export
+tunable.step_rollimpute <- tunable.step_impute_roll

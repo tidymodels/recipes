@@ -1,14 +1,14 @@
 #' Imputation via Bagged Trees
 #'
-#' `step_bagimpute` creates a *specification* of a recipe step that will
+#' `step_impute_bag` creates a *specification* of a recipe step that will
 #'  create bagged tree models to impute missing data.
 
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables. For
-#'  `step_bagimpute`, this indicates the variables to be imputed. When used with
-#'  `imp_vars`, the dots indicate which variables are used to predict the
+#'  `step_impute_bag`, this indicates the variables to be imputed. When used
+#'  with `imp_vars`, the dots indicate which variables are used to predict the
 #'  missing data in each variable. See [selections()] for more details. For the
 #'  `tidy` method, these are not currently used.
 #' @param role Not used by this step since no new variables are created.
@@ -47,6 +47,9 @@
 #'
 #'   It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
+#'
+#'  As of `recipes` 0.1.16, this function name changed from `step_bagimpute()`
+#'    to `step_impute_bag()`.
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
 #' @examples
@@ -66,7 +69,7 @@
 #' rec <- recipe(Price ~ ., data = credit_tr)
 #' \dontrun{
 #' impute_rec <- rec %>%
-#'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt)
+#'   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt)
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
@@ -81,7 +84,7 @@
 #' ## Specifying which variables to imputate with
 #'
 #'  impute_rec <- rec %>%
-#'   step_bagimpute(Status, Home, Marital, Job, Income, Assets, Debt,
+#'   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
 #'                  impute_with = imp_vars(Time, Age, Expenses),
 #'                  # for quick execution, nbagg lowered
 #'                  options = list(nbagg = 5, keepX = FALSE))
@@ -97,7 +100,7 @@
 #' tidy(imp_models, number = 1)
 #' }
 
-step_bagimpute <-
+step_impute_bag <-
   function(recipe,
            ...,
            role = NA,
@@ -108,12 +111,12 @@ step_bagimpute <-
            options = list(keepX = FALSE),
            seed_val = sample.int(10 ^ 4, 1),
            skip = FALSE,
-           id = rand_id("bagimpute")) {
+           id = rand_id("impute_bag")) {
     if (is.null(impute_with))
       rlang::abort("Please list some variables in `impute_with`")
     add_step(
       recipe,
-      step_bagimpute_new(
+      step_impute_bag_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -128,11 +131,45 @@ step_bagimpute <-
     )
   }
 
-step_bagimpute_new <-
+#' @rdname step_impute_bag
+#' @export
+step_bagimpute <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           impute_with = imp_vars(all_predictors()),
+           trees = 25,
+           models = NULL,
+           options = list(keepX = FALSE),
+           seed_val = sample.int(10 ^ 4, 1),
+           skip = FALSE,
+           id = rand_id("impute_bag")) {
+    lifecycle::deprecate_soft(
+      when = "0.1.16",
+      what = "recipes::step_bagimpute()",
+      with = "recipes::step_impute_bag()"
+    )
+    step_impute_bag(
+      recipe,
+      ...,
+      role = role,
+      trained = trained,
+      impute_with = impute_with,
+      trees = trees,
+      models = models,
+      options = options,
+      seed_val = seed_val,
+      skip = skip,
+      id = id
+    )
+  }
+
+step_impute_bag_new <-
   function(terms, role, trained, models, options, impute_with, trees,
            seed_val, skip, id) {
     step(
-      subclass = "bagimpute",
+      subclass = "impute_bag",
       terms = terms,
       role = role,
       trained = trained,
@@ -176,7 +213,7 @@ impute_var_lists <- function(to_impute, impute_using, training, info) {
 }
 
 #' @export
-prep.step_bagimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_bag <- function(x, training, info = NULL, ...) {
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -196,7 +233,7 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
   )
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
 
-  step_bagimpute_new(
+  step_impute_bag_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -211,7 +248,10 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_bagimpute <- function(object, new_data, ...) {
+prep.step_bagimpute <- prep.step_impute_bag
+
+#' @export
+bake.step_impute_bag <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
     return(new_data)
@@ -237,8 +277,11 @@ bake.step_bagimpute <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+#' @export
+bake.step_bagimpute <- bake.step_impute_bag
 
-print.step_bagimpute <-
+#' @export
+print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
     cat("Bagged tree imputation for ", sep = "")
     printer(names(x$models), x$terms, x$trained, width = width)
@@ -246,13 +289,16 @@ print.step_bagimpute <-
   }
 
 #' @export
-#' @rdname step_bagimpute
+print.step_bagimpute <- print.step_impute_bag
+
+#' @export
+#' @rdname step_impute_bag
 imp_vars <- function(...) quos(...)
 
-#' @rdname step_bagimpute
-#' @param x A `step_bagimpute` object.
+#' @rdname step_impute_bag
+#' @param x A `step_impute_bag` object.
 #' @export
-tidy.step_bagimpute <- function(x, ...) {
+tidy.step_impute_bag <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
                   model = x$models)
@@ -264,17 +310,21 @@ tidy.step_bagimpute <- function(x, ...) {
   res
 }
 
+#' @export
+tidy.step_bagimpute <- tidy.step_impute_bag
 
 # ------------------------------------------------------------------------------
 
 #' @rdname tunable.step
 #' @export
-tunable.step_bagimpute <- function(x, ...) {
+tunable.step_impute_bag <- function(x, ...) {
   tibble::tibble(
     name = "trees",
     call_info = list(list(pkg = "dials", fun = "trees", range = c(5L, 25L))),
     source = "recipe",
-    component = "step_bagimpute",
+    component = "step_impute_bag",
     component_id = x$id
   )
 }
+
+tunable.step_bagimpute <- tunable.step_impute_bag
