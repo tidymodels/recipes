@@ -101,7 +101,7 @@
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -207,7 +207,11 @@
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_knnimpute.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
+  <span class="fu"><a href="../reference/step_impute_knn.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
+<span class="co">#&gt; Warning: `step_knnimpute()` is deprecated as of recipes 0.1.16.</span>
+<span class="co">#&gt; Please use `step_impute_knn()` instead.</span>
+<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
+<span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span>
 <span class="va">imputed</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
@@ -328,25 +332,27 @@
 #&gt; [13] "step_discretize"    "step_downsample"    "step_dummy"        
 #&gt; [16] "step_factor2string" "step_filter"        "step_geodist"      
 #&gt; [19] "step_holiday"       "step_hyperbolic"    "step_ica"          
-#&gt; [22] "step_impute_linear" "step_integer"       "step_interact"     
-#&gt; [25] "step_intercept"     "step_inverse"       "step_invlogit"     
-#&gt; [28] "step_isomap"        "step_knnimpute"     "step_kpca"         
-#&gt; [31] "step_kpca_poly"     "step_kpca_rbf"      "step_lag"          
-#&gt; [34] "step_lincomb"       "step_log"           "step_logit"        
-#&gt; [37] "step_lowerimpute"   "step_meanimpute"    "step_medianimpute" 
-#&gt; [40] "step_modeimpute"    "step_mutate"        "step_mutate_at"    
-#&gt; [43] "step_naomit"        "step_nnmf"          "step_normalize"    
-#&gt; [46] "step_novel"         "step_ns"            "step_num2factor"   
-#&gt; [49] "step_nzv"           "step_ordinalscore"  "step_other"        
-#&gt; [52] "step_pca"           "step_pls"           "step_poly"         
-#&gt; [55] "step_profile"       "step_range"         "step_ratio"        
-#&gt; [58] "step_regex"         "step_relevel"       "step_relu"         
-#&gt; [61] "step_rename"        "step_rename_at"     "step_rm"           
-#&gt; [64] "step_rollimpute"    "step_sample"        "step_scale"        
-#&gt; [67] "step_shuffle"       "step_slice"         "step_spatialsign"  
-#&gt; [70] "step_sqrt"          "step_string2factor" "step_unknown"      
-#&gt; [73] "step_unorder"       "step_upsample"      "step_window"       
-#&gt; [76] "step_YeoJohnson"    "step_zv"</code></pre>
+#&gt; [22] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"
+#&gt; [25] "step_impute_lower"  "step_impute_mean"   "step_impute_median"
+#&gt; [28] "step_impute_mode"   "step_impute_roll"   "step_integer"      
+#&gt; [31] "step_interact"      "step_intercept"     "step_inverse"      
+#&gt; [34] "step_invlogit"      "step_isomap"        "step_knnimpute"    
+#&gt; [37] "step_kpca"          "step_kpca_poly"     "step_kpca_rbf"     
+#&gt; [40] "step_lag"           "step_lincomb"       "step_log"          
+#&gt; [43] "step_logit"         "step_lowerimpute"   "step_meanimpute"   
+#&gt; [46] "step_medianimpute"  "step_modeimpute"    "step_mutate"       
+#&gt; [49] "step_mutate_at"     "step_naomit"        "step_nnmf"         
+#&gt; [52] "step_normalize"     "step_novel"         "step_ns"           
+#&gt; [55] "step_num2factor"    "step_nzv"           "step_ordinalscore" 
+#&gt; [58] "step_other"         "step_pca"           "step_pls"          
+#&gt; [61] "step_poly"          "step_profile"       "step_range"        
+#&gt; [64] "step_ratio"         "step_regex"         "step_relevel"      
+#&gt; [67] "step_relu"          "step_rename"        "step_rename_at"    
+#&gt; [70] "step_rm"            "step_rollimpute"    "step_sample"       
+#&gt; [73] "step_scale"         "step_shuffle"       "step_slice"        
+#&gt; [76] "step_spatialsign"   "step_sqrt"          "step_string2factor"
+#&gt; [79] "step_unknown"       "step_unorder"       "step_upsample"     
+#&gt; [82] "step_window"        "step_YeoJohnson"    "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">

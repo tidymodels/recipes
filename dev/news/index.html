@@ -144,7 +144,7 @@
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -368,7 +368,7 @@
 <a href="#other-changes-5" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289"><a href='https://github.com/tidymodels/recipes/issues/289'>#289</a></a></p></li>
-<li><p><code><a href="../reference/step_knnimpute.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
+<li><p><code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
 <li><p>Due to changes by CRAN, <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> are now tolerant to cases where that step’s selectors do not capture any columns. In this case, no modifications to the data are made. (<a href="https://github.com/tidymodels/recipes/issues/290"><a href='https://github.com/tidymodels/recipes/issues/290'>#290</a></a>, <a href="https://github.com/tidymodels/recipes/issues/348"><a href='https://github.com/tidymodels/recipes/issues/348'>#348</a></a>)</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328"><a href='https://github.com/tidymodels/recipes/issues/328'>#328</a></a>)</p></li>

@@ -146,7 +146,7 @@ with information about the parameters." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -218,15 +218,18 @@ the source of the function (e.g. the <code>dials</code> package).</p>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_knnimpute.html'>step_knnimpute</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='step_impute_knn.html'>step_knnimpute</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 5</span><span>
-#&gt;   name      call_info        source component      component_id   
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> neighbors </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_knnimpute knnimpute_hw1Dj
-#&gt; </span><span style='color: #555555;'>2</span><span> num_comp  </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_pca       pca_nADLd      
-#&gt; </span><span style='color: #555555;'>3</span><span> threshold </span><span style='color: #555555;'>&lt;named list [2]&gt;</span><span> recipe step_pca       pca_nADLd      </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_knnimpute()` is deprecated as of recipes 0.1.16.</span>
+#&gt; <span class='warning'>Please use `step_impute_knn()` instead.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
+#&gt;   name      call_info        source component       component_id    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span> neighbors </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_impute_knn impute_knn_hw1Dj
+#&gt; </span><span style='color: #555555;'>2</span><span> num_comp  </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_pca        pca_nADLd       
+#&gt; </span><span style='color: #555555;'>3</span><span> threshold </span><span style='color: #555555;'>&lt;named list [2]&gt;</span><span> recipe step_pca        pca_nADLd       </div><div class='input'>
 <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='op'>)</span>
