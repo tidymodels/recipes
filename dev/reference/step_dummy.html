@@ -317,20 +317,27 @@ and interactions has more information.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>
 <span class='va'>okc</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>,<span class='op'>]</span>
 
+<span class='co'># Original data: diet has 18 levels</span>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 18</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "anything"            "halal"               "kosher"             
+#&gt;  [4] "mostly anything"     "mostly halal"        "mostly kosher"      
+#&gt;  [7] "mostly other"        "mostly vegan"        "mostly vegetarian"  
+#&gt; [10] "other"               "strictly anything"   "strictly halal"     
+#&gt; [13] "strictly kosher"     "strictly other"      "strictly vegan"     
+#&gt; [16] "strictly vegetarian" "vegan"               "vegetarian"         </div><div class='input'>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>height</span>, data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
 
-<span class='va'>dummies</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span> <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span>
-<span class='va'>dummies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>dummies</span>, training <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
+<span class='co'># Default dummy coding: 17 dummy variables</span>
+<span class='va'>dummies</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
 
-<span class='va'>dummy_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>dummies</span>, new_data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
+<span class='va'>dummy_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>dummies</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "strictly anything"   "mostly other"        "anything"           
-#&gt;  [4] "vegetarian"          "mostly anything"     "mostly vegetarian"  
-#&gt;  [7] "strictly vegan"      "strictly vegetarian" "mostly vegan"       
-#&gt; [10] "strictly other"      "mostly halal"        "other"              
-#&gt; [13] "vegan"               "mostly kosher"       "strictly halal"     
-#&gt; [16] "halal"               "strictly kosher"     "kosher"             </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span><span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dummy_data</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>dummy_data</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"diet"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># level "anything" is the reference level</span>
 </div><div class='output co'>#&gt;  [1] "diet_halal"               "diet_kosher"             
 #&gt;  [3] "diet_mostly.anything"     "diet_mostly.halal"       
 #&gt;  [5] "diet_mostly.kosher"       "diet_mostly.other"       
@@ -340,42 +347,68 @@ and interactions has more information.</p>
 #&gt; [13] "diet_strictly.other"      "diet_strictly.vegan"     
 #&gt; [15] "diet_strictly.vegetarian" "diet_vegan"              
 #&gt; [17] "diet_vegetarian"         </div><div class='input'>
-<span class='co'># Obtain the full set of dummy variables using `one_hot` option</span>
-<span class='va'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>diet</span>, one_hot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"diet"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 18</div><div class='input'>
-<span class='co'># Without one_hot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span><span class='st'>"^diet"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dummy_data</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div><div class='input'>
+<span class='co'># Obtain the full set of 18 dummy variables using `one_hot` option</span>
+<span class='va'>dummies_one_hot</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>diet</span>, one_hot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
+
+<span class='va'>dummy_data_one_hot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>dummies_one_hot</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='va'>dummy_data_one_hot</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"diet"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># no reference level</span>
+</div><div class='output co'>#&gt;  [1] "diet_anything"            "diet_halal"              
+#&gt;  [3] "diet_kosher"              "diet_mostly.anything"    
+#&gt;  [5] "diet_mostly.halal"        "diet_mostly.kosher"      
+#&gt;  [7] "diet_mostly.other"        "diet_mostly.vegan"       
+#&gt;  [9] "diet_mostly.vegetarian"   "diet_other"              
+#&gt; [11] "diet_strictly.anything"   "diet_strictly.halal"     
+#&gt; [13] "diet_strictly.kosher"     "diet_strictly.other"     
+#&gt; [15] "diet_strictly.vegan"      "diet_strictly.vegetarian"
+#&gt; [17] "diet_vegan"               "diet_vegetarian"         </div><div class='input'>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>dummies</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 17 x 3</span><span>
 #&gt;    terms columns             id         
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'> 1</span><span> diet  anything            dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 2</span><span> diet  halal               dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 3</span><span> diet  kosher              dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 4</span><span> diet  mostly anything     dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 5</span><span> diet  mostly halal        dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 6</span><span> diet  mostly kosher       dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 7</span><span> diet  mostly other        dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 8</span><span> diet  mostly vegan        dummy_CL8hh
-#&gt; </span><span style='color: #555555;'> 9</span><span> diet  mostly vegetarian   dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>10</span><span> diet  other               dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>11</span><span> diet  strictly anything   dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>12</span><span> diet  strictly halal      dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>13</span><span> diet  strictly kosher     dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>14</span><span> diet  strictly other      dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>15</span><span> diet  strictly vegan      dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>16</span><span> diet  strictly vegetarian dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>17</span><span> diet  vegan               dummy_CL8hh
-#&gt; </span><span style='color: #555555;'>18</span><span> diet  vegetarian          dummy_CL8hh</div></span></pre>
+#&gt; </span><span style='color: #555555;'> 1</span><span> diet  halal               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 2</span><span> diet  kosher              dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 3</span><span> diet  mostly anything     dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 4</span><span> diet  mostly halal        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 5</span><span> diet  mostly kosher       dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 6</span><span> diet  mostly other        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 7</span><span> diet  mostly vegan        dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 8</span><span> diet  mostly vegetarian   dummy_CL8hh
+#&gt; </span><span style='color: #555555;'> 9</span><span> diet  other               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>10</span><span> diet  strictly anything   dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>11</span><span> diet  strictly halal      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>12</span><span> diet  strictly kosher     dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>13</span><span> diet  strictly other      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>14</span><span> diet  strictly vegan      dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>15</span><span> diet  strictly vegetarian dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>16</span><span> diet  vegan               dummy_CL8hh
+#&gt; </span><span style='color: #555555;'>17</span><span> diet  vegetarian          dummy_CL8hh</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>dummies_one_hot</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 18 x 3</span><span>
+#&gt;    terms columns             id         
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'> 1</span><span> diet  anything            dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 2</span><span> diet  halal               dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 3</span><span> diet  kosher              dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 4</span><span> diet  mostly anything     dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 5</span><span> diet  mostly halal        dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 6</span><span> diet  mostly kosher       dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 7</span><span> diet  mostly other        dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 8</span><span> diet  mostly vegan        dummy_rhRyp
+#&gt; </span><span style='color: #555555;'> 9</span><span> diet  mostly vegetarian   dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>10</span><span> diet  other               dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>11</span><span> diet  strictly anything   dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>12</span><span> diet  strictly halal      dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>13</span><span> diet  strictly kosher     dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>14</span><span> diet  strictly other      dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>15</span><span> diet  strictly vegan      dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>16</span><span> diet  strictly vegetarian dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>17</span><span> diet  vegan               dummy_rhRyp
+#&gt; </span><span style='color: #555555;'>18</span><span> diet  vegetarian          dummy_rhRyp</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
