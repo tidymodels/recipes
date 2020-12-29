@@ -307,7 +307,7 @@ ellipse_check <- function(...) {
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
-#' @return `NULL``, invisibly.
+#' @return `NULL`, invisibly.
 #' @keywords internal
 #' @export
 #' @rdname recipes-internal
