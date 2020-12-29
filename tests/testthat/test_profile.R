@@ -8,6 +8,7 @@ library(modeldata)
 data(okc)
 okc <- okc[1:20,]
 okc$diet <- factor(okc$diet)
+okc$int <- 1:20
 okc_rec <- recipe(~ ., data = okc)
 
 is_unq <- function(x) length(unique(x)) == 1
@@ -21,7 +22,15 @@ test_that('numeric profile', {
   expect_true(is_unq(num_rec$height))
   expect_true(is_unq(num_rec$location))
   expect_true(is_unq(num_rec$date))
+  expect_true(is_unq(num_rec$int))
   expect_false(is_unq(num_rec$age))
+
+  expect_true(inherits(num_rec$diet,     "factor"))
+  expect_true(inherits(num_rec$height,   "integer"))
+  expect_true(inherits(num_rec$location, "factor"))
+  expect_true(inherits(num_rec$date,     "Date"))
+  expect_true(inherits(num_rec$int,      "integer"))
+  expect_true(inherits(num_rec$age,      "integer"))
 
 })
 
@@ -135,8 +144,8 @@ test_that('tidy', {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("diet", "height", "location", "date", "Class", "age"),
-    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
+    terms = c("diet", "height", "location", "date", "Class", "int", "age"),
+    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
     id = ""
   )
   expect_equal(tidy_4, exp_4)

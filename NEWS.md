@@ -2,6 +2,8 @@
 
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
 
+* Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
