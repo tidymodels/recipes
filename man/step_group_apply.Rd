@@ -61,7 +61,7 @@ grouped_rec <- recipes::recipe(y ~ ., data = df) \%>\%
   recipes::step_center(x, y)
 
 rec <- recipes::recipe(y ~ ., df) \%>\%
-  step_group(g, grouped_rec)
+  step_group_apply(g, grouped_rec)
 
 rec <- recipes::prep(rec, df)
 
