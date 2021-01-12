@@ -25,6 +25,10 @@ when preparing the recipe.}
 \item{grouped_recipe}{a recipe specification to apply
 for each group.}
 
+\item{trained_recipes}{(will be filled when \link{prep}ing the recipe.) A tibble
+with all the grouping variables and a list column with the prepared recipes
+for each group.}
+
 \item{role}{Not used by this step since no new variables are
 created.}
 

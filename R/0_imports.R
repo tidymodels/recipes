@@ -32,6 +32,7 @@ utils::globalVariables(
     "denom",                                                           # ratio.R
     "component", "denom", "id", "value",                                 # ica.R
     "training", "x_names", "y_names",                                    # pls.R
-    ".order_1", ".order_2"                                           # recipes.R
+    ".order_1", ".order_2",                                          # recipes.R
+    "where"                                                      # group_apply.R
   )
 )

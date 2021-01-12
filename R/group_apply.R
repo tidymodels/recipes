@@ -12,6 +12,9 @@
 #'   when preparing the recipe.
 #' @param grouped_recipe a recipe specification to apply
 #'   for each group.
+#' @param trained_recipes (will be filled when [prep]ing the recipe.) A tibble
+#'   with all the grouping variables and a list column with the prepared recipes
+#'   for each group.
 #' @inheritParams step_center
 #'
 #' @examples
