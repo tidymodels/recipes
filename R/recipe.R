@@ -847,3 +847,9 @@ required_pkgs.recipe <- function(x, infra = TRUE, ...) {
 required_pkgs.step <- function(x, ...) {
   character(0)
 }
+
+#' @rdname required_pkgs
+#' @export
+required_pkgs.check <- function(x, ...) {
+  character(0)
+}
