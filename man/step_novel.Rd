@@ -76,6 +76,11 @@ Missing values will remain missing.
 
 If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
+
+When fitting a model that can deal with new factor levels, consider using
+\code{\link[workflows:add_recipe]{workflows::add_recipe()}} with \code{allow_novel_levels = TRUE} set in
+\code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}. This will allow your model to handle
+new levels at prediction time, instead of throwing warnings or errors.
 }
 \examples{
 library(modeldata)
