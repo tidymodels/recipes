@@ -500,11 +500,11 @@ prep.recipe <-
       group_by(variable) %>%
       arrange(desc(number)) %>%
       summarise(
-        type = first(type),
+        type = dplyr::first(type),
         role = as.list(unique(unlist(role))),
-        source = first(source),
-        number = first(number),
-        skip = first(skip),
+        source = dplyr::first(source),
+        number = dplyr::first(number),
+        skip = dplyr::first(skip),
         .groups = "keep"
       )
     x
