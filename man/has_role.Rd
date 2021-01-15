@@ -3,6 +3,8 @@
 \name{has_role}
 \alias{has_role}
 \alias{all_predictors}
+\alias{all_numeric_predictors}
+\alias{all_nominal_predictors}
 \alias{all_outcomes}
 \alias{has_type}
 \alias{all_numeric}
@@ -13,6 +15,10 @@
 has_role(match = "predictor")
 
 all_predictors()
+
+all_numeric_predictors()
+
+all_nominal_predictors()
 
 all_outcomes()
 

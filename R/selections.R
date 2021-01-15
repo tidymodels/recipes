@@ -206,6 +206,19 @@ all_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_numeric_predictors <- function() {
+  intersect(has_role("predictor"), has_type("numeric"))
+}
+
+#' @export
+#' @rdname has_role
+all_nominal_predictors <- function() {
+  intersect(has_role("predictor"), has_type("nominal"))
+}
+
+
+#' @export
+#' @rdname has_role
 all_outcomes <- function() {
   has_role("outcome")
 }
@@ -292,6 +305,8 @@ element_check <- function(x) {
   role_selectors <- c(
     "has_role",
     "all_predictors",
+    "all_numeric_predictors",
+    "all_nominal_predictors",
     "all_outcomes"
   )
   type_selectors <- c(

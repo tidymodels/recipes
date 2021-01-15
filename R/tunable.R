@@ -29,11 +29,11 @@
 #'
 #' recipe(mpg ~ ., data = mtcars) %>%
 #'   step_knnimpute(all_predictors()) %>%
-#'   step_pca(all_predictors()) %>%
+#'   step_pca(all_numeric_predictors()) %>%
 #'   tunable()
 #'
 #' recipe(mpg ~ ., data = mtcars) %>%
-#'   step_normalize(all_predictors()) %>%
+#'   step_normalize(all_numeric_predictors()) %>%
 #'   tunable()
 #' }
 #'

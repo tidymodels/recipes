@@ -48,7 +48,7 @@ recipe (e.g. \code{terms} in most steps).}
 \value{
 If not empty, a list of quosures. If empty, an error is thrown.
 
-`NULL``, invisibly.
+\code{NULL}, invisibly.
 
 A logical
 

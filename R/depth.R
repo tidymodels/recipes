@@ -71,12 +71,12 @@
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_predictors(), class = "Species")
+#'   step_depth(all_numeric_predictors(), class = "Species")
 #'
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_predictors(), class = "Species",
+#'   step_depth(all_numeric_predictors(), class = "Species",
 #'              metric = "zonoid", prefix = "zonoid_")
 #'
 #' rec_dists <- prep(rec, training = iris)
