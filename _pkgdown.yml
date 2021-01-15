@@ -25,10 +25,7 @@ reference:
     - bake
     - juice
     - selections
-    - all_predictors
-    - all_outcomes
-    - all_numeric
-    - all_nominal
+    - starts_with("all_")
     - has_role
     - has_type
     - current_info
