@@ -4,6 +4,8 @@
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
+* Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
