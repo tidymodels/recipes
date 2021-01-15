@@ -262,6 +262,10 @@ converted to factors by this step.</p>
 <p>Missing values will remain missing.</p>
 <p>If <code>new_level</code> is already in the data given to <code>prep</code>, an error
 is thrown.</p>
+<p>When fitting a model that can deal with new factor levels, consider using
+<code>workflows::add_recipe()</code> with <code>allow_novel_levels = TRUE</code> set in
+<code>hardhat::default_recipe_blueprint()</code>. This will allow your model to handle
+new levels at prediction time, instead of throwing warnings or errors.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
