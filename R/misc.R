@@ -637,6 +637,25 @@ check_training_set <- function(x, rec, fresh) {
 }
 
 
+check_keep_original_cols <- function(object) {
+  # Allow prepping of old recipes created before addition of keep_original_cols
+  step_class <- class(object)[1]
+
+  if (is.null(object$keep_original_cols)) {
+    object$keep_original_cols <- FALSE
+    rlang::warn(
+      paste0(
+        "'keep_original_cols' was added to `",
+        step_class,
+        "()` after this recipe was created.\n",
+        "Regenerate your recipe to avoid this warning."
+      )
+    )
+  }
+
+  object
+}
+
 # ------------------------------------------------------------------------------
 # From parsnip, keep synced
 
