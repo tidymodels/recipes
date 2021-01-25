@@ -107,7 +107,7 @@ imputed
 
 It is important to realize that the _specific_ variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy`. To do this, the step selects all non-numeric predictors:
+Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy()`. To do this, the step selects all non-numeric predictors:
 
 ```{r imputing}
 ind_vars <- imputed %>%
@@ -171,6 +171,5 @@ Currently, `recipes` includes:
 ```{r check_list, echo = FALSE}
 grep("^check_", ls("package:recipes"), value = TRUE)
 ```
-
 
 
