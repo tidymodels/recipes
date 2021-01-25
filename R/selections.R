@@ -148,16 +148,21 @@ nest_current_info <- function(info) {
 #'
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
-#'  Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used
-#'  to select columns based on their data type. Nominal variables include both
+#'
+#' Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used to
+#'  select columns based on their data type. Nominal variables include both
 #'  character and factor.
+#'
+#' **In most cases**, the selectors `all_numeric_predictors()` and
+#'  `all_nominal_predictors()`, which select on role and type, will be the right
+#'  approach for users.
 #'
 #'  See `?selections` for more details.
 #'
 #'  `current_info()` is an internal function.
 #'
-#'  All of these functions have have limited utility
-#'  outside of column selection in step functions.
+#'  All of these functions have have limited utility outside of column selection
+#'  in step functions.
 #'
 #' @param match A single character string for the query. Exact
 #'  matching is used (i.e. regular expressions won't work).

@@ -42,16 +42,21 @@ Selector functions return an integer vector.
 \description{
 \code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
 select variables in a formula that have certain roles.
-Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used
-to select columns based on their data type. Nominal variables include both
+
+Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used to
+select columns based on their data type. Nominal variables include both
 character and factor.
+
+\strong{In most cases}, the selectors \code{all_numeric_predictors()} and
+\code{all_nominal_predictors()}, which select on role and type, will be the right
+approach for users.
 
 See \code{?selections} for more details.
 
 \code{current_info()} is an internal function.
 
-All of these functions have have limited utility
-outside of column selection in step functions.
+All of these functions have have limited utility outside of column selection
+in step functions.
 }
 \examples{
 library(modeldata)
