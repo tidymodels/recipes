@@ -39,6 +39,11 @@
 #' If `new_level` is already in the data given to `prep`, an error
 #'  is thrown.
 #'
+#' When fitting a model that can deal with new factor levels, consider using
+#'  [workflows::add_recipe()] with `allow_novel_levels = TRUE` set in
+#'  [hardhat::default_recipe_blueprint()]. This will allow your model to handle
+#'  new levels at prediction time, instead of throwing warnings or errors.
+#'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_other()]

@@ -499,7 +499,14 @@ prep.recipe <-
       running_info %>%
       group_by(variable) %>%
       arrange(desc(number)) %>%
-      slice(1)
+      summarise(
+        type = dplyr::first(type),
+        role = as.list(unique(unlist(role))),
+        source = dplyr::first(source),
+        number = dplyr::first(number),
+        skip = dplyr::first(skip),
+        .groups = "keep"
+      )
     x
   }
 

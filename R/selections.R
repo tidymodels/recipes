@@ -199,7 +199,8 @@ nest_current_info <- function(info) {
 #' @export
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
-  lgl_matches <- purrr::map_lgl(roles, ~any(.x %in% match))
+  # roles is potentially a list columns so we unlist `.x` below.
+  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
   which(lgl_matches)
 }
 
