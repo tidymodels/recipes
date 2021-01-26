@@ -148,16 +148,21 @@ nest_current_info <- function(info) {
 #'
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
-#'  Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used
-#'  to select columns based on their data type. Nominal variables include both
+#'
+#' Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used to
+#'  select columns based on their data type. Nominal variables include both
 #'  character and factor.
+#'
+#' **In most cases**, the selectors `all_numeric_predictors()` and
+#'  `all_nominal_predictors()`, which select on role and type, will be the right
+#'  approach for users.
 #'
 #'  See `?selections` for more details.
 #'
 #'  `current_info()` is an internal function.
 #'
-#'  All of these functions have have limited utility
-#'  outside of column selection in step functions.
+#'  All of these functions have have limited utility outside of column selection
+#'  in step functions.
 #'
 #' @param match A single character string for the query. Exact
 #'  matching is used (i.e. regular expressions won't work).
@@ -204,6 +209,19 @@ has_role <- function(match = "predictor") {
 all_predictors <- function() {
   has_role("predictor")
 }
+
+#' @export
+#' @rdname has_role
+all_numeric_predictors <- function() {
+  intersect(has_role("predictor"), has_type("numeric"))
+}
+
+#' @export
+#' @rdname has_role
+all_nominal_predictors <- function() {
+  intersect(has_role("predictor"), has_type("nominal"))
+}
+
 
 #' @export
 #' @rdname has_role
@@ -293,6 +311,8 @@ element_check <- function(x) {
   role_selectors <- c(
     "has_role",
     "all_predictors",
+    "all_numeric_predictors",
+    "all_nominal_predictors",
     "all_outcomes"
   )
   type_selectors <- c(

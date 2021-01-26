@@ -69,7 +69,7 @@ examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
 rec <- recipe(~ X1 + X2, data = examples)
 
 factor_trans <- rec  \%>\%
-  step_unorder(all_predictors())
+  step_unorder(all_nominal_predictors())
 
 factor_obj <- prep(factor_trans, training = examples)
 

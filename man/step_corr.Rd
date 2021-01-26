@@ -97,7 +97,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
               data = biomass_tr)
 
 corr_filter <- rec \%>\%
-  step_corr(all_predictors(), threshold = .5)
+  step_corr(all_numeric_predictors(), threshold = .5)
 
 filter_obj <- prep(corr_filter, training = biomass_tr)
 

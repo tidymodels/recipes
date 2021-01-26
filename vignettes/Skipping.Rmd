@@ -59,7 +59,7 @@ As of version recipes 0.1.2, each step has an optional logical argument called `
 * No steps are skipped during `prep()`
 * Steps with `skip = TRUE` are not applied to the data when `bake()` is called
 
-Recall that there are two ways of getting the results for the training set with recipes. First, `bake()` can be used as usual. Second, `juice()` is a shortcut that will use the already processed data that is contained in the recipe when `prep(recipe, retain = TRUE)` is used. `juice()` is much faster and would be the way to get the training set _with all of the steps applied to the data_. For this reason, you should almost always used `retain = TRUE` if any steps are skipped (and a warning is produced otherwise). 
+Recall that there are two ways of getting the results for the training set with recipes. First, `bake()` can be used as usual. Second, `bake(new_data = NULL)` is a shortcut that will use the already processed data that is contained in the recipe when `prep(recipe, retain = TRUE)` is used. `bake(new_data = NULL)` is much faster and would be the way to get the training set _with all of the steps applied to the data_. For this reason, you should almost always used `retain = TRUE` if any steps are skipped (and a warning is produced otherwise). 
 
 # Be Careful!
 
@@ -71,14 +71,14 @@ As an example, skipping an operation whose variables are used later might be an 
 library(recipes)
 car_recipe <- recipe(mpg ~ ., data = mtcars) %>%
   step_log(disp, skip = TRUE) %>%
-  step_center(all_predictors()) %>%
+  step_center(all_numeric_predictors()) %>%
   prep(training = mtcars)
 
 # These *should* produce the same results (as they do for `hp`)
-juice(car_recipe) %>% head() %>% select(disp, hp)
+bake(car_recipe, new_data = NULL)   %>% head() %>% select(disp, hp)
 bake(car_recipe, new_data = mtcars) %>% head() %>% select(disp, hp)
 ```
 
-This should emphasize that `juice()` should be used to get the training set values whenever a step is skipped. 
+This should emphasize that `bake(new_data = NULL)` should be used to get the training set values whenever a step is skipped. 
 
 

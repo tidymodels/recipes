@@ -53,12 +53,12 @@
 #'
 #' # define naming convention
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_predictors(), class = "Species",
+#'   step_classdist(all_numeric_predictors(), class = "Species",
 #'                  pool = FALSE, mean_func = mean2, prefix = "centroid_")
 #'
 #' # default naming
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_predictors(), class = "Species",
+#'   step_classdist(all_numeric_predictors(), class = "Species",
 #'                  pool = FALSE, mean_func = mean2)
 #'
 #' rec_dists <- prep(rec, training = iris)

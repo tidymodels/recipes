@@ -83,9 +83,11 @@ rec_obj <- rec_obj %>% step_{X}(arguments)
 One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page `?selections` has more details but [`dplyr`](https://cran.r-project.org/package=dplyr)-like selector functions can be used: 
 
  * use basic variable names (e.g. `x1, x2`),
- *  [`dplyr`](https://cran.r-project.org/package=dplyr) functions for selecting variables: `contains`, `ends_with`, `everything`, `matches`, `num_range`, and `starts_with`,
- * functions that subset on the role of the variables that have been specified so far: `all_outcomes`, `all_predictors`, `has_role`, or 
- * similar functions for the type of data: `all_nominal`, `all_numeric`, and `has_type`. 
+ *  [`dplyr`](https://cran.r-project.org/package=dplyr) functions for selecting variables: `contains()`, `ends_with()`, `everything()`, `matches()`, `num_range()`, and `starts_with()`,
+ * functions that subset on the role of the variables that have been specified so far: `all_outcomes()`, `all_predictors()`, `has_role()`,  
+ * similar functions for the type of data: `all_nominal()`, `all_numeric()`, and `has_type()`, or 
+ * compound selectors such as `all_nominal_predictors()` or `all_numeric_predictors()`.
+
 
 Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables. 
 
@@ -105,11 +107,11 @@ imputed
 
 It is important to realize that the _specific_ variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables. 
 
-Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy`. To do this, the step selects all predictors then removes those that are numeric:
+Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy()`. To do this, the step selects all non-numeric predictors:
 
 ```{r imputing}
 ind_vars <- imputed %>%
-  step_dummy(all_predictors(), -all_numeric()) 
+  step_dummy(all_nominal_predictors()) 
 ind_vars
 ```
 
@@ -117,8 +119,8 @@ At this point in the recipe, all of the predictor should be encoded as numeric, 
 
 ```{r center_scale}
 standardized <- ind_vars %>%
-  step_center(all_predictors())  %>%
-  step_scale(all_predictors()) 
+  step_center(all_numeric_predictors())  %>%
+  step_scale(all_numeric_predictors()) 
 standardized
 ```
 
@@ -130,7 +132,7 @@ trained_rec <- prep(standardized, training = credit_train)
 trained_rec
 ```
 
-Note that the real variables are listed (e.g. `Home` etc.) instead of the selectors (`all_predictors()`). 
+Note that the real variables are listed (e.g. `Home` etc.) instead of the selectors (`all_numeric_predictors()`). 
 
 Now that the statistics have been estimated, the preprocessing can be _applied_ to the training and test set:
 
@@ -169,6 +171,5 @@ Currently, `recipes` includes:
 ```{r check_list, echo = FALSE}
 grep("^check_", ls("package:recipes"), value = TRUE)
 ```
-
 
 
