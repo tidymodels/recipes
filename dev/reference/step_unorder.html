@@ -259,7 +259,7 @@ columns that will be affected).</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 
 <span class='va'>factor_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'>%&gt;%</span>
-  <span class='fu'>step_unorder</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>step_unorder</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_nominal_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>factor_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>factor_trans</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `step_unorder` requires ordered factors. Variables X1 will be ignored.</span></div><div class='input'>
@@ -272,9 +272,9 @@ columns that will be affected).</p>
 #&gt;   High   0   0    4</div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>factor_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
-#&gt;   terms            id           
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() unorder_NRDyG</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>factor_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+#&gt;   terms                    id           
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'>1</span><span> all_nominal_predictors() unorder_NRDyG</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>factor_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
 #&gt;   terms id           
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        

@@ -170,7 +170,7 @@
 <span class="co">#&gt; 7 Species_virginica  numeric predictor derived</span>
 
 <span class="co"># Get a row for each factor level</span>
-<span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">ref_cell</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">ref_cell</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   original   Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;</span>
@@ -212,7 +212,7 @@
 <span class="co">#&gt; 6 Species_X1   numeric predictor derived </span>
 <span class="co">#&gt; 7 Species_X2   numeric predictor derived</span>
 
-<span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">helmert</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   original   Species_X1 Species_X2</span>
 <span class="co">#&gt;   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span>
@@ -223,7 +223,7 @@
 <span class="co"># Yuk; go back to the original method</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">param</span><span class="op">)</span></code></pre></div>
 <p>Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn’t make sense.</p>
-<p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code> functions will return the data as-is (e.g. with no dummy variables).</p>
+<p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> function will return the data as-is (e.g. with no dummy variables).</p>
 <p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>preserve</code> that can be used to keep the original column that are being used to create the dummy variables.</p>
 </div>
 <div id="interactions-with-dummy-variables" class="section level2">
@@ -350,7 +350,7 @@
 <code class="sourceCode R"><span class="va">iris_rec</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
@@ -366,7 +366,7 @@
   <span class="va">iris_rec</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">hot_reference</span>
@@ -384,7 +384,7 @@
   <span class="va">iris_rec</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">hot_helmert</span>

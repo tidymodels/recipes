@@ -282,7 +282,7 @@ selectors or variables selected) and <code>denom</code>.</p>
 
 <span class='va'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
   <span class='co'># all predictors over total</span>
-  <span class='fu'>step_ratio</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, denom <span class='op'>=</span> <span class='fu'>denom_vars</span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_ratio</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, denom <span class='op'>=</span> <span class='fu'>denom_vars</span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># get rid of the original predictors</span>
   <span class='fu'><a href='step_rm.html'>step_rm</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"total"</span><span class='op'>)</span><span class='op'>)</span>
 

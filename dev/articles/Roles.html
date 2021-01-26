@@ -247,7 +247,7 @@
   <span class="fu"><a href="../reference/roles.html">add_role</a></span><span class="op">(</span><span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"nocenter"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="../reference/has_role.html">has_role</a></span><span class="op">(</span><span class="st">"nocenter"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">biomass</span>, retain <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 8</span>
 <span class="co">#&gt;   sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV</span>
@@ -258,6 +258,7 @@
 <span class="co">#&gt; 4 Alfalfa                Training -3.19   -0.489   -2.97   2.22   -0.0736  18.2</span>
 <span class="co">#&gt; 5 Alfalfa Seed Straw     Training -1.53   -0.0586   2.15  -0.0772 -0.214   18.4</span>
 <span class="co">#&gt; 6 Alfalfa Stalks         Training -2.89    0.291    1.63   0.963  -0.134   18.5</span></code></pre></div>
+<p>The selector <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> can also be used in place of the compound specification above.</p>
 </div>
 <div id="the-non-formula-interface" class="section level2">
 <h2 class="hasAnchor">
@@ -311,7 +312,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Species_versicolor" "Species_virginica"</span>
@@ -320,7 +321,7 @@
 <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, role <span class="op">=</span> <span class="st">"trousers"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">has_role</a></span><span class="op">(</span><span class="st">"trousers"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="../reference/has_role.html">has_role</a></span><span class="op">(</span><span class="st">"trousers"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Species_versicolor" "Species_virginica"</span></code></pre></div>
 </div>

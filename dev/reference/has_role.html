@@ -52,13 +52,16 @@
 <meta property="og:title" content="Role Selection — has_role" />
 <meta property="og:description" content="has_role(), all_predictors(), and all_outcomes() can be used to
 select variables in a formula that have certain roles.
-Similarly, has_type(), all_numeric(), and all_nominal() are used
-to select columns based on their data type. Nominal variables include both
+Similarly, has_type(), all_numeric(), and all_nominal() are used to
+select columns based on their data type. Nominal variables include both
 character and factor.
+In most cases, the selectors all_numeric_predictors() and
+all_nominal_predictors(), which select on role and type, will be the right
+approach for users.
 See ?selections for more details.
 current_info() is an internal function.
-All of these functions have have limited utility
-outside of column selection in step functions." />
+All of these functions have have limited utility outside of column selection
+in step functions." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -177,19 +180,26 @@ outside of column selection in step functions." />
 
     <div class="ref-description">
     <p><code>has_role()</code>, <code>all_predictors()</code>, and <code>all_outcomes()</code> can be used to
-select variables in a formula that have certain roles.
-Similarly, <code>has_type()</code>, <code>all_numeric()</code>, and <code>all_nominal()</code> are used
-to select columns based on their data type. Nominal variables include both
+select variables in a formula that have certain roles.</p>
+<p>Similarly, <code>has_type()</code>, <code>all_numeric()</code>, and <code>all_nominal()</code> are used to
+select columns based on their data type. Nominal variables include both
 character and factor.</p>
+<p><strong>In most cases</strong>, the selectors <code>all_numeric_predictors()</code> and
+<code>all_nominal_predictors()</code>, which select on role and type, will be the right
+approach for users.</p>
 <p>See <code><a href='selections.html'>?selections</a></code> for more details.</p>
 <p><code>current_info()</code> is an internal function.</p>
-<p>All of these functions have have limited utility
-outside of column selection in step functions.</p>
+<p>All of these functions have have limited utility outside of column selection
+in step functions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>has_role</span><span class='op'>(</span>match <span class='op'>=</span> <span class='st'>"predictor"</span><span class='op'>)</span>
 
 <span class='fu'>all_predictors</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='fu'>all_numeric_predictors</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='fu'>all_nominal_predictors</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='fu'>all_outcomes</span><span class='op'>(</span><span class='op'>)</span>
 

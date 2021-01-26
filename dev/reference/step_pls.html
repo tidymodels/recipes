@@ -331,11 +331,11 @@ above.</p>
 
 <span class='va'>dense_pls</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biom_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"HHV"</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"HHV"</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 
 <span class='va'>sparse_pls</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biom_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"HHV"</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span>, predictor_prop <span class='op'>=</span> <span class='fl'>4</span><span class='op'>/</span><span class='fl'>5</span><span class='op'>)</span>
+  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"HHV"</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span>, predictor_prop <span class='op'>=</span> <span class='fl'>4</span><span class='op'>/</span><span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'>## -----------------------------------------------------------------------------</span>
 <span class='co'>## PLS discriminant analysis</span>
@@ -353,11 +353,11 @@ above.</p>
 
 <span class='va'>dense_plsda</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>cell_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"class"</span>, num_comp <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"class"</span>, num_comp <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='va'>sparse_plsda</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>cell_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"class"</span>, num_comp <span class='op'>=</span> <span class='fl'>5</span>, predictor_prop <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
+  <span class='fu'>step_pls</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, outcome <span class='op'>=</span> <span class='st'>"class"</span>, num_comp <span class='op'>=</span> <span class='fl'>5</span>, predictor_prop <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span>
 
 </div></pre>
   </div>

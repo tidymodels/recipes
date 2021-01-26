@@ -207,7 +207,7 @@
 <span class="co">#&gt; 10         0    48    41 bad              0</span>
 <span class="co">#&gt; # … with 4,444 more rows</span></code></pre></div>
 <p><code>Status</code> is unaffected.</p>
-<p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code>all_predictors</code> or <code>contains</code> is to be able to select variables that have not be created yet.</p>
+<p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code><a href="../reference/has_role.html">all_predictors()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code> is to be able to select variables that have not be created yet.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

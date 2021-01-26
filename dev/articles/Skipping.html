@@ -173,7 +173,7 @@
 </li>
 <li>Steps with <code>skip = TRUE</code> are not applied to the data when <code><a href="../reference/bake.html">bake()</a></code> is called</li>
 </ul>
-<p>Recall that there are two ways of getting the results for the training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as usual. Second, <code><a href="../reference/juice.html">juice()</a></code> is a shortcut that will use the already processed data that is contained in the recipe when <code><a href="../reference/prep.html">prep(recipe, retain = TRUE)</a></code> is used. <code><a href="../reference/juice.html">juice()</a></code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
+<p>Recall that there are two ways of getting the results for the training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as usual. Second, <code><a href="../reference/bake.html">bake(new_data = NULL)</a></code> is a shortcut that will use the already processed data that is contained in the recipe when <code><a href="../reference/prep.html">prep(recipe, retain = TRUE)</a></code> is used. <code><a href="../reference/bake.html">bake(new_data = NULL)</a></code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
 </div>
 <div id="be-careful" class="section level1">
 <h1 class="hasAnchor">
@@ -184,11 +184,11 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
 <span class="va">car_recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_log.html">step_log</a></span><span class="op">(</span><span class="va">disp</span>, skip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
 
 <span class="co"># These *should* produce the same results (as they do for `hp`)</span>
-<span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="va">car_recipe</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;     disp    hp</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -208,7 +208,7 @@
 <span class="co">#&gt; 4  253. -36.7</span>
 <span class="co">#&gt; 5  355.  28.3</span>
 <span class="co">#&gt; 6  220. -41.7</span></code></pre></div>
-<p>This should emphasize that <code><a href="../reference/juice.html">juice()</a></code> should be used to get the training set values whenever a step is skipped.</p>
+<p>This should emphasize that <code><a href="../reference/bake.html">bake(new_data = NULL)</a></code> should be used to get the training set values whenever a step is skipped.</p>
 </div>
   </div>
 

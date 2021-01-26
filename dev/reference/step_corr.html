@@ -299,7 +299,7 @@ function.</p>
               data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
 <span class='va'>corr_filter</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_corr</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
+  <span class='fu'>step_corr</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
 
 <span class='va'>filter_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>corr_filter</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 

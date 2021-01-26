@@ -281,7 +281,7 @@ applied multiple times (as defined by <code>max_steps</code>).</p>
               data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
 <span class='va'>lincomb_filter</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_lincomb</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>step_lincomb</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>lincomb_filter_trained</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>lincomb_filter</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 <span class='va'>lincomb_filter_trained</span>

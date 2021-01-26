@@ -306,7 +306,7 @@ If <code>num = 101</code>, the names would be <code>NNMF001</code> -
 <span class='co'># rec &lt;- recipe(HHV ~ ., data = biomass) %&gt;%</span>
 <span class='co'>#   update_role(sample, new_role = "id var") %&gt;%</span>
 <span class='co'>#   update_role(dataset, new_role = "split variable") %&gt;%</span>
-<span class='co'>#   step_nnmf(all_predictors(), num_comp = 2, seed = 473, num_run = 2) %&gt;%</span>
+<span class='co'>#   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) %&gt;%</span>
 <span class='co'>#   prep(training = biomass)</span>
 <span class='co'>#</span>
 <span class='co'># bake(rec, new_data = NULL)</span>

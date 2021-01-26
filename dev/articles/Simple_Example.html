@@ -193,9 +193,11 @@
 <ul>
 <li>use basic variable names (e.g. <code>x1, x2</code>),</li>
 <li>
-<a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> functions for selecting variables: <code>contains</code>, <code>ends_with</code>, <code>everything</code>, <code>matches</code>, <code>num_range</code>, and <code>starts_with</code>,</li>
-<li>functions that subset on the role of the variables that have been specified so far: <code>all_outcomes</code>, <code>all_predictors</code>, <code>has_role</code>, or</li>
-<li>similar functions for the type of data: <code>all_nominal</code>, <code>all_numeric</code>, and <code>has_type</code>.</li>
+<a href="https://cran.r-project.org/package=dplyr"><code>dplyr</code></a> functions for selecting variables: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with()</a></code>,</li>
+<li>functions that subset on the role of the variables that have been specified so far: <code><a href="../reference/has_role.html">all_outcomes()</a></code>, <code><a href="../reference/has_role.html">all_predictors()</a></code>, <code><a href="../reference/has_role.html">has_role()</a></code>,<br>
+</li>
+<li>similar functions for the type of data: <code><a href="../reference/has_role.html">all_nominal()</a></code>, <code><a href="../reference/has_role.html">all_numeric()</a></code>, and <code><a href="../reference/has_role.html">has_type()</a></code>, or</li>
+<li>compound selectors such as <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code> or <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>.</li>
 </ul>
 <p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
@@ -225,10 +227,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
-<p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code>step_dummy</code>. To do this, the step selects all predictors then removes those that are numeric:</p>
+<p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
+  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">ind_vars</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
@@ -241,12 +243,12 @@
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
-<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span></code></pre></div>
+<span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
+  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">standardized</span>
 <span class="co">#&gt; Data Recipe</span>
 <span class="co">#&gt; </span>
@@ -259,9 +261,9 @@
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
-<span class="co">#&gt; Dummy variables from all_predictors(), -all_numeric()</span>
-<span class="co">#&gt; Centering for all_predictors()</span>
-<span class="co">#&gt; Scaling for all_predictors()</span></code></pre></div>
+<span class="co">#&gt; Dummy variables from all_nominal_predictors()</span>
+<span class="co">#&gt; Centering for all_numeric_predictors()</span>
+<span class="co">#&gt; Scaling for all_numeric_predictors()</span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
@@ -282,7 +284,7 @@
 <span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span>
 <span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span>
 <span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></code></pre></div>
-<p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_predictors()</a></code>).</p>
+<p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>

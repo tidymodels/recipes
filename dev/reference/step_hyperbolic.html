@@ -268,7 +268,7 @@ columns that will be affected), <code>inverse</code>, and <code>func</code>.</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 
 <span class='va'>cos_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'>%&gt;%</span>
-  <span class='fu'>step_hyperbolic</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='fu'>step_hyperbolic</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>,
                   func <span class='op'>=</span> <span class='st'>"cos"</span>, inverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='va'>cos_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>cos_trans</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
@@ -278,9 +278,9 @@ columns that will be affected), <code>inverse</code>, and <code>func</code>.</p>
 </div><div class='img'><img src='step_hyperbolic-1.png' alt='' width='768' height='552' /></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>cos_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 4</span><span>
-#&gt;   terms            inverse func  id              
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> all_predictors() FALSE   cos   hyperbolic_IhS7o</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>cos_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+#&gt;   terms                    inverse func  id              
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric_predictors() FALSE   cos   hyperbolic_IhS7o</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>cos_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 4</span><span>
 #&gt;   terms inverse func  id              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
