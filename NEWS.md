@@ -4,6 +4,8 @@
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
+* Added `keep_original_cols` argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca`, `step_pls`, `step_spatialsign`, and `step_isomap` (#635).
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
