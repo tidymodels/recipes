@@ -215,9 +215,9 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
 
-    object$keep_original_cols <- get_keep_original_cols(object)
+    keep_original_cols <- get_keep_original_cols(object)
 
-    if (!object$keep_original_cols) {
+    if (!keep_original_cols) {
       new_data <-
         new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
     }
