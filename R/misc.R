@@ -637,12 +637,12 @@ check_training_set <- function(x, rec, fresh) {
 }
 
 
-check_keep_original_cols <- function(object) {
+get_keep_original_cols <- function(object) {
   # Allow prepping of old recipes created before addition of keep_original_cols
   step_class <- class(object)[1]
 
   if (is.null(object$keep_original_cols)) {
-    object$keep_original_cols <- FALSE
+    ret <- FALSE
     rlang::warn(
       paste0(
         "'keep_original_cols' was added to `",
@@ -651,9 +651,11 @@ check_keep_original_cols <- function(object) {
         "Regenerate your recipe to avoid this warning."
       )
     )
+  } else {
+    ret <- object$keep_original_cols
   }
 
-  object
+  ret
 }
 
 # ------------------------------------------------------------------------------

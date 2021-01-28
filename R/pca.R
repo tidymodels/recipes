@@ -191,15 +191,13 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     prc_obj <- list(rotation = fake_matrix)
   }
 
-  x <- check_keep_original_cols(x)
-
   step_pca_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     num_comp = x$num_comp,
     threshold = x$threshold,
-    keep_original_cols = x$keep_original_cols,
+    keep_original_cols = get_keep_original_cols(x),
     options = x$options,
     res = prc_obj,
     prefix = x$prefix,
@@ -217,7 +215,7 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
 
-    object <- check_keep_original_cols(object)
+    object$keep_original_cols <- get_keep_original_cols(object)
 
     if (!object$keep_original_cols) {
       new_data <-
