@@ -11,6 +11,7 @@ step_ica(
   role = "predictor",
   trained = FALSE,
   num_comp = 5,
+  keep_original_cols = FALSE,
   options = list(method = "C"),
   res = NULL,
   prefix = "IC",
@@ -41,6 +42,9 @@ preprocessing have been estimated.}
 predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{options}{A list of options to
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.

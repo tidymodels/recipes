@@ -154,3 +154,48 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+test_that('keep_original_cols works', {
+
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  ica_extract <- rec %>%
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2,
+             id = "", keep_original_cols = TRUE)
+
+  set.seed(12)
+  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
+
+  ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors())
+
+
+  expect_equal(
+    colnames(ica_pred),
+    c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
+      "IC1", "IC2")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  ica_extract <- rec %>%
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
+
+  ica_extract$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors()),
+    NA
+  )
+
+})
