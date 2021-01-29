@@ -15,6 +15,7 @@ step_isomap(
   options = list(.mute = c("message", "output")),
   res = NULL,
   prefix = "Isomap",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("isomap")
 )
@@ -53,6 +54,9 @@ here once this preprocessing step has be trained by
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

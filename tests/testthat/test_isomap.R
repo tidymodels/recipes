@@ -124,3 +124,51 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+test_that('keep_original_cols works', {
+
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "", keep_original_cols = TRUE)
+
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+
+  im_pred <- bake(im_trained, new_data = dat2)
+
+  expect_equal(
+    colnames(im_pred),
+    c("x1", "x2", "x3",
+      "Isomap1", "Isomap2", "Isomap3")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
+
+  im_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    im_trained <- prep(im_rec, training = dat1, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    im_pred <- bake(im_trained, new_data = dat2, all_predictors()),
+    NA
+  )
+
+})
