@@ -15,6 +15,7 @@
 #' @importFrom gower gower_topn
 #' @importFrom lubridate year yday week decimal_date quarter semester wday month
 #' @importFrom lubridate is.Date
+#' @importFrom lifecycle deprecated
 #' @importFrom utils stack globalVariables packageVersion object.size install.packages
 #' @importFrom tidyselect everything
 #' @importFrom withr with_seed
