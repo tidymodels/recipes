@@ -381,6 +381,8 @@ intersect_selectors <- c(
 
   "has_role",
   "all_predictors",
+  "all_numeric_predictors",
+  "all_nominal_predictors",
   "all_outcomes",
 
   "has_type",

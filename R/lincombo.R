@@ -46,7 +46,7 @@
 #'               data = biomass_tr)
 #'
 #' lincomb_filter <- rec %>%
-#'   step_lincomb(all_predictors())
+#'   step_lincomb(all_numeric_predictors())
 #'
 #' lincomb_filter_trained <- prep(lincomb_filter, training = biomass_tr)
 #' lincomb_filter_trained

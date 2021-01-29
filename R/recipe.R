@@ -107,8 +107,8 @@ recipe.default <- function(x, ...)
 #' # Now add preprocessing steps to the recipe.
 #'
 #' sp_signed <- rec %>%
-#'   step_normalize(all_predictors()) %>%
-#'   step_spatialsign(all_predictors())
+#'   step_normalize(all_numeric_predictors()) %>%
+#'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
 #' # now estimate required parameters
@@ -121,8 +121,8 @@ recipe.default <- function(x, ...)
 #' # or use pipes for the entire workflow:
 #' rec <- biomass_tr %>%
 #'   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-#'   step_normalize(all_predictors()) %>%
-#'   step_spatialsign(all_predictors())
+#'   step_normalize(all_numeric_predictors()) %>%
+#'   step_spatialsign(all_numeric_predictors())
 #'
 #' ###############################################
 #' # multivariate example
@@ -131,8 +131,8 @@ recipe.default <- function(x, ...)
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
 #'                   data = biomass_tr)
 #' multi_y <- multi_y %>%
-#'   step_center(all_outcomes()) %>%
-#'   step_scale(all_predictors())
+#'   step_center(all_numeric_predictors()) %>%
+#'   step_scale(all_numeric_predictors())
 #'
 #' multi_y_trained <- prep(multi_y, training = biomass_tr)
 #'
@@ -499,7 +499,14 @@ prep.recipe <-
       running_info %>%
       group_by(variable) %>%
       arrange(desc(number)) %>%
-      slice(1)
+      summarise(
+        type = dplyr::first(type),
+        role = as.list(unique(unlist(role))),
+        source = dplyr::first(source),
+        number = dplyr::first(number),
+        skip = dplyr::first(skip),
+        .groups = "keep"
+      )
     x
   }
 

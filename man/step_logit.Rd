@@ -69,7 +69,7 @@ examples <- data.frame(examples)
 rec <- recipe(~ X1 + X2, data = examples)
 
 logit_trans <- rec  \%>\%
-  step_logit(all_predictors())
+  step_logit(all_numeric_predictors())
 
 logit_obj <- prep(logit_trans, training = examples)
 

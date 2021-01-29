@@ -117,9 +117,9 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 im_trans <- rec \%>\%
-  step_YeoJohnson(all_predictors()) \%>\%
-  step_normalize(all_predictors()) \%>\%
-  step_isomap(all_predictors(), neighbors = 100, num_terms = 2)
+  step_YeoJohnson(all_numeric_predictors()) \%>\%
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
 
 if (require(dimRed) & require(RSpectra)) {
   im_estimates <- prep(im_trans, training = biomass_tr)

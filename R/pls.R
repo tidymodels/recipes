@@ -92,11 +92,11 @@
 #'
 #' dense_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3)
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5)
+#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5)
 #'
 #' ## -----------------------------------------------------------------------------
 #' ## PLS discriminant analysis
@@ -114,11 +114,11 @@
 #'
 #' dense_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_predictors(), outcome = "class", num_comp = 5)
+#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5)
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
+#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
 #'
 #' @seealso [step_pca()], [step_kpca()], [step_ica()], [recipe()],
 #'  [prep.recipe()], [bake.recipe()]

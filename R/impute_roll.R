@@ -63,7 +63,7 @@
 #' library(recipes)
 #' seven_pt <- recipe(~ . , data = example_data) %>%
 #'   update_role(day, new_role = "time_index") %>%
-#'   step_impute_roll(all_predictors(), window = 7) %>%
+#'   step_impute_roll(all_numeric_predictors(), window = 7) %>%
 #'   prep(training = example_data)
 #'
 #' # The training set:

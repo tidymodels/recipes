@@ -48,7 +48,7 @@ ref_cell <-
 summary(ref_cell)
 
 # Get a row for each factor level
-juice(ref_cell, original, starts_with("Species")) %>% distinct()
+bake(ref_cell, new_data = NULL, original, starts_with("Species")) %>% distinct()
 ```
 
 Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
@@ -79,7 +79,7 @@ helmert <-
   prep(training = iris)
 summary(helmert)
 
-juice(helmert, original, starts_with("Species")) %>% distinct()
+bake(helmert, new_data = NULL, original, starts_with("Species")) %>% distinct()
 
 # Yuk; go back to the original method
 options(contrasts = param)
@@ -87,7 +87,7 @@ options(contrasts = param)
 
 Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn't make sense. 
 
-If no columns are selected (perhaps due to an earlier `step_zv()`), the `bake()` and `juice()` functions will return the data as-is (e.g. with no dummy variables).  
+If no columns are selected (perhaps due to an earlier `step_zv()`), the `bake()` function will return the data as-is (e.g. with no dummy variables).  
 
 Finally, `step_dummy()` has an option called `preserve` that can be used to keep the original column that are being used to create the dummy variables. 
 
@@ -186,7 +186,7 @@ There are models (e.g. `glmnet` and others) that can avoid this issue so you mig
 iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
   prep(training = iris) %>%
-  juice(original, starts_with("Species")) %>%
+  bake(original, new_data = NULL, starts_with("Species")) %>%
   distinct()
 ```
 
@@ -201,7 +201,7 @@ hot_reference <-
   iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
   prep(training = iris) %>%
-  juice(original, starts_with("Species")) %>%
+  bake(original, new_data = NULL, starts_with("Species")) %>%
   distinct()
 
 hot_reference
@@ -213,7 +213,7 @@ hot_helmert <-
   iris_rec %>% 
   step_dummy(Species, one_hot = TRUE) %>%
   prep(training = iris) %>%
-  juice(original, starts_with("Species")) %>%
+  bake(original, new_data = NULL, starts_with("Species")) %>%
   distinct()
 
 hot_helmert
