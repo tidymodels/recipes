@@ -12,10 +12,10 @@ step_pca(
   trained = FALSE,
   num_comp = 5,
   threshold = NA,
-  keep_original_cols = FALSE,
   options = list(),
   res = NULL,
   prefix = "PC",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("pca")
 )
@@ -48,9 +48,6 @@ generate enough components to capture 75 percent of the variability in the
 variables. Note: using this argument will override and reset any value given
 to \code{num_comp}.}
 
-\item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
-
 \item{options}{A list of options to the default method for
 \code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x}
 should not be passed here (or at all).}
@@ -60,6 +57,9 @@ preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
 new variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

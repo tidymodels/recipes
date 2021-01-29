@@ -20,8 +20,6 @@
 #'  generate enough components to capture 75 percent of the variability in the
 #'  variables. Note: using this argument will override and reset any value given
 #'  to `num_comp`.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
 #' @param options A list of options to the default method for
 #'  [stats::prcomp()]. Argument defaults are set to `retx = FALSE`, `center =
 #'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
@@ -33,6 +31,8 @@
 #' @param type For the `tidy()` method, either "coef" (for the variable
 #'  loadings per component) or "variance" (how much variance does each component
 #'  account for).
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step added to the
 #'  sequence of existing steps (if any). For the `tidy` method, a tibble with
 #'  columns `terms` (the selectors or variables selected), `value` (the
@@ -102,10 +102,10 @@ step_pca <- function(recipe,
                      trained = FALSE,
                      num_comp  = 5,
                      threshold = NA,
-                     keep_original_cols = FALSE,
                      options = list(),
                      res = NULL,
                      prefix = "PC",
+                     keep_original_cols = FALSE,
                      skip = FALSE,
                      id = rand_id("pca")) {
 
@@ -123,10 +123,10 @@ step_pca <- function(recipe,
       trained = trained,
       num_comp = num_comp,
       threshold = threshold,
-      keep_original_cols = keep_original_cols,
       options = options,
       res = res,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -134,8 +134,8 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <-
-  function(terms, role, trained, num_comp, threshold, keep_original_cols,
-           options, res, prefix, skip, id) {
+  function(terms, role, trained, num_comp, threshold, options, res,
+           prefix,  keep_original_cols, skip, id) {
     step(
       subclass = "pca",
       terms = terms,
@@ -143,10 +143,10 @@ step_pca_new <-
       trained = trained,
       num_comp = num_comp,
       threshold = threshold,
-      keep_original_cols = keep_original_cols,
       options = options,
       res = res,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -197,10 +197,10 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     num_comp = x$num_comp,
     threshold = x$threshold,
-    keep_original_cols = get_keep_original_cols(x),
     options = x$options,
     res = prc_obj,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -214,12 +214,10 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
-      new_data <-
-        new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
     }
   }
   as_tibble(new_data)

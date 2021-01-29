@@ -24,6 +24,8 @@
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -109,6 +111,7 @@ step_kpca_rbf <-
            res = NULL,
            sigma = 0.2,
            prefix = "kPC",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("kpca_rbf")) {
 
@@ -124,6 +127,7 @@ step_kpca_rbf <-
         res = res,
         sigma = sigma,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -131,7 +135,8 @@ step_kpca_rbf <-
   }
 
 step_kpca_rbf_new <-
-  function(terms, role, trained, num_comp, res, sigma, prefix, skip, id) {
+  function(terms, role, trained, num_comp, res, sigma, prefix,
+           keep_original_cols, skip, id) {
     step(
       subclass = "kpca_rbf",
       terms = terms,
@@ -141,6 +146,7 @@ step_kpca_rbf_new <-
       res = res,
       sigma = sigma,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -185,6 +191,7 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
     sigma = x$sigma,
     res = kprc,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -200,7 +207,11 @@ bake.step_kpca_rbf <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    keep_original_cols <- get_keep_original_cols(object)
+
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }

@@ -16,6 +16,7 @@ step_nnmf(
   res = NULL,
   prefix = "NNMF",
   seed = sample.int(10^5, 1),
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("nnmf")
 )
@@ -60,6 +61,9 @@ resulting new variables. See notes below.}
 
 \item{seed}{An integer that will be used to set the seed in isolation
 when computing the factorization.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

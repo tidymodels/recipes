@@ -18,8 +18,6 @@
 #'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
 #'  used.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
 #' @param options A list of options to
 #'  [fastICA::fastICA()]. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should
@@ -27,6 +25,8 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -103,10 +103,10 @@ step_ica <-
            role = "predictor",
            trained = FALSE,
            num_comp  = 5,
-           keep_original_cols = FALSE,
            options = list(method = "C"),
            res = NULL,
            prefix = "IC",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("ica")) {
 
@@ -120,10 +120,10 @@ step_ica <-
         role = role,
         trained = trained,
         num_comp = num_comp,
-        keep_original_cols = keep_original_cols,
         options = options,
         res = res,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -131,18 +131,18 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, keep_original_cols, options, res,
-           prefix, skip, id) {
+  function(terms, role, trained, num_comp, options, res,
+           prefix, keep_original_cols, skip, id) {
     step(
       subclass = "ica",
       terms = terms,
       role = role,
       trained = trained,
       num_comp = num_comp,
-      keep_original_cols = keep_original_cols,
       options = options,
       res = res,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -177,10 +177,10 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     num_comp = x$num_comp,
-    keep_original_cols = get_keep_original_cols(x),
     options = x$options,
     res = indc,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -202,8 +202,7 @@ bake.step_ica <- function(object, new_data, ...) {
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
-      new_data <-
-        new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+      new_data <- new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
     }
   }
   as_tibble(new_data)

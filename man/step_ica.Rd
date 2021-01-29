@@ -11,10 +11,10 @@ step_ica(
   role = "predictor",
   trained = FALSE,
   num_comp = 5,
-  keep_original_cols = FALSE,
   options = list(method = "C"),
   res = NULL,
   prefix = "IC",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("ica")
 )
@@ -43,9 +43,6 @@ predictors. If \code{num_comp} is greater than the number of columns
 or the number of possible components, a smaller value will be
 used.}
 
-\item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
-
 \item{options}{A list of options to
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
@@ -57,6 +54,9 @@ here once this preprocessing step has be trained by
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
