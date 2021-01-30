@@ -161,7 +161,8 @@ splines_predict <- function(object, x) {
   xu <- unique(x)
   ru <- predict(object, xu)
   res <- ru[match(x, xu), ]
-  copy_attrs <- c("class", "degree", "knots", "Boundary.knots", "intercept")
+  copy_attrs <- c("class", if (inherits(object, "bs")) "degree" else NULL,
+                  "knots", "Boundary.knots", "intercept")
   attributes(res)[copy_attrs] <- attributes(ru)[copy_attrs]
   res
 }
