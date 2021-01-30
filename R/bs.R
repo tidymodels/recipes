@@ -101,9 +101,48 @@ step_bs_new <-
   }
 
 bs_wrapper <- function(x, args) {
-  if (!("Boundary.knots" %in% names(args)))
+  # Only do the parameter computations from splines::bs(), don't evaluate at x.
+  if (!"degree" %in% names(args)) {
+    args$degree <- 3L
+  } else {
+    args$degree <- as.integer(args$degree)
+    if (!args$degree >= 1L) {
+      stop("B-Spline 'degree' must be integer >= 1")
+    }
+  }
+  if (!"intercept" %in% names(args)) {
+    args$intercept <- FALSE
+  } else {
+    args$intercept <- as.logical(args$intercept)
+  }
+  if (!("Boundary.knots" %in% names(args))) {
     args$Boundary.knots <- range(x)
-  args$x <- x
+  } else {
+    args$Boundary.knots <- sort(args$Boundary.knots)
+  }
+
+  if (!is.null(args$df) && is.null(args$knots)) {
+    ord <- 1L + args$degree
+    x <- na.omit(x)
+    outside <- x < args$Boundary.knots[1L] | x > args$Boundary.knots[2L]
+    nIknots <- args$df - ord + (1L - args$intercept)
+    if (nIknots < 0L) {
+      nIknots <- 0L
+      warning(gettextf("'df' was too small; have used %d",
+                       ord - (1L - args$intercept)), domain = NA)
+    }
+    if (nIknots > 0L) {
+      args$knots <- seq.int(from = 0, to = 1, length.out = nIknots +
+        2L)[-c(1L, nIknots + 2L)]
+      quantile(x[!outside], knots)
+    } else {
+      args$knots <- numeric()
+    }
+  } else {
+    args$knots <- numeric()
+  }
+
+  args$x <- mean(args$Boundary.knots)
   bs_obj <- do.call("bs", args)
   ## don't need to save the original data so keep 1 row
   out <- matrix(NA, ncol = ncol(bs_obj), nrow = 1)
@@ -113,6 +152,15 @@ bs_wrapper <- function(x, args) {
   attr(out, "Boundary.knots") <- attr(bs_obj, "Boundary.knots")
   attr(out, "intercept") <- attr(bs_obj, "intercept")
   out
+}
+
+bs_predict <- function(object, x) {
+  xu <- unique(x)
+  ru <- predict(object, xu)
+  res <- ru[match(x, xu), ]
+  copy_attrs <- c("class", "degree", "knots", "Boundary.knots", "intercept")
+  attributes(res)[copy_attrs] <- attributes(ru)[copy_attrs]
+  res
 }
 
 #' @export
@@ -151,7 +199,7 @@ bake.step_bs <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     bs_values[, cols] <-
-      predict(object$objects[[i]], getElement(new_data, i))
+      bs_predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
