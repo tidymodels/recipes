@@ -132,9 +132,9 @@ bs_wrapper <- function(x, args) {
                        ord - (1L - args$intercept)), domain = NA)
     }
     if (nIknots > 0L) {
-      args$knots <- seq.int(from = 0, to = 1, length.out = nIknots +
+      probs <- seq.int(from = 0, to = 1, length.out = nIknots +
         2L)[-c(1L, nIknots + 2L)]
-      quantile(x[!outside], knots)
+      args$knots <- quantile(x[!outside], probs)
     } else {
       args$knots <- numeric()
     }
