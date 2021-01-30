@@ -95,21 +95,6 @@ step_ns_new <-
     )
   }
 
-
-ns_wrapper <- function(x, args) {
-  if (!("Boundary.knots" %in% names(args)))
-    args$Boundary.knots <- range(x)
-  args$x <- x
-  ns_obj <- do.call("ns", args)
-  ## don't need to save the original data so keep 1 row
-  out <- matrix(NA, ncol = ncol(ns_obj), nrow = 1)
-  class(out) <- c("ns", "basis", "matrix")
-  attr(out, "knots") <- attr(ns_obj, "knots")[]
-  attr(out, "Boundary.knots") <- attr(ns_obj, "Boundary.knots")
-  attr(out, "intercept") <- attr(ns_obj, "intercept")
-  out
-}
-
 #' @export
 prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
@@ -118,7 +103,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
 
   opt <- x$options
   opt$df <- x$deg_free
-  obj <- lapply(training[, col_names], ns_wrapper, opt)
+  obj <- lapply(training[, col_names], splines_wrapper, opt, type = "ns")
   for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
@@ -145,7 +130,7 @@ bake.step_ns <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     ns_values[, cols] <-
-      predict(object$objects[[i]], getElement(new_data, i))
+      splines_predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
     colnames(ns_values)[cols] <- new_names

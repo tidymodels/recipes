@@ -100,8 +100,10 @@ step_bs_new <-
     )
   }
 
-bs_wrapper <- function(x, args) {
-  # Only do the parameter computations from splines::bs(), don't evaluate at x.
+splines_wrapper <- function(x, args, type = c("bs", "ns")) {
+  type <- match.arg(type)
+
+  # Only do the parameter computations from splines::bs() / splines::ns(), don't evaluate at x.
   if (!"degree" %in% names(args)) {
     args$degree <- 3L
   } else {
@@ -123,8 +125,8 @@ bs_wrapper <- function(x, args) {
 
   if (!is.null(args$df) && is.null(args$knots)) {
     ord <- 1L + args$degree
-    x <- na.omit(x)
-    outside <- x < args$Boundary.knots[1L] | x > args$Boundary.knots[2L]
+    ok <- !is.na(x) &
+      x >= args$Boundary.knots[1L] & x <= args$Boundary.knots[2L]
     nIknots <- args$df - ord + (1L - args$intercept)
     if (nIknots < 0L) {
       nIknots <- 0L
@@ -134,7 +136,7 @@ bs_wrapper <- function(x, args) {
     if (nIknots > 0L) {
       probs <- seq.int(from = 0, to = 1, length.out = nIknots +
         2L)[-c(1L, nIknots + 2L)]
-      args$knots <- quantile(x[!outside], probs)
+      args$knots <- quantile(x[ok], probs)
     } else {
       args$knots <- numeric()
     }
@@ -142,19 +144,17 @@ bs_wrapper <- function(x, args) {
     args$knots <- numeric()
   }
 
-  args$x <- mean(args$Boundary.knots)
-  bs_obj <- do.call("bs", args)
-  ## don't need to save the original data so keep 1 row
-  out <- matrix(NA, ncol = ncol(bs_obj), nrow = 1)
-  class(out) <- c("bs", "basis", "matrix")
-  attr(out, "knots") <- attr(bs_obj, "knots")[]
-  attr(out, "degree") <- attr(bs_obj, "degree")
-  attr(out, "Boundary.knots") <- attr(bs_obj, "Boundary.knots")
-  attr(out, "intercept") <- attr(bs_obj, "intercept")
+  # Only construct the data necessary for splines_predict
+  out <- matrix(NA, ncol = args$degree + length(args$knots) + args$intercept, nrow = 1)
+  class(out) <- c(type, "basis", "matrix")
+  attr(out, "knots") <- args$knots
+  attr(out, "degree") <- args$degree
+  attr(out, "Boundary.knots") <- args$Boundary.knots
+  attr(out, "intercept") <- args$intercept
   out
 }
 
-bs_predict <- function(object, x) {
+splines_predict <- function(object, x) {
   xu <- unique(x)
   ru <- predict(object, xu)
   res <- ru[match(x, xu), ]
@@ -171,7 +171,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   opt <- x$options
   opt$df <- x$deg_free
   opt$degree <- x$degree
-  obj <- lapply(training[, col_names], bs_wrapper, opt)
+  obj <- lapply(training[, col_names], splines_wrapper, opt, type = "bs")
   for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_bs_new(
@@ -199,7 +199,7 @@ bake.step_bs <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     bs_values[, cols] <-
-      bs_predict(object$objects[[i]], getElement(new_data, i))
+      splines_predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
