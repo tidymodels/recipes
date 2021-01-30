@@ -151,7 +151,9 @@ splines_wrapper <- function(x, args, type = c("bs", "ns")) {
   out <- matrix(NA, ncol = args$degree + length(args$knots) + args$intercept, nrow = 1)
   class(out) <- c(type, "basis", "matrix")
   attr(out, "knots") <- args$knots
-  attr(out, "degree") <- args$degree
+  if (type == "bs") {
+    attr(out, "degree") <- args$degree
+  }
   attr(out, "Boundary.knots") <- args$Boundary.knots
   attr(out, "intercept") <- args$intercept
   out
