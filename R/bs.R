@@ -105,7 +105,7 @@ splines_wrapper <- function(x, args, type = c("bs", "ns")) {
 
   # Only do the parameter computations from splines::bs() / splines::ns(), don't evaluate at x.
   if (!"degree" %in% names(args)) {
-    args$degree <- 3L
+    args$degree <- switch(type, bs = 3L, ns = 1L)
   } else {
     args$degree <- as.integer(args$degree)
     if (!args$degree >= 1L) {
@@ -119,6 +119,9 @@ splines_wrapper <- function(x, args, type = c("bs", "ns")) {
   }
   if (!("Boundary.knots" %in% names(args))) {
     args$Boundary.knots <- range(x)
+    if (length(x) == 1L && type == "ns") {
+      args$Boundary.knots <- x * c(7, 9) / 8
+    }
   } else {
     args$Boundary.knots <- sort(args$Boundary.knots)
   }
