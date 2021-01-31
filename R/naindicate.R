@@ -117,7 +117,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
 
   df_ind_na <- purrr::map_dfc(
       new_data[col_names],
-      ~ifelse(is.na(.x), 1, 0)
+      ~ifelse(is.na(.x), 1L, 0L)
     ) %>%
     dplyr::rename_with(~paste0(object$prefix, "_", .x))
   new_data <- dplyr::bind_cols(new_data, df_ind_na)
