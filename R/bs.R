@@ -104,58 +104,29 @@ splines_wrapper <- function(x, args, type = c("bs", "ns")) {
   type <- match.arg(type)
 
   # Only do the parameter computations from splines::bs() / splines::ns(), don't evaluate at x.
-  if (!"degree" %in% names(args)) {
-    args$degree <- switch(type, bs = 3L, ns = 1L)
-  } else {
-    args$degree <- as.integer(args$degree)
-    if (!args$degree >= 1L) {
-      stop("B-Spline 'degree' must be integer >= 1")
-    }
-  }
-  if (!"intercept" %in% names(args)) {
-    args$intercept <- FALSE
-  } else {
-    args$intercept <- as.logical(args$intercept)
-  }
-  if (!("Boundary.knots" %in% names(args))) {
-    args$Boundary.knots <- range(x)
-    if (length(x) == 1L && type == "ns") {
-      args$Boundary.knots <- x * c(7, 9) / 8
-    }
-  } else {
-    args$Boundary.knots <- sort(args$Boundary.knots)
-  }
+  degree <- as.integer(args$degree %||% switch(type, bs = 3L, ns = 1L))
+  intercept <- as.logical(args$intercept %||% FALSE)
+  # This behaves differently from splines::ns() if length(x) is 1
+  boundary <- sort(args$Boundary.knots) %||% range(x)
 
-  if (!is.null(args$df) && is.null(args$knots)) {
-    ord <- 1L + args$degree
-    ok <- !is.na(x) &
-      x >= args$Boundary.knots[1L] & x <= args$Boundary.knots[2L]
-    nIknots <- args$df - ord + (1L - args$intercept)
-    if (nIknots < 0L) {
-      nIknots <- 0L
-      warning(gettextf("'df' was too small; have used %d",
-                       ord - (1L - args$intercept)), domain = NA)
-    }
-    if (nIknots > 0L) {
-      probs <- seq.int(from = 0, to = 1, length.out = nIknots +
-        2L)[-c(1L, nIknots + 2L)]
-      args$knots <- quantile(x[ok], probs)
-    } else {
-      args$knots <- numeric()
-    }
+  # This behaves differently from splines::bs() and splines::ns() if num_knots < 0L
+  # the original implementations issue a warning.
+  if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
+    num_knots <- args$df - degree - intercept >= 1L
+    knots <- quantile(x, seq_len(num_knots - 1L) / num_knots, na.rm = TRUE)
   } else {
-    args$knots <- numeric()
+    knots <- numeric()
   }
 
   # Only construct the data necessary for splines_predict
-  out <- matrix(NA, ncol = args$degree + length(args$knots) + args$intercept, nrow = 1)
+  out <- matrix(NA, ncol = degree + length(knots) + intercept, nrow = 1L)
   class(out) <- c(type, "basis", "matrix")
-  attr(out, "knots") <- args$knots
+  attr(out, "knots") <- knots
+  attr(out, "Boundary.knots") <- boundary
+  attr(out, "intercept") <- intercept
   if (type == "bs") {
-    attr(out, "degree") <- args$degree
+    attr(out, "degree") <- degree
   }
-  attr(out, "Boundary.knots") <- args$Boundary.knots
-  attr(out, "intercept") <- args$intercept
   out
 }
 
