@@ -113,7 +113,7 @@ splines_wrapper <- function(x, args, type = c("bs", "ns")) {
   # the original implementations issue a warning.
   if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
     num_knots <- args$df - degree - intercept
-    knots <- quantile(x, seq_len(num_knots - 1L) / num_knots, na.rm = TRUE)
+    knots <- unname(quantile(x, seq_len(num_knots) / (num_knots + 1L), na.rm = TRUE))
   } else {
     knots <- numeric()
   }
