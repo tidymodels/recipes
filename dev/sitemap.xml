@@ -49,6 +49,9 @@
     <loc>https://recipes.tidymodels.org/reference/fully_trained.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/get_keep_original_cols.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/has_role.html</loc>
   </url>
   <url>
@@ -182,6 +185,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_impute_roll.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_indicate_na.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_integer.html</loc>

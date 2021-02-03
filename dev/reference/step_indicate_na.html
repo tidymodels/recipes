@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NNMF Signal Extraction — step_nnmf • recipes</title>
+<title>Create Missing Data Column Indicators — step_indicate_na • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,10 +49,10 @@
 
 
 
-<meta property="og:title" content="NNMF Signal Extraction — step_nnmf" />
-<meta property="og:description" content="step_nnmf creates a specification of a recipe step
-that will convert numeric data into one or more non-negative
-components." />
+<meta property="og:title" content="Create Missing Data Column Indicators — step_indicate_na" />
+<meta property="og:description" content="step_indicate_na creates a specification of a recipe step that will
+create and append additional binary columns to the dataset to indicate
+which observations are missing." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -164,34 +164,29 @@ components." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>NNMF Signal Extraction</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/nnmf.R'><code>R/nnmf.R</code></a></small>
-    <div class="hidden name"><code>step_nnmf.Rd</code></div>
+    <h1>Create Missing Data Column Indicators</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/naindicate.R'><code>R/naindicate.R</code></a></small>
+    <div class="hidden name"><code>step_indicate_na.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>step_nnmf</code> creates a <em>specification</em> of a recipe step
-that will convert numeric data into one or more non-negative
-components.</p>
+    <p><code>step_indicate_na</code> creates a <em>specification</em> of a recipe step that will
+create and append additional binary columns to the dataset to indicate
+which observations are missing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_nnmf</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>step_indicate_na</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='st'>"predictor"</span>,
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  num_comp <span class='op'>=</span> <span class='fl'>2</span>,
-  num_run <span class='op'>=</span> <span class='fl'>30</span>,
-  options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
-  res <span class='op'>=</span> <span class='cn'>NULL</span>,
-  prefix <span class='op'>=</span> <span class='st'>"NNMF"</span>,
-  seed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>^</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prefix <span class='op'>=</span> <span class='st'>"na_ind"</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"nnmf"</span><span class='op'>)</span>
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"indicate_na"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for step_nnmf</span>
+<span class='co'># S3 method for step_indicate_na</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -199,75 +194,45 @@ components.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
+      <td><p>A recipe object. The check will be added to the
 sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+      <td><p>One or more selector functions to choose which variables are
+affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
 method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
       <td><p>For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
-that the new component columns created by the
-original variables will be used as predictors in a model.</p></td>
+that the new na indicator columns created from the original
+variables will be used as predictors in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
+      <td><p>A logical for whether the selectors in <code>...</code>
+have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>num_comp</th>
-      <td><p>The number of components to retain as new
-predictors. If <code>num_comp</code> is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.</p></td>
-    </tr>
-    <tr>
-      <th>num_run</th>
-      <td><p>A positive integer for the number of computations runs used
-to obtain a consensus projection.</p></td>
-    </tr>
-    <tr>
-      <th>options</th>
-      <td><p>A list of options to <code>nmf()</code> in the NMF package by way of the
-<code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> function in the <code>dimRed</code> package. <strong>Note</strong> that the arguments
-<code>data</code> and <code>ndim</code> should not be passed here.</p></td>
-    </tr>
-    <tr>
-      <th>res</th>
-      <td><p>The <code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> object is stored
-here once this preprocessing step has been trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated (eventually) by the terms argument.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
       <td><p>A character string that will be the prefix to the
-resulting new variables. See notes below.</p></td>
-    </tr>
-    <tr>
-      <th>seed</th>
-      <td><p>An integer that will be used to set the seed in isolation
-when computing the factorization.</p></td>
-    </tr>
-    <tr>
-      <th>keep_original_cols</th>
-      <td><p>A logical to keep the original variables in the
-output. Defaults to <code>FALSE</code>.</p></td>
+resulting new variables. Defaults to "na_ind".</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+      <td><p>A logical. Should the check be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -275,52 +240,43 @@ the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_nnmf</code> object.</p></td>
+      <td><p>A <code>step_indicate_na</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and the number of components.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Non-negative matrix factorization computes latent components that
-have non-negative values and take into account that the original data
-have non-negative values.</p>
-<p>The argument <code>num_comp</code> controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with <code>prefix</code> and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if <code>num &lt; 10</code>, their names will be <code>NNMF1</code> - <code>NNMF9</code>.
-If <code>num = 101</code>, the names would be <code>NNMF001</code> -
-<code>NNMF101</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code>, <code><a href='step_ica.html'>step_ica()</a></code>, <code><a href='step_kpca.html'>step_kpca()</a></code>,
-<code><a href='step_isomap.html'>step_isomap()</a></code>, <code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep.recipe()</a></code>,
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
+columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
+median value).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"credit_data"</span><span class='op'>)</span>
 
-<span class='co'># rec &lt;- recipe(HHV ~ ., data = biomass) %&gt;%</span>
-<span class='co'>#   update_role(sample, new_role = "id var") %&gt;%</span>
-<span class='co'>#   update_role(dataset, new_role = "split variable") %&gt;%</span>
-<span class='co'>#   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) %&gt;%</span>
-<span class='co'>#   prep(training = biomass)</span>
-<span class='co'>#</span>
-<span class='co'># bake(rec, new_data = NULL)</span>
-<span class='co'>#</span>
-<span class='co'># library(ggplot2)</span>
-<span class='co'># bake(rec, new_data = NULL) %&gt;%</span>
-<span class='co'>#  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()</span>
+<span class='co'>## missing data per column</span>
+<span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_dbl</a></span><span class='op'>(</span><span class='va'>credit_data</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+#&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
+#&gt;      Records          Job     Expenses       Income       Assets         Debt 
+#&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
+#&gt;       Amount        Price 
+#&gt; 0.0000000000 0.0000000000 </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>342</span><span class='op'>)</span>
+<span class='va'>in_training</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>credit_data</span><span class='op'>)</span>, <span class='fl'>2000</span><span class='op'>)</span>
 
+<span class='va'>credit_tr</span> <span class='op'>&lt;-</span> <span class='va'>credit_data</span><span class='op'>[</span> <span class='va'>in_training</span>, <span class='op'>]</span>
+<span class='va'>credit_te</span> <span class='op'>&lt;-</span> <span class='va'>credit_data</span><span class='op'>[</span><span class='op'>-</span><span class='va'>in_training</span>, <span class='op'>]</span>
+
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Price</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>credit_tr</span><span class='op'>)</span>
+
+<span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_indicate_na</span><span class='op'>(</span><span class='va'>Income</span>, <span class='va'>Assets</span>, <span class='va'>Debt</span><span class='op'>)</span>
+
+<span class='va'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, training <span class='op'>=</span> <span class='va'>credit_tr</span><span class='op'>)</span>
+
+<span class='va'>imputed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>imp_models</span>, new_data <span class='op'>=</span> <span class='va'>credit_te</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

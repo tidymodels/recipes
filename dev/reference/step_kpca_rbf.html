@@ -184,6 +184,7 @@ using a radial basis function kernel basis expansion.</p>
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
   sigma <span class='op'>=</span> <span class='fl'>0.2</span>,
   prefix <span class='op'>=</span> <span class='st'>"kPC"</span>,
+  keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"kpca_rbf"</span><span class='op'>)</span>
 <span class='op'>)</span>
@@ -239,6 +240,11 @@ here once this preprocessing step has be trained by
       <th>prefix</th>
       <td><p>A character string that will be the prefix to the
 resulting new variables. See notes below.</p></td>
+    </tr>
+    <tr>
+      <th>keep_original_cols</th>
+      <td><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -330,7 +336,7 @@ of Statistical Software</em>, 11(1), 1-20.</p>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>kpca_trans</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>kpca_estimates</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>2021-01-26 16:42:51: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2021-01-26 16:42:51: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2021-01-26 16:42:51: DONE</span></div><div class='img'><img src='step_kpca_rbf-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
+</div><div class='output co'>#&gt; <span class='message'>2021-02-03 20:24:20: Calculating kernel PCA</span></div><div class='output co'>#&gt; <span class='message'>2021-02-03 20:24:20: Trying to calculate reverse</span></div><div class='output co'>#&gt; <span class='message'>2021-02-03 20:24:20: DONE</span></div><div class='img'><img src='step_kpca_rbf-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
 #&gt;   terms    id            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
 #&gt; </span><span style='color: #555555;'>1</span><span> carbon   kpca_rbf_evI1V

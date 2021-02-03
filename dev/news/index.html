@@ -172,8 +172,10 @@
 <ul>
 <li><p>Two new selectors that combine role and data type were added: <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> and <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/620'>#620</a>)</p></li>
 <li><p>The <code>threshold</code>argument of <code><a href="../reference/step_pca.html">step_pca()</a></code> is now <code><a href="https://generics.r-lib.org/reference/tunable.html">tunable()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/534'>#534</a>).</p></li>
+<li><p>Added a new step called <code><a href="../reference/step_indicate_na.html">step_indicate_na()</a></code>, which will create and append additional binary columns to the dataset to indicate which observations are missing (<a href='https://github.com/tidymodels/recipes/issues/623'>#623</a>)</p></li>
 <li><p>Integer variables used in <code><a href="../reference/step_profile.html">step_profile()</a></code> are now kept as integers (and not doubles).</p></li>
 <li><p>Preserve preserve multiple roles in <code>last_term_info</code> so <code>bake</code> can correctly respond to <code>has_roles</code>. (<a href='https://github.com/tidymodels/recipes/issues/632'>#632</a>)</p></li>
+<li><p>Added <code>keep_original_cols</code> argument to <code>step_pca</code>, <code>step_ica</code>, <code>step_nnmf</code>, <code>step_kpca_rbf</code>, <code>step_kpca_poly</code>, <code>step_pls</code>, and <code>step_isomap</code> (<a href='https://github.com/tidymodels/recipes/issues/635'>#635</a>).</p></li>
 </ul>
 </div>
     <div id="recipes-0115" class="section level1">
