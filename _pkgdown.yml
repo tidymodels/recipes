@@ -62,6 +62,7 @@ reference:
     - step_dummy
     - step_factor2string
     - step_holiday
+    - step_indicate_na
     - step_integer
     - step_novel
     - step_num2factor
