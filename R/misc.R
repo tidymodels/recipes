@@ -636,7 +636,12 @@ check_training_set <- function(x, rec, fresh) {
   x
 }
 
-
+#' Get the `keep_original_cols` value of a recipe step
+#'
+#' @export
+#' @param object A recipe step
+#' @return A logical to keep the original variables in the output
+#' @keywords internal
 get_keep_original_cols <- function(object) {
   # Allow prepping of old recipes created before addition of keep_original_cols
   step_class <- class(object)[1]
