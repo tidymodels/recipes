@@ -95,6 +95,41 @@ step_ns_new <-
     )
   }
 
+ns_wrapper <- function(x, args) {
+  # Only do the parameter computations from splines::bs() / splines::ns(), don't evaluate at x.
+  degree <- 1L
+  intercept <- as.logical(args$intercept %||% FALSE)
+  # This behaves differently from splines::ns() if length(x) is 1
+  boundary <- sort(args$Boundary.knots) %||% range(x)
+
+  # This behaves differently from splines::bs() and splines::ns() if num_knots < 0L
+  # the original implementations issue a warning.
+  if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
+    num_knots <- args$df - degree - intercept
+    ok <- !is.na(x) & x >= boundary[1L] & x <= boundary[2L]
+    knots <- unname(quantile(x[ok], seq_len(num_knots) / (num_knots + 1L)))
+  } else {
+    knots <- numeric()
+  }
+
+  # Only construct the data necessary for splines_predict
+  out <- matrix(NA, ncol = degree + length(knots) + intercept, nrow = 1L)
+  class(out) <- c("ns", "basis", "matrix")
+  attr(out, "knots") <- knots
+  attr(out, "Boundary.knots") <- boundary
+  attr(out, "intercept") <- intercept
+  out
+}
+
+ns_predict <- function(object, x) {
+  xu <- unique(x)
+  ru <- predict(object, xu)
+  res <- ru[match(x, xu), ]
+  copy_attrs <- c("class", "knots", "Boundary.knots", "intercept")
+  attributes(res)[copy_attrs] <- attributes(ru)[copy_attrs]
+  res
+}
+
 #' @export
 prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
@@ -103,7 +138,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
 
   opt <- x$options
   opt$df <- x$deg_free
-  obj <- lapply(training[, col_names], splines_wrapper, opt, type = "ns")
+  obj <- lapply(training[, col_names], ns_wrapper, opt)
   for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
@@ -130,7 +165,7 @@ bake.step_ns <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     ns_values[, cols] <-
-      splines_predict(object$objects[[i]], getElement(new_data, i))
+      ns_predict(object$objects[[i]], getElement(new_data, i))
     new_names <-
       paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
     colnames(ns_values)[cols] <- new_names
