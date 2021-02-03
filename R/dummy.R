@@ -67,7 +67,8 @@
 #' contrast option via `options`.
 #'
 #' When the factor being converted has a missing value, all of the
-#'  corresponding dummy variables are also missing.
+#'  corresponding dummy variables are also missing. See [step_unknown()] for
+#'  a solution.
 #'
 #' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), a missing value is assigned to
@@ -88,31 +89,37 @@
 #' data(okc)
 #' okc <- okc[complete.cases(okc),]
 #'
+#' # Original data: diet has 18 levels
+#' length(unique(okc$diet))
+#' unique(okc$diet) %>% sort()
+#'
 #' rec <- recipe(~ diet + age + height, data = okc)
 #'
-#' dummies <- rec %>% step_dummy(diet)
-#' dummies <- prep(dummies, training = okc)
+#' # Default dummy coding: 17 dummy variables
+#' dummies <- rec %>%
+#'     step_dummy(diet) %>%
+#'     prep(training = okc)
 #'
-#' dummy_data <- bake(dummies, new_data = okc)
+#' dummy_data <- bake(dummies, new_data = NULL)
 #'
-#' unique(okc$diet)
-#' grep("^diet", names(dummy_data), value = TRUE)
+#' dummy_data %>%
+#'     select(starts_with("diet")) %>%
+#'     names() # level "anything" is the reference level
 #'
-#' # Obtain the full set of dummy variables using `one_hot` option
-#' rec %>%
-#'   step_dummy(diet, one_hot = TRUE) %>%
-#'   prep(training = okc) %>%
-#'   bake(new_data = NULL, starts_with("diet")) %>%
-#'   names() %>%
-#'   length()
+#' # Obtain the full set of 18 dummy variables using `one_hot` option
+#' dummies_one_hot <- rec %>%
+#'     step_dummy(diet, one_hot = TRUE) %>%
+#'     prep(training = okc)
 #'
-#' length(unique(okc$diet))
+#' dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 #'
-#' # Without one_hot
-#' length(grep("^diet", names(dummy_data), value = TRUE))
+#' dummy_data_one_hot %>%
+#'     select(starts_with("diet")) %>%
+#'     names() # no reference level
 #'
 #'
 #' tidy(dummies, number = 1)
+#' tidy(dummies_one_hot, number = 1)
 
 
 step_dummy <-
@@ -272,7 +279,8 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     if (length(attr(object$levels[[i]], "values")) == 1)
       rlang::abort(
-        paste0("Only one factor level in ", orig_var)
+        paste0("Only one factor level in ", orig_var, ": ",
+               attr(object$levels[[i]], "values"))
         )
 
     warn_new_levels(
@@ -341,8 +349,10 @@ print.step_dummy <-
   }
 
 
-get_dummy_columns <- function(x) {
-  tibble(columns = attr(x, "values"))
+get_dummy_columns <- function(x, one_hot) {
+  x <- attr(x, "values")
+  if (!one_hot) x <- x[-1]
+  tibble(columns = x)
 }
 
 
@@ -352,7 +362,7 @@ get_dummy_columns <- function(x) {
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, get_dummy_columns, .id = "terms")
+      res <- purrr::map_dfr(x$levels, get_dummy_columns, x$one_hot, .id = "terms")
     } else {
       res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
     }

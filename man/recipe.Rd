@@ -118,8 +118,8 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 # Now add preprocessing steps to the recipe.
 
 sp_signed <- rec \%>\%
-  step_normalize(all_predictors()) \%>\%
-  step_spatialsign(all_predictors())
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_spatialsign(all_numeric_predictors())
 sp_signed
 
 # now estimate required parameters
@@ -132,8 +132,8 @@ test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
 # or use pipes for the entire workflow:
 rec <- biomass_tr \%>\%
   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
-  step_normalize(all_predictors()) \%>\%
-  step_spatialsign(all_predictors())
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_spatialsign(all_numeric_predictors())
 
 ###############################################
 # multivariate example
@@ -142,8 +142,8 @@ rec <- biomass_tr \%>\%
 multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
                   data = biomass_tr)
 multi_y <- multi_y \%>\%
-  step_center(all_outcomes()) \%>\%
-  step_scale(all_predictors())
+  step_center(all_numeric_predictors()) \%>\%
+  step_scale(all_numeric_predictors())
 
 multi_y_trained <- prep(multi_y, training = biomass_tr)
 

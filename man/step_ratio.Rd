@@ -92,7 +92,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
-  step_ratio(all_predictors(), denom = denom_vars(total)) \%>\%
+  step_ratio(all_numeric_predictors(), denom = denom_vars(total)) \%>\%
   # get rid of the original predictors
   step_rm(all_predictors(), -ends_with("total"))
 

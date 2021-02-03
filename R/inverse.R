@@ -30,7 +30,7 @@
 #' rec <- recipe(~ X1 + X2, data = examples)
 #'
 #' inverse_trans <- rec  %>%
-#'   step_inverse(all_predictors())
+#'   step_inverse(all_numeric_predictors())
 #'
 #' inverse_obj <- prep(inverse_trans, training = examples)
 #'

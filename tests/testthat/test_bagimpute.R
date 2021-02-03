@@ -77,7 +77,7 @@ test_that('tunable', {
   rec <-
     recipe(~ ., data = iris) %>%
     step_bagimpute(all_predictors(), impute_with = imp_vars(all_predictors()))
-  rec_param <- tunable.step_bagimpute(rec$steps[[1]])
+  rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
   expect_true(all(rec_param$source == "recipe"))
   expect_true(is.list(rec_param$call_info))

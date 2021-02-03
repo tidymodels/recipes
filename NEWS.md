@@ -1,7 +1,14 @@
 # recipes (development version)
 
+* Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
+
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
 * Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623)
+
+* Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
+
+* Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+
 
 # recipes 0.1.15
 

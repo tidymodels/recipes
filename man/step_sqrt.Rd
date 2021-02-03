@@ -64,7 +64,7 @@ examples <- as.data.frame(examples)
 rec <- recipe(~ V1 + V2, data = examples)
 
 sqrt_trans <- rec  \%>\%
-  step_sqrt(all_predictors())
+  step_sqrt(all_numeric_predictors())
 
 sqrt_obj <- prep(sqrt_trans, training = examples)
 

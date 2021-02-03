@@ -122,9 +122,9 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
 kpca_trans <- rec \%>\%
-  step_YeoJohnson(all_predictors()) \%>\%
-  step_normalize(all_predictors()) \%>\%
-  step_kpca(all_predictors())
+  step_YeoJohnson(all_numeric_predictors()) \%>\%
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_kpca(all_numeric_predictors())
 
 if (require(dimRed) & require(kernlab)) {
   kpca_estimates <- prep(kpca_trans, training = biomass_tr)

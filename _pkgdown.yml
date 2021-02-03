@@ -25,10 +25,7 @@ reference:
     - bake
     - juice
     - selections
-    - all_predictors
-    - all_outcomes
-    - all_numeric
-    - all_nominal
+    - starts_with("all_")
     - has_role
     - has_type
     - current_info
@@ -36,7 +33,7 @@ reference:
     - tidy.recipe
   - title: Step Functions - Imputation
     contents:
-    - matches("impute")
+    - starts_with("step_impute_")
     - step_unknown
   - title: Step Functions - Individual Transformations
     contents:
@@ -114,7 +111,7 @@ reference:
     - step_filter
     - step_lag
     - step_naomit
-    - step_rollimpute
+    - step_impute_roll
     - step_sample
     - step_shuffle
     - step_slice

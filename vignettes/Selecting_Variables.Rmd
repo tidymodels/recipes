@@ -71,5 +71,5 @@ with_dummy
 
 `Status` is unaffected. 
 
-One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, `Records` is a factor variable before the step is executed. Afterwards, `Records` is gone and the binary variable `Records_yes` is in its place. One reason to have general selection routines like `all_predictors` or `contains` is to be able to select variables that have not be created yet. 
+One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, `Records` is a factor variable before the step is executed. Afterwards, `Records` is gone and the binary variable `Records_yes` is in its place. One reason to have general selection routines like `all_predictors()` or `contains()` is to be able to select variables that have not be created yet. 
 

@@ -475,3 +475,22 @@ test_that("Existing `NA` roles are not modified in prep() when multiple new colu
   )
 
 })
+
+test_that("Roles are correcly selected in bake", {
+
+  x <- tibble::tibble(
+    a = runif(10),
+    b = runif(10),
+    c = runif(10)
+  )
+
+  rec <- recipe(c ~ ., x) %>%
+    update_role(b, new_role = "id") %>%
+    add_role(a, new_role = "id") %>%
+    prep()
+
+  o <- recipes::bake(rec, x, recipes::has_role("id"))
+  expect_equal(names(o), c("a", "b"))
+
+})
+

@@ -32,7 +32,7 @@
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
 #' cos_trans <- rec  %>%
-#'   step_hyperbolic(all_predictors(),
+#'   step_hyperbolic(all_numeric_predictors(),
 #'                   func = "cos", inverse = FALSE)
 #'
 #' cos_obj <- prep(cos_trans, training = examples)

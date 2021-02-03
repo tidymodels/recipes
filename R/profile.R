@@ -265,7 +265,11 @@ fixed.default <- function(x, pct, index, ...) {
 #' @export
 #' @rdname fixed
 fixed.numeric <- function(x, pct, index, ...) {
-  unname(quantile(x, probs = pct, na.rm = TRUE))
+  res <- unname(quantile(x, probs = pct, na.rm = TRUE))
+  if (is.integer(x)) {
+    res <- unique(as.integer(res))
+  }
+  res
 }
 #' @export
 #' @rdname fixed
@@ -317,6 +321,9 @@ prof.numeric <- function(x, grid, ...) {
       max(x, na.rm = TRUE),
       length = grid$len
     )
+  }
+  if (is.integer(x)) {
+    out <- as.integer(out)
   }
   unique(out)
 }

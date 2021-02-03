@@ -1,6 +1,6 @@
 #' Impute Nominal Data Using the Most Common Value
 #'
-#'   `step_modeimpute` creates a *specification* of a
+#'   `step_impute_mode` creates a *specification* of a
 #'  recipe step that will substitute missing values of nominal
 #'  variables by the training set mode of those variables.
 #'
@@ -22,11 +22,15 @@
 #' @concept preprocessing
 #' @concept imputation
 #' @export
-#' @details `step_modeimpute` estimates the variable modes
+#' @details `step_impute_mode` estimates the variable modes
 #'  from the data used in the `training` argument of
 #'  `prep.recipe`. `bake.recipe` then applies the new
 #'  values to new data sets using these values. If the training set
 #'  data has more than one mode, one is selected at random.
+#'
+#'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
+#'    to `step_impute_mode()`.
+#'
 #' @examples
 #' library(modeldata)
 #' data("credit_data")
@@ -44,7 +48,7 @@
 #' rec <- recipe(Price ~ ., data = credit_tr)
 #'
 #' impute_rec <- rec %>%
-#'   step_modeimpute(Status, Home, Marital)
+#'   step_impute_mode(Status, Home, Marital)
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
@@ -54,17 +58,18 @@
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-step_modeimpute <-
+
+step_impute_mode <-
   function(recipe,
            ...,
            role = NA,
            trained = FALSE,
            modes = NULL,
            skip = FALSE,
-           id = rand_id("modeimpute")) {
+           id = rand_id("impute_mode")) {
     add_step(
       recipe,
-      step_modeimpute_new(
+      step_impute_mode_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -75,10 +80,36 @@ step_modeimpute <-
     )
   }
 
-step_modeimpute_new <-
+#' @rdname step_impute_mode
+#' @export
+step_modeimpute <-
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           modes = NULL,
+           skip = FALSE,
+           id = rand_id("impute_mode")) {
+    lifecycle::deprecate_soft(
+      when = "0.1.16",
+      what = "recipes::step_modeimpute()",
+      with = "recipes::step_impute_mode()"
+    )
+    step_impute_mode(
+      recipe,
+      ...,
+      role = role,
+      trained = trained,
+      modes = modes,
+      skip = skip,
+      id = id
+    )
+  }
+
+step_impute_mode_new <-
   function(terms, role, trained, modes, skip, id) {
     step(
-      subclass = "modeimpute",
+      subclass = "impute_mode",
       terms = terms,
       role = role,
       trained = trained,
@@ -89,10 +120,10 @@ step_modeimpute_new <-
   }
 
 #' @export
-prep.step_modeimpute <- function(x, training, info = NULL, ...) {
+prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
   modes <- vapply(training[, col_names], mode_est, c(mode = ""))
-  step_modeimpute_new(
+  step_impute_mode_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -103,7 +134,10 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_modeimpute <- function(object, new_data, ...) {
+prep.step_modeimpute <- prep.step_impute_mode
+
+#' @export
+bake.step_impute_mode <- function(object, new_data, ...) {
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
       mode_val <- cast(object$modes[[i]], new_data[[i]])
@@ -113,12 +147,19 @@ bake.step_modeimpute <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-print.step_modeimpute <-
+#' @export
+bake.step_modeimpute <- bake.step_impute_mode
+
+#' @export
+print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
     cat("Mode Imputation for ", sep = "")
     printer(names(x$modes), x$terms, x$trained, width = width)
     invisible(x)
   }
+
+#' @export
+print.step_modeimpute <- print.step_impute_mode
 
 mode_est <- function(x) {
   if (!is.character(x) & !is.factor(x))
@@ -128,10 +169,10 @@ mode_est <- function(x) {
   sample(modes, size = 1)
 }
 
-#' @rdname step_modeimpute
-#' @param x A `step_modeimpute` object.
+#' @rdname step_impute_mode
+#' @param x A `step_impute_mode` object.
 #' @export
-tidy.step_modeimpute <- function(x, ...) {
+tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$modes),
                   model = x$modes)
@@ -142,3 +183,6 @@ tidy.step_modeimpute <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+tidy.step_modeimpute <- tidy.step_impute_mode
