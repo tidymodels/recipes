@@ -173,3 +173,38 @@ test_that('print method', {
   )
 
 })
+
+test_that('keep_original_cols works', {
+
+  skip_if_not_installed("mixOmics")
+  pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3, keep_original_cols = TRUE)
+
+  pls_trained <- prep(pls_rec)
+  pls_pred <- bake(pls_trained, new_data = biom_te, all_predictors())
+
+  expect_equal(
+    colnames(pls_pred),
+    c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
+      "PLS1", "PLS2", "PLS3")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_if_not_installed("mixOmics")
+  pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+
+  pls_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    pls_trained <- prep(pls_rec, training = biom_tr, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    pls_pred <- bake(pls_trained, new_data = biom_te, all_predictors()),
+    NA
+  )
+
+})

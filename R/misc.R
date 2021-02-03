@@ -636,6 +636,32 @@ check_training_set <- function(x, rec, fresh) {
   x
 }
 
+#' Get the `keep_original_cols` value of a recipe step
+#'
+#' @export
+#' @param object A recipe step
+#' @return A logical to keep the original variables in the output
+#' @keywords internal
+get_keep_original_cols <- function(object) {
+  # Allow prepping of old recipes created before addition of keep_original_cols
+  step_class <- class(object)[1]
+
+  if (is.null(object$keep_original_cols)) {
+    ret <- FALSE
+    rlang::warn(
+      paste0(
+        "'keep_original_cols' was added to `",
+        step_class,
+        "()` after this recipe was created.\n",
+        "Regenerate your recipe to avoid this warning."
+      )
+    )
+  } else {
+    ret <- object$keep_original_cols
+  }
+
+  ret
+}
 
 # ------------------------------------------------------------------------------
 # From parsnip, keep synced

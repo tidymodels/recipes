@@ -14,9 +14,10 @@ step_pls(
   predictor_prop = 1,
   outcome = NULL,
   options = list(scale = TRUE),
-  preserve = FALSE,
+  preserve = deprecated(),
   res = NULL,
   prefix = "PLS",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("pls")
 )
@@ -54,14 +55,17 @@ variable.}
 \code{mixOmics::plsda()}, or \code{mixOmics::splsda()} (depending on the data and
 arguments).}
 
-\item{preserve}{A single logical: should the original predictor data be
-retained along with the new features?}
+\item{preserve}{Use \code{keep_original_cols} instead to specify whether the
+original predictor data should be retained along with the new features.}
 
 \item{res}{A list of results are stored here once this preprocessing step
 has been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

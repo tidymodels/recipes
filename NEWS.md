@@ -9,6 +9,7 @@
 
 * Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
 
+* Added `keep_original_cols` argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, and `step_isomap` (#635).
 
 # recipes 0.1.15
 

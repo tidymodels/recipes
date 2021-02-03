@@ -156,3 +156,41 @@ test_that('tunable', {
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
 })
+
+test_that('keep_original_cols works', {
+  pca_extract <- rec %>%
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = "", keep_original_cols = TRUE)
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+
+  expect_equal(
+    colnames(pca_pred),
+    c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
+      "PC1", "PC2", "PC3", "PC4", "PC5")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  pca_extract <- rec %>%
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
+
+  pca_extract$steps[[3]]$keep_original_cols <- NULL
+
+  expect_warning(
+    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors()),
+    NA
+  )
+
+})
