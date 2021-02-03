@@ -8,6 +8,8 @@
 
 * Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
 
+* Performance improvements for `step_bs()` and `step_ns()`. The `prep` step no longer evaluates the basis functions on the training set and the `bake` steps only evaluates the basis functions once for each unique input value (#574)
+
 
 # recipes 0.1.15
 
