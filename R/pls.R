@@ -17,8 +17,8 @@
 #'  possible dimensions, a smaller value will be used.
 #' @param predictor_prop The maximum number of original predictors that can have
 #'  non-zero coefficients for each PLS component (via regularization).
-#' @param preserve A single logical: should the original predictor data be
-#' retained along with the new features?
+#' @param preserve Use `keep_original_cols` instead to specify whether the
+#'  original predictor data should be retained along with the new features.
 #' @param outcome When a single outcome is available, character
 #'  string or call to [dplyr::vars()] can be used to specify a single outcome
 #'  variable.
@@ -29,6 +29,8 @@
 #'  has been trained by [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -130,13 +132,23 @@ step_pls <-
            predictor_prop = 1,
            outcome = NULL,
            options = list(scale = TRUE),
-           preserve = FALSE,
+           preserve = deprecated(),
            res = NULL,
            prefix = "PLS",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome)) {
       rlang::abort("`outcome` should select at least one column.")
+    }
+
+    if (lifecycle::is_present(preserve)) {
+      lifecycle::deprecate_soft(
+        "0.1.16",
+        "step_pls(preserve = )",
+        "step_pls(keep_original_cols = )"
+      )
+      keep_original_cols <- preserve
     }
 
     recipes_pkg_check(required_pkgs.step_pls())
@@ -151,9 +163,10 @@ step_pls <-
         predictor_prop = predictor_prop,
         outcome = outcome,
         options = options,
-        preserve = preserve,
+        preserve = keep_original_cols,
         res = res,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -162,7 +175,7 @@ step_pls <-
 
 step_pls_new <-
   function(terms, role, trained, num_comp, predictor_prop, outcome, options,
-           preserve, res, prefix, skip, id) {
+           preserve, res, prefix, keep_original_cols, skip, id) {
     step(
       subclass = "pls",
       terms = terms,
@@ -175,6 +188,7 @@ step_pls_new <-
       preserve = preserve,
       res = res,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -334,6 +348,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     preserve = x$preserve,
     res = res,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -353,6 +368,7 @@ bake.step_pls <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
 
     new_data <- bind_cols(new_data, as_tibble(comps))
+    keep_original_cols <- get_keep_original_cols(object)
 
     # Old pls never preserved original columns,
     # but didn't have the `preserve` option
@@ -360,7 +376,7 @@ bake.step_pls <- function(object, new_data, ...) {
       pls_vars <- rownames(object$res$projection)
       keep_vars <- !(colnames(new_data) %in% pls_vars)
       new_data <- new_data[, keep_vars, drop = FALSE]
-    } else if (!object$preserve) {
+    } else if (any(!object$preserve, !keep_original_cols)) {
       pls_vars <- names(object$res$mu)
       keep_vars <- !(colnames(new_data) %in% pls_vars)
       new_data <- new_data[, keep_vars, drop = FALSE]

@@ -89,3 +89,43 @@ test_that('tunable', {
   )
 })
 
+test_that('keep_original_cols works', {
+
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>%
+    step_kpca_rbf(X2, X3, X4, X5, X6, id = "", keep_original_cols = TRUE)
+
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+
+  pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
+
+  expect_equal(
+    colnames(pca_pred),
+    c("X2", "X3", "X4", "X5", "X6",
+      "kPC1", "kPC2", "kPC3", "kPC4", "kPC5")
+  )
+
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>%
+    step_kpca_poly(X2, X3, X4, X5, X6, id = "")
+
+  kpca_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors()),
+    NA
+  )
+
+})
