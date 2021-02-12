@@ -35,7 +35,7 @@
 #'   excluded variable(s).
 #'   }
 #'
-#' Also, select helpers from the `tidyselect` package can also be used:
+#' Select helpers from the `tidyselect` package can also be used:
 #'   [tidyselect::starts_with()], [tidyselect::ends_with()],
 #'   [tidyselect::contains()], [tidyselect::matches()],
 #'   [tidyselect::num_range()], [tidyselect::everything()],
@@ -58,7 +58,7 @@
 #' case, using `matches("^PC")` will select all of the columns
 #' whose names start with "PC" *once those columns are created*.
 #'
-#' There are sets of recipes specific functions that can be used to select
+#' There are sets of recipes-specific functions that can be used to select
 #' variables based on their role or type: [has_role()] and
 #' [has_type()]. For convenience, there are also functions that are
 #' more specific. The functions [all_numeric()] and [all_nominal()] select
