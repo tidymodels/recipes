@@ -94,7 +94,8 @@
 NULL
 
 
-eval_select_recipes <- function(quos, data, info) {
+eval_select_recipes <- function(quos, data, info, allow_rename = FALSE) {
+
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
   data_info <- tibble(variable = names(data))
@@ -106,27 +107,30 @@ eval_select_recipes <- function(quos, data, info) {
 
   expr <- expr(c(!!!quos))
 
-  # FIXME: Ideally this is `FALSE`, but empty selections incorrectly throw an
+  # FIXME: Ideally this is `FALSE` for strict selection,
+  # but empty selections incorrectly throw an
   # error when this is false due to the following bug:
   # https://github.com/r-lib/tidyselect/issues/221
-  allow_rename <- TRUE
+  # Once it's fixed, remove this and pass allow_rename to
+  # tidyselect::eval_select().
+  allow_rename_ts <- TRUE
 
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename
+    allow_rename = allow_rename_ts
   )
 
   # Return names not positions, as these names are
   # used for both the training and test set and their positions
-  # may have changed. `sel` won't be named because when `allow_rename = FALSE`,
-  # `eval_select()` returns an unnamed vector.
+  # may have changed. If renaming is allowed, add the new names.
   out <- names(data)[sel]
+  if (allow_rename) names(out) <- names(sel)
 
   # FIXME: Remove this check when the following issue is fixed,
   # i.e. when we can use `allow_rename = FALSE`
   # https://github.com/r-lib/tidyselect/issues/221
-  if (!identical(out, names(sel))) {
+  if (!allow_rename & !identical(out, names(sel))) {
     abort("Can't rename variables in this context.")
   }
 
