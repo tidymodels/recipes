@@ -138,4 +138,37 @@ test_that('printing', {
   expect_output(prep(rec3, training = ex_dat, verbose = TRUE))
 })
 
+test_that('keep_original_cols works', {
+  rec1 <- rec %>%
+    step_ratio(x1, denom = denom_vars(all_numeric()),
+               id = "", keep_original_cols = FALSE)
 
+  rec1 <- prep(rec1, ex_dat, verbose = FALSE)
+  obs1 <- bake(rec1, ex_dat)
+  res1 <- tibble(
+    x5        = factor(letters[1:10]),
+    x1_o_x2   = ex_dat$x1/ex_dat$x2,
+    x1_o_x3   = ex_dat$x1/ex_dat$x3,
+    x1_o_x4   = ex_dat$x1/ex_dat$x4
+  )
+  expect_equal(res1, obs1)
+
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  rec1 <- rec %>%
+    step_ratio(x1, denom = denom_vars(all_numeric()), id = "")
+
+  rec1$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    prep1 <- prep(rec1, training = ex_dat, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    obs1 <- bake(prep1, new_data = ex_dat, all_predictors()),
+    NA
+  )
+
+})

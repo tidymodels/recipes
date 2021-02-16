@@ -14,6 +14,7 @@ step_ratio(
   denom = denom_vars(),
   naming = function(numer, denom) make.names(paste(numer, denom, sep = "_o_")),
   columns = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("ratio")
 )
@@ -54,6 +55,9 @@ new ratio columns.}
 \item{columns}{The column names used in the ratios. This
 argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
 executed.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
