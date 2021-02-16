@@ -21,6 +21,8 @@
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `TRUE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` which is
@@ -56,6 +58,7 @@ step_holiday <-
     trained = FALSE,
     holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
     columns = NULL,
+    keep_original_cols = TRUE,
     skip = FALSE,
     id = rand_id("holiday")
   ) {
@@ -74,6 +77,7 @@ step_holiday <-
       trained = trained,
       holidays = holidays,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -81,7 +85,7 @@ step_holiday <-
 }
 
 step_holiday_new <-
-  function(terms, role, trained, holidays, columns, skip, id) {
+  function(terms, role, trained, holidays, columns, keep_original_cols, skip, id) {
     step(
       subclass = "holiday",
       terms = terms,
@@ -89,6 +93,7 @@ step_holiday_new <-
       trained = trained,
       holidays = holidays,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -113,6 +118,7 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     holidays = x$holidays,
     columns = col_names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -146,6 +152,11 @@ bake.step_holiday <- function(object, new_data, ...) {
 
     names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
     new_data <- bind_cols(new_data, tmp)
+  }
+
+  keep_original_cols <- get_keep_original_cols(object)
+  if (!keep_original_cols) {
+    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
   }
 
   if (!is_tibble(new_data)) {

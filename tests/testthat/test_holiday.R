@@ -59,3 +59,36 @@ test_that('printing', {
   expect_output(prep(holiday_rec, training = test_data, verbose = TRUE))
 })
 
+test_that('keep_original_cols works', {
+  holiday_rec <- recipe(~ day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday,
+                 keep_original_cols = FALSE)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
+
+  expect_equal(
+    colnames(holiday_ind),
+    c("day_ChristmasDay",
+      "day_USMemorialDay",
+      "day_Easter")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  holiday_rec <- recipe(~ day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  holiday_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    holiday_rec <- prep(holiday_rec, training = test_data, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    holiday_ind <- bake(holiday_rec, new_data = test_data, all_predictors()),
+    NA
+  )
+})
+
