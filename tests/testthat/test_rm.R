@@ -7,10 +7,12 @@ context("Removing variables")
 
 n <- 20
 set.seed(12)
-ex_dat <- data.frame(x1 = rnorm(n),
-                     x2 = runif(n))
+ex_dat <- data.frame(
+  x1 = rnorm(n),
+  x2 = runif(n)
+)
 
-test_that('basics', {
+test_that("basics", {
   rec <- recipe(~., data = ex_dat) %>%
     step_rm(x1)
 
@@ -32,7 +34,7 @@ test_that('basics', {
 #   expect_equal(colnames(tr_res), c("x1", "x2"))
 # })
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 
 iris_train <- iris %>%
   as_tibble() %>%
@@ -71,8 +73,10 @@ test_that("basic rename", {
     iris_rec %>%
     step_rm(sepal_length = Sepal.Length)
 
-  expect_error(prep(rec, training = iris %>% slice(1:75)),
-               "Can't rename variables in this context.")
+  expect_error(
+    prep(rec, training = iris %>% slice(1:75)),
+    "Can't rename variables in this context."
+  )
 })
 
 test_that("remove via type", {
@@ -84,14 +88,14 @@ test_that("remove via type", {
 
   dplyr_train <-
     iris_train %>%
-    select_if(~!is.numeric(.))
+    select_if(~ !is.numeric(.))
 
   rec_train <- juice(prepped)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris_test %>%
-    select_if(~!is.numeric(.))
+    select_if(~ !is.numeric(.))
 
   rec_test <- bake(prepped, iris_test)
   expect_equal(dplyr_test, rec_test)
@@ -119,7 +123,7 @@ test_that("remove via role", {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('remove with quasi-quotation', {
+test_that("remove with quasi-quotation", {
   sepal_vars <- c("Sepal.Width", "Sepal.Length")
 
   rec_1 <-
@@ -151,16 +155,16 @@ test_that('remove with quasi-quotation', {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that('no input', {
+test_that("no input", {
   expect_error(
     iris_rec %>%
-    step_rm() %>%
-    prep(training = iris),
+      step_rm() %>%
+      prep(training = iris),
     "Please supply at least one variable specification.See [?]selections."
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_rm(x1)
   expect_output(print(rec))
