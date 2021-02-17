@@ -33,9 +33,10 @@
 #' @concept variable_encodings
 #' @concept dates
 #' @export
-#' @details Unlike other steps, `step_holiday` does
-#'  *not* remove the original date variables.
-#'  [step_rm()] can be used for this purpose.
+#' @details Unlike some other steps, `step_holiday` does *not*
+#'  remove the original date variables by default. Set `keep_original_cols`
+#'  to `FALSE` to remove them.
+#'
 #' @examples
 #' library(lubridate)
 #'

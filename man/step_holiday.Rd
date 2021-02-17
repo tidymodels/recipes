@@ -71,9 +71,9 @@ recipe step that will convert date data into one or more binary
 indicator variables for common holidays.
 }
 \details{
-Unlike other steps, \code{step_holiday} does
-\emph{not} remove the original date variables.
-\code{\link[=step_rm]{step_rm()}} can be used for this purpose.
+Unlike some other steps, \code{step_holiday} does \emph{not}
+remove the original date variables by default. Set \code{keep_original_cols}
+to \code{FALSE} to remove them.
 }
 \examples{
 library(lubridate)
