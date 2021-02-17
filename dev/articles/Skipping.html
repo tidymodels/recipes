@@ -36,6 +36,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -50,7 +52,7 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.15.9000</span>
         </div>
       </div>
@@ -100,7 +102,7 @@
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -121,7 +123,7 @@
       <h1 data-toc-skip>On Skipping Steps</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Skipping.Rmd"><code>vignettes/Skipping.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/vignettes/Skipping.Rmd" class="external-link"><code>vignettes/Skipping.Rmd</code></a></small>
       <div class="hidden name"><code>Skipping.Rmd</code></div>
 
     </div>
@@ -141,7 +143,7 @@
 <div id="example-class-imbalance-sampling-and-skipping-steps" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-class-imbalance-sampling-and-skipping-steps" class="anchor"></a>Example: Class Imbalance Sampling and Skipping Steps</h1>
-<p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
+<p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016" class="external-link">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
 </div>
 <div id="other-examples" class="section level1">
@@ -159,7 +161,7 @@
 <code><a href="../reference/step_naomit.html">step_naomit()</a></code> will remove rows with missing values in certain columns.</li>
 </ul>
 <p>The main issue with these steps being applied to new data (i.e. after the recipe has been trained) is that the non-outcome rows can become out-of-sync with the outcome data.</p>
-<p>For example, when <code><a href="../reference/bake.html">bake()</a></code> is run with <code><a href="../reference/step_naomit.html">step_naomit(skip = FALSE)</a></code> and their are missing values, the predictors will have fewer rows than the outcome vector. When model predictions are produced and merged with the other data, their will be discordant rows. In this case, it would be better to have missing values in the predictions and a full data set than a subset of predictions from the complete data. The <a href="https://tidymodels.github.io/model-implementation-principles/model-predictions.html">general rule</a> in tidymodels is that, for models,</p>
+<p>For example, when <code><a href="../reference/bake.html">bake()</a></code> is run with <code><a href="../reference/step_naomit.html">step_naomit(skip = FALSE)</a></code> and their are missing values, the predictors will have fewer rows than the outcome vector. When model predictions are produced and merged with the other data, their will be discordant rows. In this case, it would be better to have missing values in the predictions and a full data set than a subset of predictions from the complete data. The <a href="https://tidymodels.github.io/model-implementation-principles/model-predictions.html" class="external-link">general rule</a> in tidymodels is that, for models,</p>
 <blockquote>
 <p>The return value is a tibble with the <strong>same number of rows</strong> as the data being predicted and in the same order.</p>
 </blockquote>
@@ -181,14 +183,14 @@
 <p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
 <p>As an example, skipping an operation whose variables are used later might be an issue:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
 <span class="va">car_recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_log.html">step_log</a></span><span class="op">(</span><span class="va">disp</span>, skip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
 
 <span class="co"># These *should* produce the same results (as they do for `hp`)</span>
-<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;     disp    hp</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -198,7 +200,7 @@
 <span class="co">#&gt; 4  0.268 -36.7</span>
 <span class="co">#&gt; 5  0.601  28.3</span>
 <span class="co">#&gt; 6  0.131 -41.7</span>
-<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;    disp    hp</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -228,8 +230,8 @@
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by Max Kuhn, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 
@@ -238,6 +240,8 @@
 
   
 
+
+  
 
   </body>
 </html>

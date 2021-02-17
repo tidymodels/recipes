@@ -77,9 +77,15 @@ with information about the parameters." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -221,10 +227,8 @@ the source of the function (e.g. the <code>dials</code> package).</p>
   <span class='fu'><a href='step_impute_knn.html'>step_knnimpute</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_knnimpute()` is deprecated as of recipes 0.1.16.</span>
-#&gt; <span class='warning'>Please use `step_impute_knn()` instead.</span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
-#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `step_knnimpute()` was deprecated in recipes 0.1.16.</span>
+#&gt; <span class='warning'>Please use `step_impute_knn()` instead.</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 5</span><span>
 #&gt;   name      call_info        source component       component_id    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> neighbors </span><span style='color: #555555;'>&lt;named list [3]&gt;</span><span> recipe step_impute_knn impute_knn_hw1Dj
@@ -264,6 +268,8 @@ the source of the function (e.g. the <code>dials</code> package).</p>
 
   
 
+
+  
 
   </body>
 </html>

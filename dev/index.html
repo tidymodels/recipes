@@ -41,6 +41,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -128,42 +130,42 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The <code>recipes</code> package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From <a href="https://en.wikipedia.org/wiki/Design_matrix">Wikipedia</a>:</p>
+<p>The <code>recipes</code> package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization. From <a href="https://en.wikipedia.org/wiki/Design_matrix" class="external-link">Wikipedia</a>:</p>
 <blockquote>
 <p>In statistics, a <strong>design matrix</strong> (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object.</p>
 </blockquote>
-<p>While R already has long-standing methods for creating these matrices (e.g. <a href="https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/">formulas</a> and <code>model.matrix</code>), there are some <a href="https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/">limitations to what the existing infrastructure can do</a>.</p>
+<p>While R already has long-standing methods for creating these matrices (e.g. <a href="https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/" class="external-link">formulas</a> and <code>model.matrix</code>), there are some <a href="https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/" class="external-link">limitations to what the existing infrastructure can do</a>.</p>
 <p>The idea of the <code>recipes</code> package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. “feature engineering”). For example, to create a simple recipe containing only an outcome and predictors and have the predictors centered and scaled:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Sonar</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sonar</span><span class="op">)</span>
 
 <span class="va">sonar_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Sonar</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>More information on <code>recipes</code> can be found at the <a href="https://www.tidymodels.org/start/recipes/"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org"><code>tidymodels.org</code></a>.</p>
+<p>More information on <code>recipes</code> can be found at the <a href="https://www.tidymodels.org/start/recipes/" class="external-link"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org" class="external-link"><code>tidymodels.org</code></a>.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install this package, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"recipes"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"recipes"</span><span class="op">)</span>
 
 <span class="co">## for development version:</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">install_github</span><span class="op">(</span><span class="st">"tidymodels/recipes"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 <ul>
-<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://community.rstudio.com/c/ml/15">post on RStudio Community</a>.</p></li>
-<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/recipes/issues">submit an issue</a>.</p></li>
-<li><p>Either way, learn how to create and share a <a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
-<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/">how to get help</a>.</p></li>
+<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://community.rstudio.com/c/ml/15" class="external-link">post on RStudio Community</a>.</p></li>
+<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/recipes/issues" class="external-link">submit an issue</a>.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html" class="external-link">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/" class="external-link">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/" class="external-link">how to get help</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -171,7 +173,7 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=recipes">https://​cloud.r-project.org/​package=recipes</a>
 </li>
@@ -181,21 +183,24 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Max Kuhn <br><small class="roles"> Author, maintainer </small>  </li>
 <li>
@@ -204,17 +209,18 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/tidymodels/recipes/actions"><img src="https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/tidymodels/recipes?branch=master"><img src="https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://CRAN.R-project.org/package=recipes"><img src="https://www.r-pkg.org/badges/version/recipes" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://CRAN.R-project.org/package=recipes"><img src="https://cranlogs.r-pkg.org/badges/recipes" alt="Downloads"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+<li><a href="https://github.com/tidymodels/recipes/actions" class="external-link"><img src="https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/tidymodels/recipes?branch=master" class="external-link"><img src="https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://CRAN.R-project.org/package=recipes" class="external-link"><img src="https://www.r-pkg.org/badges/version/recipes" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://CRAN.R-project.org/package=recipes" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/recipes" alt="Downloads"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
@@ -234,6 +240,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -78,9 +78,15 @@ variable changed in the new data." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -276,10 +282,8 @@ the second to compute the allowed slack at the upper end.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>  <span class='va'>slack_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/deprecated.html'>data_frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `data_frame()` is deprecated as of tibble 1.1.0.</span>
-#&gt; <span class='warning'>Please use `tibble()` instead.</span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
-#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>  <span class='va'>slack_new_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/deprecated.html'>data_frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `data_frame()` was deprecated in tibble 1.1.0.</span>
+#&gt; <span class='warning'>Please use `tibble()` instead.</span></div><div class='input'>  <span class='va'>slack_new_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/deprecated.html'>data_frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>110</span><span class='op'>)</span>
 
   <span class='co'># this will fail the check both ends</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
@@ -304,7 +308,7 @@ the second to compute the allowed slack at the upper end.</p>
     <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>slack_new_data</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -331,6 +335,8 @@ the second to compute the allowed slack at the upper end.</p>
 
   
 
+
+  
 
   </body>
 </html>
