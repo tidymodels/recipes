@@ -11,6 +11,8 @@
 
 * Added `keep_original_cols` argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, and `step_isomap` (#635).
 
+* Added `allow_rename` argument to `eval_select_recipes()`
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
