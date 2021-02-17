@@ -34,7 +34,7 @@ has the effect of adding all variables to the list except the
 excluded variable(s).
 }
 
-Also, select helpers from the \code{tidyselect} package can also be used:
+Select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}}, \code{\link[tidyselect:starts_with]{tidyselect::ends_with()}},
 \code{\link[tidyselect:starts_with]{tidyselect::contains()}}, \code{\link[tidyselect:starts_with]{tidyselect::matches()}},
 \code{\link[tidyselect:starts_with]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}},
@@ -57,7 +57,7 @@ may not be known when subsequent steps are defined. In this
 case, using \code{matches("^PC")} will select all of the columns
 whose names start with "PC" \emph{once those columns are created}.
 
-There are sets of recipes specific functions that can be used to select
+There are sets of recipes-specific functions that can be used to select
 variables based on their role or type: \code{\link[=has_role]{has_role()}} and
 \code{\link[=has_type]{has_type()}}. For convenience, there are also functions that are
 more specific. The functions \code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select
