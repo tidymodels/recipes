@@ -18,14 +18,16 @@
 #'  variables will be used as predictors in a model.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #' rather than C-1?
-#' @param preserve A single logical; should the selected column(s) be retained
-#'  (in addition to the new dummy variables).
+#' @param preserve Use `keep_original_cols` to specify whether the selected
+#'  column(s) should be retained (in addition to the new dummy variables).
 #' @param naming A function that defines the naming convention for
 #'  new dummy columns. See Details below.
 #' @param levels A list that contains the information needed to
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -128,11 +130,22 @@ step_dummy <-
            role = "predictor",
            trained = FALSE,
            one_hot = FALSE,
-           preserve = FALSE,
+           preserve = deprecated(),
            naming = dummy_names,
            levels = NULL,
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy")) {
+
+    if (lifecycle::is_present(preserve)) {
+      lifecycle::deprecate_soft(
+        "0.1.16",
+        "step_dummy(preserve = )",
+        "step_dummy(keep_original_cols = )"
+      )
+      keep_original_cols <- preserve
+    }
+
     add_step(
       recipe,
       step_dummy_new(
@@ -140,9 +153,10 @@ step_dummy <-
         role = role,
         trained = trained,
         one_hot = one_hot,
-        preserve = preserve,
+        preserve = keep_original_cols,
         naming = naming,
         levels = levels,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -150,7 +164,8 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, preserve, naming, levels, skip, id) {
+  function(terms, role, trained, one_hot, preserve, naming, levels,
+           keep_original_cols, skip, id) {
     step(
       subclass = "dummy",
       terms = terms,
@@ -160,6 +175,7 @@ step_dummy_new <-
       preserve = preserve,
       naming = naming,
       levels = levels,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -233,6 +249,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     preserve = x$preserve,
     naming = x$naming,
     levels = levels,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -261,6 +278,7 @@ bake.step_dummy <- function(object, new_data, ...) {
   }
 
   col_names <- names(object$levels)
+  keep_original_cols <- get_keep_original_cols(object)
 
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
@@ -319,7 +337,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     new_data <- bind_cols(new_data, as_tibble(indicators))
-    if (!object$preserve) {
+    if (any(!object$preserve, !keep_original_cols)) {
       new_data[, col_names[i]] <- NULL
     }
   }

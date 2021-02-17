@@ -290,3 +290,33 @@ test_that('retained columns', {
   expect_true(any(colnames(dummy_pred) == "diet"))
   expect_true(any(colnames(dummy_pred) == "location"))
 })
+
+test_that('keep_original_cols works', {
+  rec <- recipe(age ~ diet, data = okc_fac)
+  dummy <- rec %>% step_dummy(diet, id = "", keep_original_cols = TRUE)
+  dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE)
+  dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
+
+  expect_equal(
+    colnames(dummy_pred),
+    c("diet",
+      paste0("diet_", setdiff(gsub(" ", ".", levels(okc_fac$diet)), "anything")))
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  rec <- recipe(age ~ diet, data = okc_fac)
+  dummy <- rec %>% step_dummy(diet, id = "", keep_original_cols = TRUE)
+
+  dummy$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors()),
+    NA
+  )
+})
