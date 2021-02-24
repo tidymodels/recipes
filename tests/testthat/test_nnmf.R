@@ -120,3 +120,46 @@ test_that('tunable', {
   )
 })
 
+test_that('keep_original_cols works', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_nnmf(all_predictors(), seed = 2432, num_run = 3, keep_original_cols = TRUE)
+
+  nnmf_trained <- prep(rec, training = iris, verbose = FALSE)
+
+  nnmf_pred <- bake(nnmf_trained, new_data = iris[1:10,], all_predictors())
+
+  expect_equal(
+    colnames(nnmf_pred),
+    c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width",
+      "NNMF1", "NNMF2")
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_on_cran()
+  skip_if(!(compareVersion(R_ver, "3.6.0") >= 0))
+  for (i in req)
+    skip_if_not_installed(i)
+
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_nnmf(all_predictors(), seed = 2432, num_run = 3)
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    nnmf_trained <- prep(rec, training = iris, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    nnmf_pred <- bake(nnmf_trained, new_data = iris, all_predictors()),
+    NA
+  )
+
+})
+

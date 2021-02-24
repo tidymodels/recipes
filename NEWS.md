@@ -3,13 +3,15 @@
 * Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
 
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
+* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623)
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
 * Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
 
-* Performance improvements for `step_bs()` and `step_ns()`. The `prep` step no longer evaluates the basis functions on the training set and the `bake` steps only evaluates the basis functions once for each unique input value (#574)
+* Added `keep_original_cols` argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, and `step_isomap` (#635).
 
+* Performance improvements for `step_bs()` and `step_ns()`. The `prep` step no longer evaluates the basis functions on the training set and the `bake` steps only evaluates the basis functions once for each unique input value (#574)
 
 # recipes 0.1.15
 

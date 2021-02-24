@@ -30,6 +30,8 @@
 #'  resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation
 #'  when computing the factorization.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -83,6 +85,7 @@ step_nnmf <-
            res = NULL,
            prefix = "NNMF",
            seed = sample.int(10^5, 1),
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("nnmf")
            ) {
@@ -99,6 +102,7 @@ step_nnmf <-
         res = res,
         prefix = prefix,
         seed = seed,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -106,8 +110,8 @@ step_nnmf <-
   }
 
 step_nnmf_new <-
-  function(terms, role, trained, num_comp, num_run,
-           options, res, prefix, seed, skip, id) {
+  function(terms, role, trained, num_comp, num_run, options, res,
+           prefix, seed, keep_original_cols, skip, id) {
     step(
       subclass = "nnmf",
       terms = terms,
@@ -119,6 +123,7 @@ step_nnmf_new <-
       res = res,
       prefix = prefix,
       seed = seed,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -166,6 +171,7 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
     res = nnm,
     prefix = x$prefix,
     seed = x$seed,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -184,8 +190,11 @@ bake.step_nnmf <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+    keep_original_cols <- get_keep_original_cols(object)
+
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }

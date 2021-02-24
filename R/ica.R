@@ -25,6 +25,8 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
@@ -104,6 +106,7 @@ step_ica <-
            options = list(method = "C"),
            res = NULL,
            prefix = "IC",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("ica")) {
 
@@ -120,6 +123,7 @@ step_ica <-
         options = options,
         res = res,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -127,7 +131,8 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, res, prefix, skip, id) {
+  function(terms, role, trained, num_comp, options, res,
+           prefix, keep_original_cols, skip, id) {
     step(
       subclass = "ica",
       terms = terms,
@@ -137,6 +142,7 @@ step_ica_new <-
       options = options,
       res = res,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -174,6 +180,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = indc,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -192,8 +199,11 @@ bake.step_ica <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+    keep_original_cols <- get_keep_original_cols(object)
+
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }
