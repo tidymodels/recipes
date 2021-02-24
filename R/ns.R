@@ -95,7 +95,7 @@ step_ns_new <-
     )
   }
 
-ns_wrapper <- function(x, args) {
+ns_statistics <- function(x, args) {
   # Only do the parameter computations from splines::bs() / splines::ns(), don't evaluate at x.
   degree <- 1L
   intercept <- as.logical(args$intercept %||% FALSE)
@@ -138,7 +138,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
 
   opt <- x$options
   opt$df <- x$deg_free
-  obj <- lapply(training[, col_names], ns_wrapper, opt)
+  obj <- lapply(training[, col_names], ns_statistics, opt)
   for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
   step_ns_new(
