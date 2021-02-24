@@ -110,3 +110,34 @@ test_that('printing', {
   expect_output(print(date_rec))
   expect_output(prep(date_rec, training = examples, verbose = TRUE))
 })
+
+test_that('keep_original_cols works', {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
+
+  date_rec <- prep(date_rec, training = examples)
+  date_res <- bake(date_rec, new_data = examples)
+
+  expect_equal(
+    colnames(date_res),
+    c(paste0("Dan_", feats), paste0("Stefan_", feats))
+  )
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
+
+  date_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_warning(
+    date_rec <- prep(date_rec, training = examples, verbose = FALSE),
+    "'keep_original_cols' was added to"
+  )
+
+  expect_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors()),
+    NA
+  )
+})
+

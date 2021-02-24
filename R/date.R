@@ -36,6 +36,8 @@
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `TRUE`.
 #' @return For `step_date`, an updated version of recipe with
 #'  the new step added to the sequence of existing steps (if any).
 #'  For the `tidy` method, a tibble with columns `terms`
@@ -47,9 +49,10 @@
 #' @concept variable_encodings
 #' @concept dates
 #' @export
-#' @details Unlike other steps, `step_date` does *not*
-#'  remove the original date variables. [step_rm()] can be
-#'  used for this purpose.
+#' @details Unlike some other steps, `step_date` does *not*
+#'  remove the original date variables by default. Set `keep_original_cols`
+#'  to `FALSE` to remove them.
+#'
 #' @examples
 #' library(lubridate)
 #'
@@ -80,6 +83,7 @@ step_date <-
            label = TRUE,
            ordinal = FALSE,
            columns = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("date")
   ) {
@@ -109,6 +113,7 @@ step_date <-
       label = label,
       ordinal = ordinal,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -116,7 +121,8 @@ step_date <-
 }
 
 step_date_new <-
-  function(terms, role, trained, features, abbr, label, ordinal, columns, skip, id) {
+  function(terms, role, trained, features, abbr, label, ordinal, columns,
+           keep_original_cols, skip, id) {
     step(
       subclass = "date",
       terms = terms,
@@ -127,6 +133,7 @@ step_date_new <-
       label = label,
       ordinal = ordinal,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -154,6 +161,7 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     label = x$label,
     ordinal = x$ordinal,
     columns = col_names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -248,6 +256,10 @@ bake.step_date <- function(object, new_data, ...) {
   names(date_values) <- new_names
 
   new_data <- bind_cols(new_data, date_values)
+  keep_original_cols <- get_keep_original_cols(object)
+  if (!keep_original_cols) {
+    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
+  }
 
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)

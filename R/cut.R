@@ -52,6 +52,14 @@
 #'   prep() %>%
 #'   bake(df)
 #'
+#' # You can keep the original variables using `step_mutate` or
+#' # `step_mutate_at`, for transforming multiple variables at once
+#' rec %>%
+#'   step_mutate(x_orig = x) %>%
+#'   step_cut(x, breaks = 5) %>%
+#'   prep() %>%
+#'   bake(df)
+#'
 #' # It is up to you if you want values outside the
 #' # range learned at prep to be included
 #' new_df <- data.frame(x = 1:11)

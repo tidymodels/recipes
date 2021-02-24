@@ -96,6 +96,15 @@ transformed_te
 tidy(norm_trans, number = 1)
 tidy(norm_obj, number = 1)
 
+# To keep the original variables in the output, use `step_mutate_at`:
+norm_keep_orig <- rec \%>\%
+  step_mutate_at(all_numeric_predictors(), fn = list(orig = ~.)) \%>\%
+  step_normalize(-contains("orig"), -all_outcomes())
+
+keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)
+keep_orig_te <- bake(keep_orig_obj, biomass_te)
+keep_orig_te
+
 }
 \concept{normalization_methods}
 \concept{preprocessing}

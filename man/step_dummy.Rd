@@ -11,9 +11,10 @@ step_dummy(
   role = "predictor",
   trained = FALSE,
   one_hot = FALSE,
-  preserve = FALSE,
+  preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy")
 )
@@ -41,8 +42,8 @@ preprocessing have been estimated.}
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
 
-\item{preserve}{A single logical; should the selected column(s) be retained
-(in addition to the new dummy variables).}
+\item{preserve}{Use \code{keep_original_cols} to specify whether the selected
+column(s) should be retained (in addition to the new dummy variables).}
 
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
@@ -51,6 +52,9 @@ new dummy columns. See Details below.}
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

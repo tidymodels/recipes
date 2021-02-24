@@ -15,6 +15,7 @@ step_date(
   label = TRUE,
   ordinal = FALSE,
   columns = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("date")
 )
@@ -64,6 +65,9 @@ available for features \code{month} or \code{dow}.}
 used as inputs. This field is a placeholder and will be
 populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{TRUE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
@@ -88,9 +92,9 @@ step that will convert date data into one or more factor or
 numeric variables.
 }
 \details{
-Unlike other steps, \code{step_date} does \emph{not}
-remove the original date variables. \code{\link[=step_rm]{step_rm()}} can be
-used for this purpose.
+Unlike some other steps, \code{step_date} does \emph{not}
+remove the original date variables by default. Set \code{keep_original_cols}
+to \code{FALSE} to remove them.
 }
 \examples{
 library(lubridate)

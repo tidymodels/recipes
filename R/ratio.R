@@ -27,6 +27,8 @@
 #' @param columns The column names used in the ratios. This
 #'  argument is not populated until [prep.recipe()] is
 #'  executed.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `TRUE`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with columns `terms` (the
@@ -67,6 +69,7 @@ step_ratio <-
            naming = function(numer, denom)
              make.names(paste(numer, denom, sep = "_o_")),
            columns = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("ratio")) {
     if (is_empty(denom))
@@ -85,6 +88,7 @@ step_ratio <-
         denom = denom,
         naming = naming,
         columns = columns,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -92,7 +96,8 @@ step_ratio <-
   }
 
 step_ratio_new <-
-  function(terms, role, trained, denom, naming, columns, skip, id) {
+  function(terms, role, trained, denom, naming, columns,
+           keep_original_cols, skip, id) {
     step(
       subclass = "ratio",
       terms = terms,
@@ -101,6 +106,7 @@ step_ratio_new <-
       denom = denom,
       naming = naming,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -130,6 +136,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     denom = x$denom,
     naming = x$naming,
     columns = col_names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -145,7 +152,14 @@ bake.step_ratio <- function(object, new_data, ...) {
   if (!is_tibble(res))
     res <- as_tibble(res)
 
+  keep_original_cols <- get_keep_original_cols(object)
   new_data <- bind_cols(new_data, res)
+
+  if (!keep_original_cols) {
+    union_cols <- union(object$columns$top, object$columns$bottom)
+    new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
+  }
+
   if (!is_tibble(new_data))
     new_data <- as_tibble(new_data)
   new_data
