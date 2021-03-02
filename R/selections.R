@@ -128,7 +128,7 @@ eval_select_recipes <- function(quos, data, info, allow_rename = FALSE) {
   if (allow_rename) names(out) <- names(sel)
 
   # FIXME: Remove this check when the following issue is fixed,
-  # i.e. when we can use `allow_rename = FALSE`
+  # at that point, just pass `allow_rename` to `eval_select()` directly.
   # https://github.com/r-lib/tidyselect/issues/221
   if (!allow_rename & !identical(out, names(sel))) {
     abort("Can't rename variables in this context.")
