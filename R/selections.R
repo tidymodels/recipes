@@ -113,12 +113,12 @@ eval_select_recipes <- function(quos, data, info, allow_rename = FALSE) {
   # https://github.com/r-lib/tidyselect/issues/221
   # Once it's fixed, remove this and pass allow_rename to
   # tidyselect::eval_select().
-  allow_rename_ts <- TRUE
+  allow_rename_compat <- TRUE
 
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename_ts
+    allow_rename = allow_rename_compat
   )
 
   # Return names not positions, as these names are
