@@ -11,7 +11,7 @@
 
 * Added `keep_original_cols` argument to `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, and `step_isomap` (#635).
 
-* Added `allow_rename` argument to `eval_select_recipes()`
+* Added `allow_rename` argument to `eval_select_recipes()` (#646).
 
 # recipes 0.1.15
 
