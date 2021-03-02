@@ -94,7 +94,9 @@
 NULL
 
 
-eval_select_recipes <- function(quos, data, info, allow_rename = FALSE) {
+eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
+
+  ellipsis::check_dots_empty()
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
