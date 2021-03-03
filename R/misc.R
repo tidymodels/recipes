@@ -333,7 +333,7 @@ printer <- function(tr_obj = NULL,
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-prepare   <- function(x, ...)
+prepare <- function(x, ...)
   rlang::abort(paste0("As of version 0.0.1.9006, used `prep` ",
        "instead of `prepare`"))
 

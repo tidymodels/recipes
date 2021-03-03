@@ -9,7 +9,7 @@
 #' @param x A `recipe` object (trained or otherwise).
 #' @param number An integer or `NA`. If missing and `id` is not provided,
 #'  the return value is a list of the operations in the recipe.
-#'  If a number is  given, a `tidy` method is executed for that operation
+#'  If a number is given, a `tidy` method is executed for that operation
 #'  in the recipe (if it exists). `number` must not be provided if
 #'  `id` is.
 #' @param id A character string or `NA`. If missing and `number` is not provided,

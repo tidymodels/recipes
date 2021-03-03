@@ -17,7 +17,7 @@
 
 \item{number}{An integer or \code{NA}. If missing and \code{id} is not provided,
 the return value is a list of the operations in the recipe.
-If a number is  given, a \code{tidy} method is executed for that operation
+If a number is given, a \code{tidy} method is executed for that operation
 in the recipe (if it exists). \code{number} must not be provided if
 \code{id} is.}
 

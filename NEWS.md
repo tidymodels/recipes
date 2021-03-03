@@ -13,6 +13,8 @@
   * `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, `step_isomap` which all default to `FALSE` (#635).
   * `step_ratio()`, `step_holiday()`, `step_date()` which all default to `TRUE` to maintain original behavior, as well as `step_dummy()` which defaults to `FALSE` (#645).
 
+* Added `allow_rename` argument to `eval_select_recipes()` (#646).
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).

@@ -35,7 +35,7 @@
 #'   excluded variable(s).
 #'   }
 #'
-#' Also, select helpers from the `tidyselect` package can also be used:
+#' Select helpers from the `tidyselect` package can also be used:
 #'   [tidyselect::starts_with()], [tidyselect::ends_with()],
 #'   [tidyselect::contains()], [tidyselect::matches()],
 #'   [tidyselect::num_range()], [tidyselect::everything()],
@@ -58,7 +58,7 @@
 #' case, using `matches("^PC")` will select all of the columns
 #' whose names start with "PC" *once those columns are created*.
 #'
-#' There are sets of recipes specific functions that can be used to select
+#' There are sets of recipes-specific functions that can be used to select
 #' variables based on their role or type: [has_role()] and
 #' [has_type()]. For convenience, there are also functions that are
 #' more specific. The functions [all_numeric()] and [all_nominal()] select
@@ -94,7 +94,10 @@
 NULL
 
 
-eval_select_recipes <- function(quos, data, info) {
+eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
+
+  ellipsis::check_dots_empty()
+
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
   data_info <- tibble(variable = names(data))
@@ -106,27 +109,30 @@ eval_select_recipes <- function(quos, data, info) {
 
   expr <- expr(c(!!!quos))
 
-  # FIXME: Ideally this is `FALSE`, but empty selections incorrectly throw an
+  # FIXME: Ideally this is `FALSE` for strict selection,
+  # but empty selections incorrectly throw an
   # error when this is false due to the following bug:
   # https://github.com/r-lib/tidyselect/issues/221
-  allow_rename <- TRUE
+  # Once it's fixed, remove this and pass allow_rename to
+  # tidyselect::eval_select().
+  allow_rename_compat <- TRUE
 
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename
+    allow_rename = allow_rename_compat
   )
 
   # Return names not positions, as these names are
   # used for both the training and test set and their positions
-  # may have changed. `sel` won't be named because when `allow_rename = FALSE`,
-  # `eval_select()` returns an unnamed vector.
+  # may have changed. If renaming is allowed, add the new names.
   out <- names(data)[sel]
+  if (allow_rename) names(out) <- names(sel)
 
   # FIXME: Remove this check when the following issue is fixed,
-  # i.e. when we can use `allow_rename = FALSE`
+  # at that point, just pass `allow_rename` to `eval_select()` directly.
   # https://github.com/r-lib/tidyselect/issues/221
-  if (!identical(out, names(sel))) {
+  if (!allow_rename & !identical(out, names(sel))) {
     abort("Can't rename variables in this context.")
   }
 
