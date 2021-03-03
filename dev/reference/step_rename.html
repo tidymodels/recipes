@@ -262,14 +262,14 @@ expression (to be portable between sessions).</p>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 5</span><span>
 #&gt;   Sepal.Length Sepal_Width Petal.Length Petal.Width Species
-#&gt;          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'>1</span><span>          5.1         3.5          1.4         0.2 setosa 
-#&gt; </span><span style='color: #555555;'>2</span><span>          4.9         3            1.4         0.2 setosa 
-#&gt; </span><span style='color: #555555;'>3</span><span>          4.7         3.2          1.3         0.2 setosa 
-#&gt; </span><span style='color: #555555;'>4</span><span>          4.6         3.1          1.5         0.2 setosa 
-#&gt; </span><span style='color: #555555;'>5</span><span>          5           3.6          1.4         0.2 setosa </div><div class='input'>
+#&gt;          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>  
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>          5.1         3.5          1.4         0.2 setosa 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>          4.9         3            1.4         0.2 setosa 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>          4.7         3.2          1.3         0.2 setosa 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>          4.6         3.1          1.5         0.2 setosa 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>          5           3.6          1.4         0.2 setosa </div><div class='input'>
 <span class='va'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>var1 <span class='op'>=</span> <span class='st'>"cyl"</span>, var2 <span class='op'>=</span> <span class='st'>"am"</span><span class='op'>)</span>
 <span class='va'>car_rec</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -278,26 +278,26 @@ expression (to be portable between sessions).</p>
 <span class='va'>car_rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 11</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 32 x 11</span><span>
 #&gt;      mpg `&lt;chr&gt;...var1`  disp    hp  drat    wt  qsec    vs `&lt;chr&gt;...var2`  gear
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span>  21                6  160    110  3.9   2.62  16.5     0              1     4
-#&gt; </span><span style='color: #555555;'> 2</span><span>  21                6  160    110  3.9   2.88  17.0     0              1     4
-#&gt; </span><span style='color: #555555;'> 3</span><span>  22.8              4  108     93  3.85  2.32  18.6     1              1     4
-#&gt; </span><span style='color: #555555;'> 4</span><span>  21.4              6  258    110  3.08  3.22  19.4     1              0     3
-#&gt; </span><span style='color: #555555;'> 5</span><span>  18.7              8  360    175  3.15  3.44  17.0     0              0     3
-#&gt; </span><span style='color: #555555;'> 6</span><span>  18.1              6  225    105  2.76  3.46  20.2     1              0     3
-#&gt; </span><span style='color: #555555;'> 7</span><span>  14.3              8  360    245  3.21  3.57  15.8     0              0     3
-#&gt; </span><span style='color: #555555;'> 8</span><span>  24.4              4  147.    62  3.69  3.19  20       1              0     4
-#&gt; </span><span style='color: #555555;'> 9</span><span>  22.8              4  141.    95  3.92  3.15  22.9     1              0     4
-#&gt; </span><span style='color: #555555;'>10</span><span>  19.2              6  168.   123  3.92  3.44  18.3     1              0     4
-#&gt; </span><span style='color: #555555;'># … with 22 more rows, and 1 more variable: carb </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  21                6  160    110  3.9   2.62  16.5     0              1     4
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  21                6  160    110  3.9   2.88  17.0     0              1     4
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  22.8              4  108     93  3.85  2.32  18.6     1              1     4
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  21.4              6  258    110  3.08  3.22  19.4     1              0     3
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>  18.7              8  360    175  3.15  3.44  17.0     0              0     3
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  18.1              6  225    105  2.76  3.46  20.2     1              0     3
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>  14.3              8  360    245  3.21  3.57  15.8     0              0     3
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  24.4              4  147.    62  3.69  3.19  20       1              0     4
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>  22.8              4  141.    95  3.92  3.15  22.9     1              0     4
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>  19.2              6  168.   123  3.92  3.44  18.3     1              0     4
+#&gt; </span><span style='color: #949494;'># … with 22 more rows, and 1 more variable: carb &lt;dbl&gt;</span><span></div><div class='input'>
 <span class='va'>car_rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span>number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 3</span><span>
 #&gt;   terms value                              id          
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #555555;'>1</span><span> &lt;chr&gt; </span><span style='color: #555555;'>"</span><span>c(var1 = \"cyl\", var2 = \"am\")</span><span style='color: #555555;'>"</span><span> rename_o1y7D</div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> &lt;chr&gt; </span><span style='color: #949494;'>"</span><span>c(var1 = \"cyl\", var2 = \"am\")</span><span style='color: #949494;'>"</span><span> rename_o1y7D</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

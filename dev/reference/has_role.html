@@ -247,36 +247,36 @@ matching is used (i.e. regular expressions won't work).</p></td>
 
 <span class='va'>recipe_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>rec</span><span class='op'>)</span>
 <span class='va'>recipe_info</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 8 x 4</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 4</span><span>
 #&gt;   variable type    role                source  
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'>1</span><span> sample   nominal id variable         original
-#&gt; </span><span style='color: #555555;'>2</span><span> dataset  nominal splitting indicator original
-#&gt; </span><span style='color: #555555;'>3</span><span> carbon   numeric predictor           original
-#&gt; </span><span style='color: #555555;'>4</span><span> hydrogen numeric predictor           original
-#&gt; </span><span style='color: #555555;'>5</span><span> oxygen   numeric predictor           original
-#&gt; </span><span style='color: #555555;'>6</span><span> nitrogen numeric predictor           original
-#&gt; </span><span style='color: #555555;'>7</span><span> sulfur   numeric predictor           original
-#&gt; </span><span style='color: #555555;'>8</span><span> HHV      numeric outcome             original</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> sample   nominal id variable         original
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> dataset  nominal splitting indicator original
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> carbon   numeric predictor           original
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> hydrogen numeric predictor           original
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> oxygen   numeric predictor           original
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> nitrogen numeric predictor           original
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> sulfur   numeric predictor           original
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> HHV      numeric outcome             original</div><div class='input'>
 <span class='co'># Centering on all predictors except carbon</span>
 <span class='va'>rec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'>all_predictors</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>carbon</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 536 x 8</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 536 x 8</span><span>
 #&gt;    sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Akhrot Shell           Training   49.8   0.181   4.37   -</span><span style='color: #BB0000;'>0.667</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   20.0
-#&gt; </span><span style='color: #555555;'> 2</span><span> Alabama Oak Wood Waste Training   49.5   0.241   2.73   -</span><span style='color: #BB0000;'>0.877</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   19.2
-#&gt; </span><span style='color: #555555;'> 3</span><span> Alder                  Training   47.8   0.341   7.68   -</span><span style='color: #BB0000;'>0.967</span><span>  -</span><span style='color: #BB0000;'>0.214</span><span>   18.3
-#&gt; </span><span style='color: #555555;'> 4</span><span> Alfalfa                Training   45.1  -</span><span style='color: #BB0000;'>0.489</span><span>  -</span><span style='color: #BB0000;'>2.97</span><span>    2.22   -</span><span style='color: #BB0000;'>0.073</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.2
-#&gt; </span><span style='color: #555555;'> 5</span><span> Alfalfa Seed Straw     Training   46.8  -</span><span style='color: #BB0000;'>0.058</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  2.15   -</span><span style='color: #BB0000;'>0.077</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> -</span><span style='color: #BB0000;'>0.214</span><span>   18.4
-#&gt; </span><span style='color: #555555;'> 6</span><span> Alfalfa Stalks         Training   45.4   0.291   1.63    0.963  -</span><span style='color: #BB0000;'>0.134</span><span>   18.5
-#&gt; </span><span style='color: #555555;'> 7</span><span> Alfalfa Stems          Training   47.2   0.531  -</span><span style='color: #BB0000;'>0.383</span><span>   1.60   -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.7
-#&gt; </span><span style='color: #555555;'> 8</span><span> Alfalfa Straw          Training   45.7   0.241   1.13    0.623  -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.3
-#&gt; </span><span style='color: #555555;'> 9</span><span> Almond                 Training   48.8   0.041</span><span style='text-decoration: underline;'>4</span><span>  2.33   -</span><span style='color: #BB0000;'>0.277</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   18.6
-#&gt; </span><span style='color: #555555;'>10</span><span> Almond Hull            Training   47.1   0.441   1.43    0.123  -</span><span style='color: #BB0000;'>0.134</span><span>   18.9
-#&gt; </span><span style='color: #555555;'># … with 526 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>                  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Akhrot Shell           Training   49.8   0.181   4.37   -</span><span style='color: #BB0000;'>0.667</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   20.0
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Alabama Oak Wood Waste Training   49.5   0.241   2.73   -</span><span style='color: #BB0000;'>0.877</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   19.2
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Alder                  Training   47.8   0.341   7.68   -</span><span style='color: #BB0000;'>0.967</span><span>  -</span><span style='color: #BB0000;'>0.214</span><span>   18.3
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Alfalfa                Training   45.1  -</span><span style='color: #BB0000;'>0.489</span><span>  -</span><span style='color: #BB0000;'>2.97</span><span>    2.22   -</span><span style='color: #BB0000;'>0.073</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.2
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Alfalfa Seed Straw     Training   46.8  -</span><span style='color: #BB0000;'>0.058</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  2.15   -</span><span style='color: #BB0000;'>0.077</span><span style='color: #BB0000;text-decoration: underline;'>2</span><span> -</span><span style='color: #BB0000;'>0.214</span><span>   18.4
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Alfalfa Stalks         Training   45.4   0.291   1.63    0.963  -</span><span style='color: #BB0000;'>0.134</span><span>   18.5
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Alfalfa Stems          Training   47.2   0.531  -</span><span style='color: #BB0000;'>0.383</span><span>   1.60   -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.7
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Alfalfa Straw          Training   45.7   0.241   1.13    0.623  -</span><span style='color: #BB0000;'>0.033</span><span style='color: #BB0000;text-decoration: underline;'>6</span><span>  18.3
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Almond                 Training   48.8   0.041</span><span style='text-decoration: underline;'>4</span><span>  2.33   -</span><span style='color: #BB0000;'>0.277</span><span>  -</span><span style='color: #BB0000;'>0.234</span><span>   18.6
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Almond Hull            Training   47.1   0.441   1.43    0.123  -</span><span style='color: #BB0000;'>0.134</span><span>   18.9
+#&gt; </span><span style='color: #949494;'># … with 526 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

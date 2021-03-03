@@ -281,19 +281,19 @@ order</em> for lagging.</p>
   <span class='fu'>step_lag</span><span class='op'>(</span><span class='va'>index</span>, <span class='va'>day</span>, lag <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 7</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 7</span><span>
 #&gt;        x index day        lag_2_index lag_2_day  lag_3_index lag_3_day 
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span> 0.872     1 1999-01-01          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
-#&gt; </span><span style='color: #555555;'> 2</span><span> 0.253     2 1999-01-02          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
-#&gt; </span><span style='color: #555555;'> 3</span><span> 0.448     3 1999-01-03           1 1999-01-01          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
-#&gt; </span><span style='color: #555555;'> 4</span><span> 0.245     4 1999-01-04           2 1999-01-02           1 1999-01-01
-#&gt; </span><span style='color: #555555;'> 5</span><span> 0.575     5 1999-01-05           3 1999-01-03           2 1999-01-02
-#&gt; </span><span style='color: #555555;'> 6</span><span> 0.111     6 1999-01-06           4 1999-01-04           3 1999-01-03
-#&gt; </span><span style='color: #555555;'> 7</span><span> 0.631     7 1999-01-07           5 1999-01-05           4 1999-01-04
-#&gt; </span><span style='color: #555555;'> 8</span><span> 0.717     8 1999-01-08           6 1999-01-06           5 1999-01-05
-#&gt; </span><span style='color: #555555;'> 9</span><span> 0.789     9 1999-01-09           7 1999-01-07           6 1999-01-06
-#&gt; </span><span style='color: #555555;'>10</span><span> 0.745    10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>    
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 0.872     1 1999-01-01          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 0.253     2 1999-01-02          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 0.448     3 1999-01-03           1 1999-01-01          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 0.245     4 1999-01-04           2 1999-01-02           1 1999-01-01
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 0.575     5 1999-01-05           3 1999-01-03           2 1999-01-02
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 0.111     6 1999-01-06           4 1999-01-04           3 1999-01-03
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 0.631     7 1999-01-07           5 1999-01-05           4 1999-01-04
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 0.717     8 1999-01-08           6 1999-01-06           5 1999-01-05
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 0.789     9 1999-01-09           7 1999-01-07           6 1999-01-06
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 0.745    10 1999-01-10           8 1999-01-08           7 1999-01-07</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

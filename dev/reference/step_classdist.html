@@ -322,40 +322,40 @@ overall.</p>
 <span class='co'>## on log scale:</span>
 <span class='va'>dist_cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span><span class='st'>"classdist"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dists_to_species</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>dists_to_species</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='va'>dist_cols</span><span class='op'>)</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 4</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 150 x 4</span><span>
 #&gt;    Species classdist_setosa classdist_versicolor classdist_virginica
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> setosa            -</span><span style='color: #BB0000;'>0.800</span><span>                 4.74                5.21
-#&gt; </span><span style='color: #555555;'> 2</span><span> setosa             0.733                 4.42                5.04
-#&gt; </span><span style='color: #555555;'> 3</span><span> setosa             0.250                 4.55                5.08
-#&gt; </span><span style='color: #555555;'> 4</span><span> setosa             0.534                 4.42                4.95
-#&gt; </span><span style='color: #555555;'> 5</span><span> setosa            -</span><span style='color: #BB0000;'>0.272</span><span>                 4.79                5.22
-#&gt; </span><span style='color: #555555;'> 6</span><span> setosa             1.31                  4.79                5.21
-#&gt; </span><span style='color: #555555;'> 7</span><span> setosa             1.23                  4.56                5.04
-#&gt; </span><span style='color: #555555;'> 8</span><span> setosa            -</span><span style='color: #BB0000;'>1.07</span><span>                  4.64                5.12
-#&gt; </span><span style='color: #555555;'> 9</span><span> setosa             1.10                  4.30                4.89
-#&gt; </span><span style='color: #555555;'>10</span><span> setosa             1.16                  4.54                5.05
-#&gt; </span><span style='color: #555555;'># … with 140 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> setosa            -</span><span style='color: #BB0000;'>0.800</span><span>                 4.74                5.21
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> setosa             0.733                 4.42                5.04
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> setosa             0.250                 4.55                5.08
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> setosa             0.534                 4.42                4.95
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> setosa            -</span><span style='color: #BB0000;'>0.272</span><span>                 4.79                5.22
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> setosa             1.31                  4.79                5.21
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> setosa             1.23                  4.56                5.04
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> setosa            -</span><span style='color: #BB0000;'>1.07</span><span>                  4.64                5.12
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> setosa             1.10                  4.30                4.89
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> setosa             1.16                  4.54                5.05
+#&gt; </span><span style='color: #949494;'># … with 140 more rows</span><span></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
 #&gt;   terms                    value class id             
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> all_numeric_predictors()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    classdist_jisyY</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec_dists</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 4</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> all_numeric_predictors()    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    classdist_jisyY</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec_dists</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 4</span><span>
 #&gt;    terms        value class      id             
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'> 1</span><span> Sepal.Length 5.01  setosa     classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 2</span><span> Sepal.Width  3.43  setosa     classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 3</span><span> Petal.Length 1.46  setosa     classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 4</span><span> Petal.Width  0.246 setosa     classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 5</span><span> Sepal.Length 5.94  versicolor classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 6</span><span> Sepal.Width  2.77  versicolor classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 7</span><span> Petal.Length 4.26  versicolor classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 8</span><span> Petal.Width  1.33  versicolor classdist_jisyY
-#&gt; </span><span style='color: #555555;'> 9</span><span> Sepal.Length 6.59  virginica  classdist_jisyY
-#&gt; </span><span style='color: #555555;'>10</span><span> Sepal.Width  2.97  virginica  classdist_jisyY
-#&gt; </span><span style='color: #555555;'>11</span><span> Petal.Length 5.55  virginica  classdist_jisyY
-#&gt; </span><span style='color: #555555;'>12</span><span> Petal.Width  2.03  virginica  classdist_jisyY</div></span></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Sepal.Length 5.01  setosa     classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Sepal.Width  3.43  setosa     classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Petal.Length 1.46  setosa     classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Petal.Width  0.246 setosa     classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Sepal.Length 5.94  versicolor classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Sepal.Width  2.77  versicolor classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Petal.Length 4.26  versicolor classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Petal.Width  1.33  versicolor classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Sepal.Length 6.59  virginica  classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Sepal.Width  2.97  virginica  classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> Petal.Length 5.55  virginica  classdist_jisyY
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> Petal.Width  2.03  virginica  classdist_jisyY</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

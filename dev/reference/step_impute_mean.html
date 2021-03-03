@@ -311,26 +311,26 @@ to <code>step_impute_mean()</code>.</p>
 #&gt; 28     4000    0   1800  2557
 #&gt; 688    2000    0   1250  1517
 #&gt; 1002   2000    0   2000  2536</div><div class='input'><span class='va'>imputed_te</span><span class='op'>[</span><span class='va'>missing_examples</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>credit_te</span><span class='op'>)</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 14</span><span>
-#&gt;   Status Seniority Home   Time   Age Marital Records Job   Expenses Income
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> good          15 owner    36    43 married no      fixed       75    251
-#&gt; </span><span style='color: #555555;'>2</span><span> good           2 rent     60    32 married no      part…       87    115
-#&gt; </span><span style='color: #555555;'>3</span><span> good          21 rent     60    39 married no      fixed      124    191
-#&gt; </span><span style='color: #555555;'># … with 4 more variables: Assets </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Debt </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Amount </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Price </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 14</span><span>
+#&gt;   Status Seniority Home   Time   Age Marital Records Job     Expenses Income
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> good          15 owner    36    43 married no      fixed         75    251
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> good           2 rent     60    32 married no      partime       87    115
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> good          21 rent     60    39 married no      fixed        124    191
+#&gt; </span><span style='color: #949494;'># … with 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;, Amount &lt;int&gt;, Price &lt;int&gt;</span><span></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
 #&gt;   terms  model id               
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
-#&gt; </span><span style='color: #555555;'>1</span><span> Income    </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y
-#&gt; </span><span style='color: #555555;'>2</span><span> Assets    </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y
-#&gt; </span><span style='color: #555555;'>3</span><span> Debt      </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>imp_models</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Income    </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Assets    </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Debt      </span><span style='color: #BB0000;'>NA</span><span> impute_mean_Hlm2y</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>imp_models</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
 #&gt;   terms  model id               
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
-#&gt; </span><span style='color: #555555;'>1</span><span> Income   142 impute_mean_Hlm2y
-#&gt; </span><span style='color: #555555;'>2</span><span> Assets  </span><span style='text-decoration: underline;'>5</span><span>378 impute_mean_Hlm2y
-#&gt; </span><span style='color: #555555;'>3</span><span> Debt     364 impute_mean_Hlm2y</div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Income   142 impute_mean_Hlm2y
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Assets  </span><span style='text-decoration: underline;'>5</span><span>378 impute_mean_Hlm2y
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Debt     364 impute_mean_Hlm2y</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

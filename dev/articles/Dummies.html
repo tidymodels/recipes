@@ -226,7 +226,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">param</span><span class="op">)</span></code></pre></div>
 <p>Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn’t make sense.</p>
 <p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> function will return the data as-is (e.g. with no dummy variables).</p>
-<p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>preserve</code> that can be used to keep the original column that are being used to create the dummy variables.</p>
+<p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>keep_original_cols</code> that can be used to keep the original columns that are being used to create the dummy variables.</p>
 </div>
 <div id="interactions-with-dummy-variables" class="section level2">
 <h2 class="hasAnchor">
