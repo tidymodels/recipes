@@ -127,12 +127,12 @@ eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
   # used for both the training and test set and their positions
   # may have changed. If renaming is allowed, add the new names.
   out <- names(data)[sel]
-  if (allow_rename) names(out) <- names(sel)
+  names(out) <- names(sel)
 
   # FIXME: Remove this check when the following issue is fixed,
   # at that point, just pass `allow_rename` to `eval_select()` directly.
   # https://github.com/r-lib/tidyselect/issues/221
-  if (!allow_rename & !identical(out, names(sel))) {
+  if (!allow_rename & !identical(unname(out), names(sel))) {
     abort("Can't rename variables in this context.")
   }
 

@@ -251,7 +251,7 @@ tidy.step_kpca_poly <- function(x, ...) {
     if (x$num_comp > 0) {
       res <- tibble(terms = colnames(x$res@org.data))
     } else {
-      res <- tibble(terms = x$res$x_vars)
+      res <- tibble(terms = unname(x$res$x_vars))
     }
   } else {
     term_names <- sel2char(x$terms)

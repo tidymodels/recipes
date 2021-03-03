@@ -189,8 +189,8 @@ denom_vars <- function(...) quos(...)
 #' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns$top,
-                  denom = x$columns$bottom)
+    res <- tibble(terms = unname(x$columns$top),
+                  denom = unname(x$columns$bottom))
   } else {
     res <- tidyr::crossing(terms = sel2char(x$terms),
                            denom = sel2char(x$denom))
