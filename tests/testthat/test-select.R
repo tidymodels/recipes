@@ -170,6 +170,9 @@ test_that("printing", {
 })
 
 test_that("tidying", {
+  # set RNGversion to one prior to R 3.6 so that the id in the tidy tibble is
+  # consistent across older and newer versions of R
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(403)
   petal <- c("Petal.Width", "Petal.Length")
   rec <- recipe(~., data = iris) %>%
@@ -185,4 +188,6 @@ test_that("tidying", {
     tidy(prepped, number = 1)
     tidy(prepped, number = 2)
   })
+  # set RNG version back to default
+  RNGversion(getRversion())
 })
