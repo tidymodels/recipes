@@ -170,9 +170,18 @@ test_that("printing", {
 })
 
 test_that("tidying", {
-  # set RNGversion to one prior to R 3.6 so that the id in the tidy tibble is
-  # consistent across older and newer versions of R
-  suppressWarnings(RNGversion("3.5.0"))
+  # the RNGkind() changed in R version 3.6 so we set it to v3.5 so that the id
+  # in the tidy tibble is consistent across older and newer versions of R
+  r_version <- getRversion() %>%
+    as.character() %>%
+    strsplit(".", fixed = TRUE)
+  r_version <- r_version[[1]] %>% as.numeric()
+  r_version_pre_36 <- r_version[1] > 3 | (r_version[1] >= 3 & r_version[2] > 5)
+
+  if (r_version_pre_36) {
+    suppressWarnings(RNGversion("3.5.0"))
+  }
+
   set.seed(403)
   petal <- c("Petal.Width", "Petal.Length")
   rec <- recipe(~., data = iris) %>%
@@ -188,6 +197,9 @@ test_that("tidying", {
     tidy(prepped, number = 1)
     tidy(prepped, number = 2)
   })
-  # set RNG version back to default
-  RNGversion(getRversion())
+  # set RNG version back to default for R versions > 3.5
+
+  if (r_version_pre_36){
+    RNGversion(getRversion())
+  }
 })
