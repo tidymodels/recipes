@@ -1,6 +1,6 @@
-#' Select variables using `select()`
+#' Select variables using dplyr
 #'
-#' `step_select` creates a *specification* of a recipe step
+#' `step_select()` creates a *specification* of a recipe step
 #'  that will select variables using [dplyr::select()].
 #'
 #' @inheritParams step_center

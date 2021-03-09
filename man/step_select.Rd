@@ -3,7 +3,7 @@
 \name{step_select}
 \alias{step_select}
 \alias{tidy.step_select}
-\title{Select variables using \code{select}}
+\title{Select variables using dplyr}
 \usage{
 step_select(
   recipe,
@@ -50,7 +50,7 @@ contains the \code{select} expressions as character strings
 (and are not reparsable).
 }
 \description{
-\code{step_select} creates a \emph{specification} of a recipe step
+\code{step_select()} creates a \emph{specification} of a recipe step
 that will select variables using \code{\link[dplyr:select]{dplyr::select()}}.
 }
 \details{
