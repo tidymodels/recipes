@@ -1,155 +1,114 @@
 
 test_that("basic usage", {
-  rec <-
-    recipe(~., data = iris) %>%
-    step_select(Species, starts_with("Sepal"))
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
+  iris_test <- slice(iris_tbl, 76:150) %>%
+    # change the position of the variables to check that this is not a problem
+    select(Species, starts_with("Sepal"), starts_with("Petal"))
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  dplyr_train <- select(iris_train, Species, starts_with("Sepal"))
+  dplyr_test <- select(iris_test, Species, starts_with("Sepal"))
 
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(Species, starts_with("Sepal"))
+  rec <- recipe(~., data = iris_train) %>%
+    step_select(Species, starts_with("Sepal")) %>%
+    prep(training = iris_train)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(rec, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
-    # change the position of the variables to check that this is not a problem
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
-    slice(76:150)
-
-  dplyr_test <-
-    iris_test %>%
-    select(Species, starts_with("Sepal"))
-
-  rec_test <- bake(prepped, iris_test)
+  rec_test <- bake(rec, iris_test)
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("basic rename", {
-  rec <-
-    recipe(~., data = iris) %>%
-    step_select(Species, sepal_length = Sepal.Length)
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
+  iris_test <- slice(iris_tbl, 76:150)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  dplyr_train <- select(iris_train, Species, sepal_length = Sepal.Length)
+  dplyr_test <- select(iris_test, Species, sepal_length = Sepal.Length)
 
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(Species, sepal_length = Sepal.Length)
+  rec <- recipe(~., data = iris_train) %>%
+    step_select(Species, sepal_length = Sepal.Length) %>%
+    prep(training = iris_train)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(rec, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
-    # change the position of the variables to check that this is not a problem
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
-    slice(76:150)
-
-  dplyr_test <-
-    iris_test %>%
-    select(Species, sepal_length = Sepal.Length)
-
-  rec_test <- bake(prepped, iris_test)
+  rec_test <- bake(rec, iris_test)
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("select via type", {
-  rec <-
-    recipe(~., data = iris) %>%
-    step_select(all_numeric())
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
+  iris_test <- slice(iris_tbl, 76:150)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  dplyr_train <- select_if(iris_train, is.numeric)
+  dplyr_test <- select_if(iris_test, is.numeric)
 
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select_if(is.numeric)
+  rec <- recipe(~., data = iris_train) %>%
+    step_select(all_numeric()) %>%
+    prep(training = iris_train)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(rec, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
-    # change the position of the variables to check that this is not a problem
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
-    slice(76:150)
-
-  dplyr_test <-
-    iris_test %>%
-    select_if(is.numeric)
-
-  rec_test <- bake(prepped, iris_test)
+  rec_test <- bake(rec, iris_test)
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("select via role", {
-  rec <-
-    recipe(Species ~ ., data = iris) %>%
-    step_select(all_predictors())
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
+  iris_test <- slice(iris_tbl, 76:150)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  dplyr_train <- select(iris_train, -Species)
+  dplyr_test <- select(iris_test, -Species)
 
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(-Species)
+  rec <- recipe(Species ~ ., data = iris_train) %>%
+    step_select(all_predictors()) %>%
+    prep(training = iris_train)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(rec, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
-    # change the position of the variables to check that this is not a problem
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
-    slice(76:150)
-
-  dplyr_test <-
-    iris_test %>%
-    select(-Species)
-
-  rec_test <- bake(prepped, iris_test)
+  rec_test <- bake(rec, iris_test)
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("quasiquotation", {
+  # Local variables
   sepal_vars <- c("Sepal.Width", "Sepal.Length")
 
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
+
+  dplyr_train <- select(iris_train, all_of(sepal_vars))
+
   rec_1 <-
-    recipe(~., data = iris) %>%
-    step_select(Species, sepal_vars)
+    recipe(~., data = iris_train) %>%
+    step_select(all_of(sepal_vars))
+  rec_2 <-
+    recipe(~., data = iris_train) %>%
+    step_select(all_of(!!sepal_vars))
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
-
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(Species, sepal_vars)
-
-  rec_1_train <- juice(prepped_1)
+  # both work when local variable is available
+  prepped_1 <- prep(rec_1, training = iris_train)
+  rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
-  rec_2 <-
-    recipe(~., data = iris) %>%
-    step_select(Species, !!sepal_vars)
+  prepped_2 <- prep(rec_2, training = iris_train)
+  rec_2_train <- bake(prepped_2, new_data = NULL)
+  expect_equal(dplyr_train, rec_2_train)
 
-  prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
-
+  # only rec_2 works when local variable is removed
   rm(sepal_vars)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
-  expect_error(
-    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
-    regexp = NA
-  )
-  rec_2_train <- juice(prepped_2)
+
+  expect_error(prep(rec_1, training = iris_train))
+
+  prepped_2 <- prep(rec_2, training = iris_train)
+  rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
 })
 
