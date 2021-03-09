@@ -129,24 +129,17 @@ test_that("printing", {
 })
 
 test_that("tidying", {
-  # the RNGkind() changed in R version 3.6 so we set it to v3.5 so that the id
-  # in the tidy tibble is consistent across older and newer versions of R
-  r_version <- getRversion() %>%
-    as.character() %>%
-    strsplit(".", fixed = TRUE)
-  r_version <- r_version[[1]] %>% as.numeric()
-  r_version_pre_36 <- r_version[1] > 3 | (r_version[1] >= 3 & r_version[2] > 5)
+  iris_tbl <- as_tibble(iris)
+  iris_train <- slice(iris_tbl, 1:75)
 
-  if (r_version_pre_36) {
-    suppressWarnings(RNGversion("3.5.0"))
-  }
+  petal <- c("Petal.Width", "Petal.Length")
 
   set.seed(403)
-  petal <- c("Petal.Width", "Petal.Length")
   rec <- recipe(~., data = iris) %>%
-    step_select(species = Species, starts_with("Sepal"), petal) %>%
-    step_select(!!petal)
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+    step_select(species = Species, starts_with("Sepal"), all_of(petal),
+                id = "select_no_qq") %>%
+    step_select(all_of(!!petal), id = "select_qq")
+  prepped <- prep(rec, training = iris_train)
 
   verify_output(test_path("print_test_output", "tidy-select-untrained"), {
     tidy(rec, number = 1)
@@ -156,9 +149,4 @@ test_that("tidying", {
     tidy(prepped, number = 1)
     tidy(prepped, number = 2)
   })
-  # set RNG version back to default for R versions > 3.5
-
-  if (r_version_pre_36){
-    RNGversion(getRversion())
-  }
 })
