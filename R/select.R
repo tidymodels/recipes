@@ -10,7 +10,6 @@
 #'  method, these are not currently used.
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
-#' @param inputs Quosure(s) of `...`.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any). For the
 #'  `tidy` method, a tibble with column `terms` which
@@ -61,7 +60,6 @@ step_select <- function(recipe,
                         ...,
                         role = NA,
                         trained = FALSE,
-                        inputs = NULL,
                         skip = FALSE,
                         id = rand_id("select")) {
   add_step(
@@ -70,19 +68,17 @@ step_select <- function(recipe,
       terms = ellipse_check(...),
       trained = trained,
       role = role,
-      inputs = inputs,
       skip = skip,
       id = id
     )
   )
 }
-step_select_new <- function(terms, role, trained, inputs, skip, id) {
+step_select_new <- function(terms, role, trained, skip, id) {
     step(
       subclass = "select",
       terms = terms,
       role = role,
       trained = trained,
-      inputs = inputs,
       skip = skip,
       id = id
     )
@@ -90,13 +86,12 @@ step_select_new <- function(terms, role, trained, inputs, skip, id) {
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {
-  sel <- eval_select_recipes(x$terms, training, info, allow_rename = TRUE)
+  terms <- eval_select_recipes(x$terms, training, info, allow_rename = TRUE)
 
   step_select_new(
-    terms = x$terms,
+    terms = terms,
     trained = TRUE,
     role = x$role,
-    inputs = sel,
     skip = x$skip,
     id = x$id
   )
@@ -104,7 +99,7 @@ prep.step_select <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_select <- function(object, new_data, ...) {
-  dplyr::select(new_data, object$inputs)
+  dplyr::select(new_data, dplyr::all_of(object$terms))
 }
 
 
@@ -113,7 +108,7 @@ print.step_select <-
     if (x$trained) {
       cat(
         "Variables selected ",
-        paste0(names(x$inputs), collapse = ", ")
+        paste0(names(x$terms), collapse = ", ")
       )
     } else {
       cat(
@@ -134,7 +129,7 @@ print.step_select <-
 #' @export
 tidy.step_select <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$inputs)
+    res <- tibble(terms = x$terms)
   } else {
     var_expr <- map(x$terms, quo_get_expr)
     var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)

@@ -10,7 +10,6 @@ step_select(
   ...,
   role = NA,
   trained = FALSE,
-  inputs = NULL,
   skip = FALSE,
   id = rand_id("select")
 )
@@ -31,8 +30,6 @@ role should they be assigned?}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
-
-\item{inputs}{Quosure(s) of \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
