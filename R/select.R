@@ -5,7 +5,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering bake. See
+#'  variables will be selected when baking. See
 #'  [selections()] for more details. For the `tidy`
 #'  method, these are not currently used.
 #' @param role For model terms selected by this step, what analysis
