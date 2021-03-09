@@ -26,47 +26,37 @@
 #' @concept variable_filters
 #' @export
 #' @examples
-#' rec <-
-#'   recipe(~., data = iris) %>%
-#'   step_select(Species, starts_with("Sepal"))
-#'
-#' prepped <- prep(rec, training = iris %>% slice(1:75))
-#'
 #' library(dplyr)
 #'
-#' dplyr_train <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(1:75) %>%
-#'   select(Species, starts_with("Sepal"))
+#' iris_tbl <- as_tibble(iris)
+#' iris_train <- slice(iris_tbl, 1:75)
+#' iris_test <- slice(iris_tbl, 76:150)
 #'
-#' rec_train <- bake(prepped, new_data = NULL)
+#' dplyr_train <- select(iris_train, Species, starts_with("Sepal"))
+#' dplyr_test <- select(iris_test, Species, starts_with("Sepal"))
+#'
+#' rec <- recipe(~., data = iris_train) %>%
+#'   step_select(Species, starts_with("Sepal")) %>%
+#'   prep(training = iris_train)
+#'
+#' rec_train <- bake(rec, new_data = NULL)
 #' all.equal(dplyr_train, rec_train)
 #'
-#' dplyr_test <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   select(Species, starts_with("Sepal"))
-#' rec_test <- bake(prepped, iris %>% slice(76:150))
+#' rec_test <- bake(rec, iris_test)
 #' all.equal(dplyr_test, rec_test)
 #'
-#' # Embedding objects:
+#' # Local variables
 #' sepal_vars <- c("Sepal.Width", "Sepal.Length")
 #'
 #' qq_rec <-
-#'   recipe(~., data = iris) %>%
-#'   # bad approach
-#'   step_select(Species, sepal_vars) %>%
-#'   # best approach
-#'   step_select(Species, !!sepal_vars) %>%
-#'   prep(training = iris)
+#'   recipe(~., data = iris_train) %>%
+#'   # fine for interactive usage
+#'   step_select(Species, all_of(sepal_vars)) %>%
+#'   # best approach for saving a recipe to disk
+#'   step_select(Species, all_of(!!sepal_vars))
 #'
-#' bake(qq_rec, new_data = NULL) %>% slice(1:4)
-#'
-#' # The difference:
-#' tidy(qq_rec, number = 1)
-#' tidy(qq_rec, number = 2)
+#' # Note that `sepal_vars` is inlined in the second approach
+#' qq_rec
 step_select <- function(recipe,
                         ...,
                         role = NA,
