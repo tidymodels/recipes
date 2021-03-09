@@ -1,4 +1,4 @@
-#' Select variables using `select`
+#' Select variables using `select()`
 #'
 #' `step_select` creates a *specification* of a recipe step
 #'  that will select variables using [dplyr::select()].
