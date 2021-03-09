@@ -129,7 +129,7 @@ print.step_select <-
 #' @export
 tidy.step_select <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$terms)
+    res <- tibble(terms = names(x$terms))
   } else {
     var_expr <- map(x$terms, quo_get_expr)
     var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
