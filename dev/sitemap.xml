@@ -304,6 +304,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_scale.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_select.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_shuffle.html</loc>
   </url>
   <url>

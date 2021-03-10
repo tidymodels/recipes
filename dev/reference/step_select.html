@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shuffle Variables — step_shuffle • recipes</title>
+<title>Select variables using dplyr — step_select • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,10 +49,9 @@
 
 
 
-<meta property="og:title" content="Shuffle Variables — step_shuffle" />
-<meta property="og:description" content="step_shuffle creates a specification of a recipe
-step that will randomly change the order of rows for selected
-variables." />
+<meta property="og:title" content="Select variables using dplyr — step_select" />
+<meta property="og:description" content="step_select() creates a specification of a recipe step
+that will select variables using dplyr::select()." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -170,28 +169,26 @@ variables." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Shuffle Variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/shuffle.R'><code>R/shuffle.R</code></a></small>
-    <div class="hidden name"><code>step_shuffle.Rd</code></div>
+    <h1>Select variables using dplyr</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/select.R'><code>R/select.R</code></a></small>
+    <div class="hidden name"><code>step_select.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>step_shuffle</code> creates a <em>specification</em> of a recipe
-step that will randomly change the order of rows for selected
-variables.</p>
+    <p><code>step_select()</code> creates a <em>specification</em> of a recipe step
+that will select variables using <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_shuffle</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>step_select</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"shuffle"</span><span class='op'>)</span>
+  id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"select"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for step_shuffle</span>
+<span class='co'># S3 method for step_select</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -205,25 +202,19 @@ sequence of operations for this recipe.</p></td>
     <tr>
       <th>...</th>
       <td><p>One or more selector functions to choose which
-variables will be permuted. See <code><a href='selections.html'>selections()</a></code> for more
-details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+variables will be selected when baking. See
+<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
+method, these are not currently used.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
+      <td><p>For model terms selected by this step, what analysis
+role should they be assigned?</p></td>
     </tr>
     <tr>
       <th>trained</th>
       <td><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></td>
-    </tr>
-    <tr>
-      <th>columns</th>
-      <td><p>A character string that contains the names of
-columns that should be shuffled. These values are not determined
-until <code><a href='prep.html'>prep.recipe()</a></code> is called.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -240,7 +231,7 @@ the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_shuffle</code> object.</p></td>
+      <td><p>A <code>step_select</code> object</p></td>
     </tr>
     </table>
 
@@ -248,46 +239,60 @@ the computations for subsequent operations</p></td>
 
     <p>An updated version of <code>recipe</code> with the new step
 added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> which
-is the columns that will be affected.</p>
+<code>tidy</code> method, a tibble with column <code>terms</code> which
+contains the <code>select</code> expressions as character strings
+(and are not reparsable).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When an object in the user's global environment is
+referenced in the expression defining the new variable(s),
+it is a good idea to use quasiquotation (e.g. <code>!!</code>) to embed
+the value of the object in the expression (to be portable
+between sessions). See the examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>integers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>, B <span class='op'>=</span> <span class='fl'>13</span><span class='op'>:</span><span class='fl'>24</span>, C <span class='op'>=</span> <span class='fl'>25</span><span class='op'>:</span><span class='fl'>36</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>A</span> <span class='op'>+</span> <span class='va'>B</span> <span class='op'>+</span> <span class='va'>C</span>, data <span class='op'>=</span> <span class='va'>integers</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_shuffle</span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>B</span><span class='op'>)</span>
+<span class='va'>iris_tbl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>iris_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='va'>iris_tbl</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span><span class='op'>)</span>
+<span class='va'>iris_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='va'>iris_tbl</span>, <span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span>
 
-<span class='va'>rand_set</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>integers</span><span class='op'>)</span>
+<span class='va'>dplyr_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>iris_train</span>, <span class='va'>Species</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dplyr_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>iris_test</span>, <span class='va'>Species</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>5377</span><span class='op'>)</span>
-<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rand_set</span>, <span class='va'>integers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 12 x 3</span><span>
-#&gt;        A     B     C
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>     5    13    25
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>     4    24    26
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>     9    23    27
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>     1    18    28
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>    11    14    29
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>    10    21    30
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>     6    19    31
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>     3    22    32
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>    12    16    33
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>     7    15    34
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span>     2    17    35
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span>     8    20    36</div><div class='input'>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 2</span><span>
-#&gt;   terms id           
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> A     shuffle_ayomC
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> B     shuffle_ayomC</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rand_set</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 2</span><span>
-#&gt;   terms id           
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> A     shuffle_ayomC
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> B     shuffle_ayomC</div></span></pre>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris_train</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_select</span><span class='op'>(</span><span class='va'>Species</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>iris_train</span><span class='op'>)</span>
+
+<span class='va'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>dplyr_train</span>, <span class='va'>rec_train</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='va'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>iris_test</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>dplyr_test</span>, <span class='va'>rec_test</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Local variables</span>
+<span class='va'>sepal_vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Width"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span>
+
+<span class='va'>qq_rec</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris_train</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='co'># fine for interactive usage</span>
+  <span class='fu'>step_select</span><span class='op'>(</span><span class='va'>Species</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>sepal_vars</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='co'># best approach for saving a recipe to disk</span>
+  <span class='fu'>step_select</span><span class='op'>(</span><span class='va'>Species</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>sepal_vars</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Note that `sepal_vars` is inlined in the second approach</span>
+<span class='va'>qq_rec</span>
+</div><div class='output co'>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;  predictor          5
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Terms selected  ~Species, ~all_of(sepal_vars)
+#&gt; Terms selected  ~Species, ~all_of(c("Sepal.Width", "Sepal.Length"))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
