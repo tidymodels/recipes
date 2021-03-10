@@ -18,6 +18,9 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: System dependencies
+        run: brew install harfbuzz fribidi
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
