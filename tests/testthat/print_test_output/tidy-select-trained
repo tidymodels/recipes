@@ -1,0 +1,17 @@
+> tidy(prepped, number = 1)
+# A tibble: 5 x 2
+  terms        id          
+  <chr>        <chr>       
+1 species      select_no_qq
+2 Sepal.Length select_no_qq
+3 Sepal.Width  select_no_qq
+4 Petal.Width  select_no_qq
+5 Petal.Length select_no_qq
+
+> tidy(prepped, number = 2)
+# A tibble: 2 x 2
+  terms        id       
+  <chr>        <chr>    
+1 Petal.Width  select_qq
+2 Petal.Length select_qq
+
