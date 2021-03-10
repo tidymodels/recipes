@@ -104,6 +104,7 @@ reference:
     - step_lincomb
     - step_nzv
     - step_rm
+    - step_select
     - step_zv
   - title: Step Functions - Row Operations
     contents:
