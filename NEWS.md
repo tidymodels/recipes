@@ -17,6 +17,9 @@
 
 * Fixed behaviour of the retain flag in `prep()` (#652).
 
+* Added new `step_select()` (#199).
+
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
