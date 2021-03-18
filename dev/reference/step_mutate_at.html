@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mutate multiple columns — step_mutate_at • recipes</title>
+<title>Mutate multiple columns using dplyr — step_mutate_at • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,9 +49,9 @@
 
 
 
-<meta property="og:title" content="Mutate multiple columns — step_mutate_at" />
+<meta property="og:title" content="Mutate multiple columns using dplyr — step_mutate_at" />
 <meta property="og:description" content="step_mutate_at creates a specification of a recipe step that will modify
-the selected variables using a common function." />
+the selected variables using a common function via dplyr::mutate_at()." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -169,14 +169,14 @@ the selected variables using a common function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mutate multiple columns</h1>
+    <h1>Mutate multiple columns using dplyr</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/mutate_at.R'><code>R/mutate_at.R</code></a></small>
     <div class="hidden name"><code>step_mutate_at.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><code>step_mutate_at</code> creates a <em>specification</em> of a recipe step that will modify
-the selected variables using a common function.</p>
+the selected variables using a common function via <code><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>dplyr::mutate_at()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>step_mutate_at</span><span class='op'>(</span>
