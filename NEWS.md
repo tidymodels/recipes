@@ -3,7 +3,10 @@
 * Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
 
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
-* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623)
+
+* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623).
+
+* Changed the names of all imputation steps, for example, from `step_knnimpute()` or `step_medianimpute()` (old) to `step_impute_knn()` or `step_impute_median()` (new) (#614).
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
