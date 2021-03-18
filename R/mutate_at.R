@@ -1,7 +1,7 @@
-#' Mutate multiple columns
+#' Mutate multiple columns using dplyr
 #'
 #' `step_mutate_at` creates a *specification* of a recipe step that will modify
-#' the selected variables using a common function.
+#' the selected variables using a common function via [dplyr::mutate_at()].
 #'
 #' @inheritParams step_center
 #' @param fn A function fun, a quosure style lambda `~ fun(.)`` or a list of

@@ -2,7 +2,7 @@
 % Please edit documentation in R/rename_at.R
 \name{step_rename_at}
 \alias{step_rename_at}
-\title{Rename multiple columns}
+\title{Rename multiple columns using dplyr}
 \usage{
 step_rename_at(
   recipe,
@@ -54,7 +54,7 @@ columns \code{terms} which contains the columns being transformed.
 }
 \description{
 \code{step_rename_at} creates a \emph{specification} of a recipe step that will rename
-the selected variables using a common function.
+the selected variables using a common function via \code{\link[dplyr:select_all]{dplyr::rename_at()}}.
 }
 \examples{
 library(dplyr)
