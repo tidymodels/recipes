@@ -1,6 +1,6 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: 1ec304b0002d0483f386e5a9b66cc0cde24b335f
+pkgdown: 1.6.1.9001
+pkgdown_sha: 23eb05ceceda1c44573b254dd8b96e92cd91f825
 articles:
   Custom_Steps: Custom_Steps.html
   Dummies: Dummies.html
@@ -11,7 +11,7 @@ articles:
   Skipping: Skipping.html
   articles/Multivariate_PLS: Multivariate_PLS.html
   articles/Subsampling: Subsampling.html
-last_built: 2021-03-18T21:03Z
+last_built: 2021-03-24T20:47Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
