@@ -164,7 +164,7 @@ nest_current_info <- function(info) {
 #'  `all_nominal_predictors()`, which select on role and type, will be the right
 #'  approach for users.
 #'
-#'  See `?selections` for more details.
+#'  See [selections] for more details.
 #'
 #'  `current_info()` is an internal function.
 #'
