@@ -483,6 +483,8 @@ prep.recipe <-
             " in memory.\n\n")
 
       x$template <- training
+    } else {
+      x$template <- training[0,]
     }
 
     x$tr_info <- tr_data
