@@ -46,6 +46,23 @@ test_that('correct basis functions', {
   dimnames(hydrogen_bs_tr_res) <- NULL
   dimnames(hydrogen_bs_te_res) <- NULL
 
+  expect_equal(
+    unname(attr(carbon_bs_tr_exp, "knots")),
+    attr(with_bs$steps[[1]]$objects$carbon, "knots")
+  )
+  expect_equal(
+    unname(attr(carbon_bs_tr_exp, "Boundary.knots")),
+    attr(with_bs$steps[[1]]$objects$carbon, "Boundary.knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_bs_tr_exp, "knots")),
+    attr(with_bs$steps[[1]]$objects$hydrogen, "knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_bs_tr_exp, "Boundary.knots")),
+    attr(with_bs$steps[[1]]$objects$hydrogen, "Boundary.knots")
+  )
+
   expect_equal(carbon_bs_tr_res, carbon_bs_tr_exp)
   expect_equal(carbon_bs_te_res, carbon_bs_te_exp)
   expect_equal(hydrogen_bs_tr_res, hydrogen_bs_tr_exp)

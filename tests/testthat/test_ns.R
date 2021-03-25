@@ -1,16 +1,21 @@
 library(testthat)
 library(recipes)
 library(modeldata)
-data(biomass)
 library(splines)
+data(biomass)
+
+# ------------------------------------------------------------------------------
 
 context("Natural splines")
+
+# ------------------------------------------------------------------------------
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
+# ------------------------------------------------------------------------------
 
 test_that('correct basis functions', {
   with_ns <- rec %>%
@@ -45,6 +50,23 @@ test_that('correct basis functions', {
   dimnames(carbon_ns_te_res) <- NULL
   dimnames(hydrogen_ns_tr_res) <- NULL
   dimnames(hydrogen_ns_te_res) <- NULL
+
+  expect_equal(
+    unname(attr(carbon_ns_tr_exp, "knots")),
+    attr(with_ns$steps[[1]]$objects$carbon, "knots")
+  )
+  expect_equal(
+    unname(attr(carbon_ns_tr_exp, "Boundary.knots")),
+    attr(with_ns$steps[[1]]$objects$carbon, "Boundary.knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_ns_tr_exp, "knots")),
+    attr(with_ns$steps[[1]]$objects$hydrogen, "knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_ns_tr_exp, "Boundary.knots")),
+    attr(with_ns$steps[[1]]$objects$hydrogen, "Boundary.knots")
+  )
 
   expect_equal(carbon_ns_tr_res, carbon_ns_tr_exp)
   expect_equal(carbon_ns_te_res, carbon_ns_te_exp)
