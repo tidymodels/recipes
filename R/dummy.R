@@ -1,6 +1,6 @@
 #' Dummy Variables Creation
 #'
-#' `step_dummy` creates a *specification* of a recipe
+#' `step_dummy()` creates a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
@@ -10,7 +10,7 @@
 #' @param ... One or more selector functions to choose which
 #'  _factor_ variables will be used to create the dummy variables. See
 #'  [selections()] for more details. The selected
-#'  variables must be factors. For the `tidy` method, these are
+#'  variables must be factors. For the `tidy()` method, these are
 #'  not currently used.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
@@ -40,7 +40,7 @@
 #' @concept dummy_variables
 #' @concept variable_encodings
 #' @export
-#' @details `step_dummy` will create a set of binary dummy
+#' @details `step_dummy()` will create a set of binary dummy
 #'  variables from a factor variable. For example, if an unordered
 #'  factor column in the data set has levels of "red", "green",
 #'  "blue", the dummy variable bake will create two additional
@@ -78,6 +78,12 @@
 #'
 #' If no columns are selected (perhaps due to an earlier `step_zv()`),
 #'  `bake()` will return the data as-is (e.g. with no dummy variables).
+#'
+#' Note that, by default, the new dummy variable column names obey the naming
+#' rules for columns. If there are levels such as "0", [dummy_names()] will put
+#' a leading "X" in front of the level (since it uses [make.names()]). This can
+#' be changed by passing in a different function to the `naming` argument for
+#' this step.
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.

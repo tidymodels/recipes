@@ -28,7 +28,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 \emph{factor} variables will be used to create the dummy variables. See
 \code{\link[=selections]{selections()}} for more details. The selected
-variables must be factors. For the \code{tidy} method, these are
+variables must be factors. For the \code{tidy()} method, these are
 not currently used.}
 
 \item{role}{For model terms created by this step, what analysis
@@ -75,13 +75,13 @@ selectors or original variables selected) and \code{columns} (the
 list of corresponding binary columns).
 }
 \description{
-\code{step_dummy} creates a \emph{specification} of a recipe
+\code{step_dummy()} creates a \emph{specification} of a recipe
 step that will convert nominal data (e.g. character or factors)
 into one or more numeric binary model terms for the levels of
 the original data.
 }
 \details{
-\code{step_dummy} will create a set of binary dummy
+\code{step_dummy()} will create a set of binary dummy
 variables from a factor variable. For example, if an unordered
 factor column in the data set has levels of "red", "green",
 "blue", the dummy variable bake will create two additional
@@ -119,6 +119,12 @@ the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
 If no columns are selected (perhaps due to an earlier \code{step_zv()}),
 \code{bake()} will return the data as-is (e.g. with no dummy variables).
+
+Note that, by default, the new dummy variable column names obey the naming
+rules for columns. If there are levels such as "0", \code{\link[=dummy_names]{dummy_names()}} will put
+a leading "X" in front of the level (since it uses \code{\link[=make.names]{make.names()}}). This can
+be changed by passing in a different function to the \code{naming} argument for
+this step.
 
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
