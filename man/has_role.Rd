@@ -51,7 +51,7 @@ character and factor.
 \code{all_nominal_predictors()}, which select on role and type, will be the right
 approach for users.
 
-See \code{?selections} for more details.
+See \link{selections} for more details.
 
 \code{current_info()} is an internal function.
 

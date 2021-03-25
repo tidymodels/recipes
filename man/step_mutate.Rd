@@ -4,7 +4,7 @@
 \alias{step_mutate}
 \alias{tidy.step_mutate}
 \alias{tidy.step_mutate_at}
-\title{Add new variables using \code{mutate}}
+\title{Add new variables using dplyr}
 \usage{
 step_mutate(
   recipe,

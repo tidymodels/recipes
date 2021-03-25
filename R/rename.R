@@ -1,4 +1,4 @@
-#' Rename variables by name
+#' Rename variables by name using dplyr
 #'
 #' `step_rename` creates a *specification* of a recipe step that will add
 #'  variables using [dplyr::rename()].

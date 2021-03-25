@@ -2,7 +2,7 @@
 % Please edit documentation in R/mutate_at.R
 \name{step_mutate_at}
 \alias{step_mutate_at}
-\title{Mutate multiple columns}
+\title{Mutate multiple columns using dplyr}
 \usage{
 step_mutate_at(
   recipe,
@@ -54,7 +54,7 @@ columns \code{terms} which contains the columns being transformed.
 }
 \description{
 \code{step_mutate_at} creates a \emph{specification} of a recipe step that will modify
-the selected variables using a common function.
+the selected variables using a common function via \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
 }
 \examples{
 library(dplyr)
