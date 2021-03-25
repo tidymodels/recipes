@@ -20,6 +20,8 @@
 
 * Added new `step_select()` (#199).
 
+* The `neighbors` parameter's default range for `step_isomap()` was changed to be 20-80.
+
 # recipes 0.1.15
 
 * The full tidyselect DSL is now allowed inside recipes `step_*()` functions. This includes the operators `&`, `|`, `-` and `!` and the new `where()` function. Additionally, the restriction preventing user defined selectors from being used has been lifted (#572).
