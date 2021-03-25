@@ -222,7 +222,8 @@ tidy.step_nnmf <- function(x, ...) {
       res$terms <- var_nms
       res <- tidyr::pivot_longer(res, cols = c(-terms),
                                  names_to = "component", values_to = "value")
-      res <- res[c("terms", "value", "component")]
+      res <- res[,c("terms", "value", "component")]
+      res <- res[order(res$component, res$terms),]
     } else {
       res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
     }

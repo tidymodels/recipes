@@ -187,9 +187,9 @@ test_that('tidy method', {
   expect_equal(
     tidy(rec_prep, 1),
     tibble::tibble(
-      terms = rep(c("disp", "wt"), each = 2),
-      value = unname(c(wts[1,], wts[2,])),
-      component = rep(c("NNMF1", "NNMF2"), 2),
+      terms = rep(c("disp", "wt"), 2),
+      value = unname(c(wts[,1], wts[,2])),
+      component = rep(c("NNMF1", "NNMF2"), each = 2),
       id = "test"
     )
   )
