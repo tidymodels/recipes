@@ -24,9 +24,9 @@
 
 * Performance improvements for `step_bs()` and `step_ns()`. The `prep()` step no longer evaluates the basis functions on the training set and the `bake()` steps only evaluates the basis functions once for each unique input value (#574)
 
-
 * Added new `step_select()` (#199).
 
+* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great. (#665)
 
 # recipes 0.1.15
 
