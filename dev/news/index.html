@@ -197,6 +197,7 @@
 <li><p>Performance improvements for <code><a href="../reference/step_bs.html">step_bs()</a></code> and <code><a href="../reference/step_ns.html">step_ns()</a></code>. The <code><a href="../reference/prep.html">prep()</a></code> step no longer evaluates the basis functions on the training set and the <code><a href="../reference/bake.html">bake()</a></code> steps only evaluates the basis functions once for each unique input value (<a href='https://github.com/tidymodels/recipes/issues/574'>#574</a>)</p></li>
 <li><p>Added new <code><a href="../reference/step_select.html">step_select()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/199'>#199</a>).</p></li>
 <li><p>The <code>neighbors</code> parameter’s default range for <code><a href="../reference/step_isomap.html">step_isomap()</a></code> was changed to be 20-80.</p></li>
+<li><p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> methods for <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> was rewritten since it was not great. (<a href='https://github.com/tidymodels/recipes/issues/665'>#665</a>)</p></li>
 </ul>
 </div>
     <div id="recipes-0115" class="section level1">
