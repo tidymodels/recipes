@@ -28,6 +28,7 @@
 
 * The `neighbors` parameter's default range for `step_isomap()` was changed to be 20-80.
 
+* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great. (#665)
 
 # recipes 0.1.15
 

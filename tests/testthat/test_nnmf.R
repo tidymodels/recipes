@@ -163,3 +163,34 @@ test_that('can prep recipes with no keep_original_cols', {
 
 })
 
+test_that('tidy method', {
+  skip_on_cran()
+  for (i in req)
+    skip_if_not_installed(i)
+
+  set.seed(1)
+  rec <- recipe(~., data = mtcars) %>%
+    step_nnmf(disp, wt, id = "test", seed = 1)
+  rec_prep <- prep(rec)
+  wts <- rec_prep$steps[[1]]$res@other.data$w
+
+
+  expect_equal(
+    tidy(rec, 1),
+    tibble::tribble(
+      ~terms, ~value, ~component,    ~id,
+      "disp",     NA_real_,          2, "test",
+      "wt",     NA_real_,          2, "test"
+    )
+  )
+
+  expect_equal(
+    tidy(rec_prep, 1),
+    tibble::tibble(
+      terms = rep(c("disp", "wt"), 2),
+      value = unname(c(wts[,1], wts[,2])),
+      component = rep(c("NNMF1", "NNMF2"), each = 2),
+      id = "test"
+    )
+  )
+})

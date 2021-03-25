@@ -216,14 +216,20 @@ print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
 tidy.step_nnmf <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {
-      var_names <- colnames(x$res@other.data$H)
-      res <- tibble(terms = var_names, components  = x$num_comp)
+      res <- x$res@other.data$w
+      var_nms <- rownames(res)
+      res <- tibble::as_tibble(res)
+      res$terms <- var_nms
+      res <- tidyr::pivot_longer(res, cols = c(-terms),
+                                 names_to = "component", values_to = "value")
+      res <- res[,c("terms", "value", "component")]
+      res <- res[order(res$component, res$terms),]
     } else {
       res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, components  = x$num_comp)
+    res <- tibble(terms = term_names, value = na_dbl, component  = x$num_comp)
   }
   res$id <- x$id
   res
