@@ -1,6 +1,6 @@
 #' PCA Signal Extraction
 #'
-#' `step_pca` creates a *specification* of a recipe step that will convert
+#' `step_pca()` creates a *specification* of a recipe step that will convert
 #'  numeric data into one or more principal components.
 #'
 #' @inheritParams step_center
@@ -69,6 +69,12 @@
 #' Alternatively, `threshold` can be used to determine the
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
+#'
+#' PCA loadings are unique up to sign (the help file for [stats::prcomp()]
+#' states that "The signs of the columns of the rotation matrix are arbitrary").
+#' `step_pca()` tries to reduce the differences in signs due to small
+#' differences in the data. As a result, they may not have the same sign as the
+#' loadings produces by [prcomp()].
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
@@ -152,6 +158,17 @@ step_pca_new <-
     )
   }
 
+standardize_loading_signs <- function(x) {
+  apply(x, 2, leading_pos)
+}
+leading_pos <- function(x) {
+  mx <- which.max(abs(x))
+  if (x[mx] < 0) {
+    x <- -x
+  }
+  x
+}
+
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
@@ -171,6 +188,11 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
     prc_call$x <- expr(training[, col_names, drop = FALSE])
     prc_obj <- eval(prc_call)
+
+    # PCA loadings are unique up to sign; the signs of the loadings are
+    # reproducible but will change with data changes. We try to make them more
+    # standard by making sure that the signs are the same. See issue #653
+    prc_obj$rotation <- standardize_loading_signs(prc_obj$rotation)
 
     x$num_comp <- min(x$num_comp, length(col_names))
     if (!is.na(x$threshold)) {

@@ -83,7 +83,7 @@ columns \code{terms} (the selectors or variables selected), \code{value} (the
 loading), and \code{component}.
 }
 \description{
-\code{step_pca} creates a \emph{specification} of a recipe step that will convert
+\code{step_pca()} creates a \emph{specification} of a recipe step that will convert
 numeric data into one or more principal components.
 }
 \details{
@@ -113,6 +113,12 @@ If \code{num_comp = 101}, the names would be \code{PC001} -
 Alternatively, \code{threshold} can be used to determine the
 number of components that are required to capture a specified
 fraction of the total variance in the variables.
+
+PCA loadings are unique up to sign (the help file for \code{\link[stats:prcomp]{stats::prcomp()}}
+states that "The signs of the columns of the rotation matrix are arbitrary").
+\code{step_pca()} tries to reduce the differences in signs due to small
+differences in the data. As a result, they may not have the same sign as the
+loadings produces by \code{\link[=prcomp]{prcomp()}}.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)

@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing Tools to Create Design Matrices
-Version: 0.1.15.9000
+Version: 0.1.15.9001
 Authors@R: c(
     person(given = "Max",    family = "Kuhn",    email = "max@rstudio.com",    role = c("aut", "cre")),
     person(given = "Hadley", family = "Wickham", email = "hadley@rstudio.com", role = c("aut")),
@@ -57,6 +57,6 @@ License: GPL-2
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.1.1.9001
 Roxygen: list(markdown = TRUE)
 RdMacros: lifecycle

@@ -33,7 +33,9 @@ test_that('correct PCA values', {
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
 
-  expect_equal(pca_pred, pca_pred_exp)
+  # See issue #653
+  expect_true(all(pca_extract_trained$steps[[3]]$res$rotation[1,] >= 0))
+  expect_equal(abs(pca_pred), abs(pca_pred_exp))
 
   tidy_exp_un <- tibble(
     terms = c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur"),
@@ -47,7 +49,8 @@ test_that('correct PCA values', {
     x = biomass_tr[, c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur")],
     scale. = TRUE)
   variances <- pca_obj$sdev^2
-  pca_obj <- pca_obj$rotation
+  # See issue #653
+  pca_obj <- recipes:::standardize_loading_signs(pca_obj$rotation)
   pca_obj <- as.data.frame(pca_obj)
   pca_obj <- utils::stack(pca_obj)
 
@@ -116,7 +119,29 @@ test_that('Reduced rotation size', {
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
 
-  expect_equal(pca_pred, pca_pred_exp)
+  expect_equal(abs(pca_pred), abs(pca_pred_exp))
+
+  # ----------------------------------------------------------------------------
+  # same but with one component
+  pca_extract <- rec %>%
+    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 1)
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- prcomp(biomass_tr[, 3:7], center = TRUE, scale. = TRUE, retx = TRUE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, 3:7])[, 1, drop = FALSE]
+  rownames(pca_pred_exp) <- NULL
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+
+  expect_equal(abs(pca_pred), abs(pca_pred_exp))
+
 })
 
 test_that('printing', {
