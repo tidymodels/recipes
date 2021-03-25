@@ -18,7 +18,12 @@
 
 * Added `allow_rename` argument to `eval_select_recipes()` (#646).
 
+* Added `keep_original_cols` argument to `step_pca()`, `step_ica()`, `step_nnmf()`, `step_kpca_rbf()`, `step_kpca_poly()`, `step_pls()`, and `step_isomap()` (#635).
+
+* Performance improvements for `step_bs()` and `step_ns()`. The `prep()` step no longer evaluates the basis functions on the training set and the `bake()` steps only evaluates the basis functions once for each unique input value (#574)
+
 * Added new `step_select()` (#199).
+
 
 # recipes 0.1.15
 
