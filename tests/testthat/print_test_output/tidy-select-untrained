@@ -1,0 +1,14 @@
+> tidy(rec, number = 1)
+# A tibble: 3 x 2
+  terms                    id          
+  <chr>                    <chr>       
+1 "Species"                select_no_qq
+2 "starts_with(\"Sepal\")" select_no_qq
+3 "all_of(petal)"          select_no_qq
+
+> tidy(rec, number = 2)
+# A tibble: 1 x 2
+  terms                                          id       
+  <chr>                                          <chr>    
+1 "all_of(c(\"Petal.Width\", \"Petal.Length\"))" select_qq
+

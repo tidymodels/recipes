@@ -333,7 +333,7 @@ printer <- function(tr_obj = NULL,
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-prepare   <- function(x, ...)
+prepare <- function(x, ...)
   rlang::abort(paste0("As of version 0.0.1.9006, used `prep` ",
        "instead of `prepare`"))
 
@@ -474,7 +474,7 @@ to_character <- function(x) {
 
 simple_terms <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

@@ -1,4 +1,4 @@
-#' Add new variables using `mutate`
+#' Add new variables using dplyr
 #'
 #' `step_mutate` creates a *specification* of a recipe step
 #'  that will add variables using [dplyr::mutate()].

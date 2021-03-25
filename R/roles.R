@@ -203,10 +203,10 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     last_row_with_var <- dplyr::last(which(recipe$var_info$variable == vars[i]))
     recipe$var_info <- tibble::add_row(
       .data = recipe$var_info,
-      variable = vars[i],
-      type = new_type[i],
+      variable = unname(vars[i]),
+      type = unname(new_type[i]),
       role = new_role,
-      source = source[i],
+      source = unname(source[i]),
       .after = last_row_with_var
     )
   }

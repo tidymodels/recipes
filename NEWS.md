@@ -3,15 +3,27 @@
 * Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
 
 * The `threshold`argument of `step_pca()` is now `tunable()` (#534).
-* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623)
+
+* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623).
+
+* Changed the names of all imputation steps, for example, from `step_knnimpute()` or `step_medianimpute()` (old) to `step_impute_knn()` or `step_impute_median()` (new) (#614).
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
-* Preserve preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+* Preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+
+* Added `keep_original_cols` argument to several steps: 
+  * `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, `step_isomap` which all default to `FALSE` (#635).
+  * `step_ratio()`, `step_holiday()`, `step_date()` which all default to `TRUE` to maintain original behavior, as well as `step_dummy()` which defaults to `FALSE` (#645).
+
+* Added `allow_rename` argument to `eval_select_recipes()` (#646).
 
 * Added `keep_original_cols` argument to `step_pca()`, `step_ica()`, `step_nnmf()`, `step_kpca_rbf()`, `step_kpca_poly()`, `step_pls()`, and `step_isomap()` (#635).
 
 * Performance improvements for `step_bs()` and `step_ns()`. The `prep()` step no longer evaluates the basis functions on the training set and the `bake()` steps only evaluates the basis functions once for each unique input value (#574)
+
+* Added new `step_select()` (#199).
+
 
 # recipes 0.1.15
 

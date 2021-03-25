@@ -4,7 +4,7 @@
 \alias{step_rename}
 \alias{tidy.step_rename}
 \alias{tidy.step_rename_at}
-\title{Rename variables by name}
+\title{Rename variables by name using dplyr}
 \usage{
 step_rename(
   recipe,

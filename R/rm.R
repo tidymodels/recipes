@@ -25,11 +25,12 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#'   data = biomass_tr
+#' )
 #'
 #' library(dplyr)
 #' smaller_set <- rec %>%
@@ -48,15 +49,17 @@ step_rm <- function(recipe,
                     removals = NULL,
                     skip = FALSE,
                     id = rand_id("rm")) {
-  add_step(recipe,
-           step_rm_new(
-             terms = ellipse_check(...),
-             role = role,
-             trained = trained,
-             removals = removals,
-             skip = skip,
-             id = id
-           ))
+  add_step(
+    recipe,
+    step_rm_new(
+      terms = ellipse_check(...),
+      role = role,
+      trained = trained,
+      removals = removals,
+      skip = skip,
+      id = id
+    )
+  )
 }
 
 step_rm_new <- function(terms, role, trained, removals, skip, id) {
@@ -74,6 +77,7 @@ step_rm_new <- function(terms, role, trained, removals, skip, id) {
 #' @export
 prep.step_rm <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
+
   step_rm_new(
     terms = x$terms,
     role = x$role,
@@ -86,8 +90,9 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_rm <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
+  if (length(object$removals) > 0) {
     new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  }
   as_tibble(new_data)
 }
 
@@ -97,16 +102,18 @@ print.step_rm <-
       if (length(x$removals) > 0) {
         cat("Variables removed ")
         cat(format_ch_vec(x$removals, width = width))
-      } else
+      } else {
         cat("No variables were removed")
+      }
     } else {
       cat("Delete terms ", sep = "")
       cat(format_selectors(x$terms, width = width))
     }
-    if (x$trained)
+    if (x$trained) {
       cat(" [trained]\n")
-    else
+    } else {
       cat("\n")
+    }
     invisible(x)
   }
 
