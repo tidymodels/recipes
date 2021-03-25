@@ -26,6 +26,23 @@ test_that('correct basis functions', {
   carbon_bs_te_exp <- predict(carbon_bs_tr_exp, biomass_te$carbon)
   hydrogen_bs_te_exp <- predict(hydrogen_bs_tr_exp, biomass_te$hydrogen)
 
+  expect_equal(
+    unname(attr(carbon_bs_tr_exp, "knots")),
+    attr(with_bs$steps[[1]]$objects$carbon, "knots")
+  )
+  expect_equal(
+    unname(attr(carbon_bs_tr_exp, "Boundary.knots")),
+    attr(with_bs$steps[[1]]$objects$carbon, "Boundary.knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_bs_tr_exp, "knots")),
+    attr(with_bs$steps[[1]]$objects$hydrogen, "knots")
+  )
+  expect_equal(
+    unname(attr(hydrogen_bs_tr_exp, "Boundary.knots")),
+    attr(with_bs$steps[[1]]$objects$hydrogen, "Boundary.knots")
+  )
+
   carbon_bs_tr_res <- as.matrix(with_bs_pred_tr[, grep("carbon", names(with_bs_pred_tr))])
   colnames(carbon_bs_tr_res) <- NULL
   hydrogen_bs_tr_res <- as.matrix(with_bs_pred_tr[, grep("hydrogen", names(with_bs_pred_tr))])

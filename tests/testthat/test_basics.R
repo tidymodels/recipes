@@ -182,3 +182,23 @@ test_that("`bake(new_data = NULL)` same as `juice()`", {
   expect_equal(nrow(roasted), 32)
 
 })
+
+test_that("`retain flag in prep should return data when TRUE and zero rows when FALSE", {
+  rec <-  recipe(mpg ~ ., data = mtcars %>% head(20))
+
+  # flag TRUE but no training data
+  prec_1 <- prep(rec, retain = TRUE)
+  expect_equal(nrow(prec_1$template), 20)
+
+  #flag FALSE and no training data
+  prec_2 <- prep(rec, retain = FALSE)
+  expect_equal(nrow(prec_2$template), 0)
+
+  #flag TRUE with training data
+  prec_3 <- prep(rec, training = mtcars %>% tail(12),retain = TRUE)
+  expect_equal(nrow(prec_3$template), 12)
+
+  #flag FALSE with training data
+  prec_4 <- prep(rec, training = mtcars %>% tail(12),retain = FALSE)
+  expect_equal(nrow(prec_4$template), 0)
+})
