@@ -257,7 +257,7 @@ tunable.step_isomap <- function(x, ...) {
     name = c("num_terms", "neighbors"),
     call_info = list(
       list(pkg = "dials", fun = "num_terms", range = c(1L, 4L)),
-      list(pkg = "dials", fun = "neighbors", range = c(1L, 15L))
+      list(pkg = "dials", fun = "neighbors", range = c(20L, 80L))
     ),
     source = "recipe",
     component = "step_isomap",
