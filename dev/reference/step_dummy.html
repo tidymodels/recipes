@@ -50,7 +50,7 @@
 
 
 <meta property="og:title" content="Dummy Variables Creation — step_dummy" />
-<meta property="og:description" content="step_dummy creates a specification of a recipe
+<meta property="og:description" content="step_dummy() creates a specification of a recipe
 step that will convert nominal data (e.g. character or factors)
 into one or more numeric binary model terms for the levels of
 the original data." />
@@ -177,7 +177,7 @@ the original data." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_dummy</code> creates a <em>specification</em> of a recipe
+    <p><code>step_dummy()</code> creates a <em>specification</em> of a recipe
 step that will convert nominal data (e.g. character or factors)
 into one or more numeric binary model terms for the levels of
 the original data.</p>
@@ -213,7 +213,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose which
 <em>factor</em> variables will be used to create the dummy variables. See
 <code><a href='selections.html'>selections()</a></code> for more details. The selected
-variables must be factors. For the <code>tidy</code> method, these are
+variables must be factors. For the <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> method, these are
 not currently used.</p></td>
     </tr>
     <tr>
@@ -283,7 +283,7 @@ selectors or original variables selected) and <code>columns</code> (the
 list of corresponding binary columns).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>step_dummy</code> will create a set of binary dummy
+    <p><code>step_dummy()</code> will create a set of binary dummy
 variables from a factor variable. For example, if an unordered
 factor column in the data set has levels of "red", "green",
 "blue", the dummy variable bake will create two additional
@@ -315,6 +315,11 @@ contained in the training set), a missing value is assigned to
 the results. See <code><a href='step_other.html'>step_other()</a></code> for an alternative.</p>
 <p>If no columns are selected (perhaps due to an earlier <code><a href='step_zv.html'>step_zv()</a></code>),
 <code><a href='bake.html'>bake()</a></code> will return the data as-is (e.g. with no dummy variables).</p>
+<p>Note that, by default, the new dummy variable column names obey the naming
+rules for columns. If there are levels such as "0", <code><a href='names0.html'>dummy_names()</a></code> will put
+a leading "X" in front of the level (since it uses <code><a href='https://rdrr.io/r/base/make.names.html'>make.names()</a></code>). This can
+be changed by passing in a different function to the <code>naming</code> argument for
+this step.</p>
 <p>The <a href='https://recipes.tidymodels.org/articles/Dummies.html'>package vignette for dummy variables</a>
 and interactions has more information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
