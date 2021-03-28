@@ -1,16 +1,29 @@
 # recipes (development version)
 
-* Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
 
-* The `threshold`argument of `step_pca()` is now `tunable()` (#534).
+## New Steps
 
 * Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623).
 
-* Changed the names of all imputation steps, for example, from `step_knnimpute()` or `step_medianimpute()` (old) to `step_impute_knn()` or `step_impute_median()` (new) (#614).
+* Added new `step_select()` (#199).
+
+## Bug Fixes
+
+* The `threshold` argument of `step_pca()` is now `tunable()` (#534).
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
 * Preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+
+* Fixed behavior of the retain flag in `prep()` (#652).
+
+* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great. (#665)
+
+## Improvements and Other Changes
+
+* Two new selectors that combine role and data type were added: `all_numeric_predictors()` and `all_nominal_predictors()`. (#620)
+
+* Changed the names of all imputation steps, for example, from `step_knnimpute()` or `step_medianimpute()` (old) to `step_impute_knn()` or `step_impute_median()` (new) (#614).
 
 * Added `keep_original_cols` argument to several steps: 
   * `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, `step_isomap` which all default to `FALSE` (#635).
@@ -18,17 +31,12 @@
 
 * Added `allow_rename` argument to `eval_select_recipes()` (#646).
 
-* Fixed behaviour of the retain flag in `prep()` (#652).
-
-* Added `keep_original_cols` argument to `step_pca()`, `step_ica()`, `step_nnmf()`, `step_kpca_rbf()`, `step_kpca_poly()`, `step_pls()`, and `step_isomap()` (#635).
-
 * Performance improvements for `step_bs()` and `step_ns()`. The `prep()` step no longer evaluates the basis functions on the training set and the `bake()` steps only evaluates the basis functions once for each unique input value (#574)
-
-* Added new `step_select()` (#199).
 
 * The `neighbors` parameter's default range for `step_isomap()` was changed to be 20-80.
 
-* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great. (#665)
+* Per the warning in version 0.1.13, `step_upsample()` and `step_downsample()` are deprecated in favor of the themis package. They are no longer in recipes.  
+
 
 # recipes 0.1.15
 
@@ -64,7 +72,7 @@
 
 * Avoided partial matching on `seq()` arguments in internal functions. 
 
-* Improved error messaging, for example when a user tries to `prep()` a tuneable recipe.
+* Improved error messaging, for example when a user tries to `prep()` a tunable recipe.
 
 * `step_upsample()` and `step_downsample()` are soft deprecated in recipes as they are now available in the themis package. They will be removed in the next version. 
 

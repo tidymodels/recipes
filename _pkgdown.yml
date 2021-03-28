@@ -109,7 +109,6 @@ reference:
   - title: Step Functions - Row Operations
     contents:
     - step_arrange
-    - step_downsample
     - step_filter
     - step_lag
     - step_naomit
@@ -117,7 +116,6 @@ reference:
     - step_sample
     - step_shuffle
     - step_slice
-    - step_upsample
   - title: Step Functions - Others
     contents:
     - step_intercept
