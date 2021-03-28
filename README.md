@@ -6,7 +6,7 @@
 coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=master)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
 [![Downloads](https://cranlogs.r-pkg.org/badges/recipes)](https://CRAN.R-project.org/package=recipes)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
 ## Introduction
 
