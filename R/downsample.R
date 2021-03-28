@@ -1,7 +1,7 @@
 #' Down-Sample a Data Set Based on a Factor Variable
 #'
 #' @description
-#' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
+#' `r lifecycle::badge("deprecated")`
 #'
 #' `step_downsample` is now available as `themis::step_downsample()`. This
 #'  function creates a *specification* of a recipe step that will remove
@@ -59,7 +59,7 @@
 #'  option `skip = TRUE` so that the extra sampling is _not_
 #'  conducted outside of the training set.
 #'
-#' @keywords datagen
+#' @keywords internal
 #' @concept preprocessing
 #' @concept subsampling
 #' @export
@@ -84,7 +84,7 @@ step_downsample <-
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1), id = rand_id("downsample")) {
 
-    lifecycle::deprecate_soft("0.1.13",
+    lifecycle::deprecate_warn("0.1.13",
                               "recipes::step_downsample()",
                               "themis::step_downsample()")
 

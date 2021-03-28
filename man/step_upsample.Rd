@@ -72,7 +72,7 @@ added to the sequence of existing steps (if any). For the
 the variable used to sample.
 }
 \description{
-\if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{step_upsample} is now available as \code{themis::step_upsample()}. This
 function creates a \emph{specification} of a recipe step that
@@ -132,4 +132,4 @@ data.frame(
 }
 \concept{preprocessing}
 \concept{subsampling}
-\keyword{datagen}
+\keyword{internal}

@@ -1,7 +1,7 @@
 #' Up-Sample a Data Set Based on a Factor Variable
 #'
 #' @description
-#' \if{html}{\figure{lifecycle-soft-deprecated.svg}{alt="lifecycle-soft-deprecated"}}
+#' `r lifecycle::badge("deprecated")`
 #'
 #' `step_upsample` is now available as `themis::step_upsample()`. This
 #'  function creates a *specification* of a recipe step that
@@ -54,7 +54,7 @@
 #'  option `skip = TRUE` so that the extra sampling is _not_
 #'  conducted outside of the training set.
 #'
-#' @keywords datagen
+#' @keywords internal
 #' @concept preprocessing
 #' @concept subsampling
 #' @export
@@ -93,7 +93,7 @@ step_upsample <-
            seed = sample.int(10^5, 1),
            id = rand_id("upsample")) {
 
-    lifecycle::deprecate_soft("0.1.13",
+    lifecycle::deprecate_warn("0.1.13",
                               "recipes::step_upsample()",
                               "themis::step_upsample()")
 
