@@ -56,8 +56,8 @@
 #'  you wanted an interaction with numeric column `z`, you could
 #'  create a set of specific interaction effects (e.g.
 #'  `x_2:z + x_3:z` and so on) or you could use
-#'  `starts_with("z_"):z`. When [prep()] evaluates this step,
-#'  `starts_with("z_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x6)`
+#'  `starts_with("x_"):z`. When [prep()] evaluates this step,
+#'  `starts_with("x_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x6)`
 #'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x6):z` and
 #'  all two-way interactions are created.
 
