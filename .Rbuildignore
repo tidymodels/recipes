@@ -18,3 +18,4 @@ tests/testthat/NMF*
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
 ^man-roxygen$
+^LICENSE\.md$
