@@ -96,8 +96,8 @@ variables \code{x_2}, \code{x_3}, ..., \code{x_6} using \code{\link[=step_dummy]
 you wanted an interaction with numeric column \code{z}, you could
 create a set of specific interaction effects (e.g.
 \code{x_2:z + x_3:z} and so on) or you could use
-\code{starts_with("z_"):z}. When \code{\link[=prep]{prep()}} evaluates this step,
-\code{starts_with("z_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x6)}
+\code{starts_with("x_"):z}. When \code{\link[=prep]{prep()}} evaluates this step,
+\code{starts_with("x_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x6)}
 so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x6):z} and
 all two-way interactions are created.
 }
