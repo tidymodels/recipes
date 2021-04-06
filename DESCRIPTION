@@ -53,7 +53,7 @@ Suggests:
     RSpectra,
     testthat (>= 2.1.0),
     xml2
-License: GPL-2
+License: MIT + file LICENSE
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
