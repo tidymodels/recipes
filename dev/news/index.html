@@ -175,13 +175,31 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor"></a>recipes (development version)<small> Unreleased </small>
 </h1>
+<div id="new-steps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-steps" class="anchor"></a>New Steps</h2>
 <ul>
-<li><p>Two new selectors that combine role and data type were added: <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> and <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/620'>#620</a>)</p></li>
-<li><p>The <code>threshold</code>argument of <code><a href="../reference/step_pca.html">step_pca()</a></code> is now <code><a href="https://generics.r-lib.org/reference/tunable.html" class="external-link">tunable()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/534'>#534</a>).</p></li>
 <li><p>Added a new step called <code><a href="../reference/step_indicate_na.html">step_indicate_na()</a></code>, which will create and append additional binary columns to the dataset to indicate which observations are missing (<a href='https://github.com/tidymodels/recipes/issues/623'>#623</a>).</p></li>
-<li><p>Changed the names of all imputation steps, for example, from <code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> or <code><a href="../reference/step_impute_median.html">step_medianimpute()</a></code> (old) to <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> or <code><a href="../reference/step_impute_median.html">step_impute_median()</a></code> (new) (<a href='https://github.com/tidymodels/recipes/issues/614'>#614</a>).</p></li>
+<li><p>Added new <code><a href="../reference/step_select.html">step_select()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/199'>#199</a>).</p></li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li><p>The <code>threshold</code> argument of <code><a href="../reference/step_pca.html">step_pca()</a></code> is now <code><a href="https://generics.r-lib.org/reference/tunable.html" class="external-link">tunable()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/534'>#534</a>).</p></li>
 <li><p>Integer variables used in <code><a href="../reference/step_profile.html">step_profile()</a></code> are now kept as integers (and not doubles).</p></li>
 <li><p>Preserve multiple roles in <code>last_term_info</code> so <code>bake</code> can correctly respond to <code>has_roles</code>. (<a href='https://github.com/tidymodels/recipes/issues/632'>#632</a>)</p></li>
+<li><p>Fixed behavior of the retain flag in <code><a href="../reference/prep.html">prep()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/652'>#652</a>).</p></li>
+<li><p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> methods for <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> was rewritten since it was not great. (<a href='https://github.com/tidymodels/recipes/issues/665'>#665</a>)</p></li>
+</ul>
+</div>
+<div id="improvements-and-other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#improvements-and-other-changes" class="anchor"></a>Improvements and Other Changes</h2>
+<ul>
+<li><p>Two new selectors that combine role and data type were added: <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> and <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/620'>#620</a>)</p></li>
+<li><p>Changed the names of all imputation steps, for example, from <code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> or <code><a href="../reference/step_impute_median.html">step_medianimpute()</a></code> (old) to <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> or <code><a href="../reference/step_impute_median.html">step_impute_median()</a></code> (new) (<a href='https://github.com/tidymodels/recipes/issues/614'>#614</a>).</p></li>
 <li>
 <p>Added <code>keep_original_cols</code> argument to several steps:</p>
 <ul>
@@ -192,14 +210,12 @@
 </ul>
 </li>
 <li><p>Added <code>allow_rename</code> argument to <code>eval_select_recipes()</code> (<a href='https://github.com/tidymodels/recipes/issues/646'>#646</a>).</p></li>
-<li><p>Fixed behaviour of the retain flag in <code><a href="../reference/prep.html">prep()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/652'>#652</a>).</p></li>
-<li><p>Added <code>keep_original_cols</code> argument to <code><a href="../reference/step_pca.html">step_pca()</a></code>, <code><a href="../reference/step_ica.html">step_ica()</a></code>, <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code>, <code><a href="../reference/step_kpca_rbf.html">step_kpca_rbf()</a></code>, <code><a href="../reference/step_kpca_poly.html">step_kpca_poly()</a></code>, <code><a href="../reference/step_pls.html">step_pls()</a></code>, and <code><a href="../reference/step_isomap.html">step_isomap()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/635'>#635</a>).</p></li>
 <li><p>Performance improvements for <code><a href="../reference/step_bs.html">step_bs()</a></code> and <code><a href="../reference/step_ns.html">step_ns()</a></code>. The <code><a href="../reference/prep.html">prep()</a></code> step no longer evaluates the basis functions on the training set and the <code><a href="../reference/bake.html">bake()</a></code> steps only evaluates the basis functions once for each unique input value (<a href='https://github.com/tidymodels/recipes/issues/574'>#574</a>)</p></li>
-<li><p>Added new <code><a href="../reference/step_select.html">step_select()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/199'>#199</a>).</p></li>
 <li><p>The <code>neighbors</code> parameter’s default range for <code><a href="../reference/step_isomap.html">step_isomap()</a></code> was changed to be 20-80.</p></li>
-<li><p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> methods for <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> was rewritten since it was not great. (<a href='https://github.com/tidymodels/recipes/issues/665'>#665</a>)</p></li>
+<li><p>The deprecation for <code><a href="../reference/step_upsample.html">step_upsample()</a></code> and <code><a href="../reference/step_downsample.html">step_downsample()</a></code> has been escalated from a soft deprecation to a regular deprecation; these functions are available in the themis package.</p></li>
 <li><p>Re-licensed package from GPL-2 to MIT. See <a href="https://github.com/tidymodels/recipes/issues/670" class="external-link">consent from copyright holders here</a>.</p></li>
 </ul>
+</div>
 </div>
     <div id="recipes-0115" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.15">
@@ -427,9 +443,9 @@
 <li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/296'>#296</a></a>).</li>
 </ul>
@@ -545,9 +561,9 @@
 <li><p>The <code>okc</code> data were updated with two additional columns.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p><a href="https://github.com/tidymodels/recipes/issues/125" class="external-link">issue 125</a> that prevented several steps from working with <strong>dplyr</strong> grouped data frames. (contributed by Jeffrey Arnold)</p></li>
 <li><p><a href="https://github.com/tidymodels/recipes/issues/127" class="external-link">issue 127</a> where options to <code>step_discretize</code> were not being passed to <code>discretize</code>.</p></li>
@@ -645,9 +661,9 @@
     <div id="recipes-0019002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9002">
 <a href="#recipes-0019002" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9002</h1>
-<div id="new-steps" class="section level2">
+<div id="new-steps-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-steps" class="anchor"></a>New steps</h2>
+<a href="#new-steps-1" class="anchor"></a>New steps</h2>
 <ul>
 <li>
 <code>step_lincomb</code> removes variables involved in linear combinations to resolve them.</li>
