@@ -50,7 +50,8 @@ to obtain a consensus projection.}
 
 \item{options}{A list of options to \code{nmf()} in the NMF package by way of the
 \code{NNMF()} function in the \code{dimRed} package. \strong{Note} that the arguments
-\code{data} and \code{ndim} should not be passed here.}
+\code{data} and \code{ndim} should not be passed here, and that NMF's parallel
+processing is turned off in favor of resample-level parallelization.}
 
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by

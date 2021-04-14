@@ -22,7 +22,8 @@
 #'  to obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the
 #'  `NNMF()` function in the `dimRed` package. **Note** that the arguments
-#'  `data` and `ndim` should not be passed here.
+#'  `data` and `ndim` should not be passed here, and that NMF's parallel
+#'  processing is turned off in favor of resample-level parallelization.
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
 #'  [prep.recipe()].
@@ -146,12 +147,8 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
     opts$.mute <- c("message", "output")
     opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
     opts$.method <- "NNMF"
-
-    for (i in nmf_pkg) {
-      suppressPackageStartupMessages(
-        require(i, character.only = TRUE)
-      )
-    }
+    nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
+    opts$options <- list(.options = nmf_opts)
 
     nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
     if (inherits(nnm, "try-error")) {
@@ -252,8 +249,6 @@ tunable.step_nnmf <- function(x, ...) {
   )
 }
 
-
-nmf_pkg <- c("dimRed", "NMF")
 #' @rdname required_pkgs.step
 #' @export
 required_pkgs.step_nnmf <- function(x, ...) {
