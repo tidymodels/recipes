@@ -243,7 +243,8 @@ to obtain a consensus projection.</p></td>
       <th>options</th>
       <td><p>A list of options to <code>nmf()</code> in the NMF package by way of the
 <code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> function in the <code>dimRed</code> package. <strong>Note</strong> that the arguments
-<code>data</code> and <code>ndim</code> should not be passed here.</p></td>
+<code>data</code> and <code>ndim</code> should not be passed here, and that NMF's parallel
+processing is turned off in favor of resample-level parallelization.</p></td>
     </tr>
     <tr>
       <th>res</th>
