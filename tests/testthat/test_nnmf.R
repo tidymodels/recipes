@@ -13,9 +13,6 @@ test_that('Correct values', {
   for (i in req)
     skip_if_not_installed(i)
 
-  for (i in req)
-    require(i, character.only = TRUE)
-
   # # make test cases
   # dat <- loadDataSet("Iris")
   # factorization <- embed(dat, "NNMF", seed = 2432, nrun = 3)

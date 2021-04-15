@@ -17,7 +17,7 @@
 
 * Fixed behavior of the retain flag in `prep()` (#652).
 
-* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great. (#665)
+* The `tidy()` methods for `step_nnmf()` was rewritten since it was not great (#665), and `step_nnmf()` now no longer fully loads underlying packages (#685). 
 
 ## Improvements and Other Changes
 
