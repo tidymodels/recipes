@@ -206,7 +206,7 @@ print.step_downsample <-
 #' @export
 tidy.step_downsample <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$column)
+    res <- tibble(terms = unname(x$column))
   }
   else {
     term_names <- sel2char(x$terms)
