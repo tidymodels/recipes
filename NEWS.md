@@ -1,9 +1,8 @@
-# recipes (development version)
-
+# recipes 0.1.16
 
 ## New Steps
 
-* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the dataset to indicate which observations are missing (#623).
+* Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the data set to indicate which observations are missing (#623).
 
 * Added new `step_select()` (#199).
 
@@ -13,7 +12,7 @@
 
 * Integer variables used in `step_profile()` are now kept as integers (and not doubles). 
 
-* Preserve multiple roles in `last_term_info` so `bake` can correctly respond to `has_roles`. (#632)
+* Preserve multiple roles in `last_term_info` so `bake()` can correctly respond to `has_roles`. (#632)
 
 * Fixed behavior of the retain flag in `prep()` (#652).
 
@@ -26,7 +25,7 @@
 * Changed the names of all imputation steps, for example, from `step_knnimpute()` or `step_medianimpute()` (old) to `step_impute_knn()` or `step_impute_median()` (new) (#614).
 
 * Added `keep_original_cols` argument to several steps: 
-  * `step_pca`, `step_ica`, `step_nnmf`, `step_kpca_rbf`, `step_kpca_poly`, `step_pls`, `step_isomap` which all default to `FALSE` (#635).
+  * `step_pca()`, `step_ica()`, `step_nnmf()`, `step_kpca_rbf()`, `step_kpca_poly()`, `step_pls()`, `step_isomap()` which all default to `FALSE` (#635).
   * `step_ratio()`, `step_holiday()`, `step_date()` which all default to `TRUE` to maintain original behavior, as well as `step_dummy()` which defaults to `FALSE` (#645).
 
 * Added `allow_rename` argument to `eval_select_recipes()` (#646).
@@ -36,7 +35,6 @@
 * The `neighbors` parameter's default range for `step_isomap()` was changed to be 20-80.
 
 * The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a soft deprecation to a regular deprecation; these functions are available in the themis package.  
-
 
 * Re-licensed package from GPL-2 to MIT. See [consent from copyright holders here](https://github.com/tidymodels/recipes/issues/670).
 

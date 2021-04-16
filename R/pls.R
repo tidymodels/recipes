@@ -76,7 +76,7 @@
 #'
 #' Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) _mixOmics: An R package for
 #' 'omics feature selection and multiple data integration_. PLoS Comput Biol
-#' 13(11): e1005752. \url{https://doi.org/10.1371/journal.pcbi.1005752}
+#' 13(11): e1005752. \doi{10.1371/journal.pcbi.1005752}
 #' @examples
 #' # requires the Bioconductor mixOmics package
 #' data(biomass, package = "modeldata")
