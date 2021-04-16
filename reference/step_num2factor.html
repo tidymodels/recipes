@@ -78,9 +78,15 @@ integers." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -97,7 +103,7 @@ integers." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
         </div>
       </div>
     </div>
@@ -147,7 +153,7 @@ integers." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -267,14 +273,14 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='va'>attrition</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>StockOptionLevel</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 2</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   StockOptionLevel [4]</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span><span>
+#&gt; </span><span style='color: #949494;'># Groups:   StockOptionLevel [4]</span><span>
 #&gt;   StockOptionLevel     n
-#&gt;              </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>                0   631
-#&gt; </span><span style='color: #555555;'>2</span><span>                1   596
-#&gt; </span><span style='color: #555555;'>3</span><span>                2   158
-#&gt; </span><span style='color: #555555;'>4</span><span>                3    85</div><div class='input'>
+#&gt;              </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>                0   631
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>                1   596
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>                2   158
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>                3    85</div><div class='input'>
 <span class='va'>amnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nothin"</span>, <span class='st'>"meh"</span>, <span class='st'>"some"</span>, <span class='st'>"copious"</span><span class='op'>)</span>
 
 <span class='va'>rec</span> <span class='op'>&lt;-</span>
@@ -327,10 +333,10 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 <span class='va'>ceo</span> <span class='op'>&lt;-</span> <span class='va'>attrition</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>MonthlyIncome <span class='op'>=</span> <span class='fl'>10</span><span class='op'>^</span><span class='fl'>10</span><span class='op'>)</span>
 
 <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>ceo</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 2</span><span>
 #&gt;   MonthlyIncome Attrition
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Yes      </div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;ord&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>            Yes      </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -357,6 +363,8 @@ columns <code>terms</code> (the selectors or variables selected) and <code>order
 
   
 
+
+  
 
   </body>
 </html>

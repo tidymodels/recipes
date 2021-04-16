@@ -80,9 +80,15 @@ printing." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -99,7 +105,7 @@ printing." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
         </div>
       </div>
     </div>
@@ -149,7 +155,7 @@ printing." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -179,24 +185,24 @@ in most steps) and returns a character vector version for
 printing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yj_transform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span>, eps <span class='op'>=</span> <span class='fl'>0.001</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'><a href='recipes-internal.html'>yj_transform</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span>, eps <span class='op'>=</span> <span class='fl'>0.001</span><span class='op'>)</span>
 
-<span class='fu'>estimate_yj</span><span class='op'>(</span><span class='va'>dat</span>, limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>, num_unique <span class='op'>=</span> <span class='fl'>5</span>, na_rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='recipes-internal.html'>estimate_yj</a></span><span class='op'>(</span><span class='va'>dat</span>, limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>, num_unique <span class='op'>=</span> <span class='fl'>5</span>, na_rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>ellipse_check</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+<span class='fu'><a href='recipes-internal.html'>ellipse_check</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>printer</span><span class='op'>(</span>
+<span class='fu'><a href='recipes-internal.html'>printer</a></span><span class='op'>(</span>
   tr_obj <span class='op'>=</span> <span class='cn'>NULL</span>,
   untr_obj <span class='op'>=</span> <span class='cn'>NULL</span>,
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
   width <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>width</span> <span class='op'>-</span> <span class='fl'>30</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='fu'>prepare</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'><a href='recipes-internal.html'>prepare</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>is_trained</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'><a href='recipes-internal.html'>is_trained</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>sel2char</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'><a href='recipes-internal.html'>sel2char</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,7 +239,7 @@ recipe (e.g. <code>terms</code> in most steps).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If not empty, a list of quosures. If empty, an error is thrown.</p>
-<p>`NULL``, invisibly.</p>
+<p><code>NULL</code>, invisibly.</p>
 <p>A logical</p>
 <p>A character vector</p>
 
@@ -263,6 +269,8 @@ recipe (e.g. <code>terms</code> in most steps).</p></td>
 
   
 
+
+  
 
   </body>
 </html>

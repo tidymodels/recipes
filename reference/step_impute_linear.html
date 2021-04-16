@@ -77,9 +77,15 @@ create linear regression models to impute missing data." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -96,7 +102,7 @@ create linear regression models to impute missing data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
         </div>
       </div>
     </div>
@@ -146,7 +152,7 @@ create linear regression models to impute missing data." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -164,7 +170,7 @@ create linear regression models to impute missing data." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation of numeric variables via a linear model.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/impute_lm.R'><code>R/impute_lm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/impute_linear.R'><code>R/impute_linear.R</code></a></small>
     <div class="hidden name"><code>step_impute_linear.Rd</code></div>
     </div>
 
@@ -178,7 +184,7 @@ create linear regression models to impute missing data.</p>
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  impute_with <span class='op'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
+  impute_with <span class='op'>=</span> <span class='fu'><a href='step_impute_bag.html'>imp_vars</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
   models <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"impute_linear"</span><span class='op'>)</span>
@@ -278,7 +284,7 @@ cases for the training set predictors.</p>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>ames_missing</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>step_impute_linear</span><span class='op'>(</span>
     <span class='va'>Longitude</span>,
-    impute_with <span class='op'>=</span> <span class='fu'><a href='step_bagimpute.html'>imp_vars</a></span><span class='op'>(</span><span class='va'>Latitude</span>, <span class='va'>Neighborhood</span>, <span class='va'>MS_Zoning</span>, <span class='va'>Alley</span><span class='op'>)</span>
+    impute_with <span class='op'>=</span> <span class='fu'><a href='step_impute_bag.html'>imp_vars</a></span><span class='op'>(</span><span class='va'>Latitude</span>, <span class='va'>Neighborhood</span>, <span class='va'>MS_Zoning</span>, <span class='va'>Alley</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ames_missing</span><span class='op'>)</span>
 
@@ -289,7 +295,7 @@ cases for the training set predictors.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>ames_missing</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Longitude</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>Longitude</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:kernlab’:</span>
 #&gt; <span class='message'></span>
@@ -325,6 +331,8 @@ cases for the training set predictors.</p>
 
   
 
+
+  
 
   </body>
 </html>

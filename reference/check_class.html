@@ -77,9 +77,15 @@ check that will check if a variable is of a designated class." />
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -96,7 +102,7 @@ check that will check if a variable is of a designated class." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
         </div>
       </div>
     </div>
@@ -146,7 +152,7 @@ check that will check if a variable is of a designated class." />
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -285,20 +291,20 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
-#&gt; </span><span style='color: #555555;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
-#&gt; </span><span style='color: #555555;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
-#&gt; </span><span style='color: #555555;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
-#&gt; </span><span style='color: #555555;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
-#&gt; </span><span style='color: #555555;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
-#&gt; </span><span style='color: #555555;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
-#&gt; </span><span style='color: #555555;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
-#&gt; </span><span style='color: #555555;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
-#&gt; </span><span style='color: #555555;'># … with 990 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
+#&gt; </span><span style='color: #949494;'># … with 990 more rows</span><span></div><div class='input'>
 <span class='co'># Manual specification</span>
 <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>age</span>, class_nm <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -306,20 +312,20 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>date</span>, class_nm <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1,000 x 6</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1,000 x 6</span><span>
 #&gt;    diet                height location      date       Class   age
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
-#&gt; </span><span style='color: #555555;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
-#&gt; </span><span style='color: #555555;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
-#&gt; </span><span style='color: #555555;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
-#&gt; </span><span style='color: #555555;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
-#&gt; </span><span style='color: #555555;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
-#&gt; </span><span style='color: #555555;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
-#&gt; </span><span style='color: #555555;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
-#&gt; </span><span style='color: #555555;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
-#&gt; </span><span style='color: #555555;'># … with 990 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
+#&gt; </span><span style='color: #949494;'># … with 990 more rows</span><span></div><div class='input'>
 <span class='co'># By default only the classes that are specified</span>
 <span class='co'>#   are allowed.</span>
 <span class='va'>x_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>time <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>60</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -336,11 +342,11 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
   <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span>, allow_additional <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 1</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 1</span><span>
 #&gt;   time               
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span> 2020-11-11 </span><span style='color: #555555;'>20:12:26</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> 2020-11-11 </span><span style='color: #555555;'>20:13:26</span><span></div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-04-16 </span><span style='color: #949494;'>16:05:37</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2021-04-16 </span><span style='color: #949494;'>16:06:37</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -368,6 +374,8 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 
   
 
+
+  
 
   </body>
 </html>

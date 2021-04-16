@@ -75,9 +75,15 @@
   gtag('config', 'UA-115082821-1');
 </script>
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,7 +100,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
         </div>
       </div>
     </div>
@@ -144,7 +150,7 @@
 </li>
         <li>
   <a href="https://github.com/tidymodels/recipes/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -247,7 +253,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="has_role.html">has_role()</a></code> <code><a href="has_role.html">all_predictors()</a></code> <code><a href="has_role.html">all_outcomes()</a></code> <code><a href="has_role.html">has_type()</a></code> <code><a href="has_role.html">all_numeric()</a></code> <code><a href="has_role.html">all_nominal()</a></code> <code><a href="has_role.html">current_info()</a></code> </p>
+          <p><code><a href="has_role.html">has_role()</a></code> <code><a href="has_role.html">all_predictors()</a></code> <code><a href="has_role.html">all_numeric_predictors()</a></code> <code><a href="has_role.html">all_nominal_predictors()</a></code> <code><a href="has_role.html">all_outcomes()</a></code> <code><a href="has_role.html">has_type()</a></code> <code><a href="has_role.html">all_numeric()</a></code> <code><a href="has_role.html">all_nominal()</a></code> <code><a href="has_role.html">current_info()</a></code> </p>
         </td>
         <td><p>Role Selection</p></td>
       </tr><tr>
@@ -272,9 +278,15 @@
       <tr>
         
         <td>
-          <p><code><a href="step_bagimpute.html">step_bagimpute()</a></code> <code><a href="step_bagimpute.html">imp_vars()</a></code> <code><a href="step_bagimpute.html">tidy(<i>&lt;step_bagimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_bag.html">step_impute_bag()</a></code> <code><a href="step_impute_bag.html">step_bagimpute()</a></code> <code><a href="step_impute_bag.html">imp_vars()</a></code> <code><a href="step_impute_bag.html">tidy(<i>&lt;step_impute_bag&gt;</i>)</a></code> </p>
         </td>
         <td><p>Imputation via Bagged Trees</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="step_impute_knn.html">step_impute_knn()</a></code> <code><a href="step_impute_knn.html">step_knnimpute()</a></code> <code><a href="step_impute_knn.html">tidy(<i>&lt;step_impute_knn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Imputation via K-Nearest Neighbors</p></td>
       </tr><tr>
         
         <td>
@@ -284,37 +296,31 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="step_knnimpute.html">step_knnimpute()</a></code> <code><a href="step_knnimpute.html">tidy(<i>&lt;step_knnimpute&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Imputation via K-Nearest Neighbors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="step_lowerimpute.html">step_lowerimpute()</a></code> <code><a href="step_lowerimpute.html">tidy(<i>&lt;step_lowerimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_lower.html">step_impute_lower()</a></code> <code><a href="step_impute_lower.html">step_lowerimpute()</a></code> <code><a href="step_impute_lower.html">tidy(<i>&lt;step_impute_lower&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Numeric Data Below the Threshold of Measurement</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="step_meanimpute.html">step_meanimpute()</a></code> <code><a href="step_meanimpute.html">tidy(<i>&lt;step_meanimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_mean.html">step_impute_mean()</a></code> <code><a href="step_impute_mean.html">step_meanimpute()</a></code> <code><a href="step_impute_mean.html">tidy(<i>&lt;step_impute_mean&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Numeric Data Using the Mean</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="step_medianimpute.html">step_medianimpute()</a></code> <code><a href="step_medianimpute.html">tidy(<i>&lt;step_medianimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_median.html">step_impute_median()</a></code> <code><a href="step_impute_median.html">step_medianimpute()</a></code> <code><a href="step_impute_median.html">tidy(<i>&lt;step_impute_median&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Numeric Data Using the Median</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="step_modeimpute.html">step_modeimpute()</a></code> <code><a href="step_modeimpute.html">tidy(<i>&lt;step_modeimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_mode.html">step_impute_mode()</a></code> <code><a href="step_impute_mode.html">step_modeimpute()</a></code> <code><a href="step_impute_mode.html">tidy(<i>&lt;step_impute_mode&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Nominal Data Using the Most Common Value</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="step_rollimpute.html">step_rollimpute()</a></code> <code><a href="step_rollimpute.html">tidy(<i>&lt;step_rollimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_roll.html">step_impute_roll()</a></code> <code><a href="step_impute_roll.html">step_rollimpute()</a></code> <code><a href="step_impute_roll.html">tidy(<i>&lt;step_impute_roll&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Numeric Data Using a Rolling Window Statistic</p></td>
       </tr><tr>
@@ -383,7 +389,7 @@
         <td>
           <p><code><a href="step_mutate.html">step_mutate()</a></code> <code><a href="step_mutate.html">tidy(<i>&lt;step_mutate&gt;</i>)</a></code> <code><a href="step_mutate.html">tidy(<i>&lt;step_mutate_at&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Add new variables using <code>mutate</code></p></td>
+        <td><p>Add new variables using dplyr</p></td>
       </tr><tr>
         
         <td>
@@ -494,6 +500,12 @@
           <p><code><a href="step_holiday.html">step_holiday()</a></code> <code><a href="step_holiday.html">tidy(<i>&lt;step_holiday&gt;</i>)</a></code> </p>
         </td>
         <td><p>Holiday Feature Generator</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="step_indicate_na.html">step_indicate_na()</a></code> <code><a href="step_indicate_na.html">tidy(<i>&lt;step_indicate_na&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Create Missing Data Column Indicators</p></td>
       </tr><tr>
         
         <td>
@@ -676,7 +688,7 @@
         <td>
           <p><code><a href="step_mutate_at.html">step_mutate_at()</a></code> </p>
         </td>
-        <td><p>Mutate multiple columns</p></td>
+        <td><p>Mutate multiple columns using dplyr</p></td>
       </tr><tr>
         
         <td>
@@ -747,6 +759,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="step_select.html">step_select()</a></code> <code><a href="step_select.html">tidy(<i>&lt;step_select&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Select variables using dplyr</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="step_zv.html">step_zv()</a></code> <code><a href="step_zv.html">tidy(<i>&lt;step_zv&gt;</i>)</a></code> </p>
         </td>
         <td><p>Zero Variance Filter</p></td>
@@ -772,12 +790,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="step_downsample.html">step_downsample()</a></code> <code><a href="step_downsample.html">tidy(<i>&lt;step_downsample&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Down-Sample a Data Set Based on a Factor Variable</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="step_filter.html">step_filter()</a></code> <code><a href="step_filter.html">tidy(<i>&lt;step_filter&gt;</i>)</a></code> </p>
         </td>
         <td><p>Filter rows using dplyr</p></td>
@@ -796,7 +808,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="step_rollimpute.html">step_rollimpute()</a></code> <code><a href="step_rollimpute.html">tidy(<i>&lt;step_rollimpute&gt;</i>)</a></code> </p>
+          <p><code><a href="step_impute_roll.html">step_impute_roll()</a></code> <code><a href="step_impute_roll.html">step_rollimpute()</a></code> <code><a href="step_impute_roll.html">tidy(<i>&lt;step_impute_roll&gt;</i>)</a></code> </p>
         </td>
         <td><p>Impute Numeric Data Using a Rolling Window Statistic</p></td>
       </tr><tr>
@@ -817,12 +829,6 @@
           <p><code><a href="step_slice.html">step_slice()</a></code> <code><a href="step_slice.html">tidy(<i>&lt;step_slice&gt;</i>)</a></code> </p>
         </td>
         <td><p>Filter rows by position using dplyr</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="step_upsample.html">step_upsample()</a></code> <code><a href="step_upsample.html">tidy(<i>&lt;step_upsample&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Up-Sample a Data Set Based on a Factor Variable</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -853,13 +859,13 @@
         <td>
           <p><code><a href="step_rename.html">step_rename()</a></code> <code><a href="step_rename.html">tidy(<i>&lt;step_rename&gt;</i>)</a></code> <code><a href="step_rename.html">tidy(<i>&lt;step_rename_at&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Rename variables by name</p></td>
+        <td><p>Rename variables by name using dplyr</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="step_rename_at.html">step_rename_at()</a></code> </p>
         </td>
-        <td><p>Rename multiple columns</p></td>
+        <td><p>Rename multiple columns using dplyr</p></td>
       </tr><tr>
         
         <td>
@@ -994,6 +1000,8 @@
 
   
 
+
+  
 
   </body>
 </html>
