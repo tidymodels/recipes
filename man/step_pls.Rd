@@ -168,7 +168,7 @@ sparse_plsda <-
 
 Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) \emph{mixOmics: An R package for
 'omics feature selection and multiple data integration}. PLoS Comput Biol
-13(11): e1005752. \url{https://doi.org/10.1371/journal.pcbi.1005752}
+13(11): e1005752. \doi{10.1371/journal.pcbi.1005752}
 }
 \seealso{
 \code{\link[=step_pca]{step_pca()}}, \code{\link[=step_kpca]{step_kpca()}}, \code{\link[=step_ica]{step_ica()}}, \code{\link[=recipe]{recipe()}},
