@@ -29,7 +29,7 @@
 #' @concept preprocessing
 #' @concept basis_expansion
 #' @export
-#' @details `step_poly` can new features from a single
+#' @details `step_poly` can create new features from a single
 #'  variable that enable fitting routines to model this variable in
 #'  a nonlinear manner. The extent of the possible nonlinearity is
 #'  determined by the `degree` argument of
