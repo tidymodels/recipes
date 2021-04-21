@@ -69,7 +69,7 @@ step that will create new columns that are basis expansions of
 variables using orthogonal polynomials.
 }
 \details{
-\code{step_poly} can new features from a single
+\code{step_poly} can create new features from a single
 variable that enable fitting routines to model this variable in
 a nonlinear manner. The extent of the possible nonlinearity is
 determined by the \code{degree} argument of
