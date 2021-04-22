@@ -141,7 +141,7 @@
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An Example</h2>
+<a href="#an-example" class="anchor" aria-hidden="true"></a>An Example</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
@@ -167,7 +167,7 @@
 </div>
 <div id="an-initial-recipe" class="section level2">
 <h2 class="hasAnchor">
-<a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
+<a href="#an-initial-recipe" class="anchor" aria-hidden="true"></a>An Initial Recipe</h2>
 <p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
@@ -186,7 +186,7 @@
 </div>
 <div id="preprocessing-steps" class="section level2">
 <h2 class="hasAnchor">
-<a href="#preprocessing-steps" class="anchor"></a>Preprocessing Steps</h2>
+<a href="#preprocessing-steps" class="anchor" aria-hidden="true"></a>Preprocessing Steps</h2>
 <p>From here, preprocessing steps for some step <em>X</em> can be added sequentially in one of two ways:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>rec_obj &lt;-<span class="st"> </span>step_{X}(rec_obj, arguments)    <span class="co">## or</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span>step_{X}(arguments)</span></code></pre></div>
@@ -359,7 +359,7 @@
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">
-<a href="#checks" class="anchor"></a>Checks</h2>
+<a href="#checks" class="anchor" aria-hidden="true"></a>Checks</h2>
 <p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
 <p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">

@@ -133,7 +133,7 @@
 <p>Recipes can be different from their base R counterparts such as <code>model.matrix</code>. This vignette describes the different methods for encoding categorical predictors with special attention to interaction terms and contrasts.</p>
 <div id="creating-dummy-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#creating-dummy-variables" class="anchor"></a>Creating Dummy Variables</h2>
+<a href="#creating-dummy-variables" class="anchor" aria-hidden="true"></a>Creating Dummy Variables</h2>
 <p>Let’s start, of course, with <code>iris</code> data. This has four numeric columns and a single factor column with three levels: <code>'setosa'</code>, <code>'versicolor'</code>, and <code>'virginica'</code>. Our initial recipe will have no outcome:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
@@ -230,7 +230,7 @@
 </div>
 <div id="interactions-with-dummy-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interactions-with-dummy-variables" class="anchor"></a>Interactions with Dummy Variables</h2>
+<a href="#interactions-with-dummy-variables" class="anchor" aria-hidden="true"></a>Interactions with Dummy Variables</h2>
 <p>Creating interactions with recipes requires the use of a model formula, such as</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_int</span> <span class="op">&lt;-</span> 
@@ -318,7 +318,7 @@
 </div>
 <div id="warning" class="section level2">
 <h2 class="hasAnchor">
-<a href="#warning" class="anchor"></a>Warning!</h2>
+<a href="#warning" class="anchor" aria-hidden="true"></a>Warning!</h2>
 <p>Would it work if I didn’t convert species to a factor and used the interactions step?</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_int</span> <span class="op">&lt;-</span> 
@@ -344,7 +344,7 @@
 </div>
 <div id="getting-all-of-the-indicator-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#getting-all-of-the-indicator-variables" class="anchor"></a>Getting All of the Indicator Variables</h2>
+<a href="#getting-all-of-the-indicator-variables" class="anchor" aria-hidden="true"></a>Getting All of the Indicator Variables</h2>
 <p>As mentioned above, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created. You might want to get all of them back.</p>
 <p>Historically, <em>C</em> - 1 are used so that a linear dependency is avoided in the design matrix; all <em>C</em> dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can’t be computed. This technical term for a the design matrix like this is “less than full rank”.</p>
 <p>There are models (e.g. <code>glmnet</code> and others) that can avoid this issue so you might want to get all of the columns. To do this, <code>step_dummy</code> has an option called <code>one_hot</code> that will make sure that all <em>C</em> are produced:</p>
@@ -400,7 +400,7 @@
 </div>
 <div id="novel-levels" class="section level2">
 <h2 class="hasAnchor">
-<a href="#novel-levels" class="anchor"></a>Novel Levels</h2>
+<a href="#novel-levels" class="anchor" aria-hidden="true"></a>Novel Levels</h2>
 <p>When a recipe is used with new samples, some factors may have acquired new levels that were not present when <code>prep</code> was run. If <code>step_dummy</code> encounters this situation, a warning is issues (“There are new levels in a factor”) and the indicator variables that correspond to the factor are assigned missing values.</p>
 <p>One way around this is to use <code>step_other</code>. This step can convert infrequently occurring levels to a new category (that defaults to “other”). This step can also be used to convert new factor levels to “other” also.</p>
 <p>Also, <code>step_integer</code> has functionality similar to <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" class="external-link"><code>LabelEncoder</code></a> and encodes new values as zero.</p>
@@ -408,7 +408,7 @@
 </div>
 <div id="other-steps-related-to-dummy-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-steps-related-to-dummy-variables" class="anchor"></a>Other Steps Related to Dummy Variables</h2>
+<a href="#other-steps-related-to-dummy-variables" class="anchor" aria-hidden="true"></a>Other Steps Related to Dummy Variables</h2>
 <p>There are a bunch of steps related to going in-between factors and dummy variables:</p>
 <ul>
 <li>

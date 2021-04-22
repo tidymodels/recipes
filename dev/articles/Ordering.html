@@ -133,7 +133,7 @@
 <p>In the recipes package, there are no constraints on the order in which steps are added to the recipe; you as a user are free to apply steps in the order appropriate to your data preprocessing needs. However, the <strong>order of steps matters</strong> and there are some general suggestions that you should consider.</p>
 <div id="transforming-a-variable" class="section level2">
 <h2 class="hasAnchor">
-<a href="#transforming-a-variable" class="anchor"></a>Transforming a variable</h2>
+<a href="#transforming-a-variable" class="anchor" aria-hidden="true"></a>Transforming a variable</h2>
 <ul>
 <li>If using a Box-Cox transformation, don’t center the data first or do any operations that might make the data non-positive.</li>
 <li>Alternatively, use the Yeo-Johnson transformation so you don’t have to worry about this.</li>
@@ -141,7 +141,7 @@
 </div>
 <div id="handling-levels-in-categorical-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#handling-levels-in-categorical-data" class="anchor"></a>Handling levels in categorical data</h2>
+<a href="#handling-levels-in-categorical-data" class="anchor" aria-hidden="true"></a>Handling levels in categorical data</h2>
 <p>The order of steps for handling categorical levels is important, because each step sets levels for the next step to use as input. These steps create <em>factor</em> output, even if the input is of character type.</p>
 <ul>
 <li>Typically use <code><a href="../reference/step_novel.html">step_novel()</a></code> before other steps for changing factor levels, so that the new factor level can be set as you desire rather than coerced to <code>NA</code> by other factor handling steps.</li>
@@ -151,7 +151,7 @@
 </div>
 <div id="dummy-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#dummy-variables" class="anchor"></a>Dummy variables</h2>
+<a href="#dummy-variables" class="anchor" aria-hidden="true"></a>Dummy variables</h2>
 <p>Recipes do not automatically create dummy variables (unlike <em>most</em> formula methods).</p>
 <ul>
 <li>If you want to center, scale, or do any other operations on <em>all</em> of the predictors, run <code><a href="../reference/step_dummy.html">step_dummy()</a></code> first so that numeric columns are in the data set instead of factors.</li>
@@ -160,7 +160,7 @@
 </div>
 <div id="recommended-preprocessing-outline" class="section level2">
 <h2 class="hasAnchor">
-<a href="#recommended-preprocessing-outline" class="anchor"></a>Recommended preprocessing outline</h2>
+<a href="#recommended-preprocessing-outline" class="anchor" aria-hidden="true"></a>Recommended preprocessing outline</h2>
 <p>While every individual project’s needs are different, here is a suggested order of <em>potential</em> steps that should work for most problems:</p>
 <ol style="list-style-type: decimal">
 <li>Impute</li>

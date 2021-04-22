@@ -173,16 +173,16 @@
 
     <div id="recipes-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
-<a href="#recipes-development-version" class="anchor"></a>recipes (development version)<small> Unreleased </small>
+<a href="#recipes-development-version" class="anchor" aria-hidden="true"></a>recipes (development version)<small> Unreleased </small>
 </h1>
 </div>
     <div id="recipes-0116" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.16">
-<a href="#recipes-0116" class="anchor"></a>recipes 0.1.16<small> 2021-04-16 </small>
+<a href="#recipes-0116" class="anchor" aria-hidden="true"></a>recipes 0.1.16<small> 2021-04-16 </small>
 </h1>
 <div id="new-steps" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-steps" class="anchor"></a>New Steps</h2>
+<a href="#new-steps" class="anchor" aria-hidden="true"></a>New Steps</h2>
 <ul>
 <li><p>Added a new step called <code><a href="../reference/step_indicate_na.html">step_indicate_na()</a></code>, which will create and append additional binary columns to the data set to indicate which observations are missing (<a href='https://github.com/tidymodels/recipes/issues/623'>#623</a>).</p></li>
 <li><p>Added new <code><a href="../reference/step_select.html">step_select()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/199'>#199</a>).</p></li>
@@ -190,7 +190,7 @@
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes" class="anchor" aria-hidden="true"></a>Bug Fixes</h2>
 <ul>
 <li><p>The <code>threshold</code> argument of <code><a href="../reference/step_pca.html">step_pca()</a></code> is now <code><a href="https://generics.r-lib.org/reference/tunable.html" class="external-link">tunable()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/534'>#534</a>).</p></li>
 <li><p>Integer variables used in <code><a href="../reference/step_profile.html">step_profile()</a></code> are now kept as integers (and not doubles).</p></li>
@@ -201,7 +201,7 @@
 </div>
 <div id="improvements-and-other-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#improvements-and-other-changes" class="anchor"></a>Improvements and Other Changes</h2>
+<a href="#improvements-and-other-changes" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
 <ul>
 <li><p>Two new selectors that combine role and data type were added: <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> and <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/620'>#620</a>)</p></li>
 <li><p>Changed the names of all imputation steps, for example, from <code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> or <code><a href="../reference/step_impute_median.html">step_medianimpute()</a></code> (old) to <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> or <code><a href="../reference/step_impute_median.html">step_impute_median()</a></code> (new) (<a href='https://github.com/tidymodels/recipes/issues/614'>#614</a>).</p></li>
@@ -224,7 +224,7 @@
 </div>
     <div id="recipes-0115" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.15">
-<a href="#recipes-0115" class="anchor"></a>recipes 0.1.15<small> 2020-11-11 </small>
+<a href="#recipes-0115" class="anchor" aria-hidden="true"></a>recipes 0.1.15<small> 2020-11-11 </small>
 </h1>
 <ul>
 <li><p>The full tidyselect DSL is now allowed inside recipes <code>step_*()</code> functions. This includes the operators <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">&amp;</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">|</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">-</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">!</a></code> and the new <code>where()</code> function. Additionally, the restriction preventing user defined selectors from being used has been lifted (<a href='https://github.com/tidymodels/recipes/issues/572'>#572</a>).</p></li>
@@ -235,7 +235,7 @@
 </div>
     <div id="recipes-0114" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.14">
-<a href="#recipes-0114" class="anchor"></a>recipes 0.1.14<small> 2020-10-17 </small>
+<a href="#recipes-0114" class="anchor" aria-hidden="true"></a>recipes 0.1.14<small> 2020-10-17 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/prep.html">prep()</a></code> gained an option to print a summary of which columns were added and/or removed during execution.</p></li>
@@ -245,11 +245,11 @@
 </div>
     <div id="recipes-0113" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.13">
-<a href="#recipes-0113" class="anchor"></a>recipes 0.1.13<small> 2020-06-23 </small>
+<a href="#recipes-0113" class="anchor" aria-hidden="true"></a>recipes 0.1.13<small> 2020-06-23 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li><p><code><a href="../reference/step_filter.html">step_filter()</a></code>, <code><a href="../reference/step_slice.html">step_slice()</a></code>, <code><a href="../reference/step_sample.html">step_sample()</a></code>, and <code><a href="../reference/step_naomit.html">step_naomit()</a></code> had their defaults for <code>skip</code> changed to <code>TRUE</code>. In the vast majority of applications, these steps should not be applied to the test or assessment sets.</p></li>
 <li><p><code>tidyr</code> version 1.0.0 or later is now required.</p></li>
@@ -257,7 +257,7 @@
 </div>
 <div id="other-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p><code><a href="../reference/step_pls.html">step_pls()</a></code> was changed so that it uses the Bioconductor mixOmics package. Objects created with previous versions of <code>recipes</code> can still use <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code>. With the current version, the categorical outcomes can be used but now multivariate models do not. Also, the new method allows for sparse results.</p></li>
 <li><p>As suggested by <a href='https://github.com/StefanBRas'>@StefanBRas</a>, <code><a href="../reference/step_ica.html">step_ica()</a></code> now defaults to the C engine (<a href='https://github.com/tidymodels/recipes/issues/518'>#518</a>)</p></li>
@@ -273,7 +273,7 @@
 </div>
     <div id="recipes-0112" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.12">
-<a href="#recipes-0112" class="anchor"></a>recipes 0.1.12<small> 2020-05-01 </small>
+<a href="#recipes-0112" class="anchor" aria-hidden="true"></a>recipes 0.1.12<small> 2020-05-01 </small>
 </h1>
 <ul>
 <li>Some S3 methods were not being registered previously. This caused issues in R 4.0.</li>
@@ -281,18 +281,18 @@
 </div>
     <div id="recipes-0111" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.11">
-<a href="#recipes-0111" class="anchor"></a>recipes 0.1.11<small> 2020-04-30 </small>
+<a href="#recipes-0111" class="anchor" aria-hidden="true"></a>recipes 0.1.11<small> 2020-04-30 </small>
 </h1>
 <div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li>While <code>recipes</code> does not directly depend on <code>dials</code>, it has several S3 methods for generics in <code>dials</code>. Version 0.0.5 of <code>dials</code> added stricter validation for these methods, so changes were required for <code>recipes</code>.</li>
 </ul>
 </div>
 <div id="new-operations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations" class="anchor"></a>New Operations</h2>
+<a href="#new-operations" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li>
 <code><a href="../reference/step_cut.html">step_cut()</a></code> enables you to create a factor from a numeric based on provided break (contributed by Edwin Thoen)</li>
@@ -301,18 +301,18 @@
 </div>
     <div id="recipes-0110" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.10">
-<a href="#recipes-0110" class="anchor"></a>recipes 0.1.10<small> 2020-03-18 </small>
+<a href="#recipes-0110" class="anchor" aria-hidden="true"></a>recipes 0.1.10<small> 2020-03-18 </small>
 </h1>
 <div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li>renamed <code>yj_trans()</code> to <code><a href="../reference/recipes-internal.html">yj_transform()</a></code> to avoid conflicts.</li>
 </ul>
 </div>
 <div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-2" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p>Added flexible naming options for new columns created by <code><a href="../reference/step_depth.html">step_depth()</a></code> and <code><a href="../reference/step_classdist.html">step_classdist()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/262'>#262</a>).</p></li>
 <li><p>Small changes for base R’s <code>stringsAsFactors</code> change.</p></li>
@@ -321,7 +321,7 @@
 </div>
     <div id="recipes-019" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.9">
-<a href="#recipes-019" class="anchor"></a>recipes 0.1.9<small> 2020-01-07 </small>
+<a href="#recipes-019" class="anchor" aria-hidden="true"></a>recipes 0.1.9<small> 2020-01-07 </small>
 </h1>
 <ul>
 <li><p>Delayed S3 method registration for <code>tune::tunable()</code> methods that live in recipes will now work correctly on R &gt;=4.0.0 (<a href="https://github.com/tidymodels/recipes/issues/439" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/439'>#439</a></a>, <a href="https://github.com/tidymodels/tune/issues/146" class="external-link">tidymodels/tune<a href='https://github.com/tidymodels/recipes/issues/146'>#146</a></a>).</p></li>
@@ -330,10 +330,10 @@
 </div>
     <div id="recipes-018" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.8">
-<a href="#recipes-018" class="anchor"></a><small> 2019-12-18 </small><code>recipes</code> 0.1.8</h1>
+<a href="#recipes-018" class="anchor" aria-hidden="true"></a><small> 2019-12-18 </small><code>recipes</code> 0.1.8</h1>
 <div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li><p>The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types).</p></li>
 <li><p>The data sets were moved to the new <code>modeldata</code> package.</p></li>
@@ -342,7 +342,7 @@
 </div>
 <div id="other-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-3" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-3" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p>Using a minus in the formula to <code><a href="../reference/recipes.html">recipes()</a></code> is no longer allowed (it didn’t remove variables anyway). <code><a href="../reference/step_rm.html">step_rm()</a></code> or <code><a href="../reference/roles.html">update_role()</a></code> can be used instead.</p></li>
 <li><p>When using a selector that returns no columns, <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now return a tibble with as many rows as the original template data or the <code>new_data</code> respectively. This is more consistent with how selectors work in dplyr (<a href="https://github.com/tidymodels/recipes/issues/411" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/411'>#411</a></a>).</p></li>
@@ -355,16 +355,16 @@
 </div>
     <div id="recipes-017" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.7">
-<a href="#recipes-017" class="anchor"></a><small> 2019-09-15 </small><code>recipes</code> 0.1.7</h1>
+<a href="#recipes-017" class="anchor" aria-hidden="true"></a><small> 2019-09-15 </small><code>recipes</code> 0.1.7</h1>
 <p>Release driven by changes in <code>tidyr</code> (v 1.0.0).</p>
 <div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-3" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-3" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <p><code>format_selector()</code>’s <code>wdth</code> argument has been renamed to <code>width</code> (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p>
 </div>
 <div id="new-operations-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-1" class="anchor"></a>New Operations</h2>
+<a href="#new-operations-1" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li>
 <code><a href="../reference/step_mutate_at.html">step_mutate_at()</a></code>, <code><a href="../reference/step_rename.html">step_rename()</a></code>, and <code><a href="../reference/step_rename_at.html">step_rename_at()</a></code> were added.</li>
@@ -372,7 +372,7 @@
 </div>
 <div id="other-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-4" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-4" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p>The use of <code>varying()</code> will be deprecated in favor of an upcoming function <code>tune()</code>. No changes are need in this version, but subsequent versions will work with <code>tune()</code>.</p></li>
 <li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/250'>#250</a></a>).</p></li>
@@ -389,11 +389,11 @@
 </div>
     <div id="recipes-016" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.6">
-<a href="#recipes-016" class="anchor"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
+<a href="#recipes-016" class="anchor" aria-hidden="true"></a><small> 2019-07-02 </small><code>recipes</code> 0.1.6</h1>
 <p>Release driven by changes in <code>rlang</code>.</p>
 <div id="breaking-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-4" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-4" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li><p>Since 2018, a warning has been issued when the wrong argument was used in <code><a href="../reference/bake.html">bake(recipe, newdata)</a></code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
 <li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
@@ -404,7 +404,7 @@
 </div>
 <div id="new-operations-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-2" class="anchor"></a>New Operations</h2>
+<a href="#new-operations-2" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li>
 <code><a href="../reference/step_normalize.html">step_normalize()</a></code> centers and scales the data (if you are, like Max, too lazy to use two separate steps).</li>
@@ -414,7 +414,7 @@
 </div>
 <div id="other-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-5" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-5" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/289'>#289</a></a></p></li>
 <li><p><code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/323'>#323</a></a>).</p></li>
@@ -428,11 +428,11 @@
 </div>
     <div id="recipes-015" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.5">
-<a href="#recipes-015" class="anchor"></a><small> 2019-03-21 </small><code>recipes</code> 0.1.5</h1>
+<a href="#recipes-015" class="anchor" aria-hidden="true"></a><small> 2019-03-21 </small><code>recipes</code> 0.1.5</h1>
 <p>Small release driven by changes in <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample()</a></code> in the current r-devel.</p>
 <div id="other-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-6" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-6" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p>A new vignette discussing roles has been added.</p></li>
 <li><p>To provide infrastructure for finalizing varying parameters, an <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> method for recipe steps has been added. This allows users to alter information in steps that have not yet been trained.</p></li>
@@ -443,14 +443,14 @@
 </div>
 <div id="breaking-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-5" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-5" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-1" class="anchor" aria-hidden="true"></a>Bug Fixes</h2>
 <ul>
 <li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/296'>#296</a></a>).</li>
 </ul>
@@ -458,10 +458,10 @@
 </div>
     <div id="recipes-014" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4">
-<a href="#recipes-014" class="anchor"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
+<a href="#recipes-014" class="anchor" aria-hidden="true"></a><small> 2018-11-19 </small><code>recipes</code> 0.1.4</h1>
 <div id="breaking-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-6" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-6" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
 <li>
 <p>Several argument names were changed to be consistent with other <code>tidymodels</code> packages (e.g. <code>dials</code>) and the general tidyverse naming conventions.</p>
@@ -491,7 +491,7 @@
 </div>
 <div id="new-operations-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-3" class="anchor"></a>New Operations</h2>
+<a href="#new-operations-3" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li>
 <code>step_integer</code> converts data to ordered integers similar to <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" class="external-link"><code>LabelEncoder</code></a> <a href="https://github.com/tidymodels/recipes/issues/123" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/123'>#123</a></a> and <a href="https://github.com/tidymodels/recipes/issues/185" class="external-link"><a href='https://github.com/tidymodels/recipes/issues/185'>#185</a></a>
@@ -506,7 +506,7 @@
 </div>
 <div id="other-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-7" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-7" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li>The <code>rsample</code> function <code>prepper</code> was moved to <code>recipes</code> <a href="https://github.com/tidymodels/rsample/issues/48" class="external-link">(issue)</a>.</li>
 <li>A number of packages were moved from “Imports” to “Suggests” to reduce the install footprint. A function was added to prompt the user to install the needed packages when the relevant steps are invoked.</li>
@@ -531,10 +531,10 @@
 </div>
     <div id="recipes-013" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.3">
-<a href="#recipes-013" class="anchor"></a><small> 2018-06-16 </small><code>recipes</code> 0.1.3</h1>
+<a href="#recipes-013" class="anchor" aria-hidden="true"></a><small> 2018-06-16 </small><code>recipes</code> 0.1.3</h1>
 <div id="new-operations-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-4" class="anchor"></a>New Operations</h2>
+<a href="#new-operations-4" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li><p><code>check_range</code> breaks <code>bake</code> if variable range in new data is outside the range that was learned from the train set (contributed by Edwin Thoen)</p></li>
 <li><p><code>step_lag</code> can lag variables in the data set (contributed by Alex Hayes).</p></li>
@@ -545,7 +545,7 @@
 </div>
 <div id="other-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-8" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-8" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li><p><code>step_log</code> gained an <code>offset</code> argument.</p></li>
 <li><p><code>step_log</code> gained a <code>signed</code> argument (contributed by Edwin Thoen).</p></li>
@@ -568,7 +568,7 @@
 </div>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor" aria-hidden="true"></a>Bug Fixes</h2>
 <ul>
 <li><p><a href="https://github.com/tidymodels/recipes/issues/125" class="external-link">issue 125</a> that prevented several steps from working with <strong>dplyr</strong> grouped data frames. (contributed by Jeffrey Arnold)</p></li>
 <li><p><a href="https://github.com/tidymodels/recipes/issues/127" class="external-link">issue 127</a> where options to <code>step_discretize</code> were not being passed to <code>discretize</code>.</p></li>
@@ -577,10 +577,10 @@
 </div>
     <div id="recipes-012" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.2">
-<a href="#recipes-012" class="anchor"></a><small> 2018-01-11 </small><code>recipes</code> 0.1.2</h1>
+<a href="#recipes-012" class="anchor" aria-hidden="true"></a><small> 2018-01-11 </small><code>recipes</code> 0.1.2</h1>
 <div id="general-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-changes" class="anchor"></a>General Changes</h2>
+<a href="#general-changes" class="anchor" aria-hidden="true"></a>General Changes</h2>
 <ul>
 <li><p>Edwin Thoen suggested <a href="https://github.com/tidymodels/recipes/pull/104" class="external-link">adding validation checks</a> for certain data characteristics. This fed into the existing notion of expanding <code>recipes</code> beyond steps (see the <a href="https://github.com/tidymodels/recipes/projects" class="external-link">non-step steps project</a>). A new set of operations, called <strong><code>checks</code></strong>, can now be used. These should throw an informative error when the check conditions are not met and return the existing data otherwise.</p></li>
 <li><p>Steps now have a <code>skip</code> option that will not apply preprocessing when <code>bake</code> is used. See the article <a href="https://recipes.tidymodels.org/articles/Skipping.html">on skipping steps</a> for more information.</p></li>
@@ -588,7 +588,7 @@
 </div>
 <div id="new-operations-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-operations-5" class="anchor"></a>New Operations</h2>
+<a href="#new-operations-5" class="anchor" aria-hidden="true"></a>New Operations</h2>
 <ul>
 <li><p><code>check_missing</code> will validate that none of the specified variables contain missing data.</p></li>
 <li><p><code>detect_step</code> can be used to check if a recipe contains a particular preprocessing operation.</p></li>
@@ -602,7 +602,7 @@
 </div>
 <div id="other-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-9" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-9" class="anchor" aria-hidden="true"></a>Other Changes</h2>
 <ul>
 <li>
 <code>step_spatialsign</code> now has the option of removing missing data prior to computing the norm.</li>
@@ -611,7 +611,7 @@
 </div>
     <div id="recipes-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
-<a href="#recipes-011" class="anchor"></a><small> 2017-11-20 </small><code>recipes</code> 0.1.1</h1>
+<a href="#recipes-011" class="anchor" aria-hidden="true"></a><small> 2017-11-20 </small><code>recipes</code> 0.1.1</h1>
 <ul>
 <li>The default selectors for <code>bake</code> was changed from <code><a href="../reference/has_role.html">all_predictors()</a></code> to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</li>
 <li>The <code>verbose</code> option for <code>prep</code> is now defaulted to <code>FALSE</code>
@@ -648,7 +648,7 @@
 </div>
     <div id="recipes-010" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#recipes-010" class="anchor"></a><small> 2017-07-27 </small><code>recipes</code> 0.1.0</h1>
+<a href="#recipes-010" class="anchor" aria-hidden="true"></a><small> 2017-07-27 </small><code>recipes</code> 0.1.0</h1>
 <p>First CRAN release.</p>
 <ul>
 <li>Changed <code>prepare</code> to <code>prep</code> per <a href="https://github.com/tidymodels/recipes/issues/59" class="external-link">issue <a href='https://github.com/tidymodels/recipes/issues/59'>#59</a></a>
@@ -657,7 +657,7 @@
 </div>
     <div id="recipes-0019003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9003">
-<a href="#recipes-0019003" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9003</h1>
+<a href="#recipes-0019003" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9003</h1>
 <ul>
 <li>Two of the main functions <a href="https://github.com/tidymodels/recipes/issues/57" class="external-link">changed names</a>. <code>learn</code> has become <code>prepare</code> and <code>process</code> has become <code>bake</code>
 </li>
@@ -665,10 +665,10 @@
 </div>
     <div id="recipes-0019002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9002">
-<a href="#recipes-0019002" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9002</h1>
+<a href="#recipes-0019002" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9002</h1>
 <div id="new-steps-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-steps-1" class="anchor"></a>New steps</h2>
+<a href="#new-steps-1" class="anchor" aria-hidden="true"></a>New steps</h2>
 <ul>
 <li>
 <code>step_lincomb</code> removes variables involved in linear combinations to resolve them.</li>
@@ -679,7 +679,7 @@
 </div>
 <div id="other-changes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-10" class="anchor"></a>Other changes</h2>
+<a href="#other-changes-10" class="anchor" aria-hidden="true"></a>Other changes</h2>
 <ul>
 <li>
 <code>step_dummy</code> and <code>step_interact</code> do a better job of respecting missing values in the data set.</li>
@@ -688,7 +688,7 @@
 </div>
     <div id="recipes-0019001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9001">
-<a href="#recipes-0019001" class="anchor"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9001</h1>
+<a href="#recipes-0019001" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>recipes</code> 0.0.1.9001</h1>
 <ul>
 <li>The class system for <code>recipe</code> objects was changed so that <a href="https://github.com/tidymodels/recipes/issues/46" class="external-link">pipes can be used to create the recipe with a formula</a>.</li>
 <li>

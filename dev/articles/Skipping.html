@@ -142,13 +142,13 @@
 </ul>
 <div id="example-class-imbalance-sampling-and-skipping-steps" class="section level1">
 <h1 class="hasAnchor">
-<a href="#example-class-imbalance-sampling-and-skipping-steps" class="anchor"></a>Example: Class Imbalance Sampling and Skipping Steps</h1>
+<a href="#example-class-imbalance-sampling-and-skipping-steps" class="anchor" aria-hidden="true"></a>Example: Class Imbalance Sampling and Skipping Steps</h1>
 <p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016" class="external-link">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
 </div>
 <div id="other-examples" class="section level1">
 <h1 class="hasAnchor">
-<a href="#other-examples" class="anchor"></a>Other Examples</h1>
+<a href="#other-examples" class="anchor" aria-hidden="true"></a>Other Examples</h1>
 <p>There are other steps that have a default value of <code>skip = TRUE</code>:</p>
 <ul>
 <li>
@@ -168,7 +168,7 @@
 </div>
 <div id="how-to-skip-steps" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-skip-steps" class="anchor"></a>How To Skip Steps</h1>
+<a href="#how-to-skip-steps" class="anchor" aria-hidden="true"></a>How To Skip Steps</h1>
 <p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>FALSE</code>. When using this option:</p>
 <ul>
 <li>No steps are skipped during <code><a href="../reference/prep.html">prep()</a></code>
@@ -179,7 +179,7 @@
 </div>
 <div id="be-careful" class="section level1">
 <h1 class="hasAnchor">
-<a href="#be-careful" class="anchor"></a>Be Careful!</h1>
+<a href="#be-careful" class="anchor" aria-hidden="true"></a>Be Careful!</h1>
 <p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
 <p>As an example, skipping an operation whose variables are used later might be an issue:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
