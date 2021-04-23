@@ -100,7 +100,7 @@ print.step_mutate_at <-
     invisible(x)
   }
 
-#' @rdname step_mutate
+#' @rdname step_mutate_at
 #' @export
 tidy.step_mutate_at <- function(x, ...) {
   if (is_trained(x)) {
