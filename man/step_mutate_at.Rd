@@ -2,6 +2,7 @@
 % Please edit documentation in R/mutate_at.R
 \name{step_mutate_at}
 \alias{step_mutate_at}
+\alias{tidy.step_mutate_at}
 \title{Mutate multiple columns using dplyr}
 \usage{
 step_mutate_at(
@@ -14,6 +15,8 @@ step_mutate_at(
   skip = FALSE,
   id = rand_id("mutate_at")
 )
+
+\method{tidy}{step_mutate_at}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -46,6 +49,8 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
+
+\item{x}{A \code{step_center} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
