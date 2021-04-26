@@ -8,8 +8,7 @@
 #' @param ... One or more selector functions to choose variables. For
 #'  `step_impute_knn`, this indicates the variables to be imputed. When used
 #'  with `imp_vars`, the dots indicate which variables are used to predict the
-#'  missing data in each variable. See [selections()] for more details. For the
-#'  `tidy` method, these are not currently used.
+#'  missing data in each variable. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param impute_with A call to `imp_vars` to specify which variables are used
 #'  to impute the variables that can include specific variable names separated
@@ -25,9 +24,7 @@
 #' @param columns The column names that will be imputed and used for
 #'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `neighbors`.
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -45,6 +42,10 @@
 #'
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
+#'
+#' When you [`tidy()`] this step, a tibble with
+#'  columns `terms` (the selectors or variables for imputation), `predictors`
+#'  (those variables used to impute), and `neighbors` is returned.
 #'
 #' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
 #'    to `step_impute_knn()`.
@@ -289,7 +290,7 @@ print.step_impute_knn <-
 #' @export
 print.step_knnimpute <- print.step_impute_knn
 
-#' @rdname step_impute_knn
+#' @rdname tidy.recipe
 #' @param x A `step_impute_knn` object.
 #' @export
 tidy.step_impute_knn <- function(x, ...) {

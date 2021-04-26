@@ -6,8 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  affected by the step. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
 #'  by [prep.recipe()]. Note that, if the original data are integers, the mean
@@ -16,9 +15,7 @@
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the mean
-#'  value).
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -26,6 +23,10 @@
 #' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
 #'  new values to new data sets using these averages.
+#'
+#' When you [`tidy()`] this step, a tibble with
+#'  columns `terms` (the selectors or variables selected) and `model` (the mean
+#'  value) is returned.
 #'
 #'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
 #'    to `step_impute_mean()`.
@@ -170,7 +171,7 @@ print.step_impute_mean <-
 #' @export
 print.step_meanimpute <- print.step_impute_mean
 
-#' @rdname step_impute_mean
+#' @rdname tidy.recipe
 #' @param x A `step_impute_mean` object.
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
@@ -186,7 +187,7 @@ tidy.step_impute_mean <- function(x, ...) {
 }
 
 #' @export
-tidy.step_meanimpute <-tidy.step_impute_mean
+tidy.step_meanimpute <- tidy.step_impute_mean
 
 #' @rdname tunable.step
 #' @export

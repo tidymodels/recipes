@@ -9,8 +9,7 @@
 #' `step_impute_linear`, this indicates the variables to be imputed; these variables
 #' **must** be of type `numeric`. When used with `imp_vars`, the dots indicates
 #' which variables are used to predict the missing data in each variable. See
-#' [selections()] for more details. For the `tidy` method, these are not
-#' currently used.
+#' [selections()] for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param impute_with A call to `imp_vars` to specify which variables are used
 #'  to impute the variables that can include specific variable names separated
@@ -20,9 +19,7 @@
 #' @param models The [lm()] objects are stored here once the linear models
 #'  have been trained by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  bagged tree object).
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -38,6 +35,10 @@
 #'
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
+#'
+#'  When you [`tidy()`] this step, a tibble with
+#'  columns `terms` (the selectors or variables selected) and `model` (the
+#'  bagged tree object) is returned.
 #'
 #' @references Kuhn, M. and Johnson, K. (2013).
 #' *Feature Engineering and Selection*
@@ -212,7 +213,7 @@ print.step_impute_linear <-
     invisible(x)
   }
 
-#' @rdname step_impute_linear
+#' @rdname tidy.recipe
 #' @param x A `step_impute_linear` object.
 #' @export
 tidy.step_impute_linear <- function(x, ...) {
