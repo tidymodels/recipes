@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
@@ -22,9 +21,7 @@
 #' @param options A list of options for [splines::ns()]
 #'  which should not include `x` or `df`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which is
-#'  the columns that will be affected and `holiday`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept basis_expansion
@@ -36,6 +33,10 @@
 #'  [splines::ns()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_ns_1` and so on.
+#'
+#'  When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  columns that will be affected) is returned.
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)
@@ -186,7 +187,7 @@ print.step_ns <-
     invisible(x)
   }
 
-#' @rdname step_ns
+#' @rdname tidy.recipe
 #' @param x A `step_ns` object.
 #' @export
 tidy.step_ns <- function(x, ...) {

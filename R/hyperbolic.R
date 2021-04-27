@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details.  For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param func A character value for the function. Valid values
@@ -17,13 +16,13 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected), `inverse`, and `func`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
 #' @export
+#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  columns that will be affected), `inverse`, and `func` is returned.
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(rnorm(40), ncol = 2)
@@ -129,7 +128,7 @@ print.step_hyperbolic <-
     invisible(x)
   }
 
-#' @rdname step_hyperbolic
+#' @rdname tidy.recipe
 #' @param x A `step_hyperbolic` object.
 #' @export
 tidy.step_hyperbolic <- function(x, ...) {

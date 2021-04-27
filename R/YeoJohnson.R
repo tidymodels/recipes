@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param lambdas A numeric vector of transformation values. This
@@ -18,10 +17,7 @@
 #' @param num_unique An integer where data that have less possible
 #'  values will not be evaluated for a transformation.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
-#'  lambda estimate).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
@@ -42,6 +38,10 @@
 #' If the transformation parameters are estimated to be very
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `value` (the
+#'  lambda estimate) is returned.
 #'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.
@@ -248,7 +248,7 @@ estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5,
 }
 
 
-#' @rdname step_YeoJohnson
+#' @rdname tidy.recipe
 #' @param x A `step_YeoJohnson` object.
 #' @export
 tidy.step_YeoJohnson <- tidy.step_BoxCox
