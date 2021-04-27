@@ -131,6 +131,7 @@ step_impute_bag <-
 
 #' @rdname step_impute_bag
 #' @export
+#' @keywords internal
 step_bagimpute <-
   function(recipe,
            ...,
@@ -246,6 +247,7 @@ prep.step_impute_bag <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_bagimpute <- prep.step_impute_bag
 
 #' @export
@@ -276,6 +278,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_bagimpute <- bake.step_impute_bag
 
 #' @export
@@ -287,6 +290,7 @@ print.step_impute_bag <-
   }
 
 #' @export
+#' @keywords internal
 print.step_bagimpute <- print.step_impute_bag
 
 #' @export
@@ -309,6 +313,7 @@ tidy.step_impute_bag <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_bagimpute <- tidy.step_impute_bag
 
 # ------------------------------------------------------------------------------

@@ -86,6 +86,7 @@ step_impute_lower <-
 
 #' @rdname step_impute_lower
 #' @export
+#' @keywords internal
 step_lowerimpute <- function(recipe,
                              ...,
                              role = NA,
@@ -150,6 +151,7 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_lowerimpute <- prep.step_impute_lower
 
 #' @export
@@ -164,6 +166,7 @@ bake.step_impute_lower <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_lowerimpute <- bake.step_impute_lower
 
 #' @export
@@ -175,6 +178,7 @@ print.step_impute_lower <-
   }
 
 #' @export
+#' @keywords internal
 print.step_lowerimpute <- print.step_impute_lower
 
 #' @rdname tidy.recipe
@@ -193,4 +197,5 @@ tidy.step_impute_lower <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_lowerimpute <- tidy.step_impute_lower

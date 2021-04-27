@@ -85,6 +85,7 @@ step_impute_mean <-
 
 #' @rdname step_impute_mean
 #' @export
+#' @keywords internal
 step_meanimpute <-
   function(recipe,
            ...,
@@ -146,6 +147,7 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_meanimpute <- prep.step_impute_mean
 
 #' @export
@@ -158,6 +160,7 @@ bake.step_impute_mean <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_meanimpute <- bake.step_impute_mean
 
 #' @export
@@ -169,6 +172,7 @@ print.step_impute_mean <-
   }
 
 #' @export
+#' @keywords internal
 print.step_meanimpute <- print.step_impute_mean
 
 #' @rdname tidy.recipe
@@ -187,6 +191,7 @@ tidy.step_impute_mean <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_meanimpute <- tidy.step_impute_mean
 
 #' @rdname tunable.step
@@ -204,4 +209,5 @@ tunable.step_impute_mean <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tunable.step_meanimpute <- tunable.step_impute_mean
