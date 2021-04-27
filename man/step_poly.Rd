@@ -2,7 +2,6 @@
 % Please edit documentation in R/poly.R
 \name{step_poly}
 \alias{step_poly}
-\alias{tidy.step_poly}
 \title{Orthogonal Polynomial Basis Functions}
 \usage{
 step_poly(
@@ -16,8 +15,6 @@ step_poly(
   skip = FALSE,
   id = rand_id("poly")
 )
-
-\method{tidy}{step_poly}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.  For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -54,14 +50,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_poly} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{degree}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_poly} creates a \emph{specification} of a recipe
@@ -76,6 +68,9 @@ determined by the \code{degree} argument of
 \code{\link[stats:poly]{stats::poly()}}. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is \code{varname_poly_1} and so on.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected) and \code{degree} is returned.
 }
 \examples{
 library(modeldata)

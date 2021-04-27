@@ -3,7 +3,6 @@
 \name{step_impute_knn}
 \alias{step_impute_knn}
 \alias{step_knnimpute}
-\alias{tidy.step_impute_knn}
 \title{Imputation via K-Nearest Neighbors}
 \usage{
 step_impute_knn(
@@ -33,8 +32,6 @@ step_knnimpute(
   skip = FALSE,
   id = rand_id("impute_knn")
 )
-
-\method{tidy}{step_impute_knn}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -43,8 +40,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables. For
 \code{step_impute_knn}, this indicates the variables to be imputed. When used
 with \code{imp_vars}, the dots indicate which variables are used to predict the
-missing data in each variable. See \code{\link[=selections]{selections()}} for more details. For the
-\code{tidy} method, these are not currently used.}
+missing data in each variable. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -77,14 +73,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_impute_knn} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any). For the \code{tidy} method, a tibble with
-columns \code{terms} (the selectors or variables for imputation), \code{predictors}
-(those variables used to impute), and \code{neighbors}.
+sequence of existing steps (if any).
 }
 \description{
 \code{step_impute_knn} creates a \emph{specification} of a recipe step that will
@@ -104,6 +96,10 @@ this variable will be ignored.
 
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+columns \code{terms} (the selectors or variables for imputation), \code{predictors}
+(those variables used to impute), and \code{neighbors} is returned.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimpute()}
 to \code{step_impute_knn()}.

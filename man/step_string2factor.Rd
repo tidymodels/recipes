@@ -2,7 +2,6 @@
 % Please edit documentation in R/string2factor.R
 \name{step_string2factor}
 \alias{step_string2factor}
-\alias{tidy.step_string2factor}
 \title{Convert Strings to Factors}
 \usage{
 step_string2factor(
@@ -15,8 +14,6 @@ step_string2factor(
   skip = FALSE,
   id = rand_id("string2factor")
 )
-
-\method{tidy}{step_string2factor}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -24,8 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be converted to factors. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -48,14 +44,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_string2factor} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{ordered}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_string2factor} will convert one or more character
@@ -70,6 +62,9 @@ Also, note that \code{prep} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. This should be changed so that raw character
 data will be applied to \code{step_string2factor}. However, this step
 can also take existing factors (but will leave them as-is).
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{ordered} is returned.
 }
 \examples{
 library(modeldata)

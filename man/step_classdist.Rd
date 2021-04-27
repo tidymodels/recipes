@@ -2,7 +2,6 @@
 % Please edit documentation in R/classdist.R
 \name{step_classdist}
 \alias{step_classdist}
-\alias{tidy.step_classdist}
 \title{Distances to Class Centroids}
 \usage{
 step_classdist(
@@ -20,8 +19,6 @@ step_classdist(
   skip = FALSE,
   id = rand_id("classdist")
 )
-
-\method{tidy}{step_classdist}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -29,8 +26,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{class}{A single character string that specifies a single
 categorical variable to be used as the class.}
@@ -67,15 +63,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_classdist} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the centroid of
-the class), and \code{class}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_classdist} creates a \emph{specification} of a
@@ -95,6 +86,10 @@ that each class should have at least as many rows as variables
 listed in the \code{terms} argument. If \code{pool = TRUE},
 there must be at least as many data points are variables
 overall.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected), \code{value} (the centroid of
+the class), and \code{class} is returned.
 }
 \examples{
 

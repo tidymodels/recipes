@@ -2,7 +2,6 @@
 % Please edit documentation in R/impute_linear.R
 \name{step_impute_linear}
 \alias{step_impute_linear}
-\alias{tidy.step_impute_linear}
 \title{Imputation of numeric variables via a linear model.}
 \usage{
 step_impute_linear(
@@ -15,8 +14,6 @@ step_impute_linear(
   skip = FALSE,
   id = rand_id("impute_linear")
 )
-
-\method{tidy}{step_impute_linear}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -26,8 +23,7 @@ sequence of operations for this recipe.}
 \code{step_impute_linear}, this indicates the variables to be imputed; these variables
 \strong{must} be of type \code{numeric}. When used with \code{imp_vars}, the dots indicates
 which variables are used to predict the missing data in each variable. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy} method, these are not
-currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -51,14 +47,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_impute_linear} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any). For the \code{tidy} method, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-bagged tree object).
+sequence of existing steps (if any).
 }
 \description{
 \code{step_impute_linear} creates a \emph{specification} of a recipe step that will
@@ -76,6 +68,10 @@ coerced to integer as needed).
 
 Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model} (the
+bagged tree object) is returned.
 }
 \examples{
 data(ames, package = "modeldata")

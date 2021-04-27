@@ -2,7 +2,6 @@
 % Please edit documentation in R/sqrt.R
 \name{step_sqrt}
 \alias{step_sqrt}
-\alias{tidy.step_sqrt}
 \title{Square Root Transformation}
 \usage{
 step_sqrt(
@@ -14,8 +13,6 @@ step_sqrt(
   skip = FALSE,
   id = rand_id("sqrt")
 )
-
-\method{tidy}{step_sqrt}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -23,8 +20,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be transformed. See \code{\link[=selections]{selections()}} for
-more details. For the \code{tidy} method, these are not
-currently used.}
+more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -43,18 +39,18 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_sqrt} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be affected.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_sqrt} creates a \emph{specification} of a recipe
 step that will square root transform the data.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
+columns that will be affected) is returned.
 }
 \examples{
 set.seed(313)

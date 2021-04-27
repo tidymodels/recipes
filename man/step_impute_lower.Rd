@@ -3,7 +3,6 @@
 \name{step_impute_lower}
 \alias{step_impute_lower}
 \alias{step_lowerimpute}
-\alias{tidy.step_impute_lower}
 \title{Impute Numeric Data Below the Threshold of Measurement}
 \usage{
 step_impute_lower(
@@ -25,8 +24,6 @@ step_lowerimpute(
   skip = FALSE,
   id = rand_id("impute_lower")
 )
-
-\method{tidy}{step_impute_lower}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -34,8 +31,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -54,15 +50,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_impute_lower} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} for the estimated
-threshold.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_impute_lower} creates a \emph{specification} of a recipe step
@@ -76,6 +67,10 @@ random uniform number between zero and the truncation point.
 from the data used in the \code{training} argument of \code{prep.recipe}.
 \code{bake.recipe} then simulates a value for any data at the minimum
 with a random uniform value between zero and the minimum.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} for the estimated
+threshold is returned.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimpute()}
 to \code{step_impute_lower()}.

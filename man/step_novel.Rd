@@ -2,7 +2,6 @@
 % Please edit documentation in R/novel.R
 \name{step_novel}
 \alias{step_novel}
-\alias{tidy.step_novel}
 \title{Simple Value Assignments for Novel Factor Levels}
 \usage{
 step_novel(
@@ -15,8 +14,6 @@ step_novel(
   skip = FALSE,
   id = rand_id("novel")
 )
-
-\method{tidy}{step_novel}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,7 +22,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 variables that will be affected by the step. These variables
 should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently used.}
+details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -47,15 +44,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_novel} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{value} (the factor
-levels that is used for the new value)
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_novel} creates a \emph{specification} of a recipe
@@ -81,6 +73,10 @@ When fitting a model that can deal with new factor levels, consider using
 \code{\link[workflows:add_recipe]{workflows::add_recipe()}} with \code{allow_novel_levels = TRUE} set in
 \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}. This will allow your model to handle
 new levels at prediction time, instead of throwing warnings or errors.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected) and \code{value} (the factor
+levels that is used for the new value) is returned.
 }
 \examples{
 library(modeldata)

@@ -2,7 +2,6 @@
 % Please edit documentation in R/lincombo.R
 \name{step_lincomb}
 \alias{step_lincomb}
-\alias{tidy.step_lincomb}
 \title{Linear Combination Filter}
 \usage{
 step_lincomb(
@@ -15,8 +14,6 @@ step_lincomb(
   skip = FALSE,
   id = rand_id("lincomb")
 )
-
-\method{tidy}{step_lincomb}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -24,8 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -47,14 +43,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_lincomb} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be removed.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_lincomb} creates a \emph{specification} of a recipe
@@ -66,6 +58,9 @@ This step finds exact linear combinations between two
 or more variables and recommends which column(s) should be
 removed to resolve the issue. This algorithm may need to be
 applied multiple times (as defined by \code{max_steps}).
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
+that will be removed) is returned.
 }
 \examples{
 library(modeldata)

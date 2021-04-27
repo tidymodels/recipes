@@ -2,7 +2,6 @@
 % Please edit documentation in R/mutate.R
 \name{step_mutate}
 \alias{step_mutate}
-\alias{tidy.step_mutate}
 \title{Add new variables using dplyr}
 \usage{
 step_mutate(
@@ -14,8 +13,6 @@ step_mutate(
   skip = FALSE,
   id = rand_id("mutate")
 )
-
-\method{tidy}{step_mutate}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -43,15 +40,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_mutate} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{values} which
-contains the \code{mutate} expressions as character strings
-(and are not reparsable).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_mutate} creates a \emph{specification} of a recipe step
@@ -63,6 +55,10 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{values}, which
+contains the \code{mutate} expressions as character strings
+(and are not reparsable), is returned.
 }
 \examples{
 rec <-

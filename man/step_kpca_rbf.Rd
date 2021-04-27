@@ -2,7 +2,6 @@
 % Please edit documentation in R/kpca_rbf.R
 \name{step_kpca_rbf}
 \alias{step_kpca_rbf}
-\alias{tidy.step_kpca_rbf}
 \title{Radial Basis Function Kernel PCA Signal Extraction}
 \usage{
 step_kpca_rbf(
@@ -18,8 +17,6 @@ step_kpca_rbf(
   skip = FALSE,
   id = rand_id("kpca_rbf")
 )
-
-\method{tidy}{step_kpca_rbf}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -27,8 +24,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used to compute the components. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned? By default, the function assumes
@@ -63,14 +59,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_kpca_rbf} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_kpca_rbf} a \emph{specification} of a recipe step that
@@ -103,6 +95,9 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_comp < 10}, their names will be \code{kPC1} -
 \code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
+selectors or variables selected) is returned.
 }
 \examples{
 library(modeldata)

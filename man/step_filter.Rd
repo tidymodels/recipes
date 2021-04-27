@@ -2,7 +2,6 @@
 % Please edit documentation in R/filter.R
 \name{step_filter}
 \alias{step_filter}
-\alias{tidy.step_filter}
 \title{Filter rows using dplyr}
 \usage{
 step_filter(
@@ -14,8 +13,6 @@ step_filter(
   skip = TRUE,
   id = rand_id("filter")
 )
-
-\method{tidy}{step_filter}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -24,8 +21,7 @@ sequence of operations for this recipe.}
 \item{...}{Logical predicates defined in terms of the variables
 in the data. Multiple conditions are combined with \code{&}. Only
 rows where the condition evaluates to \code{TRUE} are kept. See
-\code{\link[dplyr:filter]{dplyr::filter()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[dplyr:filter]{dplyr::filter()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -42,15 +38,10 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_filter} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-contains the conditional statements. These
-expressions are text representations and are not parsable.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_filter} creates a \emph{specification} of a recipe step
@@ -62,6 +53,10 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
+contains the conditional statements is returned. These
+expressions are text representations and are not parsable.
 }
 \section{Row Filtering}{
 

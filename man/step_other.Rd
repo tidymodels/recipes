@@ -2,7 +2,6 @@
 % Please edit documentation in R/other.R
 \name{step_other}
 \alias{step_other}
-\alias{tidy.step_other}
 \title{Collapse Some Categorical Levels}
 \usage{
 step_other(
@@ -16,8 +15,6 @@ step_other(
   skip = FALSE,
   id = rand_id("other")
 )
-
-\method{tidy}{step_other}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will potentially be reduced. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -54,15 +50,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_other} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{retained} (the factor
-levels that were not pulled into "other")
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_other} creates a \emph{specification} of a recipe
@@ -92,6 +83,10 @@ pooling is needed, they will be placed into the other category.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected) and \code{retained} (the factor
+levels that were not pulled into "other") is returned.
 }
 \examples{
 library(modeldata)

@@ -2,7 +2,6 @@
 % Please edit documentation in R/bs.R
 \name{step_bs}
 \alias{step_bs}
-\alias{tidy.step_bs}
 \title{B-Spline Basis Functions}
 \usage{
 step_bs(
@@ -17,8 +16,6 @@ step_bs(
   skip = FALSE,
   id = rand_id("bs")
 )
-
-\method{tidy}{step_bs}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -26,8 +23,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -58,14 +54,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_bs} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which is
-the columns that will be affected and \code{holiday}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_bs} creates a \emph{specification} of a recipe step
@@ -80,6 +72,9 @@ determined by the \code{df}, \code{degree}, or \code{knot} arguments of
 \code{\link[splines:bs]{splines::bs()}}. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is \code{varname_bs_1} and so on.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
+columns that will be affected) is returned.
 }
 \examples{
 library(modeldata)

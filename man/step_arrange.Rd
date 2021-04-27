@@ -2,7 +2,6 @@
 % Please edit documentation in R/arrange.R
 \name{step_arrange}
 \alias{step_arrange}
-\alias{tidy.step_arrange}
 \title{Sort rows using dplyr}
 \usage{
 step_arrange(
@@ -14,16 +13,14 @@ step_arrange(
   skip = FALSE,
   id = rand_id("arrange")
 )
-
-\method{tidy}{step_arrange}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{Comma separated list of unquoted variable names.
-Use \verb{desc()`` to sort a variable in descending order. See [dplyr::arrange()] for more details. For the }tidy`
-method, these are not currently used.}
+Use `desc()`` to sort a variable in descending order. See
+\code{\link[dplyr:arrange]{dplyr::arrange()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -41,15 +38,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_arrange} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-contains the sorting variable(s) or expression(s). The
-expressions are text representations and are not parsable.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_arrange} creates a \emph{specification} of a recipe step
@@ -61,6 +53,10 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
+contains the sorting variable(s) or expression(s) is returned. The
+expressions are text representations and are not parsable.
 }
 \examples{
 rec <- recipe( ~ ., data = iris) \%>\%

@@ -2,7 +2,6 @@
 % Please edit documentation in R/relevel.R
 \name{step_relevel}
 \alias{step_relevel}
-\alias{tidy.step_relevel}
 \title{Relevel factors to a desired level}
 \usage{
 step_relevel(
@@ -15,8 +14,6 @@ step_relevel(
   skip = FALSE,
   id = rand_id("relevel")
 )
-
-\method{tidy}{step_relevel}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -47,8 +44,6 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_relevel} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step

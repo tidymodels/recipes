@@ -2,7 +2,6 @@
 % Please edit documentation in R/integer.R
 \name{step_integer}
 \alias{step_integer}
-\alias{tidy.step_integer}
 \title{Convert values to predefined integers}
 \usage{
 step_integer(
@@ -16,8 +15,6 @@ step_integer(
   skip = FALSE,
   id = rand_id("integer")
 )
-
-\method{tidy}{step_integer}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used to create the integer variables. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy} method, these
-are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -55,15 +51,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_integer} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added
-to the sequence of existing steps (if any). For the \code{tidy}
-method, a tibble with columns \code{terms} (the selectors or
-variables selected) and \code{value} is a \emph{list column} with the
-conversion key.
+to the sequence of existing steps (if any).
 }
 \description{
 \code{step_integer} creates a \emph{specification} of a recipe
@@ -83,6 +74,10 @@ ordered by \code{sort}.
 
 Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors or
+variables selected) and \code{value} (a \emph{list column} with the
+conversion key) is returned.
 }
 \examples{
 library(modeldata)

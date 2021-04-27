@@ -2,7 +2,6 @@
 % Please edit documentation in R/discretize.R
 \name{step_discretize}
 \alias{step_discretize}
-\alias{tidy.step_discretize}
 \title{Discretize Numeric Variables}
 \usage{
 step_discretize(
@@ -17,8 +16,6 @@ step_discretize(
   skip = FALSE,
   id = rand_id("discretize")
 )
-
-\method{tidy}{step_discretize}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -27,8 +24,7 @@ sequence of operations for this recipe.}
 \item{...}{For \code{step_discretize}, the dots specify
 one or more selector functions to choose which variables are
 affected by the step. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently
-used.}
+details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -62,19 +58,20 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_discretize} object}
 }
 \value{
 \code{step_discretize} returns an updated version of
 \code{recipe} with the new step added to the sequence of
-existing steps (if any). For the \code{tidy} method, a tibble
-with columns \code{terms} (the selectors or variables selected)
-and \code{value} (the breaks).
+existing steps (if any).
 }
 \description{
 \code{step_discretize} creates a \emph{specification} of a recipe
 step that will convert numeric data into a factor with
 bins having approximately the same number of data points (based
 on a training set).
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble
+with columns \code{terms} (the selectors or variables selected)
+and \code{value} (the breaks) is returned.
 }

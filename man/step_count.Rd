@@ -2,7 +2,6 @@
 % Please edit documentation in R/count.R
 \name{step_count}
 \alias{step_count}
-\alias{tidy.step_count}
 \title{Create Counts of Patterns using Regular Expressions}
 \usage{
 step_count(
@@ -18,8 +17,6 @@ step_count(
   skip = FALSE,
   id = rand_id("count")
 )
-
-\method{tidy}{step_count}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -28,8 +25,7 @@ sequence of operations for this recipe.}
 \item{...}{A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
 into a single variable. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not
-currently used.}
+details.}
 
 \item{role}{For a variable created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -65,20 +61,20 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_count} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{result} (the
-new column name).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_count} creates a \emph{specification} of a recipe
 step that will create a variable that counts instances of a
 regular expression pattern in text.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{result} (the
+new column name) is returned.
 }
 \examples{
 library(modeldata)

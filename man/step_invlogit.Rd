@@ -2,7 +2,6 @@
 % Please edit documentation in R/invlogit.R
 \name{step_invlogit}
 \alias{step_invlogit}
-\alias{tidy.step_invlogit}
 \title{Inverse Logit Transformation}
 \usage{
 step_invlogit(
@@ -14,8 +13,6 @@ step_invlogit(
   skip = FALSE,
   id = rand_id("invlogit")
 )
-
-\method{tidy}{step_invlogit}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -23,8 +20,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -43,14 +39,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_invlogit} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be affected.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_invlogit} creates a \emph{specification} of a recipe
@@ -61,6 +53,9 @@ zero and one.
 The inverse logit transformation takes values on the
 real line and translates them to be between zero and one using
 the function \code{f(x) = 1/(1+exp(-x))}.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
+(the columns that will be affected) is returned.
 }
 \examples{
 library(modeldata)

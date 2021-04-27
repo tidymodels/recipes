@@ -2,7 +2,6 @@
 % Please edit documentation in R/depth.R
 \name{step_depth}
 \alias{step_depth}
-\alias{tidy.step_depth}
 \title{Data Depths}
 \usage{
 step_depth(
@@ -18,8 +17,6 @@ step_depth(
   skip = FALSE,
   id = rand_id("depth")
 )
-
-\method{tidy}{step_depth}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -27,8 +24,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables that will be used to create the new features. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{class}{A single character string that specifies a single
 categorical variable to be used as the class.}
@@ -69,14 +65,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_depth} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{class}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_depth} creates a \emph{specification} of a recipe
@@ -110,6 +102,9 @@ The function will create a new column for every unique value of
 the \code{class} variable. The resulting variables will not
 replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{class} is returned.
 }
 \examples{
 

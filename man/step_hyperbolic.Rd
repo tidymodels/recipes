@@ -2,7 +2,6 @@
 % Please edit documentation in R/hyperbolic.R
 \name{step_hyperbolic}
 \alias{step_hyperbolic}
-\alias{tidy.step_hyperbolic}
 \title{Hyperbolic Transformations}
 \usage{
 step_hyperbolic(
@@ -16,8 +15,6 @@ step_hyperbolic(
   skip = FALSE,
   id = rand_id("hyperbolic")
 )
-
-\method{tidy}{step_hyperbolic}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.  For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -50,19 +46,19 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_hyperbolic} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected), \code{inverse}, and \code{func}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_hyperbolic} creates a \emph{specification} of a
 recipe step that will transform data using a hyperbolic
 function.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected), \code{inverse}, and \code{func} is returned.
 }
 \examples{
 set.seed(313)

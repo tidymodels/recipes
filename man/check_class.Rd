@@ -2,7 +2,6 @@
 % Please edit documentation in R/class.R
 \name{check_class}
 \alias{check_class}
-\alias{tidy.check_class}
 \title{Check Variable Class}
 \usage{
 check_class(
@@ -16,8 +15,6 @@ check_class(
   class_list = NULL,
   id = rand_id("class")
 )
-
-\method{tidy}{check_class}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The check will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the check. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -52,14 +48,10 @@ the computations for subsequent operations.}
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{check_class} object.}
 }
 \value{
 An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{check_class} creates a \emph{specification} of a recipe
@@ -78,6 +70,9 @@ that in \code{prep} the argument \code{strings_as_factors} defaults to
 \code{TRUE}. If the train set contains character variables
 the check will be break \code{bake} when \code{strings_as_factors} is
 \code{TRUE}.
+
+When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the type) is returned.
 }
 \examples{
 library(dplyr)

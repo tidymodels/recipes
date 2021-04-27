@@ -2,7 +2,6 @@
 % Please edit documentation in R/range_check.R
 \name{check_range}
 \alias{check_range}
-\alias{tidy.check_range}
 \title{Check Range Consistency}
 \usage{
 check_range(
@@ -17,8 +16,6 @@ check_range(
   upper = NULL,
   id = rand_id("range_check_")
 )
-
-\method{tidy}{check_range}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The check will be added to the
@@ -26,8 +23,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the check. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -55,14 +51,10 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{check_range} object.}
 }
 \value{
 An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the means).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{check_range} creates a \emph{specification} of a recipe
@@ -76,6 +68,9 @@ of length one, the same proportion will be used at both ends
 of the train set range. If of length two, its first value
 is used to compute the allowed slack at the lower end,
 the second to compute the allowed slack at the upper end.
+
+When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the means) is returned.
 }
 \examples{
   slack_df <- data_frame(x = 0:100)

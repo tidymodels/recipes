@@ -2,7 +2,6 @@
 % Please edit documentation in R/select.R
 \name{step_select}
 \alias{step_select}
-\alias{tidy.step_select}
 \title{Select variables using dplyr}
 \usage{
 step_select(
@@ -13,8 +12,6 @@ step_select(
   skip = FALSE,
   id = rand_id("select")
 )
-
-\method{tidy}{step_select}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -22,8 +19,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be selected when baking. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms selected by this step, what analysis
 role should they be assigned?}
@@ -39,15 +35,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_select} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with column \code{terms} which
-contains the \code{select} expressions as character strings
-(and are not reparsable).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_select()} creates a \emph{specification} of a recipe step
@@ -59,6 +50,10 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
+contains the \code{select} expressions as character strings
+(and are not reparsable) is returned.
 }
 \examples{
 library(dplyr)
