@@ -6,8 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
-#'  used to compute the components. See [selections()] for more details. For the
-#'  `tidy` method, these are not currently used.
+#'  used to compute the components. See [selections()] for more details.
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned?. By default, the function assumes that the new principal
 #'  component columns created by the original variables will be used as
@@ -34,9 +33,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables selected), `value` (the
-#'  loading), and `component`.
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pca
@@ -69,6 +66,10 @@
 #' Alternatively, `threshold` can be used to determine the
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
+#'
+#' When you [`tidy()`] this step, a tibble with
+#'  columns `terms` (the selectors or variables selected), `value` (the
+#'  loading), and `component` is returned.
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
@@ -289,7 +290,7 @@ pca_variances <- function(x) {
 
 
 
-#' @rdname step_pca
+#' @rdname tidy.recipe
 #' @param x A `step_pca` object.
 #' @export
 tidy.step_pca <- function(x, type = "coef", ...) {

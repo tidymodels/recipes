@@ -6,8 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
-#'  used to compute the dimensions. See [selections()] for more details. For the
-#'  `tidy` method, these are not currently used.
+#'  used to compute the dimensions. See [selections()] for more details.
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned?. By default, the function assumes that the new dimension
 #'  columns created by the original variables will be used as predictors in a
@@ -32,9 +31,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected), `components`, and `values`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pls
@@ -61,7 +58,7 @@
 #' proportion to determine the `keepX` parameter in `mixOmics::spls()` and
 #' `mixOmics::splsda()`. See the references in `mixOmics::spls()` for details.
 #'
-#' The `tidy()` method returns the coefficients that are usually defined as
+#' The [`tidy()`] method returns the coefficients that are usually defined as
 #'
 #' \deqn{W(P'W)^{-1}}
 #'
@@ -69,7 +66,8 @@
 #'
 #' When applied to data, these values are usually scaled by a column-specific
 #' norm. The `tidy()` method applies this same norm to the coefficients shown
-#' above.
+#' above. When you `tidy()` this step, a tibble with columns `terms` (the
+#' selectors or variables selected), `components`, and `values` is returned.
 #'
 #' @references
 #' \url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
@@ -401,7 +399,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 }
 
 
-#' @rdname step_pls
+#' @rdname tidy.recipe
 #' @param x A `step_pls` object
 #' @export
 tidy.step_pls <- function(x, ...) {

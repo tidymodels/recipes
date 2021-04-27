@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to compute the dimensions. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dimension columns created by the original variables
@@ -28,9 +27,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept isomap
@@ -60,6 +57,10 @@
 #'  if `num_terms < 10`, their names will be `Isomap1` -
 #'  `Isomap9`. If `num_terms = 101`, the names would be
 #'  `Isomap001` - `Isomap101`.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  selectors or variables selected) is returned.
+#'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
 #'  *Advances in Neural Information Processing Systems*.
@@ -230,7 +231,7 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
   }
 
 
-#' @rdname step_isomap
+#' @rdname tidy.recipe
 #' @param x A `step_isomap` object
 #' @export
 tidy.step_isomap <- function(x, ...) {

@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param lon,lat Selector functions to choose which variables are
-#'  affected by the step. See selections() for more details.
+#'  affected by the step. See [selections()] for more details.
 #' @param ref_lon,ref_lat Single numeric values for the location
 #'  of the reference point.
 #' @param role or model term created by this step, what analysis
@@ -20,9 +20,9 @@
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
 #' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any). For the `tidy`
-#'  method, a tibble with columns echoing the values of `lat`,
-#'  `lon`, `ref_lat`, `ref_lon`, `name`, and `id`.
+#'  to the sequence of existing steps (if any).
+#' @details When you [`tidy()`] this step, a tibble with columns echoing the
+#'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `name`, and `id` is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -160,7 +160,7 @@ print.step_geodist <-
 
 
 
-#' @rdname step_geodist
+#' @rdname tidy.recipe
 #' @param x A `step_geodist` object.
 #' @export
 tidy.step_geodist <- function(x, ...) {
