@@ -27,9 +27,6 @@
 #'  preprocessing step has be trained by [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the resulting
 #'  new variables. See notes below.
-#' @param type For the `tidy()` method, either "coef" (for the variable
-#'  loadings per component) or "variance" (how much variance does each component
-#'  account for).
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step added to the
@@ -67,9 +64,9 @@
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected), `value` (the
-#'  loading), and `component` is returned.
+#' When you [`tidy()`] this step, use either `type = "coef"` for the variable
+#'  loadings per component or `type = "variance"` for how much variance each
+#'  component accounts for.
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
@@ -292,6 +289,9 @@ pca_variances <- function(x) {
 
 #' @rdname tidy.recipe
 #' @param x A `step_pca` object.
+#' @param type For `step_pca`, either "coef" (for the variable
+#'  loadings per component) or "variance" (how much variance does each component
+#'  account for).
 #' @export
 tidy.step_pca <- function(x, type = "coef", ...) {
   if (!is_trained(x)) {
