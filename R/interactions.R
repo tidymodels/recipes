@@ -8,8 +8,7 @@
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
 #'  for more details, and consider using [tidyselect::starts_with()] when
-#'  dummy variables have been created. For the `tidy` method, these are not
-#'  currently used.
+#'  dummy variables have been created.
 #' @param terms A traditional R formula that contains interaction
 #'  terms. This can include `.` and selectors.
 #' @param role For model terms created by this step, what analysis
@@ -22,9 +21,7 @@
 #'  interaction (e.g. `var1_x_var2` instead of the more
 #'  traditional `var1:var2`).
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which is
-#'  the interaction effects.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
@@ -60,7 +57,9 @@
 #'  `starts_with("x_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x_6)`
 #'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x_6):z` and
 #'  all two-way interactions are created.
-
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms`
+#'  (the interaction effects) is returned.
 #' @examples
 #' library(modeldata)
 #' data(penguins)
@@ -317,7 +316,7 @@ int_name <- function(x) {
 }
 
 
-#' @rdname step_interact
+#' @rdname tidy.recipe
 #' @param x A `step_interact` object
 #' @export
 tidy.step_interact <- function(x, ...) {
