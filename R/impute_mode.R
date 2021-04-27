@@ -82,6 +82,7 @@ step_impute_mode <-
 
 #' @rdname step_impute_mode
 #' @export
+#' @keywords internal
 step_modeimpute <-
   function(recipe,
            ...,
@@ -134,6 +135,7 @@ prep.step_impute_mode <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
@@ -148,6 +150,7 @@ bake.step_impute_mode <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_modeimpute <- bake.step_impute_mode
 
 #' @export
@@ -159,6 +162,7 @@ print.step_impute_mode <-
   }
 
 #' @export
+#' @keywords internal
 print.step_modeimpute <- print.step_impute_mode
 
 mode_est <- function(x) {
@@ -185,4 +189,5 @@ tidy.step_impute_mode <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_modeimpute <- tidy.step_impute_mode

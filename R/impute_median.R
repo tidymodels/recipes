@@ -79,6 +79,7 @@ step_impute_median <-
 
 #' @rdname step_impute_median
 #' @export
+#' @keywords internal
 step_medianimpute <-
   function(recipe,
            ...,
@@ -136,6 +137,7 @@ prep.step_impute_median <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
@@ -148,6 +150,7 @@ bake.step_impute_median <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_medianimpute <- bake.step_impute_median
 
 #' @export
@@ -159,6 +162,7 @@ print.step_impute_median <-
   }
 
 #' @export
+#' @keywords internal
 print.step_medianimpute <- print.step_impute_median
 
 #' @rdname step_impute_median
@@ -177,4 +181,5 @@ tidy.step_impute_median <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_medianimpute <- tidy.step_impute_median

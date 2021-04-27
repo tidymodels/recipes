@@ -126,3 +126,4 @@ bake(seven_pt, new_data = NULL)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
+\keyword{internal}

@@ -105,6 +105,7 @@ step_impute_roll <-
 
 #' @rdname step_impute_roll
 #' @export
+#' @keywords internal
 step_rollimpute <-
   function(recipe,
            ...,
@@ -169,6 +170,7 @@ prep.step_impute_roll <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_rollimpute <- prep.step_impute_roll
 
 get_window_ind <- function(i, n, k) {
@@ -217,6 +219,7 @@ bake.step_impute_roll <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_rollimpute <- bake.step_impute_roll
 
 #' @export
@@ -228,6 +231,7 @@ print.step_impute_roll <-
   }
 
 #' @export
+#' @keywords internal
 print.step_rollimpute <- print.step_impute_roll
 
 #' @rdname step_impute_roll
@@ -245,6 +249,7 @@ tidy.step_impute_roll <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_rollimpute <- tidy.step_impute_roll
 
 #' @rdname tunable.step
@@ -263,4 +268,5 @@ tunable.step_impute_roll <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tunable.step_rollimpute <- tunable.step_impute_roll
