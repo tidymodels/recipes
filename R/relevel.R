@@ -150,7 +150,7 @@ print.step_relevel <-
     invisible(x)
   }
 
-#' @rdname step_relevel
+#' @rdname tidy.recipe
 #' @param x A `step_relevel` object.
 #' @export
 tidy.step_relevel <- function(x, ...) {

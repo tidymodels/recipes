@@ -7,9 +7,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be converted to factors. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
-
+#'  [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param levels An options specification of the levels to be used
@@ -18,9 +16,7 @@
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `ordered`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
@@ -34,6 +30,10 @@
 #'  defaults to `TRUE`. This should be changed so that raw character
 #'  data will be applied to `step_string2factor`. However, this step
 #'  can also take existing factors (but will leave them as-is).
+#'
+#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `ordered` is returned.
+#'
 #' @seealso [step_factor2string()] [step_dummy()] [step_other()]
 #'  [step_novel()]
 #' @examples
@@ -175,7 +175,7 @@ print.step_string2factor <-
   }
 
 
-#' @rdname step_string2factor
+#' @rdname tidy.recipe
 #' @param x A `step_string2factor` object.
 #' @export
 tidy.step_string2factor <- function(x, ...) {

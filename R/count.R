@@ -9,8 +9,7 @@
 #' @param ... A single selector functions to choose which variable
 #'  will be searched for the pattern. The selector should resolve
 #'  into a single variable. See [selections()] for more
-#'  details. For the `tidy` method, these are not
-#'  currently used.
+#'  details.
 #' @param role For a variable created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new dummy variable column created by the original
@@ -29,10 +28,10 @@
 #'  variable being searched. This is `NULL` until computed by
 #'  [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
+#'  added to the sequence of existing steps (if any).
+#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `result` (the
-#'  new column name).
+#'  new column name) is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dummy_variables
@@ -174,7 +173,7 @@ print.step_count <-
   }
 
 
-#' @rdname step_count
+#' @rdname tidy.recipe
 #' @param x A `step_count` object.
 #' @export
 tidy.step_count <- function(x, ...) {

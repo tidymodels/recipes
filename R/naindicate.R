@@ -7,8 +7,7 @@
 #' @param recipe A recipe object. The check will be added to the
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  affected by the step. See [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new na indicator columns created from the original
@@ -27,9 +26,10 @@
 #'  the computations for subsequent operations.
 #' @param id A character string that is unique to this step to identify it.
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
+#'  sequence of existing steps (if any).
+#' @details  When you [`tidy()`] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  median value).
+#'  median value) is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -132,7 +132,7 @@ print.step_indicate_na <-
     invisible(x)
   }
 
-#' @rdname step_indicate_na
+#' @rdname tidy.recipe
 #' @param x A `step_indicate_na` object.
 #' @export
 tidy.step_indicate_na <- function(x, ...) {

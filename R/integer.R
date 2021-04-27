@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to create the integer variables. See
-#'  [selections()] for more details. For the `tidy` method, these
-#'  are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created by the original variables will be
@@ -23,10 +22,7 @@
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
 #' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any). For the `tidy`
-#'  method, a tibble with columns `terms` (the selectors or
-#'  variables selected) and `value` is a _list column_ with the
-#'  conversion key.
+#'  to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
@@ -44,6 +40,9 @@
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
 #'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the selectors or
+#'  variables selected) and `value` (a _list column_ with the
+#'  conversion key) is returned.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [step_regex()], [step_count()],
@@ -186,7 +185,7 @@ print.step_integer <-
     invisible(x)
   }
 
-#' @rdname step_integer
+#' @rdname tidy.recipe
 #' @param x A `step_integer` object.
 #' @export
 tidy.step_integer <- function(x, ...) {

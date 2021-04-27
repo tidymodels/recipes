@@ -7,8 +7,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be converted to strings. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variables that will be
@@ -131,7 +130,7 @@ print.step_factor2string <-
   }
 
 
-#' @rdname step_factor2string
+#' @rdname tidy.recipe
 #' @param x A `step_factor2string` object.
 #' @export
 tidy.step_factor2string <- function(x, ...) {

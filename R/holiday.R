@@ -9,8 +9,7 @@
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to create the new variables. The selected
 #'  variables should have class `Date` or `POSIXct`. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new variable columns created by the original variables
@@ -24,9 +23,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which is
-#'  the columns that will be affected and `holiday`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
@@ -36,6 +33,9 @@
 #' @details Unlike some other steps, `step_holiday` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
+#'
+#'  When you [`tidy()`] this step, a tibble with columns `terms`
+#'  (the columns that will be affected) and `holiday` is returned.
 #'
 #' @examples
 #' library(lubridate)
@@ -173,7 +173,7 @@ print.step_holiday <-
     invisible(x)
   }
 
-#' @rdname step_holiday
+#' @rdname tidy.recipe
 #' @param x A `step_holiday` object.
 #' @export
 tidy.step_holiday <- function(x, ...) {
