@@ -8,8 +8,7 @@
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the check. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this check since no new variables are
 #'  created.
 #' @param id A character string that is unique to this step to identify it.
@@ -30,9 +29,7 @@
 #' @param upper A named numeric vector of maximum values in the train set.
 #'   This is `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
@@ -44,6 +41,10 @@
 #'   of the train set range. If of length two, its first value
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
+#'
+#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `value` (the means) is returned.
+#'
 #' @examples
 #'   slack_df <- data_frame(x = 0:100)
 #'   slack_new_data <- data_frame(x = -10:110)
@@ -206,7 +207,7 @@ print.check_range <-
   }
 
 
-#' @rdname check_range
+#' @rdname tidy.recipe
 #' @param x A `check_range` object.
 #' @export
 tidy.check_range <- function(x, ...) {
