@@ -12,13 +12,16 @@
 #'  model.
 #' @param inputs Quosure(s) of `...`.
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `values` which contains the `rename` expressions as character
-#'  strings (and are not reparsable).
+#'  sequence of existing steps (if any).
 #' @details When an object in the user's global environment is referenced in
 #'  the expression defining the new variable(s), it is a good idea to use
 #'  quasiquotation (e.g. `!!`) to embed the value of the object in the
 #'  expression (to be portable between sessions).
+#'
+#'  When you [`tidy()`] this step, a tibble with
+#'  columns `values` which contains the `rename` expressions as character
+#'  strings (and are not reparsable) is returned.
+#'
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
@@ -110,7 +113,7 @@ print.step_rename <-
     invisible(x)
   }
 
-#' @rdname step_rename
+#' @rdname tidy.recipe
 #' @param x A `step_rename` object
 #' @export
 tidy.step_rename <- function(x, ...) {

@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details.  For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? If `names` is left to be
 #'  `NULL`, the rolling statistics replace the original columns
@@ -32,10 +31,7 @@
 #'  `summary` function (see the example below). These will be
 #'  the names of the new columns created by the step.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `statistic` (the
-#'  summary function name), and `size`.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept moving_windows
@@ -50,8 +46,13 @@
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
 #'
-# This step requires the \pkg{RcppRoll} package. If not installed, the
+#  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected), `statistic` (the
+#'  summary function name), and `size` is returned.
+#'
 #' @examples
 #' library(recipes)
 #' library(dplyr)
@@ -280,7 +281,7 @@ print.step_window <-
     invisible(x)
   }
 
-#' @rdname step_window
+#' @rdname tidy.recipe
 #' @param x A `step_window` object.
 #' @export
 tidy.step_window <- function(x, ...) {
