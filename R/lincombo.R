@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param max_steps A value.
@@ -16,9 +15,7 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  is the columns that will be removed.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
@@ -29,6 +26,10 @@
 #'  or more variables and recommends which column(s) should be
 #'  removed to resolve the issue. This algorithm may need to be
 #'  applied multiple times (as defined by `max_steps`).
+#'
+#'  When you [`tidy()`] this step, a tibble with column `terms` (the columns
+#'  that will be removed) is returned.
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)
@@ -211,7 +212,7 @@ iter_lc_rm <- function(x,
 }
 
 
-#' @rdname step_lincomb
+#' @rdname tidy.recipe
 #' @param x A `step_lincomb` object.
 #' @export
 tidy.step_lincomb <- tidy_filter

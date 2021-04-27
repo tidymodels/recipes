@@ -6,20 +6,21 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables will be selected when baking. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with column `terms` which
-#'  contains the `select` expressions as character strings
-#'  (and are not reparsable).
+#'  added to the sequence of existing steps (if any).
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` which
+#'  contains the `select` expressions as character strings
+#'  (and are not reparsable) is returned.
+#'
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
@@ -124,7 +125,7 @@ print.step_select <-
     invisible(x)
   }
 
-#' @rdname step_select
+#' @rdname tidy.recipe
 #' @param x A `step_select` object
 #' @export
 tidy.step_select <- function(x, ...) {
