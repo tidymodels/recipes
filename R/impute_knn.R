@@ -140,6 +140,7 @@ step_impute_knn <-
 
 #' @rdname step_impute_knn
 #' @export
+#' @keywords internal
 step_knnimpute <-
   function(recipe,
            ...,
@@ -217,6 +218,7 @@ prep.step_impute_knn <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 prep.step_knnimpute <- prep.step_impute_knn
 
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
@@ -274,6 +276,7 @@ bake.step_impute_knn <- function(object, new_data, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_knnimpute <- bake.step_impute_knn
 
 #' @export
@@ -287,6 +290,7 @@ print.step_impute_knn <-
   }
 
 #' @export
+#' @keywords internal
 print.step_knnimpute <- print.step_impute_knn
 
 #' @rdname step_impute_knn
@@ -313,6 +317,7 @@ tidy.step_impute_knn <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tidy.step_knnimpute <- tidy.step_impute_knn
 
 #' @rdname tunable.step
@@ -328,4 +333,5 @@ tunable.step_impute_knn <- function(x, ...) {
 }
 
 #' @export
+#' @keywords internal
 tunable.step_knnimpute <- tunable.step_impute_knn
