@@ -5,12 +5,10 @@
 #'  between two or more variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
+#' @param terms A traditional R formula that contains interaction
+#'  terms. This can include `.` and selectors. See [selections()]
 #'  for more details, and consider using [tidyselect::starts_with()] when
 #'  dummy variables have been created.
-#' @param terms A traditional R formula that contains interaction
-#'  terms. This can include `.` and selectors.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
