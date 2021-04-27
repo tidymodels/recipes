@@ -6,8 +6,7 @@
 #' @template row-ops
 #' @inheritParams step_center
 #' @param ... Integer row values. See
-#'  [dplyr::slice()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [dplyr::slice()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param inputs Quosure of values given by `...`.
@@ -17,14 +16,16 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = FALSE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  contains the filtering indices.
+#'  added to the sequence of existing steps (if any).
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`)
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
+#'
+#'  When you [`tidy()`] this step, a tibble with column `terms` which
+#'  contains the filtering indices is returned.
+#'
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -134,7 +135,7 @@ print.step_slice <-
     invisible(x)
   }
 
-#' @rdname step_slice
+#' @rdname tidy.recipe
 #' @param x A `step_slice` object
 #' @export
 tidy.step_slice <- function(x, ...) {

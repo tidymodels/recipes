@@ -88,7 +88,7 @@ print.step_naomit <-
     invisible(x)
   }
 
-#' @rdname step_naomit
+#' @rdname tidy.recipe
 #' @param x A `step_naomit` object.
 #' @export
 tidy.step_naomit <- function(x, ...) {
