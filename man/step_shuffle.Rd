@@ -2,7 +2,6 @@
 % Please edit documentation in R/shuffle.R
 \name{step_shuffle}
 \alias{step_shuffle}
-\alias{tidy.step_shuffle}
 \title{Shuffle Variables}
 \usage{
 step_shuffle(
@@ -14,8 +13,6 @@ step_shuffle(
   skip = FALSE,
   id = rand_id("shuffle")
 )
-
-\method{tidy}{step_shuffle}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -23,8 +20,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be permuted. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not
-currently used.}
+details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -44,19 +40,19 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_shuffle} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be affected.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_shuffle} creates a \emph{specification} of a recipe
 step that will randomly change the order of rows for selected
 variables.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
+columns that will be affected) is returned.
 }
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)

@@ -6,17 +6,16 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables that will be evaluated by the filtering bake. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  is the columns that will be removed.
+#'  added to the sequence of existing steps (if any).
+#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  columns that will be removed) is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
@@ -118,7 +117,7 @@ print.step_rm <-
   }
 
 
-#' @rdname step_rm
+#' @rdname tidy.recipe
 #' @param x A `step_rm` object.
 #' @export
 tidy.step_rm <- tidy_filter

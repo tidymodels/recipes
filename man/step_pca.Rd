@@ -2,7 +2,6 @@
 % Please edit documentation in R/pca.R
 \name{step_pca}
 \alias{step_pca}
-\alias{tidy.step_pca}
 \title{PCA Signal Extraction}
 \usage{
 step_pca(
@@ -19,16 +18,13 @@ step_pca(
   skip = FALSE,
   id = rand_id("pca")
 )
-
-\method{tidy}{step_pca}(x, type = "coef", ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables will be
-used to compute the components. See \code{\link[=selections]{selections()}} for more details. For the
-\code{tidy} method, these are not currently used.}
+used to compute the components. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned?. By default, the function assumes that the new principal
@@ -69,18 +65,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_pca} object.}
-
-\item{type}{For the \code{tidy()} method, either "coef" (for the variable
-loadings per component) or "variance" (how much variance does each component
-account for).}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any). For the \code{tidy} method, a tibble with
-columns \code{terms} (the selectors or variables selected), \code{value} (the
-loading), and \code{component}.
+sequence of existing steps (if any).
 }
 \description{
 \code{step_pca} creates a \emph{specification} of a recipe step that will convert
@@ -113,6 +101,10 @@ If \code{num_comp = 101}, the names would be \code{PC001} -
 Alternatively, \code{threshold} can be used to determine the
 number of components that are required to capture a specified
 fraction of the total variance in the variables.
+
+When you \code{\link[=tidy]{tidy()}} this step, use either \code{type = "coef"} for the variable
+loadings per component or \code{type = "variance"} for how much variance each
+component accounts for.
 }
 \examples{
 rec <- recipe( ~ ., data = USArrests)

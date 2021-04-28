@@ -2,7 +2,6 @@
 % Please edit documentation in R/colcheck.R
 \name{check_cols}
 \alias{check_cols}
-\alias{tidy.check_cols}
 \title{Check if all Columns are Present}
 \usage{
 check_cols(
@@ -13,8 +12,6 @@ check_cols(
   skip = FALSE,
   id = rand_id("cols")
 )
-
-\method{tidy}{check_cols}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The check will be added to the
@@ -22,8 +19,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are checked in the check See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -39,8 +35,6 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{check_cols} object.}
 }
 \description{
 \code{check_cols} creates a \emph{specification} of a recipe
@@ -51,6 +45,9 @@ present in the new data.
 This check will break the \code{bake} function if any of the specified
 columns is not present in the data. If the check passes, nothing is changed
 to the data.
+
+When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{value} (the type) is returned.
 }
 \examples{
 

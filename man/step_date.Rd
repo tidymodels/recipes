@@ -2,7 +2,6 @@
 % Please edit documentation in R/date.R
 \name{step_date}
 \alias{step_date}
-\alias{tidy.step_date}
 \title{Date Feature Generator}
 \usage{
 step_date(
@@ -19,8 +18,6 @@ step_date(
   skip = FALSE,
   id = rand_id("date")
 )
-
-\method{tidy}{step_date}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -29,8 +26,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 variables that will be used to create the new variables. The
 selected variables should have class \code{Date} or
-\code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.
-For the \code{tidy} method, these are not currently used.}
+\code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -76,15 +72,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_date} object.}
 }
 \value{
 For \code{step_date}, an updated version of recipe with
 the new step added to the sequence of existing steps (if any).
-For the \code{tidy} method, a tibble with columns \code{terms}
-(the selectors or variables selected), \code{value} (the feature
-names), and \code{ordinal} (a logical).
 }
 \description{
 \code{step_date} creates a \emph{specification} of a recipe
@@ -95,6 +86,10 @@ numeric variables.
 Unlike some other steps, \code{step_date} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
+(the selectors or variables selected), \code{value} (the feature
+names), and \code{ordinal} (a logical) is returned.
 }
 \examples{
 library(lubridate)

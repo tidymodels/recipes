@@ -233,13 +233,13 @@ print.discretize <-
 #' @param ... For `step_discretize`, the dots specify
 #'  one or more selector functions to choose which variables are
 #'  affected by the step. See [selections()] for more
-#'  details. For the `tidy` method, these are not currently
-#'  used.
+#'  details.
 #' @return `step_discretize` returns an updated version of
 #'  `recipe` with the new step added to the sequence of
-#'  existing steps (if any). For the `tidy` method, a tibble
+#'  existing steps (if any).
+#' @details  When you [`tidy()`] this step, a tibble
 #'  with columns `terms` (the selectors or variables selected)
-#'  and `value` (the breaks).
+#'  and `value` (the breaks) is returned.
 #' @export
 
 step_discretize <- function(recipe,
@@ -344,7 +344,7 @@ print.step_discretize <-
     invisible(x)
   }
 
-#' @rdname step_discretize
+#' @rdname tidy.recipe
 #' @param x A `step_discretize` object
 #' @export
 tidy.step_discretize <- function(x, ...) {

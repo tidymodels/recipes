@@ -10,8 +10,7 @@
 #'  variables will be used in the *numerator* of the ratio.
 #'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For terms created by this step, what analysis role
 #'  should they be assigned?. By default, the function assumes that
 #'  the newly created ratios created by the original variables will
@@ -30,9 +29,9 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `denom`.
+#'  added to the sequence of existing steps (if any).
+#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `denom` is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -184,7 +183,7 @@ print.step_ratio <-
 #' @rdname step_ratio
 denom_vars <- function(...) quos(...)
 
-#' @rdname step_ratio
+#' @rdname tidy.recipe
 #' @param x A `step_ratio` object
 #' @export
 tidy.step_ratio <- function(x, ...) {

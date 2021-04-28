@@ -6,8 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
-#'  used to compute the components. See [selections()] for more details. For the
-#'  `tidy` method, these are not currently used.
+#'  used to compute the components. See [selections()] for more details.
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned?. By default, the function assumes that the new principal
 #'  component columns created by the original variables will be used as
@@ -28,15 +27,10 @@
 #'  preprocessing step has be trained by [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the resulting
 #'  new variables. See notes below.
-#' @param type For the `tidy()` method, either "coef" (for the variable
-#'  loadings per component) or "variance" (how much variance does each component
-#'  account for).
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables selected), `value` (the
-#'  loading), and `component`.
+#'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pca
@@ -69,6 +63,10 @@
 #' Alternatively, `threshold` can be used to determine the
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
+#'
+#' When you [`tidy()`] this step, use either `type = "coef"` for the variable
+#'  loadings per component or `type = "variance"` for how much variance each
+#'  component accounts for.
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
@@ -289,8 +287,11 @@ pca_variances <- function(x) {
 
 
 
-#' @rdname step_pca
+#' @rdname tidy.recipe
 #' @param x A `step_pca` object.
+#' @param type For `step_pca`, either "coef" (for the variable
+#'  loadings per component) or "variance" (how much variance does each component
+#'  account for).
 #' @export
 tidy.step_pca <- function(x, type = "coef", ...) {
   if (!is_trained(x)) {

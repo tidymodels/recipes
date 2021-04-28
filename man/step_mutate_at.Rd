@@ -2,7 +2,6 @@
 % Please edit documentation in R/mutate_at.R
 \name{step_mutate_at}
 \alias{step_mutate_at}
-\alias{tidy.step_mutate_at}
 \title{Mutate multiple columns using dplyr}
 \usage{
 step_mutate_at(
@@ -15,8 +14,6 @@ step_mutate_at(
   skip = FALSE,
   id = rand_id("mutate_at")
 )
-
-\method{tidy}{step_mutate_at}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -24,8 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{fn}{A function fun, a quosure style lambda `~ fun(.)`` or a list of
 either form. (see \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}). \strong{Note that this argument must be
@@ -49,17 +45,18 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_center} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any). For the \code{tidy} method, a tibble with
-columns \code{terms} which contains the columns being transformed.
+sequence of existing steps (if any).
 }
 \description{
 \code{step_mutate_at} creates a \emph{specification} of a recipe step that will modify
 the selected variables using a common function via \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+column \code{terms} which contains the columns being transformed is returned.
 }
 \examples{
 library(dplyr)

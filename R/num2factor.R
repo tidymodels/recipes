@@ -7,8 +7,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
-#'  converted to factors. See [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  converted to factors. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are created.
 #' @param transform A function taking a single argument `x` that can be used
 #'  to modify the numeric values prior to determining the levels (perhaps using
@@ -20,8 +19,9 @@
 #'  modified once [prep.recipe()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
 #' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any). For the `tidy` method, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `ordered`.
+#'  sequence of existing steps (if any).
+#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `ordered` is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
@@ -193,7 +193,7 @@ print.step_num2factor <-
   }
 
 
-#' @rdname step_num2factor
+#' @rdname tidy.recipe
 #' @param x A `step_num2factor` object.
 #' @export
 tidy.step_num2factor <- function(x, ...) {

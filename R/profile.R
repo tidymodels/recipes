@@ -10,8 +10,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be fixed to a single value. See [selections()] for
-#'  more details. For the `tidy` method, these are not currently
-#'  used.
+#'  more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param profile A call to [dplyr::vars()]) to specify which
@@ -45,11 +44,13 @@
 #' @details This step is atypical in that, when baked, the
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
+#'
+#'  When you [`tidy()`] this step, a tibble with columns `terms` (which
+#'  is the columns that will be affected) and `type` (fixed or
+#'  profiled) is returned.
+#'
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (which
-#'  is the columns that will be affected), and `type` (fixed or
-#'  profiled).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -222,7 +223,7 @@ print.step_profile <-
     invisible(x)
   }
 
-#' @rdname step_profile
+#' @rdname tidy.recipe
 #' @param x A `step_profile` object.
 #' @export
 tidy.step_profile <- function(x, ...) {

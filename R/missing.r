@@ -7,8 +7,7 @@
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which
 #'  variables are checked in the check See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this check since no new variables are
 #'  created.
 #' @param trained A logical for whether the selectors in `...`
@@ -23,13 +22,15 @@
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
 #' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#'  added to the sequence of existing operations (if any).
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed
 #'  to the data.
+#'
+#'  When you [`tidy()`] this check, a tibble with column `terms` (the
+#'  selectors or variables selected) is returned.
+#'
 #' @examples
 #' library(modeldata)
 #' data(credit_data)
@@ -126,7 +127,7 @@ print.check_missing <-
     invisible(x)
   }
 
-#' @rdname check_missing
+#' @rdname tidy.recipe
 #' @param x A `check_missing` object.
 #' @export
 tidy.check_missing <- function(x, ...) {

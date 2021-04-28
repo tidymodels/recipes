@@ -2,7 +2,6 @@
 % Please edit documentation in R/sample.R
 \name{step_sample}
 \alias{step_sample}
-\alias{tidy.step_sample}
 \title{Sample rows using dplyr}
 \usage{
 step_sample(
@@ -15,16 +14,13 @@ step_sample(
   skip = TRUE,
   id = rand_id("sample")
 )
-
-\method{tidy}{step_sample}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{Argument ignored; included for consistency with other step
-specification functions. For the \code{tidy}
-method, these are not currently used.}
+specification functions.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -47,19 +43,19 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_sample} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{size}, \code{replace},
-and \code{id}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_sample} creates a \emph{specification} of a recipe step
 that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
 \code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{size},
+\code{replace}, and \code{id} is returned.
 }
 \section{Row Filtering}{
 

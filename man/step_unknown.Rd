@@ -2,7 +2,6 @@
 % Please edit documentation in R/unknown.R
 \name{step_unknown}
 \alias{step_unknown}
-\alias{tidy.step_unknown}
 \title{Assign missing categories to "unknown"}
 \usage{
 step_unknown(
@@ -15,8 +14,6 @@ step_unknown(
   skip = FALSE,
   id = rand_id("unknown")
 )
-
-\method{tidy}{step_unknown}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,7 +22,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 variables that will be affected by the step. These variables
 should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently used.}
+details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -47,15 +44,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_unknown} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{value} (the factor
-levels that is used for the new value)
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_unknown} creates a \emph{specification} of a recipe
@@ -71,6 +63,10 @@ converted to factors by this step.
 
 If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected) and \code{value} (the factor
+levels that is used for the new value) is returned.
 }
 \examples{
 library(modeldata)

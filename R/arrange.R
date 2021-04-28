@@ -6,21 +6,22 @@
 #' @inheritParams step_center
 #' @param ... Comma separated list of unquoted variable names.
 #'  Use `desc()`` to sort a variable in descending order. See
-#'  [dplyr::arrange()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [dplyr::arrange()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param inputs Quosure of values given by `...`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  contains the sorting variable(s) or expression(s). The
-#'  expressions are text representations and are not parsable.
+#'  added to the sequence of existing steps (if any).
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!!`)
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
+#'
+#'  When you [`tidy()`] this step, a tibble with column `terms` which
+#'  contains the sorting variable(s) or expression(s) is returned. The
+#'  expressions are text representations and are not parsable.
+#'
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -130,7 +131,7 @@ print.step_arrange <-
     invisible(x)
   }
 
-#' @rdname step_arrange
+#' @rdname tidy.recipe
 #' @param x A `step_arrange` object
 #' @export
 tidy.step_arrange <- function(x, ...) {

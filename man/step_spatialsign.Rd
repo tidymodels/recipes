@@ -2,7 +2,6 @@
 % Please edit documentation in R/spatialsign.R
 \name{step_spatialsign}
 \alias{step_spatialsign}
-\alias{tidy.step_spatialsign}
 \title{Spatial Sign Preprocessing}
 \usage{
 step_spatialsign(
@@ -15,8 +14,6 @@ step_spatialsign(
   skip = FALSE,
   id = rand_id("spatialsign")
 )
-
-\method{tidy}{step_spatialsign}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -24,8 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used for the normalization. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?}
@@ -47,14 +43,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_spatialsign} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be affected.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_spatialsign} is a \emph{specification} of a recipe
@@ -69,6 +61,9 @@ normalization. The spatial sign of a vector \code{w} is
 
 The variables should be centered and scaled prior to the
 computations.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
+that will be affected) is returned.
 }
 \examples{
 library(modeldata)

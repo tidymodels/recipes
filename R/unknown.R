@@ -8,7 +8,7 @@
 #' @param ... One or more selector functions to choose which
 #'  variables that will be affected by the step. These variables
 #'  should be character or factor types. See [selections()] for more
-#'  details. For the `tidy` method, these are not currently used.
+#'  details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param new_level A single character value that will be assigned
@@ -16,10 +16,7 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected) and `value` (the factor
-#'  levels that is used for the new value)
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
@@ -33,6 +30,10 @@
 #'
 #' If `new_level` is already in the data given to `prep`, an error
 #'  is thrown.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  columns that will be affected) and `value` (the factor
+#'  levels that is used for the new value) is returned.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
@@ -164,7 +165,7 @@ print.step_unknown <-
     invisible(x)
   }
 
-#' @rdname step_unknown
+#' @rdname tidy.recipe
 #' @param x A `step_unknown` object.
 #' @export
 tidy.step_unknown <- function(x, ...) {

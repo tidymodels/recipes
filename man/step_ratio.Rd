@@ -3,7 +3,6 @@
 \name{step_ratio}
 \alias{step_ratio}
 \alias{denom_vars}
-\alias{tidy.step_ratio}
 \title{Ratio Variable Creation}
 \usage{
 step_ratio(
@@ -20,8 +19,6 @@ step_ratio(
 )
 
 denom_vars(...)
-
-\method{tidy}{step_ratio}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -31,8 +28,7 @@ sequence of operations for this recipe.}
 variables will be used in the \emph{numerator} of the ratio.
 When used with \code{denom_vars}, the dots indicate which
 variables are used in the \emph{denominator}. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For terms created by this step, what analysis role
 should they be assigned?. By default, the function assumes that
@@ -67,19 +63,19 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_ratio} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{denom}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ratio} creates a \emph{specification} of a recipe
 step that will create one or more ratios out of numeric
 variables.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{denom} is returned.
 }
 \examples{
 library(recipes)

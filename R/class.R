@@ -7,8 +7,7 @@
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the check. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this check since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for
@@ -28,9 +27,7 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @param id A character string that is unique to this step to identify it.
 #' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the type).
+#'  added to the sequence of existing steps (if any).
 #'
 #' @keywords datagen
 #' @concept preprocessing normalization_methods
@@ -48,6 +45,10 @@
 #'  `TRUE`. If the train set contains character variables
 #'  the check will be break `bake` when `strings_as_factors` is
 #'  `TRUE`.
+#'
+#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `value` (the type) is returned.
+#'
 #' @examples
 #' library(dplyr)
 #' library(modeldata)
@@ -219,7 +220,7 @@ print.check_class <-
   }
 
 
-#' @rdname check_class
+#' @rdname tidy.recipe
 #' @param x A `check_class` object.
 tidy.check_class <- function(x, ...) {
   if (is_trained(x)) {

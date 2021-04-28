@@ -2,7 +2,6 @@
 % Please edit documentation in R/slice.R
 \name{step_slice}
 \alias{step_slice}
-\alias{tidy.step_slice}
 \title{Filter rows by position using dplyr}
 \usage{
 step_slice(
@@ -14,16 +13,13 @@ step_slice(
   skip = TRUE,
   id = rand_id("slice")
 )
-
-\method{tidy}{step_slice}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{Integer row values. See
-\code{\link[dplyr:slice]{dplyr::slice()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[dplyr:slice]{dplyr::slice()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -40,14 +36,10 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_slice} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-contains the filtering indices.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_slice} creates a \emph{specification} of a recipe step
@@ -59,6 +51,9 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
+contains the filtering indices is returned.
 }
 \section{Row Filtering}{
 

@@ -2,7 +2,6 @@
 % Please edit documentation in R/ica.R
 \name{step_ica}
 \alias{step_ica}
-\alias{tidy.step_ica}
 \title{ICA Signal Extraction}
 \usage{
 step_ica(
@@ -18,8 +17,6 @@ step_ica(
   skip = FALSE,
   id = rand_id("ica")
 )
-
-\method{tidy}{step_ica}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -27,8 +24,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used to compute the components. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -66,15 +62,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_ica} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the loading),
-and \code{component}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_ica} creates a \emph{specification} of a recipe step
@@ -106,6 +97,10 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
 If \code{num_comp = 101}, the names would be \code{IC001} -
 \code{IC101}.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected), \code{value} (the loading),
+and \code{component} is returned.
 }
 \examples{
 # from fastICA::fastICA

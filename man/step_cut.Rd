@@ -2,7 +2,6 @@
 % Please edit documentation in R/cut.R
 \name{step_cut}
 \alias{step_cut}
-\alias{tidy.step_cut}
 \title{Cut a numeric variable into a factor}
 \usage{
 step_cut(
@@ -15,16 +14,13 @@ step_cut(
   skip = FALSE,
   id = rand_id("cut")
 )
-
-\method{tidy}{step_cut}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+affected by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are created.}
 
@@ -43,8 +39,6 @@ run, some operations may not be able to be conducted on new data (e.g.
 processing the outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it may affect the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_cut} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the

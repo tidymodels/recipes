@@ -10,8 +10,7 @@
 #' @param ... One or more selector functions to choose which
 #'  _factor_ variables will be used to create the dummy variables. See
 #'  [selections()] for more details. The selected
-#'  variables must be factors. For the `tidy()` method, these are
-#'  not currently used.
+#'  variables must be factors.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the binary dummy variable columns created by the original
@@ -29,10 +28,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or original variables selected) and `columns` (the
-#'  list of corresponding binary columns).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dummy_variables
@@ -87,6 +83,10 @@
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
+#'
+#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or original variables selected) and `columns` (the
+#'  list of corresponding binary columns) is returned.
 #'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
@@ -380,7 +380,7 @@ get_dummy_columns <- function(x, one_hot) {
 }
 
 
-#' @rdname step_dummy
+#' @rdname tidy.recipe
 #' @param x A `step_dummy` object.
 #' @export
 tidy.step_dummy <- function(x, ...) {

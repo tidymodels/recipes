@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables that will potentially be reduced. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param threshold A numeric value between 0 and 1 or an integer greater or
@@ -22,10 +21,7 @@
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected) and `retained` (the factor
-#'  levels that were not pulled into "other")
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
@@ -52,6 +48,11 @@
 #'
 #' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), the other category is assigned.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  columns that will be affected) and `retained` (the factor
+#'  levels that were not pulled into "other") is returned.
+#'
 #' @seealso [step_factor2string()], [step_string2factor()],
 #'  [dummy_names()], [step_regex()], [step_count()],
 #'  [step_ordinalscore()], [step_unorder()], [step_novel()]
@@ -253,7 +254,7 @@ keep_levels <- function(x, threshold = .1, other = "other") {
 }
 
 
-#' @rdname step_other
+#' @rdname tidy.recipe
 #' @param x A `step_other` object.
 #' @export
 tidy.step_other <- function(x, ...) {

@@ -10,6 +10,9 @@
 #' @details This check will break the `bake` function if any of the specified
 #' columns is not present in the data. If the check passes, nothing is changed
 #'  to the data.
+#'
+#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `value` (the type) is returned.
 #' @examples
 #'
 #' library(modeldata)
@@ -92,7 +95,7 @@ print.check_cols <-
     invisible(x)
   }
 
-#' @rdname check_cols
+#' @rdname tidy.recipe
 #' @param x A `check_cols` object.
 #' @export
 tidy.check_cols <- function(x, ...) {

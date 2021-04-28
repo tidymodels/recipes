@@ -7,17 +7,13 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param modes A named character vector of modes. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the mode
-#'  value).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -27,6 +23,10 @@
 #'  `prep.recipe`. `bake.recipe` then applies the new
 #'  values to new data sets using these values. If the training set
 #'  data has more than one mode, one is selected at random.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  selectors or variables selected) and `model` (the mode
+#'  value) is returned.
 #'
 #'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
 #'    to `step_impute_mode()`.
@@ -173,7 +173,7 @@ mode_est <- function(x) {
   sample(modes, size = 1)
 }
 
-#' @rdname step_impute_mode
+#' @rdname tidy.recipe
 #' @param x A `step_impute_mode` object.
 #' @export
 tidy.step_impute_mode <- function(x, ...) {

@@ -2,7 +2,6 @@
 % Please edit documentation in R/relu.R
 \name{step_relu}
 \alias{step_relu}
-\alias{tidy.step_relu}
 \title{Apply (Smoothed) Rectified Linear Transformation}
 \usage{
 step_relu(
@@ -18,8 +17,6 @@ step_relu(
   skip = FALSE,
   id = rand_id("relu")
 )
-
-\method{tidy}{step_relu}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of
@@ -56,8 +53,6 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_relu} object.}
 }
 \value{
 An updated version of \code{recipe} with the

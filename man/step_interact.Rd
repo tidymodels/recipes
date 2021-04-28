@@ -2,7 +2,6 @@
 % Please edit documentation in R/interactions.R
 \name{step_interact}
 \alias{step_interact}
-\alias{tidy.step_interact}
 \title{Create Interaction Variables}
 \usage{
 step_interact(
@@ -15,15 +14,15 @@ step_interact(
   skip = FALSE,
   id = rand_id("interact")
 )
-
-\method{tidy}{step_interact}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{terms}{A traditional R formula that contains interaction
-terms. This can include \code{.} and selectors.}
+terms. This can include \code{.} and selectors. See \code{\link[=selections]{selections()}}
+for more details, and consider using \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}} when
+dummy variables have been created.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -48,20 +47,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_interact} object}
-
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details, and consider using \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}} when
-dummy variables have been created. For the \code{tidy} method, these are not
-currently used.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which is
-the interaction effects.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_interact} creates a \emph{specification} of a recipe
@@ -100,6 +89,9 @@ create a set of specific interaction effects (e.g.
 \code{starts_with("x_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x_6)}
 so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
 all two-way interactions are created.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms}
+(the interaction effects) is returned.
 }
 \examples{
 library(modeldata)

@@ -2,7 +2,6 @@
 % Please edit documentation in R/isomap.R
 \name{step_isomap}
 \alias{step_isomap}
-\alias{tidy.step_isomap}
 \title{Isomap Embedding}
 \usage{
 step_isomap(
@@ -19,8 +18,6 @@ step_isomap(
   skip = FALSE,
   id = rand_id("isomap")
 )
-
-\method{tidy}{step_isomap}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -28,8 +25,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be used to compute the dimensions. See
-\code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -66,14 +62,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_isomap} object}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_isomap} creates a \emph{specification} of a recipe
@@ -104,6 +96,9 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap9}. If \code{num_terms = 101}, the names would be
 \code{Isomap001} - \code{Isomap101}.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
+selectors or variables selected) is returned.
 }
 \examples{
 \donttest{

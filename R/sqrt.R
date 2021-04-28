@@ -2,25 +2,23 @@
 #'
 #' `step_sqrt` creates a *specification* of a recipe
 #'  step that will square root transform the data.
-
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be transformed. See [selections()] for
-#'  more details. For the `tidy` method, these are not
-#'  currently used.
+#'  more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  is the columns that will be affected.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
+#' columns that will be affected) is returned.
 #' @export
 #' @examples
 #' set.seed(313)
@@ -104,7 +102,7 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
   invisible(x)
 }
 
-#' @rdname step_sqrt
+#' @rdname tidy.recipe
 #' @param x A `step_sqrt` object.
 #' @export
 tidy.step_sqrt <- function(x, ...) {

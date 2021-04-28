@@ -2,7 +2,6 @@
 % Please edit documentation in R/geodist.R
 \name{step_geodist}
 \alias{step_geodist}
-\alias{tidy.step_geodist}
 \title{Distance between two locations}
 \usage{
 step_geodist(
@@ -19,15 +18,13 @@ step_geodist(
   skip = FALSE,
   id = rand_id("geodist")
 )
-
-\method{tidy}{step_geodist}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
 \item{lon, lat}{Selector functions to choose which variables are
-affected by the step. See selections() for more details.}
+affected by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{or model term created by this step, what analysis
 role should be assigned?. By default, the function assumes
@@ -57,19 +54,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_geodist} object.}
-
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
 }
 \value{
 An updated version of \code{recipe} with the new step added
-to the sequence of existing steps (if any). For the \code{tidy}
-method, a tibble with columns echoing the values of \code{lat},
-\code{lon}, \code{ref_lat}, \code{ref_lon}, \code{name}, and \code{id}.
+to the sequence of existing steps (if any).
 }
 \description{
 \code{step_geodist} creates a \emph{specification} of a
@@ -77,6 +65,9 @@ recipe step that will calculate the distance between
 points on a map to a reference location.
 }
 \details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns echoing the
+values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{name}, and \code{id} is returned.
+
 \code{step_geodist} will create a
 }
 \examples{

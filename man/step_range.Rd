@@ -2,7 +2,6 @@
 % Please edit documentation in R/range.R
 \name{step_range}
 \alias{step_range}
-\alias{tidy.step_range}
 \title{Scaling Numeric Data to a Specific Range}
 \usage{
 step_range(
@@ -16,8 +15,6 @@ step_range(
   skip = FALSE,
   id = rand_id("range")
 )
-
-\method{tidy}{step_range}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -25,8 +22,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables will be scaled. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently
-used.}
+details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -53,14 +49,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_range} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{min}, and \code{max}.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_range} creates a \emph{specification} of a recipe
@@ -71,6 +63,9 @@ range of values.
 When a new data point is outside of the ranges seen in
 the training set, the new values are truncated at \code{min} or
 \code{max}.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected), \code{min}, and \code{max} is returned.
 }
 \examples{
 library(modeldata)

@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to compute the components. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? By default, the function assumes
 #'  that the new principal component columns created by the original
@@ -27,9 +26,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pca
@@ -62,6 +59,9 @@
 #'  if `num_comp < 10`, their names will be `kPC1` -
 #'  `kPC9`. If `num_comp = 101`, the names would be
 #'  `kPC001` - `kPC101`.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  selectors or variables selected) is returned.
 #'
 #' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
 #'  Kernel principal component analysis. *Lecture Notes in
@@ -233,7 +233,7 @@ print.step_kpca_rbf <- function(x, width = max(20, options()$width - 40), ...) {
 }
 
 
-#' @rdname step_kpca_rbf
+#' @rdname tidy.recipe
 #' @param x A `step_kpca_rbf` object
 #' @export
 tidy.step_kpca_rbf <- function(x, ...) {

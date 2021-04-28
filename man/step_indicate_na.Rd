@@ -2,7 +2,6 @@
 % Please edit documentation in R/naindicate.R
 \name{step_indicate_na}
 \alias{step_indicate_na}
-\alias{tidy.step_indicate_na}
 \title{Create Missing Data Column Indicators}
 \usage{
 step_indicate_na(
@@ -15,16 +14,13 @@ step_indicate_na(
   skip = FALSE,
   id = rand_id("indicate_na")
 )
-
-\method{tidy}{step_indicate_na}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details. For the \code{tidy}
-method, these are not currently used.}
+affected by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -48,19 +44,20 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_indicate_na} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any). For the \code{tidy} method, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-median value).
+sequence of existing steps (if any).
 }
 \description{
 \code{step_indicate_na} creates a \emph{specification} of a recipe step that will
 create and append additional binary columns to the dataset to indicate
 which observations are missing.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model} (the
+median value) is returned.
 }
 \examples{
 library(modeldata)

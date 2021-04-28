@@ -6,21 +6,22 @@
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
 #'  variables are affected by the step. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
+#'  for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected).
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept ordinal_data
 #' @export
 #' @details The factors level order is preserved during the transformation.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  columns that will be affected) is returned.
+#'
 #' @examples
 #' lmh <- c("Low", "Med", "High")
 #'
@@ -126,7 +127,7 @@ print.step_unorder <-
   }
 
 
-#' @rdname step_unorder
+#' @rdname tidy.recipe
 #' @param x A `step_unorder` object.
 #' @export
 tidy.step_unorder <- function(x, ...) {

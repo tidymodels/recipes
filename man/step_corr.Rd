@@ -2,7 +2,6 @@
 % Please edit documentation in R/corr.R
 \name{step_corr}
 \alias{step_corr}
-\alias{tidy.step_corr}
 \title{High Correlation Filter}
 \usage{
 step_corr(
@@ -17,8 +16,6 @@ step_corr(
   skip = FALSE,
   id = rand_id("corr")
 )
-
-\method{tidy}{step_corr}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -26,8 +23,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which
 variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details. For the \code{tidy} method, these are not
-currently used.}
+for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -58,14 +54,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_corr} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which
-is the columns that will be removed.
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_corr} creates a \emph{specification} of a recipe
@@ -81,6 +73,9 @@ When a column has a single unique value, that column will be
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of \code{use}
 is chosen), some columns will also be excluded from the filter.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
+that will be removed) is returned.
 }
 \examples{
 library(modeldata)

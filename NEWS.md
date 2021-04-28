@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Reorganize documentation for all recipe step `tidy` methods (#701).
+
 # recipes 0.1.16
 
 ## New Steps

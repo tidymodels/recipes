@@ -2,7 +2,6 @@
 % Please edit documentation in R/regex.R
 \name{step_regex}
 \alias{step_regex}
-\alias{tidy.step_regex}
 \title{Create Dummy Variables using Regular Expressions}
 \usage{
 step_regex(
@@ -17,8 +16,6 @@ step_regex(
   skip = FALSE,
   id = rand_id("regex")
 )
-
-\method{tidy}{step_regex}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -27,8 +24,7 @@ sequence of operations for this recipe.}
 \item{...}{A single selector functions to choose which variable
 will be searched for the pattern. The selector should resolve
 into a single variable. See \code{\link[=selections]{selections()}} for more
-details. For the \code{tidy} method, these are not currently
-used.}
+details.}
 
 \item{role}{For a variable created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -61,19 +57,19 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_regex} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{result} (the
-new column name).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_regex} creates a \emph{specification} of a recipe step that will
 create a new dummy variable based on a regular expression.
+}
+\details{
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or variables selected) and \code{result} (the
+new column name) is returned.
 }
 \examples{
 library(modeldata)

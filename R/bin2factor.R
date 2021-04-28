@@ -6,8 +6,7 @@
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... Selector functions that choose which variables will
-#'  be converted. See [selections()] for more details. For
-#'  the `tidy` method, these are not currently used.
+#'  be converted. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param levels A length 2 character string that indicates the
@@ -18,9 +17,7 @@
 #' @param columns A vector with the selected variable names. This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected).
+#'  added to the sequence of existing steps (if any).
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
 #'  categorical instead of numeric. For example, naive Bayes models
@@ -28,6 +25,10 @@
 #'  distribution is modeled instead of a Gaussian probability
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
+#'
+#'  When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  columns that will be affected) is returned.
+#'
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dummy_variables
@@ -132,7 +133,7 @@ print.step_bin2factor <-
   }
 
 
-#' @rdname step_bin2factor
+#' @rdname tidy.recipe
 #' @param x A `step_bin2factor` object.
 #' @export
 tidy.step_bin2factor <- function(x, ...) {

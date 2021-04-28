@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used to compute the components. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? By default, the function assumes
 #'  that the new principal component columns created by the original
@@ -29,10 +28,8 @@
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
-#' @keywords datagen
+#'  added to the sequence of existing steps (if any).
+#' @keywords datagen internal
 #' @concept preprocessing
 #' @concept pca
 #' @concept projection_methods
@@ -71,6 +68,9 @@
 #'  if `num_comp < 10`, their names will be `kPC1` -
 #'  `kPC9`. If `num_comp = 101`, the names would be
 #'  `kPC001` - `kPC101`.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#'  selectors or variables selected) is returned.
 #'
 #' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
 #'  Kernel principal component analysis. *Lecture Notes in
@@ -165,6 +165,7 @@ step_kpca_new <-
   }
 
 #' @export
+#' @keywords internal
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training[, col_names])
@@ -200,6 +201,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
+#' @keywords internal
 bake.step_kpca <- function(object, new_data, ...) {
   if (object$num_comp > 0) {
     pca_vars <- colnames(environment(object$res@apply)$indata)
@@ -231,9 +233,10 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 }
 
 
-#' @rdname step_kpca
+#' @rdname tidy.recipe
 #' @param x A `step_kpca` object
 #' @export
+#' @keywords internal
 tidy.step_kpca <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {
@@ -253,6 +256,7 @@ tidy.step_kpca <- function(x, ...) {
 
 #' @rdname required_pkgs.step
 #' @export
+#' @keywords internal
 required_pkgs.step_kpca <- function(x, ...) {
   c("dimRed", "kernlab")
 }

@@ -2,7 +2,6 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\alias{tidy.step_dummy}
 \title{Dummy Variables Creation}
 \usage{
 step_dummy(
@@ -18,8 +17,6 @@ step_dummy(
   skip = FALSE,
   id = rand_id("dummy")
 )
-
-\method{tidy}{step_dummy}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -28,8 +25,7 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which
 \emph{factor} variables will be used to create the dummy variables. See
 \code{\link[=selections]{selections()}} for more details. The selected
-variables must be factors. For the \code{tidy()} method, these are
-not currently used.}
+variables must be factors.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -64,15 +60,10 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_dummy} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-selectors or original variables selected) and \code{columns} (the
-list of corresponding binary columns).
+added to the sequence of existing steps (if any).
 }
 \description{
 \code{step_dummy()} creates a \emph{specification} of a recipe
@@ -128,6 +119,10 @@ this step.
 
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+selectors or original variables selected) and \code{columns} (the
+list of corresponding binary columns) is returned.
 }
 \examples{
 library(modeldata)

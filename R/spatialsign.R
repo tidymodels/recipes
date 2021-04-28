@@ -8,8 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used for the normalization. See
-#'  [selections()] for more details. For the `tidy`
-#'  method, these are not currently used.
+#'  [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?
 #' @param na_rm A logical: should missing data be removed from the
@@ -17,9 +16,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which
-#'  is the columns that will be affected.
+#'  added to the sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept projection_methods
@@ -31,6 +28,9 @@
 #'
 #' The variables should be centered and scaled prior to the
 #'  computations.
+#'
+#' When you [`tidy()`] this step, a tibble with column `terms` (the columns
+#'  that will be affected) is returned.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
@@ -134,7 +134,7 @@ print.step_spatialsign <-
     invisible(x)
   }
 
-#' @rdname step_spatialsign
+#' @rdname tidy.recipe
 #' @param x A `step_spatialsign` object.
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
