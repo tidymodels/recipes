@@ -191,10 +191,7 @@ on the original data values.</p>
   key <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"integer"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_integer</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,8 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to create the integer variables. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code> method, these
-are not currently used.</p></td>
+<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -253,19 +249,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_integer</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step added
-to the sequence of existing steps (if any). For the <code>tidy</code>
-method, a tibble with columns <code>terms</code> (the selectors or
-variables selected) and <code>value</code> is a <em>list column</em> with the
-conversion key.</p>
+to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_integer</code> will determine the unique values of
@@ -278,6 +267,9 @@ argument above). Missing values propagate.</p>
 ordered by <code>sort</code>.</p>
 <p>Despite the name, the new values are returned as numeric unless
 <code>strict = TRUE</code>, which will coerce the results to integers.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the selectors or
+variables selected) and <code>value</code> (a <em>list column</em> with the
+conversion key) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
@@ -299,27 +291,27 @@ ordered by <code>sort</code>.</p>
 <span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"fast food"</span>
 <span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_integer</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>step_integer</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span>, <span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 5</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 5</span>
 #&gt;     age  diet height location  date
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>    </span><span style='color: #BB0000;'>NA</span><span>     0     12      102    37
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>    11    </span><span style='color: #BB0000;'>NA</span><span>      9       25     0
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     0     2     10       31    36
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>    20     3     11      102     0
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>    12     1      4      102    33</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 5 x 3</span><span>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span>    </span><span style='color: #BB0000;'>NA</span><span>     0     12      102    37</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span>    11    </span><span style='color: #BB0000;'>NA</span><span>      9       25     0</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span>     0     2     10       31    36</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span>    20     3     11      102     0</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span>    12     1      4      102    33</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 3</span>
 #&gt;   terms    value                  id           
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;named list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> age      </span><span style='color: #949494;'>&lt;tibble[,2] [23 × 2]&gt;</span><span>  integer_3IckW
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> diet     </span><span style='color: #949494;'>&lt;tibble[,2] [8 × 2]&gt;</span><span>   integer_3IckW
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> height   </span><span style='color: #949494;'>&lt;tibble[,2] [18 × 2]&gt;</span><span>  integer_3IckW
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> location </span><span style='color: #949494;'>&lt;tibble[,2] [135 × 2]&gt;</span><span> integer_3IckW
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> date     </span><span style='color: #949494;'>&lt;tibble[,2] [38 × 2]&gt;</span><span>  integer_3IckW</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;named list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> age      </span><span style='color: #949494;'>&lt;tibble[,2] [23 × 2]&gt;</span><span>  integer_3IckW</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> diet     </span><span style='color: #949494;'>&lt;tibble[,2] [8 × 2]&gt;</span><span>   integer_3IckW</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> height   </span><span style='color: #949494;'>&lt;tibble[,2] [18 × 2]&gt;</span><span>  integer_3IckW</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> location </span><span style='color: #949494;'>&lt;tibble[,2] [135 × 2]&gt;</span><span> integer_3IckW</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> date     </span><span style='color: #949494;'>&lt;tibble[,2] [38 × 2]&gt;</span><span>  integer_3IckW</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

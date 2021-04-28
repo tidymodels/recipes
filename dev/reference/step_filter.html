@@ -187,10 +187,7 @@ that will remove rows using <code><a href='https://dplyr.tidyverse.org/reference
   inputs <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>TRUE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"filter"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_filter</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,8 +202,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>Logical predicates defined in terms of the variables
 in the data. Multiple conditions are combined with <code>&amp;</code>. Only
 rows where the condition evaluates to <code>TRUE</code> are kept. See
-<code><a href='https://dplyr.tidyverse.org/reference/filter.html'>dplyr::filter()</a></code> for more details. For the <code>tidy</code>
-method, these are not currently used.</p></td>
+<code><a href='https://dplyr.tidyverse.org/reference/filter.html'>dplyr::filter()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -234,19 +230,12 @@ Care should be taken when using <code>skip = FALSE</code>.</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_filter</code> object</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> which
-contains the conditional statements. These
-expressions are text representations and are not parsable.</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When an object in the user's global environment is
@@ -254,6 +243,9 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. <code>!!</code>) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>terms</code> which
+contains the conditional statements is returned. These
+expressions are text representations and are not parsable.</p>
     <h2 class="hasAnchor" id="row-filtering"><a class="anchor" href="#row-filtering"></a>Row Filtering</h2>
 
     
@@ -271,43 +263,43 @@ before starting a preprocessing <code><a href='recipe.html'>recipe()</a></code>.
     <div class='dont-index'><p><code><a href='step_naomit.html'>step_naomit()</a></code> <code><a href='step_sample.html'>step_sample()</a></code> <code><a href='step_slice.html'>step_slice()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_filter</span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span><span class='op'>)</span>
 
-<span class='va'>prepped</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>prepped</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 
 <span class='va'>dplyr_train</span> <span class='op'>&lt;-</span>
-  <span class='va'>iris</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>75</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span><span class='op'>)</span>
 
 <span class='va'>rec_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>prepped</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>dplyr_train</span>, <span class='va'>rec_train</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='va'>dplyr_test</span> <span class='op'>&lt;-</span>
-  <span class='va'>iris</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='va'>Species</span> <span class='op'>!=</span> <span class='st'>"setosa"</span><span class='op'>)</span>
-<span class='va'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>prepped</span>, <span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rec_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>prepped</span>, <span class='va'>iris</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>76</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>dplyr_test</span>, <span class='va'>rec_test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='va'>values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"versicolor"</span>, <span class='st'>"virginica"</span><span class='op'>)</span>
 
 <span class='va'>qq_rec</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='co'># Embed the `values` object in the call using !!</span>
-  <span class='fu'>step_filter</span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='va'>Species</span>  <span class='op'>%in%</span> <span class='op'>!</span><span class='op'>!</span><span class='va'>values</span><span class='op'>)</span>
+  <span class='fu'>step_filter</span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4.5</span>, <span class='va'>Species</span>  <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='op'>!</span><span class='op'>!</span><span class='va'>values</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>qq_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 2</span>
 #&gt;   terms                                           id          
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>"</span><span>Sepal.Length &gt; 4.5</span><span style='color: #949494;'>"</span><span>                            filter_syRCb
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>"</span><span>Species %in% c(\"versicolor\", \"virginica\")</span><span style='color: #949494;'>"</span><span> filter_syRCb</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>"</span><span>Sepal.Length &gt; 4.5</span><span style='color: #949494;'>"</span><span>                            filter_syRCb</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>"</span><span>Species %in% c(\"versicolor\", \"virginica\")</span><span style='color: #949494;'>"</span><span> filter_syRCb</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

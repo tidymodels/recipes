@@ -203,10 +203,7 @@ random uniform number between zero and the truncation point.</p>
   threshold <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"impute_lower"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_impute_lower</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,8 +217,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -251,25 +247,21 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_impute_lower</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> for the estimated
-threshold.</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_impute_lower</code> estimates the variable minimums
 from the data used in the <code>training</code> argument of <code>prep.recipe</code>.
 <code>bake.recipe</code> then simulates a value for any data at the minimum
 with a random uniform value between zero and the minimum.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> for the estimated
+threshold is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_lowerimpute()</code>
 to <code>step_impute_lower()</code>.</p>
 
@@ -290,28 +282,28 @@ to <code>step_impute_lower()</code>.</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
               data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_impute_lower</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span>
 #&gt;   terms    value id                
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon      </span><span style='color: #BB0000;'>NA</span><span> impute_lower_b4CM3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span> impute_lower_b4CM3</div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon      </span><span style='color: #BB0000;'>NA</span><span> impute_lower_b4CM3</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> hydrogen    </span><span style='color: #BB0000;'>NA</span><span> impute_lower_b4CM3</span></div><div class='input'>
 <span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span>
 #&gt;   terms    value id                
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon      40 impute_lower_b4CM3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen     5 impute_lower_b4CM3</div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon      40 impute_lower_b4CM3</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> hydrogen     5 impute_lower_b4CM3</span></div><div class='input'>
 <span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>carbon</span>, <span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span>,
      ylab <span class='op'>=</span> <span class='st'>"pre-imputation"</span>, xlab <span class='op'>=</span> <span class='st'>"imputed"</span><span class='op'>)</span>
-</div><div class='img'><img src='step_impute_lower-1.png' alt='' width='768' height='552' /></div></span></pre>
+</div><div class='img'><img src='step_impute_lower-1.png' alt='' width='768' height='552' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

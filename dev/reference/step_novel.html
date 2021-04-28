@@ -190,10 +190,7 @@ new value.</p>
   objects <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"novel"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_novel</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,7 +205,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose which
 variables that will be affected by the step. These variables
 should be character or factor types. See <code><a href='selections.html'>selections()</a></code> for more
-details. For the <code>tidy</code> method, these are not currently used.</p></td>
+details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -243,19 +240,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_novel</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected) and <code>value</code> (the factor
-levels that is used for the new value)</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The selected variables are adjusted to have a new
@@ -272,6 +262,9 @@ is thrown.</p>
 <code>workflows::add_recipe()</code> with <code>allow_novel_levels = TRUE</code> set in
 <code>hardhat::default_recipe_blueprint()</code>. This will allow your model to handle
 new levels at prediction time, instead of throwing warnings or errors.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+columns that will be affected) and <code>value</code> (the factor
+levels that is used for the new value) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
@@ -289,27 +282,27 @@ new levels at prediction time, instead of throwing warnings or errors.</p>
 
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_novel</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span><span class='op'>)</span>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 <span class='va'>processed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span><span class='op'>)</span>
 <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>old <span class='op'>=</span> <span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span>, new <span class='op'>=</span> <span class='va'>processed</span><span class='op'>$</span><span class='va'>diet</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 2</span>
 #&gt;   old               new              
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>            
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> vegetarian        vegetarian       
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> strictly anything strictly anything
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> cannibalism       new              
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> vampirism         new              
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span>               
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span>               </div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>            </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> vegetarian        vegetarian       </span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> strictly anything strictly anything</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> cannibalism       new              </span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> vampirism         new              </span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span>               </span>
+#&gt; <span style='color: #BCBCBC;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span>               </span></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 3</span>
 #&gt;   terms    value id         
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> diet     new   novel_3AY0w
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> location new   novel_3AY0w</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> diet     new   novel_3AY0w</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> location new   novel_3AY0w</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

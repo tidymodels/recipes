@@ -188,10 +188,7 @@ vectors to factors (ordered or unordered).</p>
   ordered <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"string2factor"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_string2factor</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,8 +202,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be converted to factors. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
-method, these are not currently used.</p></td>
+<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -242,18 +238,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_string2factor</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>ordered</code>.</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If <code>levels</code> is given, <code>step_string2factor</code> will
@@ -263,6 +253,8 @@ levels.</p>
 defaults to <code>TRUE</code>. This should be changed so that raw character
 data will be applied to <code>step_string2factor</code>. However, this step
 can also take existing factors (but will leave them as-is).</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>ordered</code> is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code> <code><a href='step_dummy.html'>step_dummy()</a></code> <code><a href='step_other.html'>step_other()</a></code>
@@ -274,36 +266,36 @@ can also take existing factors (but will leave them as-is).</p>
 
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span>
 
-<span class='va'>make_factor</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>make_factor</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_string2factor</span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span>
 <span class='va'>make_factor</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>make_factor</span>,
                     training <span class='op'>=</span> <span class='va'>okc</span>,
                     strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># note that `diet` is a factor</span>
-<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>make_factor</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>head</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 2</span><span>
+<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>make_factor</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='va'>head</span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 2</span>
 #&gt;   diet              location           
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> strictly anything south san francisco
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> mostly other      oakland            
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> anything          san francisco      
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> vegetarian        berkeley           
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>                san francisco      
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> mostly anything   san francisco      </div><div class='input'><span class='va'>okc</span> <span class='op'>%&gt;%</span> <span class='va'>head</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 6</span><span>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> strictly anything south san francisco</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> mostly other      oakland            </span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> anything          san francisco      </span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> vegetarian        berkeley           </span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #BB0000;'>NA</span><span>                san francisco      </span>
+#&gt; <span style='color: #BCBCBC;'>6</span><span> mostly anything   san francisco      </span></div><div class='input'><span class='va'>okc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='va'>head</span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 6</span>
 #&gt;     age diet              height location            date       Class
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>    22 strictly anything     75 south san francisco 2012-06-28 other
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>    35 mostly other          70 oakland             2012-06-29 other
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>    38 anything              68 san francisco       2012-06-27 other
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>    23 vegetarian            71 berkeley            2012-06-28 other
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>    29 </span><span style='color: #BB0000;'>NA</span><span>                    66 san francisco       2012-06-27 other
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>    29 mostly anything       67 san francisco       2012-06-29 stem </div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>make_factor</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 3</span><span>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span>    22 strictly anything     75 south san francisco 2012-06-28 other</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span>    35 mostly other          70 oakland             2012-06-29 other</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span>    38 anything              68 san francisco       2012-06-27 other</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span>    23 vegetarian            71 berkeley            2012-06-28 other</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span>    29 </span><span style='color: #BB0000;'>NA</span><span>                    66 san francisco       2012-06-27 other</span>
+#&gt; <span style='color: #BCBCBC;'>6</span><span>    29 mostly anything       67 san francisco       2012-06-29 stem </span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>make_factor</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 3</span>
 #&gt;   terms ordered id                 
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> diet  FALSE   string2factor_a3AY0</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> diet  FALSE   string2factor_a3AY0</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

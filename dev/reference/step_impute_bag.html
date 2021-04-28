@@ -207,10 +207,7 @@ create bagged tree models to impute missing data.</p>
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"impute_bag"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='fu'>imp_vars</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for step_impute_bag</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>imp_vars</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,8 +222,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose variables. For
 <code>step_impute_bag</code>, this indicates the variables to be imputed. When used
 with <code>imp_vars</code>, the dots indicate which variables are used to predict the
-missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details. For the
-<code>tidy</code> method, these are not currently used.</p></td>
+missing data in each variable. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -278,18 +274,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_impute_bag</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step added to the
-sequence of existing steps (if any). For the <code>tidy</code> method, a tibble with
-columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
-bagged tree object).</p>
+sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For each variable requiring imputation, a bagged tree is created
@@ -303,6 +293,8 @@ will remain categorical. Also, integers will be imputed to integer too.</p>
 this variable will be ignored.</p>
 <p>It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the selectors
+or variables selected) and <code>model</code> (the bagged tree object) is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_bagimpute()</code>
 to <code>step_impute_bag()</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -316,7 +308,7 @@ Springer Verlag.</p>
 
 <span class='co'>## missing data per column</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>vapply</a></span><span class='op'>(</span><span class='va'>credit_data</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>num <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
+</div><div class='co'>#&gt;       Status    Seniority         Home         Time          Age      Marital 
 #&gt; 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 0.0002245173 
 #&gt;      Records          Job     Expenses       Income       Assets         Debt 
 #&gt; 0.0000000000 0.0004490346 0.0000000000 0.0855410867 0.0105523125 0.0040413112 
@@ -331,7 +323,7 @@ Springer Verlag.</p>
 
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Price</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>credit_tr</span><span class='op'>)</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_impute_bag</span><span class='op'>(</span><span class='va'>Status</span>, <span class='va'>Home</span>, <span class='va'>Marital</span>, <span class='va'>Job</span>, <span class='va'>Income</span>, <span class='va'>Assets</span>, <span class='va'>Debt</span><span class='op'>)</span>
 
 <span class='va'>imp_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>impute_rec</span>, training <span class='op'>=</span> <span class='va'>credit_tr</span><span class='op'>)</span>
@@ -346,7 +338,7 @@ Springer Verlag.</p>
 
 <span class='co'>## Specifying which variables to imputate with</span>
 
- <span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+ <span class='va'>impute_rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_impute_bag</span><span class='op'>(</span><span class='va'>Status</span>, <span class='va'>Home</span>, <span class='va'>Marital</span>, <span class='va'>Job</span>, <span class='va'>Income</span>, <span class='va'>Assets</span>, <span class='va'>Debt</span>,
                  impute_with <span class='op'>=</span> <span class='fu'>imp_vars</span><span class='op'>(</span><span class='va'>Time</span>, <span class='va'>Age</span>, <span class='va'>Expenses</span><span class='op'>)</span>,
                  <span class='co'># for quick execution, nbagg lowered</span>

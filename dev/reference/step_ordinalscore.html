@@ -190,10 +190,7 @@ numeric scores.</p>
   convert <span class='op'>=</span> <span class='va'>as.numeric</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"ordinalscore"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_ordinalscore</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,8 +204,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -244,18 +240,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_ordinalscore</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected).</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Dummy variables from ordered factors with <code>C</code>
@@ -265,6 +255,8 @@ ordered levels into a single numeric vector of values that
 represent (subjective) scores. By default, the translation uses
 a linear scale (1, 2, 3, ... <code>C</code>) but custom score
 functions can also be used (see the example below).</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>terms</code> (the
+columns that will be affected) is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fail_lvls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"meh"</span>, <span class='st'>"annoying"</span>, <span class='st'>"really_bad"</span><span class='op'>)</span>
@@ -276,7 +268,7 @@ functions can also be used (see the example below).</p>
                                     ordered <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>fail_severity</span>, data <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
+</div><div class='co'>#&gt;   (Intercept) fail_severity.L fail_severity.Q
 #&gt; 1           1   -7.071068e-01       0.4082483
 #&gt; 2           1   -7.850462e-17      -0.8164966
 #&gt; 3           1    7.071068e-01       0.4082483
@@ -286,47 +278,47 @@ functions can also be used (see the example below).</p>
 #&gt; attr(,"contrasts")$fail_severity
 #&gt; [1] "contr.poly"
 #&gt; </div><div class='input'>
-<span class='va'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>item</span> <span class='op'>+</span> <span class='va'>fail_severity</span>, data <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='va'>item</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>item</span> <span class='op'>+</span> <span class='va'>fail_severity</span>, data <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='va'>item</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_ordinalscore</span><span class='op'>(</span><span class='va'>fail_severity</span><span class='op'>)</span>
 
 <span class='va'>linear_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>linear_values</span>, training <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span>
 
 <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>linear_values</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   fail_severity item_paperclip item_twitter
-#&gt;           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>             1              1            0
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>             2              0            1
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>             3              0            0</div><div class='input'>
+#&gt;           <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span>             1              1            0</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span>             2              0            1</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span>             3              0            0</span></div><div class='input'>
 <span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>new_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>7</span><span class='op'>)</span>
   <span class='va'>new_values</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>]</span>
 <span class='op'>}</span>
 
-<span class='va'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>item</span> <span class='op'>+</span> <span class='va'>fail_severity</span>, data <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='va'>item</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>item</span> <span class='op'>+</span> <span class='va'>fail_severity</span>, data <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='va'>item</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_ordinalscore</span><span class='op'>(</span><span class='va'>fail_severity</span>, convert <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>nonlin_scores</span>, number <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 2</span>
 #&gt;   terms         id                
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> fail_severity ordinalscore_eIAmG</div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> fail_severity ordinalscore_eIAmG</span></div><div class='input'>
 <span class='va'>nonlin_scores</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>nonlin_scores</span>, training <span class='op'>=</span> <span class='va'>ord_data</span><span class='op'>)</span>
 
 <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>nonlin_scores</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   fail_severity item_paperclip item_twitter
-#&gt;           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>             1              1            0
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>             3              0            1
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>             7              0            0</div><div class='input'>
+#&gt;           <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span>             1              1            0</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span>             3              0            1</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span>             7              0            0</span></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>nonlin_scores</span>, number <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 2</span>
 #&gt;   terms         id                
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> fail_severity ordinalscore_eIAmG</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> fail_severity ordinalscore_eIAmG</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

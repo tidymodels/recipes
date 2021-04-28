@@ -189,10 +189,7 @@ check that will check if a variable is of a designated class.</p>
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   class_list <span class='op'>=</span> <span class='cn'>NULL</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"class"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for check_class</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,8 +203,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the check. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -248,18 +244,12 @@ the computations for subsequent operations.</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>check_class</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new check
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the type).</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function can check the classes of the variables
@@ -274,6 +264,8 @@ that in <code>prep</code> the argument <code>strings_as_factors</code> defaults 
 <code>TRUE</code>. If the train set contains character variables
 the check will be break <code>bake</code> when <code>strings_as_factors</code> is
 <code>TRUE</code>.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this check, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> (the type) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
@@ -287,67 +279,67 @@ the check will be break <code>bake</code> when <code>strings_as_factors</code> i
 <span class='co'># Learn the classes on the train set</span>
 <span class='va'>train</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>, <span class='op'>]</span>
 <span class='va'>test</span>  <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1001</span><span class='op'>:</span><span class='fl'>2000</span>, <span class='op'>]</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1,000 x 6</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1,000 x 6</span>
 #&gt;    diet                height location      date       Class   age
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
-#&gt; </span><span style='color: #949494;'># … with 990 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35</span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33</span>
+#&gt; <span style='color: #949494;'># … with 990 more rows</span></div><div class='input'>
 <span class='co'># Manual specification</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>age</span>, class_nm <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, class_nm <span class='op'>=</span> <span class='st'>"character"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>date</span>, class_nm <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>train</span>, <span class='va'>age</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>age</span>, class_nm <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, class_nm <span class='op'>=</span> <span class='st'>"character"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>date</span>, class_nm <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1,000 x 6</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1,000 x 6</span>
 #&gt;    diet                height location      date       Class   age
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33
-#&gt; </span><span style='color: #949494;'># … with 990 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-06-27 other    34</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span> strictly anything       74 berkeley      2012-06-26 stem     23</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span> mostly anything         67 san francisco 2012-06-29 other    23</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span> anything                72 burlingame    2012-06-29 other    45</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span> strictly vegetarian     71 oakland       2012-06-29 stem     35</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span> mostly anything         66 san francisco 2011-10-17 other    20</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>                      66 san francisco 2012-04-10 stem     39</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span> anything                67 san francisco 2012-06-29 other    39</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span> mostly anything         67 oakland       2012-06-29 other    35</span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span> mostly anything         64 san francisco 2012-06-26 other    33</span>
+#&gt; <span style='color: #949494;'># … with 990 more rows</span></div><div class='input'>
 <span class='co'># By default only the classes that are specified</span>
 <span class='co'>#   are allowed.</span>
 <span class='va'>x_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>time <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>60</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>x_df</span><span class='op'>$</span><span class='va'>time</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>x_df</span><span class='op'>$</span><span class='va'>time</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] "POSIXct" "POSIXt" </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>bake_</span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='co'># Use allow_additional = TRUE if you are fine with it</span>
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span>, allow_additional <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span>, allow_additional <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 1</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 1</span>
 #&gt;   time               
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-04-27 </span><span style='color: #949494;'>14:20:31</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2021-04-27 </span><span style='color: #949494;'>14:21:31</span><span></div><div class='input'>
-</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> 2021-04-28 </span><span style='color: #949494;'>15:01:10</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> 2021-04-28 </span><span style='color: #949494;'>15:02:10</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

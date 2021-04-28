@@ -194,10 +194,7 @@ dimensions.</p>
   keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"isomap"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_isomap</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,8 +208,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables will be used to compute the dimensions. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
-method, these are not currently used.</p></td>
+<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -270,18 +266,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_isomap</code> object</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected).</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Isomap is a form of multidimensional scaling (MDS).
@@ -304,6 +294,8 @@ numbers. The variable names are padded with zeros. For example,
 if <code>num_terms &lt; 10</code>, their names will be <code>Isomap1</code> -
 <code>Isomap9</code>. If <code>num_terms = 101</code>, the names would be
 <code>Isomap001</code> - <code>Isomap101</code>.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>terms</code> (the
+selectors or variables selected) is returned.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>De Silva, V., and Tenenbaum, J. B. (2003). Global
@@ -329,9 +321,9 @@ https://github.com/gdkrmr</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
               data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='va'>im_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>im_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='step_YeoJohnson.html'>step_YeoJohnson</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_isomap</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, neighbors <span class='op'>=</span> <span class='fl'>100</span>, num_terms <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/gdkrmr/dimRed'>dimRed</a></span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/yixuan/RSpectra'>RSpectra</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -346,15 +338,15 @@ https://github.com/gdkrmr</p>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>im_trans</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>im_estimates</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: RSpectra</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: Isomap START</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: Classical Scaling</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:21: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: embedding</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: DONE</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: L-Isomap embed START</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: constructing knn graph</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: calculating geodesic distances</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: embedding</span></div><div class='output co'>#&gt; <span class='message'>2021-04-27 14:22:22: DONE</span></div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 2</span><span>
+</div><div class='co'>#&gt; Loading required package: RSpectra</div><div class='co'>#&gt; 2021-04-28 15:02:59: Isomap START</div><div class='co'>#&gt; 2021-04-28 15:02:59: constructing knn graph</div><div class='co'>#&gt; 2021-04-28 15:02:59: calculating geodesic distances</div><div class='co'>#&gt; 2021-04-28 15:02:59: Classical Scaling</div><div class='co'>#&gt; 2021-04-28 15:02:59: L-Isomap embed START</div><div class='co'>#&gt; 2021-04-28 15:02:59: constructing knn graph</div><div class='co'>#&gt; 2021-04-28 15:02:59: calculating geodesic distances</div><div class='co'>#&gt; 2021-04-28 15:03:00: embedding</div><div class='co'>#&gt; 2021-04-28 15:03:01: DONE</div><div class='co'>#&gt; 2021-04-28 15:03:01: L-Isomap embed START</div><div class='co'>#&gt; 2021-04-28 15:03:01: constructing knn graph</div><div class='co'>#&gt; 2021-04-28 15:03:01: calculating geodesic distances</div><div class='co'>#&gt; 2021-04-28 15:03:01: embedding</div><div class='co'>#&gt; 2021-04-28 15:03:01: DONE</div><div class='img'><img src='step_isomap-1.png' alt='' width='768' height='552' /></div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 2</span>
 #&gt;   terms    id          
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon   isomap_ntsLB
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> hydrogen isomap_ntsLB
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> oxygen   isomap_ntsLB
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> nitrogen isomap_ntsLB
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> sulfur   isomap_ntsLB</div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon   isomap_ntsLB</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> hydrogen isomap_ntsLB</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> oxygen   isomap_ntsLB</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> nitrogen isomap_ntsLB</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> sulfur   isomap_ntsLB</span></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

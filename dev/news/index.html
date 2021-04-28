@@ -175,6 +175,9 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor" aria-hidden="true"></a>recipes (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>Reorganize documentation for all recipe step <code>tidy</code> methods (<a href='https://github.com/tidymodels/recipes/issues/701'>#701</a>).</li>
+</ul>
 </div>
     <div id="recipes-0116" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.16">
@@ -227,7 +230,7 @@
 <a href="#recipes-0115" class="anchor" aria-hidden="true"></a>recipes 0.1.15<small> 2020-11-11 </small>
 </h1>
 <ul>
-<li><p>The full tidyselect DSL is now allowed inside recipes <code>step_*()</code> functions. This includes the operators <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">&amp;</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">|</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">-</a></code> and <code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">!</a></code> and the new <code>where()</code> function. Additionally, the restriction preventing user defined selectors from being used has been lifted (<a href='https://github.com/tidymodels/recipes/issues/572'>#572</a>).</p></li>
+<li><p>The full tidyselect DSL is now allowed inside recipes <code>step_*()</code> functions. This includes the operators <code>&amp;</code>, <code>|</code>, <code>-</code> and <code>!</code> and the new <code>where()</code> function. Additionally, the restriction preventing user defined selectors from being used has been lifted (<a href='https://github.com/tidymodels/recipes/issues/572'>#572</a>).</p></li>
 <li><p>If steps that drop/add variables are skipped when baking the test set, the resulting column ordering of the baked test set will now be relative to the original recipe specification rather than relative to the baked training set. This is often more intuitive.</p></li>
 <li><p>More infrastructure work to make parallel processing on Windows less buggy with PSOCK clusters</p></li>
 <li><p><code><a href="../reference/fully_trained.html">fully_trained()</a></code> now returns <code>FALSE</code> when an unprepped recipe is used.</p></li>
@@ -239,7 +242,7 @@
 </h1>
 <ul>
 <li><p><code><a href="../reference/prep.html">prep()</a></code> gained an option to print a summary of which columns were added and/or removed during execution.</p></li>
-<li><p>To reduce confusion between <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code>, the latter is superseded in favor of using <code><a href="../reference/bake.html">bake(object, new_data = NULL)</a></code>. The <code>new_data</code> argument now has no default, so a <code>NULL</code> value must be explicitly used in order to emulate the results of <code><a href="../reference/juice.html">juice()</a></code>. <code><a href="../reference/juice.html">juice()</a></code> will remain in the package (and used internally) but most communication and training will use <code><a href="../reference/bake.html">bake(object, new_data = NULL)</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/543'>#543</a>)</p></li>
+<li><p>To reduce confusion between <code><a href="../reference/bake.html">bake()</a></code> and <code><a href="../reference/juice.html">juice()</a></code>, the latter is superseded in favor of using <code>bake(object, new_data = NULL)</code>. The <code>new_data</code> argument now has no default, so a <code>NULL</code> value must be explicitly used in order to emulate the results of <code><a href="../reference/juice.html">juice()</a></code>. <code><a href="../reference/juice.html">juice()</a></code> will remain in the package (and used internally) but most communication and training will use <code>bake(object, new_data = NULL)</code>. (<a href='https://github.com/tidymodels/recipes/issues/543'>#543</a>)</p></li>
 <li><p>Tim Zhou added a step to use linear models for imputation (<a href='https://github.com/tidymodels/recipes/issues/555'>#555</a>)</p></li>
 </ul>
 </div>
@@ -395,7 +398,7 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-4" class="anchor" aria-hidden="true"></a>Breaking Changes</h2>
 <ul>
-<li><p>Since 2018, a warning has been issued when the wrong argument was used in <code><a href="../reference/bake.html">bake(recipe, newdata)</a></code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
+<li><p>Since 2018, a warning has been issued when the wrong argument was used in <code>bake(recipe, newdata)</code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
 <li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
 </ul>
 <blockquote>
@@ -622,7 +625,7 @@
 <code>step_dummy</code> also has a new default naming function that works better for factors. However, there is an extra argument (<code>ordinal</code>) now to the functions that can be passed to <code>step_dummy</code>.<br>
 </li>
 <li>
-<code>step_interact</code> now allows for selectors (e.g. <code><a href="../reference/has_role.html">all_predictors()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with("prefix")</a></code> to be used in the interaction formula.</li>
+<code>step_interact</code> now allows for selectors (e.g. <code><a href="../reference/has_role.html">all_predictors()</a></code> or <code>starts_with("prefix")</code> to be used in the interaction formula.</li>
 <li>
 <code>step_YeoJohnson</code> gained an <code>na.rm</code> option.</li>
 <li>

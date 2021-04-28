@@ -255,7 +255,7 @@ type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='va'>Murder</span>, <span class='va'>Assault</span>, <span class='va'>UrbanPop</span>, <span class='va'>Rape</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </pre>
 
@@ -282,7 +282,7 @@ excluded variable(s).</p></li>
 <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code></p>
 <p>For example:</p>
 <pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"Width"</span><span class='op'>)</span><span class='op'>)</span>
 </pre>
 
@@ -291,7 +291,7 @@ excluded variable(s).</p></li>
 is coded can also be selected. For example, when using
 <code><a href='step_pca.html'>step_pca()</a></code>, the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
-case, using <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches("^PC")</a></code> will select all of the columns
+case, using <code>matches("^PC")</code> will select all of the columns
 whose names start with "PC" <em>once those columns are created</em>.</p>
 <p>There are sets of recipes-specific functions that can be used to select
 variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
@@ -303,7 +303,7 @@ Any can be used in conjunction with the previous functions described for
 selecting variables using their names:</p>
 <pre>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </pre>
 
@@ -321,7 +321,7 @@ previously using <code><a href='step_dummy.html'>step_dummy()</a></code>. The im
 the other step functions. Only the selector functions from
 recipes and tidyselect are allowed. User defined selector functions
 will not be recognized. Additionally, the tidyselect domain specific
-language is not recognized here, meaning that <code>&amp;</code>, <code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>, <code><a href='https://rdrr.io/r/base/Logic.html'>!</a></code>, and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>
+language is not recognized here, meaning that <code>&amp;</code>, <code>|</code>, <code>!</code>, and <code>-</code>
 will not work.</p>
     </div>
 

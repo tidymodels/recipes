@@ -188,10 +188,7 @@ step that will normalize numeric data to have a mean of zero.</p>
   na_rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"center"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_center</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,8 +202,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -241,18 +237,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_center</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the means).</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Centering data means that the average of a variable is
@@ -260,6 +250,8 @@ subtracted from the data. <code>step_center</code> estimates the
 variable means from the data used in the <code>training</code>
 argument of <code>prep.recipe</code>. <code>bake.recipe</code> then applies
 the centering to new data sets using these means.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+selectors or variables selected) and <code>value</code> (the means) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
@@ -275,7 +267,7 @@ the centering to new data sets using these means.</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
               data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 
-<span class='va'>center_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>center_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_center</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"gen"</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>hydrogen</span><span class='op'>)</span>
 
 <span class='va'>center_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>center_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
@@ -283,7 +275,7 @@ the centering to new data sets using these means.</p>
 <span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>center_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
 
 <span class='va'>biomass_te</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>transformed_te</span><span class='op'>)</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
+</div><div class='co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
 #&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
 #&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
 #&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
@@ -294,33 +286,33 @@ the centering to new data sets using these means.</p>
 #&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
 #&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
 #&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='va'>transformed_te</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 6</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 6</span>
 #&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
-#&gt;      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  -</span><span style='color: #BB0000;'>2.00</span><span>      5.67   8.68   -</span><span style='color: #BB0000;'>0.775</span><span>   0.22  18.3
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  -</span><span style='color: #BB0000;'>5.10</span><span>      5.5    9.54    1.78    0.34  17.6
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  -</span><span style='color: #BB0000;'>5.65</span><span>      5.5   10.6     1.33    0.3   17.2
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  -</span><span style='color: #BB0000;'>1.95</span><span>      6.1   -</span><span style='color: #BB0000;'>1.22</span><span>    0.725   0.5   18.9
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>   0.406     6.32   4.25   -</span><span style='color: #BB0000;'>0.875</span><span>   0     20.5
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  -</span><span style='color: #BB0000;'>4.05</span><span>      5.5    3.18   -</span><span style='color: #BB0000;'>0.375</span><span>   0.2   18.5
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>  -</span><span style='color: #BB0000;'>9.41</span><span>      5.23  15.6     0.115   0.51  15.1
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  -</span><span style='color: #BB0000;'>6.25</span><span>      4.66  -</span><span style='color: #BB0000;'>4.72</span><span>   -</span><span style='color: #BB0000;'>0.125</span><span>   0.2   16.2
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>19.2</span><span>       4.4   -</span><span style='color: #BB0000;'>7.42</span><span>   -</span><span style='color: #BB0000;'>0.935</span><span>   4.9   11.1
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> -</span><span style='color: #BB0000;'>20.6</span><span>       3.77 -</span><span style='color: #BB0000;'>14.8</span><span>     3.56    1.05  10.8
-#&gt; </span><span style='color: #949494;'># … with 70 more rows</span><span></div><div class='input'>
+#&gt;      <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span>  -</span><span style='color: #BB0000;'>2.00</span><span>      5.67   8.68   -</span><span style='color: #BB0000;'>0.775</span><span>   0.22  18.3</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span>  -</span><span style='color: #BB0000;'>5.10</span><span>      5.5    9.54    1.78    0.34  17.6</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span>  -</span><span style='color: #BB0000;'>5.65</span><span>      5.5   10.6     1.33    0.3   17.2</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span>  -</span><span style='color: #BB0000;'>1.95</span><span>      6.1   -</span><span style='color: #BB0000;'>1.22</span><span>    0.725   0.5   18.9</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span>   0.406     6.32   4.25   -</span><span style='color: #BB0000;'>0.875</span><span>   0     20.5</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span>  -</span><span style='color: #BB0000;'>4.05</span><span>      5.5    3.18   -</span><span style='color: #BB0000;'>0.375</span><span>   0.2   18.5</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span>  -</span><span style='color: #BB0000;'>9.41</span><span>      5.23  15.6     0.115   0.51  15.1</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span>  -</span><span style='color: #BB0000;'>6.25</span><span>      4.66  -</span><span style='color: #BB0000;'>4.72</span><span>   -</span><span style='color: #BB0000;'>0.125</span><span>   0.2   16.2</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>19.2</span><span>       4.4   -</span><span style='color: #BB0000;'>7.42</span><span>   -</span><span style='color: #BB0000;'>0.935</span><span>   4.9   11.1</span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span> -</span><span style='color: #BB0000;'>20.6</span><span>       3.77 -</span><span style='color: #BB0000;'>14.8</span><span>     3.56    1.05  10.8</span>
+#&gt; <span style='color: #949494;'># … with 70 more rows</span></div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>center_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   terms               value id          
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>"</span><span>carbon</span><span style='color: #949494;'>"</span><span>               </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>"</span><span>contains(\"gen\")</span><span style='color: #949494;'>"</span><span>    </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> </span><span style='color: #949494;'>"</span><span>-hydrogen</span><span style='color: #949494;'>"</span><span>            </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>center_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>"</span><span>carbon</span><span style='color: #949494;'>"</span><span>               </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>"</span><span>contains(\"gen\")</span><span style='color: #949494;'>"</span><span>    </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> </span><span style='color: #949494;'>"</span><span>-hydrogen</span><span style='color: #949494;'>"</span><span>            </span><span style='color: #BB0000;'>NA</span><span> center_wECZ3</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>center_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   terms    value id          
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> carbon   48.4  center_wECZ3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> oxygen   38.5  center_wECZ3
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> nitrogen  1.07 center_wECZ3</div></span></pre>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon   48.4  center_wECZ3</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> oxygen   38.5  center_wECZ3</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> nitrogen  1.07 center_wECZ3</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

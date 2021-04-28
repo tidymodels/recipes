@@ -191,10 +191,7 @@ indicator variables for common holidays.</p>
   keep_original_cols <span class='op'>=</span> <span class='cn'>TRUE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"holiday"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_holiday</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,8 +206,7 @@ sequence of operations for this recipe.</p></td>
       <td><p>One or more selector functions to choose which
 variables will be used to create the new variables. The selected
 variables should have class <code>Date</code> or <code>POSIXct</code>. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
-method, these are not currently used.</p></td>
+<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -254,23 +250,19 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_holiday</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> which is
-the columns that will be affected and <code>holiday</code>.</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Unlike some other steps, <code>step_holiday</code> does <em>not</em>
 remove the original date variables by default. Set <code>keep_original_cols</code>
 to <code>FALSE</code> to remove them.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code>
+(the columns that will be affected) and <code>holiday</code> is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_date.html'>step_date()</a></code> <code><a href='step_rm.html'>step_rm()</a></code>
@@ -281,26 +273,26 @@ to <code>FALSE</code> to remove them.</p>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
 
 <span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>someday <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2000-12-20"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/period.html'>days</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>holiday_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>someday</span>, <span class='va'>examples</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>holiday_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>someday</span>, <span class='va'>examples</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
    <span class='fu'>step_holiday</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>holiday_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>holiday_rec</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 <span class='va'>holiday_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>holiday_rec</span>, new_data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
 <span class='va'>holiday_values</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 41 x 4</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 41 x 4</span>
 #&gt;    someday    someday_LaborDay someday_NewYearsDay someday_ChristmasDay
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2000-12-20                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2000-12-21                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2000-12-22                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2000-12-23                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2000-12-24                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2000-12-25                0                   0                    1
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2000-12-26                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2000-12-27                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2000-12-28                0                   0                    0
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2000-12-29                0                   0                    0
-#&gt; </span><span style='color: #949494;'># … with 31 more rows</span><span></div></span></pre>
+#&gt;    <span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span> 2000-12-20                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span> 2000-12-21                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span> 2000-12-22                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span> 2000-12-23                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span> 2000-12-24                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span> 2000-12-25                0                   0                    1</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span> 2000-12-26                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span> 2000-12-27                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span> 2000-12-28                0                   0                    0</span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span> 2000-12-29                0                   0                    0</span>
+#&gt; <span style='color: #949494;'># … with 31 more rows</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

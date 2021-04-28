@@ -191,10 +191,7 @@ into an "other" category.</p>
   objects <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"other"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_other</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,8 +205,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables that will potentially be reduced. See
-<code><a href='selections.html'>selections()</a></code> for more details. For the <code>tidy</code>
-method, these are not currently used.</p></td>
+<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -252,19 +248,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_other</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected) and <code>retained</code> (the factor
-levels that were not pulled into "other")</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The overall proportion (or total counts) of the categories are
@@ -284,6 +273,9 @@ occurs.</p>
 pooling is needed, they will be placed into the other category.</p>
 <p>When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+columns that will be affected) and <code>retained</code> (the factor
+levels that were not pulled into "other") is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_factor2string.html'>step_factor2string()</a></code>, <code><a href='step_string2factor.html'>step_string2factor()</a></code>,
@@ -303,13 +295,13 @@ contained in the training set), the other category is assigned.</p>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>.1</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 <span class='va'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span>, <span class='va'>collapsed</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      
+</div><div class='co'>#&gt;                      
 #&gt;                       anything mostly anything strictly anything other values
 #&gt;   anything                3128               0                 0            0
 #&gt;   halal                      0               0                 0            4
@@ -352,42 +344,42 @@ contained in the training set), the other category is assigned.</p>
 #&gt;   vegetarian              0
 #&gt;   &lt;NA&gt;                12145</div><div class='input'>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 3</span>
 #&gt;   terms    retained          id         
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> diet     anything          other_ez6XT
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_ez6XT
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_ez6XT
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> location oakland           other_ez6XT
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> location san francisco     other_ez6XT</div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> diet     anything          other_ez6XT</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_ez6XT</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_ez6XT</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> location oakland           other_ez6XT</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> location san francisco     other_ez6XT</span></div><div class='input'>
 <span class='co'># novel levels are also "othered"</span>
 <span class='va'>tahiti</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
 <span class='va'>tahiti</span><span class='op'>$</span><span class='va'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span>
 <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>tahiti</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 2</span>
 #&gt;   diet              location    
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> strictly anything other values</div><div class='input'>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> strictly anything other values</span></div><div class='input'>
 <span class='co'># threshold as a frequency</span>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>2000</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
 <span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
 #&gt;   terms    retained          id         
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> diet     anything          other_p2QWY
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_p2QWY
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_p2QWY
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> location berkeley          other_p2QWY
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> location oakland           other_p2QWY
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> location san francisco     other_p2QWY</div><div class='input'><span class='co'># compare it to</span>
+#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span> diet     anything          other_p2QWY</span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_p2QWY</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_p2QWY</span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span> location berkeley          other_p2QWY</span>
+#&gt; <span style='color: #BCBCBC;'>5</span><span> location oakland           other_p2QWY</span>
+#&gt; <span style='color: #BCBCBC;'>6</span><span> location san francisco     other_p2QWY</span></div><div class='input'><span class='co'># compare it to</span>
 <span class='co'># okc_tr %&gt;% count(diet, sort = TRUE) %&gt;% top_n(4)</span>
 <span class='co'># okc_tr %&gt;% count(location, sort = TRUE) %&gt;% top_n(3)</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
