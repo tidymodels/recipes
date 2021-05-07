@@ -48,10 +48,9 @@ test_that('simple modes', {
   expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
   # For testing all-NA imputation https://github.com/tidymodels/recipes/issues/689
-  # Convert `Records` to an integer/binary factor representation
-  .credit_tr <- credit_tr %>% transmute(Price, Records = as.factor(as.integer(Records == 'yes')))
-  # Also create completely-NA integer factor in test set
-  .credit_te <- credit_te %>% transmute(Price, Records = as.factor(as.integer(NA)))
+  .credit_tr <- credit_tr %>% transmute(Price, Records)
+  # Also create completely-NA factor in test set
+  .credit_te <- credit_te %>% transmute(Price, Records = as.factor(NA))
   prepped_rec <- recipe(.credit_tr) %>% step_modeimpute(Records) %>% prep()
   # `Records` in test set should not have any NA after baking
   expect_true(!any(is.na(bake(prepped_rec, new_data = .credit_te) %>% pull(Records))))
