@@ -612,8 +612,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     rlang::abort(
       paste0(
-        "`composition` should be one of: ",
-        paste0("'", formats, "'", collapse = ",")
+      "`composition` should be one of: ",
+      paste0("'", formats, "'", collapse = ",")
       )
     )
   }
