@@ -1,7 +1,7 @@
 # recipes (development version)
 
 * Reorganize documentation for all recipe step `tidy` methods (#701).
-* The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (#331)
+* The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (#331, #287)
 
 # recipes 0.1.16
 
