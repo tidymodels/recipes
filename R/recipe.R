@@ -18,6 +18,13 @@ recipe.default <- function(x, ...)
   rlang::abort("`x` should be a data frame, matrix, or tibble")
 
 #' @rdname recipe
+#' @param strings_as_factors A logical: should character columns be converted to
+#'   factors? This affects the preprocessed training set (when retain = TRUE)
+#'    as well as the results of both `prep.recipe()` and `bake.recipe()`. In
+#'    0.1.16 and prior versions, this argument was provided via `prep()`. Code
+#'    which only provides it via `prep()` will continue to work with a warning, and
+#'    in a future version it will become an error. If provided in both
+#'    `prep()` and `recipe()`, the value in `recipe()` will take precedence.
 #' @param vars A character string of column names corresponding to variables
 #'   that will be used in any context (see below)
 #' @param roles A character string (the same length of `vars`) that
@@ -155,7 +162,8 @@ recipe.data.frame <-
            formula = NULL,
            ...,
            vars = NULL,
-           roles = NULL) {
+           roles = NULL,
+           strings_as_factors = NULL) {
 
     if (!is.null(formula)) {
       if (!is.null(vars))
@@ -212,7 +220,8 @@ recipe.data.frame <-
       steps = NULL,
       template = x,
       levels = NULL,
-      retained = NA
+      retained = NA,
+      strings_as_factors = strings_as_factors
     )
     class(out) <- "recipe"
     out
@@ -390,6 +399,18 @@ prep.recipe <-
 
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
+
+    if (!missing(strings_as_factors)) {
+      lifecycle::deprecate_soft(
+        when = "0.1.17",
+        what = "recipes::prep.recipe(strings_as_factors)",
+        with = "recipes::recipe(strings_as_factors)"
+      )
+    }
+
+    if (!is.null(x$strings_as_factors)) {
+      strings_as_factors <- x$strings_as_factors
+    }
 
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
@@ -591,8 +612,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     rlang::abort(
       paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+        "`composition` should be one of: ",
+        paste0("'", formats, "'", collapse = ",")
       )
     )
   }

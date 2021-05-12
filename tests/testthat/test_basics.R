@@ -41,6 +41,21 @@ test_that("return character or factor values", {
 })
 
 
+test_that("strings_as_factors in `recipe()`", {
+  # Takes precedence over value in `prep()`
+  string_recipe <- recipe(HHV ~ ., data = biomass, strings_as_factors = FALSE)
+  prepped_string_recipe <- prep(string_recipe, training = biomass, strings_as_factors = TRUE)
+
+  factor_recipe <- recipe(HHV ~ ., data = biomass, strings_as_factors = TRUE)
+  prepped_factor_recipe <- prep(factor_recipe, training = biomass, strings_as_factors = FALSE)
+
+  char_var <- bake(prepped_string_recipe, new_data = head(biomass))
+  expect_equal(class(char_var$sample), "character")
+
+  factor_var <- bake(prepped_factor_recipe, new_data = head(biomass))
+  expect_equal(class(factor_var$sample), "factor")
+})
+
 test_that("Using prepare", {
   expect_error(prepare(recipe(HHV ~ ., data = biomass),
                        training = biomass),
