@@ -12,7 +12,14 @@ recipe(x, ...)
 
 \method{recipe}{default}(x, ...)
 
-\method{recipe}{data.frame}(x, formula = NULL, ..., vars = NULL, roles = NULL)
+\method{recipe}{data.frame}(
+  x,
+  formula = NULL,
+  ...,
+  vars = NULL,
+  roles = NULL,
+  strings_as_factors = NULL
+)
 
 \method{recipe}{formula}(formula, data, ...)
 
@@ -39,6 +46,14 @@ that will be used in any context (see below)}
 describes a single role that the variable will take. This value could be
 anything but common roles are \code{"outcome"}, \code{"predictor"},
 \code{"case_weight"}, or \code{"ID"}}
+
+\item{strings_as_factors}{A logical: should character columns be converted to
+factors? This affects the preprocessed training set (when retain = TRUE) as
+well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. In 0.1.16
+and prior versions, this argument was provided via \code{prep()}. Code which
+only provides it via \code{prep()} will continue to work with a once per session
+warning, and in a future version it will become an error. If provided in
+both \code{prep()} and \code{recipe()}, the value in \code{recipe()} will take precedence.}
 }
 \value{
 An object of class \code{recipe} with sub-objects:
