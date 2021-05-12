@@ -19,12 +19,12 @@ recipe.default <- function(x, ...)
 
 #' @rdname recipe
 #' @param strings_as_factors A logical: should character columns be converted to
-#'   factors? This affects the preprocessed training set (when retain = TRUE)
-#'    as well as the results of both `prep.recipe()` and `bake.recipe()`. In
-#'    0.1.16 and prior versions, this argument was provided via `prep()`. Code
-#'    which only provides it via `prep()` will continue to work with a warning, and
-#'    in a future version it will become an error. If provided in both
-#'    `prep()` and `recipe()`, the value in `recipe()` will take precedence.
+#'   factors? This affects the preprocessed training set (when retain = TRUE) as
+#'   well as the results of both `prep.recipe()` and `bake.recipe()`. In 0.1.16
+#'   and prior versions, this argument was provided via `prep()`. Code which
+#'   only provides it via `prep()` will continue to work with a once per session
+#'   warning, and in a future version it will become an error. If provided in
+#'   both `prep()` and `recipe()`, the value in `recipe()` will take precedence.
 #' @param vars A character string of column names corresponding to variables
 #'   that will be used in any context (see below)
 #' @param roles A character string (the same length of `vars`) that
