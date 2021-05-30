@@ -192,7 +192,11 @@ estimate_bc <- function(dat,
   if (length(unique(dat)) < num_unique)
     return(NA)
   if (any(dat[complete.cases(dat)] <= 0)) {
-    rlang::warn("Non-positive values in data to be Box-Cox transformed. No transformation will be made.")
+    rlang::warn(
+      paste0(
+        "Non-positive values in data to be Box-Cox transformed. ",
+        "No transformation will be made to column."
+      )
     return(NA)
   }
   res <- optimize(
