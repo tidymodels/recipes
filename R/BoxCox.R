@@ -151,7 +151,7 @@ print.step_BoxCox <-
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
   # Raise a warning if the data contains non-positive values
-  if (any(x) <= 0) 
+  if (any(x <= 0)) 
     rlang::warn("Applying Box-Cox transformation to non-positive data.")
 
   if (is.na(lambda))
