@@ -150,6 +150,10 @@ print.step_BoxCox <-
 
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
+  # Raise a warning if the data contains non-positive values
+  if (any(x) <= 0) 
+    rlang::warn("Applying Box-Cox transformation to non-positive data.")
+
   if (is.na(lambda))
     return(x)
   if (abs(lambda) < eps)
@@ -185,9 +189,12 @@ estimate_bc <- function(dat,
                         limits = c(-5, 5),
                         num_unique = 5) {
   eps <- .001
-  if (length(unique(dat)) < num_unique |
-      any(dat[complete.cases(dat)] <= 0))
+  if (length(unique(dat)) < num_unique)
     return(NA)
+  if (any(dat[complete.cases(dat)] <= 0)) {
+    rlang::warn("Non-positive values in data to be Box-Cox transformed. No transformation will be made.")
+    return(NA)
+  }
   res <- optimize(
     bc_obj,
     interval = limits,
