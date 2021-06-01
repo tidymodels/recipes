@@ -14,8 +14,8 @@
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
-#' @param num_unique An integer where data that have less possible
-#'  values will not be evaluated for a transformation.
+#' @param num_unique An integer to specify minimum required unique
+#'  values to evaluate for a transformation.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any).
 #' @keywords datagen
@@ -117,6 +117,12 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     limits = x$limits,
     num_unique = x$num_unique
   )
+  if (any(is.na(values))) {
+    vars <- glue::glue_collapse(glue::single_quote(names(values[is.na(values)])), sep = ", ")
+    rlang::warn(paste(
+      "No Box-Cox transformation will be made to:", glue::glue("{vars}")
+    ))
+  }
   values <- values[!is.na(values)]
   step_BoxCox_new(
     terms = x$terms,
@@ -150,9 +156,12 @@ print.step_BoxCox <-
 
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
-  # Raise a warning if the data contains non-positive values
-  if (any(x <= 0)) 
-    rlang::warn("Applying Box-Cox transformation to non-positive data.")
+
+  if (any(x <= 0))
+    rlang::warn(paste(
+      "Applying Box-Cox transformation to non-positive data in column",
+      names(lambda)
+      ))
 
   if (is.na(lambda))
     return(x)
@@ -189,14 +198,11 @@ estimate_bc <- function(dat,
                         limits = c(-5, 5),
                         num_unique = 5) {
   eps <- .001
-  if (length(unique(dat)) < num_unique)
+  if (length(unique(dat)) < num_unique) {
+    rlang::warn("Fewer than `num_unique` values in selected variable.")
     return(NA)
-  if (any(dat[complete.cases(dat)] <= 0)) {
-    rlang::warn(
-      paste0(
-        "Non-positive values in data to be Box-Cox transformed. ",
-        "No transformation will be made to column."
-      )
+  } else if (any(dat[complete.cases(dat)] <= 0)) {
+    rlang::warn("Non-positive values in selected variable.")
     return(NA)
   }
   res <- optimize(
