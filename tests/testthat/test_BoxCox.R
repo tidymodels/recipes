@@ -49,7 +49,10 @@ test_that('simple Box Cox', {
            id = rec$steps[[1]]$id)
   expect_equal(bc_tibble_un, tidy(rec, number = 1))
 
-  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+  expect_warning(
+    rec_trained <- prep(rec, training = ex_dat, verbose = FALSE),
+    "Non-positive values in selected"
+  )
   rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
@@ -62,6 +65,6 @@ test_that('printing', {
   rec <- recipe(~., data = ex_dat) %>%
     step_BoxCox(x1, x2, x3, x4)
   expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_output(expect_warning(prep(rec, training = ex_dat, verbose = TRUE)))
 })
 

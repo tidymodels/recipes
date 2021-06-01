@@ -36,8 +36,8 @@ is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
 
-\item{num_unique}{An integer where data that have less possible
-values will not be evaluated for a transformation.}
+\item{num_unique}{An integer to specify minimum required unique
+values to evaluate for a transformation.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

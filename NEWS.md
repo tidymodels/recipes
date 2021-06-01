@@ -2,6 +2,8 @@
 
 * Reorganize documentation for all recipe step `tidy` methods (#701).
 
+* Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
+
 # recipes 0.1.16
 
 ## New Steps
