@@ -118,7 +118,8 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     num_unique = x$num_unique
   )
   if (any(is.na(values))) {
-    vars <- glue::glue_collapse(glue::single_quote(names(values[is.na(values)])), sep = ", ")
+    var_names <- names(values[is.na(values)])
+    vars <- glue::glue_collapse(glue::backtick(var_names), sep = ", ")
     rlang::warn(paste(
       "No Box-Cox transformation will be made to:", glue::glue("{vars}")
     ))
@@ -158,9 +159,9 @@ print.step_BoxCox <-
 bc_trans <- function(x, lambda, eps = .001) {
 
   if (any(x <= 0))
-    rlang::warn(paste(
-      "Applying Box-Cox transformation to non-positive data in column",
-      names(lambda)
+    rlang::warn(paste0(
+      "Applying Box-Cox transformation to non-positive data in column `",
+      names(lambda), "`"
       ))
 
   if (is.na(lambda))
