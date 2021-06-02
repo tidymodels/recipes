@@ -181,7 +181,7 @@ step that will transform the data from real values to be between
 zero and one.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_invlogit</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_invlogit</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -189,7 +189,7 @@ zero and one.</p>
   columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"invlogit"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,25 +254,26 @@ the function <code>f(x) = 1/(1+exp(-x))</code>.</p>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-
-<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
-<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
-              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>ilogit_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='step_scale.html'>step_scale</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_invlogit</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
-
-<span class='va'>ilogit_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ilogit_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ilogit_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span>, <span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>)</span>
-</div><div class='img'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span></span>
+<span class='r-in'><span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,</span>
+<span class='r-in'>              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ilogit_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='step_scale.html'>step_scale</a></span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_invlogit</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ilogit_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ilogit_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ilogit_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span>, <span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='step_invlogit-1.png' alt='' width='768' height='552' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

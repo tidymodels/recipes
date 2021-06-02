@@ -159,9 +159,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job </span>
-<span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000     1.000 </span>
+<span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000     0.999 </span>
 <span class="co">#&gt;  Expenses    Income    Assets      Debt    Amount     Price </span>
-<span class="co">#&gt;     1.000     0.919     0.988     0.996     1.000     1.000</span></code></pre></div>
+<span class="co">#&gt;     1.000     0.910     0.989     0.996     1.000     1.000</span></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
@@ -276,7 +276,7 @@
 <span class="co">#&gt;    outcome          1</span>
 <span class="co">#&gt;  predictor         13</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span>
+<span class="co">#&gt; Training data contained 3340 data points and 322 incomplete rows. </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
@@ -294,20 +294,20 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
 <span class="va">test_data</span>
-<span class="co">#&gt; # A tibble: 1,113 x 23</span>
-<span class="co">#&gt;    Seniority   Time      Age Expenses   Income  Assets   Debt Amount  Price</span>
-<span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1   0.257   -0.706  0.826      1.75   0.718   -0.199  -0.273  2.05   2.53 </span>
-<span class="co">#&gt;  2   2.61     0.921  0.643      0.987 -0.221    0.386  -0.273  1.21   0.577</span>
-<span class="co">#&gt;  3   0.133   -2.33  -0.909     -1.05  -0.784   -0.449  -0.273 -1.76  -0.589</span>
-<span class="co">#&gt;  4   0.00966  0.921 -0.635      0.987  0.705   -0.0316  1.86   0.995  0.330</span>
-<span class="co">#&gt;  5   0.875   -1.52   1.37      -1.05   2.34     0.929  -0.273  0.995  1.24 </span>
-<span class="co">#&gt;  6   3.10    -1.52   2.84       0.479  0.718   -0.0316  1.43  -0.912 -0.165</span>
-<span class="co">#&gt;  7   2.24     0.921  1.28      -0.539  0.00434 -0.157  -0.273  0.677 -0.153</span>
-<span class="co">#&gt;  8  -0.979    0.108  0.00402   -1.05  -0.371   -0.265  -0.273  0.995  0.660</span>
-<span class="co">#&gt;  9   1.99     0.921  0.461      0.987 -0.0707  -0.115  -0.273 -0.276 -0.467</span>
-<span class="co">#&gt; 10  -0.979    0.921 -0.453     -0.539 -0.00817  0.136   2.28   0.465  0.192</span>
-<span class="co">#&gt; # … with 1,103 more rows, and 14 more variables: Status &lt;fct&gt;,</span>
+<span class="co">#&gt; # A tibble: 1,114 x 23</span>
+<span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span>
+<span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817  0.297  </span>
+<span class="co">#&gt;  2    -0.977  0.924 -0.459    1.77  -0.437   0.845 -0.295  0.333   0.760  </span>
+<span class="co">#&gt;  3    -0.977  0.103  0.349    1.77  -0.783  -0.488 -0.295  0.333   0.00254</span>
+<span class="co">#&gt;  4    -0.247  0.103 -0.280    0.231 -0.207  -0.133 -0.295  0.229   0.171  </span>
+<span class="co">#&gt;  5    -0.125 -0.718 -0.729    0.231 -0.258  -0.222 -0.295 -0.807  -0.854  </span>
+<span class="co">#&gt;  6    -0.855  0.924 -0.549   -1.05  -0.0539 -0.488 -0.295  0.436  -0.331  </span>
+<span class="co">#&gt;  7     2.31   0.924  0.349    0.949 -0.0155 -0.488 -0.295 -0.185   0.0475 </span>
+<span class="co">#&gt;  8     0.848 -0.718  0.529    1.00   1.40   -0.133 -0.295  1.58    1.69   </span>
+<span class="co">#&gt;  9    -0.977 -0.718 -1.27    -0.538 -0.246  -0.266 -0.295 -1.32   -1.65   </span>
+<span class="co">#&gt; 10    -0.855  0.514 -0.100    0.744 -0.540  -0.488 -0.295 -0.185  -0.800  </span>
+<span class="co">#&gt; # … with 1,104 more rows, and 14 more variables: Status &lt;fct&gt;,</span>
 <span class="co">#&gt; #   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;,</span>

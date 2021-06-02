@@ -181,7 +181,7 @@ step that will potentially pool infrequently occurring values
 into an "other" category.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_other</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_other</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -191,7 +191,7 @@ into an "other" category.</p>
   objects <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"other"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -283,103 +283,107 @@ levels that were not pulled into "other") is returned.</p>
 <code><a href='step_ordinalscore.html'>step_ordinalscore()</a></code>, <code><a href='step_unorder.html'>step_unorder()</a></code>, <code><a href='step_novel.html'>step_novel()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span>
-<span class='va'>in_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>)</span>
-
-<span class='va'>okc_tr</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span> <span class='va'>in_train</span>,<span class='op'>]</span>
-<span class='va'>okc_te</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='op'>-</span><span class='va'>in_train</span>,<span class='op'>]</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
-
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>.1</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
-
-<span class='va'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span>, <span class='va'>collapsed</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                      
-#&gt;                       anything mostly anything strictly anything other values
-#&gt;   anything                3128               0                 0            0
-#&gt;   halal                      0               0                 0            4
-#&gt;   kosher                     0               0                 0            5
-#&gt;   mostly anything            0            8226                 0            0
-#&gt;   mostly halal               0               0                 0           23
-#&gt;   mostly kosher              0               0                 0           36
-#&gt;   mostly other               0               0                 0          509
-#&gt;   mostly vegan               0               0                 0          164
-#&gt;   mostly vegetarian          0               0                 0         1715
-#&gt;   other                      0               0                 0          172
-#&gt;   strictly anything          0               0              2562            0
-#&gt;   strictly halal             0               0                 0            7
-#&gt;   strictly kosher            0               0                 0            7
-#&gt;   strictly other             0               0                 0          209
-#&gt;   strictly vegan             0               0                 0          104
-#&gt;   strictly vegetarian        0               0                 0          442
-#&gt;   vegan                      0               0                 0           66
-#&gt;   vegetarian                 0               0                 0          331
-#&gt;   &lt;NA&gt;                       0               0                 0            0
-#&gt;                      
-#&gt;                        &lt;NA&gt;
-#&gt;   anything                0
-#&gt;   halal                   0
-#&gt;   kosher                  0
-#&gt;   mostly anything         0
-#&gt;   mostly halal            0
-#&gt;   mostly kosher           0
-#&gt;   mostly other            0
-#&gt;   mostly vegan            0
-#&gt;   mostly vegetarian       0
-#&gt;   other                   0
-#&gt;   strictly anything       0
-#&gt;   strictly halal          0
-#&gt;   strictly kosher         0
-#&gt;   strictly other          0
-#&gt;   strictly vegan          0
-#&gt;   strictly vegetarian     0
-#&gt;   vegan                   0
-#&gt;   vegetarian              0
-#&gt;   &lt;NA&gt;                12145</div><div class='input'>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 3</span>
-#&gt;   terms    retained          id         
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> diet     anything          other_ez6XT</span>
-#&gt; <span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_ez6XT</span>
-#&gt; <span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_ez6XT</span>
-#&gt; <span style='color: #BCBCBC;'>4</span><span> location oakland           other_ez6XT</span>
-#&gt; <span style='color: #BCBCBC;'>5</span><span> location san francisco     other_ez6XT</span></div><div class='input'>
-<span class='co'># novel levels are also "othered"</span>
-<span class='va'>tahiti</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
-<span class='va'>tahiti</span><span class='op'>$</span><span class='va'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span>
-<span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>tahiti</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 2</span>
-#&gt;   diet              location    
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> strictly anything other values</span></div><div class='input'>
-<span class='co'># threshold as a frequency</span>
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>2000</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span>
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
-#&gt;   terms    retained          id         
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> diet     anything          other_p2QWY</span>
-#&gt; <span style='color: #BCBCBC;'>2</span><span> diet     mostly anything   other_p2QWY</span>
-#&gt; <span style='color: #BCBCBC;'>3</span><span> diet     strictly anything other_p2QWY</span>
-#&gt; <span style='color: #BCBCBC;'>4</span><span> location berkeley          other_p2QWY</span>
-#&gt; <span style='color: #BCBCBC;'>5</span><span> location oakland           other_p2QWY</span>
-#&gt; <span style='color: #BCBCBC;'>6</span><span> location san francisco     other_p2QWY</span></div><div class='input'><span class='co'># compare it to</span>
-<span class='co'># okc_tr %&gt;% count(diet, sort = TRUE) %&gt;% top_n(4)</span>
-<span class='co'># okc_tr %&gt;% count(location, sort = TRUE) %&gt;% top_n(3)</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>in_train</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>okc_tr</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span> <span class='va'>in_train</span>,<span class='op'>]</span></span>
+<span class='r-in'><span class='va'>okc_te</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='op'>-</span><span class='va'>in_train</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>.1</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>collapsed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>okc_te</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>okc_te</span><span class='op'>$</span><span class='va'>diet</span>, <span class='va'>collapsed</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                       anything mostly anything strictly anything other values</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   anything                3128               0                 0            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   halal                      0               0                 0            4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   kosher                     0               0                 0            5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly anything            0            8226                 0            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly halal               0               0                 0           23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly kosher              0               0                 0           36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly other               0               0                 0          509</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegan               0               0                 0          164</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegetarian          0               0                 0         1715</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   other                      0               0                 0          172</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly anything          0               0              2562            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly halal             0               0                 0            7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly kosher            0               0                 0            7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly other             0               0                 0          209</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly vegan             0               0                 0          104</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly vegetarian        0               0                 0          442</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vegan                      0               0                 0           66</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vegetarian                 0               0                 0          331</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   &lt;NA&gt;                       0               0                 0            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   anything                0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   halal                   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   kosher                  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly anything         0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly halal            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly kosher           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly other            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegan            0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegetarian       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   other                   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly anything       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly halal          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly kosher         0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly other          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly vegan          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   strictly vegetarian     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vegan                   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vegetarian              0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   &lt;NA&gt;                12145</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms    retained          id         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> diet     anything          other_ez6XT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> diet     mostly anything   other_ez6XT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> diet     strictly anything other_ez6XT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> location oakland           other_ez6XT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> location san francisco     other_ez6XT</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># novel levels are also "othered"</span></span>
+<span class='r-in'><span class='va'>tahiti</span> <span class='op'>&lt;-</span> <span class='va'>okc</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span></span>
+<span class='r-in'><span class='va'>tahiti</span><span class='op'>$</span><span class='va'>location</span> <span class='op'>&lt;-</span> <span class='st'>"a magical place"</span></span>
+<span class='r-in'><span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>rec</span>, <span class='va'>tahiti</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   diet              location    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> strictly anything other values</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># threshold as a frequency</span></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>diet</span> <span class='op'>+</span> <span class='va'>location</span>, data <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_other</span><span class='op'>(</span><span class='va'>diet</span>, <span class='va'>location</span>, threshold <span class='op'>=</span> <span class='fl'>2000</span>, other <span class='op'>=</span> <span class='st'>"other values"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>rec</span>, training <span class='op'>=</span> <span class='va'>okc_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms    retained          id         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> diet     anything          other_p2QWY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> diet     mostly anything   other_p2QWY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> diet     strictly anything other_p2QWY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> location berkeley          other_p2QWY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> location oakland           other_p2QWY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> location san francisco     other_p2QWY</span>
+<span class='r-in'><span class='co'># compare it to</span></span>
+<span class='r-in'><span class='co'># okc_tr %&gt;% count(diet, sort = TRUE) %&gt;% top_n(4)</span></span>
+<span class='r-in'><span class='co'># okc_tr %&gt;% count(location, sort = TRUE) %&gt;% top_n(3)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

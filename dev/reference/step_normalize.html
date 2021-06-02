@@ -181,7 +181,7 @@ step that will normalize numeric data to have a standard
 deviation of one and a mean of zero.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_normalize</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_normalize</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -191,7 +191,7 @@ deviation of one and a mean of zero.</p>
   na_rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"normalize"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -264,84 +264,89 @@ selectors or variables selected), <code>value</code> (the standard deviations an
 means), and <code>statistic</code> for the type of value is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-
-<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
-<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
-              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>norm_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_normalize</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
-
-<span class='va'>norm_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>norm_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>norm_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
-
-<span class='va'>biomass_te</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>transformed_te</span><span class='op'>)</span><span class='op'>]</span>
-</div><div class='co'>#&gt;    carbon hydrogen oxygen nitrogen sulfur    HHV
-#&gt; 15  46.35     5.67  47.20     0.30   0.22 18.275
-#&gt; 20  43.25     5.50  48.06     2.85   0.34 17.560
-#&gt; 26  42.70     5.50  49.10     2.40   0.30 17.173
-#&gt; 31  46.40     6.10  37.30     1.80   0.50 18.851
-#&gt; 36  48.76     6.32  42.77     0.20   0.00 20.547
-#&gt; 41  44.30     5.50  41.70     0.70   0.20 18.467
-#&gt; 46  38.94     5.23  54.13     1.19   0.51 15.095
-#&gt; 51  42.10     4.66  33.80     0.95   0.20 16.240
-#&gt; 55  29.20     4.40  31.10     0.14   4.90 11.147
-#&gt; 65  27.80     3.77  23.69     4.63   1.05 10.750</div><div class='input'><span class='va'>transformed_te</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 6</span>
-#&gt;     carbon hydrogen oxygen nitrogen sulfur   HHV
-#&gt;      <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span><span> -</span><span style='color: #BB0000;'>0.193</span><span>    0.176    47.2     0.3    0.22  18.3</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span><span> -</span><span style='color: #BB0000;'>0.490</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>   48.1     2.85   0.34  17.6</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span><span> -</span><span style='color: #BB0000;'>0.543</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>   49.1     2.4    0.3   17.2</span>
-#&gt; <span style='color: #BCBCBC;'> 4</span><span> -</span><span style='color: #BB0000;'>0.188</span><span>    0.535    37.3     1.8    0.5   18.9</span>
-#&gt; <span style='color: #BCBCBC;'> 5</span><span>  0.039</span><span style='text-decoration: underline;'>0</span><span>   0.719    42.8     0.2    0     20.5</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span><span> -</span><span style='color: #BB0000;'>0.390</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>   41.7     0.7    0.2   18.5</span>
-#&gt; <span style='color: #BCBCBC;'> 7</span><span> -</span><span style='color: #BB0000;'>0.904</span><span>   -</span><span style='color: #BB0000;'>0.191</span><span>    54.1     1.19   0.51  15.1</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span><span> -</span><span style='color: #BB0000;'>0.601</span><span>   -</span><span style='color: #BB0000;'>0.668</span><span>    33.8     0.95   0.2   16.2</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>1.84</span><span>    -</span><span style='color: #BB0000;'>0.885</span><span>    31.1     0.14   4.9   11.1</span>
-#&gt; <span style='color: #BCBCBC;'>10</span><span> -</span><span style='color: #BB0000;'>1.97</span><span>    -</span><span style='color: #BB0000;'>1.41</span><span>     23.7     4.63   1.05  10.8</span>
-#&gt; <span style='color: #949494;'># … with 70 more rows</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>norm_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 4</span>
-#&gt;   terms    statistic value id             
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon   </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> normalize_u8gfY</span>
-#&gt; <span style='color: #BCBCBC;'>2</span><span> hydrogen </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> normalize_u8gfY</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>norm_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 4</span>
-#&gt;   terms    statistic value id             
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> carbon   mean      48.4  normalize_u8gfY</span>
-#&gt; <span style='color: #BCBCBC;'>2</span><span> hydrogen mean       5.46 normalize_u8gfY</span>
-#&gt; <span style='color: #BCBCBC;'>3</span><span> carbon   sd        10.4  normalize_u8gfY</span>
-#&gt; <span style='color: #BCBCBC;'>4</span><span> hydrogen sd         1.20 normalize_u8gfY</span></div><div class='input'>
-<span class='co'># To keep the original variables in the output, use `step_mutate_at`:</span>
-<span class='va'>norm_keep_orig</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='step_mutate_at.html'>step_mutate_at</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, fn <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>orig <span class='op'>=</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_normalize</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"orig"</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>keep_orig_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>norm_keep_orig</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-<span class='va'>keep_orig_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>keep_orig_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
-<span class='va'>keep_orig_te</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 11</span>
-#&gt;     carbon hydrogen oxygen nitrogen   sulfur   HHV carbon_orig hydrogen_orig
-#&gt;      <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span><span> -</span><span style='color: #BB0000;'>0.193</span><span>    0.176   0.801  -</span><span style='color: #BB0000;'>0.643</span><span>   0.007</span><span style='text-decoration: underline;'>55</span><span>  18.3        46.4          5.67</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span><span> -</span><span style='color: #BB0000;'>0.490</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>  0.881   1.47    0.281    17.6        43.2          5.5 </span>
-#&gt; <span style='color: #BCBCBC;'> 3</span><span> -</span><span style='color: #BB0000;'>0.543</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>  0.977   1.10    0.190    17.2        42.7          5.5 </span>
-#&gt; <span style='color: #BCBCBC;'> 4</span><span> -</span><span style='color: #BB0000;'>0.188</span><span>    0.535  -</span><span style='color: #BB0000;'>0.113</span><span>   0.602   0.646    18.9        46.4          6.1 </span>
-#&gt; <span style='color: #BCBCBC;'> 5</span><span>  0.039</span><span style='text-decoration: underline;'>0</span><span>   0.719   0.392  -</span><span style='color: #BB0000;'>0.726</span><span>  -</span><span style='color: #BB0000;'>0.494</span><span>    20.5        48.8          6.32</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span><span> -</span><span style='color: #BB0000;'>0.390</span><span>    0.034</span><span style='text-decoration: underline;'>2</span><span>  0.293  -</span><span style='color: #BB0000;'>0.311</span><span>  -</span><span style='color: #BB0000;'>0.038</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>   18.5        44.3          5.5 </span>
-#&gt; <span style='color: #BCBCBC;'> 7</span><span> -</span><span style='color: #BB0000;'>0.904</span><span>   -</span><span style='color: #BB0000;'>0.191</span><span>   1.44    0.095</span><span style='text-decoration: underline;'>8</span><span>  0.668    15.1        38.9          5.23</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span><span> -</span><span style='color: #BB0000;'>0.601</span><span>   -</span><span style='color: #BB0000;'>0.668</span><span>  -</span><span style='color: #BB0000;'>0.436</span><span>  -</span><span style='color: #BB0000;'>0.103</span><span>  -</span><span style='color: #BB0000;'>0.038</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>   16.2        42.1          4.66</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span><span> -</span><span style='color: #BB0000;'>1.84</span><span>    -</span><span style='color: #BB0000;'>0.885</span><span>  -</span><span style='color: #BB0000;'>0.686</span><span>  -</span><span style='color: #BB0000;'>0.776</span><span>  10.7      11.1        29.2          4.4 </span>
-#&gt; <span style='color: #BCBCBC;'>10</span><span> -</span><span style='color: #BB0000;'>1.97</span><span>    -</span><span style='color: #BB0000;'>1.41</span><span>   -</span><span style='color: #BB0000;'>1.37</span><span>    2.95    1.90     10.8        27.8          3.77</span>
-#&gt; <span style='color: #949494;'># … with 70 more rows, and 3 more variables: oxygen_orig &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   nitrogen_orig &lt;dbl&gt;, sulfur_orig &lt;dbl&gt;</span></div><div class='input'>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span></span>
+<span class='r-in'><span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,</span>
+<span class='r-in'>              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>norm_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_normalize</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>norm_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>norm_trans</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>norm_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_te</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>transformed_te</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    carbon hydrogen oxygen nitrogen sulfur    HHV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15  46.35     5.67  47.20     0.30   0.22 18.275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20  43.25     5.50  48.06     2.85   0.34 17.560</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26  42.70     5.50  49.10     2.40   0.30 17.173</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31  46.40     6.10  37.30     1.80   0.50 18.851</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36  48.76     6.32  42.77     0.20   0.00 20.547</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41  44.30     5.50  41.70     0.70   0.20 18.467</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46  38.94     5.23  54.13     1.19   0.51 15.095</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51  42.10     4.66  33.80     0.95   0.20 16.240</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55  29.20     4.40  31.10     0.14   4.90 11.147</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65  27.80     3.77  23.69     4.63   1.05 10.750</span>
+<span class='r-in'><span class='va'>transformed_te</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 80 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     carbon hydrogen oxygen nitrogen sulfur   HHV</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>0.193</span>    0.176    47.2     0.3    0.22  18.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> -<span style='color: #BB0000;'>0.490</span>    0.034<span style='text-decoration: underline;'>2</span>   48.1     2.85   0.34  17.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> -<span style='color: #BB0000;'>0.543</span>    0.034<span style='text-decoration: underline;'>2</span>   49.1     2.4    0.3   17.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> -<span style='color: #BB0000;'>0.188</span>    0.535    37.3     1.8    0.5   18.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>  0.039<span style='text-decoration: underline;'>0</span>   0.719    42.8     0.2    0     20.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> -<span style='color: #BB0000;'>0.390</span>    0.034<span style='text-decoration: underline;'>2</span>   41.7     0.7    0.2   18.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> -<span style='color: #BB0000;'>0.904</span>   -<span style='color: #BB0000;'>0.191</span>    54.1     1.19   0.51  15.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> -<span style='color: #BB0000;'>0.601</span>   -<span style='color: #BB0000;'>0.668</span>    33.8     0.95   0.2   16.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>1.84</span>    -<span style='color: #BB0000;'>0.885</span>    31.1     0.14   4.9   11.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> -<span style='color: #BB0000;'>1.97</span>    -<span style='color: #BB0000;'>1.41</span>     23.7     4.63   1.05  10.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 70 more rows</span></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>norm_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms    statistic value id             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> carbon   <span style='color: #BB0000;'>NA</span>           <span style='color: #BB0000;'>NA</span> normalize_u8gfY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> hydrogen <span style='color: #BB0000;'>NA</span>           <span style='color: #BB0000;'>NA</span> normalize_u8gfY</span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>norm_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 4 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms    statistic value id             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> carbon   mean      48.4  normalize_u8gfY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> hydrogen mean       5.46 normalize_u8gfY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> carbon   sd        10.4  normalize_u8gfY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> hydrogen sd         1.20 normalize_u8gfY</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># To keep the original variables in the output, use `step_mutate_at`:</span></span>
+<span class='r-in'><span class='va'>norm_keep_orig</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='step_mutate_at.html'>step_mutate_at</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, fn <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>orig <span class='op'>=</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_normalize</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"orig"</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>keep_orig_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>norm_keep_orig</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>keep_orig_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>keep_orig_obj</span>, <span class='va'>biomass_te</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>keep_orig_te</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 80 x 11</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     carbon hydrogen oxygen nitrogen   sulfur   HHV carbon_orig hydrogen_orig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>0.193</span>    0.176   0.801  -<span style='color: #BB0000;'>0.643</span>   0.007<span style='text-decoration: underline;'>55</span>  18.3        46.4          5.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> -<span style='color: #BB0000;'>0.490</span>    0.034<span style='text-decoration: underline;'>2</span>  0.881   1.47    0.281    17.6        43.2          5.5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> -<span style='color: #BB0000;'>0.543</span>    0.034<span style='text-decoration: underline;'>2</span>  0.977   1.10    0.190    17.2        42.7          5.5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> -<span style='color: #BB0000;'>0.188</span>    0.535  -<span style='color: #BB0000;'>0.113</span>   0.602   0.646    18.9        46.4          6.1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>  0.039<span style='text-decoration: underline;'>0</span>   0.719   0.392  -<span style='color: #BB0000;'>0.726</span>  -<span style='color: #BB0000;'>0.494</span>    20.5        48.8          6.32</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> -<span style='color: #BB0000;'>0.390</span>    0.034<span style='text-decoration: underline;'>2</span>  0.293  -<span style='color: #BB0000;'>0.311</span>  -<span style='color: #BB0000;'>0.038</span><span style='color: #BB0000; text-decoration: underline;'>0</span>   18.5        44.3          5.5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> -<span style='color: #BB0000;'>0.904</span>   -<span style='color: #BB0000;'>0.191</span>   1.44    0.095<span style='text-decoration: underline;'>8</span>  0.668    15.1        38.9          5.23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> -<span style='color: #BB0000;'>0.601</span>   -<span style='color: #BB0000;'>0.668</span>  -<span style='color: #BB0000;'>0.436</span>  -<span style='color: #BB0000;'>0.103</span>  -<span style='color: #BB0000;'>0.038</span><span style='color: #BB0000; text-decoration: underline;'>0</span>   16.2        42.1          4.66</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>1.84</span>    -<span style='color: #BB0000;'>0.885</span>  -<span style='color: #BB0000;'>0.686</span>  -<span style='color: #BB0000;'>0.776</span>  10.7      11.1        29.2          4.4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> -<span style='color: #BB0000;'>1.97</span>    -<span style='color: #BB0000;'>1.41</span>   -<span style='color: #BB0000;'>1.37</span>    2.95    1.90     10.8        27.8          3.77</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 70 more rows, and 3 more variables: oxygen_orig &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   nitrogen_orig &lt;dbl&gt;, sulfur_orig &lt;dbl&gt;</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

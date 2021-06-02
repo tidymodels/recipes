@@ -179,7 +179,7 @@ impute missing data using nearest neighbors." />
 impute missing data using nearest neighbors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_impute_knn</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_impute_knn</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -205,7 +205,7 @@ impute missing data using nearest neighbors.</p>
   columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"impute_knn"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -301,75 +301,86 @@ to <code>step_impute_knn()</code>.</p>
 of its properties," Biometrics, 857-871.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-
-<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>, <span class='op'>]</span>
-<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>, <span class='op'>]</span>
-<span class='va'>biomass_te_whole</span> <span class='op'>&lt;-</span> <span class='va'>biomass_te</span>
-
-<span class='co'># induce some missing data at random</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>9039</span><span class='op'>)</span>
-<span class='va'>carb_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span>
-<span class='va'>nitro_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span>
-
-<span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
-<span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
-              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>step_impute_knn</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, neighbors <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='va'>ratio_recipe2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ratio_recipe</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-<span class='va'>imputed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ratio_recipe2</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
-
-<span class='co'># how well did it work?</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>)</span>
-</div><div class='co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   27.80   44.24   47.30   47.96   49.00   79.34 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span>,
-      after <span class='op'>=</span> <span class='va'>imputed</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='co'>#&gt;      before    after
-#&gt; [1,]  46.83 47.43000
-#&gt; [2,]  47.80 47.53333
-#&gt; [3,]  46.40 46.21000</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>)</span>
-</div><div class='co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   0.010   0.295   0.690   1.092   1.450   4.790 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span>,
-      after <span class='op'>=</span> <span class='va'>imputed</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='co'>#&gt;      before      after
-#&gt; [1,]   1.24 0.59333333
-#&gt; [2,]   0.30 0.92333333
-#&gt; [3,]   0.06 0.04666667</div><div class='input'>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ratio_recipe</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 4</span>
-#&gt;   terms            predictors neighbors id              
-#&gt;   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span>
-#&gt; <span style='color: #BCBCBC;'>1</span><span> all_predictors() </span><span style='color: #BB0000;'>NA</span><span>                 3 impute_knn_iyPXM</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ratio_recipe2</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</div><div class='co'>#&gt; <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</div><div class='co'>#&gt; <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</div><div class='co'>#&gt; <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</div><div class='co'>#&gt; <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 20 x 4</span>
-#&gt;    terms    predictors neighbors id              
-#&gt;    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span>
-#&gt; <span style='color: #BCBCBC;'> 1</span><span> carbon   hydrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span><span> carbon   oxygen             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span><span> carbon   nitrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 4</span><span> carbon   sulfur             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 5</span><span> hydrogen carbon             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span><span> hydrogen oxygen             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 7</span><span> hydrogen nitrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span><span> hydrogen sulfur             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span><span> oxygen   carbon             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>10</span><span> oxygen   hydrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>11</span><span> oxygen   nitrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>12</span><span> oxygen   sulfur             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>13</span><span> nitrogen carbon             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>14</span><span> nitrogen hydrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>15</span><span> nitrogen oxygen             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>16</span><span> nitrogen sulfur             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>17</span><span> sulfur   carbon             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>18</span><span> sulfur   hydrogen           3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>19</span><span> sulfur   oxygen             3 impute_knn_iyPXM</span>
-#&gt; <span style='color: #BCBCBC;'>20</span><span> sulfur   nitrogen           3 impute_knn_iyPXM</span></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>biomass_te_whole</span> <span class='op'>&lt;-</span> <span class='va'>biomass_te</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># induce some missing data at random</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>9039</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>carb_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>nitro_missing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>biomass_te</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span></span>
+<span class='r-in'><span class='va'>biomass_te</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,</span>
+<span class='r-in'>              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ratio_recipe</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_impute_knn</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, neighbors <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ratio_recipe2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>ratio_recipe</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imputed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ratio_recipe2</span>, <span class='va'>biomass_te</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># how well did it work?</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   27.80   44.24   47.30   47.96   49.00   79.34 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span>,</span>
+<span class='r-in'>      after <span class='op'>=</span> <span class='va'>imputed</span><span class='op'>$</span><span class='va'>carbon</span><span class='op'>[</span><span class='va'>carb_missing</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      before    after</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]  46.83 47.43000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]  47.80 47.53333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3,]  46.40 46.21000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   0.010   0.295   0.690   1.092   1.450   4.790 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='va'>biomass_te_whole</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span>,</span>
+<span class='r-in'>      after <span class='op'>=</span> <span class='va'>imputed</span><span class='op'>$</span><span class='va'>nitrogen</span><span class='op'>[</span><span class='va'>nitro_missing</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      before      after</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]   1.24 0.59333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]   0.30 0.92333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3,]   0.06 0.04666667</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ratio_recipe</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms            predictors neighbors id              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> all_predictors() <span style='color: #BB0000;'>NA</span>                 3 impute_knn_iyPXM</span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>ratio_recipe2</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>row names were found from a short variable and have been discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    terms    predictors neighbors id              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> carbon   hydrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> carbon   oxygen             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> carbon   nitrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> carbon   sulfur             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> hydrogen carbon             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> hydrogen oxygen             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> hydrogen nitrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> hydrogen sulfur             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> oxygen   carbon             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> oxygen   hydrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> oxygen   nitrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> oxygen   sulfur             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> nitrogen carbon             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span> nitrogen hydrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span> nitrogen oxygen             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span> nitrogen sulfur             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span> sulfur   carbon             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span> sulfur   hydrogen           3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span> sulfur   oxygen             3 impute_knn_iyPXM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span> sulfur   nitrogen           3 impute_knn_iyPXM</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
