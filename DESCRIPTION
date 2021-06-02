@@ -1,21 +1,29 @@
 Package: recipes
-Title: Preprocessing Tools to Create Design Matrices
+Title: Preprocessing and Feature Engineering Steps for Modeling
 Version: 0.1.16.9000
-Authors@R: c(
-    person(given = "Max",    family = "Kuhn",    email = "max@rstudio.com",    role = c("aut", "cre")),
-    person(given = "Hadley", family = "Wickham", email = "hadley@rstudio.com", role = c("aut")),
-    person("RStudio", role = "cph"))
-Description: An extensible framework to create and preprocess 
-    design matrices. Recipes consist of one or more data manipulation 
-    and analysis "steps". Statistical parameters for the steps can 
-    be estimated from an initial data set and then applied to 
-    other data sets. The resulting design matrices can then be used 
-    as inputs into statistical or machine learning models. 
+Authors@R: 
+    c(person(given = "Max",
+             family = "Kuhn",
+             role = c("aut", "cre"),
+             email = "max@rstudio.com"),
+      person(given = "Hadley",
+             family = "Wickham",
+             role = "aut",
+             email = "hadley@rstudio.com"),
+      person(given = "RStudio",
+             role = "cph"))
+Description: Recipes get your data ready for modeling. An extensible
+    framework for pipeable sequences of feature engineering steps provides
+    preprocessing tools to be applied to data. Statistical parameters for
+    the steps can be estimated from an initial data set and then applied
+    to other data sets. The resulting processed output can then be used as
+    inputs for statistical or machine learning models.
+License: MIT + file LICENSE
 URL: https://github.com/tidymodels/recipes, https://recipes.tidymodels.org
 BugReports: https://github.com/tidymodels/recipes/issues
 Depends: 
-    R (>= 3.1),
-    dplyr
+    dplyr,
+    R (>= 3.1)
 Imports: 
     ellipsis,
     generics (>= 0.1.0),
@@ -53,9 +61,10 @@ Suggests:
     RSpectra,
     testthat (>= 2.1.0),
     xml2
-License: MIT + file LICENSE
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr
+RdMacros: 
+    lifecycle
 Encoding: UTF-8
-RoxygenNote: 7.1.1.9001
 Roxygen: list(markdown = TRUE)
-RdMacros: lifecycle
+RoxygenNote: 7.1.1.9001
