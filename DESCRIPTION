@@ -12,7 +12,7 @@ Authors@R:
              email = "hadley@rstudio.com"),
       person(given = "RStudio",
              role = "cph"))
-Description: Recipes get your data ready for modeling. An extensible
+Description: Recipes prepares your data for modeling. An extensible
     framework for pipeable sequences of feature engineering steps provides
     preprocessing tools to be applied to data. Statistical parameters for
     the steps can be estimated from an initial data set and then applied
