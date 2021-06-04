@@ -21,6 +21,7 @@
 #' @importFrom tidyselect everything
 #' @importFrom withr with_seed
 #' @importFrom splines ns bs
+#' @importFrom vctrs vec_cast vec_slice
 
 # ------------------------------------------------------------------------------
 
