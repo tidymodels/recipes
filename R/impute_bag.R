@@ -269,6 +269,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
       } else {
         pred_vals <- predict(object$models[[imp_var]], pred_data)
         pred_vals <- cast(pred_vals, new_data[[imp_var]])
+        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }

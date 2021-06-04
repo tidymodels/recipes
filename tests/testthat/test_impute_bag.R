@@ -15,7 +15,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
 
 test_that('imputation models', {
   imputed <- rec %>%
-    step_bagimpute(carbon, fac, impute_with = imp_vars(hydrogen, oxygen),
+    step_impute_bag(carbon, fac, impute_with = imp_vars(hydrogen, oxygen),
                    seed_val = 12, trees = 5)
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
@@ -64,9 +64,21 @@ test_that('imputation models', {
 })
 
 
+test_that("All NA values", {
+
+  imputed <- rec %>%
+    step_impute_bag(carbon, fac, impute_with = imp_vars(hydrogen, oxygen),
+                    seed_val = 12, trees = 5) %>%
+    prep(biomass)
+
+  imputed_te <- bake(imputed, biomass %>% mutate(carbon = NA))
+  expect_equal(sum(is.na(imputed_te$carbon)), 0)
+
+})
+
 test_that('printing', {
   imputed <- rec %>%
-    step_bagimpute(carbon, impute_with = imp_vars(hydrogen), seed_val = 12,
+    step_impute_bag(carbon, impute_with = imp_vars(hydrogen), seed_val = 12,
                    trees = 7)
 
   expect_output(print(imputed))
@@ -76,7 +88,7 @@ test_that('printing', {
 test_that('tunable', {
   rec <-
     recipe(~ ., data = iris) %>%
-    step_bagimpute(all_predictors(), impute_with = imp_vars(all_predictors()))
+    step_impute_bag(all_predictors(), impute_with = imp_vars(all_predictors()))
   rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
   expect_true(all(rec_param$source == "recipe"))
