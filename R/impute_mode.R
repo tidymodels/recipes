@@ -149,9 +149,19 @@ prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
+
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
-      new_data[[i]] <- vec_cast(new_data[[i]], object$ptype[[i]])
+      if(is.null(object$ptype)) {
+        rlang::warn(
+          paste0(
+            "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
+            "Regenerate your recipe to avoid this warning."
+          )
+        )
+      } else {
+        new_data[[i]] <- vec_cast(new_data[[i]], object$ptype[[i]])
+      }
       mode_val <- cast(object$modes[[i]], new_data[[i]])
       new_data[is.na(new_data[[i]]), i] <- mode_val
     }

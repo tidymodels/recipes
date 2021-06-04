@@ -72,6 +72,20 @@ test_that('all NA values', {
 })
 
 
+test_that('can bake recipes with no ptype', {
+  imputed <- recipe(Price ~ ., data = credit_tr) %>%
+    step_impute_mode(Status, Home) %>%
+    prep(credit_tr, verbose = FALSE)
+
+  imputed$steps[[1]]$ptype <- NULL
+
+  expect_warning(
+    imputed_te <- bake(imputed, credit_te),
+    "'ptype' was added to"
+  )
+})
+
+
 test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_mode(Status, Home, Marital)
