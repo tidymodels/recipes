@@ -66,10 +66,9 @@ test_that('all NA values', {
   impute_rec <- rec %>%
     step_impute_median(Age, Assets)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  imputed_te <- bake(prepped, new_data = credit_te %>% mutate(Age = NA))
+  imputed_te <- bake(imputed, new_data = credit_te %>% mutate(Age = NA))
 
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$medians$Age)
-
 })
 
 
