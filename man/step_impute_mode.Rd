@@ -11,6 +11,7 @@ step_impute_mode(
   role = NA,
   trained = FALSE,
   modes = NULL,
+  ptype = NULL,
   skip = FALSE,
   id = rand_id("impute_mode")
 )
@@ -21,6 +22,7 @@ step_modeimpute(
   role = NA,
   trained = FALSE,
   modes = NULL,
+  ptype = NULL,
   skip = FALSE,
   id = rand_id("impute_mode")
 )
@@ -41,6 +43,9 @@ preprocessing have been estimated.}
 
 \item{modes}{A named character vector of modes. This is
 \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{ptype}{A data frame prototype to cast new data sets to. This is
+commonly a 0-row slice of the training set.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
