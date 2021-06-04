@@ -15,7 +15,7 @@ tg_dat <- ToothGrowth %>%
 
 test_that("Does the imputation (no NAs), and does it correctly.", {
 
-  missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = T)
+  missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
   imputed <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
@@ -26,12 +26,30 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
 
   lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
     predict(newdata = ames_dat[missing_ind, ]) %>%
-    unname
+    unname()
 
   expect_equal(imputed, lm_predicted)
   expect_equal(sum(is.na(imputed)), 0)
 
 })
+
+test_that("All NA values", {
+
+  imputed <- recipe(head(ames_dat)) %>%
+    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    prep(ames_dat)
+
+  imputed_te <- bake(imputed, ames_dat %>% mutate(Lot_Frontage = NA))
+
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
+    predict(newdata = ames_dat) %>%
+    unname()
+
+  expect_equal(unname(imputed_te$Lot_Frontage), lm_predicted)
+  expect_equal(sum(is.na(imputed_te$Lot_Frontage)), 0)
+
+})
+
 
 test_that("Returns correct models.", {
 
