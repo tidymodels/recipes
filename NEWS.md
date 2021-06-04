@@ -4,6 +4,8 @@
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
 
+* Fix imputation steps for new data that is all `NA` (#719).
+
 # recipes 0.1.16
 
 ## New Steps
