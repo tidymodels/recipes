@@ -154,6 +154,7 @@ prep.step_meanimpute <- prep.step_impute_mean
 bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
     if (any(is.na(new_data[[i]])))
+      new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
       new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
   as_tibble(new_data)
