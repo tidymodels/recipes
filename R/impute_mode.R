@@ -12,6 +12,8 @@
 #'  created.
 #' @param modes A named character vector of modes. This is
 #'  `NULL` until computed by [prep.recipe()].
+#' @param ptype A data frame prototype to cast new data sets to. This is
+#'  commonly a 0-row slice of the training set.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any).
 #' @keywords datagen
@@ -65,6 +67,7 @@ step_impute_mode <-
            role = NA,
            trained = FALSE,
            modes = NULL,
+           ptype = NULL,
            skip = FALSE,
            id = rand_id("impute_mode")) {
     add_step(
@@ -74,6 +77,7 @@ step_impute_mode <-
         role = role,
         trained = trained,
         modes = modes,
+        ptype = ptype,
         skip = skip,
         id = id
       )
@@ -89,6 +93,7 @@ step_modeimpute <-
            role = NA,
            trained = FALSE,
            modes = NULL,
+           ptype = NULL,
            skip = FALSE,
            id = rand_id("impute_mode")) {
     lifecycle::deprecate_soft(
@@ -102,19 +107,21 @@ step_modeimpute <-
       role = role,
       trained = trained,
       modes = modes,
+      ptype = ptype,
       skip = skip,
       id = id
     )
   }
 
 step_impute_mode_new <-
-  function(terms, role, trained, modes, skip, id) {
+  function(terms, role, trained, modes, ptype, skip, id) {
     step(
       subclass = "impute_mode",
       terms = terms,
       role = role,
       trained = trained,
       modes = modes,
+      ptype = ptype,
       skip = skip,
       id = id
     )
@@ -124,11 +131,13 @@ step_impute_mode_new <-
 prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
   modes <- vapply(training[, col_names], mode_est, c(mode = ""))
+  ptype <- vec_slice(training[, col_names], 0)
   step_impute_mode_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     modes = modes,
+    ptype = ptype,
     skip = x$skip,
     id = x$id
   )
@@ -142,6 +151,7 @@ prep.step_modeimpute <- prep.step_impute_mode
 bake.step_impute_mode <- function(object, new_data, ...) {
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
+      new_data[[i]] <- vec_cast(new_data[[i]], object$ptype[[i]])
       mode_val <- cast(object$modes[[i]], new_data[[i]])
       new_data[is.na(new_data[[i]]), i] <- mode_val
     }
