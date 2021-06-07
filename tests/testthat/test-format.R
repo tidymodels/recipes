@@ -19,7 +19,8 @@ test_that("format_ch_vec handles a vector with long items", {
     long_vec <- paste(long_vec, as.character(i))
   }
 
-  expect_equal(format_ch_vec(c("1", long_vec)), "2 items")
+  expect_equal(format_ch_vec(c("1", long_vec), width = 20),
+               "1,  1 2 3 4 5 6 7...")
 })
 
 test_that("format_selectors handles small numbers of selectors", {
@@ -42,5 +43,6 @@ test_that("format_ch_vec handles a long expression", {
     long_vec <- paste(long_vec, as.character(i))
   }
 
-  expect_equal(format_ch_vec(c(expr(1), expr(!!long_vec))), "2 items")
+  expect_equal(format_ch_vec(c(expr(1), expr(!!long_vec)), width = 20),
+               "1,  1 2 3 4 5 6 7...")
 })
