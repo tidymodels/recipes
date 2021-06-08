@@ -1,6 +1,6 @@
 #' multi Label Dummy Variables Creation
 #'
-#' `step_dummy_multi_label` creates a *specification* of a recipe
+#' `step_dummy_multi_label()` creates a *specification* of a recipe
 #'  step that will convert multiple nominal data (e.g. character or factors)
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
@@ -115,10 +115,10 @@ step_dummy_multi_label <- function(recipe,
 
   if (!is_tune(threshold) & !is_varying(threshold)) {
     if (threshold < 0) {
-      rlang::abort("`threshold` non-negative.")
+      rlang::abort("`threshold` should be non-negative.")
     }
-    if (threshold >= 1 && !is_integerish(threshold)) {
-      rlang::abort("If `threshold` is greater than one it should be an integer.")
+    if (threshold > 1) {
+      rlang::abort("`threshold` should be less then or equal to 1.")
     }
   }
 
