@@ -180,18 +180,6 @@ bake.step_dummy_multi_label <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
-print.step_dummy_multi_label <-
-  function(x, width = max(20, options()$width - 29), ...) {
-    if (all(is.na(x$res$rotation))) {
-      cat("No PCA components were extracted.\n")
-    } else {
-      cat("PCA extraction with ")
-      #printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
-    }
-
-    invisible(x)
-  }
-
 multi_dummy <- function(x, y) {
   row_id <- rep(seq_len(nrow(x)), times = ncol(x))
   values <- unlist(purrr::map(x, as.character), use.names = FALSE)
@@ -219,6 +207,21 @@ multi_dummy <- function(x, y) {
     mutate_all(as.integer)
 }
 
+print.step_dummy_multi_label <-
+  function(x, width = max(20, options()$width - 20), ...) {
+    if (x$trained) {
+      cat("Multi label Dummy variables from ")
+      cat(format_ch_vec(x$input, width = width))
+    } else {
+      cat("Multi label Dummy variables from ", sep = "")
+      cat(format_selectors(x$terms, width = width))
+    }
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
+  }
 
 #' @rdname tidy.recipe
 #' @param x A `step_dummy_multi_label` object.
