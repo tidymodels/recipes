@@ -225,29 +225,27 @@ print.step_dummy_multi_label <-
 
 #' @rdname tidy.recipe
 #' @param x A `step_dummy_multi_label` object.
-#' @param type For `step_dummy_multi_label`, either "coef" (for the variable
-#'  loadings per component) or "variance" (how much variance does each component
-#'  account for).
 #' @export
-tidy.step_dummy_multi_label <- function(x, type = "coef", ...) {
-  if (!is_trained(x)) {
-    term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl,
-                  component  = na_chr)
-  } else {
-    type <- match.arg(type, c("coef", "variance"))
-    if (type == "coef") {
-      res <- dummy_multi_label_coefs(x)
+tidy.step_dummy_multi_label <- function(x, ...) {
+  if (is_trained(x)) {
+    if (length(x$input) > 0) {
+      if (x$res$collapse) {
+        columns <- c(x$res$keep, x$res$other)
+      } else {
+        columns <- x$res$keep
+      }
+
+      res <- tibble(terms = x$input[1],
+                    columns = columns)
     } else {
-      res <- dummy_multi_label_variances(x)
+      res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
     }
+  } else {
+    res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
   }
   res$id <- x$id
   res
 }
-
-
 
 #' @rdname tunable.step
 #' @export
