@@ -67,6 +67,7 @@ step_dummy_multi_label <- function(recipe,
                      res = NULL,
                      input = NULL,
                      other = "other",
+                     naming = dummy_names,
                      prefix = NULL,
                      keep_original_cols = FALSE,
                      skip = FALSE,
@@ -91,6 +92,7 @@ step_dummy_multi_label <- function(recipe,
       res = res,
       input = input,
       other = other,
+      naming = naming,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -100,7 +102,7 @@ step_dummy_multi_label <- function(recipe,
 }
 
 step_dummy_multi_label_new <-
-  function(terms, role, trained, threshold, res, input, other,
+  function(terms, role, trained, threshold, res, input, other, naming,
            prefix,  keep_original_cols, skip, id) {
     step(
       subclass = "dummy_multi_label",
@@ -111,6 +113,7 @@ step_dummy_multi_label_new <-
       res = res,
       input = input,
       other = other,
+      naming = naming,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -149,6 +152,7 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
     res = my_levels,
     input = col_names,
     other = x$other,
+    naming = x$naming,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -161,9 +165,12 @@ bake.step_dummy_multi_label <- function(object, new_data, ...) {
 
   col_names <- object$input
 
-  new_columns <- multi_dummy(new_data[, col_names], object$res)
+  indicators <- multi_dummy(new_data[, col_names], object$res)
 
-  new_data <- bind_cols(new_data, as_tibble(new_columns))
+  used_lvl <- gsub(paste0("^", col_names[1]), "", colnames(indicators))
+  colnames(indicators) <- object$naming(col_names[1], used_lvl)
+
+  new_data <- bind_cols(new_data, as_tibble(indicators))
   keep_original_cols <- get_keep_original_cols(object)
 
   if (!keep_original_cols) {
