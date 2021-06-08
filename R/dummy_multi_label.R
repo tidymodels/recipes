@@ -165,19 +165,7 @@ step_dummy_multi_label_new <-
 prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  if (length(col_names) > 0) {
-    fac_check <- vapply(training[, col_names], is.factor, logical(1))
-
-    #col_names <- col_names[fac_check]
-    if (length(col_names) == 0) {
-      rlang::abort(
-        paste0(
-          "The `terms` argument in `step_dummy` did not select ",
-          "any factor columns."
-        )
-      )
-    }
-  }
+  multi_dummy_check_type(training[, col_names])
 
   levels <- purrr::map(training[, col_names], as.character)
   levels <- unlist(levels)
@@ -198,6 +186,23 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
     skip = x$skip,
     id = x$id
   )
+}
+
+multi_dummy_check_type <- function(dat) {
+  is_good <- function(x) {
+    is.factor(x) | is.character(x) | all(is.na(x))
+  }
+
+  all_good <- vapply(dat, is_good, logical(1))
+  label <- "factor, character, or NA"
+  if (!all(all_good))
+    rlang::abort(
+      paste0(
+        "All columns selected for the step",
+        " should be ",
+        label)
+    )
+  invisible(all_good)
 }
 
 #' @export
