@@ -1,6 +1,6 @@
-#' multi Label Dummy Variables Creation
+#'  Multi Choice Dummy Variables Creation
 #'
-#' `step_dummy_multi_label()` creates a *specification* of a recipe
+#' `step_dummy_multi_choice()` creates a *specification* of a recipe
 #'  step that will convert multiple nominal data (e.g. character or factors)
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
@@ -35,11 +35,11 @@
 #'  sequence of existing steps (if any).
 #' @keywords datagen
 #' @concept preprocessing
-#' @concept dummy_multi_label
+#' @concept dummy_multi_choice
 #' @concept projection_methods
 #' @export
 #' @details
-#' `step_dummy_multi_label()` will create a set of binary dummy
+#' `step_dummy_multi_choice()` will create a set of binary dummy
 #'  variables from a selection of factor variable. For data looking
 #'  like
 #'
@@ -84,22 +84,22 @@
 #'   NA,         NA,        NA
 #' )
 #'
-#' dummy_multi_label_rec <- recipe(~ ., data = languages) %>%
-#'   step_dummy_multi_label(starts_with("lang")) %>%
+#' dummy_multi_choice_rec <- recipe(~ ., data = languages) %>%
+#'   step_dummy_multi_choice(starts_with("lang")) %>%
 #'   prep()
 #'
-#' bake(dummy_multi_label_rec, new_data = NULL)
-#' tidy(dummy_multi_label_rec, number = 1)
+#' bake(dummy_multi_choice_rec, new_data = NULL)
+#' tidy(dummy_multi_choice_rec, number = 1)
 #'
-#' dummy_multi_label_rec2 <- recipe(~ ., data = languages) %>%
-#'   step_dummy_multi_label(starts_with("lang"), prefix = "lang",
+#' dummy_multi_choice_rec2 <- recipe(~ ., data = languages) %>%
+#'   step_dummy_multi_choice(starts_with("lang"), prefix = "lang",
 #'                          threshold = 0.2) %>%
 #'   prep()
 #'
-#' bake(dummy_multi_label_rec2, new_data = NULL)
-#' tidy(dummy_multi_label_rec2, number = 1)
+#' bake(dummy_multi_choice_rec2, new_data = NULL)
+#' tidy(dummy_multi_choice_rec2, number = 1)
 #' @seealso [step_dummy()]
-step_dummy_multi_label <- function(recipe,
+step_dummy_multi_choice <- function(recipe,
                      ...,
                      role = "predictor",
                      trained = FALSE,
@@ -111,7 +111,7 @@ step_dummy_multi_label <- function(recipe,
                      prefix = NULL,
                      keep_original_cols = FALSE,
                      skip = FALSE,
-                     id = rand_id("dummy_multi_label")) {
+                     id = rand_id("dummy_multi_choice")) {
 
   if (!is_tune(threshold) & !is_varying(threshold)) {
     if (threshold < 0) {
@@ -124,7 +124,7 @@ step_dummy_multi_label <- function(recipe,
 
   add_step(
     recipe,
-    step_dummy_multi_label_new(
+    step_dummy_multi_choice_new(
       terms = ellipse_check(...),
       role = role,
       trained = trained,
@@ -141,11 +141,11 @@ step_dummy_multi_label <- function(recipe,
   )
 }
 
-step_dummy_multi_label_new <-
+step_dummy_multi_choice_new <-
   function(terms, role, trained, threshold, levels, input, other, naming,
            prefix,  keep_original_cols, skip, id) {
     step(
-      subclass = "dummy_multi_label",
+      subclass = "dummy_multi_choice",
       terms = terms,
       role = role,
       trained = trained,
@@ -162,7 +162,7 @@ step_dummy_multi_label_new <-
   }
 
 #' @export
-prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
+prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
   multi_dummy_check_type(training[, col_names])
@@ -172,7 +172,7 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
   levels <- levels[!is.na(levels)]
   levels <- keep_levels(levels, x$threshold, other = x$other)
 
-  step_dummy_multi_label_new(
+  step_dummy_multi_choice_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -206,7 +206,7 @@ multi_dummy_check_type <- function(dat) {
 }
 
 #' @export
-bake.step_dummy_multi_label <- function(object, new_data, ...) {
+bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   col_names <- object$input
 
@@ -253,7 +253,7 @@ multi_dummy <- function(x, y) {
     mutate_all(as.integer)
 }
 
-print.step_dummy_multi_label <-
+print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
     if (x$trained) {
       cat("Multi label Dummy variables from ")
@@ -270,9 +270,9 @@ print.step_dummy_multi_label <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_dummy_multi_label` object.
+#' @param x A `step_dummy_multi_choice` object.
 #' @export
-tidy.step_dummy_multi_label <- function(x, ...) {
+tidy.step_dummy_multi_choice <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$input) > 0) {
       if (x$levels$collapse) {
@@ -295,7 +295,7 @@ tidy.step_dummy_multi_label <- function(x, ...) {
 
 #' @rdname tunable.step
 #' @export
-tunable.step_dummy_multi_label <- function(x, ...) {
+tunable.step_dummy_multi_choice <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "threshold"),
     call_info = list(
@@ -303,7 +303,7 @@ tunable.step_dummy_multi_label <- function(x, ...) {
       list(pkg = "dials", fun = "threshold")
     ),
     source = "recipe",
-    component = "step_dummy_multi_label",
+    component = "step_dummy_multi_choice",
     component_id = x$id
   )
 }

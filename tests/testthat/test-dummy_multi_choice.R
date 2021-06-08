@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
 
-context("Muli Label Dummy variable creation")
+context("Muli Choice Dummy variable creation")
 
 languages <- tribble(
   ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
@@ -21,7 +21,7 @@ result <- tribble(
 
 test_that('dummy variables with factor inputs', {
   dummy <- recipe(~ ., data = languages) %>%
-    step_dummy_multi_label(all_predictors())
+    step_dummy_multi_choice(all_predictors())
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = languages)
@@ -39,7 +39,7 @@ test_that('dummy variables with factor inputs', {
 
 test_that('dummy variables with non-factor inputs', {
   dummy <- recipe(~ ., data = mtcars) %>%
-    step_dummy_multi_label(all_predictors())
+    step_dummy_multi_choice(all_predictors())
 
   expect_error(
     prep(dummy)
@@ -48,7 +48,7 @@ test_that('dummy variables with non-factor inputs', {
 
 test_that('printing', {
   rec <- recipe(~ ., data = languages) %>%
-    step_dummy_multi_label(all_predictors())
+    step_dummy_multi_choice(all_predictors())
   expect_output(print(rec))
   expect_output(prep(rec, training = languages, verbose = TRUE))
 })
@@ -62,7 +62,7 @@ test_that('no columns selected', {
 
   rec <- recipe(y ~ ., data = zdat) %>%
     step_zv(all_predictors()) %>%
-    step_dummy_multi_label(all_nominal()) %>%
+    step_dummy_multi_choice(all_nominal()) %>%
     prep(training = zdat)
 
   expect_equal(
