@@ -35,11 +35,9 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A numeric value between 0 and 1 or an integer greater or
-equal to one.  If it's less than one then factor levels whose rate of
-occurrence in the training set are below \code{threshold} will be "othered". If
-it's greater or equal to one then it's treated as a frequency and factor
-levels that occur less then \code{threshold} times will be "othered".}
+\item{threshold}{A numeric value between 0 and 1. If it's less than one then
+factor levels whose rate of occurrence in the training set are below
+\code{threshold} will be "othered". If it is 0 then no thresholding will be done.}
 
 \item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in

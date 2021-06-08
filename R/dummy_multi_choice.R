@@ -13,11 +13,9 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the binary dummy variable columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param threshold A numeric value between 0 and 1 or an integer greater or
-#'  equal to one.  If it's less than one then factor levels whose rate of
-#'  occurrence in the training set are below `threshold` will be "othered". If
-#'  it's greater or equal to one then it's treated as a frequency and factor
-#'  levels that occur less then `threshold` times will be "othered".
+#' @param threshold A numeric value between 0 and 1. If it's less than one then
+#'  factor levels whose rate of occurrence in the training set are below
+#'  `threshold` will be "othered". If it is 0 then no thresholding will be done.
 #' @param levels A list that contains the information needed to
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
