@@ -213,58 +213,27 @@ print.step_dummy_multi_label <-
     invisible(x)
   }
 
-pca_coefs <- function(x) {
-  rot <- as.data.frame(x$res$rotation)
-  vars <- rownames(rot)
-  if (x$num_comp > 0) {
-    npc <- ncol(rot)
-    res <- utils::stack(rot)
-    colnames(res) <- c("value", "component")
-    res$component <- as.character(res$component)
-    res$terms <- rep(vars, npc)
-    res <- as_tibble(res)[, c("terms", "value", "component")]
-  } else {
-    res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
-                          component = rlang::na_chr)
-  }
-  res
+multi_dummy <- function(x) {
+  row_id <- rep(seq_len(nrow(x)), times = ncol(x))
+  values <- unlist(purrr::map(x, as.character), use.names = FALSE)
+
+  row_id <- row_id[!is.na(values)]
+  values <- values[!is.na(values)]
+
+  values <- factor(values)
+
+  res <- Matrix::sparseMatrix(
+    i = row_id,
+    j = as.numeric(values),
+    dims = c(nrow(x), length(levels(values)))
+  )
+
+  colnames(res) <- levels(values)
+
+  as.matrix(res) %>%
+    as_tibble() %>%
+    mutate_all(as.integer)
 }
-
-pca_variances <- function(x) {
-  rot <- as.data.frame(x$res$rotation)
-  vars <- rownames(rot)
-  if (x$num_comp > 0) {
-    variances <- x$res$sdev ^ 2
-    p <- length(variances)
-    tot <- sum(variances)
-    y <- c(variances,
-           cumsum(variances),
-           variances / tot * 100,
-           cumsum(variances) / tot * 100)
-    x <-
-      rep(
-        c(
-          "variance",
-          "cumulative variance",
-          "percent variance",
-          "cumulative percent variance"
-        ),
-        each = p
-      )
-
-    res <- tibble::tibble(terms = x,
-                          value = y,
-                          component = rep(1:p, 4))
-  } else {
-    res <- tibble::tibble(
-      terms = vars,
-      value = rep(rlang::na_dbl, length(vars)),
-      component = rep(rlang::na_chr, length(vars))
-    )
-  }
-  res
-}
-
 
 
 #' @rdname tidy.recipe
