@@ -2,15 +2,18 @@
 % Please edit documentation in R/dummy_multi_label.R
 \name{step_dummy_multi_label}
 \alias{step_dummy_multi_label}
-\title{dummy_multi_label Signal Extraction}
+\title{multi Label Dummy Variables Creation}
 \usage{
 step_dummy_multi_label(
   recipe,
   ...,
   role = "predictor",
   trained = FALSE,
-  threshold = NA,
-  res = NULL,
+  threshold = 0,
+  levels = NULL,
+  input = NULL,
+  other = "other",
+  naming = dummy_names,
   prefix = NULL,
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -24,22 +27,32 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose which variables will be
 used to compute the components. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new principal
-component columns created by the original variables will be used as
-predictors in a model.}
+\item{role}{For model terms created by this step, what analysis
+role should they be assigned?. By default, the function assumes
+that the binary dummy variable columns created by the original
+variables will be used as predictors in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A fraction of the total variance that should be covered by
-the components. For example, \code{threshold = .75} means that \code{step_dummy_multi_label} should
-generate enough components to capture 75 percent of the variability in the
-variables. Note: using this argument will override and reset any value given
-to \code{num_comp}.}
+\item{threshold}{A numeric value between 0 and 1 or an integer greater or
+equal to one.  If it's less than one then factor levels whose rate of
+occurrence in the training set are below \code{threshold} will be "othered". If
+it's greater or equal to one then it's treated as a frequency and factor
+levels that occur less then \code{threshold} times will be "othered".}
 
-\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
-preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{levels}{A list that contains the information needed to
+create dummy variables for each variable contained in
+\code{terms}. This is \code{NULL} until the step is trained by
+\code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{input}{A character vector containing the names of the columns used.
+This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{other}{A single character value for the "other" category.}
+
+\item{naming}{A function that defines the naming convention for
+new dummy columns. See Details below.}
 
 \item{prefix}{A character string that will be the prefix to the resulting
 new variables. See notes below.}
@@ -55,84 +68,74 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{num_comp}{The number of dummy_multi_label components to retain as new predictors.
-If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used.}
-
-\item{options}{A list of options to the default method for
-\code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x}
-should not be passed here (or at all).}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
 sequence of existing steps (if any).
 }
 \description{
-\code{step_dummy_multi_label} creates a \emph{specification} of a recipe step that will convert
-numeric data into one or more principal components.
+\code{step_dummy_multi_label} creates a \emph{specification} of a recipe
+step that will convert multiple nominal data (e.g. character or factors)
+into one or more numeric binary model terms for the levels of
+the original data.
 }
 \details{
-Principal component analysis (dummy_multi_label) is a transformation of a
-group of variables that produces a new set of artificial
-features or components. These components are designed to capture
-the maximum amount of information (i.e. variance) in the
-original variables. Also, the components are statistically
-independent from one another. This means that they can be used
-to combat large inter-variables correlations in a data set.
+\code{step_dummy_multi_label()} will create a set of binary dummy
+variables from a selection of factor variable. For data looking
+like\preformatted{lang_1     lang_2     lang_3
+English    Italian    NA
+Spanish    NA         French
+Armenian   English    French
+NA         NA         NA
+}
 
-It is advisable to standardize the variables prior to running
-dummy_multi_label. Here, each variable will be centered and scaled prior to
-the dummy_multi_label calculation. This can be changed using the
-\code{options} argument or by using \code{\link[=step_center]{step_center()}}
-and \code{\link[=step_scale]{step_scale()}}.
+would end up looking like this\preformatted{Armenian English French Italian Spanish
+0       1      0       1       0
+0       0      1       0       1
+1       1      1       0       0
+0       0      0       0       0
+}
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}.
-If \code{num_comp = 101}, the names would be \code{PC001} -
-\code{PC101}.
-
-Alternatively, \code{threshold} can be used to determine the
-number of components that are required to capture a specified
-fraction of the total variance in the variables.
-
-When you \code{\link[=tidy]{tidy()}} this step, use either \code{type = "coef"} for the variable
-loadings per component or \code{type = "variance"} for how much variance each
-component accounts for.
+The function allows for non-standard naming of the resulting
+variables. For an unordered factor named \code{x}, with levels \code{"a"}
+and \code{"b"}, the default naming convention would be to create a
+new variable called \code{x_b}. Note that if the factor levels are
+not valid variable names (e.g. "some text with spaces"), it will
+be changed by \code{\link[base:make.names]{base::make.names()}} to be valid (see the example
+below). The naming format can be changed using the \code{naming}
+argument and the function \code{\link[=dummy_names]{dummy_names()}} is the default. This
+function will also change the names of ordinal dummy variables.
+Instead of values such as "\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal
+dummy variables are given simple integer suffixes such as
+"\verb{_1}", "\verb{_2}", etc.
 }
 \examples{
-rec <- recipe( ~ ., data = USArrests)
-dummy_multi_label_trans <- rec \%>\%
-  step_normalize(all_numeric()) \%>\%
-  step_dummy_multi_label(all_numeric(), num_comp = 3)
-dummy_multi_label_estimates <- prep(dummy_multi_label_trans, training = USArrests)
-dummy_multi_label_data <- bake(dummy_multi_label_estimates, USArrests)
+library(tibble)
+languages <- tribble(
+  ~lang_1,    ~lang_2,   ~lang_3,
+  "English",  "Italian", NA,
+  "Spanish",  NA,        "French",
+  "Armenian", "English", "French",
+  NA,         NA,        NA
+)
 
-rng <- extendrange(c(dummy_multi_label_data$PC1, dummy_multi_label_data$PC2))
-plot(dummy_multi_label_data$PC1, dummy_multi_label_data$PC2,
-     xlim = rng, ylim = rng)
+dummy_multi_label_rec <- recipe(~ ., data = languages) \%>\%
+  step_dummy_multi_label(starts_with("lang")) \%>\%
+  prep()
 
-with_thresh <- rec \%>\%
-  step_normalize(all_numeric()) \%>\%
-  step_dummy_multi_label(all_numeric(), threshold = .99)
-with_thresh <- prep(with_thresh, training = USArrests)
-bake(with_thresh, USArrests)
+bake(dummy_multi_label_rec, new_data = NULL)
+tidy(dummy_multi_label_rec, number = 1)
 
-tidy(dummy_multi_label_trans, number = 2)
-tidy(dummy_multi_label_estimates, number = 2)
-}
-\references{
-Jolliffe, I. T. (2010). \emph{Principal Component
-Analysis}. Springer.
+dummy_multi_label_rec2 <- recipe(~ ., data = languages) \%>\%
+  step_dummy_multi_label(starts_with("lang"), prefix = "lang",
+                         threshold = 0.2) \%>\%
+  prep()
+
+bake(dummy_multi_label_rec2, new_data = NULL)
+tidy(dummy_multi_label_rec2, number = 1)
 }
 \seealso{
-\code{\link[=step_ica]{step_ica()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+\code{\link[=step_dummy]{step_dummy()}}
 }
 \concept{dummy_multi_label}
 \concept{preprocessing}

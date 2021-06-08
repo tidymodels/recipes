@@ -1,30 +1,32 @@
-#' dummy_multi_label Signal Extraction
+#' multi Label Dummy Variables Creation
 #'
-#' `step_dummy_multi_label` creates a *specification* of a recipe step that will convert
-#'  numeric data into one or more principal components.
+#' `step_dummy_multi_label` creates a *specification* of a recipe
+#'  step that will convert multiple nominal data (e.g. character or factors)
+#'  into one or more numeric binary model terms for the levels of
+#'  the original data.
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which variables will be
 #'  used to compute the components. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned?. By default, the function assumes that the new principal
-#'  component columns created by the original variables will be used as
-#'  predictors in a model.
-#' @param num_comp The number of dummy_multi_label components to retain as new predictors.
-#'  If `num_comp` is greater than the number of columns or the number of
-#'  possible components, a smaller value will be used.
-#' @param threshold A fraction of the total variance that should be covered by
-#'  the components. For example, `threshold = .75` means that `step_dummy_multi_label` should
-#'  generate enough components to capture 75 percent of the variability in the
-#'  variables. Note: using this argument will override and reset any value given
-#'  to `num_comp`.
-#' @param options A list of options to the default method for
-#'  [stats::prcomp()]. Argument defaults are set to `retx = FALSE`, `center =
-#'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
-#'  should not be passed here (or at all).
-#' @param res The [stats::prcomp.default()] object is stored here once this
-#'  preprocessing step has be trained by [prep.recipe()].
+#' @param role For model terms created by this step, what analysis
+#'  role should they be assigned?. By default, the function assumes
+#'  that the binary dummy variable columns created by the original
+#'  variables will be used as predictors in a model.
+#' @param threshold A numeric value between 0 and 1 or an integer greater or
+#'  equal to one.  If it's less than one then factor levels whose rate of
+#'  occurrence in the training set are below `threshold` will be "othered". If
+#'  it's greater or equal to one then it's treated as a frequency and factor
+#'  levels that occur less then `threshold` times will be "othered".
+#' @param levels A list that contains the information needed to
+#'  create dummy variables for each variable contained in
+#'  `terms`. This is `NULL` until the step is trained by
+#'  [prep.recipe()].
+#' @param input A character vector containing the names of the columns used.
+#'  This is `NULL` until the step is trained by [prep.recipe()].
+#' @param other A single character value for the "other" category.
+#' @param naming A function that defines the naming convention for
+#'  new dummy columns. See Details below.
 #' @param prefix A character string that will be the prefix to the resulting
 #'  new variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
@@ -37,34 +39,72 @@
 #' @concept projection_methods
 #' @export
 #' @details
+#' `step_dummy_multi_label()` will create a set of binary dummy
+#'  variables from a selection of factor variable. For data looking
+#'  like
+#'
+#'  ```
+#'  lang_1     lang_2     lang_3
+#'  English    Italian    NA
+#'  Spanish    NA         French
+#'  Armenian   English    French
+#'  NA         NA         NA
+#'  ```
+#'
+#'  would end up looking like this
+#'
+#'  ```
+#'  Armenian English French Italian Spanish
+#'  0       1      0       1       0
+#'  0       0      1       0       1
+#'  1       1      1       0       0
+#'  0       0      0       0       0
+#'  ```
+#'
+#'  The function allows for non-standard naming of the resulting
+#'  variables. For an unordered factor named `x`, with levels `"a"`
+#'  and `"b"`, the default naming convention would be to create a
+#'  new variable called `x_b`. Note that if the factor levels are
+#'  not valid variable names (e.g. "some text with spaces"), it will
+#'  be changed by [base::make.names()] to be valid (see the example
+#'  below). The naming format can be changed using the `naming`
+#'  argument and the function [dummy_names()] is the default. This
+#'  function will also change the names of ordinal dummy variables.
+#'  Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
+#'  dummy variables are given simple integer suffixes such as
+#'  "`_1`", "`_2`", etc.
 #'
 #' @examples
-#' rec <- recipe( ~ ., data = USArrests)
-#' dummy_multi_label_trans <- rec %>%
-#'   step_normalize(all_numeric()) %>%
-#'   step_dummy_multi_label(all_numeric(), num_comp = 3)
-#' dummy_multi_label_estimates <- prep(dummy_multi_label_trans, training = USArrests)
-#' dummy_multi_label_data <- bake(dummy_multi_label_estimates, USArrests)
+#' library(tibble)
+#' languages <- tribble(
+#'   ~lang_1,    ~lang_2,   ~lang_3,
+#'   "English",  "Italian", NA,
+#'   "Spanish",  NA,        "French",
+#'   "Armenian", "English", "French",
+#'   NA,         NA,        NA
+#' )
 #'
-#' rng <- extendrange(c(dummy_multi_label_data$PC1, dummy_multi_label_data$PC2))
-#' plot(dummy_multi_label_data$PC1, dummy_multi_label_data$PC2,
-#'      xlim = rng, ylim = rng)
+#' dummy_multi_label_rec <- recipe(~ ., data = languages) %>%
+#'   step_dummy_multi_label(starts_with("lang")) %>%
+#'   prep()
 #'
-#' with_thresh <- rec %>%
-#'   step_normalize(all_numeric()) %>%
-#'   step_dummy_multi_label(all_numeric(), threshold = .99)
-#' with_thresh <- prep(with_thresh, training = USArrests)
-#' bake(with_thresh, USArrests)
+#' bake(dummy_multi_label_rec, new_data = NULL)
+#' tidy(dummy_multi_label_rec, number = 1)
 #'
-#' tidy(dummy_multi_label_trans, number = 2)
-#' tidy(dummy_multi_label_estimates, number = 2)
+#' dummy_multi_label_rec2 <- recipe(~ ., data = languages) %>%
+#'   step_dummy_multi_label(starts_with("lang"), prefix = "lang",
+#'                          threshold = 0.2) %>%
+#'   prep()
+#'
+#' bake(dummy_multi_label_rec2, new_data = NULL)
+#' tidy(dummy_multi_label_rec2, number = 1)
 #' @seealso [step_dummy()]
 step_dummy_multi_label <- function(recipe,
                      ...,
                      role = "predictor",
                      trained = FALSE,
                      threshold = 0,
-                     res = NULL,
+                     levels = NULL,
                      input = NULL,
                      other = "other",
                      naming = dummy_names,
@@ -89,7 +129,7 @@ step_dummy_multi_label <- function(recipe,
       role = role,
       trained = trained,
       threshold = threshold,
-      res = res,
+      levels = levels,
       input = input,
       other = other,
       naming = naming,
@@ -102,7 +142,7 @@ step_dummy_multi_label <- function(recipe,
 }
 
 step_dummy_multi_label_new <-
-  function(terms, role, trained, threshold, res, input, other, naming,
+  function(terms, role, trained, threshold, levels, input, other, naming,
            prefix,  keep_original_cols, skip, id) {
     step(
       subclass = "dummy_multi_label",
@@ -110,7 +150,7 @@ step_dummy_multi_label_new <-
       role = role,
       trained = trained,
       threshold = threshold,
-      res = res,
+      levels = levels,
       input = input,
       other = other,
       naming = naming,
@@ -139,17 +179,17 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
     }
   }
 
-  my_levels <- purrr::map(training[, col_names], as.character)
-  my_levels <- unlist(my_levels)
-  my_levels <- my_levels[!is.na(my_levels)]
-  my_levels <- keep_levels(my_levels, x$threshold, other = x$other)
+  levels <- purrr::map(training[, col_names], as.character)
+  levels <- unlist(levels)
+  levels <- levels[!is.na(levels)]
+  levels <- keep_levels(levels, x$threshold, other = x$other)
 
   step_dummy_multi_label_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
     threshold = x$threshold,
-    res = my_levels,
+    levels = levels,
     input = col_names,
     other = x$other,
     naming = x$naming,
@@ -165,10 +205,12 @@ bake.step_dummy_multi_label <- function(object, new_data, ...) {
 
   col_names <- object$input
 
-  indicators <- multi_dummy(new_data[, col_names], object$res)
+  indicators <- multi_dummy(new_data[, col_names], object$levels)
 
-  used_lvl <- gsub(paste0("^", col_names[1]), "", colnames(indicators))
-  colnames(indicators) <- object$naming(col_names[1], used_lvl)
+  prefix <- object$prefix %||% col_names[1]
+
+  used_lvl <- gsub(paste0("^", prefix), "", colnames(indicators))
+  colnames(indicators) <- object$naming(prefix, used_lvl)
 
   new_data <- bind_cols(new_data, as_tibble(indicators))
   keep_original_cols <- get_keep_original_cols(object)
@@ -187,7 +229,6 @@ multi_dummy <- function(x, y) {
   if (y$collapse) {
     values[(!values %in% y$keep) & !is.na(values)] <- y$other
   }
-
 
   row_id <- row_id[!is.na(values)]
   values <- values[!is.na(values)]
@@ -229,10 +270,10 @@ print.step_dummy_multi_label <-
 tidy.step_dummy_multi_label <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$input) > 0) {
-      if (x$res$collapse) {
-        columns <- c(x$res$keep, x$res$other)
+      if (x$levels$collapse) {
+        columns <- c(x$levels$keep, x$levels$other)
       } else {
-        columns <- x$res$keep
+        columns <- x$levels$keep
       }
 
       res <- tibble(terms = x$input[1],

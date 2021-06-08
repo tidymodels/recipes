@@ -133,7 +133,7 @@
 
 \method{tidy}{step_dummy}(x, ...)
 
-\method{tidy}{step_dummy_multi_label}(x, type = "coef", ...)
+\method{tidy}{step_dummy_multi_label}(x, ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 
