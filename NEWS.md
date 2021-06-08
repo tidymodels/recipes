@@ -8,6 +8,8 @@
 
 ## New Steps
 
+* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
+
 * Added a new step called `step_indicate_na()`, which will create and append additional binary columns to the data set to indicate which observations are missing (#623).
 
 * Added new `step_select()` (#199).
