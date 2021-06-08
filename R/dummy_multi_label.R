@@ -37,39 +37,6 @@
 #' @concept projection_methods
 #' @export
 #' @details
-#' Principal component analysis (dummy_multi_label) is a transformation of a
-#'  group of variables that produces a new set of artificial
-#'  features or components. These components are designed to capture
-#'  the maximum amount of information (i.e. variance) in the
-#'  original variables. Also, the components are statistically
-#'  independent from one another. This means that they can be used
-#'  to combat large inter-variables correlations in a data set.
-#'
-#' It is advisable to standardize the variables prior to running
-#'  dummy_multi_label. Here, each variable will be centered and scaled prior to
-#'  the dummy_multi_label calculation. This can be changed using the
-#'  `options` argument or by using [step_center()]
-#'  and [step_scale()].
-#'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `PC1` - `PC9`.
-#'  If `num_comp = 101`, the names would be `PC001` -
-#'  `PC101`.
-#'
-#' Alternatively, `threshold` can be used to determine the
-#'  number of components that are required to capture a specified
-#'  fraction of the total variance in the variables.
-#'
-#' When you [`tidy()`] this step, use either `type = "coef"` for the variable
-#'  loadings per component or `type = "variance"` for how much variance each
-#'  component accounts for.
-#'
-#' @references Jolliffe, I. T. (2010). *Principal Component
-#'  Analysis*. Springer.
 #'
 #' @examples
 #' rec <- recipe( ~ ., data = USArrests)
@@ -91,24 +58,23 @@
 #'
 #' tidy(dummy_multi_label_trans, number = 2)
 #' tidy(dummy_multi_label_estimates, number = 2)
-#' @seealso [step_ica()] [step_kpca()]
-#'   [step_isomap()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
+#' @seealso [step_dummy()]
 step_dummy_multi_label <- function(recipe,
                      ...,
                      role = "predictor",
                      trained = FALSE,
-                     threshold = NA,
+                     threshold = 0,
                      res = NULL,
                      input = NULL,
+                     other = "other",
                      prefix = NULL,
                      keep_original_cols = FALSE,
                      skip = FALSE,
                      id = rand_id("dummy_multi_label")) {
 
   if (!is_tune(threshold) & !is_varying(threshold)) {
-    if (threshold <= 0) {
-      rlang::abort("`threshold` should be greater than zero")
+    if (threshold < 0) {
+      rlang::abort("`threshold` non-negative.")
     }
     if (threshold >= 1 && !is_integerish(threshold)) {
       rlang::abort("If `threshold` is greater than one it should be an integer.")
@@ -124,6 +90,7 @@ step_dummy_multi_label <- function(recipe,
       threshold = threshold,
       res = res,
       input = input,
+      other = other,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -133,7 +100,7 @@ step_dummy_multi_label <- function(recipe,
 }
 
 step_dummy_multi_label_new <-
-  function(terms, role, trained, threshold, res, input,
+  function(terms, role, trained, threshold, res, input, other,
            prefix,  keep_original_cols, skip, id) {
     step(
       subclass = "dummy_multi_label",
@@ -143,6 +110,7 @@ step_dummy_multi_label_new <-
       threshold = threshold,
       res = res,
       input = input,
+      other = other,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -168,7 +136,10 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
     }
   }
 
-  my_levels <- unique(unlist(purrr::map(training[, col_names], levels), use.names = FALSE))
+  my_levels <- purrr::map(training[, col_names], as.character)
+  my_levels <- unlist(my_levels)
+  my_levels <- my_levels[!is.na(my_levels)]
+  my_levels <- keep_levels(my_levels, x$threshold, other = x$other)
 
   step_dummy_multi_label_new(
     terms = x$terms,
@@ -177,6 +148,7 @@ prep.step_dummy_multi_label <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     res = my_levels,
     input = col_names,
+    other = x$other,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -189,7 +161,7 @@ bake.step_dummy_multi_label <- function(object, new_data, ...) {
 
   col_names <- object$input
 
-  new_columns <- multi_dummy(new_data[, col_names])
+  new_columns <- multi_dummy(new_data[, col_names], object$res)
 
   new_data <- bind_cols(new_data, as_tibble(new_columns))
   keep_original_cols <- get_keep_original_cols(object)
@@ -213,9 +185,14 @@ print.step_dummy_multi_label <-
     invisible(x)
   }
 
-multi_dummy <- function(x) {
+multi_dummy <- function(x, y) {
   row_id <- rep(seq_len(nrow(x)), times = ncol(x))
   values <- unlist(purrr::map(x, as.character), use.names = FALSE)
+
+  if (y$collapse) {
+    values[(!values %in% y$keep) & !is.na(values)] <- y$other
+  }
+
 
   row_id <- row_id[!is.na(values)]
   values <- values[!is.na(values)]
