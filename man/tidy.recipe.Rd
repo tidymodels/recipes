@@ -2,18 +2,19 @@
 % Please edit documentation in R/BoxCox.R, R/YeoJohnson.R, R/arrange.R,
 %   R/bin2factor.R, R/bs.R, R/center.R, R/class.R, R/classdist.R, R/colcheck.R,
 %   R/corr.R, R/count.R, R/cut.R, R/date.R, R/depth.R, R/discretize.R,
-%   R/dummy.R, R/factor2string.R, R/filter.R, R/geodist.R, R/holiday.R,
-%   R/hyperbolic.R, R/ica.R, R/impute_bag.R, R/impute_knn.R, R/impute_linear.R,
-%   R/impute_lower.R, R/impute_mean.R, R/impute_median.R, R/impute_mode.R,
-%   R/impute_roll.R, R/integer.R, R/interactions.R, R/inverse.R, R/invlogit.R,
-%   R/isomap.R, R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R,
-%   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
-%   R/naomit.R, R/nnmf.R, R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R,
-%   R/nzv.R, R/ordinalscore.R, R/other.R, R/pca.R, R/pls.R, R/poly.R,
-%   R/profile.R, R/range.R, R/range_check.R, R/ratio.R, R/regex.R,
-%   R/relevel.R, R/relu.R, R/rename.R, R/rename_at.R, R/rm.R, R/sample.R,
-%   R/scale.R, R/select.R, R/shuffle.R, R/slice.R, R/spatialsign.R, R/sqrt.R,
-%   R/string2factor.R, R/tidy.R, R/unknown.R, R/unorder.R, R/window.R, R/zv.R
+%   R/dummy.R, R/dummy_multi_label.R, R/factor2string.R, R/filter.R,
+%   R/geodist.R, R/holiday.R, R/hyperbolic.R, R/ica.R, R/impute_bag.R,
+%   R/impute_knn.R, R/impute_linear.R, R/impute_lower.R, R/impute_mean.R,
+%   R/impute_median.R, R/impute_mode.R, R/impute_roll.R, R/integer.R,
+%   R/interactions.R, R/inverse.R, R/invlogit.R, R/isomap.R, R/kpca.R,
+%   R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R, R/logit.R, R/missing.r,
+%   R/mutate.R, R/mutate_at.R, R/naindicate.R, R/naomit.R, R/nnmf.R,
+%   R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R,
+%   R/other.R, R/pca.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
+%   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
+%   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
+%   R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R,
+%   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -31,6 +32,7 @@
 \alias{tidy.step_depth}
 \alias{tidy.step_discretize}
 \alias{tidy.step_dummy}
+\alias{tidy.step_dummy_multi_label}
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_geodist}
@@ -130,6 +132,8 @@
 \method{tidy}{step_discretize}(x, ...)
 
 \method{tidy}{step_dummy}(x, ...)
+
+\method{tidy}{step_dummy_multi_label}(x, type = "coef", ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 
