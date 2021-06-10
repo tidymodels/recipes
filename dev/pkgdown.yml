@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1.9001
-pkgdown_sha: 900ef5471576f8f29508a7e7d94fae51390f2d96
+pkgdown_sha: 9ce6af43b55cd21e9563526e12a12d1243657bf6
 articles:
   Custom_Steps: Custom_Steps.html
   Dummies: Dummies.html
@@ -9,7 +9,7 @@ articles:
   Selecting_Variables: Selecting_Variables.html
   Simple_Example: Simple_Example.html
   Skipping: Skipping.html
-last_built: 2021-06-08T00:18Z
+last_built: 2021-06-10T22:00Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
