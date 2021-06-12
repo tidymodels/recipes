@@ -35,11 +35,12 @@ variables will be used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A numeric value between 0 and 1. If it's less than one then
+\item{threshold}{A numeric value between 0 and 1. If less than one,
 factor levels whose rate of occurrence in the training set are below
-\code{threshold} will be "othered". If it is 0 then no thresholding will be done.}
+\code{threshold} will be "othered". See Details below.
+If \code{threshold = 0} then no thresholding is done.}
 
-\item{levels}{A list that contains the information needed to
+\item{levels}{A list with the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
@@ -79,33 +80,34 @@ the original data.
 }
 \details{
 \code{step_dummy_multi_choice()} will create a set of binary dummy
-variables from a selection of factor variable. For data looking
-like\preformatted{lang_1     lang_2     lang_3
+variables from a selection of factor variables. For data such as:\preformatted{lang_1     lang_2     lang_3
 English    Italian    NA
 Spanish    NA         French
 Armenian   English    French
 NA         NA         NA
 }
 
-would end up looking like this\preformatted{Armenian English French Italian Spanish
+the results will be:\preformatted{Armenian English French Italian Spanish
 0       1      0       1       0
 0       0      1       0       1
 1       1      1       0       0
 0       0      0       0       0
 }
 
-The function allows for non-standard naming of the resulting
+This function allows for non-standard naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
-new variable called \code{x_b}. Note that if the factor levels are
-not valid variable names (e.g. "some text with spaces"), it will
-be changed by \code{\link[base:make.names]{base::make.names()}} to be valid (see the example
-below). The naming format can be changed using the \code{naming}
-argument and the function \code{\link[=dummy_names]{dummy_names()}} is the default. This
-function will also change the names of ordinal dummy variables.
-Instead of values such as "\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal
-dummy variables are given simple integer suffixes such as
-"\verb{_1}", "\verb{_2}", etc.
+new variable called \code{x_b}. The naming format can be changed using
+the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
+default. This function will also change the names of ordinal
+dummy variables. Instead of values such as "\code{.L}", "\code{.Q}", or
+"\verb{^4}", ordinal dummy variables are given simple integer
+suffixes such as "\verb{_1}", "\verb{_2}", etc.
+
+The overall proportion (or total counts) of the categories are
+computed. The "other" category is used in place of any categorical levels
+whose individual proportion (or frequency) in the training set is less than
+\code{threshold}.
 }
 \examples{
 library(tibble)

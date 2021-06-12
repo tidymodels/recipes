@@ -13,10 +13,11 @@
 #'  role should they be assigned?. By default, the function assumes
 #'  that the binary dummy variable columns created by the original
 #'  variables will be used as predictors in a model.
-#' @param threshold A numeric value between 0 and 1. If it's less than one then
+#' @param threshold A numeric value between 0 and 1. If less than one,
 #'  factor levels whose rate of occurrence in the training set are below
-#'  `threshold` will be "othered". If it is 0 then no thresholding will be done.
-#' @param levels A list that contains the information needed to
+#'  `threshold` will be "othered". See Details below.
+#'   If `threshold = 0` then no thresholding is done.
+#' @param levels A list with the information needed to
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
@@ -38,8 +39,7 @@
 #' @export
 #' @details
 #' `step_dummy_multi_choice()` will create a set of binary dummy
-#'  variables from a selection of factor variable. For data looking
-#'  like
+#'  variables from a selection of factor variables. For data such as:
 #'
 #'  ```
 #'  lang_1     lang_2     lang_3
@@ -49,7 +49,7 @@
 #'  NA         NA         NA
 #'  ```
 #'
-#'  would end up looking like this
+#'  the results will be:
 #'
 #'  ```
 #'  Armenian English French Italian Spanish
@@ -59,18 +59,20 @@
 #'  0       0      0       0       0
 #'  ```
 #'
-#'  The function allows for non-standard naming of the resulting
+#'  This function allows for non-standard naming of the resulting
 #'  variables. For an unordered factor named `x`, with levels `"a"`
 #'  and `"b"`, the default naming convention would be to create a
-#'  new variable called `x_b`. Note that if the factor levels are
-#'  not valid variable names (e.g. "some text with spaces"), it will
-#'  be changed by [base::make.names()] to be valid (see the example
-#'  below). The naming format can be changed using the `naming`
-#'  argument and the function [dummy_names()] is the default. This
-#'  function will also change the names of ordinal dummy variables.
-#'  Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
-#'  dummy variables are given simple integer suffixes such as
-#'  "`_1`", "`_2`", etc.
+#'  new variable called `x_b`. The naming format can be changed using
+#'  the `naming` argument; the function [dummy_names()] is the
+#'  default. This function will also change the names of ordinal
+#'  dummy variables. Instead of values such as "`.L`", "`.Q`", or
+#'  "`^4`", ordinal dummy variables are given simple integer
+#'  suffixes such as "`_1`", "`_2`", etc.
+#'
+#'  The overall proportion (or total counts) of the categories are
+#'  computed. The "other" category is used in place of any categorical levels
+#'  whose individual proportion (or frequency) in the training set is less than
+#'  `threshold`.
 #'
 #' @examples
 #' library(tibble)
@@ -246,18 +248,20 @@ multi_dummy <- function(x, y) {
 
   colnames(res) <- levels(values)
 
-  as.matrix(res) %>%
-    as_tibble() %>%
-    mutate_all(as.integer)
+  res <- as.matrix(res)
+  if (ncol(res) > 0) {
+    res <- apply(res, 2, as.integer, simplify = FALSE)
+  }
+  as_tibble(res)
 }
 
 print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
     if (x$trained) {
-      cat("Multi label Dummy variables from ")
+      cat("Multi-choice Dummy variables from ")
       cat(format_ch_vec(x$input, width = width))
     } else {
-      cat("Multi label Dummy variables from ", sep = "")
+      cat("Multi-choice Dummy variables from ", sep = "")
       cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
@@ -295,9 +299,8 @@ tidy.step_dummy_multi_choice <- function(x, ...) {
 #' @export
 tunable.step_dummy_multi_choice <- function(x, ...) {
   tibble::tibble(
-    name = c("num_comp", "threshold"),
+    name = c("threshold"),
     call_info = list(
-      list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
       list(pkg = "dials", fun = "threshold")
     ),
     source = "recipe",

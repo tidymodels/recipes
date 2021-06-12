@@ -76,3 +76,22 @@ test_that('no columns selected', {
                      id = rec$steps[[2]]$id)
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
+
+test_that('one columns selected', {
+  zdat <- tibble(
+    y = c(1, 2, 3),
+    x = c("a", "a", "a"),
+    z = 3:1
+  )
+
+  rec <- recipe(y ~ ., data = zdat) %>%
+    step_dummy_multi_choice(all_nominal()) %>%
+    prep(training = zdat)
+
+  expect_equal(
+    unname(rec$steps[[1]]$input),
+    "x"
+  )
+
+  expect_equal(names(bake(rec, zdat)), c("z", "y", "x_a"))
+})
