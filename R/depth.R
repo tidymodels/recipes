@@ -40,7 +40,7 @@
 #' @export
 #' @details Data depth metrics attempt to measure how close data a
 #'  data point is to the center of its distribution. There are a
-#'  number of methods for calculating death but a simple example is
+#'  number of methods for calculating depth but a simple example is
 #'  the inverse of the distance of a data point to the centroid of
 #'  the distribution. Generally, small values indicate that a data
 #'  point not close to the centroid. `step_depth` can compute a
