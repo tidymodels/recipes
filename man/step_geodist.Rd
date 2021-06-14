@@ -12,6 +12,7 @@ step_geodist(
   trained = FALSE,
   ref_lat = NULL,
   ref_lon = NULL,
+  is_lat_lon = TRUE,
   log = FALSE,
   name = "geo_dist",
   columns = NULL,
@@ -35,6 +36,10 @@ preprocessing have been estimated.}
 
 \item{ref_lon, ref_lat}{Single numeric values for the location
 of the reference point.}
+
+\item{is_lat_lon}{A logical: Are coordinates in latitude and longitude? If
+TRUE the Haversine formula is used and the returned result is meters. If
+FALSE the Pythagorean formula is used. Default is TRUE.}
 
 \item{log}{A logical: should the distance be transformed by
 the natural log function?}
@@ -66,7 +71,8 @@ points on a map to a reference location.
 }
 \details{
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns echoing the
-values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{name}, and \code{id} is returned.
+values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{is_lat_lon}, \code{name}, and \code{id}
+is returned.
 
 \code{step_geodist} will create a
 }
@@ -79,7 +85,8 @@ data(Smithsonian)
 near_station <- recipe( ~ ., data = Smithsonian) \%>\%
   update_role(name, new_role = "location") \%>\%
   step_geodist(lat = latitude, lon = longitude, log = FALSE,
-               ref_lat = 38.8986312, ref_lon = -77.0062457) \%>\%
+               ref_lat = 38.8986312, ref_lon = -77.0062457,
+               is_lat_lon = TRUE) \%>\%
   prep(training = Smithsonian)
 
 bake(near_station, new_data = NULL) \%>\%
