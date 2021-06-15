@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Use Haversine formula for latitude-longitude pairs in step_geodist (#725).
+
 * Reorganize documentation for all recipe step `tidy` methods (#701).
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
