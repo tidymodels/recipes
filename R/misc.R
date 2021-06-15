@@ -62,7 +62,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data), "terms")
+  data_info <- attr(model.frame(formula, data[1,]), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
   if (length(response_info) > 0 && all(response_info > 0)) {
