@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* When only the terms attributes are desired from `model.frame` use the first row of data to improve speed and memory use (#726).
+
 * Use Haversine formula for latitude-longitude pairs in step_geodist (#725).
 
 * Reorganize documentation for all recipe step `tidy` methods (#701).

@@ -228,7 +228,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       }
       form <- as.formula(form_chr)
       terms <- model.frame(form,
-                           data = training,
+                           data = training[1,],
                            xlev = x$levels[[i]],
                            na.action = na.pass)
       levels[[i]] <- attr(terms, "terms")
