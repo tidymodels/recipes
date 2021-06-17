@@ -1,6 +1,6 @@
 # recipes (development version)
 
-* When only the terms attributes are desired from `model.frame` only use the first row of data to improve speed and memory use (#726).
+* When only the terms attributes are desired from `model.frame` use the first row of data to improve speed and memory use (#726).
 
 * Reorganize documentation for all recipe step `tidy` methods (#701).
 
