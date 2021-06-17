@@ -12,6 +12,7 @@ step_geodist(
   trained = FALSE,
   ref_lat = NULL,
   ref_lon = NULL,
+  is_lat_lon = TRUE,
   log = FALSE,
   name = "geo_dist",
   columns = NULL,
@@ -24,7 +25,7 @@ step_geodist(
 sequence of operations for this recipe.}
 
 \item{lon, lat}{Selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+used by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{or model term created by this step, what analysis
 role should be assigned?. By default, the function assumes
@@ -35,6 +36,11 @@ preprocessing have been estimated.}
 
 \item{ref_lon, ref_lat}{Single numeric values for the location
 of the reference point.}
+
+\item{is_lat_lon}{A logical: Are coordinates in latitude and longitude? If
+\code{TRUE} the Haversine formula is used and the returned result is meters. If
+\code{FALSE} the Pythagorean formula is used. Default is \code{TRUE} and for recipes
+created from previous versions of recipes, a value of \code{FALSE} is used.}
 
 \item{log}{A logical: should the distance be transformed by
 the natural log function?}
@@ -66,9 +72,12 @@ points on a map to a reference location.
 }
 \details{
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns echoing the
-values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{name}, and \code{id} is returned.
+values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{is_lat_lon}, \code{name}, and \code{id}
+is returned.
 
-\code{step_geodist} will create a
+\code{step_geodist} uses the Pythagorean theorem to calculate Euclidean
+distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haversine
+formula is used to calculate the great-circle distance in meters.
 }
 \examples{
 
@@ -79,13 +88,17 @@ data(Smithsonian)
 near_station <- recipe( ~ ., data = Smithsonian) \%>\%
   update_role(name, new_role = "location") \%>\%
   step_geodist(lat = latitude, lon = longitude, log = FALSE,
-               ref_lat = 38.8986312, ref_lon = -77.0062457) \%>\%
+               ref_lat = 38.8986312, ref_lon = -77.0062457,
+               is_lat_lon = TRUE) \%>\%
   prep(training = Smithsonian)
 
 bake(near_station, new_data = NULL) \%>\%
   arrange(geo_dist)
 
 tidy(near_station, number = 1)
+}
+\references{
+https://en.wikipedia.org/wiki/Haversine_formula
 }
 \concept{preprocessing}
 \keyword{datagen}
