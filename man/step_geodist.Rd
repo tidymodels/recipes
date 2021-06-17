@@ -25,7 +25,7 @@ step_geodist(
 sequence of operations for this recipe.}
 
 \item{lon, lat}{Selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+used by the step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{or model term created by this step, what analysis
 role should be assigned?. By default, the function assumes
@@ -38,8 +38,9 @@ preprocessing have been estimated.}
 of the reference point.}
 
 \item{is_lat_lon}{A logical: Are coordinates in latitude and longitude? If
-TRUE the Haversine formula is used and the returned result is meters. If
-FALSE the Pythagorean formula is used. Default is TRUE.}
+\code{TRUE} the Haversine formula is used and the returned result is meters. If
+\code{FALSE} the Pythagorean formula is used. Default is \code{TRUE} and for recipes
+created from previous versions of recipes, a value of \code{FALSE} is used.}
 
 \item{log}{A logical: should the distance be transformed by
 the natural log function?}
@@ -95,6 +96,9 @@ bake(near_station, new_data = NULL) \%>\%
   arrange(geo_dist)
 
 tidy(near_station, number = 1)
+}
+\references{
+https://en.wikipedia.org/wiki/Haversine_formula
 }
 \concept{preprocessing}
 \keyword{datagen}

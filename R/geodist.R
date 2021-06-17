@@ -6,15 +6,16 @@
 #'
 #' @inheritParams step_center
 #' @param lon,lat Selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
+#'  used by the step. See [selections()] for more details.
 #' @param ref_lon,ref_lat Single numeric values for the location
 #'  of the reference point.
 #' @param role or model term created by this step, what analysis
 #'  role should be assigned?. By default, the function assumes
 #'  that resulting distance will be used as a predictor in a model.
 #' @param is_lat_lon A logical: Are coordinates in latitude and longitude? If
-#'  TRUE the Haversine formula is used and the returned result is meters. If
-#'  FALSE the Pythagorean formula is used. Default is TRUE.
+#'  `TRUE` the Haversine formula is used and the returned result is meters. If
+#'  `FALSE` the Pythagorean formula is used. Default is `TRUE` and for recipes
+#'  created from previous versions of recipes, a value of `FALSE` is used.
 #' @param log A logical: should the distance be transformed by
 #'  the natural log function?
 #' @param columns A character string of variable names that will
@@ -29,6 +30,7 @@
 #'  is returned.
 #' @keywords datagen
 #' @concept preprocessing
+#' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
 #' @details `step_geodist` uses the Pythagorean theorem to calculate Euclidean
 #'  distances if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine
@@ -120,15 +122,21 @@ step_geodist_new <-
     )
   }
 
+# for backward compatibility
+check_is_lat_lon <- function(x) {
+  if (!'is_lat_lon' %in% names(x)) {
+    x$is_lat_lon <- FALSE
+  }
+  x
+}
+
 
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- eval_select_recipes(x$lon, training, info)
   lat_name <- eval_select_recipes(x$lat, training, info)
 
-  # for backward compatibility
-  if (!'is_lat_lon' %in% names(x))
-    x$is_lat_lon <- FALSE
+  x <- check_is_lat_lon(x)
 
   if (length(lon_name) > 1)
     rlang::abort("`lon` should resolve to a single column name.")
@@ -158,8 +166,9 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   )
 }
 
-geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2)
+geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
   sqrt((x_1 - x_2) ^ 2L + (y_1 - y_2) ^ 2L)
+}
 
 
 # earth_radius = 6371e3 in meters
@@ -195,9 +204,7 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3) {
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
 
-  # for backward compatibility
-  if (!'is_lat_lon' %in% names(object))
-    object$is_lat_lon <- FALSE
+  object <- check_is_lat_lon(object)
 
   if(object$is_lat_lon) {
     dist_vals <-
@@ -237,9 +244,7 @@ print.step_geodist <-
 #' @export
 tidy.step_geodist <- function(x, ...) {
 
-  # for backward compatibility
-  if (!'is_lat_lon' %in% names(x))
-    x$is_lat_lon <- FALSE
+  x <- check_is_lat_lon(x)
 
   if (is_trained(x)) {
     res <- tibble(
