@@ -238,8 +238,8 @@ print.step_geodist <-
 tidy.step_geodist <- function(x, ...) {
 
   # for backward compatibility
-  if (!'is_lat_lon' %in% names(object))
-    object$is_lat_lon <- FALSE
+  if (!'is_lat_lon' %in% names(x))
+    x$is_lat_lon <- FALSE
 
   if (is_trained(x)) {
     res <- tibble(
