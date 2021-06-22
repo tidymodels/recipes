@@ -31,8 +31,8 @@
 #'    exclude variables (e.g. `-Murder`) and the set of selectors will
 #'    processed in order.
 #'   \item A leading exclusion in these arguments (e.g. `-Murder`)
-#'   has the effect of adding all variables to the list except the
-#'   excluded variable(s).
+#'   has the effect of adding *all* variables to the list except the
+#'   excluded variable(s), ignoring role information.
 #'   }
 #'
 #' Select helpers from the `tidyselect` package can also be used:
@@ -64,8 +64,11 @@
 #' more specific. The functions [all_numeric()] and [all_nominal()] select
 #' based on type, with nominal variables including both character and factor;
 #' the functions [all_predictors()] and [all_outcomes()] select based on role.
-#' Any can be used in conjunction with the previous functions described for
-#' selecting variables using their names:
+#' The functions [all_numeric_predictors()] and [all_nominal_predictors()]
+#' select intersections of role and type. Any can be used in conjunction with
+#' the previous functions described for selecting variables using their names.
+#'
+#' A selection like this:
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -73,7 +76,15 @@
 #'     step_center(all_numeric(), -all_outcomes())
 #' }
 #'
-#' This results in all the numeric predictors: carbon, hydrogen,
+#' is equivalent to:
+#'
+#' \preformatted{
+#'   data(biomass)
+#'   recipe(HHV ~ ., data = biomass) \%>\%
+#'     step_center(all_numeric_predictors())
+#' }
+#'
+#' Both result in all the numeric predictors: carbon, hydrogen,
 #' oxygen, nitrogen, and sulfur.
 #'
 #' If a role for a variable has not been defined, it will never be
