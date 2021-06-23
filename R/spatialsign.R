@@ -118,10 +118,10 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
   col_names <- object$columns
-  ss <- function(x, na_rm) {
-    x / sqrt(sum(x ^ 2, na.rm = na_rm))
-  }
-  res <- t(apply(as.matrix(new_data[, col_names]), 1, ss, na_rm = object$na_rm))
+
+  res <- as.matrix(new_data[, col_names])
+  res <- res / sqrt(rowSums(res ^ 2, na.rm = object$na_rm))
+
   res <- tibble::as_tibble(res)
   new_data[, col_names] <- res
   tibble::as_tibble(new_data)
