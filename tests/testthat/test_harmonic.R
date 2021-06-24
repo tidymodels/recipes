@@ -74,6 +74,20 @@ test_that("harmonic error", {
                                cycle_unit = c("second", "minute")))
 
 
+  # starting_val is numeric, Date or POSIXt
+  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
+                 step_harmonic(time_var,
+                               frequency = 1,
+                               starting_val = 'a',
+                               cycle_unit = "second"))
+
+  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
+                 step_harmonic(time_var,
+                               frequency = 1,
+                               starting_val = factor('a'),
+                               cycle_unit = "second"))
+
+
 })
 
 test_that("harmonic cycle units", {
@@ -388,5 +402,67 @@ test_that("harmonic NA in term", {
 
 })
 
+
+test_that("harmonic check tidy starting value", {
+
+  harmonic_dat = tibble(osc = sin(2 * pi * as.numeric(x_second) / (3600 * 6)),
+                        time_var = x_second)
+
+  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) %>%
+    step_harmonic(time_var,
+                  frequency = 12,
+                  cycle_unit = "year") %>%
+    prep() %>%
+    tidy(number = 1)
+
+
+  expect_equal(tidy_starting$value[[1]], 0,
+               ignore_attr = TRUE)
+
+
+  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) %>%
+    step_harmonic(time_var,
+                  frequency = 12,
+                  starting_val = 10,
+                  cycle_unit = "year") %>%
+    prep() %>%
+    tidy(number = 1)
+
+
+  expect_equal(tidy_starting$value[[1]], 10,
+               ignore_attr = TRUE)
+
+
+  x_datetime <- as.POSIXct(x_second,
+                           origin = '1990-01-01 01:02:23',
+                           tz = 'UTC')
+  harmonic_dat = tibble(osc = sin(2 * pi * as.numeric(x_datetime) / (3600 * 6)),
+                        time_var_posixt = x_datetime)
+
+  tidy_starting <- recipe(osc ~ time_var_posixt, data = harmonic_dat) %>%
+    step_harmonic(time_var_posixt,
+                  frequency = 12,
+                  cycle_unit = "day") %>%
+    prep() %>%
+    tidy(number = 1)
+
+
+  expect_equal(tidy_starting$value[[1]],
+               631152000,
+               ignore_attr = TRUE)
+
+  origin <- x_datetime[1]
+  tidy_starting <- recipe(osc ~ time_var_posixt, data = harmonic_dat) %>%
+    step_harmonic(time_var_posixt,
+                  frequency = 12,
+                  starting_val = origin,
+                  cycle_unit = "day") %>%
+    prep() %>%
+    tidy(number = 1)
+
+  expect_equal(tidy_starting$value[[1]],
+               as.numeric(origin),
+               ignore_attr = TRUE)
+})
 
 
