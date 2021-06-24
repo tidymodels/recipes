@@ -436,10 +436,16 @@ prep.recipe <-
 
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-        x$steps[[i]] <-
-          prep(x$steps[[i]],
-               training = training,
-               info = x$term_info)
+        x$steps[[i]] <- withCallingHandlers(
+          expr = prep(x$steps[[i]], training = training, info = x$term_info),
+          error = function(c) {
+            c$message <- paste0(
+              "[in ", attr(x$steps[[i]], "class")[1], "()] ",c$message
+            )
+            stop(c)
+          }
+        )
+
         training <- bake(x$steps[[i]], new_data = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
