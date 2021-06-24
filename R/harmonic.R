@@ -96,9 +96,15 @@ step_harmonic <-
     if (!any(is.na(frequency)) & !any(is.na(period)))
       rlang::warn("Both frequency and period are specified.")
 
-
     if (!all(is.character(cycle_unit)) | length(cycle_unit) != 1)
       rlang::abort("cycle_unit column name must be a single character value.")
+
+    if (!is.na(starting_val) &
+        !is.numeric(starting_val) &
+        !inherits(starting_val, 'Date') &
+        !inherits(starting_val, 'POSIXt'))
+      rlang::abort("starting_val must be numeric, Date or POSIXt")
+
 
     f_units <-
       c("year",
@@ -282,7 +288,7 @@ sin_cos <- function(x,
   nc <- length(frequency)
   nr <- length(x)
 
-  x <- x - starting_val
+  x <- x - as.numeric(starting_val)
 
   # cycles per unit
   cycle <- 2 * (pi * (x / cycle_size));
@@ -338,7 +344,7 @@ tidy.step_harmonic <- function(x, ...) {
   if (is_trained(x)) {
     res <-
       tibble(terms = names(x$objects),
-             value = x$starting_val)
+             value = sapply(x$objects, function(y) y$starting_val))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
@@ -347,3 +353,20 @@ tidy.step_harmonic <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+
+# may want a tunable step that can adjust the frequency/period
+#' #' @rdname tunable.step
+#' #' @export
+#' tunable.step_harmonic <- function(x, ...) {
+#'   tibble::tibble(
+#'     name = c("frequency", "period"),
+#'     call_info = list(
+#'       list(pkg = "dials", fun = ""),
+#'       list(pkg = "dials", fun = "")
+#'     ),
+#'     source = "recipe",
+#'     component = "step_harmonic",
+#'     component_id = x$id
+#'   )
+#' }
