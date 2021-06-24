@@ -3,6 +3,8 @@
 #' `step_harmonic` creates a *specification* of a recipe step that
 #'   will add sin and cos terms for harmonic analysis.
 #'
+#' @inheritParams step_center
+#'
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
