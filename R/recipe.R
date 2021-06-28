@@ -47,51 +47,11 @@ recipe.default <- function(x, ...)
 #'   as the data given in the `data` argument but can be different after
 #'   the recipe is trained.}
 #'
-#' @details Recipes are alternative methods for creating design matrices and
-#'   for preprocessing data.
-#'
-#' Variables in recipes can have any type of *role* in subsequent analyses
-#'   such as: outcome, predictor, case weights, stratification variables, etc.
-#'
-#' `recipe` objects can be created in several ways. If the analysis only
-#'   contains outcomes and predictors, the simplest way to create one is to use
-#'   a simple formula (e.g. `y ~ x1 + x2`) that does not contain inline
-#'   functions such as `log(x3)`. An example is given below.
-#'
-#' Alternatively, a `recipe` object can be created by first specifying
-#'   which variables in a data set should be used and then sequentially
-#'   defining their roles (see the last example). This alternative is an
-#'   excellent choice when the number of variables is very high, as the
-#'   formula method is memory-inefficient with many variables.
-#'
-#' There are two different types of operations that can be
-#'  sequentially added to a recipe. **Steps**  can include common
-#'  operations like logging a variable, creating dummy variables or
-#'  interactions and so on. More computationally complex actions
-#'  such as dimension reduction or imputation can also be specified.
-#'  **Checks** are operations that conduct specific tests of the
-#'  data. When the test is satisfied, the data are returned without
-#'  issue or modification. Otherwise, any error is thrown.
-#'
-#' Once a recipe has been defined, the [prep()] function can be
-#'  used to estimate quantities required for the operations using a
-#'  data set (a.k.a. the training data). [prep()] returns another
-#'  recipe.
-#'
-#' To apply the recipe to a data set, the [bake()] function is
-#'   used in the same manner as `predict` would be for models. This
-#'   applies the steps to any data set.
-#'
-#' Note that the data passed to `recipe` need not be the complete data
-#'   that will be used to train the steps (by [prep()]). The recipe
-#'   only needs to know the names and types of data that will be used. For
-#'   large data sets, `head` could be used to pass the recipe a smaller
-#'   data set to save time and memory.
+#' @includeRmd man/rmd/recipes.Rmd details
 #'
 #' @export
 #' @examples
 #'
-#' ###############################################
 #' # simple example:
 #' library(modeldata)
 #' data(biomass)
@@ -105,26 +65,12 @@ recipe.default <- function(x, ...)
 #'               data = biomass_tr)
 #'
 #' # Now add preprocessing steps to the recipe.
-#'
 #' sp_signed <- rec %>%
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
-#' # now estimate required parameters
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-#' sp_signed_trained
-#'
-#' # apply the preprocessing to a data set
-#' test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
-#'
-#' # or use pipes for the entire workflow:
-#' rec <- biomass_tr %>%
-#'   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-#'   step_normalize(all_numeric_predictors()) %>%
-#'   step_spatialsign(all_numeric_predictors())
-#'
-#' ###############################################
+#' # ---------------------------------------------------------------------------
 #' # multivariate example
 #'
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
@@ -134,11 +80,7 @@ recipe.default <- function(x, ...)
 #'   step_center(all_numeric_predictors()) %>%
 #'   step_scale(all_numeric_predictors())
 #'
-#' multi_y_trained <- prep(multi_y, training = biomass_tr)
-#'
-#' results <- bake(multi_y_trained, biomass_te)
-#'
-#' ###############################################
+#' # ---------------------------------------------------------------------------
 #' # example with manually updating different roles
 #'
 #' # best choice for high-dimensional data:
@@ -306,7 +248,7 @@ inline_check <- function(x) {
 prep <- function(x, ...)
   UseMethod("prep")
 
-#' Train a Data Recipe
+#' Estimate a Data Recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
@@ -335,10 +277,13 @@ prep <- function(x, ...)
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
 #'   `term_info` object is likely to be modified as the operations are
 #'   executed.
-#' @details Given a data set, this function estimates the required quantities
-#'   and statistics required by any operations.
+#' @details
 #'
-#' [prep()] returns an updated recipe with the estimates.
+#' Given a data set, this function estimates the required quantities and
+#' statistics required by any operations. [prep()] returns an updated recipe
+#' with the estimates. If you are using a recipe as a preprocessor for modeling,
+#' we **highly recommend** that you use a workflow instead of manually
+#' estimating a recipe (see the example in [recipe()]).
 #'
 #' Note that missing data handling is handled in the steps; there is no global
 #'   `na.rm` option at the recipe-level or in [prep()].
@@ -543,8 +488,10 @@ bake <- function(object, ...)
 #'  resolve to numeric columns (otherwise an error is thrown).
 #' @return A tibble, matrix, or sparse matrix that may have different
 #'  columns than the original columns in `new_data`.
-#' @details [bake()] takes a trained recipe and applies the
-#'   operations to a data set to create a design matrix.
+#' @details [bake()] takes a trained recipe and applies the operations to a
+#'  data set to create a design matrix. If you are using a recipe as a
+#'  preprocessor for modeling, we **highly recommend** that you use a workflow
+#'  instead of manually applying a recipe (see the example in [recipe()]).
 #'
 #' If the data set is not too large, time can be saved by using the
 #'  `retain = TRUE` option of [prep()]. This stores the processed version of the

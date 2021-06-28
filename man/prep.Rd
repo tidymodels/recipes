@@ -3,7 +3,7 @@
 \name{prep}
 \alias{prep}
 \alias{prep.recipe}
-\title{Train a Data Recipe}
+\title{Estimate a Data Recipe}
 \usage{
 prep(x, ...)
 
@@ -62,10 +62,11 @@ parameters from a training set that can be later applied to other data
 sets.
 }
 \details{
-Given a data set, this function estimates the required quantities
-and statistics required by any operations.
-
-\code{\link[=prep]{prep()}} returns an updated recipe with the estimates.
+Given a data set, this function estimates the required quantities and
+statistics required by any operations. \code{\link[=prep]{prep()}} returns an updated recipe
+with the estimates. If you are using a recipe as a preprocessor for modeling,
+we \strong{highly recommend} that you use a workflow instead of manually
+estimating a recipe (see the example in \code{\link[=recipe]{recipe()}}).
 
 Note that missing data handling is handled in the steps; there is no global
 \code{na.rm} option at the recipe-level or in \code{\link[=prep]{prep()}}.
