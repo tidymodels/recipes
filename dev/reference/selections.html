@@ -73,7 +73,7 @@ exclude variables (e.g. -Murder) and the set of selectors will
 processed in order.
 A leading exclusion in these arguments (e.g. -Murder)
 has the effect of adding all variables to the list except the
-excluded variable(s).
+excluded variable(s), ignoring role information.
 
 
 Select helpers from the tidyselect package can also be used:
@@ -101,15 +101,24 @@ has_type(). For convenience, there are also functions that are
 more specific. The functions all_numeric() and all_nominal() select
 based on type, with nominal variables including both character and factor;
 the functions all_predictors() and all_outcomes() select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:
+The functions all_numeric_predictors() and all_nominal_predictors()
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.
+A selection like this:
 
   data(biomass)
   recipe(HHV ~ ., data = biomass) %&amp;gt;%
     step_center(all_numeric(), -all_outcomes())
 
 
-This results in all the numeric predictors: carbon, hydrogen,
+is equivalent to:
+
+  data(biomass)
+  recipe(HHV ~ ., data = biomass) %&amp;gt;%
+    step_center(all_numeric_predictors())
+
+
+Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.
 If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.
@@ -270,8 +279,8 @@ function for the step is executed.</p></li>
 exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
 processed in order.</p></li>
 <li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)
-has the effect of adding all variables to the list except the
-excluded variable(s).</p></li>
+has the effect of adding <em>all</em> variables to the list except the
+excluded variable(s), ignoring role information.</p></li>
 </ol>
 
 <p>Select helpers from the <code>tidyselect</code> package can also be used:
@@ -299,15 +308,24 @@ variables based on their role or type: <code><a href='has_role.html'>has_role()<
 more specific. The functions <code><a href='has_role.html'>all_numeric()</a></code> and <code><a href='has_role.html'>all_nominal()</a></code> select
 based on type, with nominal variables including both character and factor;
 the functions <code><a href='has_role.html'>all_predictors()</a></code> and <code><a href='has_role.html'>all_outcomes()</a></code> select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:</p>
+The functions <code><a href='has_role.html'>all_numeric_predictors()</a></code> and <code><a href='has_role.html'>all_nominal_predictors()</a></code>
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.</p>
+<p>A selection like this:</p>
 <pre class='sourceCode r'><code>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 
-<p>This results in all the numeric predictors: carbon, hydrogen,
+<p>is equivalent to:</p>
+<pre class='sourceCode r'><code>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+
+<p>Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.</p>
 <p>If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.</p>
