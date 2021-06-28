@@ -108,21 +108,33 @@ step_harmonic <-
       rlang::abort("starting_val must be numeric, Date or POSIXt")
 
 
-    f_units <-
-      c("year",
-        "month_synodic",
-        "month_sidereal",
-        "month_average",
-        "week",
-        "day",
-        "hour",
-        "minute",
-        "second",
-        "sample")
-      if (!(cycle_unit %in% f_units)) {
-        rlang::abort(paste0("Possible values of `frequency units` should include: ",
-                     paste0("'", f_units, "'", collapse = ", ")))
-      }
+
+    rlang::arg_match0(cycle_unit, c("year",
+                                    "month_synodic",
+                                    "month_sidereal",
+                                    "month_average",
+                                    "week",
+                                    "day",
+                                    "hour",
+                                    "minute",
+                                    "second",
+                                    "sample"))
+
+    # f_units <-
+    #   c("year",
+    #     "month_synodic",
+    #     "month_sidereal",
+    #     "month_average",
+    #     "week",
+    #     "day",
+    #     "hour",
+    #     "minute",
+    #     "second",
+    #     "sample")
+    #   if (!(cycle_unit %in% f_units)) {
+    #     rlang::abort(paste0("Possible values of `frequency units` should include: ",
+    #                  paste0("'", f_units, "'", collapse = ", ")))
+    #   }
 
     # allow empty terms
     terms <- quos(...)
@@ -168,16 +180,17 @@ step_harmonic_new <-
 
 
 get_cycle_n <- function(x) {
-  if (x == 'year') 31556926 # solar year
-  else if (x == 'month_synodic') cycle_size = 2551443
-  else if (x == 'month_sidereal') cycle_size = 2360592
-  else if (x == 'month_average') cycle_size = 2629744
-  else if (x == 'week') cycle_size = 86400 * 7
-  else if (x == 'day') cycle_size = 86400
-  else if (x == 'hour') cycle_size = 3600
-  else if (x == 'minute') cycle_size = 60
-  else if (x == 'second') cycle_size = 1
-  else if (x == 'sample') cycle_size = 1
+  switch(x,
+         year = 31556926,
+         month_synodic = 2551443,
+         month_sidereal = 2360592,
+         week = 86400*7,
+         day = 86400,
+         hour = 3600,
+         minute = 60,
+         second = 1,
+         sample = 1
+  )
 }
 
 
