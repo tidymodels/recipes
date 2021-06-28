@@ -30,8 +30,8 @@ function for the step is executed.
 exclude variables (e.g. \code{-Murder}) and the set of selectors will
 processed in order.
 \item A leading exclusion in these arguments (e.g. \code{-Murder})
-has the effect of adding all variables to the list except the
-excluded variable(s).
+has the effect of adding \emph{all} variables to the list except the
+excluded variable(s), ignoring role information.
 }
 
 Select helpers from the \code{tidyselect} package can also be used:
@@ -63,8 +63,11 @@ variables based on their role or type: \code{\link[=has_role]{has_role()}} and
 more specific. The functions \code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select
 based on type, with nominal variables including both character and factor;
 the functions \code{\link[=all_predictors]{all_predictors()}} and \code{\link[=all_outcomes]{all_outcomes()}} select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:
+The functions \code{\link[=all_numeric_predictors]{all_numeric_predictors()}} and \code{\link[=all_nominal_predictors]{all_nominal_predictors()}}
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.
+
+A selection like this:
 
 \preformatted{
   data(biomass)
@@ -72,7 +75,15 @@ selecting variables using their names:
     step_center(all_numeric(), -all_outcomes())
 }
 
-This results in all the numeric predictors: carbon, hydrogen,
+is equivalent to:
+
+\preformatted{
+  data(biomass)
+  recipe(HHV ~ ., data = biomass) \%>\%
+    step_center(all_numeric_predictors())
+}
+
+Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.
 
 If a role for a variable has not been defined, it will never be
