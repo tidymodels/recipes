@@ -29,6 +29,8 @@
 #'   specified to increase control over the signal phase.  If starting_val is
 #'   not specified the default is the start of the data series, or the start of
 #'   the cycle (i.e. the beginning of the hour, day, week).
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `TRUE`.
 #' @param objects Statistics are stored here once this step has
 #'  been trained by [prep.recipe()].
 #'
@@ -69,7 +71,9 @@ step_harmonic <-
            frequency = NA_real_,
            period = NA_real_,
            cycle_unit = 'day',
+           cycle_size = NA_real_,
            starting_val = NA_real_,
+           keep_original_cols = TRUE,
            objects = NULL,
            skip = FALSE,
            id = rand_id("harmonic")) {
@@ -107,8 +111,6 @@ step_harmonic <-
         !inherits(starting_val, 'POSIXt'))
       rlang::abort("starting_val must be numeric, Date or POSIXt")
 
-
-
     rlang::arg_match0(cycle_unit, c("year",
                                     "month_synodic",
                                     "month_sidereal",
@@ -119,22 +121,6 @@ step_harmonic <-
                                     "minute",
                                     "second",
                                     "sample"))
-
-    # f_units <-
-    #   c("year",
-    #     "month_synodic",
-    #     "month_sidereal",
-    #     "month_average",
-    #     "week",
-    #     "day",
-    #     "hour",
-    #     "minute",
-    #     "second",
-    #     "sample")
-    #   if (!(cycle_unit %in% f_units)) {
-    #     rlang::abort(paste0("Possible values of `frequency units` should include: ",
-    #                  paste0("'", f_units, "'", collapse = ", ")))
-    #   }
 
     # allow empty terms
     terms <- quos(...)
@@ -151,7 +137,9 @@ step_harmonic <-
         frequency = frequency,
         period = period,
         cycle_unit = cycle_unit,
+        cycle_size = cycle_size,
         starting_val = starting_val,
+        keep_original_cols = keep_original_cols,
         objects = objects,
         skip = skip,
         id = id
@@ -161,8 +149,8 @@ step_harmonic <-
 
 step_harmonic_new <-
   function(terms, role, trained,
-           frequency, period, cycle_unit,
-           starting_val, objects, skip, id) {
+           frequency, period, cycle_unit, cycle_size,
+           starting_val, keep_original_cols, objects, skip, id) {
     step(
       subclass = "harmonic",
       terms = terms,
@@ -171,7 +159,9 @@ step_harmonic_new <-
       frequency = frequency,
       period = period,
       cycle_unit = cycle_unit,
+      cycle_size = cycle_size,
       starting_val = starting_val,
+      keep_original_cols = keep_original_cols,
       objects = objects,
       skip = skip,
       id = id
@@ -226,15 +216,15 @@ process_inputs <- function(time_var,
     nms <- paste0('_p_', period_1)
   }
 
-  col_names <- c(paste0(rep("sin", each = length(frequencies)), nms),
-                 paste0(rep("cos", each = length(frequencies)), nms))
+  col_names <- c(paste0(rep("sin", each = length(frequencies)),
+                        1:length(frequencies)),
+                 paste0(rep("cos", each = length(frequencies)),
+                        1:length(frequencies)))
 
 
-  # starting val
+  # start at an even cycle if no starting_val is provided
   if (is.na(starting_val)) {
-    # find the first value
     mn <- min(time_var, na.rm = TRUE)
-    # start at an even cycle
     starting_val <- (as.numeric(mn) %/% cycle_size) * cycle_size
   }
 
@@ -285,6 +275,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
     period = x$period,
     cycle_unit = x$cycle_unit,
     starting_val = x$object$starting_val,
+    keep_original_cols = get_keep_original_cols(x),
     object = x$object,
     skip = x$skip,
     id = x$id
@@ -335,7 +326,11 @@ bake.step_harmonic <- function(object, new_data, ...) {
     colnames(res) <- paste0(col_name, '_', ob[["col_names"]])
     res <- as_tibble(res)
     new_data <- bind_cols(new_data, res)
+  }
 
+  keep_original_cols <- get_keep_original_cols(object)
+  if (!keep_original_cols) {
+    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
   }
 
 
@@ -377,8 +372,8 @@ tidy.step_harmonic <- function(x, ...) {
 #'   tibble::tibble(
 #'     name = c("frequency", "period"),
 #'     call_info = list(
-#'       list(pkg = "dials", fun = ""),
-#'       list(pkg = "dials", fun = "")
+#'       list(pkg = "dials", fun = "harmonic_period"),
+#'       list(pkg = "dials", fun = "harmonic_period")
 #'     ),
 #'     source = "recipe",
 #'     component = "step_harmonic",
