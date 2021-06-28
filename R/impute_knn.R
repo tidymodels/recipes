@@ -269,6 +269,7 @@ bake.step_impute_knn <- function(object, new_data, ...) {
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
         pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
+        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }

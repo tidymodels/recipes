@@ -26,11 +26,11 @@ test_that('imputation values', {
   discr_rec <- rec %>%
     step_discretize(nitrogen, options = list(keep_na = FALSE))
   impute_rec <- discr_rec %>%
-    step_knnimpute(carbon,
-                   nitrogen,
-                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3,
-                   id = "")
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3,
+                    id = "")
 
   imp_exp_un <- tibble(
     terms = c("carbon", "nitrogen"),
@@ -78,13 +78,29 @@ test_that('imputation values', {
 
 })
 
+test_that("All NA values", {
+
+  imputed <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                    data = biomass_tr) %>%
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3) %>%
+    prep(biomass_tr)
+
+  imputed_te <- bake(imputed, biomass_te %>% mutate(carbon = NA))
+  expect_equal(sum(is.na(imputed_te$carbon)), 0)
+
+})
+
+
 test_that('printing', {
   discr_rec <- rec %>%
-    step_knnimpute(carbon,
-                   nitrogen,
-                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3,
-                   id = "")
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3,
+                    id = "")
   expect_output(print(discr_rec))
   expect_output(prep(discr_rec, training = biomass_tr, verbose = TRUE))
 })
@@ -92,30 +108,30 @@ test_that('printing', {
 
 test_that('options', {
   rec_1 <- rec %>%
-    step_knnimpute(carbon,
-                   nitrogen,
-                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3,
-                   options = list(),
-                   id = "")
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3,
+                    options = list(),
+                    id = "")
   expect_equal(rec_1$steps[[1]]$options, list(nthread = 1, eps = 1e-08))
 
   rec_2 <- rec %>%
-    step_knnimpute(carbon,
-                   nitrogen,
-                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3,
-                   options = list(nthread = 10),
-                   id = "")
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3,
+                    options = list(nthread = 10),
+                    id = "")
   expect_equal(rec_2$steps[[1]]$options, list(nthread = 10, eps = 1e-08))
 
   rec_3 <- rec %>%
-    step_knnimpute(carbon,
-                   nitrogen,
-                   impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-                   neighbors = 3,
-                   options = list(eps = 10),
-                   id = "")
+    step_impute_knn(carbon,
+                    nitrogen,
+                    impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+                    neighbors = 3,
+                    options = list(eps = 10),
+                    id = "")
   expect_equal(rec_3$steps[[1]]$options, list(eps = 10, nthread = 1))
 
   dat_1 <-
@@ -150,7 +166,7 @@ test_that('options', {
 test_that('tunable', {
   rec <-
     recipe(~ ., data = iris) %>%
-    step_knnimpute(all_predictors())
+    step_impute_knn(all_predictors())
   rec_param <- tunable.step_impute_knn(rec$steps[[1]])
   expect_equal(rec_param$name, c("neighbors"))
   expect_true(all(rec_param$source == "recipe"))

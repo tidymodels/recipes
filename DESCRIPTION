@@ -42,6 +42,7 @@ Imports:
     tidyselect (>= 1.1.0),
     timeDate,
     utils,
+    vctrs,
     withr
 Suggests: 
     covr,

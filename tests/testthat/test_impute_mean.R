@@ -17,7 +17,7 @@ test_that('simple mean', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_meanimpute(Age, Assets, Income, id = "")
+    step_impute_mean(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
 
@@ -56,7 +56,7 @@ test_that('trimmed mean', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_meanimpute(Assets, trim = .1)
+    step_impute_mean(Assets, trim = .1)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
 
@@ -70,14 +70,25 @@ test_that('non-numeric', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_meanimpute(Assets, Job)
+    step_impute_mean(Assets, Job)
   expect_error(prep(impute_rec, training = credit_tr, verbose = FALSE))
+})
+
+test_that('all NA values', {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_mean(Age, Assets)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed_te <- bake(imputed, new_data = credit_te %>% mutate(Age = NA))
+
+  expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$means$Age)
 })
 
 
 test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
-    step_meanimpute(Age, Assets, Income)
+    step_impute_mean(Age, Assets, Income)
   expect_output(print(impute_rec))
   expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
 })
@@ -86,7 +97,7 @@ test_that('printing', {
 test_that('tunable', {
   rec <-
     recipe(~ ., data = iris) %>%
-    step_meanimpute(all_predictors())
+    step_impute_mean(all_predictors())
   rec_param <- tunable.step_impute_mean(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))
   expect_true(all(rec_param$source == "recipe"))

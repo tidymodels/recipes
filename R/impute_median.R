@@ -145,6 +145,7 @@ prep.step_medianimpute <- prep.step_impute_median
 bake.step_impute_median <- function(object, new_data, ...) {
   for (i in names(object$medians)) {
     if (any(is.na(new_data[[i]])))
+      new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])
       new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
   }
   as_tibble(new_data)
