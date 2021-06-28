@@ -38,6 +38,10 @@
 #'   new step added to the sequence of existing steps (if any).
 #' @export
 #'
+#' @references Foreman, M. G. G., & Henry, R. F. (1989).
+#'   The harmonic analysis of tidal model time series.
+#'   Advances in water resources, 12(3), 109-120.
+#'
 #' @examples
 #' library(ggplot2, quietly = TRUE)
 #'
@@ -203,7 +207,7 @@ process_inputs <- function(time_var,
   # convert from period to frequency
   period_1    <- sort(unique(na.omit(period)))
   frequency_1 <- sort(unique(na.omit(frequency)))
-  frequency_2 <- 1 / period_1
+  frequency_2 <- 1.0 / period_1
   frequencies <- c(frequency_1, frequency_2)
 
   # set column names
@@ -328,6 +332,7 @@ bake.step_harmonic <- function(object, new_data, ...) {
     new_data <- bind_cols(new_data, res)
   }
 
+
   keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {
     new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
@@ -354,11 +359,15 @@ tidy.step_harmonic <- function(x, ...) {
   if (is_trained(x)) {
     res <-
       tibble(terms = names(x$objects),
-             value = sapply(x$objects, function(y) y$starting_val))
+             value = sapply(x$objects, function(y) y$starting_val),
+             key = 0, # column names
+             frequency = 0) # frequencies
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
-                  value = na_dbl)
+                  value = na_dbl,
+                  key = na_chr,
+                  frequency = na_dbl)
   }
   res$id <- x$id
   res
