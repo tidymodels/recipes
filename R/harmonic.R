@@ -38,9 +38,9 @@
 #'   new step added to the sequence of existing steps (if any).
 #' @export
 #'
-#' @references Foreman, M. G. G., & Henry, R. F. (1989).
-#'   The harmonic analysis of tidal model time series.
-#'   Advances in water resources, 12(3), 109-120.
+#' @references Doran, H. E., & Quilkey, J. J. (1972).
+#'   Harmonic analysis of seasonal data: some important properties.
+#'   American Journal of Agricultural Economics, 54(4_Part_1), 646-651.
 #'
 #' @examples
 #' library(ggplot2, quietly = TRUE)
