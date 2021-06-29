@@ -15,7 +15,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
+#'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @return An updated version of `recipe` with the new step
 #'  added to the sequence of existing steps (if any).
