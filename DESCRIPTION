@@ -54,6 +54,7 @@ Suggests:
     kernlab,
     knitr,
     modeldata,
+    parsnip (>= 0.1.6.9000),
     RANN,
     RcppRoll,
     rmarkdown,
@@ -61,6 +62,7 @@ Suggests:
     rsample,
     RSpectra,
     testthat (>= 2.1.0),
+    workflows,
     xml2
 VignetteBuilder: 
     knitr
@@ -69,3 +71,6 @@ RdMacros:
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9001
+Remotes:
+    tidymodels/parsnip
+    

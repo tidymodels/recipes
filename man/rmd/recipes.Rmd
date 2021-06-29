@@ -1,0 +1,128 @@
+```{r startup, include = FALSE}
+options(width = 70)
+
+library(dplyr)
+library(workflows)
+library(recipes)
+library(parsnip)
+```
+
+## Defining recipes
+
+Variables in recipes can have any type of *role*, including outcome, predictor, observation ID, case weights, stratification variables, etc.
+
+`recipe` objects can be created in several ways. If an analysis only contains outcomes and predictors, the simplest way to create one is to use a formula (e.g. `y ~ x1 + x2`) that does not contain inline functions such as `log(x3)` (see the first example below).
+
+Alternatively, a `recipe` object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example). This alternative is an excellent choice when the number of variables is very high, as the formula method is memory-inefficient with many variables. 
+
+There are two different types of operations that can be sequentially added to a recipe. 
+
+- **Steps** can include operations like scaling a variable, creating dummy variables or interactions, and so on. More computationally complex actions such as dimension reduction or imputation can also be specified. 
+
+- **Checks** are operations that conduct specific tests of the data. When the test is satisfied, the data are returned without issue or modification. Otherwise, an error is thrown.
+
+If you have defined a recipe and want to see which steps are included, use the `tidy()` method on the recipe object.
+
+Note that the data passed to `recipe()` need not be the complete data that will be used to train the steps (by [prep()]). The recipe only needs to know the names and types of data that will be used. For large data sets, `head()` could be used to pass a smaller data set to save time and memory.
+
+## Using recipes
+
+Once a recipe is defined, it needs to be _estimated_ before being applied to data. Most recipe steps have specific quantities that must be calculated or estimated. For example, `step_normalize()` needs to compute the training set's mean for the selected columns, while `step_dummy()` needs to determine the factor levels of selected columns in order to make the appropriate indicator columns. 
+
+The two most common application of recipes are modeling and stand-alone preprocessing. How the recipe is estimated depends on how it is being used. 
+
+### Modeling
+
+The best way to use use a recipe for modeling is via the `workflows` package. This bundles a model and preprocessor (e.g. a recipe) together and gives the user a fluent way to train the model/recipe and make predictions. 
+
+```{r }
+library(dplyr)
+library(workflows)
+library(recipes)
+library(parsnip)
+
+data(biomass, package = "modeldata")
+
+# split data
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+# With only predictors and outcomes, use a formula:
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr)
+
+# Now add preprocessing steps to the recipe:
+sp_signed <- 
+  rec %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_spatialsign(all_numeric_predictors())
+sp_signed
+```
+
+We can create a `parsnip` model, and then build a workflow with the model and recipe: 
+
+```{r}
+linear_mod <- linear_reg()
+
+linear_sp_sign_wflow <- 
+  workflow() %>% 
+  add_model(linear_mod) %>% 
+  add_recipe(sp_signed)
+
+linear_sp_sign_wflow
+```
+
+To estimate the preprocessing steps and then fit the linear model, a single call to `fit()` is used:
+
+```{r}
+linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
+```
+
+When predicting, there is no need to do anything other than call `predict()`. This preprocesses the new data in the same manner as the training set, then gives the data to the linear model prediction code: 
+
+```{r}
+predict(linear_sp_sign_fit, new_data = head(biomass_te))
+```
+
+### Stand-alone use of recipes
+
+When using a recipe to generate data for a visualization or to troubleshoot any problems with the recipe, there are functions that can be used to estimate the recipe and apply it to new data manually.
+
+Once a recipe has been defined, the [prep()] function can be used to estimate quantities required for the operations using a data set (a.k.a. the training data). [prep()] returns a recipe.
+
+As an example of using PCA (perhaps to produce a plot): 
+
+```{r}
+# Define the recipe
+pca_rec <- 
+  rec %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_pca(all_numeric_predictors())
+```
+
+Now to estimate the normalization statistics and the PCA loadings: 
+
+```{r}
+pca_rec <- prep(pca_rec, training = biomass_tr)
+pca_rec
+```
+
+Note that the estimated recipe shows the actual column names captured by the selectors. 
+
+You can [tidy.recipe()] a recipe, either when it is prepped or unprepped, to learn more about its components.
+
+```{r}
+tidy(pca_rec)
+```
+
+You can also `tidy()` recipe *steps* with a `number` or `id` argument.
+
+To apply the prepped recipe to a data set, the [bake()] function is used in the same manner that `predict()` would be for models. This applies the estimated steps to any data set.
+
+```{r}
+bake(pca_rec, head(biomass_te))
+```
+
+In general, the workflow interface to recipes is recommended for most applications. 
+
+
