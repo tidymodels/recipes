@@ -63,13 +63,13 @@ sets.
 }
 \details{
 Given a data set, this function estimates the required quantities and
-statistics required by any operations. \code{\link[=prep]{prep()}} returns an updated recipe
+statistics needed by any operations. \code{\link[=prep]{prep()}} returns an updated recipe
 with the estimates. If you are using a recipe as a preprocessor for modeling,
-we \strong{highly recommend} that you use a workflow instead of manually
+we \strong{highly recommend} that you use a \code{workflow()} instead of manually
 estimating a recipe (see the example in \code{\link[=recipe]{recipe()}}).
 
-Note that missing data handling is handled in the steps; there is no global
-\code{na.rm} option at the recipe-level or in \code{\link[=prep]{prep()}}.
+Note that missing data is handled in the steps; there is no global
+\code{na.rm} option at the recipe level or in \code{\link[=prep]{prep()}}.
 
 Also, if a recipe has been trained using \code{\link[=prep]{prep()}} and then steps
 are added, \code{\link[=prep]{prep()}} will only update the new operations. If

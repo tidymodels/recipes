@@ -38,9 +38,9 @@ For a recipe with at least one preprocessing operation that has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
 }
 \details{
-\code{\link[=bake]{bake()}} takes a trained recipe and applies the operations to a
+\code{\link[=bake]{bake()}} takes a trained recipe and applies its operations to a
 data set to create a design matrix. If you are using a recipe as a
-preprocessor for modeling, we \strong{highly recommend} that you use a workflow
+preprocessor for modeling, we \strong{highly recommend} that you use a \code{workflow()}
 instead of manually applying a recipe (see the example in \code{\link[=recipe]{recipe()}}).
 
 If the data set is not too large, time can be saved by using the
