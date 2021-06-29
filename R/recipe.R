@@ -1,7 +1,7 @@
 #' Create a Recipe for Preprocessing Data
 #'
-#' A recipe is a description of what steps should be applied to a data set in
-#'   order to get it ready for data analysis.
+#' A recipe is a description of the steps to be applied to a data set in
+#'   order to prepare it for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
 #' @author Max Kuhn
@@ -52,7 +52,7 @@ recipe.default <- function(x, ...)
 #' @export
 #' @examples
 #'
-#' # simple example:
+#' # formula example with single outcome:
 #' library(modeldata)
 #' data(biomass)
 #'
@@ -60,20 +60,20 @@ recipe.default <- function(x, ...)
 #' biomass_tr <- biomass[biomass$dataset == "Training",]
 #' biomass_te <- biomass[biomass$dataset == "Testing",]
 #'
-#' # When only predictors and outcomes, a simplified formula can be used.
+#' # With only predictors and outcomes, use a formula
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'               data = biomass_tr)
 #'
-#' # Now add preprocessing steps to the recipe.
+#' # Now add preprocessing steps to the recipe
 #' sp_signed <- rec %>%
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
 #' # ---------------------------------------------------------------------------
-#' # multivariate example
-#'
+#' # formula multivariate example:
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
+#'
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
 #'                   data = biomass_tr)
 #' multi_y <- multi_y %>%
@@ -81,9 +81,8 @@ recipe.default <- function(x, ...)
 #'   step_scale(all_numeric_predictors())
 #'
 #' # ---------------------------------------------------------------------------
-#' # example with manually updating different roles
-#'
-#' # best choice for high-dimensional data:
+#' # example using `update_role` instead of formula:
+#' # best choice for high-dimensional data
 #'
 #' rec <- recipe(biomass_tr) %>%
 #'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
@@ -280,13 +279,13 @@ prep <- function(x, ...)
 #' @details
 #'
 #' Given a data set, this function estimates the required quantities and
-#' statistics required by any operations. [prep()] returns an updated recipe
+#' statistics needed by any operations. [prep()] returns an updated recipe
 #' with the estimates. If you are using a recipe as a preprocessor for modeling,
-#' we **highly recommend** that you use a workflow instead of manually
+#' we **highly recommend** that you use a `workflow()` instead of manually
 #' estimating a recipe (see the example in [recipe()]).
 #'
-#' Note that missing data handling is handled in the steps; there is no global
-#'   `na.rm` option at the recipe-level or in [prep()].
+#' Note that missing data is handled in the steps; there is no global
+#'   `na.rm` option at the recipe level or in [prep()].
 #'
 #' Also, if a recipe has been trained using [prep()] and then steps
 #'   are added, [prep()] will only update the new operations. If
@@ -488,9 +487,9 @@ bake <- function(object, ...)
 #'  resolve to numeric columns (otherwise an error is thrown).
 #' @return A tibble, matrix, or sparse matrix that may have different
 #'  columns than the original columns in `new_data`.
-#' @details [bake()] takes a trained recipe and applies the operations to a
+#' @details [bake()] takes a trained recipe and applies its operations to a
 #'  data set to create a design matrix. If you are using a recipe as a
-#'  preprocessor for modeling, we **highly recommend** that you use a workflow
+#'  preprocessor for modeling, we **highly recommend** that you use a `workflow()`
 #'  instead of manually applying a recipe (see the example in [recipe()]).
 #'
 #' If the data set is not too large, time can be saved by using the
