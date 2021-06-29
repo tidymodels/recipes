@@ -222,8 +222,10 @@ resolve to numeric columns (otherwise an error is thrown).</p></td>
 columns than the original columns in <code>new_data</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>bake()</code> takes a trained recipe and applies the
-operations to a data set to create a design matrix.</p>
+    <p><code>bake()</code> takes a trained recipe and applies its operations to a
+data set to create a design matrix. If you are using a recipe as a
+preprocessor for modeling, we <strong>highly recommend</strong> that you use a <code>workflow()</code>
+instead of manually applying a recipe (see the example in <code><a href='recipe.html'>recipe()</a></code>).</p>
 <p>If the data set is not too large, time can be saved by using the
 <code>retain = TRUE</code> option of <code><a href='prep.html'>prep()</a></code>. This stores the processed version of the
 training set. With this option set, <code>bake(object, new_data = NULL)</code>

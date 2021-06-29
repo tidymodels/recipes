@@ -335,7 +335,7 @@
 <div id="other-changes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-changes-4" class="anchor" aria-hidden="true"></a>Other Changes</h2>
-<ul><li><p>The use of <code>varying()</code> will be deprecated in favor of an upcoming function <code>tune()</code>. No changes are need in this version, but subsequent versions will work with <code>tune()</code>.</p></li>
+<ul><li><p>The use of <code><a href="https://parsnip.tidymodels.org/reference/varying.html" class="external-link">varying()</a></code> will be deprecated in favor of an upcoming function <code>tune()</code>. No changes are need in this version, but subsequent versions will work with <code>tune()</code>.</p></li>
 <li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link">#250</a>).</p></li>
 <li><p><code>check_new_values</code> breaks <code>bake</code> if variable contains values that were not observed in the train set (contributed by Edwin Thoen)</p></li>
 <li><p>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298" class="external-link">#298</a>). This will also occur when the selectors select no columns.</p></li>

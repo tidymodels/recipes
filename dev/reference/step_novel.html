@@ -259,8 +259,8 @@ converted to factors by this step.</p>
 <p>If <code>new_level</code> is already in the data given to <code>prep</code>, an error
 is thrown.</p>
 <p>When fitting a model that can deal with new factor levels, consider using
-<code>workflows::add_recipe()</code> with <code>allow_novel_levels = TRUE</code> set in
-<code>hardhat::default_recipe_blueprint()</code>. This will allow your model to handle
+<code><a href='https://workflows.tidymodels.org//reference/add_recipe.html'>workflows::add_recipe()</a></code> with <code>allow_novel_levels = TRUE</code> set in
+<code><a href='https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html'>hardhat::default_recipe_blueprint()</a></code>. This will allow your model to handle
 new levels at prediction time, instead of throwing warnings or errors.</p>
 <p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
 columns that will be affected) and <code>value</code> (the factor
