@@ -138,10 +138,10 @@ variables using B-splines." />
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -181,7 +181,7 @@ that will create new columns that are basis expansions of
 variables using B-splines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_bs</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_bs</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='st'>"predictor"</span>,
@@ -192,10 +192,7 @@ variables using B-splines.</p>
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"bs"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_bs</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,8 +206,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -258,18 +254,12 @@ the computations for subsequent operations</p></td>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_bs</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> which is
-the columns that will be affected and <code>holiday</code>.</p>
+added to the sequence of existing steps (if any).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>step_bs</code> can create new features from a single variable
@@ -279,42 +269,45 @@ determined by the <code>df</code>, <code>degree</code>, or <code>knot</code> arg
 <code><a href='https://rdrr.io/r/splines/bs.html'>splines::bs()</a></code>. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is <code>varname_bs_1</code> and so on.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>terms</code> (the
+columns that will be affected) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='step_poly.html'>step_poly()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='step_ns.html'>step_ns()</a></code>
 <code><a href='prep.html'>prep.recipe()</a></code> <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-
-<span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span>
-<span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,
-              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_bs</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span>
-<span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>with_splines</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
-
-<span class='va'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>with_splines</span>, <span class='va'>biomass_te</span><span class='op'>)</span>
-<span class='va'>expanded</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 80 x 10</span><span>
-#&gt;    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3
-#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>   47.2     0.3    0.22  18.3       0.437      0.273      0.056</span><span style='text-decoration: underline;'>8</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>   48.1     2.85   0.34  17.6       0.444      0.236      0.041</span><span style='text-decoration: underline;'>7</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>   49.1     2.4    0.3   17.2       0.444      0.229      0.039</span><span style='text-decoration: underline;'>4</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>   37.3     1.8    0.5   18.9       0.437      0.273      0.057</span><span style='text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>   42.8     0.2    0     20.5       0.427      0.301      0.070</span><span style='text-decoration: underline;'>7</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>   41.7     0.7    0.2   18.5       0.442      0.248      0.046</span><span style='text-decoration: underline;'>5</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>   54.1     1.19   0.51  15.1       0.440      0.184      0.025</span><span style='text-decoration: underline;'>6</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>   33.8     0.95   0.2   16.2       0.444      0.222      0.036</span><span style='text-decoration: underline;'>9</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>   31.1     0.14   4.9   11.1       0.359      0.077</span><span style='text-decoration: underline;'>1</span><span>     0.005</span><span style='text-decoration: underline;'>52</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>   23.7     4.63   1.05  10.8       0.338      0.064</span><span style='text-decoration: underline;'>3</span><span>     0.004</span><span style='text-decoration: underline;'>08</span><span>
-#&gt; </span><span style='color: #949494;'># … with 70 more rows, and 3 more variables: hydrogen_bs_1 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   hydrogen_bs_2 &lt;dbl&gt;, hydrogen_bs_3 &lt;dbl&gt;</span><span></div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>biomass_tr</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Training"</span>,<span class='op'>]</span></span>
+<span class='r-in'><span class='va'>biomass_te</span> <span class='op'>&lt;-</span> <span class='va'>biomass</span><span class='op'>[</span><span class='va'>biomass</span><span class='op'>$</span><span class='va'>dataset</span> <span class='op'>==</span> <span class='st'>"Testing"</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>carbon</span> <span class='op'>+</span> <span class='va'>hydrogen</span> <span class='op'>+</span> <span class='va'>oxygen</span> <span class='op'>+</span> <span class='va'>nitrogen</span> <span class='op'>+</span> <span class='va'>sulfur</span>,</span>
+<span class='r-in'>              data <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='va'>rec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_bs</span><span class='op'>(</span><span class='va'>carbon</span>, <span class='va'>hydrogen</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>with_splines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>with_splines</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>expanded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>with_splines</span>, <span class='va'>biomass_te</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>expanded</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 80 x 10</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>   47.2     0.3    0.22  18.3       0.437      0.273      0.056<span style='text-decoration: underline;'>8</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>   48.1     2.85   0.34  17.6       0.444      0.236      0.041<span style='text-decoration: underline;'>7</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>   49.1     2.4    0.3   17.2       0.444      0.229      0.039<span style='text-decoration: underline;'>4</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>   37.3     1.8    0.5   18.9       0.437      0.273      0.057<span style='text-decoration: underline;'>1</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>   42.8     0.2    0     20.5       0.427      0.301      0.070<span style='text-decoration: underline;'>7</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>   41.7     0.7    0.2   18.5       0.442      0.248      0.046<span style='text-decoration: underline;'>5</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>   54.1     1.19   0.51  15.1       0.440      0.184      0.025<span style='text-decoration: underline;'>6</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>   33.8     0.95   0.2   16.2       0.444      0.222      0.036<span style='text-decoration: underline;'>9</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>   31.1     0.14   4.9   11.1       0.359      0.077<span style='text-decoration: underline;'>1</span>     0.005<span style='text-decoration: underline;'>52</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>   23.7     4.63   1.05  10.8       0.338      0.064<span style='text-decoration: underline;'>3</span>     0.004<span style='text-decoration: underline;'>08</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 70 more rows, and 3 more variables: hydrogen_bs_1 &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   hydrogen_bs_2 &lt;dbl&gt;, hydrogen_bs_3 &lt;dbl&gt;</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

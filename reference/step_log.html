@@ -137,10 +137,10 @@ that will log transform data." />
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -179,7 +179,7 @@ that will log transform data." />
 that will log transform data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>step_log</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_log</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -190,10 +190,7 @@ that will log transform data.</p>
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   signed <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"log"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for step_log</span>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,8 +204,7 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose which
 variables are affected by the step. See <code><a href='selections.html'>selections()</a></code>
-for more details.  For the <code>tidy</code> method, these are not
-currently used.</p></td>
+for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -227,7 +223,7 @@ preprocessing have been estimated.</p></td>
     <tr>
       <th>offset</th>
       <td><p>An optional value to add to the data prior to
-logging (to avoid <code><a href='https://rdrr.io/r/base/Log.html'>log(0)</a></code>).</p></td>
+logging (to avoid <code>log(0)</code>).</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -246,24 +242,22 @@ the computations for subsequent operations</p></td>
     <tr>
       <th>signed</th>
       <td><p>A logical indicating whether to take the signed log.
-This is sign(x) * abs(x) when abs(x) =&gt; 1 or 0 if abs(x) &lt; 1.
+This is sign(x) * abs(log(x)) when abs(x) =&gt; 1 or 0 if abs(x) &lt; 1.
 If <code>TRUE</code> the <code>offset</code> argument will be ignored.</p></td>
     </tr>
     <tr>
       <th>id</th>
       <td><p>A character string that is unique to this step to identify it.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>step_log</code> object.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
+added to the sequence of existing steps (if any).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
 columns that will be affected) and <code>base</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -273,90 +267,99 @@ columns that will be affected) and <code>base</code>.</p>
 <code><a href='bake.html'>bake.recipe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>313</span><span class='op'>)</span>
-<span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>examples</span><span class='op'>)</span>
-
-<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
-
-<span class='va'>log_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'>%&gt;%</span>
-  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>log_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>log_trans</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span>
-
-<span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>log_obj</span>, <span class='va'>examples</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>examples</span><span class='op'>$</span><span class='va'>V1</span>, <span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>)</span>
-</div><div class='img'><img src='step_log-1.png' alt='' width='768' height='552' /></div><div class='input'>
-<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>log_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 3</span><span>
-#&gt;   terms                     base id       
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> all_numeric_predictors()  2.72 log_IhS7o</div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>log_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 3</span><span>
-#&gt;   terms  base id       
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> V1     2.72 log_IhS7o
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> V2     2.72 log_IhS7o</div><div class='input'>
-<span class='co'># using the signed argument with negative values</span>
-
-<span class='va'>examples2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>40</span>, sd <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>examples2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span>
-
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs produced</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 20 x 2</span><span>
-#&gt;         V1       V2
-#&gt;      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  -</span><span style='color: #BB0000;'>0.209</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>   1.71  </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>   1.12    1.06  
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>   1.65    1.19  
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #BB0000;'>NaN</span><span>       2.18  
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>   1.15    1.08  
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #BB0000;'>NaN</span><span>       0.555 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>   0.102 </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>   0.670   1.37  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #BB0000;'>NaN</span><span>       1.02  
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span>   1.25   -</span><span style='color: #BB0000;'>0.088</span><span style='color: #BB0000;text-decoration: underline;'>0</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span>   2.21    0.774 
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span> </span><span style='color: #BB0000;'>NaN</span><span>       2.49  
-#&gt; </span><span style='color: #BCBCBC;'>18</span><span> </span><span style='color: #BB0000;'>NaN</span><span>       1.47  
-#&gt; </span><span style='color: #BCBCBC;'>19</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>20</span><span> </span><span style='color: #BB0000;'>NaN</span><span>     </span><span style='color: #BB0000;'>NaN</span><span>     </div><div class='input'>
-<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, signed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 20 x 2</span><span>
-#&gt;        V1      V2
-#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  0     -</span><span style='color: #BB0000;'>1.24</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  1.71  -</span><span style='color: #BB0000;'>1.81</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  1.12   1.06  
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  1.65   1.19  
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> -</span><span style='color: #BB0000;'>1.63</span><span>   2.18  
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  1.15   1.08  
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> -</span><span style='color: #BB0000;'>0.604</span><span>  0.555 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  0.102 -</span><span style='color: #BB0000;'>0.565</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>  0.670  1.37  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> -</span><span style='color: #BB0000;'>2.65</span><span>   1.02  
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> -</span><span style='color: #BB0000;'>1.34</span><span>  -</span><span style='color: #BB0000;'>1.04</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> -</span><span style='color: #BB0000;'>2.06</span><span>  -</span><span style='color: #BB0000;'>1.51</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> -</span><span style='color: #BB0000;'>0.613</span><span> -</span><span style='color: #BB0000;'>1.75</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span>  1.25   0     
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span>  2.21   0.774 
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span> -</span><span style='color: #BB0000;'>1.90</span><span>  -</span><span style='color: #BB0000;'>0.081</span><span style='color: #BB0000;text-decoration: underline;'>4</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span> -</span><span style='color: #BB0000;'>0.762</span><span>  2.49  
-#&gt; </span><span style='color: #BCBCBC;'>18</span><span> -</span><span style='color: #BB0000;'>1.40</span><span>   1.47  
-#&gt; </span><span style='color: #BCBCBC;'>19</span><span> -</span><span style='color: #BB0000;'>1.22</span><span>  -</span><span style='color: #BB0000;'>0.825</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>20</span><span> -</span><span style='color: #BB0000;'>1.20</span><span>  -</span><span style='color: #BB0000;'>2.27</span><span>  </div><div class='input'>
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>313</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>examples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>examples</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>log_trans</span> <span class='op'>&lt;-</span> <span class='va'>rec</span>  <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>log_obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>log_trans</span>, training <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>transformed_te</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>log_obj</span>, <span class='va'>examples</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>examples</span><span class='op'>$</span><span class='va'>V1</span>, <span class='va'>transformed_te</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='step_log-1.png' alt='' width='768' height='552' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>log_trans</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms                     base id       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> all_numeric_predictors()  2.72 log_IhS7o</span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>log_obj</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   terms  base id       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> V1     2.72 log_IhS7o</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> V2     2.72 log_IhS7o</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># using the signed argument with negative values</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>examples2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>40</span>, sd <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>examples2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/dimRed/man/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>NaNs produced</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>NaNs produced</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>NaNs produced</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>NaNs produced</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 x 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         V1       V2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>  -<span style='color: #BB0000;'>0.209</span> <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>   1.71  <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>   1.12    1.06  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>   1.65    1.19  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> <span style='color: #BB0000;'>NaN</span>       2.18  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>   1.15    1.08  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> <span style='color: #BB0000;'>NaN</span>       0.555 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>   0.102 <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>   0.670   1.37  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> <span style='color: #BB0000;'>NaN</span>       1.02  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span>   1.25   -<span style='color: #BB0000;'>0.088</span><span style='color: #BB0000; text-decoration: underline;'>0</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span>   2.21    0.774 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span> <span style='color: #BB0000;'>NaN</span>       2.49  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span> <span style='color: #BB0000;'>NaN</span>       1.47  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span> <span style='color: #BB0000;'>NaN</span>     <span style='color: #BB0000;'>NaN</span>     </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>V1</span> <span class='op'>+</span> <span class='va'>V2</span>, data <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>step_log</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, signed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>examples2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>examples2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 20 x 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        V1      V2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>  0     -<span style='color: #BB0000;'>1.24</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>  1.71  -<span style='color: #BB0000;'>1.81</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>  1.12   1.06  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>  1.65   1.19  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> -<span style='color: #BB0000;'>1.63</span>   2.18  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>  1.15   1.08  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> -<span style='color: #BB0000;'>0.604</span>  0.555 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>  0.102 -<span style='color: #BB0000;'>0.565</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>  0.670  1.37  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> -<span style='color: #BB0000;'>2.65</span>   1.02  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> -<span style='color: #BB0000;'>1.34</span>  -<span style='color: #BB0000;'>1.04</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> -<span style='color: #BB0000;'>2.06</span>  -<span style='color: #BB0000;'>1.51</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> -<span style='color: #BB0000;'>0.613</span> -<span style='color: #BB0000;'>1.75</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span>  1.25   0     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span>  2.21   0.774 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span> -<span style='color: #BB0000;'>1.90</span>  -<span style='color: #BB0000;'>0.081</span><span style='color: #BB0000; text-decoration: underline;'>4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span> -<span style='color: #BB0000;'>0.762</span>  2.49  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span> -<span style='color: #BB0000;'>1.40</span>   1.47  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span> -<span style='color: #BB0000;'>1.22</span>  -<span style='color: #BB0000;'>0.825</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span> -<span style='color: #BB0000;'>1.20</span>  -<span style='color: #BB0000;'>2.27</span>  </span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -73,7 +73,7 @@ exclude variables (e.g. -Murder) and the set of selectors will
 processed in order.
 A leading exclusion in these arguments (e.g. -Murder)
 has the effect of adding all variables to the list except the
-excluded variable(s).
+excluded variable(s), ignoring role information.
 
 
 Select helpers from the tidyselect package can also be used:
@@ -101,15 +101,24 @@ has_type(). For convenience, there are also functions that are
 more specific. The functions all_numeric() and all_nominal() select
 based on type, with nominal variables including both character and factor;
 the functions all_predictors() and all_outcomes() select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:
+The functions all_numeric_predictors() and all_nominal_predictors()
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.
+A selection like this:
 
   data(biomass)
   recipe(HHV ~ ., data = biomass) %&amp;gt;%
     step_center(all_numeric(), -all_outcomes())
 
 
-This results in all the numeric predictors: carbon, hydrogen,
+is equivalent to:
+
+  data(biomass)
+  recipe(HHV ~ ., data = biomass) %&amp;gt;%
+    step_center(all_numeric_predictors())
+
+
+Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.
 If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.
@@ -210,10 +219,10 @@ will not work." />
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -254,10 +263,10 @@ can choose variables based on their name, current role, data
 type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
 stated in the step function, this might be similar to:</p>
-<pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<pre class='sourceCode r'><code>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='va'>Murder</span>, <span class='va'>Assault</span>, <span class='va'>UrbanPop</span>, <span class='va'>Rape</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</pre>
+</code></pre>
 
 <p>The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
@@ -270,8 +279,8 @@ function for the step is executed.</p></li>
 exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
 processed in order.</p></li>
 <li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)
-has the effect of adding all variables to the list except the
-excluded variable(s).</p></li>
+has the effect of adding <em>all</em> variables to the list except the
+excluded variable(s), ignoring role information.</p></li>
 </ol>
 
 <p>Select helpers from the <code>tidyselect</code> package can also be used:
@@ -281,17 +290,17 @@ excluded variable(s).</p></li>
 <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>tidyselect::one_of()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::all_of()</a></code>, and
 <code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>tidyselect::any_of()</a></code></p>
 <p>For example:</p>
-<pre>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<pre class='sourceCode r'><code>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Sepal"</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"Width"</span><span class='op'>)</span><span class='op'>)</span>
-</pre>
+</code></pre>
 
 <p>would only select <code>Sepal.Length</code></p>
 <p>Columns of the design matrix that may not exist when the step
 is coded can also be selected. For example, when using
 <code><a href='step_pca.html'>step_pca()</a></code>, the number of columns created by feature extraction
 may not be known when subsequent steps are defined. In this
-case, using <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches("^PC")</a></code> will select all of the columns
+case, using <code>matches("^PC")</code> will select all of the columns
 whose names start with "PC" <em>once those columns are created</em>.</p>
 <p>There are sets of recipes-specific functions that can be used to select
 variables based on their role or type: <code><a href='has_role.html'>has_role()</a></code> and
@@ -299,15 +308,24 @@ variables based on their role or type: <code><a href='has_role.html'>has_role()<
 more specific. The functions <code><a href='has_role.html'>all_numeric()</a></code> and <code><a href='has_role.html'>all_nominal()</a></code> select
 based on type, with nominal variables including both character and factor;
 the functions <code><a href='has_role.html'>all_predictors()</a></code> and <code><a href='has_role.html'>all_outcomes()</a></code> select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:</p>
-<pre>
+The functions <code><a href='has_role.html'>all_numeric_predictors()</a></code> and <code><a href='has_role.html'>all_nominal_predictors()</a></code>
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.</p>
+<p>A selection like this:</p>
+<pre class='sourceCode r'><code>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
-  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='fu'><a href='has_role.html'>all_outcomes</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</pre>
+</code></pre>
 
-<p>This results in all the numeric predictors: carbon, hydrogen,
+<p>is equivalent to:</p>
+<pre class='sourceCode r'><code>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>biomass</span><span class='op'>)</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>HHV</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>biomass</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='step_center.html'>step_center</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+
+<p>Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.</p>
 <p>If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.</p>
@@ -321,7 +339,7 @@ previously using <code><a href='step_dummy.html'>step_dummy()</a></code>. The im
 the other step functions. Only the selector functions from
 recipes and tidyselect are allowed. User defined selector functions
 will not be recognized. Additionally, the tidyselect domain specific
-language is not recognized here, meaning that <code>&amp;</code>, <code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>, <code><a href='https://rdrr.io/r/base/Logic.html'>!</a></code>, and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>
+language is not recognized here, meaning that <code>&amp;</code>, <code>|</code>, <code>!</code>, and <code>-</code>
 will not work.</p>
     </div>
 

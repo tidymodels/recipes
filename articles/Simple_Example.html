@@ -87,10 +87,10 @@
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="../articles/articles/Subsampling.html">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="../articles/articles/Multivariate_PLS.html">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul>
 </li>
@@ -140,7 +140,7 @@
 </ul>
 <div id="an-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An Example</h2>
+<a href="#an-example" class="anchor" aria-hidden="true"></a>An Example</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
@@ -158,15 +158,15 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job </span>
-<span class="co">#&gt;     1.000     1.000     0.999     1.000     1.000     1.000     1.000     1.000 </span>
+<span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000     0.999 </span>
 <span class="co">#&gt;  Expenses    Income    Assets      Debt    Amount     Price </span>
-<span class="co">#&gt;     1.000     0.919     0.988     0.996     1.000     1.000</span></code></pre></div>
+<span class="co">#&gt;     1.000     0.910     0.989     0.996     1.000     1.000</span></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
 <div id="an-initial-recipe" class="section level2">
 <h2 class="hasAnchor">
-<a href="#an-initial-recipe" class="anchor"></a>An Initial Recipe</h2>
+<a href="#an-initial-recipe" class="anchor" aria-hidden="true"></a>An Initial Recipe</h2>
 <p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
@@ -185,7 +185,7 @@
 </div>
 <div id="preprocessing-steps" class="section level2">
 <h2 class="hasAnchor">
-<a href="#preprocessing-steps" class="anchor"></a>Preprocessing Steps</h2>
+<a href="#preprocessing-steps" class="anchor" aria-hidden="true"></a>Preprocessing Steps</h2>
 <p>From here, preprocessing steps for some step <em>X</em> can be added sequentially in one of two ways:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>rec_obj &lt;-<span class="st"> </span>step_{X}(rec_obj, arguments)    <span class="co">## or</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span>step_{X}(arguments)</span></code></pre></div>
@@ -209,7 +209,7 @@
 <span class="co">#&gt; [7] "step_rollimpute"</span></code></pre></div>
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_impute_knn.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="co">#&gt; Warning: `step_knnimpute()` was deprecated in recipes 0.1.16.</span>
 <span class="co">#&gt; Please use `step_impute_knn()` instead.</span>
@@ -228,7 +228,7 @@
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">ind_vars</span>
 <span class="co">#&gt; Data Recipe</span>
@@ -245,8 +245,8 @@
 <span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">standardized</span>
 <span class="co">#&gt; Data Recipe</span>
@@ -275,14 +275,14 @@
 <span class="co">#&gt;    outcome          1</span>
 <span class="co">#&gt;  predictor         13</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Training data contained 3341 data points and 303 incomplete rows. </span>
+<span class="co">#&gt; Training data contained 3340 data points and 322 incomplete rows. </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Operations:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]</span>
+<span class="co">#&gt; K-nearest neighbor imputation for Home, Time, Age, Marital, Records, Job, Expens... [trained]</span>
 <span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span>
-<span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, ... [trained]</span>
-<span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, ... [trained]</span></code></pre></div>
+<span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, Assets,... [trained]</span>
+<span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, Assets,... [trained]</span></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -293,20 +293,20 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
 <span class="va">test_data</span>
-<span class="co">#&gt; # A tibble: 1,113 x 23</span>
-<span class="co">#&gt;    Seniority   Time      Age Expenses   Income  Assets   Debt Amount  Price</span>
-<span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1   0.257   -0.706  0.826      1.75   0.718   -0.199  -0.273  2.05   2.53 </span>
-<span class="co">#&gt;  2   2.61     0.921  0.643      0.987 -0.221    0.386  -0.273  1.21   0.577</span>
-<span class="co">#&gt;  3   0.133   -2.33  -0.909     -1.05  -0.784   -0.449  -0.273 -1.76  -0.589</span>
-<span class="co">#&gt;  4   0.00966  0.921 -0.635      0.987  0.705   -0.0316  1.86   0.995  0.330</span>
-<span class="co">#&gt;  5   0.875   -1.52   1.37      -1.05   2.34     0.929  -0.273  0.995  1.24 </span>
-<span class="co">#&gt;  6   3.10    -1.52   2.84       0.479  0.718   -0.0316  1.43  -0.912 -0.165</span>
-<span class="co">#&gt;  7   2.24     0.921  1.28      -0.539  0.00434 -0.157  -0.273  0.677 -0.153</span>
-<span class="co">#&gt;  8  -0.979    0.108  0.00402   -1.05  -0.371   -0.265  -0.273  0.995  0.660</span>
-<span class="co">#&gt;  9   1.99     0.921  0.461      0.987 -0.0707  -0.115  -0.273 -0.276 -0.467</span>
-<span class="co">#&gt; 10  -0.979    0.921 -0.453     -0.539 -0.00817  0.136   2.28   0.465  0.192</span>
-<span class="co">#&gt; # … with 1,103 more rows, and 14 more variables: Status &lt;fct&gt;,</span>
+<span class="co">#&gt; # A tibble: 1,114 x 23</span>
+<span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span>
+<span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817  0.297  </span>
+<span class="co">#&gt;  2    -0.977  0.924 -0.459    1.77  -0.437   0.845 -0.295  0.333   0.760  </span>
+<span class="co">#&gt;  3    -0.977  0.103  0.349    1.77  -0.783  -0.488 -0.295  0.333   0.00254</span>
+<span class="co">#&gt;  4    -0.247  0.103 -0.280    0.231 -0.207  -0.133 -0.295  0.229   0.171  </span>
+<span class="co">#&gt;  5    -0.125 -0.718 -0.729    0.231 -0.258  -0.222 -0.295 -0.807  -0.854  </span>
+<span class="co">#&gt;  6    -0.855  0.924 -0.549   -1.05  -0.0539 -0.488 -0.295  0.436  -0.331  </span>
+<span class="co">#&gt;  7     2.31   0.924  0.349    0.949 -0.0155 -0.488 -0.295 -0.185   0.0475 </span>
+<span class="co">#&gt;  8     0.848 -0.718  0.529    1.00   1.40   -0.133 -0.295  1.58    1.69   </span>
+<span class="co">#&gt;  9    -0.977 -0.718 -1.27    -0.538 -0.246  -0.266 -0.295 -1.32   -1.65   </span>
+<span class="co">#&gt; 10    -0.855  0.514 -0.100    0.744 -0.540  -0.488 -0.295 -0.185  -0.800  </span>
+<span class="co">#&gt; # … with 1,104 more rows, and 14 more variables: Status &lt;fct&gt;,</span>
 <span class="co">#&gt; #   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;,</span>
@@ -324,7 +324,7 @@
 <span class="co">#&gt;                 1                 1                 1                 1 </span>
 <span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span>
 <span class="co">#&gt;                 1                 1                 1</span></code></pre></div>
-<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code><a href="../reference/bake.html">bake(object, new_data, all_predictors())</a></code>.</p>
+<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code>bake(object, new_data, all_predictors())</code>.</p>
 <p>There are a number of other steps included in the package:</p>
 <pre><code>#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   
 #&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       
@@ -358,11 +358,11 @@
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">
-<a href="#checks" class="anchor"></a>Checks</h2>
+<a href="#checks" class="anchor" aria-hidden="true"></a>Checks</h2>
 <p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
 <p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
 <pre><code>#&gt; [1] "check_class"      "check_cols"       "check_missing"    "check_name"      
