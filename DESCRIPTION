@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 0.1.16.9000
+Version: 0.1.16
 Authors@R: 
     c(person(given = "Max",
              family = "Kuhn",
