@@ -43,11 +43,13 @@
 #'   thrown. If `other` is in the list of discarded levels, no error
 #'   occurs.
 #'
-#' If no pooling is done, novel factor levels are converted to missing. If
-#'  pooling is needed, they will be placed into the other category.
+#' If pooling is needed, novel factor levels will be placed into the `other`
+#'  category. If no pooling is needed, novel factor levels are converted to
+#'  missing; if desired, these can be handled by [step_novel()] before
+#'  pooling via `step_other()`.
 #'
 #' When data to be processed contains novel levels (i.e., not
-#' contained in the training set), the other category is assigned.
+#'  contained in the training set), the other category is assigned.
 #'
 #' When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `retained` (the factor

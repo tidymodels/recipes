@@ -78,8 +78,10 @@ If the retained categories include the value of \code{other}, an error is
 thrown. If \code{other} is in the list of discarded levels, no error
 occurs.
 
-If no pooling is done, novel factor levels are converted to missing. If
-pooling is needed, they will be placed into the other category.
+If pooling is needed, novel factor levels will be placed into the \code{other}
+category. If no pooling is needed, novel factor levels are converted to
+missing; if desired, these can be handled by \code{\link[=step_novel]{step_novel()}} before
+pooling via \code{step_other()}.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
