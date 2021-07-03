@@ -439,9 +439,7 @@ prep.recipe <-
         x$steps[[i]] <- withCallingHandlers(
           expr = prep(x$steps[[i]], training = training, info = x$term_info),
           error = function(c) {
-            c$message <- paste0(
-              "[in ", attr(x$steps[[i]], "class")[1], "()] ",c$message
-            )
+            c$call <- call(attr(x$steps[[i]], "class")[1])
             stop(c)
           }
         )
