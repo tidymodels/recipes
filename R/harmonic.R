@@ -8,39 +8,72 @@
 #' @param recipe A recipe object. The step will be added to the sequence of
 #'   operations for this recipe.
 #' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
+#'  affected by the step. See [selections()] for more details.  This will
+#'  typically be a single variable.
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned?. By default, the function assumes
 #'  that the new columns created from the original variables will be
 #'  used as predictors in a model.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
-#' @param frequency A numeric vector with at least one value if using frequency
-#'   to specify the cycle size.  The value must be greater than zero and finite.
-#' @param period A numeric vector with at least one value if using period to
-#'   specify the cycle size. The value must be greater than zero and finite.
-#' @param cycle_unit Character string to indicate the units for a cycle.
-#'   Possible values are:
-#'   'year' (31556926 seconds), 'month_synodic' (2360592 seconds),
-#'   'month_sidereal' (2551443 seconds), 'month_average' (2629744 seconds),
-#'   'week', day', 'hour', 'minute', 'second', 'sample'.
-#' @param starting_val either numeric, Date or POSIXt value that indicates the
-#'   reference point for the sin and cos curves.  This parameter may be
-#'   specified to increase control over the signal phase.  If starting_val is
-#'   not specified the default is the start of the data series, or the start of
-#'   the cycle (i.e. the beginning of the hour, day, week).
+#' @param frequency A numeric vector with at least one value.
+#'   The value(s) must be greater than zero and finite.
+#' @param cycle_size A numeric vector with at least one value that indicates
+#'   the size of a single cycle. `cycle_size` should have the same units as the
+#'   input variable(s).
+#' @param starting_val either `NA`, numeric, Date or POSIXt value(s) that indicates
+#'   the reference point for the sin and cos curves for each input variable.
+#'   If the value is a `Date` or `POISXt` the value is converted to numeric
+#'   using `as.numeric`. This parameter may be specified to increase control
+#'   over the signal phase.  If `starting_val` is not specified the default
+#'   is 0.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
-#' @param objects Statistics are stored here once this step has
-#'  been trained by [prep.recipe()].
-#'
 #' @return An updated version of `recipe` with the
 #'   new step added to the sequence of existing steps (if any).
 #' @export
+#' @details This step seeks to describe periodic components of observational
+#'  data using a combination of sin and cos waves. To do this, each wave of a
+#'  specified frequency is modeled using one sin and one cos term. The two
+#'  terms for each frequency can then be used to estimate the amplitude and
+#'  phase shift of a periodic signal in observational data. The equation
+#'  relating cos waves of known frequency but unknown phase and amplitude to a
+#'  sum of sin and cos terms is below:
+#'
+#'  \deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j sin(\sigma_j t_i)}
+#'
+#'  Solving the equation yields \eqn{C_j} and \eqn{S_j}. the
+#'  amplitude can then be obtained with:
+#'
+#'  \deqn{A_j = \sqrt{C^2_j + S^2_j}}
+#'
+#'  And the phase can be obtained with:
+#'  \deqn{\Phi_j = \arctan{(S_j / C_j)}}
+#'
+#'  where:
+#'
+#'  * \eqn{\sigma_j = 2 \pi (frequency / cycle\_size))}
+#'  * \eqn{A_j} is the amplitude of the \eqn{j^{th}} frequency
+#'  * \eqn{\Phi_j} is the phase of the \eqn{j^{th}} frequency
+#'  * \eqn{C_j} is the coefficient of the cos term for the \eqn{j^{th}} frequency
+#'  * \eqn{S_j} is the coefficient of the sin term for the \eqn{j^{th}} frequency
+#'
+#'
+#'  The periodic component is specified by `frequency` and `cycle_size`
+#'  parameters. The cycle size relates the specified frequency to the
+#'  input column(s) units. There are multiple ways to specify a wave of given
+#'  frequency, for example, a `POSIXct` input column given a `frequency` of
+#'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
+#'  1.0 with `cycle_size` equal to 3600.
+#'
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).
 #'   Harmonic analysis of seasonal data: some important properties.
-#'   American Journal of Agricultural Economics, 54(4_Part_1), 646-651.
+#'   American Journal of Agricultural Economics, 54(volume 4 part 1), 646-651.
+#'
+#' Foreman, M. G. G., & Henry, R. F. (1989).
+#'   The harmonic analysis of tidal model time series.
+#'   Advances in water resources, 12(3), 109-120.
 #'
 #' @examples
 #' library(ggplot2, quietly = TRUE)
@@ -53,17 +86,51 @@
 #' # sunspots period is around 11 years, sample spacing is one year
 #' rec <- recipe(n_sunspot ~ yr,
 #'               data = sunspots) %>%
-#'               step_harmonic(yr, period = 11, cycle_unit = "sample") %>%
+#'               step_harmonic(yr, frequency = 1/11, cycle_size = 1) %>%
 #'               prep() %>%
 #'               bake(new_data = NULL)
 #'
-#'  fit <- lm(n_sunspot~yr_sin_p_11+yr_cos_p_11, rec)
+#'  fit <- lm(n_sunspot~yr_sin_1 + yr_cos_1, rec)
 #'
 #'  preds <- tibble(yr = sunspots$yr,
 #'                  n_sunspot = fit$fitted.values,
 #'                  type = 'predicted')
 #'
 #'  ggplot(rbind(sunspots, preds), aes(x = yr, y = n_sunspot, color = type)) +
+#'    geom_line()
+#'
+#'
+#'
+#' # POSIXct example
+#' datetime <- as.POSIXct(paste0(rep(1959:1997, each = 12), '-',
+#'                    rep(1:12, length(1959:1997)),
+#'                    '-01'), tz = 'UTC')
+#'
+#' carbon_dioxide <- tibble(datetime = datetime,
+#'                    co2 = as.numeric(co2),
+#'                    type = "measured")
+#'
+#' # yearly co2 fluctuations
+#' rec <- recipe(co2 ~ datetime,
+#'               data = carbon_dioxide) %>%
+#'               step_mutate(datetime_num = as.numeric(datetime)) %>%
+#'               step_ns(datetime_num,
+#'                       deg_free = 3) %>%
+#'               step_harmonic(datetime,
+#'                             frequency = 1,
+#'                             cycle_size = 86400 * 365.24) %>%
+#'               prep() %>%
+#'               bake(new_data = NULL)
+#'
+#'  fit <- lm(co2~datetime_num_ns_1 + datetime_num_ns_2 +
+#'                datetime_num_ns_3 + datetime_sin_1 +
+#'                datetime_cos_1, rec)
+#'
+#'  preds <- tibble(datetime = datetime,
+#'                  co2 = fit$fitted.values,
+#'                  type = 'predicted')
+#'
+#'  ggplot(rbind(carbon_dioxide, preds), aes(x = datetime, y = co2, color = type)) +
 #'    geom_line()
 #'
 #' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
@@ -73,78 +140,31 @@ step_harmonic <-
            role = NA,
            trained = FALSE,
            frequency = NA_real_,
-           period = NA_real_,
-           cycle_unit = 'day',
            cycle_size = NA_real_,
            starting_val = NA_real_,
            keep_original_cols = TRUE,
-           objects = NULL,
            skip = FALSE,
            id = rand_id("harmonic")) {
 
-    if (!all(is.numeric(frequency)))
-      rlang::abort("frequency value(s) must be numeric.")
+    if (!all(is.numeric(cycle_size)) | all(is.na(cycle_size)))
+      rlang::abort("cycle_size must have at least one non-NA numeric value.")
 
-    if (!all(is.numeric(period)))
-      rlang::abort("period value(s) must be numeric.")
-
-    if (all(is.na(period)) & all(is.na(frequency)))
-      rlang::abort("period or frequency value(s) cannot both be NA")
-
-    if (!all(is.na(period)) & any(period <= 0))
-      rlang::abort("period value(s) must be greater than 0.")
-
-    if (!all(is.na(frequency)) & any(frequency <= 0))
-      rlang::abort("period value(s) must be greater than 0")
-
-    if (any(is.infinite(frequency)))
-      rlang::abort("frequency value(s) must be finite.")
-
-    if (any(is.infinite(period)))
-      rlang::abort("period value(s) must be finite.")
-
-    if (!any(is.na(frequency)) & !any(is.na(period)))
-      rlang::warn("Both frequency and period are specified.")
-
-    if (!all(is.character(cycle_unit)) | length(cycle_unit) != 1)
-      rlang::abort("cycle_unit column name must be a single character value.")
-
-    if (!is.na(starting_val) &
-        !is.numeric(starting_val) &
-        !inherits(starting_val, 'Date') &
-        !inherits(starting_val, 'POSIXt'))
-      rlang::abort("starting_val must be numeric, Date or POSIXt")
-
-    rlang::arg_match0(cycle_unit, c("year",
-                                    "month_synodic",
-                                    "month_sidereal",
-                                    "month_average",
-                                    "week",
-                                    "day",
-                                    "hour",
-                                    "minute",
-                                    "second",
-                                    "sample"))
-
-    # allow empty terms
-    terms <- quos(...)
-    if (is_empty(terms)) {
-      terms = NULL
-    }
+    if (!all(is.na(starting_val)) &
+        !all(is.numeric(starting_val)) &
+        !all(inherits(starting_val, 'Date')) &
+        !all(inherits(starting_val, 'POSIXt')))
+      rlang::abort("starting_val must be NA, numeric, Date or POSIXt")
 
     add_step(
       recipe,
       step_harmonic_new(
-        terms = terms,
+        terms = ellipse_check(...),
         trained = trained,
         role = role,
         frequency = frequency,
-        period = period,
-        cycle_unit = cycle_unit,
         cycle_size = cycle_size,
         starting_val = starting_val,
         keep_original_cols = keep_original_cols,
-        objects = objects,
         skip = skip,
         id = id
       )
@@ -153,106 +173,31 @@ step_harmonic <-
 
 step_harmonic_new <-
   function(terms, role, trained,
-           frequency, period, cycle_unit, cycle_size,
-           starting_val, keep_original_cols, objects, skip, id) {
+           frequency, cycle_size,
+           starting_val, columns,
+           keep_original_cols, objects, skip, id) {
     step(
       subclass = "harmonic",
       terms = terms,
       role = role,
       trained = trained,
       frequency = frequency,
-      period = period,
-      cycle_unit = cycle_unit,
       cycle_size = cycle_size,
       starting_val = starting_val,
       keep_original_cols = keep_original_cols,
-      objects = objects,
       skip = skip,
       id = id
     )
   }
 
 
-get_cycle_n <- function(x) {
-  switch(x,
-         year = 31556926,
-         month_synodic = 2551443,
-         month_sidereal = 2360592,
-         week = 86400*7,
-         day = 86400,
-         hour = 3600,
-         minute = 60,
-         second = 1,
-         sample = 1
-  )
-}
-
-
-process_inputs <- function(time_var,
-                           period = NA,
-                           frequency = NA,
-                           starting_val = NA,
-                           cycle_unit = "week") {
-
-  if (all(is.na(time_var)))
-    rlang::abort("variable must have at least one non-NA value")
-
-
-  # get cycle information
-  cycle_size <- get_cycle_n(cycle_unit)
-  if (inherits(time_var, 'Date')) {
-    cycle_size <- cycle_size / 86400
-  }
-
-  # convert from period to frequency
-  period_1    <- sort(unique(na.omit(period)))
-  frequency_1 <- sort(unique(na.omit(frequency)))
-  frequency_2 <- 1.0 / period_1
-  frequencies <- c(frequency_1, frequency_2)
-
-  # set column names
-
-  if (length(frequency_1) > 0 & length(period_1) > 0) {
-    nms <- c(paste0('_f_', frequency_1), paste0('_p_', period_1))
-  } else if (length(frequency_1) > 0) {
-    nms <- paste0('_f_', frequency_1)
-  } else if (length(period_1) > 0) {
-    nms <- paste0('_p_', period_1)
-  }
-
-  col_names <- c(paste0(rep("sin", each = length(frequencies)),
-                        1:length(frequencies)),
-                 paste0(rep("cos", each = length(frequencies)),
-                        1:length(frequencies)))
-
-
-  # start at an even cycle if no starting_val is provided
-  if (is.na(starting_val)) {
-    mn <- min(time_var, na.rm = TRUE)
-    starting_val <- (as.numeric(mn) %/% cycle_size) * cycle_size
-  }
-
-
-  list(
-    starting_val = starting_val,
-    frequency = frequencies,
-    col_names = col_names,
-    cycle_size = cycle_size
-  )
-
-}
-
-
-
-
 #' @export
 prep.step_harmonic <- function(x, training, info = NULL, ...) {
-
-  # check period and frequency info
 
   col_names <- eval_select_recipes(x$terms, training, info)
   harmonic_data <- info[info$variable %in% col_names, ]
 
+  # check input columns
   if (any(harmonic_data$type != "date" & harmonic_data$type != "numeric"))
     rlang::abort(
       paste0(
@@ -261,26 +206,42 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
       )
     )
 
-  # record the starting value for consistent phases
-  x$object <- lapply(training[, col_names], process_inputs,
-                           period = x$period,
-                           frequency = x$frequency,
-                           starting_val = x$starting_val,
-                           cycle_unit = x$cycle_unit)
 
-  names(x$object) <- col_names
+  # check cycle_size
+  if (length(x$cycle_size) == 1)
+    cycle_sizes <- rep(x$cycle_size, length(col_names))
+  else if (length(x$cycle_size) == length(col_names))
+    cycle_sizes <- x$cycle_size
+  else
+    rlang::abort(paste0("`cycle_size` must be length 1 or the same  ",
+                        "length as the input columns"))
 
+
+  # check starting_val
+  if (all(is.na(x$starting_val)))
+    starting_vals <- rep(0.0, length(col_names))
+  else if (length(x$starting_val) == 1)
+    starting_vals <- rep(as.numeric(x$starting_val), length(col_names))
+  else if (length(x$starting_val) == length(col_names))
+    starting_vals <- x$starting_val
+  else
+    rlang::abort(paste0("`starting_val` must be length 1 or the same  ",
+                        "length as the input columns"))
+
+  frequencies <- sort(unique(na.omit(x$frequency)))
+
+  names(frequencies) <- as.character(1:length(frequencies))
+  names(starting_vals) <- col_names
+  names(cycle_sizes) <- col_names
 
   step_harmonic_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    frequency = x$frequency,
-    period = x$period,
-    cycle_unit = x$cycle_unit,
-    starting_val = x$object$starting_val,
+    frequency = frequencies,
+    cycle_size = cycle_sizes,
+    starting_val = starting_vals,
     keep_original_cols = get_keep_original_cols(x),
-    object = x$object,
     skip = x$skip,
     id = x$id
   )
@@ -290,7 +251,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
 sin_cos <- function(x,
                     frequency,
                     starting_val,
-                    cycle_size = 86400) {
+                    cycle_size) {
 
   if (all(is.na(x)))
     rlang::abort("variable must have at least one non-NA value")
@@ -298,20 +259,20 @@ sin_cos <- function(x,
   nc <- length(frequency)
   nr <- length(x)
 
+  # adjust phase
   x <- x - as.numeric(starting_val)
 
   # cycles per unit
-  cycle <- 2 * (pi * (x / cycle_size));
+  cycle <- 2.0 * (pi * (x / cycle_size));
 
   m <- matrix(NA_real_,
-         ncol = nc * 2,
-         nrow = nr)
+              ncol = nc * 2L,
+              nrow = nr)
 
   for(i in seq_along(frequency)) {
     m[, i] <- sin(cycle * frequency[i])
     m[, i + nc] <- cos(cycle * frequency[i])
   }
-
 
   return(m)
 }
@@ -321,23 +282,29 @@ sin_cos <- function(x,
 #' @export
 bake.step_harmonic <- function(object, new_data, ...) {
 
-  for (col_name in names(object$objects)) {
-    ob <- object$objects[[col_name]]
+  col_names <- names(object$starting_val)
+
+  # calculate sin and cos columns
+  for (i in seq_along(col_names)) {
+    col_name <- col_names[i]
+    n_frequency <- length(object$frequency)
     res <- sin_cos(as.numeric(new_data[[col_name]]),
-                   ob[["frequency"]],
-                   ob[["starting_val"]],
-                   ob[["cycle_size"]])
-    colnames(res) <- paste0(col_name, '_', ob[["col_names"]])
+                   object$frequency,
+                   object$starting_val[i],
+                   object$cycle_size[i])
+    colnames(res) <- paste0(col_name,
+                            rep(c('_sin_', '_cos_'), each = n_frequency),
+                            1:n_frequency
+    )
     res <- as_tibble(res)
     new_data <- bind_cols(new_data, res)
   }
 
-
   keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
+    new_data <-
+      new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
   }
-
 
   as_tibble(new_data)
 }
@@ -357,35 +324,45 @@ print.step_harmonic <-
 #' @export
 tidy.step_harmonic <- function(x, ...) {
   if (is_trained(x)) {
+    col_names <- names(x$starting_val)
+    n_frequency <- length(x$frequency)
+    n_terms <- length(col_names)
+
     res <-
-      tibble(terms = names(x$objects),
-             value = sapply(x$objects, function(y) y$starting_val),
-             key = 0, # column names
-             frequency = 0) # frequencies
+      tibble(terms = rep(col_names, each = n_frequency * 2L),
+             starting_val = rep(x$starting_val, each = n_frequency * 2L),
+             cycle_size = rep(x$cycle_size, each = n_frequency * 2L),
+             frequency = rep(rep(x$frequency, times = 2L), times = n_terms),
+      )
+    res$key <- paste0(res$terms,
+                      rep(rep(c('_sin_', '_cos_'), each = n_frequency),
+                          times = n_terms),
+                      res$frequency)
+
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
-                  value = na_dbl,
-                  key = na_chr,
-                  frequency = na_dbl)
+                  starting_val = na_dbl,
+                  cycle_size = na_dbl,
+                  frequency = na_dbl,
+                  key = na_chr)
   }
   res$id <- x$id
   res
 }
 
 
-# may want a tunable step that can adjust the frequency/period
-#' #' @rdname tunable.step
-#' #' @export
-#' tunable.step_harmonic <- function(x, ...) {
-#'   tibble::tibble(
-#'     name = c("frequency", "period"),
-#'     call_info = list(
-#'       list(pkg = "dials", fun = "harmonic_period"),
-#'       list(pkg = "dials", fun = "harmonic_period")
-#'     ),
-#'     source = "recipe",
-#'     component = "step_harmonic",
-#'     component_id = x$id
-#'   )
-#' }
+# may want a tunable step that can adjust the frequency#'
+#' @rdname tunable.step
+#' @export
+tunable.step_harmonic <- function(x, ...) {
+  tibble::tibble(
+    name = "frequency",
+    call_info = list(
+      list(pkg = "dials", fun = "harmonic_frequency")
+    ),
+    source = "recipe",
+    component = "step_harmonic",
+    component_id = x$id
+  )
+}

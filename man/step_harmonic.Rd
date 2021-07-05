@@ -10,10 +10,9 @@ step_harmonic(
   role = NA,
   trained = FALSE,
   frequency = NA_real_,
-  period = NA_real_,
-  cycle_unit = "day",
+  cycle_size = NA_real_,
   starting_val = NA_real_,
-  objects = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("harmonic")
 )
@@ -23,7 +22,8 @@ step_harmonic(
 operations for this recipe.}
 
 \item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+affected by the step. See \code{\link[=selections]{selections()}} for more details.  This will
+typically be a single variable.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned?. By default, the function assumes
@@ -33,26 +33,22 @@ used as predictors in a model.}
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
 
-\item{frequency}{A numeric vector with at least one value if using frequency
-to specify the cycle size.  The value must be greater than zero and finite.}
+\item{frequency}{A numeric vector with at least one value.
+The value(s) must be greater than zero and finite.}
 
-\item{period}{A numeric vector with at least one value if using period to
-specify the cycle size. The value must be greater than zero and finite.}
+\item{cycle_size}{A numeric vector with at least one value that indicates
+the size of a single cycle. \code{cycle_size} should have the same units as the
+input variable(s).}
 
-\item{cycle_unit}{Character string to indicate the units for a cycle.
-Possible values are:
-'year' (31556926 seconds), 'month_synodic' (2360592 seconds),
-'month_sidereal' (2551443 seconds), 'month_average' (2629744 seconds),
-'week', day', 'hour', 'minute', 'second', 'sample'.}
+\item{starting_val}{either \code{NA}, numeric, Date or POSIXt value(s) that indicates
+the reference point for the sin and cos curves for each input variable.
+If the value is a \code{Date} or \code{POISXt} the value is converted to numeric
+using \code{as.numeric}. This parameter may be specified to increase control
+over the signal phase.  If \code{starting_val} is not specified the default
+is 0.}
 
-\item{starting_val}{either numeric, Date or POSIXt value that indicates the
-reference point for the sin and cos curves.  This parameter may be
-specified to increase control over the signal phase.  If starting_val is
-not specified the default is the start of the data series, or the start of
-the cycle (i.e. the beginning of the hour, day, week).}
-
-\item{objects}{Statistics are stored here once this step has
-been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -71,6 +67,41 @@ new step added to the sequence of existing steps (if any).
 \code{step_harmonic} creates a \emph{specification} of a recipe step that
 will add sin and cos terms for harmonic analysis.
 }
+\details{
+This step seeks to describe periodic components of observational
+data using a combination of sin and cos waves. To do this, each wave of a
+specified frequency is modeled using one sin and one cos term. The two
+terms for each frequency can then be used to estimate the amplitude and
+phase shift of a periodic signal in observational data. The equation
+relating cos waves of known frequency but unknown phase and amplitude to a
+sum of sin and cos terms is below:
+
+\deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j sin(\sigma_j t_i)}
+
+Solving the equation yields \eqn{C_j} and \eqn{S_j}. the
+amplitude can then be obtained with:
+
+\deqn{A_j = \sqrt{C^2_j + S^2_j}}
+
+And the phase can be obtained with:
+\deqn{\Phi_j = \arctan{(S_j / C_j)}}
+
+where:
+\itemize{
+\item \eqn{\sigma_j = 2 \pi (frequency / cycle\_size))}
+\item \eqn{A_j} is the amplitude of the \eqn{j^{th}} frequency
+\item \eqn{\Phi_j} is the phase of the \eqn{j^{th}} frequency
+\item \eqn{C_j} is the coefficient of the cos term for the \eqn{j^{th}} frequency
+\item \eqn{S_j} is the coefficient of the sin term for the \eqn{j^{th}} frequency
+}
+
+The periodic component is specified by \code{frequency} and \code{cycle_size}
+parameters. The cycle size relates the specified frequency to the
+input column(s) units. There are multiple ways to specify a wave of given
+frequency, for example, a \code{POSIXct} input column given a \code{frequency} of
+24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
+1.0 with \code{cycle_size} equal to 3600.
+}
 \examples{
 library(ggplot2, quietly = TRUE)
 
@@ -82,11 +113,11 @@ sunspots <- tibble(yr = 1700:1988,
 # sunspots period is around 11 years, sample spacing is one year
 rec <- recipe(n_sunspot ~ yr,
               data = sunspots) \%>\%
-              step_harmonic(yr, period = 11, cycle_unit = "sample") \%>\%
+              step_harmonic(yr, frequency = 1/11, cycle_size = 1) \%>\%
               prep() \%>\%
               bake(new_data = NULL)
 
- fit <- lm(n_sunspot~yr_sin_p_11+yr_cos_p_11, rec)
+ fit <- lm(n_sunspot~yr_sin_1 + yr_cos_1, rec)
 
  preds <- tibble(yr = sunspots$yr,
                  n_sunspot = fit$fitted.values,
@@ -95,6 +126,49 @@ rec <- recipe(n_sunspot ~ yr,
  ggplot(rbind(sunspots, preds), aes(x = yr, y = n_sunspot, color = type)) +
    geom_line()
 
+
+
+# POSIXct example
+datetime <- as.POSIXct(paste0(rep(1959:1997, each = 12), '-',
+                   rep(1:12, length(1959:1997)),
+                   '-01'), tz = 'UTC')
+
+carbon_dioxide <- tibble(datetime = datetime,
+                   co2 = as.numeric(co2),
+                   type = "measured")
+
+# yearly co2 fluctuations
+rec <- recipe(co2 ~ datetime,
+              data = carbon_dioxide) \%>\%
+              step_mutate(datetime_num = as.numeric(datetime)) \%>\%
+              step_ns(datetime_num,
+                      deg_free = 3) \%>\%
+              step_harmonic(datetime,
+                            frequency = 1,
+                            cycle_size = 86400 * 365.24) \%>\%
+              prep() \%>\%
+              bake(new_data = NULL)
+
+ fit <- lm(co2~datetime_num_ns_1 + datetime_num_ns_2 +
+               datetime_num_ns_3 + datetime_sin_1 +
+               datetime_cos_1, rec)
+
+ preds <- tibble(datetime = datetime,
+                 co2 = fit$fitted.values,
+                 type = 'predicted')
+
+ ggplot(rbind(carbon_dioxide, preds), aes(x = datetime, y = co2, color = type)) +
+   geom_line()
+
+}
+\references{
+Doran, H. E., & Quilkey, J. J. (1972).
+Harmonic analysis of seasonal data: some important properties.
+American Journal of Agricultural Economics, 54(volume 4 part 1), 646-651.
+
+Foreman, M. G. G., & Henry, R. F. (1989).
+The harmonic analysis of tidal model time series.
+Advances in water resources, 12(3), 109-120.
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
