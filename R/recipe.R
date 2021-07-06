@@ -440,7 +440,7 @@ prep.recipe <-
           expr = prep(x$steps[[i]], training = training, info = x$term_info),
           error = function(c) {
             c$call <- call(attr(x$steps[[i]], "class")[1])
-            stop(c)
+            rlang::cnd_signal(c)
           }
         )
 
