@@ -42,10 +42,8 @@ the computations for subsequent operations}
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing steps.
 }
 \description{
 \code{step_factor2string} will convert one or more factor
@@ -56,6 +54,9 @@ vectors to strings.
 defaults to \code{TRUE}. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.
+
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
+columns that will be affected) is returned.
 }
 \examples{
 library(modeldata)

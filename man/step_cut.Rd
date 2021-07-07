@@ -42,7 +42,7 @@ processing the outcome variable(s)). Care should be taken when using \code{skip 
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing steps.
 }
 \description{
 \code{step_cut()} creates a \emph{specification} of a recipe step that cuts a numeric

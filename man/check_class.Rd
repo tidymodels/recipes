@@ -50,8 +50,8 @@ the computations for subsequent operations.}
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing steps.
 }
 \description{
 \code{check_class} creates a \emph{specification} of a recipe
