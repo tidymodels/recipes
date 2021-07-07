@@ -10,8 +10,7 @@
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param inputs Quosure of values given by `...`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!!`)

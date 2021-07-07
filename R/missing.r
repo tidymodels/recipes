@@ -21,8 +21,7 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any).
+#' @template step-return
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed

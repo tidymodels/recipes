@@ -25,8 +25,7 @@
 #'  new distance columns. Defaults to `"classdist_"`. See Details below.
 #' @param objects Statistics are stored here once this step has
 #'  been trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dimension_reduction

@@ -14,8 +14,7 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

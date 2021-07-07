@@ -28,10 +28,7 @@
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
 #' @param seed An integer that will be used as the seed when downsampling.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which is
-#'  the variable used to sample.
+#' @template step-return
 #' @details
 #' Down-sampling is intended to be performed on the _training_ set alone. For
 #'  this reason, the default is `skip = TRUE`. It is advisable to use

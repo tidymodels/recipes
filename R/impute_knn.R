@@ -23,8 +23,7 @@
 #'  is trained by [prep.recipe()].
 #' @param columns The column names that will be imputed and used for
 #'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

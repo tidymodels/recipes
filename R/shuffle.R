@@ -14,8 +14,7 @@
 #' @param columns A character string that contains the names of
 #'  columns that should be shuffled. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #' columns that will be affected) is returned.
 #' @keywords datagen

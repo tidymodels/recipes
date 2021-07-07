@@ -32,8 +32,7 @@
 #'  new depth columns. Defaults to `"depth_"`. See Details below.
 #' @param data The training data are stored here once after
 #'  [prep.recipe()] is executed.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dimension_reduction

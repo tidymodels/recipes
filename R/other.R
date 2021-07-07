@@ -20,8 +20,7 @@
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors

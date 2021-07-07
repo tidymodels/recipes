@@ -19,8 +19,7 @@
 #' @param statistic A function with a single argument for the data to compute
 #'  the imputed value. Only complete values will be passed to the function and
 #'  it should return a double precision value.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

@@ -23,8 +23,7 @@
 #' @param name A single character value to use for the new
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
-#' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns echoing the
 #'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
 #'  is returned.

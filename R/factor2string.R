@@ -13,10 +13,7 @@
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
 #'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  columns that will be affected).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
@@ -26,6 +23,10 @@
 #'  defaults to `TRUE`. If this step is used with the default
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
+#'
+#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  columns that will be affected) is returned.
+#'
 #' @seealso [step_string2factor()] [step_dummy()]
 #' @examples
 #' library(modeldata)

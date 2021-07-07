@@ -11,8 +11,7 @@
 #' @param medians A named numeric vector of medians. This is `NULL` until
 #'  computed by [prep.recipe()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

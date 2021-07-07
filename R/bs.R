@@ -21,8 +21,7 @@
 #' @param degree Degree of polynomial spline (integer).
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept basis_expansion

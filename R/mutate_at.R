@@ -12,8 +12,7 @@
 #'  columns created by the original variables will be used as predictors in a
 #'  model.
 #' @param inputs A vector of column names populated by `prep()`.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with
 #'  column `terms` which contains the columns being transformed is returned.
 #' @keywords datagen

@@ -16,8 +16,7 @@
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer to specify minimum required unique
 #'  values to evaluate for a transformation.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods

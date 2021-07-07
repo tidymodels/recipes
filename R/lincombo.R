@@ -14,8 +14,7 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters

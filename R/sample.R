@@ -21,8 +21,7 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = FALSE`.
 #' @param replace Sample with or without replacement?
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `size`,
 #' `replace`, and `id` is returned.
 #' @keywords datagen

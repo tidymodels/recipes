@@ -18,8 +18,7 @@
 #'  normalized. Note that this is ignored until the values are
 #'  determined by [prep.recipe()]. Setting this value will
 #'  be ineffective.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods

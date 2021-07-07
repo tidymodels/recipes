@@ -18,8 +18,7 @@
 #' @param sep A character value used to delineate variables in an
 #'  interaction (e.g. `var1_x_var2` instead of the more
 #'  traditional `var1:var2`).
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification

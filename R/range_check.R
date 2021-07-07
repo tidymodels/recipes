@@ -29,7 +29,7 @@
 #' @param upper A named numeric vector of maximum values in the train set.
 #'   This is `NULL` until computed by [prep.recipe()].
 #' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any).
+#'  added to the sequence of any existing operations.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
