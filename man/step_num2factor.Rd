@@ -51,7 +51,7 @@ the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing steps.
 }
 \description{
 \code{step_num2factor} will convert one or more numeric vectors to factors

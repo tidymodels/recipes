@@ -20,9 +20,7 @@
 #'   have been estimated. Again included for consistency.
 #' @param name Character name for newly added column
 #' @param value A numeric constant to fill the intercept column. Defaults to 1.
-#'
-#' @return An updated version of `recipe` with the
-#'   new step added to the sequence of existing steps (if any).
+#' @template step-return
 #' @export
 #'
 #' @examples

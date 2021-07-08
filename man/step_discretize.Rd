@@ -60,9 +60,8 @@ the computations for subsequent operations}
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-\code{step_discretize} returns an updated version of
-\code{recipe} with the new step added to the sequence of
-existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing steps.
 }
 \description{
 \code{step_discretize} creates a \emph{specification} of a recipe

@@ -14,8 +14,7 @@
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

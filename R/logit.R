@@ -11,8 +11,7 @@
 #'  created.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods

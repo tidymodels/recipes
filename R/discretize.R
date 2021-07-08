@@ -234,9 +234,7 @@ print.discretize <-
 #'  one or more selector functions to choose which variables are
 #'  affected by the step. See [selections()] for more
 #'  details.
-#' @return `step_discretize` returns an updated version of
-#'  `recipe` with the new step added to the sequence of
-#'  existing steps (if any).
+#' @template step-return
 #' @details  When you [`tidy()`] this step, a tibble
 #'  with columns `terms` (the selectors or variables selected)
 #'  and `value` (the breaks) is returned.

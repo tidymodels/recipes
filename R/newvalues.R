@@ -26,14 +26,16 @@
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#' @return An updated version of `recipe` with the new check added to the
+#'  sequence of any existing operations.
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain values it did not contain when `prep` was called
 #'  on the recipe. If the check passes, nothing is changed to the data.
+#'
+#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
+#'  selectors or variables selected) is returned.
+#'
 #' @examples
 #' library(modeldata)
 #' data(credit_data)

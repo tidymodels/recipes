@@ -28,8 +28,7 @@
 #'  executed.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `denom` is returned.
 #' @keywords datagen

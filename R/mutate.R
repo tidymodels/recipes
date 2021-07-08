@@ -12,8 +12,7 @@
 #'  that the new dimension columns created by the original variables
 #'  will be used as predictors in a model.
 #' @param inputs Quosure(s) of `...`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed

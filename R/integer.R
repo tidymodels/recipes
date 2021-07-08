@@ -21,8 +21,7 @@
 #'  integers (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
-#' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings

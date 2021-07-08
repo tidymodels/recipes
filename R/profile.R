@@ -49,8 +49,7 @@
 #'  is the columns that will be affected) and `type` (fixed or
 #'  profiled) is returned.
 #'
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @export

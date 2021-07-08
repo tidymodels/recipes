@@ -15,8 +15,7 @@
 #'  [prep.recipe()].
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept ordinal_data

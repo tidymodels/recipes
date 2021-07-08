@@ -24,8 +24,7 @@
 #' @param input A single character value for the name of the
 #'  variable being searched. This is `NULL` until computed by
 #'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `result` (the
 #'  new column name) is returned.

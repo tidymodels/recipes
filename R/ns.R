@@ -20,8 +20,7 @@
 #'  created once the step has been trained.
 #' @param options A list of options for [splines::ns()]
 #'  which should not include `x` or `df`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept basis_expansion

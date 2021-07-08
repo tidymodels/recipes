@@ -18,8 +18,7 @@
 #'  will be removed from the latter and not used to impute itself.
 #' @param models The [lm()] objects are stored here once the linear models
 #'  have been trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

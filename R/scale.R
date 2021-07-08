@@ -19,8 +19,7 @@
 #'  binary inputs. Defaults to `1`. More in reference below.
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods

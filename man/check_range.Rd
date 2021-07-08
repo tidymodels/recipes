@@ -54,7 +54,7 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 }
 \value{
 An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any).
+added to the sequence of any existing operations.
 }
 \description{
 \code{check_range} creates a \emph{specification} of a recipe

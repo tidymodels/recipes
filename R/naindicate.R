@@ -25,8 +25,7 @@
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
 #' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @details  When you [`tidy()`] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  median value) is returned.

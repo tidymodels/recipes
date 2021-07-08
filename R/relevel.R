@@ -19,8 +19,7 @@
 #'  relevel the factor column(s) (if the level is present).
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #'
 #' @keywords datagen
 #' @concept preprocessing

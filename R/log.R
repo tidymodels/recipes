@@ -17,8 +17,7 @@
 #' @param signed A logical indicating whether to take the signed log.
 #'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods

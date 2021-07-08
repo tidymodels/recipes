@@ -14,8 +14,7 @@
 #'  created.
 #' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation

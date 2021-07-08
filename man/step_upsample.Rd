@@ -66,10 +66,8 @@ the computations for subsequent operations}
 \item{x}{A \code{step_upsample} object.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which is
-the variable used to sample.
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing steps.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

@@ -27,8 +27,7 @@
 #'  [prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen internal
 #' @concept preprocessing
 #' @concept pca

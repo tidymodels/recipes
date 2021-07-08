@@ -21,8 +21,7 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @author Original R code for filtering algorithm by Dong Li,
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for

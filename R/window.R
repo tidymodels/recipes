@@ -30,8 +30,7 @@
 #'  are not sure what columns will be selected, use the
 #'  `summary` function (see the example below). These will be
 #'  the names of the new columns created by the step.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept moving_windows

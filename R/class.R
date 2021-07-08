@@ -26,8 +26,7 @@
 #' @param class_list A named list of column classes. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #'
 #' @keywords datagen
 #' @concept preprocessing normalization_methods

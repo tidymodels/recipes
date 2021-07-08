@@ -58,7 +58,7 @@ the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing steps.
 }
 \description{
 \code{step_impute_mean} creates a \emph{specification} of a recipe step that will

@@ -16,8 +16,7 @@
 #' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
 #'  is `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
 #'  categorical instead of numeric. For example, naive Bayes models

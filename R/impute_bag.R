@@ -23,8 +23,7 @@
 #'  is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
 #'  bagged trees have be trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
