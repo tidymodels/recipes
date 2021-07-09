@@ -38,6 +38,7 @@ reference:
     contents:
     - step_BoxCox
     - step_bs
+    - step_harmonic
     - step_hyperbolic
     - step_inverse
     - step_invlogit
