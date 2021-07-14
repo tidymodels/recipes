@@ -22,15 +22,13 @@ step_dummy(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-\emph{factor} variables will be used to create the dummy variables. See
-\code{\link[=selections]{selections()}} for more details. The selected
-variables must be factors.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details. The selected
+variables \emph{must} be factors.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the binary dummy variable columns created by the original
-variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}

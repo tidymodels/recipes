@@ -16,19 +16,18 @@ step_intercept(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{Argument ignored; included for consistency with other step
 specification functions.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new columns created from the original variables will be
-used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated. Again included for consistency.}
+have been estimated. Again included only for consistency.}
 
 \item{name}{Character name for newly added column}
 

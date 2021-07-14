@@ -30,10 +30,9 @@ When used with \code{denom_vars}, the dots indicate which
 variables are used in the \emph{denominator}. See
 \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For terms created by this step, what analysis role
-should they be assigned?. By default, the function assumes that
-the newly created ratios created by the original variables will
-be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}

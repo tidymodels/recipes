@@ -18,16 +18,18 @@ step_lag(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Defaults to "predictor"}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{lag}{A vector of positive integers. Each specified column will be
 lagged for each value in the vector.}
