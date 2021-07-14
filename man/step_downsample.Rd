@@ -104,22 +104,6 @@ When used in modeling, users should strongly consider using the
 option \code{skip = TRUE} so that the extra sampling is \emph{not}
 conducted outside of the training set.
 }
-\examples{
-library(modeldata)
-data(okc)
-
-sort(table(okc$diet, useNA = "always"))
-
-ds_rec <- recipe( ~ ., data = okc) \%>\%
-  step_downsample(diet) \%>\%
-  prep(training = okc)
-
-table(bake(ds_rec, new_data = NULL)$diet, useNA = "always")
-
-# since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(ds_rec, new_data = okc)
-table(baked_okc$diet, useNA = "always")
-}
 \concept{preprocessing}
 \concept{subsampling}
 \keyword{internal}
