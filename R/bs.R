@@ -4,14 +4,8 @@
 #'  that will create new columns that are basis expansions of
 #'  variables using B-splines.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
 #' @param deg_free The degrees of freedom for the spline. As the

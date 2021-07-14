@@ -4,16 +4,11 @@
 #'  step that will create a variable that counts instances of a
 #'  regular expression pattern in text.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... A single selector functions to choose which variable
-#'  will be searched for the pattern. The selector should resolve
-#'  into a single variable. See [selections()] for more
-#'  details.
-#' @param role For a variable created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new dummy variable column created by the original
-#'  variable will be used as a predictor in a model.
+#' @param ... A single selector function to choose which variable
+#'  will be searched for the regex pattern. The selector should
+#'  resolve to a single variable. See [selections()] for more details.
 #' @param pattern A character string containing a regular
 #'  expression (or character string for `fixed = TRUE`) to be
 #'  matched in the given character vector. Coerced by

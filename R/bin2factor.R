@@ -4,11 +4,6 @@
 #'  recipe step that will create a two-level factor from a single
 #'  dummy variable.
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... Selector functions that choose which variables will
-#'  be converted. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param levels A length 2 character string that indicates the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)

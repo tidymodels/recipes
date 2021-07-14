@@ -5,13 +5,6 @@
 #'  new value.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be affected by the step. These variables
-#'  should be character or factor types. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param new_level A single character value that will be assigned
 #'  to new factor levels.
 #' @param objects A list of objects that contain the information

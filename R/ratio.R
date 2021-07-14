@@ -4,6 +4,7 @@
 #'  step that will create one or more ratios out of numeric
 #'  variables.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose which
@@ -11,10 +12,6 @@
 #'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
 #'  [selections()] for more details.
-#' @param role For terms created by this step, what analysis role
-#'  should they be assigned?. By default, the function assumes that
-#'  the newly created ratios created by the original variables will
-#'  be used as predictors in a model.
 #' @param denom A call to `denom_vars` to specify which
 #'  variables are used in the denominator that can include specific
 #'  variable names separated by commas or different selectors (see

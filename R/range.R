@@ -5,11 +5,6 @@
 #'  range of values.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be scaled. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param min A single numeric value for the smallest value in the
 #'  range.
 #' @param max A single numeric value for the largest value in the

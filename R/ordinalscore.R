@@ -5,11 +5,6 @@
 #'  numeric scores.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
 #'  [prep.recipe()].
