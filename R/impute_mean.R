@@ -5,9 +5,6 @@
 #'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
 #'  by [prep.recipe()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.

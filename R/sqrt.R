@@ -4,12 +4,6 @@
 #'  step that will square root transform the data.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be transformed. See [selections()] for
-#'  more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return

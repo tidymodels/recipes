@@ -4,12 +4,6 @@
 #'  that will remove variables that contain only a single value.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.

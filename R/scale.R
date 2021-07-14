@@ -5,11 +5,6 @@
 #'  deviation of one.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param sds A named numeric vector of standard deviations. This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param factor A numeric value of either 1 or 2 that scales the

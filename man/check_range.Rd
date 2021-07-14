@@ -21,9 +21,8 @@ check_range(
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the check. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this check. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -35,8 +34,8 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical for whether the selectors in \code{...}
+have been resolved by \code{\link[=prep]{prep()}}.}
 
 \item{slack_prop}{The allowed slack as a proportion of the range
 of the variable in the train set.}
@@ -50,11 +49,11 @@ This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.
 \item{upper}{A named numeric vector of maximum values in the train set.
 This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{id}{A character string that is unique to this step to identify it.}
+\item{id}{A character string that is unique to this check to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new check
-added to the sequence of any existing operations.
+An updated version of \code{recipe} with the new check added to the
+sequence of any existing operations.
 }
 \description{
 \code{check_range} creates a \emph{specification} of a recipe

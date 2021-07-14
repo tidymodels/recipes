@@ -5,11 +5,6 @@
 #'  transformation.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param lambdas A numeric vector of transformation values. This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param limits A length 2 numeric vector defining the range to

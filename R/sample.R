@@ -8,18 +8,11 @@
 #' @inheritParams step_center
 #' @param ... Argument ignored; included for consistency with other step
 #'  specification functions.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param size An integer or fraction. If the value is within (0, 1),
 #'  [dplyr::sample_frac()] is applied to the data. If an integer
 #'  value of 1 or greater is used, [dplyr::sample_n()] is applied.
 #'  The default of `NULL` uses [dplyr::sample_n()] with the size
 #'  of the training set (or smaller for smaller `new_data`).
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`.
 #' @param replace Sample with or without replacement?
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `size`,

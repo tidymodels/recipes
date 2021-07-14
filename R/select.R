@@ -4,9 +4,6 @@
 #'  that will select variables using [dplyr::select()].
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be selected when baking. See
-#'  [selections()] for more details.
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
 #' @template step-return

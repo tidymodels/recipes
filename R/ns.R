@@ -4,14 +4,8 @@
 #'  that will create new columns that are basis expansions of
 #'  variables using natural splines.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param deg_free The degrees of freedom for the natural spline. As the
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. When a single degree of freedom is used,

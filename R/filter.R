@@ -9,14 +9,7 @@
 #'  in the data. Multiple conditions are combined with `&`. Only
 #'  rows where the condition evaluates to `TRUE` are kept. See
 #'  [dplyr::filter()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param inputs Quosure of values given by `...`.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`.
 #' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),

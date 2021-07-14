@@ -37,12 +37,13 @@ step_knnimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For
-\code{step_impute_knn}, this indicates the variables to be imputed. When used
-with \code{imp_vars}, the dots indicate which variables are used to predict the
-missing data in each variable. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables to be imputed.
+When used with \code{imp_vars}, these dots indicate which variables are used to
+predict the missing data in each variable. See \code{\link[=selections]{selections()}} for more
+details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}

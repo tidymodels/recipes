@@ -25,11 +25,8 @@ step_downsample(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variable is used to sample the data. See \code{\link[=selections]{selections()}}
-for more details. The selection should result in \emph{single
-factor variable}. For the \code{tidy} method, these are not
-currently used.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{under_ratio}{A numeric value for the ratio of the
 minority-to-majority frequencies. The default value (1) means

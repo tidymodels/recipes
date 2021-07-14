@@ -5,12 +5,9 @@
 #'  variables by the measure of location (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()] for more
-#'  details. These columns should be non-integer numerics (i.e.,
-#'  double precision).
-#' @param role Not used by this step since no new variables are
-#'  created.
+#' @param ... One or more selector functions to choose variables to be imputed;
+#'  these columns must be non-integer numerics (i.e., double precision).
+#'  See [selections()] for more details.
 #' @param columns A named numeric vector of columns. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param window The size of the window around a point to be imputed. Should be

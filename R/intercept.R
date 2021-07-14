@@ -7,17 +7,12 @@
 #'   unintentional transformations when calling steps with
 #'   `all_predictors`.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
 #' @param ... Argument ignored; included for consistency with other step
 #'   specification functions.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated. Again included for consistency.
+#'   have been estimated. Again included only for consistency.
 #' @param name Character name for newly added column
 #' @param value A numeric constant to fill the intercept column. Defaults to 1.
 #' @template step-return

@@ -4,11 +4,6 @@
 #'  that will log transform data.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param base A numeric value for the base.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `log(0)`).

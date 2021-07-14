@@ -19,12 +19,12 @@ step_spatialsign(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used for the normalization. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned?. By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{na_rm}{A logical: should missing data be removed from the
 norm computation?}

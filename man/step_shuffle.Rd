@@ -18,9 +18,8 @@ step_shuffle(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be permuted. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -52,7 +51,7 @@ variables.
 }
 \details{
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
+columns that will be permuted) is returned.
 }
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)

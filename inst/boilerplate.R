@@ -3,6 +3,7 @@ library(glue)
 # set up the boilerplate for a new step or check
 # creates a prefilled script in /R
 # and an empty script in /tests
+# consider using @inheritParams where appropriate instead of full boilerplate
 make_new <- function(name,
                      which = c("step", "check")) {
   which <- match.arg(which)

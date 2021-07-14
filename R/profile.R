@@ -7,12 +7,6 @@
 #'  models.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be fixed to a single value. See [selections()] for
-#'  more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param profile A call to [dplyr::vars()]) to specify which
 #'  variable will be profiled (see [selections()]). If a column is
 #'  included in both lists to be fixed and to be profiled, an error

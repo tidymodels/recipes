@@ -5,11 +5,6 @@
 #'  absolute correlations with other variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param threshold A value for the threshold of absolute
 #'  correlation values. The step will try to remove the minimum
 #'  number of columns so that all the resulting absolute

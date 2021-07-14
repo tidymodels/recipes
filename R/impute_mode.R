@@ -5,11 +5,6 @@
 #'  variables by the training set mode of those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param modes A named character vector of modes. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param ptype A data frame prototype to cast new data sets to. This is

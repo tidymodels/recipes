@@ -3,14 +3,11 @@
 #' `step_rename_at` creates a *specification* of a recipe step that will rename
 #' the selected variables using a common function via [dplyr::rename_at()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param fn A function `fun`, a quosure style lambda `~ fun(.)`` or a list of
 #' either form (but containing only a single function, see [dplyr::rename_at()]).
 #' **Note that this argument must be named**.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the function assumes that the new dimension
-#'  columns created by the original variables will be used as predictors in a
-#'  model.
 #' @param inputs A vector of column names populated by `prep()`.
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with

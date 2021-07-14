@@ -21,10 +21,8 @@ step_discretize(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{For \code{step_discretize}, the dots specify
-one or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}

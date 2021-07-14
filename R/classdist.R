@@ -5,15 +5,10 @@
 #'  distance measurements to the data centroid. This is done for
 #'  each value of a categorical class variable.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that resulting distances will be used as predictors in a model.
 #' @param mean_func A function to compute the center of the
 #'  distribution.
 #' @param cov_func A function that computes the covariance matrix
@@ -21,8 +16,6 @@
 #'  by pooling the data for all of the classes?
 #' @param log A logical: should the distances be transformed by
 #'  the natural log function?
-#' @param prefix A character string that defines the naming convention for
-#'  new distance columns. Defaults to `"classdist_"`. See Details below.
 #' @param objects Statistics are stored here once this step has
 #'  been trained by [prep.recipe()].
 #' @template step-return

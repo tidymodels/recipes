@@ -4,21 +4,15 @@
 #'   will apply the rectified linear or softplus transformations to numeric
 #'   data. The transformed data is added as new columns to the data matrix.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'   affected by the step. See [selections()] for more details.
-#' @param role Defaults to "predictor".
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated.
 #' @param shift A numeric value dictating a translation to apply to the data.
 #' @param reverse A logical to indicate if the left hinge should be used as
 #'   opposed to the right hinge.
 #' @param smooth A logical indicating if the softplus function, a smooth
 #'   approximation to the rectified linear transformation, should be used.
-#' @param prefix A prefix for generated column names, default to "right_relu_"
-#'   when right hinge transformation and "left_relu_" for reversed/left hinge
+#' @param prefix A prefix for generated column names, defaults to "right_relu_"
+#'   for right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.

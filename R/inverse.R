@@ -4,11 +4,6 @@
 #'  step that will inverse transform the data.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `1/0`).
 #' @param columns A character string of variable names that will

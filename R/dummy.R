@@ -5,16 +5,11 @@
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  _factor_ variables will be used to create the dummy variables. See
-#'  [selections()] for more details. The selected
-#'  variables must be factors.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the binary dummy variable columns created by the original
-#'  variables will be used as predictors in a model.
+#' @param ... One or more selector functions to choose variables
+#'  for this step. See [selections()] for more details. The selected
+#'  variables _must_ be factors.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #' rather than C-1?
 #' @param preserve Use `keep_original_cols` to specify whether the selected
@@ -25,8 +20,6 @@
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
 #' @template step-return
 #' @keywords datagen
 #' @concept preprocessing

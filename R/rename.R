@@ -3,13 +3,10 @@
 #' `step_rename` creates a *specification* of a recipe step that will add
 #'  variables using [dplyr::rename()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... One or more unquoted expressions separated by commas. See
 #'  [dplyr::rename()] where the convention is **`new_name = old_name`**.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the function assumes that the new dimension
-#'  columns created by the original variables will be used as predictors in a
-#'  model.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
 #' @details When an object in the user's global environment is referenced in

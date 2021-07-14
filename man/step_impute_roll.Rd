@@ -33,10 +33,9 @@ step_rollimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}} for more
-details. These columns should be non-integer numerics (i.e.,
-double precision).}
+\item{...}{One or more selector functions to choose variables to be imputed;
+these columns must be non-integer numerics (i.e., double precision).
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
