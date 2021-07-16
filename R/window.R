@@ -75,10 +75,6 @@
 #'               role = "outcome")
 #' rec <- prep(rec, training = sim_dat)
 #'
-#' # If you aren't sure how to set the names, see which variables are selected
-#' # and the order that they are selected:
-#' terms_select(info = summary(rec), terms = quos(starts_with("y")))
-#'
 #' smoothed_dat <- bake(rec, sim_dat, everything())
 #'
 #' ggplot(data = sim_dat, aes(x = x1, y = y1)) +
