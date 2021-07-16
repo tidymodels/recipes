@@ -97,7 +97,7 @@ step_indicate_na_new <-
 
 #' @export
 prep.step_indicate_na <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
   step_indicate_na_new(
     terms = x$terms,
