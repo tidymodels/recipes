@@ -126,8 +126,8 @@ step_impute_bag <-
     )
   }
 
+#' @rdname step_impute_bag
 #' @export
-#' @keywords internal
 step_bagimpute <-
   function(recipe,
            ...,
@@ -140,7 +140,7 @@ step_bagimpute <-
            seed_val = sample.int(10 ^ 4, 1),
            skip = FALSE,
            id = rand_id("impute_bag")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_bagimpute()",
       with = "recipes::step_impute_bag()"

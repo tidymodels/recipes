@@ -128,8 +128,8 @@ step_impute_knn <-
     )
   }
 
+#' @rdname step_impute_knn
 #' @export
-#' @keywords internal
 step_knnimpute <-
   function(recipe,
            ...,
@@ -142,7 +142,7 @@ step_knnimpute <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("impute_knn")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_knnimpute()",
       with = "recipes::step_impute_knn()"

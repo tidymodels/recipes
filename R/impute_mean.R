@@ -79,8 +79,8 @@ step_impute_mean <-
     )
   }
 
+#' @rdname step_impute_mean
 #' @export
-#' @keywords internal
 step_meanimpute <-
   function(recipe,
            ...,
@@ -90,7 +90,7 @@ step_meanimpute <-
            trim = 0,
            skip = FALSE,
            id = rand_id("impute_mean")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_meanimpute()",
       with = "recipes::step_impute_mean()"

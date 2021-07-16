@@ -2,10 +2,25 @@
 % Please edit documentation in R/impute_bag.R
 \name{step_impute_bag}
 \alias{step_impute_bag}
+\alias{step_bagimpute}
 \alias{imp_vars}
 \title{Imputation via Bagged Trees}
 \usage{
 step_impute_bag(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  impute_with = imp_vars(all_predictors()),
+  trees = 25,
+  models = NULL,
+  options = list(keepX = FALSE),
+  seed_val = sample.int(10^4, 1),
+  skip = FALSE,
+  id = rand_id("impute_bag")
+)
+
+step_bagimpute(
   recipe,
   ...,
   role = NA,

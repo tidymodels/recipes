@@ -2,9 +2,21 @@
 % Please edit documentation in R/impute_mean.R
 \name{step_impute_mean}
 \alias{step_impute_mean}
+\alias{step_meanimpute}
 \title{Impute Numeric Data Using the Mean}
 \usage{
 step_impute_mean(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  means = NULL,
+  trim = 0,
+  skip = FALSE,
+  id = rand_id("impute_mean")
+)
+
+step_meanimpute(
   recipe,
   ...,
   role = NA,

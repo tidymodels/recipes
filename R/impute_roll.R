@@ -98,9 +98,8 @@ step_impute_roll <-
     )
   }
 
-
+#' @rdname step_impute_roll
 #' @export
-#' @keywords internal
 step_rollimpute <-
   function(recipe,
            ...,
@@ -111,7 +110,7 @@ step_rollimpute <-
            window = 5,
            skip = FALSE,
            id = rand_id("impute_roll")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_rollimpute()",
       with = "recipes::step_impute_roll()"

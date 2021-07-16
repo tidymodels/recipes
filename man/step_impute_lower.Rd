@@ -2,9 +2,20 @@
 % Please edit documentation in R/impute_lower.R
 \name{step_impute_lower}
 \alias{step_impute_lower}
+\alias{step_lowerimpute}
 \title{Impute Numeric Data Below the Threshold of Measurement}
 \usage{
 step_impute_lower(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  threshold = NULL,
+  skip = FALSE,
+  id = rand_id("impute_lower")
+)
+
+step_lowerimpute(
   recipe,
   ...,
   role = NA,
