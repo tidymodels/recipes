@@ -27,7 +27,7 @@ either form (but containing only a single function, see \code{\link[dplyr:select
 \strong{Note that this argument must be named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the new columns created by this step from
+they be assigned? By default, the new columns created by this step from
 the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for

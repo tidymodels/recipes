@@ -23,7 +23,7 @@ If the argument is not named, the expression is converted to
 a column name.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the new columns created by this step from
+they be assigned? By default, the new columns created by this step from
 the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for

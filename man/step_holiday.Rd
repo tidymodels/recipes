@@ -25,7 +25,7 @@ for this step. The selected variables should have class \code{Date} or
 \code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned?. By default, the new columns created by this step from
+they be assigned? By default, the new columns created by this step from
 the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for

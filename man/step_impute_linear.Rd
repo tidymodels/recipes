@@ -21,7 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables to be imputed;
 these variables \strong{must} be of type \code{numeric}. When used with \code{imp_vars},
-these dots indicates which variables are used to predict the missing data
+these dots indicate which variables are used to predict the missing data
 in each variable. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
