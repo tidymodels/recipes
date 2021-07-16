@@ -126,7 +126,6 @@ step_impute_bag <-
     )
   }
 
-#' @rdname step_impute_bag
 #' @export
 #' @keywords internal
 step_bagimpute <-

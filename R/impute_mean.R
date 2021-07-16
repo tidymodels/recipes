@@ -79,7 +79,6 @@ step_impute_mean <-
     )
   }
 
-#' @rdname step_impute_mean
 #' @export
 #' @keywords internal
 step_meanimpute <-

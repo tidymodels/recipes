@@ -74,7 +74,6 @@ step_impute_median <-
     )
   }
 
-#' @rdname step_impute_median
 #' @export
 #' @keywords internal
 step_medianimpute <-

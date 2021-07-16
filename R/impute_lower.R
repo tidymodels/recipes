@@ -78,7 +78,6 @@ step_impute_lower <-
     )
   }
 
-#' @rdname step_impute_lower
 #' @export
 #' @keywords internal
 step_lowerimpute <- function(recipe,

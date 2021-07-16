@@ -78,7 +78,6 @@ step_impute_mode <-
     )
   }
 
-#' @rdname step_impute_mode
 #' @export
 #' @keywords internal
 step_modeimpute <-

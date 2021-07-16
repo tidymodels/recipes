@@ -128,7 +128,6 @@ step_impute_knn <-
     )
   }
 
-#' @rdname step_impute_knn
 #' @export
 #' @keywords internal
 step_knnimpute <-

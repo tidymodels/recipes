@@ -2,22 +2,9 @@
 % Please edit documentation in R/impute_roll.R
 \name{step_impute_roll}
 \alias{step_impute_roll}
-\alias{step_rollimpute}
 \title{Impute Numeric Data Using a Rolling Window Statistic}
 \usage{
 step_impute_roll(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  columns = NULL,
-  statistic = median,
-  window = 5,
-  skip = FALSE,
-  id = rand_id("impute_roll")
-)
-
-step_rollimpute(
   recipe,
   ...,
   role = NA,
@@ -120,4 +107,3 @@ bake(seven_pt, new_data = NULL)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

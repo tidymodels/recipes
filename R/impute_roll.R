@@ -99,7 +99,6 @@ step_impute_roll <-
   }
 
 
-#' @rdname step_impute_roll
 #' @export
 #' @keywords internal
 step_rollimpute <-
