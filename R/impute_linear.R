@@ -8,7 +8,7 @@
 #' @inherit step_center return
 #' @param ... One or more selector functions to choose variables to be imputed;
 #' these variables **must** be of type `numeric`. When used with `imp_vars`,
-#' these dots indicates which variables are used to predict the missing data
+#' these dots indicate which variables are used to predict the missing data
 #' in each variable. See [selections()] for more details.
 #' @param models The [lm()] objects are stored here once the linear models
 #'  have been trained by [prep.recipe()].
