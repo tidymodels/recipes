@@ -201,9 +201,8 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables are affected by the check. See <code><a href='selections.html'>selections()</a></code>
-for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this check. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -212,8 +211,8 @@ created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
+      <td><p>A logical for whether the selectors in <code>...</code>
+have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>class_nm</th>
@@ -242,14 +241,14 @@ the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
+      <td><p>A character string that is unique to this check to identify it.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step added to the
-sequence of any existing steps.</p>
+    <p>An updated version of <code>recipe</code> with the new check added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function can check the classes of the variables
@@ -340,8 +339,8 @@ selectors or variables selected) and <code>value</code> (the type) is returned.<
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 x 1</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   time               </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>             </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2021-07-08 <span style='color: #949494;'>16:07:33</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2021-07-08 <span style='color: #949494;'>16:08:33</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2021-07-16 <span style='color: #949494;'>16:51:12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2021-07-16 <span style='color: #949494;'>16:52:12</span></span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

@@ -197,25 +197,24 @@ which observations are missing.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The check will be added to the
+      <td><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new na indicator columns created from the original
-variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -229,12 +228,12 @@ resulting new variables. Defaults to "na_ind".</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>A logical. Should the check be skipped when the
+      <td><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
+the computations for subsequent operations</p></td>
     </tr>
     <tr>
       <th>id</th>

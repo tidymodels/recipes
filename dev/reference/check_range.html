@@ -204,9 +204,8 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables are affected by the check. See <code><a href='selections.html'>selections()</a></code>
-for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this check. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -224,8 +223,8 @@ the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
+      <td><p>A logical for whether the selectors in <code>...</code>
+have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>slack_prop</th>
@@ -249,14 +248,14 @@ This is <code>NULL</code> until computed by <code><a href='prep.html'>prep.recip
     </tr>
     <tr>
       <th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
+      <td><p>A character string that is unique to this check to identify it.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new check
-added to the sequence of any existing operations.</p>
+    <p>An updated version of <code>recipe</code> with the new check added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The amount of slack that is allowed is determined by the

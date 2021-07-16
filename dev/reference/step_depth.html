@@ -207,9 +207,8 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables that will be used to create the new features. See
-<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>class</th>
@@ -218,10 +217,9 @@ categorical variable to be used as the class.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that resulting depth estimates will be used as predictors in a
-model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -253,8 +251,8 @@ depth functions. See <code><a href='https://rdrr.io/pkg/ddalpha/man/depth.halfsp
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that defines the naming convention for
-new depth columns. Defaults to <code>"depth_"</code>. See Details below.</p></td>
+      <td><p>A character string for the prefix of the resulting new
+variables. See notes below.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -329,7 +327,7 @@ selectors or variables selected) and <code>class</code> is returned.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>          5.4         3.9          1.7         0.4 setosa         0.083<span style='text-decoration: underline;'>8</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>          4.6         3.4          1.4         0.3 setosa         0.020<span style='text-decoration: underline;'>0</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>          5           3.4          1.5         0.2 setosa         0.645 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>          4.4         2.9          1.4         0.2 setosa         0.020<span style='text-decoration: underline;'>0</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>          4.4         2.9          1.4         0.2 setosa         0.02  </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>          4.9         3.1          1.5         0.1 setosa         0.020<span style='text-decoration: underline;'>0</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 140 more rows, and 2 more variables: zonoid_versicolor &lt;dbl&gt;,</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   zonoid_virginica &lt;dbl&gt;</span></span>

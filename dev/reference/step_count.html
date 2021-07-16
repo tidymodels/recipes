@@ -205,17 +205,15 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>A single selector functions to choose which variable
-will be searched for the pattern. The selector should resolve
-into a single variable. See <code><a href='selections.html'>selections()</a></code> for more
-details.</p></td>
+      <td><p>A single selector function to choose which variable
+will be searched for the regex pattern. The selector should
+resolve to a single variable. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For a variable created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new dummy variable column created by the original
-variable will be used as a predictor in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>

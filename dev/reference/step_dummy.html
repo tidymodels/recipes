@@ -207,17 +207,15 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-<em>factor</em> variables will be used to create the dummy variables. See
-<code><a href='selections.html'>selections()</a></code> for more details. The selected
-variables must be factors.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details. The selected
+variables <em>must</em> be factors.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the binary dummy variable columns created by the original
-variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>

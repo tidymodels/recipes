@@ -206,15 +206,14 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables will be
-used to compute the dimensions. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
       <td><p>For model terms created by this step, what analysis role should
-they be assigned?. By default, the function assumes that the new dimension
-columns created by the original variables will be used as predictors in a
-model.</p></td>
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -256,8 +255,8 @@ has been trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the
-resulting new variables. See notes below.</p></td>
+      <td><p>A character string for the prefix of the resulting new
+variables. See notes below.</p></td>
     </tr>
     <tr>
       <th>keep_original_cols</th>

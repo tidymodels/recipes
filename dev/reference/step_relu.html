@@ -200,22 +200,24 @@ data. The transformed data is added as new columns to the data matrix.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The step will be added to the sequence of
-operations for this recipe.</p></td>
+      <td><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Defaults to "predictor".</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical to indicate if the quantities for preprocessing
-have been estimated.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>shift</th>
@@ -233,8 +235,8 @@ approximation to the rectified linear transformation, should be used.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A prefix for generated column names, default to "right_relu_"
-when right hinge transformation and "left_relu_" for reversed/left hinge
+      <td><p>A prefix for generated column names, defaults to "right_relu_"
+for right hinge transformation and "left_relu_" for reversed/left hinge
 transformations.</p></td>
     </tr>
     <tr>
